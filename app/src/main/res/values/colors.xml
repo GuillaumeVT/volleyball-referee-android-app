@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1d41b8</color>
+    <color name="colorButtonMain">#1d41b8</color>
+    <color name="colorButtonNormal">#d6d7d7</color>
+    <color name="colorPrimaryDark">#0d1017</color>
+    <color name="colorAccent">#ffe500</color>
+
+    <color name="colorPrimaryTextDefaultMaterialLight">#de000000</color>
+    <color name="colorSecondaryTextDefaultMaterialLight">#8A000000</color>
+
+    <color name="colorShirt1">#034694</color>
+    <color name="colorShirt2">#052443</color>
+    <color name="colorShirt3">#006032</color>
+    <color name="colorShirt4">#6a1b9a</color>
+    <color name="colorShirt5">#c2185b</color>
+    <color name="colorShirt6">#bc0019</color>
+    <color name="colorShirt7">#e25618</color>
+    <color name="colorShirt8">#f3bc07</color>
+    <color name="colorShirt9">#0d1017</color>
+</resources>

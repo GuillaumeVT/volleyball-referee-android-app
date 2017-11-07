@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.tonkar.volleyballreferee">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.rules.RulesActivity" android:parentActivityName=".ui.MainActivity" android:theme="@style/AppTheme.Preferences"/>
+        <activity android:name=".ui.team.QuickTeamsSetupActivity"/>
+        <activity android:name=".ui.team.TeamSetupActivity"/>
+        <activity android:name=".ui.game.GameActivity"/>
+        <activity android:name=".ui.history.RecentGamesListActivity" android:parentActivityName=".ui.MainActivity">
+        </activity>
+        <activity android:name=".ui.history.RecentGameActivity" android:parentActivityName=".ui.history.RecentGamesListActivity">
+        </activity>
+    </application>
+
+</manifest>

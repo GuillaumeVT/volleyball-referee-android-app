@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">Volley-Ball Referee</string>
+
+    <!-- Main activity -->
+    <string name="indoor_game">Start Indoor Volley-Ball Game</string>
+    <string name="beach_game">Start Beach Volley-Ball Game</string>
+    <string name="official_rules">Official Rules</string>
+    <string name="my_rules">My Own Rules</string>
+    <string name="indoor_description">Indoor Volley-Ball Image</string>
+    <string name="beach_description">Beach Volley-Ball Image</string>
+    <string name="permission_title">About Permissions</string>
+    <string name="permission_message">This application needs the storage permission in order to share the game results. Denying it will disable this feature.</string>
+    <string name="resume_game_title">Resume Game</string>
+    <string name="resume_game_question">The application found an on-going game. Do you wish to resume it or to delete it?</string>
+    <string name="resume">Resume</string>
+    <string name="delete">Delete</string>
+    <string name="ignore">Ignore</string>
+
+    <!-- Setup activities -->
+    <string name="home_team">Home Team</string>
+    <string name="home_team_hint">Home Team Name</string>
+    <string name="guest_team">Guest Team</string>
+    <string name="guest_team_hint">Guest Team Name</string>
+    <string name="select_6_players">Select at least 6 players:</string>
+    <string name="next">Next</string>
+
+    <!-- Game activity -->
+    <string name="toss_tails">Tails</string>
+    <string name="toss_heads">Heads</string>
+    <string name="toss_coin">Toss a Coin</string>
+    <string name="swap_first_service">Swap First Service</string>
+    <string name="navigated_home">Navigate Home</string>
+    <string name="share">Share</string>
+    <string name="share_exception">Failed to share the game</string>
+    <string name="navigated_home_question">You may resume the current game later, proceed?</string>
+    <string name="select_player_title">Select a player from the bench</string>
+    <string name="court_position_tab">Positions</string>
+    <string name="scores_tab">Scores</string>
+    <string name="set_number">Set %d</string>
+    <string name="set_duration">%d min</string>
+    <string name="switch_sides">Switch Sides</string>
+    <string name="won_game">%s won the game</string>
+    <string name="timeout">Timeout</string>
+    <string name="timeout_question">Call a timeout?</string>
+    <string name="game_interval">Game Interval</string>
+    <string name="skip">Skip</string>
+    <string name="switch_sides_description">Manually Switch Sides</string>
+    <string name="remove_point_description">Remove 1 Point</string>
+    <string name="call_timeout_description">Call Timeout</string>
+
+    <!-- Rules activity -->
+    <string name="rules">Rules</string>
+    <string name="general_preferences">General</string>
+    <string name="timeout_preferences">Timeout</string>
+    <string name="indoor_preferences">Indoor Volley-Ball</string>
+    <string name="beach_preferences">Beach Volley-Ball</string>
+
+    <string name="pref_points_per_set">Number of points per set</string>
+    <string name="pref_sets_per_game">Number of sets per game</string>
+    <string name="pref_tie_break">Tie break in last set</string>
+    <string name="pref_team_timeouts">Team timeouts</string>
+    <string name="pref_team_timeouts_per_set">Number of team timeouts per set</string>
+    <string name="pref_team_timeout_duration">Duration of a team timeout</string>
+    <string name="pref_technical_timeouts">Technical timeouts</string>
+    <string name="pref_technical_timeout_duration">Duration of a technical timeout</string>
+    <string name="pref_game_intervals">Game intervals</string>
+    <string name="pref_game_intervals_duration">Duration of a game interval</string>
+    <string name="pref_players_number">Team of 6 players on court</string>
+    <string name="pref_change_side_every_7_points">Change sides every 7 points</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Set of 25 points</item>
+        <item>Set of 21 points</item>
+        <item>Set of 15 points</item>
+    </string-array>
+    <string-array name="best_of_sets_entries">
+        <item>Game of 5 sets</item>
+        <item>Game of 3 sets</item>
+        <item>Game of 1 set</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>Each team has 2 timeouts per set</item>
+        <item>Each team has 1 timeout per set</item>
+        <item>Each team has no timeout per set</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 seconds</item>
+        <item>45 seconds</item>
+        <item>30 seconds</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 minutes</item>
+        <item>2 minutes</item>
+        <item>1 minute</item>
+    </string-array>
+
+    <string-array name="points_per_set_values">
+        <item>25</item>
+        <item>21</item>
+        <item>15</item>
+    </string-array>
+    <string-array name="best_of_sets_values">
+        <item>5</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="timeout_duration_values">
+        <item>60</item>
+        <item>45</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="game_interval_duration_values">
+        <item>180</item>
+        <item>120</item>
+        <item>60</item>
+    </string-array>
+
+    <!-- Recent games activity -->
+    <string name="recent_games">Recent Games</string>
+    <string name="search_games">Search Games</string>
+    <string name="delete_games">Delete All Games</string>
+    <string name="delete_game">Delete Game</string>
+    <string name="delete_games_question">Do you want to delete all the recorded games?</string>
+    <string name="delete_game_question">Do you want to delete this recorded game?</string>
+    <string name="deleted_game">Game was deleted</string>
+    <string name="deleted_games">Games were all deleted</string>
+
+</resources>

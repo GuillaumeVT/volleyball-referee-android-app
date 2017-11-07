@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/general_preferences">
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="5"
+            android:key="pref_sets_per_game"
+            android:title="@string/pref_sets_per_game"
+            android:summary="%s"
+            android:entries="@array/best_of_sets_entries"
+            android:entryValues="@array/best_of_sets_values"/>
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="25"
+            android:key="pref_points_per_set"
+            android:title="@string/pref_points_per_set"
+            android:summary="%s"
+            android:entries="@array/points_per_set_entries"
+            android:entryValues="@array/points_per_set_values"/>
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_tie_break"
+            android:title="@string/pref_tie_break"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/timeout_preferences">
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_team_timeouts"
+            android:title="@string/pref_team_timeouts"/>
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="2"
+            android:key="pref_team_timeouts_per_set"
+            android:title="@string/pref_team_timeouts_per_set"
+            android:summary="%s"
+            android:entries="@array/team_timeouts_per_set_entries"
+            android:entryValues="@array/team_timeouts_per_set_values"/>
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="30"
+            android:key="pref_team_timeout_duration"
+            android:title="@string/pref_team_timeout_duration"
+            android:summary="%s"
+            android:entries="@array/timeout_duration_entries"
+            android:entryValues="@array/timeout_duration_values"/>
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_technical_timeouts"
+            android:title="@string/pref_technical_timeouts"/>
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="60"
+            android:key="pref_technical_timeout_duration"
+            android:title="@string/pref_technical_timeout_duration"
+            android:summary="%s"
+            android:entries="@array/timeout_duration_entries"
+            android:entryValues="@array/timeout_duration_values"/>
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_game_intervals"
+            android:title="@string/pref_game_intervals"/>
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="180"
+            android:key="pref_game_intervals_duration"
+            android:title="@string/pref_game_intervals_duration"
+            android:summary="%s"
+            android:entries="@array/game_interval_duration_entries"
+            android:entryValues="@array/game_interval_duration_values"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/indoor_preferences">
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_players_number"
+            android:title="@string/pref_players_number"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/beach_preferences">
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_change_side_every_7_points"
+            android:title="@string/pref_change_side_every_7_points"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+</android.support.v7.preference.PreferenceScreen>

@@ -1,0 +1,106 @@
+<resources>
+
+    <!-- Main activity -->
+    <string name="indoor_game">Démarrer un Match de Volley-Ball en Salle</string>
+    <string name="beach_game">Démarrer un Match de Beach Volley-Ball</string>
+    <string name="official_rules">Règles Officielles</string>
+    <string name="my_rules">Mes Règles</string>
+    <string name="indoor_description">Image Volley-Ball en Salle</string>
+    <string name="beach_description">Image Beach Volley-Ball</string>
+    <string name="permission_title">À Propos Des Autorisations</string>
+    <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats. Les refuser désactivera cette fonctionnalité.</string>
+    <string name="resume_game_title">Reprendre le Match</string>
+    <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le reprendre ou le supprimer?</string>
+    <string name="resume">Reprendre</string>
+    <string name="delete">Supprimer</string>
+    <string name="ignore">Ignorer</string>
+
+    <!-- Setup activities -->
+    <string name="home_team">Équipe à Domicile</string>
+    <string name="home_team_hint">Nom de l\'Équipe à Domicile</string>
+    <string name="guest_team">Équipe à l\'Extérieur</string>
+    <string name="guest_team_hint">Nom de l\'Équipe à l\'Extérieur</string>
+    <string name="select_6_players">Sélectionner au moins 6 joueurs:</string>
+    <string name="next">Suivant</string>
+
+    <!-- Game activity -->
+    <string name="toss_tails">Pile</string>
+    <string name="toss_heads">Face</string>
+    <string name="toss_coin">Tirer au Sort</string>
+    <string name="swap_first_service">Échanger le Premier Service</string>
+    <string name="navigated_home">Retour à l\'Accueil</string>
+    <string name="share">Partager</string>
+    <string name="share_exception">Echec du partage du match</string>
+    <string name="navigated_home_question">Il sera possible de reprendre le match en cours, continuer?</string>
+    <string name="select_player_title">Sélectionner un joueur du banc</string>
+    <string name="court_position_tab">Positions</string>
+    <string name="scores_tab">Scores</string>
+    <string name="set_number">Set %d</string>
+    <string name="set_duration">%d min</string>
+    <string name="switch_sides">Changement de Côté</string>
+    <string name="won_game">%s remporte le match</string>
+    <string name="timeout">Temps Mort</string>
+    <string name="timeout_question">Appeler un temps mort?</string>
+    <string name="game_interval">Pause entre les Sets</string>
+    <string name="skip">Passer</string>
+    <string name="switch_sides_description">Changement de Côté Manuel</string>
+    <string name="remove_point_description">Retirer 1 Point</string>
+    <string name="call_timeout_description">Appeler un Temps Mort</string>
+
+    <!-- Rules activity -->
+    <string name="rules">Règles</string>
+    <string name="general_preferences">Générales</string>
+    <string name="timeout_preferences">Temps Morts</string>
+    <string name="indoor_preferences">Volley-Ball en Salle</string>
+    <string name="beach_preferences">Beach Volley-Ball</string>
+
+    <string name="pref_points_per_set">Nombres de points par set</string>
+    <string name="pref_sets_per_game">Nombres de sets par match</string>
+    <string name="pref_tie_break">Tie break dans le dernier set</string>
+    <string name="pref_team_timeouts">Temps morts d\'équipe</string>
+    <string name="pref_team_timeouts_per_set">Nombre de temps morts d\'équipe par set</string>
+    <string name="pref_team_timeout_duration">Durée d\'un temps mort d\'équipe</string>
+    <string name="pref_technical_timeouts">Temps morts techniques</string>
+    <string name="pref_technical_timeout_duration">Durée d\'un temps mort technique</string>
+    <string name="pref_game_intervals">Pauses entre les sets</string>
+    <string name="pref_game_intervals_duration">Durée de la pause entre les sets</string>
+    <string name="pref_players_number">Équipe de 6 joueurs sur le terrain</string>
+    <string name="pref_change_side_every_7_points">Changement de côté tous les 7 points</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Set de 25 points</item>
+        <item>Set de 21 points</item>
+        <item>Set de 15 points</item>
+    </string-array>
+    <string-array name="best_of_sets_entries">
+        <item>Match en 5 sets</item>
+        <item>Match en 3 sets</item>
+        <item>Match en 1 set</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>Chaque équipe a 2 temps morts d\'équipe par set</item>
+        <item>Chaque équipe a 1 temps morts d\'équipe par set</item>
+        <item>Chaque équipe n\'a pas de temps mort d\'équipe par set</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 secondes</item>
+        <item>45 secondes</item>
+        <item>30 secondes</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 minutes</item>
+        <item>2 minutes</item>
+        <item>1 minute</item>
+    </string-array>
+
+    <!-- Recent games activity -->
+    <string name="recent_games">Matchs Récents</string>
+    <string name="search_games">Rechercher des Matchs</string>
+    <string name="delete_games">Supprimer Tous les Matchs</string>
+    <string name="delete_game">Supprimer un Match</string>
+    <string name="delete_games_question">Voulez-vous supprimer tous les matchs enregistrés?</string>
+    <string name="delete_game_question">Voulez-vous supprimer ce match enregistré?</string>
+    <string name="deleted_game">Le match a été supprimé</string>
+    <string name="deleted_games">Tous les matchs ont été supprimés</string>
+
+</resources>
