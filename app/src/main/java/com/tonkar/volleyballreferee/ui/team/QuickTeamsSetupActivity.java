@@ -42,7 +42,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-QTSActivity", String.format("Update %s team name", TeamType.HOME.toString()));
                 mTeamService.setTeamName(TeamType.HOME, s.toString());
-                computeNextButtonVisibility();
+                computeNextButtonActivation();
             }
 
             @Override
@@ -59,7 +59,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-QTSActivity", String.format("Update %s team name", TeamType.GUEST.toString()));
                 mTeamService.setTeamName(TeamType.GUEST, s.toString());
-                computeNextButtonVisibility();
+                computeNextButtonActivation();
             }
 
             @Override
@@ -105,7 +105,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
 
         guestTeamColorSpinner.setSelection(guestTeamColorIndex);
 
-        computeNextButtonVisibility();
+        computeNextButtonActivation();
     }
 
     @Override
@@ -113,15 +113,15 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
         mTeamService = teamService;
     }
 
-    private void computeNextButtonVisibility() {
+    private void computeNextButtonActivation() {
         final Button nextButton = findViewById(R.id.next_button);
 
         if (mTeamService.getTeamName(TeamType.HOME).isEmpty() || mTeamService.getTeamName(TeamType.GUEST).isEmpty()) {
-            Log.i("VBR-QTSActivity", "Next button is invisible");
-            nextButton.setVisibility(View.INVISIBLE);
+            Log.i("VBR-QTSActivity", "Next button is disabled");
+            nextButton.setEnabled(false);
         } else {
-            Log.i("VBR-QTSActivity", "Next button is visible");
-            nextButton.setVisibility(View.VISIBLE);
+            Log.i("VBR-QTSActivity", "Next button is enabled");
+            nextButton.setEnabled(true);
         }
     }
 

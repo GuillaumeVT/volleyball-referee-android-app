@@ -26,7 +26,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/left_team_position_6"
@@ -37,7 +38,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/left_team_position_1"
@@ -48,7 +50,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
 
     <LinearLayout
@@ -68,7 +71,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/left_team_position_3"
@@ -79,7 +83,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/left_team_position_2"
@@ -90,7 +95,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
 
     <LinearLayout
@@ -109,7 +115,8 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/right_team_position_3"
@@ -120,7 +127,8 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/right_team_position_4"
@@ -131,7 +139,8 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
 
@@ -151,7 +160,8 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/right_team_position_6"
@@ -162,7 +172,8 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
             android:id="@+id/right_team_position_5"
@@ -173,7 +184,8 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"/>
+            android:theme="@style/TeamTheme"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
 

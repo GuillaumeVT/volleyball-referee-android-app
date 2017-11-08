@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:weightSum="7">
+            android:weightSum="8">
 
             <ImageView
                 android:id="@+id/indoor_game_image"
@@ -43,22 +43,24 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="@string/indoor_game"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 android:textSize="18sp"/>
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:columnCount="2"
-                android:rowCount="1">
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/start_official_indoor_game_button"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
                     android:onClick="startOfficialIndoorGame"
                     android:text="@string/official_rules"
                     android:textColor="@color/colorButtonMain"
@@ -69,11 +71,12 @@
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
                     android:onClick="startCustomIndoorGame"
                     android:text="@string/my_rules"
                     android:textColor="@color/colorButtonMain"
                     android:textSize="14sp"/>
-            </GridLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -91,7 +94,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:weightSum="7">
+            android:weightSum="8">
 
             <ImageView
                 android:id="@+id/beach_game_image"
@@ -113,20 +116,24 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="@string/beach_game"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 android:textSize="18sp"/>
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/start_official_beach_game_button"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
                     android:onClick="startOfficialBeachGame"
                     android:text="@string/official_rules"
                     android:textColor="@color/colorButtonMain"
@@ -137,11 +144,12 @@
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
                     android:onClick="startCustomBeachGame"
                     android:text="@string/my_rules"
                     android:textColor="@color/colorButtonMain"
                     android:textSize="14sp"/>
-            </GridLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
+              android:baselineAligned="false"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_margin="8dp"
@@ -38,9 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/switch_sides_description"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="swapTeams"
-                android:tint="@color/colorPrimary"
+                android:theme="@style/ImageButtonTheme"
+                style="@style/Widget.AppCompat.ImageButton"
                 app:srcCompat="@drawable/ic_swap"/>
 
             <TextView
@@ -69,7 +70,8 @@
                 android:layout_weight="2"
                 android:onClick="increaseLeftScore"
                 android:textSize="36sp"
-                android:theme="@style/TeamTheme"/>
+                android:theme="@style/TeamTheme"
+                style="@style/Widget.AppCompat.Button.Colored"/>
 
             <TextView
                 android:id="@+id/left_team_set_text"
@@ -96,7 +98,8 @@
                 android:layout_weight="2"
                 android:onClick="increaseRightScore"
                 android:textSize="36sp"
-                android:theme="@style/TeamTheme"/>
+                android:theme="@style/TeamTheme"
+                style="@style/Widget.AppCompat.Button.Colored"/>
 
         </LinearLayout>
 
@@ -122,9 +125,9 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/remove_point_description"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="decreaseLeftScore"
-                android:tint="@color/colorPrimary"
+                android:theme="@style/ImageButtonTheme"
+                style="@style/Widget.AppCompat.ImageButton"
                 app:srcCompat="@drawable/ic_score_revert"/>
 
             <Space
@@ -145,9 +148,9 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/call_timeout_description"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:onClick="callLeftTimeout"
-                    android:tint="@color/colorPrimary"
+                    android:theme="@style/ImageButtonTheme"
+                    style="@style/Widget.AppCompat.ImageButton"
                     app:srcCompat="@drawable/ic_timeout"/>
 
                 <LinearLayout
@@ -178,9 +181,9 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/call_timeout_description"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:onClick="callRightTimeout"
-                    android:tint="@color/colorPrimary"
+                    android:theme="@style/ImageButtonTheme"
+                    style="@style/Widget.AppCompat.ImageButton"
                     app:srcCompat="@drawable/ic_timeout"/>
 
                 <LinearLayout
@@ -206,9 +209,9 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/remove_point_description"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="decreaseRightScore"
-                android:tint="@color/colorPrimary"
+                android:theme="@style/ImageButtonTheme"
+                style="@style/Widget.AppCompat.ImageButton"
                 app:srcCompat="@drawable/ic_score_revert"/>
         </LinearLayout>
 

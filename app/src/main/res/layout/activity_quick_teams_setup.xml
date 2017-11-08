@@ -16,7 +16,8 @@
         android:onClick="validateTeams"
         android:text="@string/next"
         android:textSize="16sp"
-        android:theme="@style/MainButtonTheme"/>
+        android:theme="@style/MainButtonTheme"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <LinearLayout
         android:layout_width="match_parent"

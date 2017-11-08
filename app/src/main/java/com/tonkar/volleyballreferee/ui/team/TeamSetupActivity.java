@@ -66,7 +66,7 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-TSActivity", String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString());
-                computeNextButtonVisibility();
+                computeNextButtonActivation();
             }
 
             @Override
@@ -92,7 +92,7 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
         final PlayerAdapter playerAdapter = new PlayerAdapter(this);
         teamNumbersGrid.setAdapter(playerAdapter);
 
-        computeNextButtonVisibility();
+        computeNextButtonActivation();
     }
 
     @Override
@@ -100,15 +100,15 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
         mTeamService = teamService;
     }
 
-    private void computeNextButtonVisibility() {
+    private void computeNextButtonActivation() {
         final Button nextButton = findViewById(R.id.next_button);
 
         if (mTeamService.getTeamName(mTeamType).isEmpty() || mTeamService.getNumberOfPlayers(mTeamType) < 6) {
-            Log.i("VBR-TSActivity", "Next button is invisible");
-            nextButton.setVisibility(View.INVISIBLE);
+            Log.i("VBR-TSActivity", "Next button is disabled");
+            nextButton.setEnabled(false);
         } else {
-            Log.i("VBR-TSActivity", "Next button is visible");
-            nextButton.setVisibility(View.VISIBLE);
+            Log.i("VBR-TSActivity", "Next button is enabled");
+            nextButton.setEnabled(true);
         }
     }
 
@@ -182,7 +182,7 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
                         Log.i("VBR-TSActivity", String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
                         mTeamService.removePlayer(mTeamType, number);
                     }
-                    computeNextButtonVisibility();
+                    computeNextButtonActivation();
                 }
             });
 

@@ -20,12 +20,21 @@
     <style name="MainButtonTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@android:color/white</item>
         <item name="colorButtonNormal">@color/colorButtonMain</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorButtonMain</item>
+        <item name="android:disabledAlpha">0.5</item>
     </style>
 
     <style name="TeamTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@android:color/white</item>
         <item name="colorButtonNormal">@android:color/holo_red_light</item>
+        <item name="colorAccent">@android:color/holo_red_light</item>
+    </style>
+
+    <style name="ImageButtonTheme" parent="Widget.AppCompat.ImageButton">
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+        <item name="colorAccent">@color/colorButtonNormal</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:tint">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.Preferences" parent="AppTheme">
