@@ -55,14 +55,15 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/start_official_indoor_game_button"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
+                    android:layout_weight="1"
                     android:onClick="startOfficialIndoorGame"
                     android:text="@string/official_rules"
                     android:textColor="@color/colorButtonMain"
@@ -71,9 +72,9 @@
                 <Button
                     android:id="@+id/start_custom_indoor_game_button"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
+                    android:layout_weight="1"
                     android:onClick="startCustomIndoorGame"
                     android:text="@string/my_rules"
                     android:textColor="@color/colorButtonMain"
@@ -134,14 +135,15 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/start_official_beach_game_button"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
+                    android:layout_weight="1"
                     android:onClick="startOfficialBeachGame"
                     android:text="@string/official_rules"
                     android:textColor="@color/colorButtonMain"
@@ -150,13 +152,14 @@
                 <Button
                     android:id="@+id/start_custom_beach_game_button"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
+                    android:layout_weight="1"
                     android:onClick="startCustomBeachGame"
                     android:text="@string/my_rules"
                     android:textColor="@color/colorButtonMain"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    />
             </LinearLayout>
 
         </LinearLayout>
