@@ -13,6 +13,5 @@ Volley-Ball Referee is a user-friendly and complete application for refereeing i
 • Toss coins to determine the serving team and the sides.
 • Create your own rules from an exhaustive set of rules.
 • View recorded completed games.
-• Resume the current game: feel free to quit or restart, your latest game is always 
-automatically saved.
+• Resume the current game: feel free to quit or restart, your latest game is always automatically saved.
 • Share games with your friends, whether they are in progress or recorded.
