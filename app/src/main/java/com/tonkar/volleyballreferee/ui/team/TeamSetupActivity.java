@@ -140,7 +140,7 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
 
         @Override
         public int getCount() {
-            return 40;
+            return 20;
         }
 
         @Override

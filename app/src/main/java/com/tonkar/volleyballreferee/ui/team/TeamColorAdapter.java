@@ -21,7 +21,7 @@ public class TeamColorAdapter extends BaseAdapter {
 
     private final int[]          mColors = {R.color.colorShirt1, R.color.colorShirt2, R.color.colorShirt3, R.color.colorShirt4,
             R.color.colorShirt5, R.color.colorShirt6, R.color.colorShirt7, R.color.colorShirt8,
-            R.color.colorShirt9};
+            R.color.colorShirt9, R.color.colorShirt10, R.color.colorShirt11};
 
     TeamColorAdapter(final Context context, final LayoutInflater layoutInflater) {
         mContext = context;
