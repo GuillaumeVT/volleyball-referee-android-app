@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>

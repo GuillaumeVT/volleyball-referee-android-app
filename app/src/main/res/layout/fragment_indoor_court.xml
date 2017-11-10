@@ -26,7 +26,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -50,7 +50,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -83,7 +83,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -95,7 +95,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
 
@@ -115,7 +115,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -127,7 +127,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -139,7 +139,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
@@ -160,7 +160,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -172,7 +172,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -184,7 +184,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:theme="@style/TeamTheme"
+            android:theme="@style/TeamButtonTheme"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>

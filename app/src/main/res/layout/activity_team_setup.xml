@@ -10,14 +10,14 @@
 
     <Button
         android:id="@+id/next_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:onClick="validateTeam"
         android:text="@string/next"
-        android:textSize="18sp"
-        android:theme="@style/MainButtonTheme"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        android:textSize="16sp"
+        android:theme="@style/ButtonTheme"/>
 
     <LinearLayout
         android:layout_width="match_parent"

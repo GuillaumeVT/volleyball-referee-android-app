@@ -60,25 +60,25 @@
 
                 <Button
                     android:id="@+id/start_official_indoor_game_button"
-                    style="@style/Widget.AppCompat.Button"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="startOfficialIndoorGame"
                     android:text="@string/official_rules"
-                    android:textColor="@color/colorButtonMain"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:theme="@style/ButtonTheme"/>
 
                 <Button
                     android:id="@+id/start_custom_indoor_game_button"
-                    style="@style/Widget.AppCompat.Button"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="startCustomIndoorGame"
                     android:text="@string/my_rules"
-                    android:textColor="@color/colorButtonMain"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:theme="@style/ButtonTheme"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -140,26 +140,25 @@
 
                 <Button
                     android:id="@+id/start_official_beach_game_button"
-                    style="@style/Widget.AppCompat.Button"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="startOfficialBeachGame"
                     android:text="@string/official_rules"
-                    android:textColor="@color/colorButtonMain"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:theme="@style/ButtonTheme"/>
 
                 <Button
                     android:id="@+id/start_custom_beach_game_button"
-                    style="@style/Widget.AppCompat.Button"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="startCustomBeachGame"
                     android:text="@string/my_rules"
-                    android:textColor="@color/colorButtonMain"
                     android:textSize="14sp"
-                    />
+                    android:theme="@style/ButtonTheme"/>
             </LinearLayout>
 
         </LinearLayout>
