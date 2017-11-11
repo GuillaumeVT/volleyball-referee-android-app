@@ -17,17 +17,10 @@
         android:title="@string/share"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/action_swap_first_service"
-        android:icon="@drawable/ic_service_menu"
-        android:iconTint="@android:color/white"
-        android:orderInCategory="3"
-        android:title="@string/swap_first_service"
-        app:showAsAction="always"/>
-    <item
         android:id="@+id/action_toss_coin"
         android:icon="@drawable/ic_coin_menu"
         android:iconTint="@android:color/white"
-        android:orderInCategory="4"
+        android:orderInCategory="3"
         android:title="@string/toss_coin"
         app:showAsAction="always"/>
 </menu>

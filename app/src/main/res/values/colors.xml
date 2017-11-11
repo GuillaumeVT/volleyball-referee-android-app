@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#1f4294</color>
-    <color name="colorPrimaryDark">#0d1017</color>
-    <color name="colorAccent">#f2bb1a</color>
+    <color name="colorPrimaryDark">#1f4294</color>
+    <color name="colorAccent">#1f4294</color>
 
-    <color name="colorButtonNormal">#d6d7d7</color>
+    <color name="colorBeach">#f2bb1a</color>
 
-    <color name="colorPrimaryTextDefaultMaterialLight">#de000000</color>
-    <color name="colorSecondaryTextDefaultMaterialLight">#8A000000</color>
+    <color name="colorButtonDisabled">#d6d7d7</color>
+
+    <color name="colorPrimaryText">#de000000</color>
+    <color name="colorEnabledText">#ffffff</color>
+    <color name="colorDisabledText">#8a000000</color>
+
+    <color name="colorTextTeamDarkBackground">#ffffff</color>
+    <color name="colorTextTeamLightBackground">#de000000</color>
 
     <color name="colorShirt1">#2980b9</color>
     <color name="colorShirt2">#3b5999</color>

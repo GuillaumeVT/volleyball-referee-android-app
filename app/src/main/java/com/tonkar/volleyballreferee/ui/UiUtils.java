@@ -28,9 +28,9 @@ public class UiUtils {
         double a = 1 - ( 0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(backgroundColor)) / 255;
 
         if (a < 0.5) {
-            textColor = ContextCompat.getColor(context, R.color.colorPrimaryTextDefaultMaterialLight);
+            textColor = ContextCompat.getColor(context, R.color.colorPrimaryText);
         } else {
-            textColor = ContextCompat.getColor(context, android.R.color.white);
+            textColor = ContextCompat.getColor(context, R.color.colorTextTeamDarkBackground);
         }
 
         return textColor;

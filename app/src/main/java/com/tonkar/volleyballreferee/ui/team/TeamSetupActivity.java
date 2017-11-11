@@ -167,7 +167,8 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
             button.setText(String.valueOf(playerShirtNumber));
             button.setTextOn(String.valueOf(playerShirtNumber));
             button.setTextOff(String.valueOf(playerShirtNumber));
-            button.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            button.setTextColor(ContextCompat.getColorStateList(mContext, R.color.toggle_button_text_color));
+            button.setBackground(ContextCompat.getDrawable(mContext, R.drawable.toggle_button_color));
             button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
             button.setTextSize(16);
 

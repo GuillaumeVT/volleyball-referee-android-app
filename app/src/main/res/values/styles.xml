@@ -18,10 +18,9 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/colorButtonNormal</item>
-        <item name="colorAccent">@color/colorButtonNormal</item>
-        <item name="android:textColor">@drawable/button_text_color</item>
-        <item name="android:disabledAlpha">0.3</item>
+        <item name="colorButtonNormal">@drawable/button_color</item>
+        <item name="colorAccent">@drawable/button_color</item>
+        <item name="android:textColor">@color/button_text_color</item>
     </style>
 
     <style name="TeamButtonTheme" parent="Widget.AppCompat.Button.Colored">
@@ -31,10 +30,14 @@
     </style>
 
     <style name="ImageButtonTheme" parent="Widget.AppCompat.ImageButton">
-        <item name="colorButtonNormal">@color/colorButtonNormal</item>
-        <item name="colorAccent">@color/colorButtonNormal</item>
+        <item name="colorButtonNormal">@android:color/white</item>
+        <item name="colorAccent">@color/colorButtonDisabled</item>
         <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:tint">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextViewTheme" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
     <style name="AppTheme.Preferences" parent="AppTheme">

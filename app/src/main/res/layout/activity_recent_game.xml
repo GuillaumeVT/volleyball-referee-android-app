@@ -27,7 +27,7 @@
             android:layout_weight="4"
             android:gravity="start"
             android:textAlignment="textStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:textAppearance="@style/TextViewTheme"/>
 
         <TextView
             android:id="@+id/home_team_set_text"
@@ -38,7 +38,7 @@
             android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:textAppearance="@style/TextViewTheme"/>
 
         <TextView
             android:id="@+id/guest_team_set_text"
@@ -49,7 +49,7 @@
             android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:textAppearance="@style/TextViewTheme"/>
 
         <TextView
             android:id="@+id/guest_team_name_text"
@@ -59,7 +59,7 @@
             android:layout_weight="4"
             android:gravity="end"
             android:textAlignment="textEnd"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:textAppearance="@style/TextViewTheme"/>
 
     </LinearLayout>
 

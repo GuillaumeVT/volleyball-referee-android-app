@@ -17,8 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+            android:textAppearance="@style/TextViewTheme"
             android:textSize="16sp"/>
 
         <TextView
@@ -27,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+            android:textAppearance="@style/TextViewTheme"
             android:textSize="16sp"/>
 
         <TextView
@@ -37,8 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+            android:textAppearance="@style/TextViewTheme"
             android:textSize="16sp"/>
     </LinearLayout>
 

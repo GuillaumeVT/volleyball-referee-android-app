@@ -46,8 +46,7 @@
                 android:gravity="center|start"
                 android:text="@string/indoor_game"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+                android:textAppearance="@style/TextViewTheme"
                 android:textSize="18sp"/>
 
             <LinearLayout
@@ -126,8 +125,7 @@
                 android:gravity="center|start"
                 android:text="@string/beach_game"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+                android:textAppearance="@style/TextViewTheme"
                 android:textSize="18sp"/>
 
             <LinearLayout

@@ -30,18 +30,19 @@
                 android:layout_weight="2"
                 android:gravity="start"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+                android:textAppearance="@style/TextViewTheme"
                 android:textSize="16sp"/>
 
             <ImageButton
                 android:id="@+id/swap_teams_button"
+                style="@style/Widget.AppCompat.ImageButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/switch_sides_description"
+                android:elevation="@dimen/cardview_default_elevation"
                 android:onClick="swapTeams"
                 android:theme="@style/ImageButtonTheme"
-                style="@style/Widget.AppCompat.ImageButton"
                 app:srcCompat="@drawable/ic_swap"/>
 
             <TextView
@@ -51,7 +52,7 @@
                 android:layout_weight="2"
                 android:gravity="end"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+                android:textAppearance="@style/TextViewTheme"
                 android:textSize="16sp"/>
 
         </LinearLayout>
@@ -65,41 +66,80 @@
 
             <Button
                 android:id="@+id/left_team_score_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:onClick="increaseLeftScore"
-                android:textSize="36sp"
-                android:theme="@style/TeamButtonTheme"
-                style="@style/Widget.AppCompat.Button.Colored"/>
+                android:textSize="40sp"
+                android:theme="@style/TeamButtonTheme"/>
 
-            <TextView
-                android:id="@+id/left_team_set_text"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="center"
-                android:textSize="24sp"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/right_team_set_text"
+                <TextView
+                    android:id="@+id/left_team_set_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:textAlignment="center"
+                    android:textSize="24sp"/>
+
+                <ImageButton
+                    android:id="@+id/left_team_service_button"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:contentDescription="@string/swap_first_service"
+                    android:elevation="@dimen/cardview_default_elevation"
+                    android:onClick="swapFirstService"
+                    android:theme="@style/ImageButtonTheme"
+                    app:srcCompat="@drawable/ic_volley_ball"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="center"
-                android:textSize="24sp"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/right_team_set_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:onClick="swapFirstService"
+                    android:textAlignment="center"
+                    android:textSize="24sp"/>
+
+                <ImageButton
+                    android:id="@+id/right_team_service_button"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:contentDescription="@string/swap_first_service"
+                    android:elevation="@dimen/cardview_default_elevation"
+                    android:onClick="swapFirstService"
+                    android:theme="@style/ImageButtonTheme"
+                    app:srcCompat="@drawable/ic_volley_ball"/>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/right_team_score_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:onClick="increaseRightScore"
-                android:textSize="36sp"
-                android:theme="@style/TeamButtonTheme"
-                style="@style/Widget.AppCompat.Button.Colored"/>
+                android:textSize="40sp"
+                android:theme="@style/TeamButtonTheme"/>
 
         </LinearLayout>
 
@@ -108,35 +148,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"/>
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="16sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="17">
+            android:weightSum="5">
 
             <ImageButton
                 android:id="@+id/left_team_score_remove_button"
-                android:layout_width="wrap_content"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/remove_point_description"
+                android:elevation="@dimen/cardview_default_elevation"
                 android:onClick="decreaseLeftScore"
                 android:theme="@style/ImageButtonTheme"
-                style="@style/Widget.AppCompat.ImageButton"
                 app:srcCompat="@drawable/ic_score_revert"/>
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"/>
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -144,13 +181,14 @@
 
                 <ImageButton
                     android:id="@+id/left_team_timeout_button"
+                    style="@style/Widget.AppCompat.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/call_timeout_description"
+                    android:elevation="@dimen/cardview_default_elevation"
                     android:onClick="callLeftTimeout"
                     android:theme="@style/ImageButtonTheme"
-                    style="@style/Widget.AppCompat.ImageButton"
                     app:srcCompat="@drawable/ic_timeout"/>
 
                 <LinearLayout
@@ -164,12 +202,12 @@
             </LinearLayout>
 
             <Space
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"/>
+                android:layout_weight="1"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -177,13 +215,14 @@
 
                 <ImageButton
                     android:id="@+id/right_team_timeout_button"
+                    style="@style/Widget.AppCompat.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/call_timeout_description"
+                    android:elevation="@dimen/cardview_default_elevation"
                     android:onClick="callRightTimeout"
                     android:theme="@style/ImageButtonTheme"
-                    style="@style/Widget.AppCompat.ImageButton"
                     app:srcCompat="@drawable/ic_timeout"/>
 
                 <LinearLayout
@@ -196,22 +235,18 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"/>
-
             <ImageButton
                 android:id="@+id/right_team_score_remove_button"
-                android:layout_width="wrap_content"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/remove_point_description"
+                android:elevation="@dimen/cardview_default_elevation"
                 android:onClick="decreaseRightScore"
                 android:theme="@style/ImageButtonTheme"
-                style="@style/Widget.AppCompat.ImageButton"
                 app:srcCompat="@drawable/ic_score_revert"/>
         </LinearLayout>
 

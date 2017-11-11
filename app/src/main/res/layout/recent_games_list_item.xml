@@ -19,8 +19,7 @@
             android:layout_weight="1"
             android:drawablePadding="2dp"
             android:gravity="center|start"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+            android:textAppearance="@style/TextViewTheme"
             android:textSize="16sp"/>
 
         <TextView
@@ -29,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="end"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+            android:textAppearance="@style/TextViewTheme"
             android:textSize="14sp"/>
 
     </LinearLayout>
@@ -48,8 +46,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center|start"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorSecondaryTextDefaultMaterialLight"
+            android:textAppearance="@style/TextViewTheme"
             android:textSize="14sp"/>
 
         <ImageView
@@ -57,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:tint="@color/colorAccent"
+            android:tint="@color/colorBeach"
             app:srcCompat="@drawable/ic_sun"/>
 
     </LinearLayout>

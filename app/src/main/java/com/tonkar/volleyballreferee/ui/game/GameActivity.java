@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -61,6 +60,8 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     private Button              mRightTeamScoreButton;
     private TextView            mLeftTeamSetsText;
     private TextView            mRightTeamSetsText;
+    private ImageButton         mLeftTeamServiceButton;
+    private ImageButton         mRightTeamServiceButton;
     private TextView            mSetsText;
     private ImageButton         mLeftTeamScoreRemoveButton;
     private ImageButton         mRightTeamScoreRemoveButton;
@@ -101,6 +102,9 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
         mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
         mRightTeamSetsText = findViewById(R.id.right_team_set_text);
+
+        mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
+        mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
 
         mSetsText = findViewById(R.id.set_text);
 
@@ -188,9 +192,6 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
             case R.id.action_toss_coin:
                 tossACoin();
                 return true;
-            case R.id.action_swap_first_service:
-                swapFirstService();
-                return true;
             case R.id.action_navigate_home:
                 navigateHome();
                 return true;
@@ -208,11 +209,6 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         final Toast toast = Toast.makeText(this, tossResult, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-    }
-
-    private void swapFirstService() {
-        Log.i("VBR-GameActivity", "Swap first service");
-        mGameService.swapServiceAtStart();
     }
 
     private void navigateHome() {
@@ -242,6 +238,11 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     public void swapTeams(View view) {
         Log.i("VBR-GameActivity", "Swap teams");
         mTeamService.swapTeams(ActionOriginType.USER);
+    }
+
+    public void swapFirstService(View view) {
+        Log.i("VBR-GameActivity", "Swap first service");
+        mGameService.swapServiceAtStart();
     }
 
     public void increaseLeftScore(View view) {
@@ -373,26 +374,12 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     @Override
     public void onServiceSwapped(TeamType teamType) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            showService(mLeftTeamSetsText);
-            hideService(mRightTeamSetsText);
+            mLeftTeamServiceButton.setVisibility(View.VISIBLE);
+            mRightTeamServiceButton.setVisibility(View.INVISIBLE);
         } else {
-            showService(mRightTeamSetsText);
-            hideService(mLeftTeamSetsText);
+            mRightTeamServiceButton.setVisibility(View.VISIBLE);
+            mLeftTeamServiceButton.setVisibility(View.INVISIBLE);
         }
-    }
-
-    private void showService(TextView textView) {
-        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.ic_volley_ball);
-
-        for (Drawable drawable : textView.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
-            }
-        }
-    }
-
-    private void hideService(TextView textView) {
-        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
 
     @Override
@@ -441,7 +428,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
                 final int colorId;
 
                 if (maxCount - newCount > index) {
-                    colorId = R.color.colorButtonNormal;
+                    colorId = R.color.colorButtonDisabled;
                 } else {
                     colorId = android.R.color.holo_orange_dark;
                 }
@@ -475,8 +462,6 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
     private void disableMenu() {
         Log.i("VBR-GameActivity", "Disable game activity menu");
-        final MenuItem swapFirstServiceMenu = mMenu.findItem(R.id.action_swap_first_service);
-        swapFirstServiceMenu.setEnabled(false);
         final MenuItem tossCoinMenu = mMenu.findItem(R.id.action_toss_coin);
         tossCoinMenu.setEnabled(false);
     }
