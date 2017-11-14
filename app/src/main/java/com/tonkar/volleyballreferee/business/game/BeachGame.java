@@ -1,14 +1,14 @@
 package com.tonkar.volleyballreferee.business.game;
 
 import com.tonkar.volleyballreferee.business.team.Team;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.BeachTeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.business.team.BeachTeam;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class BeachGame extends Game {
+public class BeachGame extends Game implements BeachTeamService {
 
     BeachGame(final Rules rules) {
         super(GameType.BEACH, rules);
@@ -19,11 +19,15 @@ public class BeachGame extends Game {
         return new BeachTeam(teamType);
     }
 
+    private BeachTeam getBeachTeam(TeamType teamType) {
+        return (BeachTeam) getTeam(teamType);
+    }
+
     @Override
     public void addPoint(final TeamType teamType) {
         super.addPoint(teamType);
 
-        if (!currentSet().isSetComplete()) {
+        if (!currentSet().isSetCompleted()) {
             // In beach volley, the teams change sides every 7 points, or every 5 points during the tie break
             int period = isTieBreakSet() ? 5 : 7;
             int combinedScores = currentSet().getPoints(TeamType.HOME) + currentSet().getPoints(TeamType.GUEST);
@@ -40,8 +44,8 @@ public class BeachGame extends Game {
     }
 
     @Override
-    public void removePoint(final TeamType teamType) {
-        super.removePoint(teamType);
+    public void removeLastPoint() {
+        super.removeLastPoint();
 
         // In beach volley, the teams change sides every 7 points, or every 5 points during the tie break
         int period = isTieBreakSet() ? 5 : 7;
@@ -53,12 +57,12 @@ public class BeachGame extends Game {
     }
 
     @Override
-    public void substitutePlayer(TeamType teamType, int number, PositionType positionType) {
-        super.substitutePlayer(teamType, number, positionType);
+    protected void onNewSet() {}
 
-        int otherNumber = (number == 1) ? 2 : 1;
-        PositionType otherPositionType = (PositionType.POSITION_1.equals(positionType) ? PositionType.POSITION_2 : PositionType.POSITION_1);
-        super.substitutePlayer(teamType, otherNumber, otherPositionType);
+    @Override
+    public void swapPlayers(TeamType teamType) {
+        getBeachTeam(teamType).rotateToNextPositions();
+        notifyPlayerChanged(teamType, 1, getPlayerPosition(teamType, 1));
+        notifyPlayerChanged(teamType, 2, getPlayerPosition(teamType, 2));
     }
-
 }

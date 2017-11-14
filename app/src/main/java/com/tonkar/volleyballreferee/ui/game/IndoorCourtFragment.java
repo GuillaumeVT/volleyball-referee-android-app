@@ -1,16 +1,35 @@
 package com.tonkar.volleyballreferee.ui.game;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.AlertDialogFragment;
+import com.tonkar.volleyballreferee.ui.UiUtils;
+
+import java.util.List;
+import java.util.Map;
 
 public class IndoorCourtFragment extends CourtFragment {
+
+    private IndoorTeamService mIndoorTeamService;
 
     public IndoorCourtFragment() {
         super();
@@ -26,6 +45,8 @@ public class IndoorCourtFragment extends CourtFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Court", "Create indoor court view");
+
+        mIndoorTeamService = (IndoorTeamService) mTeamService;
 
         mView = inflater.inflate(R.layout.fragment_indoor_court, container, false);
 
@@ -45,7 +66,210 @@ public class IndoorCourtFragment extends CourtFragment {
 
         initView();
 
+        if (savedInstanceState != null) {
+            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getFragmentManager().findFragmentByTag("confirm_lineup");
+            if (alertDialogFragment != null) {
+                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                    @Override
+                    public void onNegativeButtonClicked() {
+                    }
+
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        mIndoorTeamService.confirmStartingLineup();
+                    }
+
+                    @Override
+                    public void onNeutralButtonClicked() {
+                    }
+                });
+            }
+        }
+
         return mView;
+    }
+
+    protected void initView() {
+        super.initView();
+
+        for (Map.Entry<PositionType,Button> entry : mLeftTeamPositions.entrySet()) {
+            final PositionType positionType = entry.getKey();
+            entry.getValue().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final List<Integer> possibleReplacements = mIndoorTeamService.getPossibleReplacements(mTeamOnLeftSide, positionType);
+                    if (possibleReplacements.size() > 0) {
+                        Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
+                        final PlayerAdapter playerAdapter = new PlayerAdapter(getContext(), mTeamOnLeftSide, possibleReplacements, positionType);
+                        showPlayerSelectionDialog(playerAdapter);
+                    } else {
+                        Toast.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            entry.getValue().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (!mIndoorTeamService.isStartingLineupConfirmed()) {
+                        int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnLeftSide, positionType);
+                        if (number > 0) {
+                            mIndoorTeamService.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH);
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
+
+        for (Map.Entry<PositionType,Button> entry : mRightTeamPositions.entrySet()) {
+            final PositionType positionType = entry.getKey();
+            entry.getValue().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final List<Integer> possibleReplacements = mIndoorTeamService.getPossibleReplacements(mTeamOnRightSide, positionType);
+                    if (possibleReplacements.size() > 0) {
+                        Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
+                        final PlayerAdapter playerAdapter = new PlayerAdapter(getContext(), mTeamOnRightSide, possibleReplacements, positionType);
+                        showPlayerSelectionDialog(playerAdapter);
+                    } else {
+                        Toast.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            entry.getValue().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (!mIndoorTeamService.isStartingLineupConfirmed()) {
+                        int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnRightSide, positionType);
+                        if (number > 0) {
+                            mIndoorTeamService.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH);
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void applyColor(TeamType teamType, int number, Button button) {
+        if (mIndoorTeamService.isLibero(teamType, number)) {
+            int backgroundColor = ContextCompat.getColor(mView.getContext(), mIndoorTeamService.getLiberoColor(teamType));
+            button.getBackground().setColorFilter(new PorterDuffColorFilter(backgroundColor, PorterDuff.Mode.SRC));
+            button.setTextColor(UiUtils.getTextColor(mView.getContext(), backgroundColor));
+        } else {
+            applyColor(teamType, button);
+        }
+    }
+
+    @Override
+    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType) {
+        super.onPlayerChanged(teamType, number, positionType);
+
+        if (!mIndoorTeamService.isStartingLineupConfirmed()
+                && mIndoorTeamService.getPlayersOnCourt(TeamType.HOME).size() == 6 && mIndoorTeamService.getPlayersOnCourt(TeamType.GUEST).size() == 6) {
+            AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_message),
+                    getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
+            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                @Override
+                public void onNegativeButtonClicked() {}
+
+                @Override
+                public void onPositiveButtonClicked() {
+                    mIndoorTeamService.confirmStartingLineup();
+                }
+
+                @Override
+                public void onNeutralButtonClicked() {}
+            });
+            alertDialogFragment.show(getActivity().getFragmentManager(), "confirm_lineup");
+        }
+    }
+
+    private void showPlayerSelectionDialog(final PlayerAdapter playerAdapter) {
+        final GridView gridView = new GridView(getContext());
+        gridView.setNumColumns(GridView.AUTO_FIT);
+        gridView.setGravity(Gravity.CENTER);
+        gridView.setPadding(8, 8, 8, 8);
+        gridView.setAdapter(playerAdapter);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog);
+        builder.setTitle(getResources().getString(R.string.select_player_title)).setView(gridView);
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        final AlertDialog alertDialog = builder.create();
+
+        playerAdapter.setDialog(alertDialog);
+
+        alertDialog.show();
+    }
+
+    private class PlayerAdapter extends BaseAdapter {
+
+        private final Context       mContext;
+        private final TeamType      mTeamType;
+        private final List<Integer> mPossibleReplacements;
+        private final PositionType  mPositionType;
+        private       AlertDialog   mDialog;
+
+        private PlayerAdapter(Context context, final TeamType teamType, final List<Integer> possibleReplacements, final PositionType positionType) {
+            mContext = context;
+            mTeamType = teamType;
+            mPossibleReplacements = possibleReplacements;
+            mPositionType = positionType;
+        }
+
+        @Override
+        public int getCount() {
+            return mPossibleReplacements.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final int playerShirtNumber = mPossibleReplacements.get(position);
+            Button button;
+
+            if (convertView == null) {
+                button = new Button(mContext);
+            } else {
+                button = (Button) convertView;
+            }
+
+            button.setText(String.valueOf(playerShirtNumber));
+            applyColor(mTeamType, playerShirtNumber, button);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final int number = Integer.parseInt(((Button) view).getText().toString());
+                    Log.i("VBR-Court", String.format("Substitute %s team player at %s position by #%d player", mTeamType.toString(), mPositionType.toString(), number));
+                    mIndoorTeamService.substitutePlayer(mTeamType, number, mPositionType);
+
+                    if (mDialog != null) {
+                        mDialog.dismiss();
+                    }
+                }
+            });
+
+            return button;
+        }
+
+        void setDialog(AlertDialog dialog) {
+            mDialog = dialog;
+        }
     }
 
 }

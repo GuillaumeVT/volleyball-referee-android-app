@@ -2,34 +2,38 @@
     <string name="app_name">Volley-Ball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_game">Start Indoor Volley-Ball Game</string>
-    <string name="beach_game">Start Beach Volley-Ball Game</string>
-    <string name="official_rules">Official Rules</string>
-    <string name="my_rules">My Own Rules</string>
-    <string name="indoor_description">Indoor Volley-Ball Image</string>
-    <string name="beach_description">Beach Volley-Ball Image</string>
-    <string name="permission_title">About Permissions</string>
+    <string name="indoor_game">Start an indoor volley-ball game</string>
+    <string name="beach_game">Start a beach volley-ball game</string>
+    <string name="official_rules">Official rules</string>
+    <string name="my_rules">My own rules</string>
+    <string name="indoor_description">Indoor volley-ball image</string>
+    <string name="beach_description">Beach Volley-ball image</string>
+    <string name="permission_title">About permissions</string>
     <string name="permission_message">This application needs the storage permission in order to share the game results. Denying it will disable this feature.</string>
-    <string name="resume_game_title">Resume Game</string>
-    <string name="resume_game_question">The application found an on-going game. Do you wish to resume it or to delete it?</string>
+    <string name="resume_game_title">Resume game</string>
+    <string name="resume_game_question">The application found a game in progress. Do you wish to resume it or to delete it?</string>
     <string name="resume">Resume</string>
     <string name="delete">Delete</string>
     <string name="ignore">Ignore</string>
 
     <!-- Setup activities -->
-    <string name="home_team">Home Team</string>
-    <string name="home_team_hint">Home Team Name</string>
-    <string name="guest_team">Guest Team</string>
-    <string name="guest_team_hint">Guest Team Name</string>
-    <string name="select_6_players">Select at least 6 players:</string>
+    <string name="teams_setup_title">Setup teams</string>
+    <string name="liberos_setup_title">Setup liberos</string>
+    <string name="home_team_tab">Home team</string>
+    <string name="home_team_hint">Home team name</string>
+    <string name="guest_team_tab">Guest team</string>
+    <string name="guest_team_hint">Guest team name</string>
+    <string name="select_6_players">Select at least 6 players</string>
+    <string name="select_shirts_color">Select the shirts colour</string>
+    <string name="select_libero">Select liberos (optional)</string>
     <string name="next">Next</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>
     <string name="toss_heads">Heads</string>
-    <string name="toss_coin">Toss a Coin</string>
-    <string name="swap_first_service">Swap First Service</string>
-    <string name="navigated_home">Navigate Home</string>
+    <string name="toss_coin">Toss a coin</string>
+    <string name="swap_first_service">Swap first service</string>
+    <string name="navigated_home">Back to Home page</string>
     <string name="share">Share</string>
     <string name="share_exception">Failed to share the game</string>
     <string name="navigated_home_question">You may resume the current game later, proceed?</string>
@@ -38,22 +42,26 @@
     <string name="scores_tab">Scores</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d min</string>
-    <string name="switch_sides">Switch Sides</string>
+    <string name="switch_sides">Switch sides</string>
     <string name="won_game">%s won the game</string>
     <string name="timeout">Timeout</string>
     <string name="timeout_question">Call a timeout?</string>
-    <string name="game_interval">Game Interval</string>
+    <string name="game_interval">Game interval</string>
     <string name="skip">Skip</string>
-    <string name="switch_sides_description">Manually Switch Sides</string>
-    <string name="remove_point_description">Remove 1 Point</string>
-    <string name="call_timeout_description">Call Timeout</string>
+    <string name="switch_sides_description">Manually switch sides</string>
+    <string name="remove_point_description">Remove 1 point</string>
+    <string name="call_timeout_description">Call timeout</string>
+    <string name="set_point">Set point</string>
+    <string name="confirm_lineup_title">Starting line-up</string>
+    <string name="confirm_lineup_message">Do you confirm this starting line-up for both teams in this set?</string>
+    <string name="no_substitution_message">No more substitution available</string>
 
     <!-- Rules activity -->
     <string name="rules">Rules</string>
     <string name="general_preferences">General</string>
     <string name="timeout_preferences">Timeout</string>
-    <string name="indoor_preferences">Indoor Volley-Ball</string>
-    <string name="beach_preferences">Beach Volley-Ball</string>
+    <string name="indoor_preferences">Indoor volley-ball</string>
+    <string name="beach_preferences">Beach volley-ball</string>
 
     <string name="pref_points_per_set">Number of points per set</string>
     <string name="pref_sets_per_game">Number of sets per game</string>
@@ -66,22 +74,24 @@
     <string name="pref_game_intervals">Game intervals</string>
     <string name="pref_game_intervals_duration">Duration of a game interval</string>
     <string name="pref_players_number">Team of 6 players on court</string>
+    <string name="pref_team_substitutions_per_set">Number of team substitutions per set</string>
     <string name="pref_change_side_every_7_points">Change sides every 7 points</string>
 
     <string-array name="points_per_set_entries">
+        <item>Set of 99 points</item>
         <item>Set of 25 points</item>
         <item>Set of 21 points</item>
         <item>Set of 15 points</item>
     </string-array>
-    <string-array name="best_of_sets_entries">
+    <string-array name="sets_per_game_entries">
         <item>Game of 5 sets</item>
         <item>Game of 3 sets</item>
         <item>Game of 1 set</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
-        <item>Each team has 2 timeouts per set</item>
-        <item>Each team has 1 timeout per set</item>
-        <item>Each team has no timeout per set</item>
+        <item>2 team timeouts per set</item>
+        <item>1 team timeout per set</item>
+        <item>No team timeout per set</item>
     </string-array>
     <string-array name="timeout_duration_entries">
         <item>60 seconds</item>
@@ -93,13 +103,20 @@
         <item>2 minutes</item>
         <item>1 minute</item>
     </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>12 substitutions per set</item>
+        <item>10 substitutions per set</item>
+        <item>8 substitutions per set</item>
+        <item>6 substitutions per set</item>
+    </string-array>
 
     <string-array name="points_per_set_values">
+        <item>99</item>
         <item>25</item>
         <item>21</item>
         <item>15</item>
     </string-array>
-    <string-array name="best_of_sets_values">
+    <string-array name="sets_per_game_values">
         <item>5</item>
         <item>3</item>
         <item>1</item>
@@ -119,15 +136,21 @@
         <item>120</item>
         <item>60</item>
     </string-array>
+    <string-array name="team_substitutions_per_set_values">
+        <item>12</item>
+        <item>10</item>
+        <item>8</item>
+        <item>6</item>
+    </string-array>
 
     <!-- Recent games activity -->
-    <string name="recent_games">Recent Games</string>
-    <string name="search_games">Search Games</string>
-    <string name="delete_games">Delete All Games</string>
-    <string name="delete_game">Delete Game</string>
+    <string name="recent_games">Recent games</string>
+    <string name="search_games">Search games</string>
+    <string name="delete_games">Delete all games</string>
+    <string name="delete_game">Delete game</string>
     <string name="delete_games_question">Do you want to delete all the recorded games?</string>
     <string name="delete_game_question">Do you want to delete this recorded game?</string>
     <string name="deleted_game">Game was deleted</string>
-    <string name="deleted_games">Games were all deleted</string>
+    <string name="deleted_games">All games were deleted</string>
 
 </resources>

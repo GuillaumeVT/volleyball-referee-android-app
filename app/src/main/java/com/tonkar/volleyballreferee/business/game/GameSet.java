@@ -38,9 +38,14 @@ public class GameSet implements Serializable {
         return mHomeTeamPoints + "-" + mGuestTeamPoints;
     }
 
-    public boolean isSetComplete() {
+    public boolean isSetCompleted() {
         // Set is complete when a team reaches the number of points to win (e.g. 25, 21, 15) or more, with a 2-points difference
         return (mHomeTeamPoints >= mPointsPerSetSettings || mGuestTeamPoints >= mPointsPerSetSettings) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 2);
+    }
+
+    public boolean isSetPoint() {
+        // Set ball when a team will reach the number of points to win  with 1 point (e.g. 25, 21, 15) or more, with at least 1-point difference
+        return (mHomeTeamPoints+1 >= mPointsPerSetSettings || mGuestTeamPoints+1 >= mPointsPerSetSettings) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
     }
 
     public TeamType getLeadingTeam() {
@@ -67,30 +72,33 @@ public class GameSet implements Serializable {
 
         mPointsLadder.add(teamType);
 
-        if (isSetComplete()) {
+        if (isSetCompleted()) {
             mEndTime = System.currentTimeMillis();
         }
 
         return points;
     }
 
-    public int removePoint(final TeamType teamType) {
-        int points = 0;
+    public TeamType removeLastPoint() {
+        TeamType teamLosingOnePoint;
 
-        switch (teamType) {
-            case HOME:
-                mHomeTeamPoints--;
-                points = mHomeTeamPoints;
-                break;
-            case GUEST:
-                mGuestTeamPoints--;
-                points = mGuestTeamPoints;
-                break;
+        if (mPointsLadder.isEmpty()) {
+            teamLosingOnePoint = null;
+        } else {
+            teamLosingOnePoint = mPointsLadder.get(mPointsLadder.size() - 1);
+            mPointsLadder.remove(mPointsLadder.size() - 1);
+
+            switch (teamLosingOnePoint) {
+                case HOME:
+                    mHomeTeamPoints--;
+                    break;
+                case GUEST:
+                    mGuestTeamPoints--;
+                    break;
+            }
         }
 
-        mPointsLadder.remove(mPointsLadder.lastIndexOf(teamType));
-
-        return points;
+        return teamLosingOnePoint;
     }
 
     int getPoints(final TeamType teamType) {

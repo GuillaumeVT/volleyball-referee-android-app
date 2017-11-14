@@ -1,59 +1,75 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
-import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
+public class TeamSetupFragment extends Fragment implements TeamClient, TeamColorDialogFragment.TeamColorSelectionListener {
 
     private TeamType    mTeamType;
     private TeamService mTeamService;
+    private Button      mTeamColorButton;
+
+    public TeamSetupFragment() {
+    }
+
+    public static TeamSetupFragment newInstance(TeamType teamType) {
+        TeamSetupFragment fragment = new TeamSetupFragment();
+        Bundle args = new Bundle();
+        args.putString(TeamType.class.getName(), teamType.toString());
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team_setup);
 
-        Log.i("VBR-TSActivity", "Create team setup activity");
+        Log.i("VBR-TSActivity", "Create team setup fragment");
 
-        Intent intent = getIntent();
-        final String teamTypeStr = intent.getStringExtra(TeamType.class.getName());
+        final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
         setTeamService(ServicesProvider.getInstance().getTeamService());
+    }
 
-        final EditText teamNameInput = findViewById(R.id.team_name_input_text);
-        teamNameInput.setText(mTeamService.getTeamName(mTeamType));
+    @Override
+    public void setTeamService(TeamService teamService) {
+        mTeamService = teamService;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_team_setup, container, false);
+
+        final EditText teamNameInput = view.findViewById(R.id.team_name_input_text);
 
         switch (mTeamType) {
             case HOME:
-                setTitle(R.string.home_team);
                 teamNameInput.setHint(R.string.home_team_hint);
                 break;
             case GUEST:
-                setTitle(R.string.guest_team);
                 teamNameInput.setHint(R.string.guest_team_hint);
                 break;
         }
@@ -73,61 +89,47 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
             public void afterTextChanged(Editable s) {}
         });
 
-        final Spinner teamColorSpinner = findViewById(R.id.team_color_spinner);
-        final TeamColorAdapter teamColorAdapter = new TeamColorAdapter(this, getLayoutInflater());
-        teamColorSpinner.setAdapter(teamColorAdapter);
-        teamColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mTeamColorButton = view.findViewById(R.id.team_color_button);
+        mTeamColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("VBR-TSActivity", String.format("Update %s team color", mTeamType.toString()));
-                mTeamService.setTeamColor(mTeamType, (int) teamColorAdapter.getItem(teamColorSpinner.getSelectedItemPosition()));
+            public void onClick(View view) {
+                selectTeamColor();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
-        teamColorSpinner.setSelection(teamColorAdapter.getRandomColorIndex());
 
-        final GridView teamNumbersGrid = findViewById(R.id.team_member_numbers_grid);
-        final PlayerAdapter playerAdapter = new PlayerAdapter(this);
+        final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
+        final PlayerAdapter playerAdapter = new PlayerAdapter(getActivity());
         teamNumbersGrid.setAdapter(playerAdapter);
 
+        if (savedInstanceState == null) {
+            onTeamColorSelected(ShirtColors.getRandomShirtColor());
+        } else {
+            teamNameInput.setText(mTeamService.getTeamName(mTeamType));
+            onTeamColorSelected(mTeamService.getTeamColor(mTeamType));
+
+            TeamColorDialogFragment teamColorDialogFragment = (TeamColorDialogFragment) getActivity().getFragmentManager().findFragmentByTag(mTeamType.toString() + "select_team_color");
+            if (teamColorDialogFragment != null) {
+                teamColorDialogFragment.setTeamColorSelectionListener(this);
+            }
+        }
+
         computeNextButtonActivation();
+
+        return view;
+    }
+
+    private void selectTeamColor() {
+        Log.i("VBR-TSActivity", String.format("Select %s team color", mTeamType.toString()));
+        TeamColorDialogFragment teamColorDialogFragment = TeamColorDialogFragment.newInstance();
+        teamColorDialogFragment.setTeamColorSelectionListener(this);
+        teamColorDialogFragment.show(getActivity().getFragmentManager(), mTeamType.toString() + "select_team_color");
     }
 
     @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
-    }
-
-    private void computeNextButtonActivation() {
-        final Button nextButton = findViewById(R.id.next_button);
-
-        if (mTeamService.getTeamName(mTeamType).isEmpty() || mTeamService.getNumberOfPlayers(mTeamType) < 6) {
-            Log.i("VBR-TSActivity", "Next button is disabled");
-            nextButton.setEnabled(false);
-        } else {
-            Log.i("VBR-TSActivity", "Next button is enabled");
-            nextButton.setEnabled(true);
-        }
-    }
-
-    public void validateTeam(View view) {
-        Log.i("VBR-TSActivity", "Validate team");
-
-        switch (mTeamType) {
-            case HOME:
-                Log.i("VBR-TSActivity", String.format("Start activity to setup %s team", TeamType.GUEST.toString()));
-                final Intent setupIntent = new Intent(this, TeamSetupActivity.class);
-                setupIntent.putExtra(TeamType.class.getName(), TeamType.GUEST.toString());
-                startActivity(setupIntent);
-                break;
-            case GUEST:
-                Log.i("VBR-TSActivity", "Start game activity");
-                final Intent gameIntent = new Intent(this, GameActivity.class);
-                startActivity(gameIntent);
-                break;
-        }
+    public void onTeamColorSelected(int colorId) {
+        Log.i("VBR-TSActivity", String.format("Update %s team color", mTeamType.toString()));
+        mTeamColorButton.getBackground().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getActivity(), colorId), PorterDuff.Mode.SRC));
+        mTeamService.setTeamColor(mTeamType, colorId);
     }
 
     private class PlayerAdapter extends BaseAdapter {
@@ -189,6 +191,10 @@ public class TeamSetupActivity extends AppCompatActivity implements TeamClient {
 
             return button;
         }
+    }
+
+    void computeNextButtonActivation() {
+        ((TeamsSetupActivity) getActivity()).computeNextButtonActivation();
     }
 
 }

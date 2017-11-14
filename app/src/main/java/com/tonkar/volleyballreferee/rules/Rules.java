@@ -18,13 +18,14 @@ public class Rules implements Serializable {
     private final boolean mGameIntervalsEnabled;
     private final int     mGameIntervalDuration;
     private final boolean mTeamOf6Players;
+    private final int     mTeamSubstitutionsPerSet;
     private final boolean mChangeSidesEvery7Points;
 
     public Rules(final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet,
                  final boolean teamTimeoutsEnabled, final int teamTimeoutsPerSet, final int teamTimeoutDuration,
                  final boolean technicalTimeoutsEnabled, final int technicalTimeoutDuration,
                  final boolean gameIntervalsEnabled, final int gameIntervalDuration,
-                 final boolean teamOf6Players, final boolean changeSidesEvery7Points) {
+                 final boolean teamOf6Players, final int teamSubstitutionsPerSet, final boolean changeSidesEvery7Points) {
         mSetsPerGame = setsPerGame;
         mPointsPerSet = pointsPerSet;
         mTieBreakInLastSet = tieBreakInLastSet;
@@ -40,11 +41,12 @@ public class Rules implements Serializable {
         mGameIntervalDuration = gameIntervalDuration;
 
         mTeamOf6Players = teamOf6Players;
+        mTeamSubstitutionsPerSet = teamSubstitutionsPerSet;
         mChangeSidesEvery7Points = changeSidesEvery7Points;
     }
 
-    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, 2, 30, true, 60, true, 180, true, false);
-    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, 1, 30, true, 30, true, 60, false, true);
+    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, 2, 30, true, 60, true, 180, true, 6, false);
+    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, 1, 30, true, 30, true, 60, false, 0, true);
 
     public static Rules createRulesFromPref(final SharedPreferences sharedPreferences, final Rules defaultRules) {
         int setsPerGame = getInt(sharedPreferences, "pref_sets_per_game", defaultRules.getSetsPerGame());
@@ -62,11 +64,12 @@ public class Rules implements Serializable {
         int gameIntervalDuration = getInt(sharedPreferences,"pref_game_intervals_duration", defaultRules.getGameIntervalDuration());
 
         boolean teamOf6Players = sharedPreferences.getBoolean("pref_players_number", defaultRules.isTeamOf6Players());
+        int teamSubstitutionsPerSet = getInt(sharedPreferences,"pref_team_substitutions_per_set", defaultRules.getTeamSubstitutionsPerSet());
 
         boolean changeSidesEvery7Points = sharedPreferences.getBoolean("pref_change_side_every_7_points", defaultRules.isChangeSidesEvery7Points());
 
         return new Rules(setsPerGame, pointsPerSet, tieBreakInLastSet, teamTimeoutsEnabled, teamTimeoutsPerSet, teamTimeoutDuration,
-                technicalTimeoutsEnabled, technicalTimeoutDuration, gameIntervalsEnabled, gameIntervalDuration, teamOf6Players, changeSidesEvery7Points);
+                technicalTimeoutsEnabled, technicalTimeoutDuration, gameIntervalsEnabled, gameIntervalDuration, teamOf6Players, teamSubstitutionsPerSet, changeSidesEvery7Points);
     }
 
     private static int getInt(final SharedPreferences sharedPreferences, final String key, final int defaultValue) {
@@ -115,6 +118,10 @@ public class Rules implements Serializable {
         return mTeamOf6Players;
     }
 
+    public int getTeamSubstitutionsPerSet() {
+        return mTeamSubstitutionsPerSet;
+    }
+
     public boolean isChangeSidesEvery7Points() { return mChangeSidesEvery7Points; }
 
     public void printRules() {
@@ -129,6 +136,7 @@ public class Rules implements Serializable {
         Log.i("VBR-Rules", String.format("pref_game_intervals: %b", mGameIntervalsEnabled));
         Log.i("VBR-Rules", String.format("pref_game_intervals_duration: %d", mGameIntervalDuration));
         Log.i("VBR-Rules", String.format("pref_players_number: %b", mTeamOf6Players));
+        Log.i("VBR-Rules", String.format("pref_team_substitutions_per_set: %d", mTeamSubstitutionsPerSet));
         Log.i("VBR-Rules", String.format("pref_change_side_every_7_points: %b", mChangeSidesEvery7Points));
     }
 }

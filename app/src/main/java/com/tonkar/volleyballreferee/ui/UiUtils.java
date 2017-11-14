@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Ringtone;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -22,13 +22,15 @@ import java.io.ByteArrayOutputStream;
 
 public class UiUtils {
 
+    public static Ringtone sTimeoutSound;
+
     public static int getTextColor(Context context, int backgroundColor) {
         int textColor;
 
         double a = 1 - ( 0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(backgroundColor)) / 255;
 
         if (a < 0.5) {
-            textColor = ContextCompat.getColor(context, R.color.colorPrimaryText);
+            textColor = ContextCompat.getColor(context, R.color.colorTextTeamLightBackground);
         } else {
             textColor = ContextCompat.getColor(context, R.color.colorTextTeamDarkBackground);
         }
@@ -61,12 +63,11 @@ public class UiUtils {
                 context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
             } catch (ActivityNotFoundException e) {
                 Log.e("VBR-Share", "Exception while sharing", e);
-                final Toast toast = Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             }
         } else {
             Log.w("VBR-Share", "No permission to share");
         }
     }
+
 }

@@ -9,8 +9,8 @@
             android:key="pref_sets_per_game"
             android:title="@string/pref_sets_per_game"
             android:summary="%s"
-            android:entries="@array/best_of_sets_entries"
-            android:entryValues="@array/best_of_sets_values"/>
+            android:entries="@array/sets_per_game_entries"
+            android:entryValues="@array/sets_per_game_values"/>
 
         <android.support.v7.preference.ListPreference
             android:defaultValue="25"
@@ -36,6 +36,7 @@
             android:title="@string/pref_team_timeouts"/>
 
         <android.support.v7.preference.ListPreference
+            android:dependency="pref_team_timeouts"
             android:defaultValue="2"
             android:key="pref_team_timeouts_per_set"
             android:title="@string/pref_team_timeouts_per_set"
@@ -44,6 +45,7 @@
             android:entryValues="@array/team_timeouts_per_set_values"/>
 
         <android.support.v7.preference.ListPreference
+            android:dependency="pref_team_timeouts"
             android:defaultValue="30"
             android:key="pref_team_timeout_duration"
             android:title="@string/pref_team_timeout_duration"
@@ -57,6 +59,7 @@
             android:title="@string/pref_technical_timeouts"/>
 
         <android.support.v7.preference.ListPreference
+            android:dependency="pref_technical_timeouts"
             android:defaultValue="60"
             android:key="pref_technical_timeout_duration"
             android:title="@string/pref_technical_timeout_duration"
@@ -70,6 +73,7 @@
             android:title="@string/pref_game_intervals"/>
 
         <android.support.v7.preference.ListPreference
+            android:dependency="pref_game_intervals"
             android:defaultValue="180"
             android:key="pref_game_intervals_duration"
             android:title="@string/pref_game_intervals_duration"
@@ -86,6 +90,15 @@
             android:defaultValue="true"
             android:key="pref_players_number"
             android:title="@string/pref_players_number"/>
+
+        <android.support.v7.preference.ListPreference
+            android:dependency="pref_players_number"
+            android:defaultValue="6"
+            android:key="pref_team_substitutions_per_set"
+            android:title="@string/pref_team_substitutions_per_set"
+            android:summary="%s"
+            android:entries="@array/team_substitutions_per_set_entries"
+            android:entryValues="@array/team_substitutions_per_set_values"/>
 
     </android.support.v7.preference.PreferenceCategory>
 

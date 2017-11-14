@@ -41,6 +41,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
     protected Game(final GameType gameType, final Rules rules) {
         mGameType = gameType;
+        mRules = rules;
         mGameDate = System.currentTimeMillis();
         mHomeTeam = createTeam(TeamType.HOME);
         mGuestTeam = createTeam(TeamType.GUEST);
@@ -48,7 +49,6 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         mTeamOnRightSide = TeamType.GUEST;
         mSets = new ArrayList<>();
 
-        mRules = rules;
         mServingTeamAtStart = TeamType.HOME;
 
         mSets.add(new GameSet(mRules.getPointsPerSet(), mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
@@ -139,20 +139,19 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
             rotateToNextPositions(newServingTeam);
         }
 
-        if (currentSet().isSetComplete()) {
+        if (currentSet().isSetCompleted()) {
             completeCurrentSet();
         }
     }
 
     @Override
-    public void removePoint(final TeamType teamType) {
-        final int oldCount = currentSet().getPoints(teamType);
+    public void removeLastPoint() {
+        final TeamType oldServingTeam = currentSet().getServingTeam();
+        final TeamType teamLosingOnePoint = currentSet().removeLastPoint();
 
-        if (oldCount > 0) {
-            final TeamType oldServingTeam = currentSet().getServingTeam();
-
-            final int newCount = currentSet().removePoint(teamType);
-            notifyPointsUpdated(teamType, newCount);
+        if (teamLosingOnePoint != null) {
+            final int newCount = currentSet().getPoints(teamLosingOnePoint);
+            notifyPointsUpdated(teamLosingOnePoint, newCount);
 
             final TeamType newServingTeam = currentSet().getServingTeam();
 
@@ -220,6 +219,11 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         }
     }
 
+    @Override
+    public boolean isSetPoint() {
+        return currentSet().isSetPoint();
+    }
+
     // Sets
 
     GameSet currentSet() {
@@ -236,7 +240,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         int setCount = 0;
 
         for (final GameSet set : mSets) {
-            if (set.isSetComplete() && set.getLeadingTeam().equals(teamType)) {
+            if (set.isSetCompleted() && set.getLeadingTeam().equals(teamType)) {
                 setCount++;
             }
         }
@@ -278,8 +282,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
             // The tie break is always played in 15 points
             final int pointsToWinSet = isTieBreakSet() ? 15 : mRules.getPointsPerSet();
             mSets.add(new GameSet(pointsToWinSet, mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
-            // Both coaches must provide a team composition to the referee for each new set
-            putAllPlayersOnBench();
+            onNewSet();
             // Both teams change sides between sets
             swapTeams(ActionOriginType.APPLICATION);
             // The service goes to the other team
@@ -346,7 +349,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
     // Team
 
-    private Team getTeam(final TeamType teamType) {
+    Team getTeam(final TeamType teamType) {
         Team team;
 
         if (TeamType.HOME.equals(teamType)) {
@@ -394,13 +397,8 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     }
 
     @Override
-    public int getNumberOfPlayers(TeamType teamType) {
-        return getTeam(teamType).getNumberOfPlayers();
-    }
-
-    @Override
-    public List<Integer> getPlayersOnBench(TeamType teamType) {
-        return getTeam(teamType).getPlayersOnBench();
+    public List<Integer> getPlayers(TeamType teamType) {
+        return getTeam(teamType).getPlayers();
     }
 
     @Override
@@ -420,23 +418,11 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     }
 
     @Override
-    public void substitutePlayer(TeamType teamType, int number, PositionType positionType) {
-        if (getTeam(teamType).substitutePlayer(number, positionType)) {
-            notifyPlayerChanged(teamType, number, positionType);
-        }
+    public int getPlayerAtPosition(TeamType teamType, PositionType positionType) {
+        return getTeam(teamType).getPlayerAtPosition(positionType);
     }
 
-    private void putAllPlayersOnBench() {
-        putAllPlayersOnBench(TeamType.HOME);
-        putAllPlayersOnBench(TeamType.GUEST);
-    }
-
-    private void putAllPlayersOnBench(final TeamType teamType) {
-        Log.i("VBR-Team", String.format("Put all players of %s team on bench", teamType.toString()));
-        for (Integer number : getTeam(teamType).getPlayersOnCourt()) {
-            substitutePlayer(teamType, number, PositionType.BENCH);
-        }
-    }
+    protected abstract void onNewSet();
 
     @Override
     public void swapTeams(ActionOriginType actionOriginType) {
@@ -479,7 +465,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         notifyTeamRotated(teamType);
     }
 
-    private void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType) {
+    void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType) {
         Log.i("VBR-Team", String.format("Player #%d of %s team is on %s position", number, teamType.toString(), positionType.toString()));
         for (final TeamListener listener : mTeamListeners) {
             listener.onPlayerChanged(teamType, number, positionType);

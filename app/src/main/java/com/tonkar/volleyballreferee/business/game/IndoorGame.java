@@ -1,13 +1,19 @@
 package com.tonkar.volleyballreferee.business.game;
 
+import android.util.Log;
+
 import com.tonkar.volleyballreferee.business.team.Team;
+import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.business.team.IndoorTeam;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class IndoorGame extends Game {
+import java.util.List;
+
+public class IndoorGame extends Game implements IndoorTeamService {
 
     IndoorGame(final Rules rules) {
         super(GameType.INDOOR, rules);
@@ -15,14 +21,20 @@ public class IndoorGame extends Game {
 
     @Override
     protected Team createTeam(TeamType teamType) {
-        return new IndoorTeam(teamType);
+        return new IndoorTeam(teamType, getRules().getTeamSubstitutionsPerSet());
+    }
+
+    private IndoorTeam getIndoorTeam(TeamType teamType) {
+        return (IndoorTeam) getTeam(teamType);
     }
 
     @Override
     public void addPoint(final TeamType teamType) {
         super.addPoint(teamType);
 
-        if (!currentSet().isSetComplete()) {
+        if (!currentSet().isSetCompleted()) {
+            checkPosition1(teamType);
+
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
             // In indoor volley, the teams change sides after the 8th during the tie break
@@ -42,8 +54,10 @@ public class IndoorGame extends Game {
     }
 
     @Override
-    public void removePoint(final TeamType teamType) {
-        super.removePoint(teamType);
+    public void removeLastPoint() {
+        super.removeLastPoint();
+
+        checkPosition1(getServingTeam());
 
         final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
@@ -53,4 +67,86 @@ public class IndoorGame extends Game {
         }
     }
 
+    @Override
+    protected void onNewSet() {
+        // Both coaches must provide a team composition to the referee for each new set
+        putAllPlayersOnBench(TeamType.HOME);
+        putAllPlayersOnBench(TeamType.GUEST);
+    }
+
+    private void checkPosition1(final TeamType scoringTeam) {
+        int number = getIndoorTeam(scoringTeam).checkPosition1Offence();
+        if (number > 0)  {
+            substitutePlayer(scoringTeam, number, PositionType.POSITION_1);
+        }
+
+        TeamType defendingTeam = scoringTeam.other();
+        number = getIndoorTeam(defendingTeam).checkPosition1Defence();
+        if (number > 0)  {
+            substitutePlayer(defendingTeam, number, PositionType.POSITION_1);
+        }
+    }
+
+    private void putAllPlayersOnBench(final TeamType teamType) {
+        Log.i("VBR-Team", String.format("Put all players of %s team on bench", teamType.toString()));
+        getIndoorTeam(teamType).putAllPlayersOnBench();
+    }
+
+    @Override
+    public int getNumberOfPlayers(TeamType teamType) {
+        return getTeam(teamType).getNumberOfPlayers();
+    }
+
+    @Override
+    public void substitutePlayer(TeamType teamType, int number, PositionType positionType) {
+        if (getTeam(teamType).substitutePlayer(number, positionType)) {
+            notifyPlayerChanged(teamType, number, positionType);
+        }
+    }
+
+    @Override
+    public List<Integer> getPossibleReplacements(TeamType teamType, PositionType positionType) {
+        return getIndoorTeam(teamType).getPossibleReplacements(positionType);
+    }
+
+    @Override
+    public void confirmStartingLineup() {
+        getIndoorTeam(TeamType.HOME).confirmStartingLineup();
+        getIndoorTeam(TeamType.GUEST).confirmStartingLineup();
+    }
+
+    @Override
+    public boolean isStartingLineupConfirmed() {
+        return getIndoorTeam(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeam(TeamType.GUEST).isStartingLineupConfirmed();
+    }
+
+    @Override
+    public int getLiberoColor(TeamType teamType) {
+        return getIndoorTeam(teamType).getLiberoColorId();
+    }
+
+    @Override
+    public void setLiberoColor(TeamType teamType, int colorId) {
+        getIndoorTeam(teamType).setLiberoColorId(colorId);
+    }
+
+    @Override
+    public void addLibero(TeamType teamType, int number) {
+        getIndoorTeam(teamType).addLibero(number);
+    }
+
+    @Override
+    public void removeLibero(TeamType teamType, int number) {
+        getIndoorTeam(teamType).removeLibero(number);
+    }
+
+    @Override
+    public boolean isLibero(TeamType teamType, int number) {
+        return getIndoorTeam(teamType).isLibero(number);
+    }
+
+    @Override
+    public boolean canAddLibero(TeamType teamType) {
+        return getIndoorTeam(teamType).canAddLibero();
+    }
 }

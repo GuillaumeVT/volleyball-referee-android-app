@@ -25,41 +25,22 @@ public class BeachTeamTest {
         assertEquals(false, team.hasPlayer(-1));
         assertEquals(null, team.getPlayerPosition(5));
         assertEquals(null, team.getPlayerPosition(-1));
-        assertEquals(PositionType.BENCH, team.getPlayerPosition(1));
-        assertEquals(PositionType.BENCH, team.getPlayerPosition(2));
-    }
-
-    @Test
-    public void substitution_fillCourt() {
-        BeachTeam team = new BeachTeam(TeamType.HOME);
-
-        assertEquals(2, team.getPlayersOnBench().size());
-        assertEquals(0, team.getPlayersOnCourt().size());
-
-        assertEquals(true, team.substitutePlayer(1, PositionType.POSITION_2));
-        assertEquals(PositionType.POSITION_2, team.getPlayerPosition(1));
-        assertEquals(1, team.getPlayersOnBench().size());
-        assertEquals(1, team.getPlayersOnCourt().size());
-
-        assertEquals(true, team.substitutePlayer(2, PositionType.POSITION_1));
-        assertEquals(PositionType.POSITION_1, team.getPlayerPosition(2));
-        assertEquals(0, team.getPlayersOnBench().size());
         assertEquals(2, team.getPlayersOnCourt().size());
+        assertEquals(PositionType.POSITION_1, team.getPlayerPosition(1));
+        assertEquals(PositionType.POSITION_2, team.getPlayerPosition(2));
     }
 
     @Test
     public void substitution_changePlayer() {
         BeachTeam team = new BeachTeam(TeamType.HOME);
 
-        team.substitutePlayer(1, PositionType.POSITION_1);
-        assertEquals(PositionType.POSITION_1, team.getPlayerPosition(1));
+        assertEquals(true, team.substitutePlayer(1, PositionType.POSITION_2));
+        assertEquals(PositionType.POSITION_2, team.getPlayerPosition(1));
+        assertEquals(1, team.getPlayersOnCourt().size());
 
         assertEquals(true, team.substitutePlayer(2, PositionType.POSITION_1));
         assertEquals(PositionType.POSITION_1, team.getPlayerPosition(2));
-        assertEquals(PositionType.BENCH, team.getPlayerPosition(1));
-
-        assertEquals(1, team.getPlayersOnBench().size());
-        assertEquals(1, team.getPlayersOnCourt().size());
+        assertEquals(2, team.getPlayersOnCourt().size());
     }
 
     @Test

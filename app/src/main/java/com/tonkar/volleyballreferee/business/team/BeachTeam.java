@@ -10,6 +10,8 @@ public class BeachTeam extends Team {
 
         addPlayer(1);
         addPlayer(2);
+        substitutePlayer(1, PositionType.POSITION_1);
+        substitutePlayer(2, PositionType.POSITION_2);
     }
 
     @Override
@@ -27,5 +29,8 @@ public class BeachTeam extends Team {
 
         return result;
     }
+
+    @Override
+    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType) {}
 
 }

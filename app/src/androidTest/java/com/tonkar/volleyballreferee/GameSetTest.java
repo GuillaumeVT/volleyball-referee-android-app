@@ -32,10 +32,11 @@ public class GameSetTest {
         GameSet set = new GameSet(12, 0, TeamType.HOME);
         set.addPoint(TeamType.HOME);
         set.addPoint(TeamType.HOME);
-        assertEquals(1, set.removePoint(TeamType.HOME));
+        assertEquals(TeamType.HOME, set.removeLastPoint());
         assertEquals(TeamType.HOME, set.getPointsLadder().get(0));
-        assertEquals(0, set.removePoint(TeamType.HOME));
+        assertEquals(TeamType.HOME, set.removeLastPoint());
         assertEquals(true, set.getPointsLadder().isEmpty());
+        assertEquals(null, set.removeLastPoint());
     }
 
     @Test
@@ -67,11 +68,11 @@ public class GameSetTest {
         GameSet set = new GameSet(4, 0, TeamType.HOME);
 
         for (int index = 0; index < 4; index++) {
-            assertEquals(false, set.isSetComplete());
+            assertEquals(false, set.isSetCompleted());
             set.addPoint(TeamType.GUEST);
         }
 
-        assertEquals(true, set.isSetComplete());
+        assertEquals(true, set.isSetCompleted());
     }
 
     @Test
@@ -79,14 +80,15 @@ public class GameSetTest {
         GameSet set = new GameSet(3, 0, TeamType.HOME);
 
         for (int index = 0; index < 2; index++) {
-            assertEquals(false, set.isSetComplete());
+            assertEquals(false, set.isSetCompleted());
             set.addPoint(TeamType.GUEST);
             set.addPoint(TeamType.HOME);
         }
 
         set.addPoint(TeamType.HOME);
-        assertEquals(false, set.isSetComplete());
+        assertEquals(false, set.isSetCompleted());
+        assertEquals(true, set.isSetPoint());
         set.addPoint(TeamType.HOME);
-        assertEquals(true, set.isSetComplete());
+        assertEquals(true, set.isSetCompleted());
     }
 }

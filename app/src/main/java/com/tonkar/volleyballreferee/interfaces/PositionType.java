@@ -5,7 +5,7 @@ public enum PositionType {
     POSITION_1, POSITION_2, POSITION_3, POSITION_4, POSITION_5, POSITION_6, BENCH;
 
     public PositionType previousPosition() {
-        final  PositionType next;
+        final PositionType next;
 
         switch (this) {
             case POSITION_1:
@@ -36,7 +36,7 @@ public enum PositionType {
     }
 
     public PositionType nextPosition() {
-        final  PositionType previous;
+        final PositionType previous;
 
         switch (this) {
             case POSITION_1:
@@ -64,5 +64,67 @@ public enum PositionType {
         }
 
         return previous;
+    }
+
+    public boolean isAtTheBack() {
+        final boolean back;
+
+        switch (this) {
+            case POSITION_1:
+                back = true;
+                break;
+            case POSITION_2:
+                back = false;
+                break;
+            case POSITION_3:
+                back = false;
+                break;
+            case POSITION_4:
+                back = false;
+                break;
+            case POSITION_5:
+                back = true;
+                break;
+            case POSITION_6:
+                back = true;
+                break;
+            default:
+            case BENCH:
+                back = false;
+                break;
+        }
+
+        return back;
+    }
+
+    public PositionType oppositePosition() {
+        final PositionType opposite;
+
+        switch (this) {
+            case POSITION_1:
+                opposite = POSITION_4;
+                break;
+            case POSITION_2:
+                opposite = POSITION_5;
+                break;
+            case POSITION_3:
+                opposite = POSITION_6;
+                break;
+            case POSITION_4:
+                opposite = POSITION_1;
+                break;
+            case POSITION_5:
+                opposite = POSITION_2;
+                break;
+            case POSITION_6:
+                opposite = POSITION_3;
+                break;
+            default:
+            case BENCH:
+                opposite = BENCH;
+                break;
+        }
+
+        return opposite;
     }
 }

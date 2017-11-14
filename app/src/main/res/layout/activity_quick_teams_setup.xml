@@ -38,12 +38,15 @@
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"/>
 
-        <Spinner
-            android:id="@+id/home_team_color_spinner"
+        <Button
+            android:id="@+id/home_team_color_button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="selectHomeTeamColor"
+            android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
 
     <LinearLayout
@@ -64,12 +67,15 @@
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"/>
 
-        <Spinner
-            android:id="@+id/guest_team_color_spinner"
+        <Button
+            android:id="@+id/guest_team_color_button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="selectGuestTeamColor"
+            android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
 
 </LinearLayout>

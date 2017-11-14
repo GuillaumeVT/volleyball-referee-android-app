@@ -27,4 +27,8 @@ public interface GamesHistoryService {
     void saveCurrentGame();
 
     void deleteCurrentGame();
+
+    void enableAutoSaveCurrentGame();
+
+    void disableAutoSaveCurrentGame();
 }

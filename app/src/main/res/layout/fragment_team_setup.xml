@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:layout_margin="8dp"
               android:gravity="top|center"
-              android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.team.TeamSetupActivity">
-
-    <Button
-        android:id="@+id/next_button"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minWidth="200dp"
-        android:onClick="validateTeam"
-        android:text="@string/next"
-        android:textSize="16sp"
-        android:theme="@style/ButtonTheme"/>
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -35,23 +22,25 @@
             android:ems="10"
             android:inputType="textCapWords"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
-        <Spinner
-            android:id="@+id/team_color_spinner"
+        <Button
+            android:id="@+id/team_color_button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:theme="@style/TeamButtonTheme"/>
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/team_member_numbers_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/select_6_players"
-        android:textAllCaps="false"
         android:textAppearance="@style/TextViewTheme"
         android:textSize="16sp"/>
 
@@ -59,6 +48,7 @@
         android:id="@+id/team_member_numbers_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
         android:columnWidth="50dp"
         android:gravity="center"
         android:horizontalSpacing="8dp"

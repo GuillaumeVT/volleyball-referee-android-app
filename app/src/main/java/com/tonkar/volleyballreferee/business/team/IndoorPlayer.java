@@ -15,4 +15,5 @@ public class IndoorPlayer extends Player {
     public void turnToPreviousPosition() {
         setPosition(getPosition().previousPosition());
     }
+
 }

@@ -18,15 +18,13 @@ public interface TeamService extends BaseTeamService {
 
     boolean hasPlayer(TeamType teamType, int number);
 
-    int getNumberOfPlayers(TeamType teamType);
-
-    List<Integer> getPlayersOnBench(TeamType teamType);
+    List<Integer> getPlayers(TeamType teamType);
 
     List<Integer> getPlayersOnCourt(TeamType teamType);
 
     PositionType getPlayerPosition(TeamType teamType, int number);
 
-    void substitutePlayer(TeamType teamType, int number, PositionType positionType);
+    int getPlayerAtPosition(TeamType teamType, PositionType positionType);
 
     void swapTeams(ActionOriginType actionOriginType);
 

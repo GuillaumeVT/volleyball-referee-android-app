@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -63,8 +62,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     private ImageButton         mLeftTeamServiceButton;
     private ImageButton         mRightTeamServiceButton;
     private TextView            mSetsText;
-    private ImageButton         mLeftTeamScoreRemoveButton;
-    private ImageButton         mRightTeamScoreRemoveButton;
+    private ImageButton         mScoreRemoveButton;
     private ImageButton         mLeftTeamTimeoutButton;
     private ImageButton         mRightTeamTimeoutButton;
     private LinearLayout        mLeftTeamTimeoutLayout;
@@ -108,8 +106,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
         mSetsText = findViewById(R.id.set_text);
 
-        mLeftTeamScoreRemoveButton = findViewById(R.id.left_team_score_remove_button);
-        mRightTeamScoreRemoveButton = findViewById(R.id.right_team_score_remove_button);
+        mScoreRemoveButton = findViewById(R.id.score_remove_button);
 
         mLeftTeamTimeoutButton = findViewById(R.id.left_team_timeout_button);
         mRightTeamTimeoutButton = findViewById(R.id.right_team_timeout_button);
@@ -168,7 +165,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
     @Override
     public void onBackPressed() {
-        navigateHome();
+        navigateHomeWithDialog();
     }
 
     // Menu
@@ -193,7 +190,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
                 tossACoin();
                 return true;
             case R.id.action_navigate_home:
-                navigateHome();
+                navigateHomeWithDialog();
                 return true;
             case R.id.action_share:
                 share();
@@ -206,26 +203,40 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     private void tossACoin() {
         Log.i("VBR-GameActivity", "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
-        final Toast toast = Toast.makeText(this, tossResult, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        Toast.makeText(this, tossResult, Toast.LENGTH_LONG).show();
+    }
+
+    private void navigateHomeWithDialog() {
+        Log.i("VBR-GameActivity", "Navigate home");
+        if (mGameService.isGameCompleted()) {
+            navigateHome();
+        } else {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+            builder.setTitle(getResources().getString(R.string.navigated_home)).setMessage(getResources().getString(R.string.navigated_home_question));
+            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    navigateHome();
+                }
+            });
+            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    mGamesHistoryService.disableAutoSaveCurrentGame();
+                    mGamesHistoryService.deleteCurrentGame();
+                    navigateHome();
+                }
+            });
+            builder.show();
+        }
     }
 
     private void navigateHome() {
-        Log.i("VBR-GameActivity", "Navigate home");
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.navigated_home)).setMessage(getResources().getString(R.string.navigated_home_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                final Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
-        builder.show();
+        final Intent intent = new Intent(GameActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void share() {
@@ -245,14 +256,14 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         mGameService.swapServiceAtStart();
     }
 
+    public void removeLastPoint(View view) {
+        Log.i("VBR-GameActivity", "Remove last point");
+        mGameService.removeLastPoint();
+    }
+
     public void increaseLeftScore(View view) {
         Log.i("VBR-GameActivity", "Increase left score");
         mGameService.addPoint(mTeamOnLeftSide);
-    }
-
-    public void decreaseLeftScore(View view) {
-        Log.i("VBR-GameActivity", "Decrease left score");
-        mGameService.removePoint(mTeamOnLeftSide);
     }
 
     public void callLeftTimeout(View view) {
@@ -263,11 +274,6 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     public void increaseRightScore(View view) {
         Log.i("VBR-GameActivity", "Increase right score");
         mGameService.addPoint(mTeamOnRightSide);
-    }
-
-    public void decreaseRightScore(View view) {
-        Log.i("VBR-GameActivity", "Decrease right score");
-        mGameService.removePoint(mTeamOnRightSide);
     }
 
     public void callRightTimeout(View view) {
@@ -328,9 +334,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         onServiceSwapped(mGameService.getServingTeam());
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            final Toast toast = Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+            Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -360,6 +364,12 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
             builder.append(String.valueOf(leftPointsCount)).append('-').append(String.valueOf(rightPointsCount)).append('\t');
         }
         mSetsText.setText(builder.toString());
+
+        if (mGameService.isSetPoint()) {
+            setTitle(getResources().getString(R.string.set_point));
+        } else {
+            setTitle("");
+        }
     }
 
     @Override
@@ -393,10 +403,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     @Override
     public void onGameCompleted(final TeamType winner) {
         disableAll();
-
-        final Toast toast = Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mTeamService.getTeamName(winner)), Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mTeamService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -454,8 +461,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         mSwapTeamsButton.setEnabled(false);
         mLeftTeamScoreButton.setEnabled(false);
         mRightTeamScoreButton.setEnabled(false);
-        mLeftTeamScoreRemoveButton.setEnabled(false);
-        mRightTeamScoreRemoveButton.setEnabled(false);
+        mScoreRemoveButton.setEnabled(false);
         mLeftTeamTimeoutButton.setEnabled(false);
         mRightTeamTimeoutButton.setEnabled(false);
     }

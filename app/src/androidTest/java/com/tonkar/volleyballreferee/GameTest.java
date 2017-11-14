@@ -18,7 +18,7 @@ public class GameTest {
     public void point_remove() {
         Game game = GameFactory.createIndoorGame();
         assertEquals(0, game.getPoints(TeamType.HOME));
-        game.removePoint(TeamType.HOME);
+        game.removeLastPoint();
         assertEquals(0, game.getPoints(TeamType.HOME));
     }
 
@@ -56,7 +56,7 @@ public class GameTest {
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, game.getServingTeam());
-        game.removePoint(TeamType.HOME);
+        game.removeLastPoint();
         assertEquals(TeamType.HOME, game.getServingTeam());
     }
 
@@ -67,7 +67,7 @@ public class GameTest {
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.GUEST);
         assertEquals(TeamType.GUEST, game.getServingTeam());
-        game.removePoint(TeamType.GUEST);
+        game.removeLastPoint();
         assertEquals(TeamType.HOME, game.getServingTeam());
     }
 

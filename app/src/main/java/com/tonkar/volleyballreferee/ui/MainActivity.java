@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +29,7 @@ import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.history.RecentGamesListActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesActivity;
 import com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity;
-import com.tonkar.volleyballreferee.ui.team.TeamSetupActivity;
+import com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.io.File;
@@ -118,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }
+
+        if (UiUtils.sTimeoutSound == null) {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            UiUtils.sTimeoutSound = RingtoneManager.getRingtone(getApplicationContext(), notification);
+        }
     }
 
     @Override
@@ -183,8 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (teamOf6Players) {
             Log.i("VBR-MainActivity", String.format("Start activity to setup %s team", TeamType.HOME.toString()));
-            final Intent intent = new Intent(this, TeamSetupActivity.class);
-            intent.putExtra(TeamType.class.getName(), TeamType.HOME.toString());
+            final Intent intent = new Intent(this, TeamsSetupActivity.class);
             startActivity(intent);
         } else {
             Log.i("VBR-MainActivity", "Start activity to setup both teams");

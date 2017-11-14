@@ -1,0 +1,156 @@
+<resources>
+    <string name="app_name">Volley-Ball Referee</string>
+
+    <!-- Main activity -->
+    <string name="indoor_game">Inizia la partita di pallavolo</string>
+    <string name="beach_game">Inizia la partita di beach volley</string>
+    <string name="official_rules">Regole ufficiali</string>
+    <string name="my_rules">Regole personalizzate</string>
+    <string name="indoor_description">Indoor volley-ball image</string>
+    <string name="beach_description">Beach Volley-ball image</string>
+    <string name="permission_title">Autorizzazioni</string>
+    <string name="permission_message">L\'applicazione richiede l\'autorizzazione al salvataggio dei dati per poter condividere i risultati. Rifiutando inattivi l'opzione.</string>
+    <string name="resume_game_title">Riprendi la partita</string>
+    <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
+    <string name="resume">Riprendi</string>
+    <string name="delete">Cancella</string>
+    <string name="ignore">Ignora</string>
+
+    <!-- Setup activities -->
+    <string name="teams_setup_title">Setup teams</string>
+    <string name="liberos_setup_title">Setup liberos</string>
+    <string name="home_team_tab">Squadra ospitante</string>
+    <string name="home_team_hint">Nome della squadra ospitante</string>
+    <string name="guest_team_tab">Squadra avversaria</string>
+    <string name="guest_team_hint">Nome della squadra avversaria</string>
+    <string name="select_6_players">Seleziona almeno 6 giocatori</string>
+    <string name="select_shirts_color">Seleziona il colore della divisa</string>
+    <string name="select_libero">Select liberos (optional)</string>
+    <string name="next">Prossimo</string>
+
+    <!-- Game activity -->
+    <string name="toss_tails">Croce</string>
+    <string name="toss_heads">Testa</string>
+    <string name="toss_coin">Lancia la moneta</string>
+    <string name="swap_first_service">Cambia il primo servizio</string>
+    <string name="navigated_home">Torna alla pagina principale</string>
+    <string name="share">Condividi</string>
+    <string name="share_exception">Errore nella condivisione della partita</string>
+    <string name="navigated_home_question">Potrai riprendere l\'attuale partita più tardi, continua?</string>
+    <string name="select_player_title">Scegli un giocatore dalla panchina</string>
+    <string name="court_position_tab">Posizioni</string>
+    <string name="scores_tab">Punteggio</string>
+    <string name="set_number">Set %d</string>
+    <string name="set_duration">%d minuti</string>
+    <string name="switch_sides">Cambio campo</string>
+    <string name="won_game">%s vince la partita</string>
+    <string name="timeout">Tempo di riposo</string>
+    <string name="timeout_question">Chiama tempo di riposo?</string>
+    <string name="game_interval">Intervallo tra i set</string>
+    <string name="skip">Passa</string>
+    <string name="switch_sides_description">Cambio campo manuale</string>
+    <string name="remove_point_description">Togli 1 punto</string>
+    <string name="call_timeout_description">Chiama tempo di riposo</string>
+    <string name="set_point">Set ball</string>
+    <string name="confirm_lineup_title">Starting line-up</string>
+    <string name="confirm_lineup_message">Do you confirm this starting line-up for both teams in this set?</string>
+    <string name="no_substitution_message">No more substitution available</string>
+
+    <!-- Rules activity -->
+    <string name="rules">Regole</string>
+    <string name="general_preferences">Generali</string>
+    <string name="timeout_preferences">Tempo di riposo</string>
+    <string name="indoor_preferences">Pallavolo</string>
+    <string name="beach_preferences">Beach volley</string>
+
+    <string name="pref_points_per_set">Numero di punti per set</string>
+    <string name="pref_sets_per_game">Numero di set per partita</string>
+    <string name="pref_tie_break">Tie-break come ultimo set</string>
+    <string name="pref_team_timeouts">Tempi di riposo</string>
+    <string name="pref_team_timeouts_per_set">Numero di tempi di riposo per squadra e per set</string>
+    <string name="pref_team_timeout_duration">Durata del tempo di riposo</string>
+    <string name="pref_technical_timeouts">Tempo tecnico</string>
+    <string name="pref_technical_timeout_duration">Durata del tempo tecnico</string>
+    <string name="pref_game_intervals">Intervalli di gioco</string>
+    <string name="pref_game_intervals_duration">Durata degli intervalli di gioco</string>
+    <string name="pref_players_number">Squadra di 6 giocatori sul campo</string>
+    <string name="pref_team_substitutions_per_set">Number of team substitutions per set</string>
+    <string name="pref_change_side_every_7_points">Cambio campo ogni 7 punti</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Set a 99 punti</item>
+        <item>Set a 25 punti</item>
+        <item>Set a 21 punti</item>
+        <item>Set a 15 punti</item>
+    </string-array>
+    <string-array name="sets_per_game_entries">
+        <item>Partita in 5 set</item>
+        <item>Partita in 3 set</item>
+        <item>Partita in 1 set</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>2 tempi di riposo per set</item>
+        <item>1 tempo di riposo per set</item>
+        <item>Nessun tempo di riposo per set</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 secondi</item>
+        <item>45 secondi</item>
+        <item>30 secondi</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 minuti</item>
+        <item>2 minuti</item>
+        <item>1 minuto</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>12 substitutions per set</item>
+        <item>10 substitutions per set</item>
+        <item>8 substitutions per set</item>
+        <item>6 substitutions per set</item>
+    </string-array>
+
+    <string-array name="points_per_set_values">
+        <item>99</item>
+        <item>25</item>
+        <item>21</item>
+        <item>15</item>
+    </string-array>
+    <string-array name="sets_per_game_values">
+        <item>5</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="timeout_duration_values">
+        <item>60</item>
+        <item>45</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="game_interval_duration_values">
+        <item>180</item>
+        <item>120</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_values">
+        <item>12</item>
+        <item>10</item>
+        <item>8</item>
+        <item>6</item>
+    </string-array>
+
+    <!-- Recent games activity -->
+    <string name="recent_games">Partite recenti</string>
+    <string name="search_games">Cerca partite</string>
+    <string name="delete_games">Cancella tutte le partite</string>
+    <string name="delete_game">Cancella partita</string>
+    <string name="delete_games_question">Vuoi cancellare tutte le partite salvate?</string>
+    <string name="delete_game_question">Vuoi cancellare la partita salvata?</string>
+    <string name="deleted_game">La partita è stata cancellata</string>
+    <string name="deleted_games">Tutte le partite son state cancellate</string>
+
+</resources>

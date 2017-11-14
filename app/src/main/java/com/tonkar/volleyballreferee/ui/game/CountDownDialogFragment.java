@@ -3,9 +3,6 @@ package com.tonkar.volleyballreferee.ui.game;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +11,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,11 +20,10 @@ import java.util.Locale;
 public class CountDownDialogFragment extends DialogFragment {
 
     // Duration is static in order to continue the countdown after a screen rotation
-    private        MediaPlayer      mMediaPlayer;
-    private        int              mDuration;
-    private        SimpleDateFormat mTimeoutFormat;
-    private        CountDownTimer   mCountDownTimer;
-    private        TextView         mCountDownView;
+    private int              mDuration;
+    private SimpleDateFormat mTimeoutFormat;
+    private CountDownTimer   mCountDownTimer;
+    private TextView         mCountDownView;
 
     public static CountDownDialogFragment newInstance(int duration, String title) {
         CountDownDialogFragment fragment = new CountDownDialogFragment();
@@ -40,12 +37,10 @@ public class CountDownDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mTimeoutFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        mMediaPlayer = MediaPlayer.create(getActivity(), notification);
 
         if (savedInstanceState == null) {
             mDuration = getArguments().getInt("duration");
-            mMediaPlayer.start();
+            UiUtils.sTimeoutSound.play();
         }
         else {
             mDuration = savedInstanceState.getInt("saved_duration");
@@ -77,7 +72,7 @@ public class CountDownDialogFragment extends DialogFragment {
 
             @Override
             public void onFinish() {
-                mMediaPlayer.start();
+                UiUtils.sTimeoutSound.play();
                 alertDialog.dismiss();
             }
         };

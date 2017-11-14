@@ -25,5 +25,6 @@
     <color name="colorShirt8">#bc0019</color>
     <color name="colorShirt9">#e25618</color>
     <color name="colorShirt10">#f3bc07</color>
-    <color name="colorShirt11">#0d1017</color>
+    <color name="colorShirt11">#ffffff</color>
+    <color name="colorShirt12">#0d1017</color>
 </resources>

@@ -41,6 +41,23 @@ public abstract class Team implements Serializable {
         return mTeamType;
     }
 
+    public List<Integer> getPlayers() {
+        List<Integer> players = new ArrayList<>();
+
+        for (Player player : mPlayers.values()) {
+            players.add(player.getNumber());
+        }
+
+        Collections.sort(players, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer n1, Integer n2) {
+                return n1.compareTo(n2);
+            }
+        });
+
+        return players;
+    }
+
     public List<Integer> getPlayersOnCourt() {
         List<Integer> playersOnCourt = new ArrayList<>();
 
@@ -60,27 +77,6 @@ public abstract class Team implements Serializable {
         Log.i("VBR-Team", String.format("Players on court for %s team: %s", mTeamType.toString(), playersOnCourt.toString()));
 
         return playersOnCourt;
-    }
-
-    public List<Integer> getPlayersOnBench() {
-        List<Integer> playersOnBench = new ArrayList<>();
-
-        for (Player player : mPlayers.values()) {
-            if (PositionType.BENCH.equals(player.getPosition())) {
-                playersOnBench.add(player.getNumber());
-            }
-        }
-
-        Collections.sort(playersOnBench, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer n1, Integer n2) {
-                return n1.compareTo(n2);
-            }
-        });
-
-        Log.i("VBR-Team", String.format("Players on bench for %s team: %s", mTeamType.toString(), playersOnBench.toString()));
-
-        return playersOnBench;
     }
 
     public int getNumberOfPlayers() {
@@ -116,24 +112,30 @@ public abstract class Team implements Serializable {
     public boolean substitutePlayer(final int number, final PositionType positionType) {
         boolean result = false;
 
-        int currentNumber = getPlayerAtPosition(positionType);
+        int oldNumber = getPlayerAtPosition(positionType);
 
-        Log.i("VBR-Team", String.format("Substitute player #%d of %s team by player #%d on position %s", currentNumber, mTeamType.toString(), number, positionType.toString()));
+        Log.i("VBR-Team", String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamType.toString(), number, positionType.toString()));
 
         if (hasPlayer(number)) {
             mPlayers.get(number).setPosition(positionType);
             result = true;
         }
 
-        if (result && currentNumber > 0 && hasPlayer(currentNumber)) {
-            mPlayers.get(currentNumber).setPosition(PositionType.BENCH);
-            Log.i("VBR-Team", String.format("Player #%d of %s team is now on bench", currentNumber, mTeamType.toString()));
+        if (result && oldNumber > 0 && hasPlayer(oldNumber)) {
+            mPlayers.get(oldNumber).setPosition(PositionType.BENCH);
+            Log.i("VBR-Team", String.format("Player #%d of %s team is now on bench", oldNumber, mTeamType.toString()));
+        }
+
+        if (result) {
+            onSubstitution(oldNumber, number, positionType);
         }
 
         return result;
     }
 
-    private int getPlayerAtPosition(final PositionType positionType) {
+    protected abstract void onSubstitution(int oldNumber, int newNumber, PositionType positionType);
+
+    public int getPlayerAtPosition(final PositionType positionType) {
         int number = -1;
 
         if (!PositionType.BENCH.equals(positionType)) {
@@ -168,4 +170,5 @@ public abstract class Team implements Serializable {
             player.turnToPreviousPosition();
         }
     }
+
 }

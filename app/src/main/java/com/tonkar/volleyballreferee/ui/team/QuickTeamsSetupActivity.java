@@ -1,16 +1,17 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
@@ -22,6 +23,9 @@ import com.tonkar.volleyballreferee.interfaces.TeamType;
 public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamClient {
 
     private TeamService mTeamService;
+    private Button      mNextButton;
+    private Button      mHomeTeamColorButton;
+    private Button      mGuestTeamColorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,9 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
 
         setTeamService(ServicesProvider.getInstance().getTeamService());
 
+        mNextButton = findViewById(R.id.next_button);
+
         final EditText homeTeamNameInput = findViewById(R.id.home_team_name_input_text);
-        homeTeamNameInput.setText(mTeamService.getTeamName(TeamType.HOME));
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -50,7 +55,6 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
         });
 
         final EditText guestTeamNameInput = findViewById(R.id.guest_team_name_input_text);
-        guestTeamNameInput.setText(mTeamService.getTeamName(TeamType.GUEST));
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -66,44 +70,39 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
             public void afterTextChanged(Editable s) {}
         });
 
-        final Spinner homeTeamColorSpinner = findViewById(R.id.home_team_color_spinner);
-        final TeamColorAdapter homeTeamColorAdapter = new TeamColorAdapter(this, getLayoutInflater());
-        homeTeamColorSpinner.setAdapter(homeTeamColorAdapter);
-        homeTeamColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("VBR-QTSActivity", String.format("Update %s team color", TeamType.HOME.toString()));
-                mTeamService.setTeamColor(TeamType.HOME, (int) homeTeamColorAdapter.getItem(homeTeamColorSpinner.getSelectedItemPosition()));
+
+        mHomeTeamColorButton = findViewById(R.id.home_team_color_button);
+        mGuestTeamColorButton = findViewById(R.id.guest_team_color_button);
+
+        if (savedInstanceState == null) {
+            int homeTeamColor = ShirtColors.getRandomShirtColor();
+            onTeamColorSelected(TeamType.HOME, homeTeamColor);
+
+            boolean sameColor = true;
+            int guestTeamColor = 0;
+
+            while (sameColor) {
+                guestTeamColor = ShirtColors.getRandomShirtColor();
+                sameColor = (guestTeamColor == homeTeamColor);
+            }
+            onTeamColorSelected(TeamType.GUEST, guestTeamColor);
+        } else {
+            homeTeamNameInput.setText(mTeamService.getTeamName(TeamType.HOME));
+            guestTeamNameInput.setText(mTeamService.getTeamName(TeamType.GUEST));
+
+            onTeamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
+            onTeamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
+
+            TeamColorDialogFragment teamColorDialogFragment = (TeamColorDialogFragment) getFragmentManager().findFragmentByTag("select_home_team_color");
+            if (teamColorDialogFragment != null) {
+                initTeamColorSelectionListener(TeamType.HOME, teamColorDialogFragment);
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-        homeTeamColorSpinner.setSelection(homeTeamColorAdapter.getRandomColorIndex());
-
-        final Spinner guestTeamColorSpinner = findViewById(R.id.guest_team_color_spinner);
-        final TeamColorAdapter guestTeamColorAdapter = new TeamColorAdapter(this, getLayoutInflater());
-        guestTeamColorSpinner.setAdapter(guestTeamColorAdapter);
-        guestTeamColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("VBR-QTSActivity", String.format("Update %s team color", TeamType.GUEST.toString()));
-                mTeamService.setTeamColor(TeamType.GUEST, (int) guestTeamColorAdapter.getItem(guestTeamColorSpinner.getSelectedItemPosition()));
+            teamColorDialogFragment = (TeamColorDialogFragment) getFragmentManager().findFragmentByTag("select_guest_team_color");
+            if (teamColorDialogFragment != null) {
+                initTeamColorSelectionListener(TeamType.GUEST, teamColorDialogFragment);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        boolean sameColor = true;
-        int guestTeamColorIndex = 0;
-
-        while (sameColor) {
-            guestTeamColorIndex = guestTeamColorAdapter.getRandomColorIndex();
-            sameColor = (guestTeamColorIndex == homeTeamColorSpinner.getSelectedItemPosition());
         }
-
-        guestTeamColorSpinner.setSelection(guestTeamColorIndex);
 
         computeNextButtonActivation();
     }
@@ -114,15 +113,50 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
     }
 
     private void computeNextButtonActivation() {
-        final Button nextButton = findViewById(R.id.next_button);
-
         if (mTeamService.getTeamName(TeamType.HOME).isEmpty() || mTeamService.getTeamName(TeamType.GUEST).isEmpty()) {
             Log.i("VBR-QTSActivity", "Next button is disabled");
-            nextButton.setEnabled(false);
+            mNextButton.setEnabled(false);
         } else {
             Log.i("VBR-QTSActivity", "Next button is enabled");
-            nextButton.setEnabled(true);
+            mNextButton.setEnabled(true);
         }
+    }
+
+    public void selectHomeTeamColor(View view) {
+        Log.i("VBR-TSActivity", "Select home team color");
+        TeamColorDialogFragment teamColorDialogFragment = TeamColorDialogFragment.newInstance();
+        initTeamColorSelectionListener(TeamType.HOME, teamColorDialogFragment);
+        teamColorDialogFragment.show(getFragmentManager(), "select_home_team_color");
+    }
+
+    public void selectGuestTeamColor(View view) {
+        Log.i("VBR-TSActivity", "Select guest team color");
+        TeamColorDialogFragment teamColorDialogFragment = TeamColorDialogFragment.newInstance();
+        initTeamColorSelectionListener(TeamType.GUEST, teamColorDialogFragment);
+        teamColorDialogFragment.show(getFragmentManager(), "select_guest_team_color");
+    }
+
+    private void initTeamColorSelectionListener(final TeamType teamType, TeamColorDialogFragment teamColorDialogFragment) {
+        teamColorDialogFragment.setTeamColorSelectionListener(new TeamColorDialogFragment.TeamColorSelectionListener() {
+            @Override
+            public void onTeamColorSelected(int colorId) {
+                QuickTeamsSetupActivity.this.onTeamColorSelected(teamType, colorId);
+            }
+        });
+    }
+
+    private void onTeamColorSelected(TeamType teamType, int colorId) {
+        Log.i("VBR-TSActivity", String.format("Update %s team color", teamType.toString()));
+        final Button button;
+
+        if (TeamType.HOME.equals(teamType)) {
+            button = mHomeTeamColorButton;
+        } else {
+            button = mGuestTeamColorButton;
+        }
+
+        button.getBackground().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(QuickTeamsSetupActivity.this, colorId), PorterDuff.Mode.SRC));
+        mTeamService.setTeamColor(teamType, colorId);
     }
 
     public void validateTeams(View view) {

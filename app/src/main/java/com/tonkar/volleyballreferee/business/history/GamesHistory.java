@@ -27,6 +27,7 @@ import java.util.List;
 public class GamesHistory implements GamesHistoryService, GameClient, TeamClient, TimeoutClient, GameListener, TeamListener, TimeoutListener {
 
     private final Context            mContext;
+    private       boolean            mAutoSave;
     private       GameService        mGameService;
     private       TeamService        mTeamService;
     private       TimeoutService     mTimeoutService;
@@ -35,6 +36,7 @@ public class GamesHistory implements GamesHistoryService, GameClient, TeamClient
     public GamesHistory(Context context) {
         mContext = context;
         recordedGames = new ArrayList<>();
+        mAutoSave = true;
     }
 
     @Override
@@ -61,15 +63,14 @@ public class GamesHistory implements GamesHistoryService, GameClient, TeamClient
         mGameService.addGameListener(this);
         mTeamService.addTeamListener(this);
         mTimeoutService.addTimeoutListener(this);
+        enableAutoSaveCurrentGame();
         saveCurrentGame();
     }
 
     @Override
     public void disconnectGameRecorder() {
         Log.i("VBR-History", "Disconnect the game recorder");
-        if (!mGameService.isGameCompleted()) {
-            saveCurrentGame();
-        }
+        saveCurrentGame();
         mGameService.removeGameListener(this);
         mTeamService.removeTeamListener(this);
         mTimeoutService.removeTimeoutListener(this);
@@ -131,13 +132,27 @@ public class GamesHistory implements GamesHistoryService, GameClient, TeamClient
 
     @Override
     public void saveCurrentGame() {
-        SerializedGameWriter.writeGame(mContext, CURRENT_GAME_FILE, (Game) mGameService);
+        if (mAutoSave && !mGameService.isGameCompleted()) {
+            SerializedGameWriter.writeGame(mContext, CURRENT_GAME_FILE, (Game) mGameService);
+        }
     }
 
     @Override
     public void deleteCurrentGame() {
         Log.d("VBR-History", String.format("Delete serialized game in %s", CURRENT_GAME_FILE));
         mContext.deleteFile(CURRENT_GAME_FILE);
+    }
+
+    @Override
+    public void enableAutoSaveCurrentGame() {
+        Log.d("VBR-History", "Enable auto-save");
+        mAutoSave = true;
+    }
+
+    @Override
+    public void disableAutoSaveCurrentGame() {
+        Log.d("VBR-History", "Disable auto-save");
+        mAutoSave = false;
     }
 
     @Override

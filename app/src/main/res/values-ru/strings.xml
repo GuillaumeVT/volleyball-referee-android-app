@@ -1,0 +1,156 @@
+<resources>
+    <string name="app_name">Volley-Ball Referee</string>
+
+    <!-- Main activity -->
+    <string name="indoor_game">Начать волейбольный матч</string>
+    <string name="beach_game">Начать матч по пляжному волейболу</string>
+    <string name="official_rules">Официальные правила</string>
+    <string name="my_rules">Мои правила</string>
+    <string name="indoor_description">Indoor Volley-Ball Image</string>
+    <string name="beach_description">Beach Volley-Ball Image</string>
+    <string name="permission_title">Разрешения</string>
+    <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами. Отклонение этого разрешения повлечёт отмену этой функции.</string>
+    <string name="resume_game_title">Продолжить матч</string>
+    <string name="resume_game_question">В приложении сохранён неоконченный матч. Вы хотите продолжить или удалить этот матч?</string>
+    <string name="resume">Продолжить</string>
+    <string name="delete">Удалить</string>
+    <string name="ignore">Пропустить</string>
+
+    <!-- Setup activities -->
+    <string name="teams_setup_title">Setup teams</string>
+    <string name="liberos_setup_title">Setup liberos</string>
+    <string name="home_team_tab">Хозяева</string>
+    <string name="home_team_hint">Имя принимающей команды</string>
+    <string name="guest_team_tab">Гости</string>
+    <string name="guest_team_hint">Имя гостевой команды</string>
+    <string name="select_6_players">Выберите минимум 6 игроков</string>
+    <string name="select_shirts_color">Выбрать цвет игровой формы</string>
+    <string name="select_libero">Select liberos (optional)</string>
+    <string name="next">Далее</string>
+
+    <!-- Game activity -->
+    <string name="toss_tails">Решка</string>
+    <string name="toss_heads">Орёл</string>
+    <string name="toss_coin">Жеребьёвка</string>
+    <string name="swap_first_service">Поменять первую подачу</string>
+    <string name="navigated_home">Вернуться на главную страницу</string>
+    <string name="share">Поделиться</string>
+    <string name="share_exception">Ошибка! Не удалось поделиться результатами матча</string>
+    <string name="navigated_home_question">Закончить данный матч позже, продолжить?</string>
+    <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
+    <string name="court_position_tab">Расстановка</string>
+    <string name="set_number">Партия %d</string>
+    <string name="set_duration">%d мин.</string>
+    <string name="switch_sides">Смена сторон площадки</string>
+    <string name="won_game">%s выиграл(а) матч</string>
+    <string name="timeout">Перерыв</string>
+    <string name="timeout_question">Запросить перерыв?</string>
+    <string name="game_interval">Перерыв между партиями</string>
+    <string name="skip">Пропустить</string>
+    <string name="switch_sides_description">Поменять стороны площадки вручную</string>
+    <string name="remove_point_description">Отменить 1 очко</string>
+    <string name="call_timeout_description">Вызвать перерыв</string>
+    <string name="set_point">Сетбол</string>
+    <string name="confirm_lineup_title">Starting line-up</string>
+    <string name="confirm_lineup_message">Do you confirm this starting line-up for both teams in this set?</string>
+    <string name="no_substitution_message">No more substitution available</string>
+
+    <!-- Rules activity -->
+    <string name="rules">Правила</string>
+    <string name="general_preferences">Общие</string>
+    <string name="timeout_preferences">Перерывы</string>
+    <string name="indoor_preferences">Классический волейбол</string>
+    <string name="beach_preferences">Пляжный волейбол</string>
+
+    <string name="pref_points_per_set">Количество очков в партии</string>
+    <string name="pref_sets_per_game">Количество партий в матче</string>
+    <string name="pref_tie_break">Решающая партия в конце матча</string>
+    <string name="pref_team_timeouts">Командные перерывы</string>
+    <string name="pref_team_timeouts_per_set">Количество командных перерывов в партии</string>
+    <string name="pref_team_timeout_duration">Длительность командных перерывов</string>
+    <string name="pref_technical_timeouts">Технические перерывы</string>
+    <string name="pref_technical_timeout_duration">Длительность технических перерывов</string>
+    <string name="pref_game_intervals">Перерывы между партиями</string>
+    <string name="pref_game_intervals_duration">Длительность перерывов между партиями</string>
+    <string name="pref_players_number">Команда из 6 игроков на площаке</string>
+    <string name="pref_team_substitutions_per_set">Number of team substitutions per set</string>
+    <string name="pref_change_side_every_7_points">Смены сторон площадки после каждых набранных 7 очков</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Партия из 99 очков</item>
+        <item>Партия из 25 очков</item>
+        <item>Партия из 21 очка</item>
+        <item>Партия из 15 очков</item>
+    </string-array>
+    <string-array name="sets_per_game_entries">
+        <item>Матч из 5 партий</item>
+        <item>Матч из 3 партий</item>
+        <item>Матч из 1 партии</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>2 командных перерыва в партии</item>
+        <item>1 командный перерыв в партии</item>
+        <item>Нет командных перерывов</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 секунд</item>
+        <item>45 секунд</item>
+        <item>30 секунд</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 минуты</item>
+        <item>2 минуты</item>
+        <item>1 минуты</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>12 substitutions per set</item>
+        <item>10 substitutions per set</item>
+        <item>8 substitutions per set</item>
+        <item>6 substitutions per set</item>
+    </string-array>
+
+    <string-array name="points_per_set_values">
+        <item>99</item>
+        <item>25</item>
+        <item>21</item>
+        <item>15</item>
+    </string-array>
+    <string-array name="sets_per_game_values">
+        <item>5</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="timeout_duration_values">
+        <item>60</item>
+        <item>45</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="game_interval_duration_values">
+        <item>180</item>
+        <item>120</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_values">
+        <item>12</item>
+        <item>10</item>
+        <item>8</item>
+        <item>6</item>
+    </string-array>
+
+    <!-- Recent games activity -->
+    <string name="recent_games">Сохранённые матчи</string>
+    <string name="search_games">Поиск матча</string>
+    <string name="delete_games">Удалить все матчи</string>
+    <string name="delete_game">Удалить данный матч</string>
+    <string name="delete_games_question">Удалить все сохранённые матчи?</string>
+    <string name="delete_game_question">Удалить данный матч?</string>
+    <string name="deleted_game">Матч успешно удалён</string>
+    <string name="deleted_games">Все матчи успешно удалены</string>
+    <string name="scores_tab">Счёт по сетам</string>
+
+</resources>
