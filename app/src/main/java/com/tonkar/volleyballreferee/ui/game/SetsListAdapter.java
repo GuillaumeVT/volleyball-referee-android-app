@@ -1,13 +1,13 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
@@ -22,10 +22,11 @@ import java.util.Locale;
 public class SetsListAdapter extends BaseAdapter {
 
     static class ViewHolder {
-        TextView   setNumberText;
-        TextView   setScoreText;
-        TextView   setDurationText;
-        GridLayout setLadderGrid;
+        TextView             setNumberText;
+        TextView             setScoreText;
+        TextView             setDurationText;
+        HorizontalScrollView setLadderScroll;
+        GridLayout           setLadderGrid;
     }
 
     private final boolean         mReverseOrder;
@@ -58,14 +59,15 @@ public class SetsListAdapter extends BaseAdapter {
     @Override
     public View getView(int index, View view, ViewGroup viewGroup) {
         View setView = view;
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (setView == null) {
-            setView = mLayoutInflater.inflate(R.layout.ladder_with_title, null);
+            setView = mLayoutInflater.inflate(R.layout.ladder_with_title_item, null);
             viewHolder = new ViewHolder();
             viewHolder.setNumberText = setView.findViewById(R.id.set_number_text);
             viewHolder.setScoreText = setView.findViewById(R.id.set_score_text);
             viewHolder.setDurationText = setView.findViewById(R.id.set_duration_text);
+            viewHolder.setLadderScroll = setView.findViewById(R.id.set_ladder_scroll);
             viewHolder.setLadderGrid = setView.findViewById(R.id.set_ladder_grid);
             setView.setTag(viewHolder);
         }
@@ -81,10 +83,18 @@ public class SetsListAdapter extends BaseAdapter {
 
         fillLadderGrid(viewHolder.setLadderGrid, mBaseGameService.getPointsLadder(actualIndex), mBaseTeamService.getTeamColor(TeamType.HOME), mBaseTeamService.getTeamColor(TeamType.GUEST));
 
+        if (mReverseOrder && index == 0) {
+            viewHolder.setLadderScroll.post(new Runnable() {
+                public void run() {
+                    viewHolder.setLadderScroll.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                }
+            });
+        }
+
         return setView;
     }
 
-    private void fillLadderGrid(GridLayout setLadderGrid, List<TeamType> ladder, int homeTeamColorId, int guestTeamColorId) {
+    private void fillLadderGrid(GridLayout setLadderGrid, List<TeamType> ladder, int homeTeamColor, int guestTeamColor) {
         setLadderGrid.removeAllViews();
         Context context = setLadderGrid.getContext();
         int homeCount = 0;
@@ -92,11 +102,11 @@ public class SetsListAdapter extends BaseAdapter {
 
         for (int index = 0; index < ladder.size(); index++) {
             TextView homeText = new TextView(context);
-            applyStyle(homeText, context, homeTeamColorId);
+            applyStyle(homeText, context, homeTeamColor);
             setLadderGrid.addView(homeText, createGridLayoutParams(0, index));
 
             TextView guestText = new TextView(context);
-            applyStyle(guestText, context, guestTeamColorId);
+            applyStyle(guestText, context, guestTeamColor);
             setLadderGrid.addView(guestText, createGridLayoutParams(1, index));
 
             final TeamType teamType = ladder.get(index);
@@ -119,12 +129,11 @@ public class SetsListAdapter extends BaseAdapter {
         }
     }
 
-    private void applyStyle(final TextView textView, final Context context, final int colorId) {
+    private void applyStyle(final TextView textView, final Context context, int color) {
         textView.setTextAppearance(context, android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Headline);
         textView.setGravity(Gravity.CENTER);
-        int backgroundColor = ContextCompat.getColor(context, colorId);
-        textView.setTextColor(UiUtils.getTextColor(context, backgroundColor));
-        textView.setBackgroundColor(backgroundColor);
+        textView.setTextColor(UiUtils.getTextColor(context, color));
+        textView.setBackgroundColor(color);
         textView.setTextSize(18);
     }
 

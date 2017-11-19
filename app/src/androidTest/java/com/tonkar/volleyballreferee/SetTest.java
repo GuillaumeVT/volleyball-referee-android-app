@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.game.GameSet;
+import com.tonkar.volleyballreferee.business.game.Set;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import org.junit.Test;
@@ -11,11 +11,11 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class GameSetTest {
+public class SetTest {
 
     @Test
     public void point_add() {
-        GameSet set = new GameSet(8, 0, TeamType.GUEST);
+        Set set = new Set(8, 0, TeamType.GUEST);
         assertEquals(true, set.getPointsLadder().isEmpty());
         assertEquals(1, set.addPoint(TeamType.HOME));
         assertEquals(TeamType.HOME, set.getPointsLadder().get(0));
@@ -29,7 +29,7 @@ public class GameSetTest {
 
     @Test
     public void point_remove() {
-        GameSet set = new GameSet(12, 0, TeamType.HOME);
+        Set set = new Set(12, 0, TeamType.HOME);
         set.addPoint(TeamType.HOME);
         set.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, set.removeLastPoint());
@@ -41,7 +41,7 @@ public class GameSetTest {
 
     @Test
     public void team_leading() {
-        GameSet set = new GameSet(5, 2, TeamType.HOME);
+        Set set = new Set(5, 2, TeamType.HOME);
 
         set.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, set.getLeadingTeam());
@@ -53,7 +53,7 @@ public class GameSetTest {
 
     @Test
     public void team_serving() {
-        GameSet set = new GameSet(7, 1, TeamType.GUEST);
+        Set set = new Set(7, 1, TeamType.GUEST);
         assertEquals(TeamType.GUEST, set.getServingTeam());
 
         set.addPoint(TeamType.GUEST);
@@ -65,7 +65,7 @@ public class GameSetTest {
 
     @Test
     public void winSet_normal() {
-        GameSet set = new GameSet(4, 0, TeamType.HOME);
+        Set set = new Set(4, 0, TeamType.HOME);
 
         for (int index = 0; index < 4; index++) {
             assertEquals(false, set.isSetCompleted());
@@ -77,7 +77,7 @@ public class GameSetTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameSet set = new GameSet(3, 0, TeamType.HOME);
+        Set set = new Set(3, 0, TeamType.HOME);
 
         for (int index = 0; index < 2; index++) {
             assertEquals(false, set.isSetCompleted());

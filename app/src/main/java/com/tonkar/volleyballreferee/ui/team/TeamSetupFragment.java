@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +22,7 @@ import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 public class TeamSetupFragment extends Fragment implements TeamClient, TeamColorDialogFragment.TeamColorSelectionListener {
 
@@ -64,6 +63,7 @@ public class TeamSetupFragment extends Fragment implements TeamClient, TeamColor
         View view = inflater.inflate(R.layout.fragment_team_setup, container, false);
 
         final EditText teamNameInput = view.findViewById(R.id.team_name_input_text);
+        teamNameInput.setText(mTeamService.getTeamName(mTeamType));
 
         switch (mTeamType) {
             case HOME:
@@ -90,6 +90,11 @@ public class TeamSetupFragment extends Fragment implements TeamClient, TeamColor
         });
 
         mTeamColorButton = view.findViewById(R.id.team_color_button);
+        if (mTeamService.getTeamColor(mTeamType) < 0) {
+            onTeamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
+        } else {
+            onTeamColorSelected(mTeamService.getTeamColor(mTeamType));
+        }
         mTeamColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,12 +106,7 @@ public class TeamSetupFragment extends Fragment implements TeamClient, TeamColor
         final PlayerAdapter playerAdapter = new PlayerAdapter(getActivity());
         teamNumbersGrid.setAdapter(playerAdapter);
 
-        if (savedInstanceState == null) {
-            onTeamColorSelected(ShirtColors.getRandomShirtColor());
-        } else {
-            teamNameInput.setText(mTeamService.getTeamName(mTeamType));
-            onTeamColorSelected(mTeamService.getTeamColor(mTeamType));
-
+        if (savedInstanceState != null) {
             TeamColorDialogFragment teamColorDialogFragment = (TeamColorDialogFragment) getActivity().getFragmentManager().findFragmentByTag(mTeamType.toString() + "select_team_color");
             if (teamColorDialogFragment != null) {
                 teamColorDialogFragment.setTeamColorSelectionListener(this);
@@ -128,7 +128,7 @@ public class TeamSetupFragment extends Fragment implements TeamClient, TeamColor
     @Override
     public void onTeamColorSelected(int colorId) {
         Log.i("VBR-TSActivity", String.format("Update %s team color", mTeamType.toString()));
-        mTeamColorButton.getBackground().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getActivity(), colorId), PorterDuff.Mode.SRC));
+        UiUtils.colorTeamButton(getActivity(), colorId, mTeamColorButton);
         mTeamService.setTeamColor(mTeamType, colorId);
     }
 
@@ -142,7 +142,7 @@ public class TeamSetupFragment extends Fragment implements TeamClient, TeamColor
 
         @Override
         public int getCount() {
-            return 20;
+            return 25;
         }
 
         @Override

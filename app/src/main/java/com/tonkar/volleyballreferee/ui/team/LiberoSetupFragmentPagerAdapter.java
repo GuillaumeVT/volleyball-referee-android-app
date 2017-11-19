@@ -1,23 +1,24 @@
 package com.tonkar.volleyballreferee.ui.team;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.TeamClient;
+import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class LiberoSetupFragmentPagerAdapter extends FragmentPagerAdapter {
+public class LiberoSetupFragmentPagerAdapter extends FragmentPagerAdapter implements TeamClient {
 
-    private final Context               mContext;
-    private       LiberoSetupFragment   mHomeTeamLiberoSetupFragment;
-    private       LiberoSetupFragment   mGuestTeamLiberoSetupFragment;
+    private LiberoSetupFragment mHomeTeamLiberoSetupFragment;
+    private LiberoSetupFragment mGuestTeamLiberoSetupFragment;
+    private TeamService         mTeamService;
 
-    LiberoSetupFragmentPagerAdapter(Context context, FragmentManager fm) {
+    LiberoSetupFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
 
-        mContext = context;
+        setTeamService(ServicesProvider.getInstance().getTeamService());
         mHomeTeamLiberoSetupFragment = LiberoSetupFragment.newInstance(TeamType.HOME);
         mGuestTeamLiberoSetupFragment = LiberoSetupFragment.newInstance(TeamType.GUEST);
     }
@@ -49,13 +50,18 @@ public class LiberoSetupFragmentPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                title = mContext.getResources().getString(R.string.home_team_tab);
+                title = mTeamService.getTeamName(TeamType.HOME);
                 break;
             case 1:
-                title = mContext.getResources().getString(R.string.guest_team_tab);
+                title = mTeamService.getTeamName(TeamType.GUEST);
                 break;
         }
 
         return title;
+    }
+
+    @Override
+    public void setTeamService(TeamService teamService) {
+        mTeamService = teamService;
     }
 }

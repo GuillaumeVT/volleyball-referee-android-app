@@ -22,22 +22,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 public abstract class Game implements GameService, TimeoutService, TeamService, Serializable {
 
-    private final     GameType             mGameType;
-    private final     long                 mGameDate;
-    private final     Rules                mRules;
-    private final     Team                 mHomeTeam;
-    private final     Team                 mGuestTeam;
-    private           TeamType             mTeamOnLeftSide;
-    private           TeamType             mTeamOnRightSide;
-    private final     List<GameSet>        mSets;
-    private           TeamType             mServingTeamAtStart;
-    private transient Set<GameListener>    mGameListeners;
-    private transient Set<TimeoutListener> mTimeoutListeners;
-    private transient Set<TeamListener>    mTeamListeners;
+    private final     GameType                       mGameType;
+    private final     long                           mGameDate;
+    private final     Rules                          mRules;
+    private final     Team                           mHomeTeam;
+    private final     Team                           mGuestTeam;
+    private           TeamType                       mTeamOnLeftSide;
+    private           TeamType                       mTeamOnRightSide;
+    private final     List<Set>                      mSets;
+    private           TeamType                       mServingTeamAtStart;
+    private transient java.util.Set<GameListener>    mGameListeners;
+    private transient java.util.Set<TimeoutListener> mTimeoutListeners;
+    private transient java.util.Set<TeamListener>    mTeamListeners;
 
     protected Game(final GameType gameType, final Rules rules) {
         mGameType = gameType;
@@ -51,7 +50,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
         mServingTeamAtStart = TeamType.HOME;
 
-        mSets.add(new GameSet(mRules.getPointsPerSet(), mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
+        mSets.add(new Set(mRules.getPointsPerSet(), mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
 
         initTransientFields();
     }
@@ -103,10 +102,10 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     @Override
     public int getPoints(TeamType teamType, int setIndex) {
         int count = 0;
-        GameSet gameSet = mSets.get(setIndex);
+        Set set = mSets.get(setIndex);
 
-        if (gameSet != null) {
-            count = gameSet.getPoints(teamType);
+        if (set != null) {
+            count = set.getPoints(teamType);
         }
 
         return count;
@@ -115,10 +114,10 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     @Override
     public List<TeamType> getPointsLadder(int setIndex) {
         List<TeamType> pointsLadder = new ArrayList<>();
-        GameSet gameSet = mSets.get(setIndex);
+        Set set = mSets.get(setIndex);
 
-        if (gameSet != null) {
-            pointsLadder = gameSet.getPointsLadder();
+        if (set != null) {
+            pointsLadder = set.getPointsLadder();
         }
 
         return pointsLadder;
@@ -191,7 +190,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     public String getGameSummary() {
         StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME),getSets(TeamType.GUEST), mGuestTeam.getName()));
 
-        for (GameSet set : mSets) {
+        for (Set set : mSets) {
             builder.append(set.getSetSummary());
             if (mSets.indexOf(set) != mSets.size() - 1) {
                 builder.append("\t\t");
@@ -220,13 +219,27 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     }
 
     @Override
+    public boolean isGamePoint() {
+        final int homeTeamSetCount = 1 + getSets(TeamType.HOME);
+        final int guestTeamSetCount = 1 + getSets(TeamType.GUEST);
+
+        return !isGameCompleted() && isSetPoint()
+                && ((TeamType.HOME.equals(getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
+    }
+
+    @Override
     public boolean isSetPoint() {
         return currentSet().isSetPoint();
     }
 
+    @Override
+    public TeamType getLeadingTeam() {
+        return currentSet().getLeadingTeam();
+    }
+
     // Sets
 
-    GameSet currentSet() {
+    Set currentSet() {
         return mSets.get(mSets.size() - 1);
     }
 
@@ -239,7 +252,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     public int getSets(TeamType teamType) {
         int setCount = 0;
 
-        for (final GameSet set : mSets) {
+        for (final Set set : mSets) {
             if (set.isSetCompleted() && set.getLeadingTeam().equals(teamType)) {
                 setCount++;
             }
@@ -251,10 +264,10 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     @Override
     public long getSetDuration() {
         long duration = 0L;
-        GameSet gameSet = currentSet();
+        Set set = currentSet();
 
-        if (gameSet != null) {
-            duration = gameSet.getDuration();
+        if (set != null) {
+            duration = set.getDuration();
         }
 
         return duration;
@@ -263,10 +276,10 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     @Override
     public long getSetDuration(int setIndex) {
         long duration = 0L;
-        GameSet gameSet = mSets.get(setIndex);
+        Set set = mSets.get(setIndex);
 
-        if (gameSet != null) {
-            duration = gameSet.getDuration();
+        if (set != null) {
+            duration = set.getDuration();
         }
 
         return duration;
@@ -281,12 +294,16 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         } else {
             // The tie break is always played in 15 points
             final int pointsToWinSet = isTieBreakSet() ? 15 : mRules.getPointsPerSet();
-            mSets.add(new GameSet(pointsToWinSet, mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
+            mSets.add(new Set(pointsToWinSet, mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
             onNewSet();
             // Both teams change sides between sets
             swapTeams(ActionOriginType.APPLICATION);
             // The service goes to the other team
             swapServiceAtStart();
+
+            if (mRules.areGameIntervalsEnabled()) {
+                notifyGameIntervalReached();
+            }
         }
     }
 
@@ -373,12 +390,12 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        return getTeam(teamType).getColorId();
+        return getTeam(teamType).getColor();
     }
 
     @Override
-    public void setTeamColor(TeamType teamType, int colorId) {
-        getTeam(teamType).setColorId(colorId);
+    public void setTeamColor(TeamType teamType, int color) {
+        getTeam(teamType).setColor(color);
     }
 
     @Override
@@ -446,29 +463,19 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     private void rotateToNextPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to next position", teamType.toString()));
         getTeam(teamType).rotateToNextPositions();
-
-        for (Integer number : getPlayersOnCourt(teamType)) {
-            notifyPlayerChanged(teamType, number, getPlayerPosition(teamType, number));
-        }
-
         notifyTeamRotated(teamType);
     }
 
     private void rotateToPreviousPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to previous position", teamType.toString()));
         getTeam(teamType).rotateToPreviousPositions();
-
-        for (Integer number : getPlayersOnCourt(teamType)) {
-            notifyPlayerChanged(teamType, number, getPlayerPosition(teamType, number));
-        }
-
         notifyTeamRotated(teamType);
     }
 
-    void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType) {
+    void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
         Log.i("VBR-Team", String.format("Player #%d of %s team is on %s position", number, teamType.toString(), positionType.toString()));
         for (final TeamListener listener : mTeamListeners) {
-            listener.onPlayerChanged(teamType, number, positionType);
+            listener.onPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
 
@@ -479,7 +486,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         }
     }
 
-    private void notifyTeamRotated(TeamType teamType) {
+    void notifyTeamRotated(TeamType teamType) {
         Log.i("VBR-Team", String.format("%s team rotated", teamType.toString()));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamRotated(teamType);
@@ -501,21 +508,14 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
             final int newCount = currentSet().removeTimeout(teamType);
 
             notifyTimeoutUpdated(teamType, mRules.getTeamTimeoutsPerSet(), newCount);
-            notifyTimeoutCalled();
+            notifyTimeoutCalled(teamType);
         }
     }
 
-    void notifyTechnicalTimeoutReached() {
-        Log.i("VBR-Timeout", "Technical timeout is reached");
-        for (final TimeoutListener listener : mTimeoutListeners) {
-            listener.onTimeout(mRules.getTechnicalTimeoutDuration());
-        }
-    }
-
-    private void notifyTimeoutCalled() {
+    private void notifyTimeoutCalled(TeamType teamType) {
         Log.i("VBR-Timeout", "Team timeout is called");
         for (final TimeoutListener listener : mTimeoutListeners) {
-            listener.onTimeout(mRules.getTeamTimeoutDuration());
+            listener.onTimeout(teamType, mRules.getTeamTimeoutDuration());
         }
     }
 
@@ -523,6 +523,20 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         Log.i("VBR-Timeout", String.format("%s has %d timeouts left on %d", teamType.toString(), newCount, maxCount));
         for (final TimeoutListener listener : mTimeoutListeners) {
             listener.onTimeoutUpdated(teamType, maxCount, newCount);
+        }
+    }
+
+    void notifyTechnicalTimeoutReached() {
+        Log.i("VBR-Timeout", "Technical timeout is reached");
+        for (final TimeoutListener listener : mTimeoutListeners) {
+            listener.onTechnicalTimeout(mRules.getTechnicalTimeoutDuration());
+        }
+    }
+
+    private void notifyGameIntervalReached() {
+        Log.i("VBR-Timeout", "Game interval is reached");
+        for (final TimeoutListener listener : mTimeoutListeners) {
+            listener.onGameInterval(mRules.getGameIntervalDuration());
         }
     }
 

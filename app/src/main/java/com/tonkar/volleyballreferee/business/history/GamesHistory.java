@@ -185,7 +185,7 @@ public class GamesHistory implements GamesHistoryService, GameClient, TeamClient
     }
 
     @Override
-    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType) {
+    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
         saveCurrentGame();
     }
 
@@ -200,7 +200,13 @@ public class GamesHistory implements GamesHistoryService, GameClient, TeamClient
     }
 
     @Override
-    public void onTimeout(int duration) {}
+    public void onTimeout(TeamType teamType, int duration) {}
+
+    @Override
+    public void onTechnicalTimeout(int duration) {}
+
+    @Override
+    public void onGameInterval(int duration) {}
 
     private RecordedGame createRecordedGame() {
         RecordedTeam homeTeam = new RecordedTeam(mTeamService.getTeamName(TeamType.HOME), mTeamService.getTeamColor(TeamType.HOME));

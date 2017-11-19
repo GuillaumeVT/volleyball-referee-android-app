@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.business.history;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.JsonReader;
 import android.util.Log;
 
@@ -93,7 +94,7 @@ public class JsonHistoryReader {
 
     private static RecordedTeam readTeam(JsonReader reader) throws IOException {
         String teamName = null;
-        int teamColorId = -1;
+        int teamColor = -1;
 
         reader.beginObject();
         while (reader.hasNext()) {
@@ -103,7 +104,7 @@ public class JsonHistoryReader {
                     teamName = reader.nextString();
                     break;
                 case "team_color":
-                    teamColorId = reader.nextInt();
+                    teamColor = Color.parseColor(reader.nextString());
                     break;
                 default:
                     reader.skipValue();
@@ -112,7 +113,7 @@ public class JsonHistoryReader {
         }
         reader.endObject();
 
-        return new RecordedTeam(teamName, teamColorId);
+        return new RecordedTeam(teamName, teamColor);
     }
 
     private static List<RecordedSet> readSetArray(JsonReader reader) throws IOException {

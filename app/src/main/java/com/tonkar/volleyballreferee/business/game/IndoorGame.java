@@ -11,6 +11,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
+import java.util.AbstractMap;
 import java.util.List;
 
 public class IndoorGame extends Game implements IndoorTeamService {
@@ -38,7 +39,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
             // In indoor volley, the teams change sides after the 8th during the tie break
-            if (isTieBreakSet() && leadingScore == 8) {
+            if (isTieBreakSet() && leadingScore == 8 && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
                 swapTeams(ActionOriginType.APPLICATION);
             }
 
@@ -77,13 +78,13 @@ public class IndoorGame extends Game implements IndoorTeamService {
     private void checkPosition1(final TeamType scoringTeam) {
         int number = getIndoorTeam(scoringTeam).checkPosition1Offence();
         if (number > 0)  {
-            substitutePlayer(scoringTeam, number, PositionType.POSITION_1);
+            substitutePlayer(scoringTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
 
         TeamType defendingTeam = scoringTeam.other();
         number = getIndoorTeam(defendingTeam).checkPosition1Defence();
         if (number > 0)  {
-            substitutePlayer(defendingTeam, number, PositionType.POSITION_1);
+            substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
     }
 
@@ -98,15 +99,15 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
-    public void substitutePlayer(TeamType teamType, int number, PositionType positionType) {
+    public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
         if (getTeam(teamType).substitutePlayer(number, positionType)) {
-            notifyPlayerChanged(teamType, number, positionType);
+            notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
 
     @Override
-    public List<Integer> getPossibleReplacements(TeamType teamType, PositionType positionType) {
-        return getIndoorTeam(teamType).getPossibleReplacements(positionType);
+    public List<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
+        return getIndoorTeam(teamType).getPossibleSubstitutions(positionType);
     }
 
     @Override
@@ -122,12 +123,12 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     public int getLiberoColor(TeamType teamType) {
-        return getIndoorTeam(teamType).getLiberoColorId();
+        return getIndoorTeam(teamType).getLiberoColor();
     }
 
     @Override
-    public void setLiberoColor(TeamType teamType, int colorId) {
-        getIndoorTeam(teamType).setLiberoColorId(colorId);
+    public void setLiberoColor(TeamType teamType, int color) {
+        getIndoorTeam(teamType).setLiberoColor(color);
     }
 
     @Override
@@ -148,5 +149,15 @@ public class IndoorGame extends Game implements IndoorTeamService {
     @Override
     public boolean canAddLibero(TeamType teamType) {
         return getIndoorTeam(teamType).canAddLibero();
+    }
+
+    @Override
+    public List<AbstractMap.SimpleEntry<Integer, Integer>> getSubstitutions(TeamType teamType) {
+        return getIndoorTeam(teamType).getSubstitutions();
+    }
+
+    @Override
+    public int getNumberOfSubstitutions(TeamType teamType) {
+        return getIndoorTeam(teamType).getNumberOfSubstitutions();
     }
 }

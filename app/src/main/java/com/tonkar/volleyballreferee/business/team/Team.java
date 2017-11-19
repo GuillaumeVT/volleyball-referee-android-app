@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.business.team;
 
 import android.util.Log;
 
-import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -18,13 +17,13 @@ public abstract class Team implements Serializable {
 
     private       String               mName;
     private final TeamType             mTeamType;
-    private       int                  mColorId;
+    private       int                  mColor;
     private final Map<Integer, Player> mPlayers;
 
     Team(final TeamType teamType) {
         mName = "";
         mTeamType = teamType;
-        mColorId = R.color.colorShirt1;
+        mColor = -1;
         mPlayers = new LinkedHashMap<>();
     }
 
@@ -149,12 +148,12 @@ public abstract class Team implements Serializable {
         return number;
     }
 
-    public int getColorId() {
-        return mColorId;
+    public int getColor() {
+        return mColor;
     }
 
-    public void setColorId(int colorId) {
-        mColorId = colorId;
+    public void setColor(int color) {
+        mColor = color;
     }
 
     public void rotateToNextPositions() {

@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -119,11 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-
-        if (UiUtils.sTimeoutSound == null) {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            UiUtils.sTimeoutSound = RingtoneManager.getRingtone(getApplicationContext(), notification);
         }
     }
 

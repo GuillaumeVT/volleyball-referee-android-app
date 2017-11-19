@@ -10,7 +10,7 @@ public interface TeamService extends BaseTeamService {
 
     void setTeamName(TeamType teamType, String name);
 
-    void setTeamColor(TeamType teamType, int colorId);
+    void setTeamColor(TeamType teamType, int color);
 
     void addPlayer(TeamType teamType, int number);
 

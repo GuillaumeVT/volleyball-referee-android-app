@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +15,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 public class TeamColorDialogFragment extends DialogFragment {
 
@@ -58,26 +57,26 @@ public class TeamColorDialogFragment extends DialogFragment {
 
     public interface TeamColorSelectionListener {
 
-        void onTeamColorSelected(int colorId);
+        void onTeamColorSelected(int color);
 
     }
 
     private class TeamColorAdapter extends BaseAdapter {
 
-        private final int[] mColors;
+        private final int[] mColorIds;
 
         TeamColorAdapter() {
-            mColors = ShirtColors.getShirtColors();
+            mColorIds = ShirtColors.getShirtColorIds();
         }
 
         @Override
         public int getCount() {
-            return mColors.length;
+            return mColorIds.length;
         }
 
         @Override
         public Object getItem(int index) {
-            return mColors[index];
+            return null;
         }
 
         @Override
@@ -95,12 +94,13 @@ public class TeamColorDialogFragment extends DialogFragment {
                 button = (Button) convertView;
             }
 
-            final int colorId = mColors[index];
-            button.getBackground().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, colorId), PorterDuff.Mode.SRC));
+            int colorId = mColorIds[index];
+            final int color = ContextCompat.getColor(mContext, colorId);
+            UiUtils.colorTeamButton(mContext, color, button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mTeamColorSelectionListener.onTeamColorSelected(colorId);
+                    mTeamColorSelectionListener.onTeamColorSelected(color);
 
                     if (mDialog != null) {
                         mDialog.dismiss();

@@ -2,20 +2,20 @@ package com.tonkar.volleyballreferee.business.team;
 
 import android.util.Log;
 
-import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class IndoorTeam extends Team {
 
-    private       int                   mLiberoColorId;
+    private       int                   mLiberoColor;
     private final Set<Integer>          mLiberos;
     private       boolean               mStartingLineupConfirmed;
     private final int                   mMaxSubstitutionsPerSet;
@@ -27,9 +27,9 @@ public class IndoorTeam extends Team {
     public IndoorTeam(final TeamType teamType, int maxSubstitutionsPerSet) {
         super(teamType);
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
-        mLiberoColorId = R.color.colorShirt1;
+        mLiberoColor = -1;
         mLiberos = new HashSet<>();
-        mSubstitutions = new HashMap<>();
+        mSubstitutions = new LinkedHashMap<>();
         mMiddleBlockers = new HashSet<>();
         putAllPlayersOnBench();
     }
@@ -43,7 +43,7 @@ public class IndoorTeam extends Team {
     public boolean substitutePlayer(final int number, final PositionType positionType) {
         boolean result = false;
 
-        if (isPossibleReplacement(number, positionType)) {
+        if (isPossibleSubstitution(number, positionType)) {
             result = super.substitutePlayer(number, positionType);
         }
 
@@ -95,12 +95,12 @@ public class IndoorTeam extends Team {
         return mStartingLineupConfirmed;
     }
 
-    public int getLiberoColorId() {
-        return mLiberoColorId;
+    public int getLiberoColor() {
+        return mLiberoColor;
     }
 
-    public void setLiberoColorId(int colorId) {
-        mLiberoColorId = colorId;
+    public void setLiberoColor(int color) {
+        mLiberoColor = color;
     }
 
     public boolean isLibero(int number) {
@@ -129,18 +129,18 @@ public class IndoorTeam extends Team {
         return mSubstitutions.size() < mMaxSubstitutionsPerSet;
     }
 
-    public List<Integer> getPossibleReplacements(PositionType positionType) {
+    public List<Integer> getPossibleSubstitutions(PositionType positionType) {
         List<Integer> availablePlayers = new ArrayList<>();
 
         // Can only do a fix number of substitutions
         if (canSubstitute()) {
-            availablePlayers.addAll(getPossibleReplacementsNoMax(positionType));
+            availablePlayers.addAll(getPossibleSubstitutionsNoMax(positionType));
         }
 
         return availablePlayers;
     }
 
-    private List<Integer> getPossibleReplacementsNoMax(PositionType positionType) {
+    private List<Integer> getPossibleSubstitutionsNoMax(PositionType positionType) {
         List<Integer> availablePlayers = new ArrayList<>();
 
         // Once the starting line-up is confirmed, the rules must apply
@@ -180,13 +180,15 @@ public class IndoorTeam extends Team {
         return availablePlayers;
     }
 
-    private boolean isPossibleReplacement(int number, PositionType positionType) {
+    private boolean isPossibleSubstitution(int number, PositionType positionType) {
         boolean result;
 
-        if (involvesLibero(number, positionType)) {
-            result = getPossibleReplacementsNoMax(positionType).contains(number);
+        if (PositionType.BENCH.equals(positionType) && !isStartingLineupConfirmed()) {
+            result = true;
+        } else if (involvesLibero(number, positionType)) {
+            result = getPossibleSubstitutionsNoMax(positionType).contains(number);
         } else {
-            result = getPossibleReplacements(positionType).contains(number);
+            result = getPossibleSubstitutions(positionType).contains(number);
         }
 
         return result;
@@ -321,4 +323,17 @@ public class IndoorTeam extends Team {
         return liberoNumber;
     }
 
+    public int getNumberOfSubstitutions() {
+        return mSubstitutions.size();
+    }
+
+    public List<AbstractMap.SimpleEntry<Integer, Integer>> getSubstitutions() {
+        List<AbstractMap.SimpleEntry<Integer, Integer>> substitutions = new ArrayList<>();
+
+        for (Map.Entry<Integer, Integer> entry : mSubstitutions.entrySet()) {
+            substitutions.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+        }
+
+        return substitutions;
+    }
 }

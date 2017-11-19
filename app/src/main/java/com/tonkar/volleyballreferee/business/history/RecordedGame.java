@@ -138,15 +138,15 @@ public class RecordedGame implements RecordedGameService {
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        int colorId;
+        int color;
 
         if (TeamType.HOME.equals(teamType)) {
-            colorId = mHomeTeam.getColorId();
+            color = mHomeTeam.getColor();
         } else {
-            colorId = mGuestTeam.getColorId();
+            color = mGuestTeam.getColor();
         }
 
-        return colorId;
+        return color;
     }
 
     @Override

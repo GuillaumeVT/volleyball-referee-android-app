@@ -1,9 +1,6 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +14,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -75,14 +73,14 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
         mGuestTeamColorButton = findViewById(R.id.guest_team_color_button);
 
         if (savedInstanceState == null) {
-            int homeTeamColor = ShirtColors.getRandomShirtColor();
+            int homeTeamColor = ShirtColors.getRandomShirtColor(this);
             onTeamColorSelected(TeamType.HOME, homeTeamColor);
 
             boolean sameColor = true;
             int guestTeamColor = 0;
 
             while (sameColor) {
-                guestTeamColor = ShirtColors.getRandomShirtColor();
+                guestTeamColor = ShirtColors.getRandomShirtColor(this);
                 sameColor = (guestTeamColor == homeTeamColor);
             }
             onTeamColorSelected(TeamType.GUEST, guestTeamColor);
@@ -155,7 +153,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
             button = mGuestTeamColorButton;
         }
 
-        button.getBackground().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(QuickTeamsSetupActivity.this, colorId), PorterDuff.Mode.SRC));
+        UiUtils.colorTeamButton(this, colorId, button);
         mTeamService.setTeamColor(teamType, colorId);
     }
 

@@ -7,13 +7,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Ringtone;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
@@ -22,7 +24,10 @@ import java.io.ByteArrayOutputStream;
 
 public class UiUtils {
 
-    public static Ringtone sTimeoutSound;
+    public static void colorTeamButton(Context context, int color, Button button) {
+        button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        button.setTextColor(getTextColor(context, color));
+    }
 
     public static int getTextColor(Context context, int backgroundColor) {
         int textColor;

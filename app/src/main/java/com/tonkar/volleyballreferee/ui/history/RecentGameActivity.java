@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui.history;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -116,10 +115,9 @@ public class RecentGameActivity extends AppCompatActivity {
         UiUtils.shareScreen(this, getWindow(), summary);
     }
 
-    private void color(TextView textView, int colorId) {
-        int backgroundColor = ContextCompat.getColor(this, colorId);
-        textView.setTextColor(UiUtils.getTextColor(this, backgroundColor));
-        textView.setBackgroundColor(backgroundColor);
+    private void color(TextView textView, int color) {
+        textView.setTextColor(UiUtils.getTextColor(this, color));
+        textView.setBackgroundColor(color);
     }
 
 }

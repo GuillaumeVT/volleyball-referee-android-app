@@ -1,12 +1,13 @@
 package com.tonkar.volleyballreferee.interfaces;
 
+import java.util.AbstractMap;
 import java.util.List;
 
 public interface IndoorTeamService extends TeamService {
 
     int getLiberoColor(TeamType teamType);
 
-    void setLiberoColor(TeamType teamType, int colorId);
+    void setLiberoColor(TeamType teamType, int color);
 
     int getNumberOfPlayers(TeamType teamType);
 
@@ -18,11 +19,15 @@ public interface IndoorTeamService extends TeamService {
 
     boolean canAddLibero(TeamType teamType);
 
-    List<Integer> getPossibleReplacements(TeamType teamType, PositionType positionType);
+    List<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType);
 
-    void substitutePlayer(TeamType teamType, int number, PositionType positionType);
+    void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType);
 
     void confirmStartingLineup();
 
     boolean isStartingLineupConfirmed();
+
+    List<AbstractMap.SimpleEntry<Integer, Integer>> getSubstitutions(TeamType teamType);
+
+    int getNumberOfSubstitutions(TeamType teamType);
 }

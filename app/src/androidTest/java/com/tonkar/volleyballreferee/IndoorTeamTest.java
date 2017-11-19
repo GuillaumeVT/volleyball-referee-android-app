@@ -87,7 +87,7 @@ public class IndoorTeamTest {
         assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
         assertEquals(true, team.substitutePlayer(4, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
-        List<Integer> availablePlayers = team.getPossibleReplacements(PositionType.POSITION_1);
+        List<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_1);
         assertEquals(4, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(6));
         assertEquals(true, availablePlayers.contains(8));
@@ -102,7 +102,7 @@ public class IndoorTeamTest {
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
 
-        List<Integer> availablePlayers = team.getPossibleReplacements(PositionType.POSITION_4);
+        List<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
         assertEquals(1, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(4));
 
@@ -112,14 +112,14 @@ public class IndoorTeamTest {
         assertEquals(true, team.substitutePlayer(4, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
 
-        availablePlayers = team.getPossibleReplacements(PositionType.POSITION_4);
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
         assertEquals(0, availablePlayers.size());
 
         assertEquals(false, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
 
         team.addLibero(10);
-        availablePlayers = team.getPossibleReplacements(PositionType.POSITION_4);
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
         assertEquals(0, availablePlayers.size());
     }
 
@@ -130,7 +130,7 @@ public class IndoorTeamTest {
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
 
-        List<Integer> availablePlayers = team.getPossibleReplacements(PositionType.POSITION_6);
+        List<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
         assertEquals(1, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(6));
 
@@ -140,14 +140,14 @@ public class IndoorTeamTest {
         assertEquals(true, team.substitutePlayer(6, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
 
-        availablePlayers = team.getPossibleReplacements(PositionType.POSITION_6);
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
         assertEquals(0, availablePlayers.size());
 
         assertEquals(false, team.substitutePlayer(7, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
 
         team.addLibero(10);
-        availablePlayers = team.getPossibleReplacements(PositionType.POSITION_6);
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
         assertEquals(1, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(10));
     }
@@ -158,33 +158,33 @@ public class IndoorTeamTest {
         team.confirmStartingLineup();
 
         team.addLibero(10);
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_6).contains(10));
-        assertEquals(false, team.getPossibleReplacements(PositionType.POSITION_4).contains(10));
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_6).size() > 1);
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
+        assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_4).contains(10));
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).size() > 1);
 
         assertEquals(true, team.substitutePlayer(10, PositionType.POSITION_5));
 
-        assertEquals(1, team.getPossibleReplacements(PositionType.POSITION_5).size());
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_5).contains(5));
-        assertEquals(false, team.getPossibleReplacements(PositionType.POSITION_6).contains(10));
+        assertEquals(1, team.getPossibleSubstitutions(PositionType.POSITION_5).size());
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_5).contains(5));
+        assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
 
         assertEquals(true, team.substitutePlayer(5, PositionType.POSITION_5));
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_6).contains(10));
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_6).size() > 1);
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).size() > 1);
 
         team.addLibero(11);
-        assertEquals(false, team.getPossibleReplacements(PositionType.POSITION_6).contains(11));
-        assertEquals(false, team.getPossibleReplacements(PositionType.POSITION_4).contains(11));
+        assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(11));
+        assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_4).contains(11));
 
         team.addLibero(9);
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_6).contains(9));
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_6).contains(10));
-        assertEquals(false, team.getPossibleReplacements(PositionType.POSITION_4).contains(9));
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(9));
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
+        assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_4).contains(9));
 
         team.substitutePlayer(10, PositionType.POSITION_5);
-        assertEquals(2, team.getPossibleReplacements(PositionType.POSITION_5).size());
-        assertEquals(true, team.getPossibleReplacements(PositionType.POSITION_5).contains(5));
-        assertEquals(false, team.getPossibleReplacements(PositionType.POSITION_5).contains(11));
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_5).size());
+        assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_5).contains(5));
+        assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_5).contains(11));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee;
 
+import android.graphics.Color;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.history.JsonHistoryReader;
@@ -48,8 +49,8 @@ public class GameHistoryIOTest {
     }
 
     private RecordedGame someRecordedGame1() {
-        RecordedTeam team1 = new RecordedTeam("Team 1", 51);
-        RecordedTeam team2 = new RecordedTeam("Team 2", 52);
+        RecordedTeam team1 = new RecordedTeam("Team 1", Color.parseColor("#123456"));
+        RecordedTeam team2 = new RecordedTeam("Team 2", Color.parseColor("#a1b2c3"));
 
         List<RecordedSet> sets = new ArrayList<>();
 
@@ -66,8 +67,8 @@ public class GameHistoryIOTest {
     }
 
     private RecordedGame someRecordedGame2() {
-        RecordedTeam team1 = new RecordedTeam("Player A / Player B", 3);
-        RecordedTeam team2 = new RecordedTeam("Player C / Player D", 777777);
+        RecordedTeam team1 = new RecordedTeam("Player A / Player B", Color.parseColor("#1234ab"));
+        RecordedTeam team2 = new RecordedTeam("Player C / Player D", Color.parseColor("#efa1c3"));
 
         List<RecordedSet> sets = new ArrayList<>();
 

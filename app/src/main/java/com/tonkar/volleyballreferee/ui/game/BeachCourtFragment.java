@@ -32,6 +32,7 @@ public class BeachCourtFragment extends CourtFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Court", "Create beach court view");
+        initView();
 
         mBeachTeamService = (BeachTeamService) mTeamService;
 
@@ -43,14 +44,7 @@ public class BeachCourtFragment extends CourtFragment {
         addButtonOnRightSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.right_team_position_1));
         addButtonOnRightSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.right_team_position_2));
 
-        initView();
-
-        return mView;
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
+        onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
         for (Map.Entry<PositionType,Button> entry : mLeftTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
@@ -71,6 +65,8 @@ public class BeachCourtFragment extends CourtFragment {
                 }
             });
         }
+
+        return mView;
     }
 
     protected void applyColor(TeamType teamType, int number, Button button) {

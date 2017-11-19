@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,9 +18,8 @@ import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class ScoresFragment extends Fragment implements GameClient, TeamClient, GameListener {
+public class ScoresFragment extends Fragment implements NamedGameFragment, GameClient, TeamClient, GameListener {
 
-    private ListView        mSetsList;
     private SetsListAdapter mSetsListAdapter;
     private GameService     mGameService;
     private TeamService     mTeamService;
@@ -35,33 +35,31 @@ public class ScoresFragment extends Fragment implements GameClient, TeamClient, 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public String getGameFragmentTitle(Context context) {
+        return context.getResources().getString(R.string.scores_tab);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Ladders", "Create scores fragment");
-
         setGameService(ServicesProvider.getInstance().getGameService());
         setTeamService(ServicesProvider.getInstance().getTeamService());
 
         mGameService.addGameListener(this);
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mGameService.removeGameListener(this);
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scores, container, false);
 
-        mSetsList = view.findViewById(R.id.set_list);
+        ListView setsList = view.findViewById(R.id.set_list);
         mSetsListAdapter = new SetsListAdapter(inflater, mGameService, mTeamService, true);
-        mSetsList.setAdapter(mSetsListAdapter);
+        setsList.setAdapter(mSetsListAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mGameService.removeGameListener(this);
     }
 
     @Override

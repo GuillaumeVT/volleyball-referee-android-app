@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameSet implements Serializable {
+public class Set implements Serializable {
 
     private final int            mPointsPerSetSettings;
     private       int            mHomeTeamPoints;
@@ -18,7 +18,7 @@ public class GameSet implements Serializable {
     private       long           mStartTime;
     private       long           mEndTime;
 
-    public GameSet(final int pointsPerSetSettings, final int teamTimeoutsPerSetSettings, final TeamType servingTeamAtStart) {
+    public Set(final int pointsPerSetSettings, final int teamTimeoutsPerSetSettings, final TeamType servingTeamAtStart) {
         mPointsPerSetSettings = pointsPerSetSettings;
 
         mHomeTeamPoints = 0;
@@ -45,7 +45,7 @@ public class GameSet implements Serializable {
 
     public boolean isSetPoint() {
         // Set ball when a team will reach the number of points to win  with 1 point (e.g. 25, 21, 15) or more, with at least 1-point difference
-        return (mHomeTeamPoints+1 >= mPointsPerSetSettings || mGuestTeamPoints+1 >= mPointsPerSetSettings) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
+        return !isSetCompleted() && (mHomeTeamPoints+1 >= mPointsPerSetSettings || mGuestTeamPoints+1 >= mPointsPerSetSettings) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
     }
 
     public TeamType getLeadingTeam() {

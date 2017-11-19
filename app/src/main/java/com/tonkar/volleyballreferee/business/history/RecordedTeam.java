@@ -3,19 +3,19 @@ package com.tonkar.volleyballreferee.business.history;
 public class RecordedTeam {
 
     private final String mName;
-    private final int    mColorId;
+    private final int    mColor;
 
-    public RecordedTeam(String name, int colorId) {
+    public RecordedTeam(String name, int color) {
         mName = name;
-        mColorId = colorId;
+        mColor = color;
     }
 
     String getName() {
         return mName;
     }
 
-    int getColorId() {
-        return mColorId;
+    int getColor() {
+        return mColor;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class RecordedTeam {
             result = true;
         } else if (obj instanceof RecordedTeam) {
             RecordedTeam other = (RecordedTeam) obj;
-            result = (this.getColorId() == other.getColorId())
+            result = (this.getColor() == other.getColor())
                     && this.getName().equals(other.getName());
         }
 

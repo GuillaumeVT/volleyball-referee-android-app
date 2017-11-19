@@ -52,17 +52,18 @@ public class JsonHistoryWriter {
 
     private static void writeHomeTeam(JsonWriter writer, RecordedTeam recordedTeam) throws IOException {
         writer.name("home_team");
-        writer.beginObject();
-        writer.name("team_name").value(recordedTeam.getName());
-        writer.name("team_color").value(recordedTeam.getColorId());
-        writer.endObject();
+        writeTeam(writer, recordedTeam);
     }
 
     private static void writeGuestTeam(JsonWriter writer, RecordedTeam recordedTeam) throws IOException {
         writer.name("guest_team");
+        writeTeam(writer, recordedTeam);
+    }
+
+    private static void writeTeam(JsonWriter writer, RecordedTeam recordedTeam) throws IOException {
         writer.beginObject();
         writer.name("team_name").value(recordedTeam.getName());
-        writer.name("team_color").value(recordedTeam.getColorId());
+        writer.name("team_color").value(String.format("#%06X", (0xFFFFFF & recordedTeam.getColor())).toLowerCase());
         writer.endObject();
     }
 

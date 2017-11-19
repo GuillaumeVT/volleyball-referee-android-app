@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.ui.game;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -263,27 +262,50 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
     public void increaseLeftScore(View view) {
         Log.i("VBR-GameActivity", "Increase left score");
-        mGameService.addPoint(mTeamOnLeftSide);
+        increaseScoreWithDialog(mTeamOnLeftSide);
     }
 
     public void callLeftTimeout(View view) {
         Log.i("VBR-GameActivity", "Call left timeout");
-        callTimeout(mTeamOnLeftSide);
+        callTimeoutWithDialog(mTeamOnLeftSide);
     }
 
     public void increaseRightScore(View view) {
         Log.i("VBR-GameActivity", "Increase right score");
-        mGameService.addPoint(mTeamOnRightSide);
+        increaseScoreWithDialog(mTeamOnRightSide);
+    }
+
+    private void increaseScoreWithDialog(final TeamType teamType) {
+        if ((mGameService.isGamePoint() || mGameService.isSetPoint()) && mGameService.getLeadingTeam().equals(teamType)) {
+            String title = mGameService.isGamePoint() ? getResources().getString(R.string.match_point) : getResources().getString(R.string.set_point);
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+            builder.setTitle(title).setMessage(getResources().getString(R.string.confirm_set_question));
+            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("VBR-GameActivity", "User accepts the set point");
+                    mGameService.addPoint(teamType);
+                }
+            });
+            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("VBR-GameActivity", "User refuses the set point");
+                }
+            });
+            builder.show();
+        } else {
+            mGameService.addPoint(teamType);
+        }
     }
 
     public void callRightTimeout(View view) {
         Log.i("VBR-GameActivity", "Call right timeout");
-        callTimeout(mTeamOnRightSide);
+        callTimeoutWithDialog(mTeamOnRightSide);
     }
 
-    private void callTimeout(final TeamType teamType) {
+    private void callTimeoutWithDialog(final TeamType teamType) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.timeout)).setMessage(getResources().getString(R.string.timeout_question));
+        builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mTeamService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("VBR-GameActivity", "User accepts the timeout");
@@ -312,16 +334,12 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
         // Left
         mLeftTeamNameText.setText(mTeamService.getTeamName(mTeamOnLeftSide));
-        int leftBackgroundColor = ContextCompat.getColor(this, mTeamService.getTeamColor(mTeamOnLeftSide));
-        mLeftTeamScoreButton.getBackground().setColorFilter(new PorterDuffColorFilter(leftBackgroundColor, PorterDuff.Mode.SRC));
-        mLeftTeamScoreButton.setTextColor(UiUtils.getTextColor(this, leftBackgroundColor));
+        UiUtils.colorTeamButton(this, mTeamService.getTeamColor(mTeamOnLeftSide), mLeftTeamScoreButton);
 
         // Right
 
         mRightTeamNameText.setText(mTeamService.getTeamName(mTeamOnRightSide));
-        int rightBackgroundColor = ContextCompat.getColor(this, mTeamService.getTeamColor(mTeamOnRightSide));
-        mRightTeamScoreButton.getBackground().setColorFilter(new PorterDuffColorFilter(rightBackgroundColor, PorterDuff.Mode.SRC));
-        mRightTeamScoreButton.setTextColor(UiUtils.getTextColor(this, rightBackgroundColor));
+        UiUtils.colorTeamButton(this, mTeamService.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
 
         onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
         onSetsUpdated(mTeamOnLeftSide, mGameService.getSets(mTeamOnLeftSide));
@@ -339,7 +357,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     }
 
     @Override
-    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType) {}
+    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {}
 
     @Override
     public void onTeamRotated(TeamType teamType) {}
@@ -365,8 +383,14 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         }
         mSetsText.setText(builder.toString());
 
-        if (mGameService.isSetPoint()) {
-            setTitle(getResources().getString(R.string.set_point));
+        if (mGameService.isGamePoint()) {
+            String text = getResources().getString(R.string.match_point);
+            setTitle(text);
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        } else if (mGameService.isSetPoint()) {
+            String text = getResources().getString(R.string.set_point);
+            setTitle(text);
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         } else {
             setTitle("");
         }
@@ -393,12 +417,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     }
 
     @Override
-    public void onSetCompleted() {
-        if (!mGameService.isGameCompleted() && mGameService.getRules().areGameIntervalsEnabled()) {
-            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(mGameService.getRules().getGameIntervalDuration(), getResources().getString(R.string.game_interval));
-            timeoutFragment.show(getFragmentManager(), "gameinterval");
-        }
-    }
+    public void onSetCompleted() {}
 
     @Override
     public void onGameCompleted(final TeamType winner) {
@@ -446,9 +465,21 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     }
 
     @Override
-    public void onTimeout(int duration) {
-        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.timeout));
+    public void onTimeout(TeamType teamType, int duration) {
+        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mTeamService.getTeamName(teamType)));
         timeoutFragment.show(getFragmentManager(), "timeout");
+    }
+
+    @Override
+    public void onTechnicalTimeout(int duration) {
+        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.technical_timeout_title));
+        timeoutFragment.show(getFragmentManager(), "technical_timeout");
+    }
+
+    @Override
+    public void onGameInterval(int duration) {
+        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
+        timeoutFragment.show(getFragmentManager(), "game_interval");
     }
 
     @Override

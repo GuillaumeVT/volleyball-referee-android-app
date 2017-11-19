@@ -12,11 +12,15 @@ public interface GameService extends BaseGameService {
 
     boolean isGameCompleted();
 
+    boolean isGamePoint();
+
     boolean isSetPoint();
 
     void addPoint(TeamType teamType);
 
     void removeLastPoint();
+
+    TeamType getLeadingTeam();
 
     TeamType getServingTeam();
 

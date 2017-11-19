@@ -62,7 +62,6 @@ public class BeachGame extends Game implements BeachTeamService {
     @Override
     public void swapPlayers(TeamType teamType) {
         getBeachTeam(teamType).rotateToNextPositions();
-        notifyPlayerChanged(teamType, 1, getPlayerPosition(teamType, 1));
-        notifyPlayerChanged(teamType, 2, getPlayerPosition(teamType, 2));
+        notifyTeamRotated(teamType);
     }
 }

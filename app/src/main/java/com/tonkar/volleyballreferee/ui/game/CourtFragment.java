@@ -1,14 +1,12 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.os.Bundle;
+import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -22,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CourtFragment extends Fragment implements TeamClient, TeamListener {
+public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamClient, TeamListener {
 
     protected       View                      mView;
     protected       TeamService               mTeamService;
@@ -37,26 +35,25 @@ public abstract class CourtFragment extends Fragment implements TeamClient, Team
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mTeamService.removeTeamListener(this);
+        mLeftTeamPositions.clear();
+        mRightTeamPositions.clear();
+    }
 
+    @Override
+    public String getGameFragmentTitle(Context context) {
+        return context.getResources().getString(R.string.court_position_tab);
+    }
+
+    protected void initView() {
         Log.i("VBR-Court", "Create court fragment");
-
         setTeamService(ServicesProvider.getInstance().getTeamService());
 
         mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
         mTeamOnRightSide = mTeamService.getTeamOnRightSide();
         mTeamService.addTeamListener(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mTeamService.removeTeamListener(this);
-    }
-
-    protected void initView() {
-        onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
     }
 
     protected void addButtonOnLeftSide(final PositionType positionType, final Button button) {
@@ -82,7 +79,7 @@ public abstract class CourtFragment extends Fragment implements TeamClient, Team
     }
 
     @Override
-    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType) {
+    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
         if (PositionType.BENCH.equals(positionType)) {
             onTeamRotated(teamType);
         } else {
@@ -126,9 +123,7 @@ public abstract class CourtFragment extends Fragment implements TeamClient, Team
     }
 
     protected void applyColor(TeamType teamType, Button button) {
-        int backgroundColor = ContextCompat.getColor(mView.getContext(), mTeamService.getTeamColor(teamType));
-        button.getBackground().setColorFilter(new PorterDuffColorFilter(backgroundColor, PorterDuff.Mode.SRC));
-        button.setTextColor(UiUtils.getTextColor(mView.getContext(), backgroundColor));
+        UiUtils.colorTeamButton(mView.getContext(), mTeamService.getTeamColor(teamType), button);
     }
 
     protected abstract void applyColor(TeamType teamType, int number, Button button);

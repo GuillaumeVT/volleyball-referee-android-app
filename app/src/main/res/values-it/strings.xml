@@ -17,15 +17,15 @@
     <string name="ignore">Ignora</string>
 
     <!-- Setup activities -->
-    <string name="teams_setup_title">Setup teams</string>
-    <string name="liberos_setup_title">Setup liberos</string>
+    <string name="teams_setup_title">Configura le squadre</string>
+    <string name="liberos_setup_title">Configura i liberi</string>
     <string name="home_team_tab">Squadra ospitante</string>
     <string name="home_team_hint">Nome della squadra ospitante</string>
     <string name="guest_team_tab">Squadra avversaria</string>
     <string name="guest_team_hint">Nome della squadra avversaria</string>
     <string name="select_6_players">Seleziona almeno 6 giocatori</string>
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
-    <string name="select_libero">Select liberos (optional)</string>
+    <string name="select_libero">Seleziona il libero (opzionale)</string>
     <string name="next">Prossimo</string>
 
     <!-- Game activity -->
@@ -39,22 +39,26 @@
     <string name="navigated_home_question">Potrai riprendere l\'attuale partita più tardi, continua?</string>
     <string name="select_player_title">Scegli un giocatore dalla panchina</string>
     <string name="court_position_tab">Posizioni</string>
+    <string name="substitutions_tab">Cambi</string>
     <string name="scores_tab">Punteggio</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d minuti</string>
     <string name="switch_sides">Cambio campo</string>
     <string name="won_game">%s vince la partita</string>
-    <string name="timeout">Tempo di riposo</string>
+    <string name="timeout_title">Tempo di riposo (%s)</string>
     <string name="timeout_question">Chiama tempo di riposo?</string>
-    <string name="game_interval">Intervallo tra i set</string>
+    <string name="technical_timeout_title">Tempo tecnico</string>
+    <string name="game_interval_title">Intervallo tra i set</string>
     <string name="skip">Passa</string>
     <string name="switch_sides_description">Cambio campo manuale</string>
-    <string name="remove_point_description">Togli 1 punto</string>
+    <string name="remove_point_description">Togli l\'ultimo punto</string>
     <string name="call_timeout_description">Chiama tempo di riposo</string>
+    <string name="match_point">Match ball</string>
     <string name="set_point">Set ball</string>
-    <string name="confirm_lineup_title">Starting line-up</string>
-    <string name="confirm_lineup_message">Do you confirm this starting line-up for both teams in this set?</string>
-    <string name="no_substitution_message">No more substitution available</string>
+    <string name="confirm_lineup_title">Composizione squadra titolare</string>
+    <string name="confirm_lineup_question">Confermi la composizione di entrambe le squadre titolari per il set?</string>
+    <string name="no_substitution_message">Nessun cambio possibile</string>
+    <string name="confirm_set_question">Vuoi confermare il punto?</string>
 
     <!-- Rules activity -->
     <string name="rules">Regole</string>
@@ -74,11 +78,10 @@
     <string name="pref_game_intervals">Intervalli di gioco</string>
     <string name="pref_game_intervals_duration">Durata degli intervalli di gioco</string>
     <string name="pref_players_number">Squadra di 6 giocatori sul campo</string>
-    <string name="pref_team_substitutions_per_set">Number of team substitutions per set</string>
+    <string name="pref_team_substitutions_per_set">Numero di cambi per squadra per set</string>
     <string name="pref_change_side_every_7_points">Cambio campo ogni 7 punti</string>
 
     <string-array name="points_per_set_entries">
-        <item>Set a 99 punti</item>
         <item>Set a 25 punti</item>
         <item>Set a 21 punti</item>
         <item>Set a 15 punti</item>
@@ -104,14 +107,11 @@
         <item>1 minuto</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>12 substitutions per set</item>
-        <item>10 substitutions per set</item>
-        <item>8 substitutions per set</item>
-        <item>6 substitutions per set</item>
+        <item>12 cambi per set</item>
+        <item>6 cambi per set</item>
     </string-array>
 
     <string-array name="points_per_set_values">
-        <item>99</item>
         <item>25</item>
         <item>21</item>
         <item>15</item>
@@ -138,8 +138,6 @@
     </string-array>
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
-        <item>10</item>
-        <item>8</item>
         <item>6</item>
     </string-array>
 

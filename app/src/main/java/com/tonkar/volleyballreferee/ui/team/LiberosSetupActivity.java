@@ -21,7 +21,7 @@ public class LiberosSetupActivity extends AppCompatActivity {
         Log.i("VBR-LSActivity", "Create liberos setup activity");
 
         final ViewPager liberoSetupPager = findViewById(R.id.libero_setup_pager);
-        liberoSetupPager.setAdapter(new LiberoSetupFragmentPagerAdapter(this, getSupportFragmentManager()));
+        liberoSetupPager.setAdapter(new LiberoSetupFragmentPagerAdapter(getSupportFragmentManager()));
 
         TabLayout liberoSetupTabs = findViewById(R.id.libero_setup_tabs);
         liberoSetupTabs.setupWithViewPager(liberoSetupPager);

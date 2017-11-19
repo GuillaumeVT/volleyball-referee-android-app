@@ -17,15 +17,15 @@
     <string name="ignore">Пропустить</string>
 
     <!-- Setup activities -->
-    <string name="teams_setup_title">Setup teams</string>
-    <string name="liberos_setup_title">Setup liberos</string>
+    <string name="teams_setup_title">Настройка команд</string>
+    <string name="liberos_setup_title">Либеро</string>
     <string name="home_team_tab">Хозяева</string>
     <string name="home_team_hint">Имя принимающей команды</string>
     <string name="guest_team_tab">Гости</string>
     <string name="guest_team_hint">Имя гостевой команды</string>
     <string name="select_6_players">Выберите минимум 6 игроков</string>
     <string name="select_shirts_color">Выбрать цвет игровой формы</string>
-    <string name="select_libero">Select liberos (optional)</string>
+    <string name="select_libero">Выбрать либеро (факультативно)</string>
     <string name="next">Далее</string>
 
     <!-- Game activity -->
@@ -39,21 +39,25 @@
     <string name="navigated_home_question">Закончить данный матч позже, продолжить?</string>
     <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
     <string name="court_position_tab">Расстановка</string>
+    <string name="substitutions_tab">Замены</string>
     <string name="set_number">Партия %d</string>
     <string name="set_duration">%d мин.</string>
     <string name="switch_sides">Смена сторон площадки</string>
     <string name="won_game">%s выиграл(а) матч</string>
-    <string name="timeout">Перерыв</string>
+    <string name="timeout_title">Перерыв (%s)</string>
     <string name="timeout_question">Запросить перерыв?</string>
-    <string name="game_interval">Перерыв между партиями</string>
+    <string name="technical_timeout_title">Технический перерыв</string>
+    <string name="game_interval_title">Перерыв между партиями</string>
     <string name="skip">Пропустить</string>
     <string name="switch_sides_description">Поменять стороны площадки вручную</string>
-    <string name="remove_point_description">Отменить 1 очко</string>
+    <string name="remove_point_description">Отменить последнее очко</string>
     <string name="call_timeout_description">Вызвать перерыв</string>
+    <string name="match_point">Матчбол</string>
     <string name="set_point">Сетбол</string>
-    <string name="confirm_lineup_title">Starting line-up</string>
-    <string name="confirm_lineup_message">Do you confirm this starting line-up for both teams in this set?</string>
-    <string name="no_substitution_message">No more substitution available</string>
+    <string name="confirm_lineup_title">Расстановка</string>
+    <string name="confirm_lineup_question">Подтвердить стартовую расстановку обеих команд в данной партии?</string>
+    <string name="no_substitution_message">Замена невозможна</string>
+    <string name="confirm_set_question">Подтвердить окончание данной партии?</string>
 
     <!-- Rules activity -->
     <string name="rules">Правила</string>
@@ -73,11 +77,10 @@
     <string name="pref_game_intervals">Перерывы между партиями</string>
     <string name="pref_game_intervals_duration">Длительность перерывов между партиями</string>
     <string name="pref_players_number">Команда из 6 игроков на площаке</string>
-    <string name="pref_team_substitutions_per_set">Number of team substitutions per set</string>
+    <string name="pref_team_substitutions_per_set">Количество замен в партии</string>
     <string name="pref_change_side_every_7_points">Смены сторон площадки после каждых набранных 7 очков</string>
 
     <string-array name="points_per_set_entries">
-        <item>Партия из 99 очков</item>
         <item>Партия из 25 очков</item>
         <item>Партия из 21 очка</item>
         <item>Партия из 15 очков</item>
@@ -103,14 +106,11 @@
         <item>1 минуты</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>12 substitutions per set</item>
-        <item>10 substitutions per set</item>
-        <item>8 substitutions per set</item>
-        <item>6 substitutions per set</item>
+        <item>12 замен в партии</item>
+        <item>6 замен в партии</item>
     </string-array>
 
     <string-array name="points_per_set_values">
-        <item>99</item>
         <item>25</item>
         <item>21</item>
         <item>15</item>
@@ -137,8 +137,6 @@
     </string-array>
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
-        <item>10</item>
-        <item>8</item>
         <item>6</item>
     </string-array>
 

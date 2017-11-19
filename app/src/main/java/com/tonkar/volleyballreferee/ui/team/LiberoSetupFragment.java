@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +20,7 @@ import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 public class LiberoSetupFragment extends Fragment implements TeamClient, TeamColorDialogFragment.TeamColorSelectionListener {
 
@@ -62,6 +61,11 @@ public class LiberoSetupFragment extends Fragment implements TeamClient, TeamCol
         View view = inflater.inflate(R.layout.fragment_libero_setup, container, false);
 
         mLiberoColorButton = view.findViewById(R.id.libero_color_button);
+        if (mTeamService.getLiberoColor(mTeamType) < 0) {
+            onTeamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
+        } else {
+            onTeamColorSelected(mTeamService.getLiberoColor(mTeamType));
+        }
         mLiberoColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,11 +77,7 @@ public class LiberoSetupFragment extends Fragment implements TeamClient, TeamCol
         final LiberoAdapter liberoAdapter = new LiberoAdapter(getActivity());
         liberoNumbersGrid.setAdapter(liberoAdapter);
 
-        if (savedInstanceState == null) {
-            onTeamColorSelected(mTeamService.getTeamColor(mTeamType));
-        } else {
-            onTeamColorSelected(mTeamService.getLiberoColor(mTeamType));
-
+        if (savedInstanceState != null) {
             TeamColorDialogFragment teamColorDialogFragment = (TeamColorDialogFragment) getActivity().getFragmentManager().findFragmentByTag(mTeamType.toString() + "select_libero_color");
             if (teamColorDialogFragment != null) {
                 teamColorDialogFragment.setTeamColorSelectionListener(this);
@@ -95,10 +95,10 @@ public class LiberoSetupFragment extends Fragment implements TeamClient, TeamCol
     }
 
     @Override
-    public void onTeamColorSelected(int colorId) {
+    public void onTeamColorSelected(int color) {
         Log.i("VBR-LSActivity", String.format("Update %s team libero color", mTeamType.toString()));
-        mLiberoColorButton.getBackground().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getActivity(), colorId), PorterDuff.Mode.SRC));
-        mTeamService.setLiberoColor(mTeamType, colorId);
+        UiUtils.colorTeamButton(getActivity(), color, mLiberoColorButton);
+        mTeamService.setLiberoColor(mTeamType, color);
     }
 
     private class LiberoAdapter extends BaseAdapter {

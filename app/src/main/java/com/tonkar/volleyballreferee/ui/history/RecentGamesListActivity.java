@@ -20,6 +20,7 @@ import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameHistoryClient;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
+import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import java.util.Collections;
 import java.util.List;
@@ -108,8 +109,10 @@ public class RecentGamesListActivity extends AppCompatActivity implements GameHi
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 mGamesHistoryService.deleteAllRecordedGames();
-                Toast.makeText(RecentGamesListActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
-                mRecentGamesListAdapter.notifyDataSetChanged();
+                Toast.makeText(RecentGamesListActivity.this, getResources().getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
+                final Intent intent = new Intent(RecentGamesListActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
