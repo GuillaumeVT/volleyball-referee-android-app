@@ -27,6 +27,7 @@
     <string name="select_shirts_color">Sélectionner la couleur des maillots</string>
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="next">Suivant</string>
+    <string name="confirm_teams_setup_question">Confirmez-vous cette composition?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Pile</string>

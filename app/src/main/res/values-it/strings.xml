@@ -27,6 +27,7 @@
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
     <string name="select_libero">Seleziona il libero (opzionale)</string>
     <string name="next">Prossimo</string>
+    <string name="confirm_teams_setup_question">Confermate questa formazione?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Croce</string>

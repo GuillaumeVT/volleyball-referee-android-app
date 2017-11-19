@@ -27,6 +27,7 @@
     <string name="select_shirts_color">Select the shirts colour</string>
     <string name="select_libero">Select liberos (optional)</string>
     <string name="next">Next</string>
+    <string name="confirm_teams_setup_question">Do you confirm this setup?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>

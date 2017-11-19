@@ -1,9 +1,11 @@
 package com.tonkar.volleyballreferee.ui.team;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,9 +32,19 @@ public class LiberosSetupActivity extends AppCompatActivity {
     public void validateLiberos(View view) {
         Log.i("VBR-LSActivity", "Validate liberos");
 
-        Log.i("VBR-LSActivity", "Start game activity");
-        final Intent gameIntent = new Intent(this, GameActivity.class);
-        startActivity(gameIntent);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+        builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.confirm_teams_setup_question));
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i("VBR-LSActivity", "Start game activity");
+                final Intent gameIntent = new Intent(LiberosSetupActivity.this, GameActivity.class);
+                startActivity(gameIntent);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        builder.show();
     }
 
 }

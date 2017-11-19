@@ -218,8 +218,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                }
+                public void onClick(DialogInterface dialog, int which) {}
             });
             builder.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {

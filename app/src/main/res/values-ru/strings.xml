@@ -27,6 +27,7 @@
     <string name="select_shirts_color">Выбрать цвет игровой формы</string>
     <string name="select_libero">Выбрать либеро (факультативно)</string>
     <string name="next">Далее</string>
+    <string name="confirm_teams_setup_question">Подтвердить составы команд?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>

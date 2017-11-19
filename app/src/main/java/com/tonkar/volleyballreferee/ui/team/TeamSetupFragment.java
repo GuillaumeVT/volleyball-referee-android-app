@@ -90,7 +90,7 @@ public class TeamSetupFragment extends Fragment implements TeamClient, TeamColor
         });
 
         mTeamColorButton = view.findViewById(R.id.team_color_button);
-        if (mTeamService.getTeamColor(mTeamType) < 0) {
+        if (mTeamService.getTeamColor(mTeamType) == Integer.MIN_VALUE) {
             onTeamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
         } else {
             onTeamColorSelected(mTeamService.getTeamColor(mTeamType));

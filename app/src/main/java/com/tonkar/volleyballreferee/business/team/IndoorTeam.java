@@ -27,7 +27,7 @@ public class IndoorTeam extends Team {
     public IndoorTeam(final TeamType teamType, int maxSubstitutionsPerSet) {
         super(teamType);
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
-        mLiberoColor = -1;
+        mLiberoColor = Integer.MIN_VALUE;
         mLiberos = new HashSet<>();
         mSubstitutions = new LinkedHashMap<>();
         mMiddleBlockers = new HashSet<>();
@@ -52,22 +52,29 @@ public class IndoorTeam extends Team {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType) {
+        Log.i("VBR-Team", String.format("Replacing %d by %d for position %s of %s team", oldNumber, newNumber, positionType.toString(), getTeamType().toString()));
+
         if (isStartingLineupConfirmed()) {
             if (isLibero(newNumber)) {
+                Log.i("VBR-Team", String.format("%d of %s team is a libero and becomes acting libero", newNumber, getTeamType().toString()));
                 mActingLibero = newNumber;
 
                 if (!isLibero(oldNumber)) {
+                    Log.i("VBR-Team", String.format("%d of %s team is a middle blocker and is waiting outside", oldNumber, getTeamType().toString()));
                     mMiddleBlockers.clear();
                     mWaitingMiddleBlocker = oldNumber;
                     mMiddleBlockers.add(oldNumber);
                     mMiddleBlockers.add(getPlayerAtPosition(positionType.oppositePosition()));
                 }
             } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && isLibero(oldNumber)) {
+                Log.i("VBR-Team", String.format("%d of %s team is a middle blocker and is back on court", newNumber, getTeamType().toString()));
                 mWaitingMiddleBlocker = -1;
             } else {
+                Log.i("VBR-Team", "Actual substitution");
                 mSubstitutions.put(newNumber, oldNumber);
 
                 if (isMiddleBlocker(oldNumber)) {
+                    Log.i("VBR-Team", String.format("%d of %s team is a new middle blocker", newNumber, getTeamType().toString()));
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
                 }
@@ -136,6 +143,8 @@ public class IndoorTeam extends Team {
         if (canSubstitute()) {
             availablePlayers.addAll(getPossibleSubstitutionsNoMax(positionType));
         }
+
+        Log.i("VBR-Team", String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), getTeamType().toString(), availablePlayers.toString()));
 
         return availablePlayers;
     }

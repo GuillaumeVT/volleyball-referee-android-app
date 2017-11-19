@@ -23,7 +23,7 @@ public abstract class Team implements Serializable {
     Team(final TeamType teamType) {
         mName = "";
         mTeamType = teamType;
-        mColor = -1;
+        mColor = Integer.MIN_VALUE;
         mPlayers = new LinkedHashMap<>();
     }
 

@@ -61,7 +61,7 @@ public class LiberoSetupFragment extends Fragment implements TeamClient, TeamCol
         View view = inflater.inflate(R.layout.fragment_libero_setup, container, false);
 
         mLiberoColorButton = view.findViewById(R.id.libero_color_button);
-        if (mTeamService.getLiberoColor(mTeamType) < 0) {
+        if (mTeamService.getLiberoColor(mTeamType) == Integer.MIN_VALUE) {
             onTeamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
         } else {
             onTeamColorSelected(mTeamService.getLiberoColor(mTeamType));
