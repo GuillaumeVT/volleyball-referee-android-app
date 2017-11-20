@@ -30,11 +30,11 @@ import com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity;
 import com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-import java.io.File;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final int  PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
+
+    private GamesHistoryService mGamesHistoryService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,55 +75,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        final GamesHistoryService gamesHistoryService = new GamesHistory(getApplicationContext());
-        gamesHistoryService.loadRecordedGames();
-        ServicesProvider.getInstance().setGameHistoryService(gamesHistoryService);
+        mGamesHistoryService = new GamesHistory(getApplicationContext());
+        mGamesHistoryService.loadRecordedGames();
+        ServicesProvider.getInstance().setGameHistoryService(mGamesHistoryService);
 
-        File currentGameFile = getFileStreamPath(GamesHistoryService.CURRENT_GAME_FILE);
-
-        if (currentGameFile != null && currentGameFile.exists()) {
-            AlertDialogFragment alertDialogFragment;
-
-            if (savedInstanceState == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_question),
-                        getResources().getString(R.string.delete), getResources().getString(R.string.resume), getResources().getString(R.string.ignore));
-                alertDialogFragment.show(getFragmentManager(), "current_game");
-            }
-            else {
-                alertDialogFragment = (AlertDialogFragment) getFragmentManager().findFragmentByTag("current_game");
-            }
-
-            if (alertDialogFragment != null) {
-                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                    @Override
-                    public void onNegativeButtonClicked() {
-                        Log.i("VBR-MainActivity", "Delete current game");
-                        gamesHistoryService.deleteCurrentGame();
-                        Toast.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onPositiveButtonClicked() {
-                        Log.i("VBR-MainActivity", "Resume current game");
-                        gamesHistoryService.resumeCurrentGame();
-
-                        Log.i("VBR-MainActivity", "Start game activity");
-                        final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                        startActivity(gameIntent);
-                    }
-
-                    @Override
-                    public void onNeutralButtonClicked() {
-                    }
-                });
-            }
-        }
+        resumeCurrentGameWithDialog(savedInstanceState);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+
+        MenuItem importantMessageItem = menu.findItem(R.id.action_important_message);
+        importantMessageItem.setVisible(mGamesHistoryService.hasCurrentGame());
+
         return true;
     }
 
@@ -139,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("VBR-MainActivity", "Recent games");
                 intent = new Intent(this, RecentGamesListActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_important_message:
+                Log.i("VBR-MainActivity", "Resume game");
+                resumeCurrentGameWithDialog(null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -212,5 +182,49 @@ public class MainActivity extends AppCompatActivity {
         ServicesProvider.getInstance().setGameService(game);
         ServicesProvider.getInstance().setTeamService(game);
         ServicesProvider.getInstance().setTimeoutService(game);
+    }
+
+    private void resumeCurrentGameWithDialog(Bundle savedInstanceState) {
+        boolean autoIgnore = getIntent().getBooleanExtra("auto_ignore_resume_game", false);
+        getIntent().removeExtra("auto_ignore_resume_game");
+
+        if (mGamesHistoryService.hasCurrentGame() && !autoIgnore) {
+            AlertDialogFragment alertDialogFragment;
+
+            if (savedInstanceState == null) {
+                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_question),
+                        getResources().getString(R.string.delete), getResources().getString(R.string.resume), getResources().getString(R.string.ignore));
+                alertDialogFragment.show(getFragmentManager(), "current_game");
+            }
+            else {
+                alertDialogFragment = (AlertDialogFragment) getFragmentManager().findFragmentByTag("current_game");
+            }
+
+            if (alertDialogFragment != null) {
+                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                    @Override
+                    public void onNegativeButtonClicked() {
+                        Log.i("VBR-MainActivity", "Delete current game");
+                        mGamesHistoryService.deleteCurrentGame();
+                        Toast.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
+                        invalidateOptionsMenu();
+                    }
+
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        Log.i("VBR-MainActivity", "Resume current game");
+                        mGamesHistoryService.resumeCurrentGame();
+
+                        Log.i("VBR-MainActivity", "Start game activity");
+                        final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                        startActivity(gameIntent);
+                    }
+
+                    @Override
+                    public void onNeutralButtonClicked() {
+                    }
+                });
+            }
+        }
     }
 }

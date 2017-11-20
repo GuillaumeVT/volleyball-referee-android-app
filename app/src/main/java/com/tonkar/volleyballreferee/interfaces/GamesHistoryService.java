@@ -22,6 +22,8 @@ public interface GamesHistoryService {
 
     void deleteAllRecordedGames();
 
+    boolean hasCurrentGame();
+
     void resumeCurrentGame();
 
     void saveCurrentGame();

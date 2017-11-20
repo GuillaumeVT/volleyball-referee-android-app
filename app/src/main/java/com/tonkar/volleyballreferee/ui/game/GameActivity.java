@@ -220,13 +220,6 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {}
             });
-            builder.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    mGamesHistoryService.disableAutoSaveCurrentGame();
-                    mGamesHistoryService.deleteCurrentGame();
-                    navigateHome();
-                }
-            });
             builder.show();
         }
     }
@@ -234,6 +227,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     private void navigateHome() {
         final Intent intent = new Intent(GameActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("auto_ignore_resume_game", true);
         startActivity(intent);
     }
 

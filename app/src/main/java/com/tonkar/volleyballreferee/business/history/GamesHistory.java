@@ -20,6 +20,7 @@ import com.tonkar.volleyballreferee.interfaces.TimeoutClient;
 import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.TimeoutService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -117,6 +118,12 @@ public class GamesHistory implements GamesHistoryService, GameClient, TeamClient
     public void deleteAllRecordedGames() {
         recordedGames.clear();
         JsonHistoryWriter.writeRecordedGames(mContext, GAMES_HISTORY_FILE, recordedGames);
+    }
+
+    @Override
+    public boolean hasCurrentGame() {
+        File currentGameFile = mContext.getFileStreamPath(GamesHistoryService.CURRENT_GAME_FILE);
+        return currentGameFile != null && currentGameFile.exists();
     }
 
     @Override

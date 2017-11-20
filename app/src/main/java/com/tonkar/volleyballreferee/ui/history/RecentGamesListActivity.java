@@ -65,6 +65,9 @@ public class RecentGamesListActivity extends AppCompatActivity implements GameHi
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_recent_games, menu);
 
+        MenuItem deleteAllGamesItem = menu.findItem(R.id.action_delete_games);
+        deleteAllGamesItem.setVisible(mGamesHistoryService.getRecordedGameServiceList().size() > 0);
+
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();
 
