@@ -7,31 +7,31 @@
               android:layout_margin="8dp"
               android:gravity="top|center"
               android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.team.LiberosSetupActivity">
+              tools:context="com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity">
 
     <Button
         android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minWidth="200dp"
-        android:onClick="validateLiberos"
+        android:layout_margin="16dp"
+        android:minWidth="300dp"
+        android:onClick="validateTeams"
         android:text="@string/next"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:theme="@style/ButtonTheme"/>
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/libero_setup_tabs"
+        android:id="@+id/team_setup_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabSelectedTextColor="@color/colorPrimary"/>
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                                       android:id="@+id/libero_setup_pager"
+                                       android:id="@+id/team_setup_pager"
                                        android:layout_width="match_parent"
                                        android:layout_height="wrap_content"
                                        android:layout_gravity="top|center"
-                                       android:layout_margin="8dp"/>
+                                       android:layout_margin="16dp"/>
 
 </LinearLayout>

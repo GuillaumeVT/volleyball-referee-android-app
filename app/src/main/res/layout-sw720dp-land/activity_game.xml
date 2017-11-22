@@ -31,7 +31,7 @@
                 android:gravity="start"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="16sp"/>
+                android:textSize="24sp"/>
 
             <ImageButton
                 android:id="@+id/swap_teams_button"
@@ -40,6 +40,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/switch_sides_description"
                 android:elevation="@dimen/cardview_default_elevation"
+                android:maxHeight="72dp"
                 android:onClick="swapTeams"
                 android:theme="@style/ImageButtonTheme"
                 app:srcCompat="@drawable/ic_swap"/>
@@ -52,7 +53,7 @@
                 android:gravity="end"
                 android:textAlignment="textEnd"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="16sp"/>
+                android:textSize="24sp"/>
 
         </LinearLayout>
 
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:onClick="increaseLeftScore"
-                android:textSize="40sp"
+                android:textSize="72sp"
                 android:theme="@style/TeamButtonTheme"/>
 
             <LinearLayout
@@ -84,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:textAlignment="center"
-                    android:textSize="24sp"/>
+                    android:textSize="48sp"/>
 
                 <ImageButton
                     android:id="@+id/left_team_service_button"
@@ -112,7 +113,7 @@
                     android:layout_gravity="top"
                     android:onClick="swapFirstService"
                     android:textAlignment="center"
-                    android:textSize="24sp"/>
+                    android:textSize="48sp"/>
 
                 <ImageButton
                     android:id="@+id/right_team_service_button"
@@ -133,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:onClick="increaseRightScore"
-                android:textSize="40sp"
+                android:textSize="72sp"
                 android:theme="@style/TeamButtonTheme"/>
 
         </LinearLayout>
@@ -144,7 +145,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:textSize="24sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,6 +168,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/call_timeout_description"
                     android:elevation="@dimen/cardview_default_elevation"
+                    android:maxHeight="72dp"
                     android:onClick="callLeftTimeout"
                     android:theme="@style/ImageButtonTheme"
                     app:srcCompat="@drawable/ic_timeout"/>
@@ -195,6 +197,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/remove_point_description"
                 android:elevation="@dimen/cardview_default_elevation"
+                android:maxHeight="72dp"
                 android:onClick="removeLastPoint"
                 android:theme="@style/ImageButtonTheme"
                 app:srcCompat="@drawable/ic_score_revert"/>
@@ -218,6 +221,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/call_timeout_description"
                     android:elevation="@dimen/cardview_default_elevation"
+                    android:maxHeight="72dp"
                     android:onClick="callRightTimeout"
                     android:theme="@style/ImageButtonTheme"
                     app:srcCompat="@drawable/ic_timeout"/>
@@ -256,7 +260,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top|center"
-            android:layout_margin="8dp"/>
+            android:layout_margin="16dp"/>
 
     </LinearLayout>
 

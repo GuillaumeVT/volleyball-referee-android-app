@@ -9,22 +9,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:gravity="center|start"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="6">
 
-        <TextView
-            android:id="@+id/team_libero_numbers_title"
+        <EditText
+            android:id="@+id/team_name_input_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/select_libero"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:layout_weight="4"
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"/>
 
         <Button
-            android:id="@+id/libero_color_button"
+            android:id="@+id/team_color_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,11 +35,20 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/team_member_numbers_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/select_6_players"
+        android:textAppearance="@style/TextViewTheme"
+        android:textSize="24sp"/>
+
     <GridView
-        android:id="@+id/team_libero_numbers_grid"
+        android:id="@+id/team_member_numbers_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:columnWidth="50dp"
         android:gravity="center"
         android:horizontalSpacing="8dp"

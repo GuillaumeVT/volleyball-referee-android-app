@@ -90,7 +90,7 @@ public class RecentGamesListAdapter extends BaseAdapter {
         for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
             int homePoints = recordedGameService.getPoints(TeamType.HOME, setIndex);
             int guestPoints = recordedGameService.getPoints(TeamType.GUEST, setIndex);
-            builder.append(String.valueOf(homePoints)).append('-').append(String.valueOf(guestPoints)).append('\t');
+            builder.append(String.valueOf(homePoints)).append('-').append(String.valueOf(guestPoints)).append("\t\t");
         }
         viewHolder.scoreText.setText(builder.toString());
 

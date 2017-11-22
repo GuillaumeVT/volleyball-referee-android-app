@@ -55,7 +55,8 @@ public class UiUtils {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
-            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, summary, null);
+            String title = summary.replaceAll("-|\t|\n", "_");
+            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, null);
             Uri bitmapUri = Uri.parse(path);
 
             Intent intent = new Intent();

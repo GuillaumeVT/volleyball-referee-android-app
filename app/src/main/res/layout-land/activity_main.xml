@@ -59,7 +59,6 @@
 
                 <Button
                     android:id="@+id/start_official_indoor_game_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -70,7 +69,6 @@
 
                 <Button
                     android:id="@+id/start_custom_indoor_game_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -134,7 +132,6 @@
 
                 <Button
                     android:id="@+id/start_official_beach_game_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -145,7 +142,6 @@
 
                 <Button
                     android:id="@+id/start_custom_beach_game_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

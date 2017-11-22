@@ -27,7 +27,6 @@
 
         <Button
             android:id="@+id/team_color_button"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

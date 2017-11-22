@@ -20,16 +20,16 @@
             android:id="@+id/left_team_position_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
+            android:layout_margin="32dp"
+            android:textSize="48sp"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
             android:id="@+id/left_team_position_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
+            android:layout_margin="32dp"
+            android:textSize="48sp"
             android:theme="@style/TeamButtonTheme"/>
 
     </LinearLayout>
@@ -50,16 +50,16 @@
             android:id="@+id/right_team_position_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
+            android:layout_margin="32dp"
+            android:textSize="48sp"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
             android:id="@+id/right_team_position_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
+            android:layout_margin="32dp"
+            android:textSize="48sp"
             android:theme="@style/TeamButtonTheme"/>
 
     </LinearLayout>
