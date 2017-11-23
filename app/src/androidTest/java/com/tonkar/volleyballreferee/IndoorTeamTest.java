@@ -43,9 +43,33 @@ public class IndoorTeamTest {
         }
     }
 
-    private IndoorTeam createTeamWith10Players() {
+    @Test
+    public void createPlayers_liberoSelection() {
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(6);
+        assertEquals(false, team.canAddLibero());
+
+        team = createTeamWithNPlayersAndFillCourt(7);
+        assertEquals(true, team.canAddLibero());
+        team.addLibero(7);
+        assertEquals(false, team.canAddLibero());
+
+        team = createTeamWithNPlayersAndFillCourt(8);
+        assertEquals(true, team.canAddLibero());
+        team.addLibero(5);
+        assertEquals(true, team.canAddLibero());
+        team.addLibero(2);
+        assertEquals(false, team.canAddLibero());
+
+        team = createTeamWithNPlayersAndFillCourt(13);
+        assertEquals(true, team.canAddLibero());
+        team.addLibero(9);
+        assertEquals(true, team.canAddLibero());
+        team.addLibero(1);
+        assertEquals(false, team.canAddLibero());
+    }
+
+    private IndoorTeam createTeamWithNPlayers(int playerCount) {
         IndoorTeam team = new IndoorTeam(TeamType.GUEST, 6);
-        int playerCount = 10;
 
         for (int index = 1; index <= playerCount; index++) {
             team.addPlayer(index);
@@ -54,8 +78,8 @@ public class IndoorTeamTest {
         return team;
     }
 
-    private IndoorTeam createTeamWith10PlayersAndFillCourt() {
-        IndoorTeam team = createTeamWith10Players();
+    private IndoorTeam createTeamWithNPlayersAndFillCourt(int playerCount) {
+        IndoorTeam team = createTeamWithNPlayers(playerCount);
         int playersOnCourt = 6;
 
         for (int index = 1; index <= playersOnCourt; index++) {
@@ -67,7 +91,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_fillCourt() {
-        IndoorTeam team = createTeamWith10Players();
+        IndoorTeam team = createTeamWithNPlayers(10);
         int playerCount = 6;
 
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -82,7 +106,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_free() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
         assertEquals(true, team.substitutePlayer(4, PositionType.POSITION_6));
@@ -97,7 +121,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_confirmed_front() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
@@ -125,7 +149,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_confirmed_back() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
@@ -154,7 +178,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_libero() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
         team.addLibero(10);
@@ -189,7 +213,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_max() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_1));
@@ -203,7 +227,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_abnormal() {
-        IndoorTeam team = createTeamWith10Players();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         assertEquals(false, team.substitutePlayer(18, PositionType.POSITION_1));
 
         team.addLibero(10);
@@ -212,7 +236,7 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_next() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
         team.rotateToNextPositions();
@@ -227,7 +251,7 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_next_libero() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.addLibero(10);
         team.confirmStartingLineup();
         assertEquals(true, team.substitutePlayer(10, PositionType.POSITION_6));
@@ -261,7 +285,7 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_previous() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
         team.rotateToPreviousPositions();
@@ -276,7 +300,7 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_previous_libero() {
-        IndoorTeam team = createTeamWith10PlayersAndFillCourt();
+        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
         team.addLibero(10);
         team.confirmStartingLineup();
 

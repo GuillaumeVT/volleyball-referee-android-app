@@ -115,7 +115,19 @@ public class IndoorTeam extends Team {
     }
 
     public boolean canAddLibero() {
-        return mLiberos.size() < 2;
+        int numberOfPlayers = getNumberOfPlayers();
+        int numberOfLiberos = mLiberos.size();
+        boolean can;
+
+        if (numberOfPlayers < 7) {
+            can = false;
+        } else if (numberOfPlayers < 8) {
+            can = numberOfLiberos < 1;
+        } else {
+            can = numberOfLiberos < 2;
+        }
+
+        return can;
     }
 
     public void addLibero(final int number) {
