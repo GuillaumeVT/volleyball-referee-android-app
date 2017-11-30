@@ -86,13 +86,7 @@
     <android.support.v7.preference.PreferenceCategory
         android:title="@string/indoor_preferences">
 
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="pref_players_number"
-            android:title="@string/pref_players_number"/>
-
         <android.support.v7.preference.ListPreference
-            android:dependency="pref_players_number"
             android:defaultValue="6"
             android:key="pref_team_substitutions_per_set"
             android:title="@string/pref_team_substitutions_per_set"

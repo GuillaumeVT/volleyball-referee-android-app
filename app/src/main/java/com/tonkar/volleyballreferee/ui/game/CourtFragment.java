@@ -17,7 +17,6 @@ import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamClient, TeamListener {
@@ -73,59 +72,10 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
         mTeamOnRightSide = rightTeamType;
-
-        onTeamRotated(mTeamOnLeftSide);
-        onTeamRotated(mTeamOnRightSide);
-    }
-
-    @Override
-    public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (PositionType.BENCH.equals(positionType)) {
-            onTeamRotated(teamType);
-        } else {
-            final Map<PositionType, Button> teamPositions;
-
-            if (mTeamOnLeftSide.equals(teamType)) {
-                teamPositions = mLeftTeamPositions;
-            } else {
-                teamPositions = mRightTeamPositions;
-            }
-
-            Button button = teamPositions.get(positionType);
-            button.setText(String.valueOf(number));
-            applyColor(teamType, number, button);
-        }
-    }
-
-    @Override
-    public void onTeamRotated(TeamType teamType) {
-        final Map<PositionType, Button> teamPositions;
-
-        if (mTeamOnLeftSide.equals(teamType)) {
-            teamPositions = mLeftTeamPositions;
-        } else {
-            teamPositions = mRightTeamPositions;
-        }
-
-        for (final Button button : teamPositions.values()) {
-            button.setText("!");
-            applyColor(teamType, button);
-        }
-
-        final List<Integer> players = mTeamService.getPlayersOnCourt(teamType);
-
-        for (Integer number : players) {
-            final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
-            Button button = teamPositions.get(positionType);
-            button.setText(String.valueOf(number));
-            applyColor(teamType, number, button);
-        }
     }
 
     protected void applyColor(TeamType teamType, Button button) {
         UiUtils.colorTeamButton(mView.getContext(), mTeamService.getTeamColor(teamType), button);
     }
-
-    protected abstract void applyColor(TeamType teamType, int number, Button button);
 
 }

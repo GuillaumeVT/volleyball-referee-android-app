@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Volley-Ball Referee</string>
+    <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
     <string name="indoor_game">Démarrer un match de volley-ball en salle</string>
@@ -23,7 +23,7 @@
     <string name="home_team_hint">Nom de l\'équipe à domicile</string>
     <string name="guest_team_tab">Équipe à l\'extérieur</string>
     <string name="guest_team_hint">Nom de l\'équipe à l\'extérieur</string>
-    <string name="select_6_players">Sélectionner au moins 6 joueurs</string>
+    <string name="select_players">Sélectionner les joueurs (dont les libéros)</string>
     <string name="select_shirts_color">Sélectionner la couleur des maillots</string>
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="next">Suivant</string>
@@ -78,7 +78,6 @@
     <string name="pref_technical_timeout_duration">Durée d\'un temps mort technique</string>
     <string name="pref_game_intervals">Pauses entre les sets</string>
     <string name="pref_game_intervals_duration">Durée de la pause entre les sets</string>
-    <string name="pref_players_number">Équipe de 6 joueurs sur le terrain</string>
     <string name="pref_team_substitutions_per_set">Nombre de changements d\'équipe par set</string>
     <string name="pref_change_side_every_7_points">Changement de côté tous les 7 points</string>
 
@@ -140,6 +139,20 @@
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
         <item>6</item>
+    </string-array>
+
+    <!-- Settings activity -->
+    <string name="settings">Paramètres</string>
+    <string name="pref_application_usage">Utilisation de l\'application</string>
+
+    <string-array name="pref_application_usage_entries">
+        <item>Utilisation classique: les joueurs doivent être configurés et placés, et le terrain est affiché</item>
+        <item>Simple panneau de score: les joueurs ne sont pas configurés, et le terrain n'est pas affiché</item>
+    </string-array>
+
+    <string-array name="pref_application_usage_values">
+        <item>true</item>
+        <item>false</item>
     </string-array>
 
     <!-- Recent games activity -->

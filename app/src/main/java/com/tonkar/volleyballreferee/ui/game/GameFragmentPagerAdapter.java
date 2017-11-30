@@ -1,9 +1,11 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.preference.PreferenceManager;
 
 import com.tonkar.volleyballreferee.interfaces.GameService;
 
@@ -26,7 +28,9 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
 
         switch (mGameService.getGameType()) {
             case INDOOR:
-                if (mGameService.getRules().isTeamOf6Players()) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                boolean normalUsageSetting = Boolean.parseBoolean(sharedPreferences.getString("pref_application_usage", String.valueOf(true)));
+                if (normalUsageSetting) {
                     mIndoorCourtFragment = IndoorCourtFragment.newInstance();
                     mSubstitutionsFragment = SubstitutionsFragment.newInstance();
                     mCount = 3;

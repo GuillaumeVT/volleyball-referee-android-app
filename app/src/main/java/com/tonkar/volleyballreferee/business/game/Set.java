@@ -168,6 +168,10 @@ public class Set implements Serializable {
         mServingTeamAtStart = servingTeamAtStart;
     }
 
+    TeamType getServingTeamAtStart() {
+        return mServingTeamAtStart;
+    }
+
     long getDuration() {
         long duration;
 

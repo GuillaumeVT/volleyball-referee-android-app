@@ -10,7 +10,7 @@
         android:title="@string/resume_game_title"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/action_edit_rules"
+        android:id="@+id/action_rules"
         android:orderInCategory="3"
         android:title="@string/rules"
         app:showAsAction="never"/>
@@ -18,4 +18,9 @@
         android:id="@+id/action_recent_games"
         android:orderInCategory="2"
         android:title="@string/recent_games"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="4"
+        android:title="@string/settings"
+        />
 </menu>

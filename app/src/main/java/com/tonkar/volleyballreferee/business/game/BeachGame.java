@@ -61,7 +61,24 @@ public class BeachGame extends Game implements BeachTeamService {
 
     @Override
     public void swapPlayers(TeamType teamType) {
-        getBeachTeam(teamType).rotateToNextPositions();
-        notifyTeamRotated(teamType);
+        if (isFirstTimeServing(teamType)) {
+            getBeachTeam(teamType).rotateToNextPositions();
+            notifyTeamRotated(teamType);
+        }
+    }
+
+    private boolean isFirstTimeServing(TeamType teamType) {
+        boolean first = false;
+
+        TeamType servingTeamAtStart = currentSet().getServingTeamAtStart();
+        int servingTeamPoints = getPoints(teamType);
+
+        if (getServingTeam().equals(teamType) && servingTeamAtStart.equals(teamType) && servingTeamPoints == 0) {
+            first = true;
+        } else if (getServingTeam().equals(teamType) && !servingTeamAtStart.equals(teamType) && servingTeamPoints == 1) {
+            first = true;
+        }
+
+        return first;
     }
 }

@@ -22,13 +22,11 @@ import com.tonkar.volleyballreferee.business.game.Game;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.history.GamesHistory;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
-import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.history.RecentGamesListActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesActivity;
 import com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity;
 import com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,9 +94,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_edit_rules:
-                Log.i("VBR-MainActivity", "Edit rules");
+            case R.id.action_rules:
+                Log.i("VBR-MainActivity", "Rules");
                 Intent intent = new Intent(this, RulesActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_settings:
+                Log.i("VBR-MainActivity", "Settings");
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_recent_games:
@@ -136,27 +139,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startIndoorGame(final boolean custom) {
-        final boolean teamOf6Players;
         final Game game;
 
         if (custom) {
             game = GameFactory.createIndoorGame(PreferenceManager.getDefaultSharedPreferences(this));
-
-            final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            teamOf6Players = sharedPreferences.getBoolean("pref_players_number", Rules.OFFICIAL_INDOOR_RULES.isTeamOf6Players());
         } else {
             game = GameFactory.createIndoorGame();
-            teamOf6Players = Rules.OFFICIAL_INDOOR_RULES.isTeamOf6Players();
         }
 
         initServices(game);
 
-        if (teamOf6Players) {
-            Log.i("VBR-MainActivity", String.format("Start activity to setup %s team", TeamType.HOME.toString()));
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean normalUsageSetting = Boolean.parseBoolean(sharedPreferences.getString("pref_application_usage", String.valueOf(true)));
+
+        if (normalUsageSetting) {
+            Log.i("VBR-MainActivity", "Start activity to setup both teams normally");
             final Intent intent = new Intent(this, TeamsSetupActivity.class);
             startActivity(intent);
         } else {
-            Log.i("VBR-MainActivity", "Start activity to setup both teams");
+            Log.i("VBR-MainActivity", "Start activity to setup both teams quickly");
             final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
             startActivity(intent);
         }
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
         initServices(game);
 
-        Log.i("VBR-MainActivity", "Start activity to setup both teams");
+        Log.i("VBR-MainActivity", "Start activity to setup both teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
         startActivity(intent);
     }

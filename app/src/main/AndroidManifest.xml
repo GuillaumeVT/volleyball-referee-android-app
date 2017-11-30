@@ -20,8 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.rules.RulesActivity" android:parentActivityName=".ui.MainActivity" android:theme="@style/AppTheme.Preferences"/>
-        <activity android:name=".ui.team.QuickTeamsSetupActivity"/>
-        <activity android:name=".ui.team.TeamsSetupActivity"/>
+        <activity android:name=".ui.SettingsActivity" android:parentActivityName=".ui.MainActivity" android:theme="@style/AppTheme.Preferences"/>
+        <activity android:name=".ui.team.QuickTeamsSetupActivity" android:parentActivityName=".ui.MainActivity"/>
+        <activity android:name=".ui.team.TeamsSetupActivity" android:parentActivityName=".ui.MainActivity"/>
         <activity android:name=".ui.team.LiberosSetupActivity" android:parentActivityName=".ui.team.TeamsSetupActivity"/>
         <activity android:name=".ui.game.GameActivity"/>
         <activity android:name=".ui.history.RecentGamesListActivity" android:parentActivityName=".ui.MainActivity"/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/indoor_preferences">
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="true"
+            android:key="pref_application_usage"
+            android:title="@string/pref_application_usage"
+            android:summary="%s"
+            android:entries="@array/pref_application_usage_entries"
+            android:entryValues="@array/pref_application_usage_values"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

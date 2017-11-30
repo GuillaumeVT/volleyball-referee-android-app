@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/select_6_players"
+        android:text="@string/select_players"
         android:textAppearance="@style/TextViewTheme"
         android:textSize="24sp"/>
 

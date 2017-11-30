@@ -6,6 +6,7 @@
               android:layout_height="match_parent"
               android:layout_margin="8dp"
               android:baselineAligned="false"
+              android:gravity="center"
               android:orientation="horizontal"
               android:weightSum="7"
               tools:context="com.tonkar.volleyballreferee.ui.game.GameActivity">

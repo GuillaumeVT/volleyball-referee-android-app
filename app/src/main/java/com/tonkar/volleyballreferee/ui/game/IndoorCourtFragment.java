@@ -148,8 +148,7 @@ public class IndoorCourtFragment extends CourtFragment {
         return mView;
     }
 
-    @Override
-    protected void applyColor(TeamType teamType, int number, Button button) {
+    private void applyColor(TeamType teamType, int number, Button button) {
         if (mIndoorTeamService.isLibero(teamType, number)) {
             UiUtils.colorTeamButton(mView.getContext(), mIndoorTeamService.getLiberoColor(teamType), button);
         } else {
@@ -158,17 +157,61 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     @Override
-    public void onTeamRotated(TeamType teamType) {
-        super.onTeamRotated(teamType);
-        confirmStartingLineup();
+    public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
+        super.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
+
+        onTeamRotated(mTeamOnLeftSide);
+        onTeamRotated(mTeamOnRightSide);
     }
 
     @Override
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        super.onPlayerChanged(teamType, number, positionType, actionOriginType);
+        if (PositionType.BENCH.equals(positionType)) {
+            onTeamRotated(teamType);
+        } else {
+            final Map<PositionType, Button> teamPositions;
+
+            if (mTeamOnLeftSide.equals(teamType)) {
+                teamPositions = mLeftTeamPositions;
+            } else {
+                teamPositions = mRightTeamPositions;
+            }
+
+            Button button = teamPositions.get(positionType);
+            button.setText(String.valueOf(number));
+            applyColor(teamType, number, button);
+        }
+
         if (ActionOriginType.USER.equals(actionOriginType)) {
             confirmStartingLineup();
         }
+    }
+
+    @Override
+    public void onTeamRotated(TeamType teamType) {
+        final Map<PositionType, Button> teamPositions;
+
+        if (mTeamOnLeftSide.equals(teamType)) {
+            teamPositions = mLeftTeamPositions;
+        } else {
+            teamPositions = mRightTeamPositions;
+        }
+
+        for (final Button button : teamPositions.values()) {
+            button.setText("!");
+            applyColor(teamType, button);
+        }
+
+        final List<Integer> players = mTeamService.getPlayersOnCourt(teamType);
+
+        for (Integer number : players) {
+            final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
+            Button button = teamPositions.get(positionType);
+            button.setText(String.valueOf(number));
+            applyColor(teamType, number, button);
+        }
+
+        confirmStartingLineup();
     }
 
     private void confirmStartingLineup() {
