@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.interfaces;
 
 import java.util.List;
 
-public interface BaseGameService {
+public interface BaseScoreService {
 
     GameType getGameType();
 
@@ -14,8 +14,6 @@ public interface BaseGameService {
 
     int getSets(TeamType teamType);
 
-    long getSetDuration();
-
     long getSetDuration(int setIndex);
 
     int getPoints(TeamType teamType);
@@ -25,4 +23,8 @@ public interface BaseGameService {
     List<TeamType> getPointsLadder();
 
     List<TeamType> getPointsLadder(int setIndex);
+
+    TeamType getServingTeam();
+
+    boolean isMatchCompleted();
 }

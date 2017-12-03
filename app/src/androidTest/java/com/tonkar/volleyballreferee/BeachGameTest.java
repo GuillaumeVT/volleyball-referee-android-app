@@ -32,6 +32,7 @@ public class BeachGameTest {
     @Test
     public void winSet_2PointsGap() {
         Game game = GameFactory.createBeachGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -65,7 +66,7 @@ public class BeachGameTest {
             game.addPoint(TeamType.HOME);
         }
 
-        assertEquals(true, game.isGameCompleted());
+        assertEquals(true, game.isMatchCompleted());
         assertEquals(2, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
         assertEquals(2, game.getNumberOfSets());
@@ -87,7 +88,7 @@ public class BeachGameTest {
             game.addPoint(TeamType.GUEST);
         }
 
-        assertEquals(true, game.isGameCompleted());
+        assertEquals(true, game.isMatchCompleted());
         assertEquals(1, game.getSets(TeamType.HOME));
         assertEquals(2, game.getSets(TeamType.GUEST));
         assertEquals(3, game.getNumberOfSets());

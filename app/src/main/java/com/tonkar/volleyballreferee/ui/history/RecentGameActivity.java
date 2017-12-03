@@ -4,69 +4,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
-import com.tonkar.volleyballreferee.ui.game.SetsListAdapter;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+public abstract class RecentGameActivity extends AppCompatActivity {
 
-public class RecentGameActivity extends AppCompatActivity {
-
-    private GamesHistoryService mGamesHistoryService;
-    private long                mGameDate;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recent_game);
-
-        Log.i("VBR-RecentActivity", "Create recent game activity");
-
-        Intent intent = getIntent();
-        mGameDate = intent.getLongExtra("game_date", 0L);
-
-        DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getDefault());
-
-        setTitle(formatter.format(new Date(mGameDate)));
-
-        mGamesHistoryService = ServicesProvider.getInstance().getGameHistoryService();
-
-        RecordedGameService recordedGameService = mGamesHistoryService.getRecordedGameService(mGameDate);
-
-        TextView homeTeamName = findViewById(R.id.home_team_name_text);
-        TextView guestTeamName = findViewById(R.id.guest_team_name_text);
-        TextView homeTeamSets = findViewById(R.id.home_team_set_text);
-        TextView guestTeamSets = findViewById(R.id.guest_team_set_text);
-
-        homeTeamName.setText(recordedGameService.getTeamName(TeamType.HOME));
-        guestTeamName.setText(recordedGameService.getTeamName(TeamType.GUEST));
-        homeTeamSets.setText(String.valueOf(recordedGameService.getSets(TeamType.HOME)));
-        guestTeamSets.setText(String.valueOf(recordedGameService.getSets(TeamType.GUEST)));
-
-        color(homeTeamSets, recordedGameService.getTeamColor(TeamType.HOME));
-        color(guestTeamSets, recordedGameService.getTeamColor(TeamType.GUEST));
-
-        ListView setsList = findViewById(R.id.recent_game_set_list);
-        SetsListAdapter setsListAdapter = new SetsListAdapter(getLayoutInflater(), recordedGameService, recordedGameService, false);
-        setsList.setAdapter(setsListAdapter);
-    }
+    protected GamesHistoryService mGamesHistoryService;
+    protected long                mGameDate;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,7 +60,8 @@ public class RecentGameActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {}
         });
-        builder.show();
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
     private void shareGame() {
@@ -115,9 +70,20 @@ public class RecentGameActivity extends AppCompatActivity {
         UiUtils.shareScreen(this, getWindow(), summary);
     }
 
-    private void color(TextView textView, int color) {
+    protected void color(TextView textView, int color) {
         textView.setTextColor(UiUtils.getTextColor(this, color));
         textView.setBackgroundColor(color);
+    }
+
+    protected String buildScore(RecordedGameService recordedGameService) {
+        StringBuilder builder = new StringBuilder();
+        for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
+            int homePoints = recordedGameService.getPoints(TeamType.HOME, setIndex);
+            int guestPoints = recordedGameService.getPoints(TeamType.GUEST, setIndex);
+            builder.append(String.valueOf(homePoints)).append('-').append(String.valueOf(guestPoints)).append("\t\t");
+        }
+
+        return builder.toString();
     }
 
 }

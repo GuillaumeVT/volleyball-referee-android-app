@@ -1,0 +1,68 @@
+package com.tonkar.volleyballreferee.ui.history;
+
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecentIndoorGameFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+    private final RecordedGameService mRecordedGameService;
+    private final Context             mContext;
+    private TeamsFragment             mTeamsFragment;
+    private final List<SetFragment>   mSetFragments;
+
+    RecentIndoorGameFragmentPagerAdapter(RecordedGameService recordedGameService, Context context, FragmentManager fm) {
+        super(fm);
+
+        mRecordedGameService = recordedGameService;
+        mContext = context;
+        mTeamsFragment = TeamsFragment.newInstance(mRecordedGameService.getGameDate());
+        mSetFragments = new ArrayList<>();
+
+        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+            SetFragment setFragment = SetFragment.newInstance(mRecordedGameService.getGameDate(), setIndex);
+            mSetFragments.add(setFragment);
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return 1 + mRecordedGameService.getNumberOfSets();
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        Fragment fragment;
+
+        switch (position) {
+            case 0:
+                fragment = mTeamsFragment;
+                break;
+            default:
+                fragment = mSetFragments.get(position - 1);
+                break;
+        }
+
+        return fragment;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        final String title;
+
+        if (position == 0) {
+            title = mContext.getString(R.string.players);
+        } else {
+            title = String.format(mContext.getString(R.string.set_number), position);
+        }
+
+        return title;
+    }
+}

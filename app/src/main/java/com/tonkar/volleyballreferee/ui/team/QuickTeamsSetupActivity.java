@@ -159,6 +159,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
 
     public void validateTeams(View view) {
         Log.i("VBR-QTSActivity", "Validate teams");
+        mTeamService.initTeams();
 
         Log.i("VBR-QTSActivity", "Start game activity");
         final Intent gameIntent = new Intent(this, GameActivity.class);

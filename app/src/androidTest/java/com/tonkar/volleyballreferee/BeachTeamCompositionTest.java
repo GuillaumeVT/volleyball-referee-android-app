@@ -2,7 +2,8 @@ package com.tonkar.volleyballreferee;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.team.BeachTeam;
+import com.tonkar.volleyballreferee.business.team.BeachTeamComposition;
+import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -12,17 +13,17 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class BeachTeamTest {
+public class BeachTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        BeachTeam team = new BeachTeam(TeamType.GUEST);
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.GUEST));
 
-        assertEquals(2, team.getNumberOfPlayers());
-        assertEquals(true, team.hasPlayer(1));
-        assertEquals(true, team.hasPlayer(2));
-        assertEquals(false, team.hasPlayer(5));
-        assertEquals(false, team.hasPlayer(-1));
+        assertEquals(2, team.getTeamDefinition().getNumberOfPlayers());
+        assertEquals(true, team.getTeamDefinition().hasPlayer(1));
+        assertEquals(true, team.getTeamDefinition().hasPlayer(2));
+        assertEquals(false, team.getTeamDefinition().hasPlayer(5));
+        assertEquals(false, team.getTeamDefinition().hasPlayer(-1));
         assertEquals(null, team.getPlayerPosition(5));
         assertEquals(null, team.getPlayerPosition(-1));
         assertEquals(2, team.getPlayersOnCourt().size());
@@ -32,7 +33,7 @@ public class BeachTeamTest {
 
     @Test
     public void substitution_changePlayer() {
-        BeachTeam team = new BeachTeam(TeamType.HOME);
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
 
         assertEquals(true, team.substitutePlayer(1, PositionType.POSITION_2));
         assertEquals(PositionType.POSITION_2, team.getPlayerPosition(1));
@@ -45,7 +46,7 @@ public class BeachTeamTest {
 
     @Test
     public void substitution_abnormal() {
-        BeachTeam team = new BeachTeam(TeamType.HOME);
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
 
         assertEquals(false, team.substitutePlayer(5, PositionType.POSITION_1));
         assertEquals(false, team.substitutePlayer(1, PositionType.POSITION_5));
@@ -54,7 +55,7 @@ public class BeachTeamTest {
 
     @Test
     public void rotation_next() {
-        BeachTeam team = new BeachTeam(TeamType.HOME);
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
         team.substitutePlayer(1, PositionType.POSITION_2);
         team.substitutePlayer(2, PositionType.POSITION_1);
 
@@ -65,7 +66,7 @@ public class BeachTeamTest {
 
     @Test
     public void rotation_previous() {
-        BeachTeam team = new BeachTeam(TeamType.HOME);
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
         team.substitutePlayer(1, PositionType.POSITION_2);
         team.substitutePlayer(2, PositionType.POSITION_1);
 

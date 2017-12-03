@@ -17,15 +17,18 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.GameHistoryClient;
+import com.tonkar.volleyballreferee.interfaces.GamesHistoryClient;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Collections;
 import java.util.List;
 
-public class RecentGamesListActivity extends AppCompatActivity implements GameHistoryClient {
+public class RecentGamesListActivity extends AppCompatActivity implements GamesHistoryClient {
 
     private GamesHistoryService    mGamesHistoryService;
     private RecentGamesListAdapter mRecentGamesListAdapter;
@@ -39,7 +42,7 @@ public class RecentGamesListActivity extends AppCompatActivity implements GameHi
 
         setTitle(getResources().getString(R.string.recent_games));
 
-        setGameHistoryService(ServicesProvider.getInstance().getGameHistoryService());
+        setGamesHistoryService(ServicesProvider.getInstance().getGameHistoryService());
 
         List<RecordedGameService> recordedGameServiceList = mGamesHistoryService.getRecordedGameServiceList();
         // Inverse list to have most recent games on top of the list
@@ -52,9 +55,20 @@ public class RecentGamesListActivity extends AppCompatActivity implements GameHi
         recentGamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.i("VBR-RecentListActivity", String.format("Start activity to display recent game %s", ((RecordedGameService) mRecentGamesListAdapter.getItem(i)).getGameSummary()));
-                final Intent intent = new Intent(RecentGamesListActivity.this, RecentGameActivity.class);
-                intent.putExtra("game_date", mRecentGamesListAdapter.getGameDate(i));
+                RecordedGameService recordedGameService = (RecordedGameService) mRecentGamesListAdapter.getItem(i);
+                Log.i("VBR-RecentListActivity", String.format("Start activity to display recent game %s", recordedGameService.getGameSummary()));
+
+                final Intent intent;
+
+                if (GameType.INDOOR.equals(recordedGameService.getGameType())
+                        && recordedGameService.getPlayers(TeamType.HOME).size() > 0
+                        && recordedGameService.getPlayers(TeamType.GUEST).size() > 0) {
+                    intent = new Intent(RecentGamesListActivity.this, RecentIndoorGameActivity.class);
+                } else {
+                    intent = new Intent(RecentGamesListActivity.this, RecentBeachGameActivity.class);
+                }
+
+                intent.putExtra("game_date", recordedGameService.getGameDate());
                 startActivity(intent);
             }
         });
@@ -121,11 +135,12 @@ public class RecentGamesListActivity extends AppCompatActivity implements GameHi
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {}
         });
-        builder.show();
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
     @Override
-    public void setGameHistoryService(GamesHistoryService gamesHistoryService) {
+    public void setGamesHistoryService(GamesHistoryService gamesHistoryService) {
         mGamesHistoryService = gamesHistoryService;
     }
 

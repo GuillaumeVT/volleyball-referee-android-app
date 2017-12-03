@@ -164,5 +164,6 @@
     <string name="deleted_game">Матч успешно удалён</string>
     <string name="deleted_games">Все матчи успешно удалены</string>
     <string name="scores_tab">Счёт по сетам</string>
+    <string name="players">Игроки</string>
 
 </resources>

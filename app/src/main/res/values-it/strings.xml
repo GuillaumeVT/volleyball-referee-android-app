@@ -23,7 +23,7 @@
     <string name="home_team_hint">Nome della squadra ospitante</string>
     <string name="guest_team_tab">Squadra avversaria</string>
     <string name="guest_team_hint">Nome della squadra avversaria</string>
-    <string name="select_players">Seleziona almeno 6 giocatori</string>
+    <string name="select_players">Seleziona i giocatori (anche i liberi)</string>
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
     <string name="select_libero">Seleziona il libero (opzionale)</string>
     <string name="next">Prossimo</string>
@@ -142,12 +142,12 @@
     </string-array>
 
     <!-- Settings activity -->
-    <string name="settings">Settings</string>
-    <string name="pref_application_usage">Application usage</string>
+    <string name="settings">Opzioni</string>
+    <string name="pref_application_usage">Uso dell\'applicazione</string>
 
     <string-array name="pref_application_usage_entries">
-        <item>Normal usage: the players must be configured and placed, and the court is displayed</item>
-        <item>Simple scoreboard: the players are not configured, and the court is not displayed</item>
+        <item>Uso classico: i giocatori devono essere configurati e posizionati per visualizzare la formazione in campo</item>
+        <item>Schermata solo punteggio: i giocatori non sono configurati e la formazione in campo non é visualizzata</item>
     </string-array>
 
     <string-array name="pref_application_usage_values">
@@ -164,5 +164,6 @@
     <string name="delete_game_question">Vuoi cancellare la partita salvata?</string>
     <string name="deleted_game">La partita è stata cancellata</string>
     <string name="deleted_games">Tutte le partite son state cancellate</string>
+    <string name="players">Giocatori</string>
 
 </resources>

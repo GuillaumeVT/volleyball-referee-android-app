@@ -12,18 +12,18 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.BeachTeamService;
-import com.tonkar.volleyballreferee.interfaces.GameClient;
-import com.tonkar.volleyballreferee.interfaces.GameListener;
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.ScoreClient;
+import com.tonkar.volleyballreferee.interfaces.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.util.Map;
 
-public class BeachCourtFragment extends CourtFragment implements GameClient, GameListener {
+public class BeachCourtFragment extends CourtFragment implements ScoreClient, ScoreListener {
 
     private BeachTeamService mBeachTeamService;
-    private GameService      mGameService;
+    private ScoreService     mScoreService;
     private ImageView        mLeftServiceImage1;
     private ImageView        mLeftServiceImage2;
     private ImageView        mRightServiceImage1;
@@ -46,8 +46,8 @@ public class BeachCourtFragment extends CourtFragment implements GameClient, Gam
         initView();
 
         mBeachTeamService = (BeachTeamService) mTeamService;
-        setGameService(ServicesProvider.getInstance().getGameService());
-        mGameService.addGameListener(this);
+        setScoreService(ServicesProvider.getInstance().getScoreService());
+        mScoreService.addScoreListener(this);
 
         mView = inflater.inflate(R.layout.fragment_beach_court, container, false);
 
@@ -68,7 +68,7 @@ public class BeachCourtFragment extends CourtFragment implements GameClient, Gam
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mGameService.getServingTeam().equals(mTeamOnLeftSide)) {
+                    if (mScoreService.getServingTeam().equals(mTeamOnLeftSide)) {
                         Log.i("VBR-Court", String.format("Swap %s team player", mTeamOnLeftSide.toString()));
                         mBeachTeamService.swapPlayers(mTeamOnLeftSide);
                     }
@@ -80,7 +80,7 @@ public class BeachCourtFragment extends CourtFragment implements GameClient, Gam
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mGameService.getServingTeam().equals(mTeamOnRightSide)) {
+                    if (mScoreService.getServingTeam().equals(mTeamOnRightSide)) {
                         Log.i("VBR-Court", String.format("Swap %s team player", mTeamOnRightSide.toString()));
                         mBeachTeamService.swapPlayers(mTeamOnRightSide);
                     }
@@ -94,12 +94,12 @@ public class BeachCourtFragment extends CourtFragment implements GameClient, Gam
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mGameService.removeGameListener(this);
+        mScoreService.removeScoreListener(this);
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setScoreService(ScoreService scoreService) {
+        mScoreService = scoreService;
     }
 
     @Override
@@ -152,7 +152,7 @@ public class BeachCourtFragment extends CourtFragment implements GameClient, Gam
     }
 
     private void applyService(TeamType teamType, PositionType positionType, ImageView imageView) {
-        if (mGameService.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
+        if (mScoreService.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
             imageView.setVisibility(View.VISIBLE);
         } else {
             imageView.setVisibility(View.INVISIBLE);
@@ -174,5 +174,5 @@ public class BeachCourtFragment extends CourtFragment implements GameClient, Gam
     public void onSetCompleted() {}
 
     @Override
-    public void onGameCompleted(TeamType winner) {}
+    public void onMatchCompleted(TeamType winner) {}
 }

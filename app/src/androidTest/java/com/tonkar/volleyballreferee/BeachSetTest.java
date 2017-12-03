@@ -2,8 +2,9 @@ package com.tonkar.volleyballreferee;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.game.Set;
+import com.tonkar.volleyballreferee.business.game.BeachSet;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +12,11 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class SetTest {
+public class BeachSetTest {
 
     @Test
     public void point_add() {
-        Set set = new Set(8, 0, TeamType.GUEST);
+        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 8, TeamType.GUEST);
         assertEquals(true, set.getPointsLadder().isEmpty());
         assertEquals(1, set.addPoint(TeamType.HOME));
         assertEquals(TeamType.HOME, set.getPointsLadder().get(0));
@@ -29,7 +30,7 @@ public class SetTest {
 
     @Test
     public void point_remove() {
-        Set set = new Set(12, 0, TeamType.HOME);
+        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 12, TeamType.HOME);
         set.addPoint(TeamType.HOME);
         set.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, set.removeLastPoint());
@@ -41,7 +42,7 @@ public class SetTest {
 
     @Test
     public void team_leading() {
-        Set set = new Set(5, 2, TeamType.HOME);
+        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 5, TeamType.HOME);
 
         set.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, set.getLeadingTeam());
@@ -53,7 +54,7 @@ public class SetTest {
 
     @Test
     public void team_serving() {
-        Set set = new Set(7, 1, TeamType.GUEST);
+        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 7, TeamType.GUEST);
         assertEquals(TeamType.GUEST, set.getServingTeam());
 
         set.addPoint(TeamType.GUEST);
@@ -65,7 +66,7 @@ public class SetTest {
 
     @Test
     public void winSet_normal() {
-        Set set = new Set(4, 0, TeamType.HOME);
+        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 4, TeamType.HOME);
 
         for (int index = 0; index < 4; index++) {
             assertEquals(false, set.isSetCompleted());
@@ -77,7 +78,7 @@ public class SetTest {
 
     @Test
     public void winSet_2PointsGap() {
-        Set set = new Set(3, 0, TeamType.HOME);
+        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 3, TeamType.HOME);
 
         for (int index = 0; index < 2; index++) {
             assertEquals(false, set.isSetCompleted());

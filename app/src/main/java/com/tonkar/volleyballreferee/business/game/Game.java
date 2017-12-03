@@ -2,9 +2,10 @@ package com.tonkar.volleyballreferee.business.game;
 
 import android.util.Log;
 
+import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameListener;
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
@@ -12,7 +13,6 @@ import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.TimeoutService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.business.team.Team;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.io.IOException;
@@ -23,18 +23,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class Game implements GameService, TimeoutService, TeamService, Serializable {
+public abstract class Game implements ScoreService, TimeoutService, TeamService, Serializable {
 
     private final     GameType                       mGameType;
     private final     long                           mGameDate;
     private final     Rules                          mRules;
-    private final     Team                           mHomeTeam;
-    private final     Team                           mGuestTeam;
+    private final     TeamDefinition                 mHomeTeam;
+    private final     TeamDefinition                 mGuestTeam;
     private           TeamType                       mTeamOnLeftSide;
     private           TeamType                       mTeamOnRightSide;
     private final     List<Set>                      mSets;
     private           TeamType                       mServingTeamAtStart;
-    private transient java.util.Set<GameListener>    mGameListeners;
+    private transient java.util.Set<ScoreListener>   mScoreListeners;
     private transient java.util.Set<TimeoutListener> mTimeoutListeners;
     private transient java.util.Set<TeamListener>    mTeamListeners;
 
@@ -42,29 +42,30 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         mGameType = gameType;
         mRules = rules;
         mGameDate = System.currentTimeMillis();
-        mHomeTeam = createTeam(TeamType.HOME);
-        mGuestTeam = createTeam(TeamType.GUEST);
+        mHomeTeam = createTeamDefinition(TeamType.HOME);
+        mGuestTeam = createTeamDefinition(TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
         mTeamOnRightSide = TeamType.GUEST;
         mSets = new ArrayList<>();
 
         mServingTeamAtStart = TeamType.HOME;
-
-        mSets.add(new Set(mRules.getPointsPerSet(), mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
+        mSets.add(createSet(mRules, false, mServingTeamAtStart));
 
         initTransientFields();
     }
 
-    protected abstract Team createTeam(TeamType teamType);
+    protected abstract TeamDefinition createTeamDefinition(TeamType teamType);
+
+    protected abstract Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart);
 
     @Override
-    public void addGameListener(final GameListener listener) {
-        mGameListeners.add(listener);
+    public void addScoreListener(final ScoreListener listener) {
+        mScoreListeners.add(listener);
     }
 
     @Override
-    public void removeGameListener(final GameListener listener) {
-        mGameListeners.remove(listener);
+    public void removeScoreListener(final ScoreListener listener) {
+        mScoreListeners.remove(listener);
     }
 
     @Override
@@ -164,12 +165,12 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     private void notifyPointsUpdated(final TeamType teamType, int newCount) {
         Log.i("VBR-Score", String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
 
-        for (final GameListener listener : mGameListeners) {
+        for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
         }
     }
 
-    // Game
+    // Score
 
     @Override
     public Rules getRules() {
@@ -201,29 +202,29 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     }
 
     @Override
-    public boolean isGameCompleted() {
+    public boolean isMatchCompleted() {
         final int homeTeamSetCount = getSets(TeamType.HOME);
         final int guestTeamSetCount = getSets(TeamType.GUEST);
 
-        // Game is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
+        // Match is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
         return (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame())
                 || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
     }
 
-    private void notifyGameCompleted(final TeamType winner) {
-        Log.i("VBR-Score", String.format("Game is completed and %s team won", winner.toString()));
+    private void notifyMatchCompleted(final TeamType winner) {
+        Log.i("VBR-Score", String.format("Match is completed and %s team won", winner.toString()));
 
-        for (final GameListener listener : mGameListeners) {
-            listener.onGameCompleted(winner);
+        for (final ScoreListener listener : mScoreListeners) {
+            listener.onMatchCompleted(winner);
         }
     }
 
     @Override
-    public boolean isGamePoint() {
+    public boolean isMatchPoint() {
         final int homeTeamSetCount = 1 + getSets(TeamType.HOME);
         final int guestTeamSetCount = 1 + getSets(TeamType.GUEST);
 
-        return !isGameCompleted() && isSetPoint()
+        return !isMatchCompleted() && isSetPoint()
                 && ((TeamType.HOME.equals(getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
     }
 
@@ -241,6 +242,10 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
     Set currentSet() {
         return mSets.get(mSets.size() - 1);
+    }
+
+    Set getSet(int setIndex) {
+        return mSets.get(setIndex);
     }
 
     @Override
@@ -262,18 +267,6 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     }
 
     @Override
-    public long getSetDuration() {
-        long duration = 0L;
-        Set set = currentSet();
-
-        if (set != null) {
-            duration = set.getDuration();
-        }
-
-        return duration;
-    }
-
-    @Override
     public long getSetDuration(int setIndex) {
         long duration = 0L;
         Set set = mSets.get(setIndex);
@@ -288,14 +281,12 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     private void completeCurrentSet() {
         notifySetCompleted();
 
-        if (isGameCompleted()) {
+        if (isMatchCompleted()) {
             final TeamType winner = getSets(TeamType.HOME) > getSets(TeamType.GUEST) ? TeamType.HOME : TeamType.GUEST;
-            notifyGameCompleted(winner);
+            notifyMatchCompleted(winner);
         } else {
-            // The tie break is always played in 15 points
-            final int pointsToWinSet = isTieBreakSet() ? 15 : mRules.getPointsPerSet();
-            mSets.add(new Set(pointsToWinSet, mRules.getTeamTimeoutsPerSet(), mServingTeamAtStart));
-            onNewSet();
+            mSets.add(createSet(mRules, isTieBreakSet(), mServingTeamAtStart));
+            initTeams();
             // Both teams change sides between sets
             swapTeams(ActionOriginType.APPLICATION);
             // The service goes to the other team
@@ -316,7 +307,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     private void notifySetsUpdated(final TeamType teamType, int newCount) {
         Log.i("VBR-Score", String.format("Sets are updated for %s team: %d", teamType.toString(), newCount));
 
-        for (final GameListener listener : mGameListeners) {
+        for (final ScoreListener listener : mScoreListeners) {
             listener.onSetsUpdated(teamType, newCount);
         }
     }
@@ -327,7 +318,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         notifySetsUpdated(TeamType.HOME, getSets(TeamType.HOME));
         notifySetsUpdated(TeamType.GUEST, getSets(TeamType.GUEST));
 
-        for (final GameListener listener : mGameListeners) {
+        for (final ScoreListener listener : mScoreListeners) {
             listener.onSetCompleted();
         }
     }
@@ -359,68 +350,85 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     private void notifyServiceSwapped(final TeamType servingTeam) {
         Log.i("VBR-Score", String.format("%s team is now serving", servingTeam.toString()));
 
-        for (final GameListener listener : mGameListeners) {
+        for (final ScoreListener listener : mScoreListeners) {
             listener.onServiceSwapped(servingTeam);
         }
     }
 
-    // Team
+    // TeamComposition
 
-    Team getTeam(final TeamType teamType) {
-        Team team;
+    TeamDefinition getTeamDefinition(final TeamType teamType) {
+        TeamDefinition teamDefinition;
 
         if (TeamType.HOME.equals(teamType)) {
-            team = mHomeTeam;
+            teamDefinition = mHomeTeam;
         } else {
-            team = mGuestTeam;
+            teamDefinition = mGuestTeam;
         }
 
-        return team;
+        return teamDefinition;
     }
 
     @Override
     public String getTeamName(TeamType teamType) {
-        return getTeam(teamType).getName();
+        return getTeamDefinition(teamType).getName();
     }
 
     @Override
     public void setTeamName(TeamType teamType, String name) {
-        getTeam(teamType).setName(name);
+        getTeamDefinition(teamType).setName(name);
     }
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        return getTeam(teamType).getColor();
+        return getTeamDefinition(teamType).getColor();
     }
 
     @Override
     public void setTeamColor(TeamType teamType, int color) {
-        getTeam(teamType).setColor(color);
+        getTeamDefinition(teamType).setColor(color);
     }
 
     @Override
     public void addPlayer(TeamType teamType, int number) {
-        getTeam(teamType).addPlayer(number);
+        getTeamDefinition(teamType).addPlayer(number);
     }
 
     @Override
     public void removePlayer(TeamType teamType, int number) {
-        getTeam(teamType).removePlayer(number);
+        getTeamDefinition(teamType).removePlayer(number);
     }
 
     @Override
     public boolean hasPlayer(TeamType teamType, int number) {
-        return getTeam(teamType).hasPlayer(number);
+        return getTeamDefinition(teamType).hasPlayer(number);
     }
 
     @Override
-    public List<Integer> getPlayers(TeamType teamType) {
-        return getTeam(teamType).getPlayers();
+    public java.util.Set<Integer> getPlayers(TeamType teamType) {
+        return getTeamDefinition(teamType).getPlayers();
     }
 
     @Override
-    public List<Integer> getPlayersOnCourt(TeamType teamType) {
-        return getTeam(teamType).getPlayersOnCourt();
+    public void initTeams() {
+        if (!currentSet().areTeamsCreated()) {
+            currentSet().createTeams(mRules, mHomeTeam, mGuestTeam);
+        }
+    }
+
+    @Override
+    public int getNumberOfPlayers(TeamType teamType) {
+        return getTeamDefinition(teamType).getNumberOfPlayers();
+    }
+
+    @Override
+    public java.util.Set<Integer> getPlayersOnCourt(TeamType teamType) {
+        return currentSet().getTeamComposition(teamType).getPlayersOnCourt();
+    }
+
+    @Override
+    public java.util.Set<Integer> getPlayersOnCourt(TeamType teamType, int setIndex) {
+        return getSet(setIndex).getTeamComposition(teamType).getPlayersOnCourt();
     }
 
     @Override
@@ -428,7 +436,18 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
         PositionType positionType = null;
 
         if (hasPlayer(teamType, number)) {
-            positionType = getTeam(teamType).getPlayerPosition(number);
+            positionType = currentSet().getTeamComposition(teamType).getPlayerPosition(number);
+        }
+
+        return positionType;
+    }
+
+    @Override
+    public PositionType getPlayerPosition(TeamType teamType, int number, int setIndex) {
+        PositionType positionType = null;
+
+        if (hasPlayer(teamType, number)) {
+            positionType = getSet(setIndex).getTeamComposition(teamType).getPlayerPosition(number);
         }
 
         return positionType;
@@ -436,10 +455,13 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
     @Override
     public int getPlayerAtPosition(TeamType teamType, PositionType positionType) {
-        return getTeam(teamType).getPlayerAtPosition(positionType);
+        return currentSet().getTeamComposition(teamType).getPlayerAtPosition(positionType);
     }
 
-    protected abstract void onNewSet();
+    @Override
+    public int getPlayerAtPosition(TeamType teamType, PositionType positionType, int setIndex) {
+        return getSet(setIndex).getTeamComposition(teamType).getPlayerAtPosition(positionType);
+    }
 
     @Override
     public void swapTeams(ActionOriginType actionOriginType) {
@@ -462,13 +484,13 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
 
     private void rotateToNextPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to next position", teamType.toString()));
-        getTeam(teamType).rotateToNextPositions();
+        currentSet().getTeamComposition(teamType).rotateToNextPositions();
         notifyTeamRotated(teamType);
     }
 
     private void rotateToPreviousPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to previous position", teamType.toString()));
-        getTeam(teamType).rotateToPreviousPositions();
+        currentSet().getTeamComposition(teamType).rotateToPreviousPositions();
         notifyTeamRotated(teamType);
     }
 
@@ -498,6 +520,18 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     @Override
     public int getTimeouts(TeamType teamType) {
         return currentSet().getTimeouts(teamType);
+    }
+
+    @Override
+    public int getTimeouts(TeamType teamType, int setIndex) {
+        int timeouts = 0;
+        Set set = mSets.get(setIndex);
+
+        if (set != null) {
+            timeouts = set.getTimeouts(teamType);
+        }
+
+        return timeouts;
     }
 
     @Override
@@ -541,7 +575,7 @@ public abstract class Game implements GameService, TimeoutService, TeamService, 
     }
 
     private void initTransientFields() {
-        mGameListeners = new HashSet<>();
+        mScoreListeners = new HashSet<>();
         mTimeoutListeners = new HashSet<>();
         mTeamListeners = new HashSet<>();
     }

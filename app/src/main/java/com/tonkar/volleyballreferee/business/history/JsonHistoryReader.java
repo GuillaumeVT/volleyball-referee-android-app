@@ -6,6 +6,8 @@ import android.util.JsonReader;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.io.FileInputStream;
@@ -15,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class JsonHistoryReader {
 
@@ -57,30 +60,35 @@ public class JsonHistoryReader {
     }
 
     private static RecordedGame readGame(JsonReader reader) throws IOException {
-        GameType gameType = null;
-        long gameDate = 0L;
-        RecordedTeam homeTeam = null;
-        RecordedTeam guestTeam = null;
-        List<RecordedSet> sets = null;
+        RecordedGame recordedGame = new RecordedGame();
 
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "game_type":
-                    gameType = GameType.valueOf(reader.nextString());
+                case "kind":
+                    recordedGame.setGameType(GameType.valueOf(reader.nextString()));
                     break;
-                case "game_date":
-                    gameDate = reader.nextLong();
+                case "date":
+                    recordedGame.setGameDate(reader.nextLong());
                     break;
-                case "home_team":
-                    homeTeam = readTeam(reader);
+                case "live":
+                    recordedGame.setMatchCompleted(!reader.nextBoolean());
                     break;
-                case "guest_team":
-                    guestTeam = readTeam(reader);
+                case "hTeam":
+                    readTeam(reader, recordedGame.getTeam(TeamType.HOME));
                     break;
-                case "set_list":
-                    sets = readSetArray(reader);
+                case "gTeam":
+                    readTeam(reader, recordedGame.getTeam(TeamType.GUEST));
+                    break;
+                case "hSets":
+                    recordedGame.setSets(TeamType.HOME, reader.nextInt());
+                    break;
+                case "gSets":
+                    recordedGame.setSets(TeamType.GUEST, reader.nextInt());
+                    break;
+                case "sets":
+                    readSetArray(reader, recordedGame.getSets());
                     break;
                 default:
                     reader.skipValue();
@@ -89,22 +97,28 @@ public class JsonHistoryReader {
         }
         reader.endObject();
 
-        return new RecordedGame(gameType, gameDate, homeTeam, guestTeam, sets);
+        return recordedGame;
     }
 
-    private static RecordedTeam readTeam(JsonReader reader) throws IOException {
-        String teamName = null;
-        int teamColor = -1;
-
+    private static void readTeam(JsonReader reader, RecordedTeam recordedTeam) throws IOException {
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "team_name":
-                    teamName = reader.nextString();
+                case "name":
+                    recordedTeam.setName(reader.nextString());
                     break;
-                case "team_color":
-                    teamColor = Color.parseColor(reader.nextString());
+                case "color":
+                    recordedTeam.setColor(Color.parseColor(reader.nextString()));
+                    break;
+                case "liberoColor":
+                    recordedTeam.setLiberoColor(Color.parseColor(reader.nextString()));
+                    break;
+                case "players":
+                    readPlayerArray(reader, recordedTeam.getPlayers());
+                    break;
+                case "liberos":
+                    readPlayerArray(reader, recordedTeam.getLiberos());
                     break;
                 default:
                     reader.skipValue();
@@ -112,35 +126,69 @@ public class JsonHistoryReader {
             }
         }
         reader.endObject();
-
-        return new RecordedTeam(teamName, teamColor);
     }
 
-    private static List<RecordedSet> readSetArray(JsonReader reader) throws IOException {
-        List<RecordedSet> sets = new ArrayList<>();
-
+    private static void readPlayerArray(JsonReader reader, Set<Integer> players) throws IOException {
         reader.beginArray();
         while (reader.hasNext()) {
-            sets.add(readSet(reader));
+            players.add(reader.nextInt());
         }
         reader.endArray();
-
-        return sets;
     }
 
-    private static RecordedSet readSet(JsonReader reader) throws IOException {
-        long duration = 0L;
-        List<TeamType > pointsLadder = null;
+    private static void readSetArray(JsonReader reader, List<RecordedSet> recordedSets) throws IOException {
+        reader.beginArray();
+        while (reader.hasNext()) {
+            RecordedSet recordedSet = new RecordedSet();
+            recordedSets.add(recordedSet);
+            readSet(reader, recordedSet);
+        }
+        reader.endArray();
+    }
 
+    private static void readSet(JsonReader reader, RecordedSet recordedSet) throws IOException {
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
-                case "set_duration":
-                    duration = reader.nextLong();
+                case "duration":
+                    recordedSet.setDuration(reader.nextLong());
                     break;
-                case "set_ladder":
-                    pointsLadder = readLadder(reader);
+                case "hPoints":
+                    recordedSet.setPoints(TeamType.HOME, reader.nextInt());
+                    break;
+                case "gPoints":
+                    recordedSet.setPoints(TeamType.GUEST, reader.nextInt());
+                    break;
+                case "hTimeouts":
+                    recordedSet.setTimeouts(TeamType.HOME, reader.nextInt());
+                    break;
+                case "gTimeouts":
+                    recordedSet.setTimeouts(TeamType.GUEST, reader.nextInt());
+                    break;
+                case "ladder":
+                    readLadder(reader, recordedSet.getPointsLadder());
+                    break;
+                case "serving":
+                    recordedSet.setServingTeam(TeamType.fromLetter(reader.nextString()));
+                    break;
+                case "hCurrentPlayers":
+                    readPlayerObjectArray(reader, recordedSet.getCurrentPlayers(TeamType.HOME));
+                    break;
+                case "gCurrentPlayers":
+                    readPlayerObjectArray(reader, recordedSet.getCurrentPlayers(TeamType.GUEST));
+                    break;
+                case "hStartingPlayers":
+                    readPlayerObjectArray(reader, recordedSet.getStartingPlayers(TeamType.HOME));
+                    break;
+                case "gStartingPlayers":
+                    readPlayerObjectArray(reader, recordedSet.getStartingPlayers(TeamType.GUEST));
+                    break;
+                case "hSubstitutions":
+                    readSubstitutionArray(reader, recordedSet.getSubstitutions(TeamType.HOME));
+                    break;
+                case "gSubstitutions":
+                    readSubstitutionArray(reader, recordedSet.getSubstitutions(TeamType.GUEST));
                     break;
                 default:
                     reader.skipValue();
@@ -148,33 +196,65 @@ public class JsonHistoryReader {
             }
         }
         reader.endObject();
-
-        int homeTeamPoints = 0;
-        int guestTeamPoints = 0;
-
-        if (pointsLadder != null) {
-            for (TeamType teamType : pointsLadder) {
-                if (TeamType.HOME.equals(teamType)) {
-                    homeTeamPoints++;
-                } else {
-                    guestTeamPoints++;
-                }
-            }
-        }
-
-        return new RecordedSet(duration, homeTeamPoints, guestTeamPoints, pointsLadder);
     }
 
-    private static List<TeamType> readLadder(JsonReader reader) throws IOException {
-        List<TeamType> ladder = new ArrayList<>();
-
+    private static void readLadder(JsonReader reader, List<TeamType> pointsLadder) throws IOException {
         reader.beginArray();
         while (reader.hasNext()) {
-            ladder.add(TeamType.valueOf(reader.nextString()));
+            pointsLadder.add(TeamType.fromLetter(reader.nextString()));
         }
         reader.endArray();
-
-        return ladder;
     }
 
+    private static void readPlayerObjectArray(JsonReader reader, List<RecordedPlayer> players) throws IOException {
+        reader.beginArray();
+        while (reader.hasNext()) {
+            RecordedPlayer player = new RecordedPlayer();
+            players.add(player);
+            readPlayerObject(reader, player);
+        }
+        reader.endArray();
+    }
+
+    private static void readPlayerObject(JsonReader reader, RecordedPlayer player) throws IOException {
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "num":
+                    player.setNumber(reader.nextInt());
+                    break;
+                case "pos":
+                    player.setPositionType(PositionType.fromInt(reader.nextInt()));
+                    break;
+            }
+        }
+        reader.endObject();
+    }
+
+    private static void readSubstitutionArray(JsonReader reader, List<Substitution> substitutions) throws IOException {
+        reader.beginArray();
+        while (reader.hasNext()) {
+            Substitution substitution = new Substitution();
+            substitutions.add(substitution);
+            readSubstitution(reader, substitution);
+        }
+        reader.endArray();
+    }
+
+    private static void readSubstitution(JsonReader reader, Substitution substitution) throws IOException {
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "in":
+                    substitution.setPlayerIn(reader.nextInt());
+                    break;
+                case "out":
+                    substitution.setPlayerOut(reader.nextInt());
+                    break;
+            }
+        }
+        reader.endObject();
+    }
 }

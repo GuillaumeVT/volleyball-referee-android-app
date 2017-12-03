@@ -2,88 +2,93 @@ package com.tonkar.volleyballreferee;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.team.IndoorTeam;
+import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
+import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class IndoorTeamTest {
-
-    private final PositionType[] positions = { PositionType.POSITION_1, PositionType.POSITION_2, PositionType.POSITION_3, PositionType.POSITION_4, PositionType.POSITION_5, PositionType.POSITION_6 };
+public class IndoorTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        IndoorTeam team = new IndoorTeam(TeamType.HOME, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(TeamType.HOME), 6);
 
-        assertEquals(0, team.getNumberOfPlayers());
+        assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
-        assertEquals(false, team.hasPlayer(5));
-        assertEquals(false, team.hasPlayer(-1));
+        assertEquals(false, team.getTeamDefinition().hasPlayer(5));
+        assertEquals(false, team.getTeamDefinition().hasPlayer(-1));
         assertEquals(null, team.getPlayerPosition(5));
     }
 
     @Test
     public void createPlayers() {
-        IndoorTeam team = new IndoorTeam(TeamType.HOME, 6);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(TeamType.HOME);
         int playerCount = 7;
 
         for (int index = 1; index <= playerCount; index++) {
-            team.addPlayer(index);
-            assertEquals(index, team.getNumberOfPlayers());
-            assertEquals(0, team.getPlayersOnCourt().size());
-            assertEquals(true, team.hasPlayer(index));
+            teamDefinition.addPlayer(index);
+            assertEquals(index, teamDefinition.getNumberOfPlayers());
+            assertEquals(true, teamDefinition.hasPlayer(index));
+        }
+
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, 6);
+        assertEquals(0, team.getPlayersOnCourt().size());
+
+        for (int index = 1; index <= playerCount; index++) {
             assertEquals(PositionType.BENCH, team.getPlayerPosition(index));
         }
     }
 
     @Test
     public void createPlayers_liberoSelection() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(6);
-        assertEquals(false, team.canAddLibero());
+        IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(6);
+        assertEquals(false, teamDefinition.canAddLibero());
 
-        team = createTeamWithNPlayersAndFillCourt(7);
-        assertEquals(true, team.canAddLibero());
-        team.addLibero(7);
-        assertEquals(false, team.canAddLibero());
+        teamDefinition = createTeamWithNPlayers(7);
+        assertEquals(true, teamDefinition.canAddLibero());
+        teamDefinition.addLibero(7);
+        assertEquals(false, teamDefinition.canAddLibero());
 
-        team = createTeamWithNPlayersAndFillCourt(8);
-        assertEquals(true, team.canAddLibero());
-        team.addLibero(5);
-        assertEquals(true, team.canAddLibero());
-        team.addLibero(2);
-        assertEquals(false, team.canAddLibero());
+        teamDefinition = createTeamWithNPlayers(8);
+        assertEquals(true, teamDefinition.canAddLibero());
+        teamDefinition.addLibero(5);
+        assertEquals(true, teamDefinition.canAddLibero());
+        teamDefinition.addLibero(2);
+        assertEquals(false, teamDefinition.canAddLibero());
 
-        team = createTeamWithNPlayersAndFillCourt(13);
-        assertEquals(true, team.canAddLibero());
-        team.addLibero(9);
-        assertEquals(true, team.canAddLibero());
-        team.addLibero(1);
-        assertEquals(false, team.canAddLibero());
+        teamDefinition = createTeamWithNPlayers(13);
+        assertEquals(true, teamDefinition.canAddLibero());
+        teamDefinition.addLibero(9);
+        assertEquals(true, teamDefinition.canAddLibero());
+        teamDefinition.addLibero(1);
+        assertEquals(false, teamDefinition.canAddLibero());
     }
 
-    private IndoorTeam createTeamWithNPlayers(int playerCount) {
-        IndoorTeam team = new IndoorTeam(TeamType.GUEST, 6);
+    private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
+        IndoorTeamDefinition teamDefinition = (new IndoorTeamDefinition(TeamType.GUEST));
 
         for (int index = 1; index <= playerCount; index++) {
-            team.addPlayer(index);
+            teamDefinition.addPlayer(index);
         }
 
-        return team;
+        return teamDefinition;
     }
 
-    private IndoorTeam createTeamWithNPlayersAndFillCourt(int playerCount) {
-        IndoorTeam team = createTeamWithNPlayers(playerCount);
+    private IndoorTeamComposition createTeamWithNPlayersAndFillCourt(int playerCount) {
+        IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(playerCount);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, 6);
         int playersOnCourt = 6;
 
         for (int index = 1; index <= playersOnCourt; index++) {
-            team.substitutePlayer(index, positions[index-1]);
+            team.substitutePlayer(index, PositionType.fromInt(index));
         }
 
         return team;
@@ -91,14 +96,15 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_fillCourt() {
-        IndoorTeam team = createTeamWithNPlayers(10);
+        IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(10);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, 6);
         int playerCount = 6;
 
         assertEquals(0, team.getPlayersOnCourt().size());
 
         for (int index = 1; index <= playerCount; index++) {
-            assertEquals(true, team.substitutePlayer(index, positions[index-1]));
-            assertEquals(positions[index-1], team.getPlayerPosition(index));
+            assertEquals(true, team.substitutePlayer(index, PositionType.fromInt(index)));
+            assertEquals(PositionType.fromInt(index), team.getPlayerPosition(index));
             assertEquals(index, team.getPlayersOnCourt().size());
         }
 
@@ -106,12 +112,12 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_free() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
         assertEquals(true, team.substitutePlayer(4, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
-        List<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_1);
+        Set<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_1);
         assertEquals(4, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(6));
         assertEquals(true, availablePlayers.contains(8));
@@ -121,12 +127,12 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_confirmed_front() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
 
-        List<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
+        Set<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
         assertEquals(1, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(4));
 
@@ -142,19 +148,20 @@ public class IndoorTeamTest {
         assertEquals(false, team.substitutePlayer(7, PositionType.POSITION_4));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
 
-        team.addLibero(10);
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
         availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
         assertEquals(0, availablePlayers.size());
     }
 
     @Test
     public void substitution_changePlayer_confirmed_back() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
 
-        List<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        Set<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
         assertEquals(1, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(6));
 
@@ -170,7 +177,8 @@ public class IndoorTeamTest {
         assertEquals(false, team.substitutePlayer(7, PositionType.POSITION_6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
 
-        team.addLibero(10);
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
         availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
         assertEquals(1, availablePlayers.size());
         assertEquals(true, availablePlayers.contains(10));
@@ -178,10 +186,11 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_libero() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
-        team.addLibero(10);
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
         assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
         assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_4).contains(10));
         assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).size() > 1);
@@ -196,11 +205,11 @@ public class IndoorTeamTest {
         assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
         assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).size() > 1);
 
-        team.addLibero(11);
+        teamDefinition.addLibero(11);
         assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(11));
         assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_4).contains(11));
 
-        team.addLibero(9);
+        teamDefinition.addLibero(9);
         assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(9));
         assertEquals(true, team.getPossibleSubstitutions(PositionType.POSITION_6).contains(10));
         assertEquals(false, team.getPossibleSubstitutions(PositionType.POSITION_4).contains(9));
@@ -213,7 +222,7 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_changePlayer_max() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_1));
@@ -227,16 +236,17 @@ public class IndoorTeamTest {
 
     @Test
     public void substitution_abnormal() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         assertEquals(false, team.substitutePlayer(18, PositionType.POSITION_1));
 
-        team.addLibero(10);
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
         assertEquals(false, team.substitutePlayer(10, PositionType.POSITION_4));
     }
 
     @Test
     public void rotation_next() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
         team.confirmStartingLineup();
 
         team.rotateToNextPositions();
@@ -251,8 +261,9 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_next_libero() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
-        team.addLibero(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
         team.confirmStartingLineup();
         assertEquals(true, team.substitutePlayer(10, PositionType.POSITION_6));
 
@@ -285,7 +296,7 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_previous() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(13);
         team.confirmStartingLineup();
 
         team.rotateToPreviousPositions();
@@ -300,8 +311,9 @@ public class IndoorTeamTest {
 
     @Test
     public void rotation_previous_libero() {
-        IndoorTeam team = createTeamWithNPlayersAndFillCourt(10);
-        team.addLibero(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(12);
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
         team.confirmStartingLineup();
 
         assertEquals(true, team.substitutePlayer(10, PositionType.POSITION_1));

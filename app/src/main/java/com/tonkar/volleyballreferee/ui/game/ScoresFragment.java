@@ -11,17 +11,17 @@ import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.GameClient;
-import com.tonkar.volleyballreferee.interfaces.GameListener;
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.ScoreClient;
+import com.tonkar.volleyballreferee.interfaces.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class ScoresFragment extends Fragment implements NamedGameFragment, GameClient, TeamClient, GameListener {
+public class ScoresFragment extends Fragment implements NamedGameFragment, ScoreClient, TeamClient, ScoreListener {
 
     private SetsListAdapter mSetsListAdapter;
-    private GameService     mGameService;
+    private ScoreService    mScoreService;
     private TeamService     mTeamService;
 
     public ScoresFragment() {
@@ -42,15 +42,15 @@ public class ScoresFragment extends Fragment implements NamedGameFragment, GameC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Ladders", "Create scores fragment");
-        setGameService(ServicesProvider.getInstance().getGameService());
+        setScoreService(ServicesProvider.getInstance().getScoreService());
         setTeamService(ServicesProvider.getInstance().getTeamService());
 
-        mGameService.addGameListener(this);
+        mScoreService.addScoreListener(this);
 
         View view = inflater.inflate(R.layout.fragment_scores, container, false);
 
         ListView setsList = view.findViewById(R.id.set_list);
-        mSetsListAdapter = new SetsListAdapter(inflater, mGameService, mTeamService, true);
+        mSetsListAdapter = new SetsListAdapter(inflater, mScoreService, mTeamService, true);
         setsList.setAdapter(mSetsListAdapter);
 
         return view;
@@ -59,7 +59,7 @@ public class ScoresFragment extends Fragment implements NamedGameFragment, GameC
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mGameService.removeGameListener(this);
+        mScoreService.removeScoreListener(this);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class ScoresFragment extends Fragment implements NamedGameFragment, GameC
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setScoreService(ScoreService scoreService) {
+        mScoreService = scoreService;
     }
 
     @Override
@@ -87,6 +87,6 @@ public class ScoresFragment extends Fragment implements NamedGameFragment, GameC
     public void onSetCompleted() {}
 
     @Override
-    public void onGameCompleted(TeamType winner) {}
+    public void onMatchCompleted(TeamType winner) {}
 
 }

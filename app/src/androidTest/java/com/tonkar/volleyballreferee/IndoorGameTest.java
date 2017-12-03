@@ -17,6 +17,7 @@ public class IndoorGameTest {
     @Test
     public void winSet_normal() {
         Game game = GameFactory.createIndoorGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -32,6 +33,7 @@ public class IndoorGameTest {
     @Test
     public void winSet_2PointsGap() {
         Game game = GameFactory.createIndoorGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -56,6 +58,7 @@ public class IndoorGameTest {
     @Test
     public void winGame_normal() {
         Game game = GameFactory.createIndoorGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -73,7 +76,7 @@ public class IndoorGameTest {
             game.addPoint(TeamType.HOME);
         }
 
-        assertEquals(true, game.isGameCompleted());
+        assertEquals(true, game.isMatchCompleted());
         assertEquals(3, game.getSets(TeamType.HOME));
         assertEquals(1, game.getSets(TeamType.GUEST));
         assertEquals(4, game.getNumberOfSets());
@@ -82,6 +85,7 @@ public class IndoorGameTest {
     @Test
     public void winGame_tieBreak() {
         Game game = GameFactory.createIndoorGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -103,7 +107,7 @@ public class IndoorGameTest {
             game.addPoint(TeamType.GUEST);
         }
 
-        assertEquals(true, game.isGameCompleted());
+        assertEquals(true, game.isMatchCompleted());
         assertEquals(2, game.getSets(TeamType.HOME));
         assertEquals(3, game.getSets(TeamType.GUEST));
         assertEquals(5, game.getNumberOfSets());

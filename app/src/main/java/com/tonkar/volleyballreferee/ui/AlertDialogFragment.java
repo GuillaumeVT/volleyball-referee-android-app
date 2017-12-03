@@ -82,7 +82,14 @@ public class AlertDialogFragment extends DialogFragment {
 
         setCancelable(false);
 
-        return builder.create();
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+            }
+        });
+        return alertDialog;
     }
 
     public void setAlertDialogListener(AlertDialogListener alertDialogListener) {

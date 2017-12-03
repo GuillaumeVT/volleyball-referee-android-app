@@ -1,9 +1,9 @@
 package com.tonkar.volleyballreferee.business.game;
 
-import com.tonkar.volleyballreferee.business.team.Team;
+import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
+import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.BeachTeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.business.team.BeachTeam;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -15,12 +15,13 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    protected Team createTeam(TeamType teamType) {
-        return new BeachTeam(teamType);
+    protected TeamDefinition createTeamDefinition(TeamType teamType) {
+        return new BeachTeamDefinition(teamType);
     }
 
-    private BeachTeam getBeachTeam(TeamType teamType) {
-        return (BeachTeam) getTeam(teamType);
+    @Override
+    protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart) {
+        return new BeachSet(rules, isTieBreakSet ? 15 : rules.getPointsPerSet(), servingTeamAtStart);
     }
 
     @Override
@@ -57,12 +58,9 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    protected void onNewSet() {}
-
-    @Override
     public void swapPlayers(TeamType teamType) {
         if (isFirstTimeServing(teamType)) {
-            getBeachTeam(teamType).rotateToNextPositions();
+            currentSet().getTeamComposition(teamType).rotateToNextPositions();
             notifyTeamRotated(teamType);
         }
     }

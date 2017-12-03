@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="8dp"
+              android:layout_margin="@dimen/default_margin_size"
               android:gravity="top|center"
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity">
@@ -12,17 +12,17 @@
         android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minWidth="200dp"
+        android:layout_margin="@dimen/default_margin_size"
+        android:minWidth="@dimen/next_button_min_width"
         android:onClick="validateTeams"
         android:text="@string/next"
-        android:textSize="16sp"
+        android:textSize="@dimen/default_text_size"
         android:theme="@style/ButtonTheme"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/default_margin_size"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -35,7 +35,7 @@
             android:hint="@string/home_team_hint"
             android:inputType="textCapWords"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
 
         <Button
             android:id="@+id/home_team_color_button"
@@ -50,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/default_margin_size"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -63,7 +63,7 @@
             android:hint="@string/guest_team_hint"
             android:inputType="textCapWords"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
 
         <Button
             android:id="@+id/guest_team_color_button"

@@ -73,9 +73,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        mGamesHistoryService = new GamesHistory(getApplicationContext());
-        mGamesHistoryService.loadRecordedGames();
-        ServicesProvider.getInstance().setGameHistoryService(mGamesHistoryService);
+        if (savedInstanceState == null) {
+            mGamesHistoryService = new GamesHistory(getApplicationContext());
+            mGamesHistoryService.loadRecordedGames();
+            ServicesProvider.getInstance().setGamesHistoryService(mGamesHistoryService);
+        } else {
+            mGamesHistoryService = ServicesProvider.getInstance().getGameHistoryService();
+        }
 
         resumeCurrentGameWithDialog(savedInstanceState);
     }
@@ -180,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initServices(Game game) {
-        ServicesProvider.getInstance().setGameService(game);
+        ServicesProvider.getInstance().setScoreService(game);
         ServicesProvider.getInstance().setTeamService(game);
         ServicesProvider.getInstance().setTimeoutService(game);
     }

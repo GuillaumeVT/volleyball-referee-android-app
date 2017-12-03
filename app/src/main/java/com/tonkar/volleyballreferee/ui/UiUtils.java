@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -12,10 +13,13 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
@@ -73,6 +77,13 @@ public class UiUtils {
             }
         } else {
             Log.w("VBR-Share", "No permission to share");
+        }
+    }
+
+    public static void setAlertDialogMessageSize(AlertDialog alertDialog, Resources resources) {
+        TextView textView = alertDialog.findViewById(android.R.id.message);
+        if (textView != null) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.default_text_size));
         }
     }
 

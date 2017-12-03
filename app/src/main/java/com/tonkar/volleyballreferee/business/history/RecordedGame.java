@@ -1,54 +1,61 @@
 package com.tonkar.volleyballreferee.business.history;
 
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class RecordedGame implements RecordedGameService {
 
-    private final GameType          mGameType;
-    private final long              mGameDate;
-    private final RecordedTeam      mHomeTeam;
-    private final RecordedTeam      mGuestTeam;
-    private final List<RecordedSet> mSets;
-    private final int               mHomeSets;
-    private final int               mGuestSets;
+    private GameType          mGameType;
+    private long              mGameDate;
+    private boolean           mLive;
+    private RecordedTeam      mHomeTeam;
+    private RecordedTeam      mGuestTeam;
+    private int               mHomeSets;
+    private int               mGuestSets;
+    private List<RecordedSet> mSets;
 
-    public RecordedGame(GameType gameType, long gameDate, RecordedTeam homeTeam, RecordedTeam guestTeam, List<RecordedSet> sets) {
-        mGameType = gameType;
-        mGameDate = gameDate;
-        mHomeTeam = homeTeam;
-        mGuestTeam = guestTeam;
-        mSets = sets;
+    public RecordedGame() {
+        mGameType = GameType.INDOOR;
+        mGameDate = 0L;
+        mLive = false;
+        mHomeTeam = new RecordedTeam();
+        mGuestTeam = new RecordedTeam();
+        mHomeSets = 0;
+        mGuestSets = 0;
+        mSets = new ArrayList<>();
+    }
 
-        int homeSets = 0;
-        int guestSets = 0;
+    @Override
+    public String getGameSummary() {
+        return String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
+    }
 
-        for (RecordedSet recordedSet : mSets) {
-            if (recordedSet.getHomeTeamPoints() > recordedSet.getGuestTeamPoints()) {
-                homeSets++;
-            }
-            else {
-                guestSets++;
-            }
+    private int currentSetIndex() {
+        return mSets.size() -1;
+    }
+
+    public RecordedTeam getTeam(TeamType teamType) {
+        RecordedTeam team;
+
+        if (TeamType.HOME.equals(teamType)) {
+            team = mHomeTeam;
+        } else {
+            team = mGuestTeam;
         }
 
-        mHomeSets = homeSets;
-        mGuestSets = guestSets;
+        return team;
     }
 
-    RecordedTeam getHomeTeam() {
-        return mHomeTeam;
-    }
-
-    RecordedTeam getGuestTeam() {
-        return mGuestTeam;
-    }
-
-    List<RecordedSet> getSets() {
+    public List<RecordedSet> getSets() {
         return mSets;
     }
 
@@ -57,14 +64,17 @@ public class RecordedGame implements RecordedGameService {
         return mGameType;
     }
 
+    public void setGameType(GameType gameType) {
+        mGameType = gameType;
+    }
+
     @Override
     public long getGameDate() {
         return mGameDate;
     }
 
-    @Override
-    public String getGameSummary() {
-        return String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME),getSets(TeamType.GUEST), mGuestTeam.getName());
+    public void setGameDate(long gameDate) {
+        mGameDate = gameDate;
     }
 
     @Override
@@ -85,9 +95,12 @@ public class RecordedGame implements RecordedGameService {
         return count;
     }
 
-    @Override
-    public long getSetDuration() {
-        return getSetDuration(mSets.size() -1);
+    public void setSets(TeamType teamType, int count) {
+        if (TeamType.HOME.equals(teamType)) {
+            mHomeSets = count;
+        } else {
+            mGuestSets = count;
+        }
     }
 
     @Override
@@ -97,25 +110,17 @@ public class RecordedGame implements RecordedGameService {
 
     @Override
     public int getPoints(TeamType teamType) {
-        return getPoints(teamType, mSets.size() -1);
+        return getPoints(teamType, currentSetIndex());
     }
 
     @Override
     public int getPoints(TeamType teamType, int setIndex) {
-        int count;
-
-        if (TeamType.HOME.equals(teamType)) {
-            count = mSets.get(setIndex).getHomeTeamPoints();
-        } else {
-            count = mSets.get(setIndex).getGuestTeamPoints();
-        }
-
-        return count;
+        return mSets.get(setIndex).getPoints(teamType);
     }
 
     @Override
     public List<TeamType> getPointsLadder() {
-        return getPointsLadder(mSets.size() -1);
+        return getPointsLadder(currentSetIndex());
     }
 
     @Override
@@ -124,29 +129,166 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public TeamType getServingTeam() {
+        return TeamType.HOME;
+    }
+
+    @Override
+    public boolean isMatchCompleted() {
+        return !mLive;
+    }
+
+    public void setMatchCompleted(boolean matchCompleted) {
+        mLive = !matchCompleted;
+    }
+
+    @Override
     public String getTeamName(TeamType teamType) {
-        String name;
-
-        if (TeamType.HOME.equals(teamType)) {
-            name = mHomeTeam.getName();
-        } else {
-            name = mGuestTeam.getName();
-        }
-
-        return name;
+        return getTeam(teamType).getName();
     }
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        int color;
+        return getTeam(teamType).getColor();
+    }
+
+    @Override
+    public void setTeamName(TeamType teamType, String name) {}
+
+    @Override
+    public void setTeamColor(TeamType teamType, int color) {}
+
+    @Override
+    public void addPlayer(TeamType teamType, int number) {}
+
+    @Override
+    public void removePlayer(TeamType teamType, int number) {}
+
+    @Override
+    public boolean hasPlayer(TeamType teamType, int number) {
+        boolean result;
 
         if (TeamType.HOME.equals(teamType)) {
-            color = mHomeTeam.getColor();
+            result = mHomeTeam.getPlayers().contains(number) || mHomeTeam.getLiberos().contains(number);
         } else {
-            color = mGuestTeam.getColor();
+            result = mGuestTeam.getPlayers().contains(number) || mGuestTeam.getLiberos().contains(number);
         }
 
-        return color;
+        return result;
+    }
+
+    @Override
+    public int getNumberOfPlayers(TeamType teamType) {
+        int count;
+
+        if (TeamType.HOME.equals(teamType)) {
+            count = mHomeTeam.getPlayers().size() + mHomeTeam.getLiberos().size();
+        } else {
+            count = mGuestTeam.getPlayers().size() + mGuestTeam.getLiberos().size();
+        }
+
+        return count;
+    }
+
+    @Override
+    public Set<Integer> getPlayers(TeamType teamType) {
+        Set<Integer> players = new TreeSet<>();
+        players.addAll(getTeam(teamType).getPlayers());
+        players.addAll(getTeam(teamType).getLiberos());
+        return players;
+    }
+
+    @Override
+    public int getLiberoColor(TeamType teamType) {
+        return getTeam(teamType).getLiberoColor();
+    }
+
+    @Override
+    public void setLiberoColor(TeamType teamType, int color) {}
+
+    @Override
+    public void addLibero(TeamType teamType, int number) {}
+
+    @Override
+    public void removeLibero(TeamType teamType, int number) {}
+
+    @Override
+    public boolean isLibero(TeamType teamType, int number) {
+        return getTeam(teamType).getLiberos().contains(number);
+    }
+
+    @Override
+    public boolean canAddLibero(TeamType teamType) {
+        return false;
+    }
+
+    @Override
+    public List<Substitution> getSubstitutions(TeamType teamType) {
+        return getSubstitutions(teamType, currentSetIndex());
+    }
+
+    @Override
+    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
+        return mSets.get(setIndex).getSubstitutions(teamType);
+    }
+
+    @Override
+    public boolean isStartingLineupConfirmed() {
+        RecordedSet set = mSets.get(currentSetIndex());
+        return !set.getSubstitutions(TeamType.HOME).isEmpty() && !set.getSubstitutions(TeamType.GUEST).isEmpty();
+    }
+
+    @Override
+    public Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
+        Set<Integer> players = new TreeSet<>();
+        List<RecordedPlayer> startingLineup = mSets.get(setIndex).getStartingPlayers(teamType);
+
+        for (RecordedPlayer player : startingLineup) {
+            players.add(player.getNumber());
+        }
+
+        return players;
+    }
+
+    @Override
+    public PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex) {
+        PositionType positionType = null;
+        List<RecordedPlayer> startingLineup = mSets.get(setIndex).getStartingPlayers(teamType);
+
+        for (RecordedPlayer player : startingLineup) {
+            if (player.getNumber() == number) {
+                positionType = player.getPositionType();
+            }
+        }
+
+        return positionType;
+    }
+
+    @Override
+    public int getPlayerAtPositionInStartingLineup(TeamType teamType, PositionType positionType, int setIndex) {
+        int number = -1;
+        List<RecordedPlayer> startingLineup = mSets.get(setIndex).getStartingPlayers(teamType);
+
+        for (RecordedPlayer player : startingLineup) {
+            if (player.getPositionType().equals(positionType)) {
+                number = player.getNumber();
+            }
+        }
+
+        return number;
+    }
+
+    @Override
+    public void initTeams() {}
+
+    @Override
+    public int getTimeouts(TeamType teamType) {
+        return mSets.get(currentSetIndex()).getTimeouts(teamType);
+    }
+
+    @Override
+    public int getTimeouts(TeamType teamType, int setIndex) {
+        return mSets.get(setIndex).getTimeouts(teamType);
     }
 
     @Override
@@ -166,11 +308,15 @@ public class RecordedGame implements RecordedGameService {
             RecordedGame other = (RecordedGame) obj;
             result = (this.getGameDate() == other.getGameDate())
                     && this.getGameType().equals(other.getGameType())
-                    && this.getHomeTeam().equals(other.getHomeTeam())
-                    && this.getGuestTeam().equals(other.getGuestTeam())
+                    && (this.isMatchCompleted() == other.isMatchCompleted())
+                    && this.getTeam(TeamType.HOME).equals(other.getTeam(TeamType.HOME))
+                    && this.getTeam(TeamType.GUEST).equals(other.getTeam(TeamType.GUEST))
+                    && (this.getSets(TeamType.HOME) == other.getSets(TeamType.HOME))
+                    && (this.getSets(TeamType.GUEST) == other.getSets(TeamType.GUEST))
                     && this.getSets().equals(other.getSets());
         }
 
         return result;
     }
+
 }

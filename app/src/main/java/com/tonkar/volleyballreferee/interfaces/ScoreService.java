@@ -2,17 +2,15 @@ package com.tonkar.volleyballreferee.interfaces;
 
 import com.tonkar.volleyballreferee.rules.Rules;
 
-public interface GameService extends BaseGameService {
+public interface ScoreService extends BaseScoreService {
 
-    void addGameListener(GameListener listener);
+    void addScoreListener(ScoreListener listener);
 
-    void removeGameListener(GameListener listener);
+    void removeScoreListener(ScoreListener listener);
 
     Rules getRules();
 
-    boolean isGameCompleted();
-
-    boolean isGamePoint();
+    boolean isMatchPoint();
 
     boolean isSetPoint();
 
@@ -21,8 +19,6 @@ public interface GameService extends BaseGameService {
     void removeLastPoint();
 
     TeamType getLeadingTeam();
-
-    TeamType getServingTeam();
 
     void swapServiceAtStart();
 

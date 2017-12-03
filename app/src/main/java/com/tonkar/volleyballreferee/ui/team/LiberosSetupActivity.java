@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
 public class LiberosSetupActivity extends AppCompatActivity {
@@ -36,6 +38,7 @@ public class LiberosSetupActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.confirm_teams_setup_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                ServicesProvider.getInstance().getTeamService().initTeams();
                 Log.i("VBR-LSActivity", "Start game activity");
                 final Intent gameIntent = new Intent(LiberosSetupActivity.this, GameActivity.class);
                 startActivity(gameIntent);
@@ -44,7 +47,8 @@ public class LiberosSetupActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {}
         });
-        builder.show();
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
 }

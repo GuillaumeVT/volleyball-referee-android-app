@@ -116,7 +116,4 @@ public class RecentGamesListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    long getGameDate(int index) {
-        return mFilteredRecordedGameServiceList.get(index).getGameDate();
-    }
 }

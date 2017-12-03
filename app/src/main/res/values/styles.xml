@@ -42,13 +42,13 @@
 
     <style name="AppTheme.Preferences" parent="AppTheme">
         <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
 </resources>

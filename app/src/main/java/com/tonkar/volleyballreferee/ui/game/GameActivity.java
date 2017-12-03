@@ -24,11 +24,11 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameClient;
-import com.tonkar.volleyballreferee.interfaces.GameHistoryClient;
+import com.tonkar.volleyballreferee.interfaces.ScoreClient;
+import com.tonkar.volleyballreferee.interfaces.GamesHistoryClient;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
-import com.tonkar.volleyballreferee.interfaces.GameListener;
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
@@ -42,9 +42,9 @@ import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements GameClient, TimeoutClient, TeamClient, GameHistoryClient, GameListener, TimeoutListener, TeamListener {
+public class GameActivity extends AppCompatActivity implements ScoreClient, TimeoutClient, TeamClient, GamesHistoryClient, ScoreListener, TimeoutListener, TeamListener {
 
-    private GameService         mGameService;
+    private ScoreService        mScoreService;
     private TimeoutService      mTimeoutService;
     private TeamService         mTeamService;
     private GamesHistoryService mGamesHistoryService;
@@ -77,12 +77,12 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
         setTitle("");
 
-        setGameService(ServicesProvider.getInstance().getGameService());
+        setScoreService(ServicesProvider.getInstance().getScoreService());
         setTimeoutService(ServicesProvider.getInstance().getTimeoutService());
         setTeamService(ServicesProvider.getInstance().getTeamService());
-        setGameHistoryService(ServicesProvider.getInstance().getGameHistoryService());
+        setGamesHistoryService(ServicesProvider.getInstance().getGameHistoryService());
 
-        mGameService.addGameListener(this);
+        mScoreService.addScoreListener(this);
         mTimeoutService.addTimeoutListener(this);
         mTeamService.addTeamListener(this);
         mGamesHistoryService.connectGameRecorder();
@@ -113,8 +113,8 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         mLeftTeamTimeoutLayout = findViewById(R.id.left_team_timeout_layout);
         mRightTeamTimeoutLayout = findViewById(R.id.right_team_timeout_layout);
 
-        if (mGameService.getRules().areTeamTimeoutsEnabled()) {
-            for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
+        if (mScoreService.getRules().areTeamTimeoutsEnabled()) {
+            for (int index = 0; index < mScoreService.getRules().getTeamTimeoutsPerSet(); index++) {
                 final ImageView leftTimeout = new ImageView(this);
                 leftTimeout.setImageResource(R.drawable.timeout_shape);
                 final LinearLayout.LayoutParams leftTimeoutLayout = new LinearLayout.LayoutParams(
@@ -139,16 +139,21 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         }
 
         final ViewPager gamePager = findViewById(R.id.game_pager);
-        gamePager.setAdapter(new GameFragmentPagerAdapter(mGameService, this, getSupportFragmentManager()));
+        final GameFragmentPagerAdapter gamePagerAdapter = new GameFragmentPagerAdapter(mScoreService, this, getSupportFragmentManager());
+        gamePager.setAdapter(gamePagerAdapter);
 
-        TabLayout gameTabs = findViewById(R.id.game_tabs);
+        final TabLayout gameTabs = findViewById(R.id.game_tabs);
         gameTabs.setupWithViewPager(gamePager);
+
+        if (gamePagerAdapter.getCount() == 1) {
+            gameTabs.setVisibility(View.GONE);
+        }
 
         mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
         mTeamOnRightSide = mTeamService.getTeamOnRightSide();
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, ActionOriginType.USER);
 
-        if (mGameService.isGameCompleted()) {
+        if (mScoreService.isMatchCompleted()) {
             disableView();
         }
     }
@@ -156,7 +161,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mGameService.removeGameListener(this);
+        mScoreService.removeScoreListener(this);
         mTimeoutService.removeTimeoutListener(this);
         mTeamService.removeTeamListener(this);
         mGamesHistoryService.disconnectGameRecorder();
@@ -175,7 +180,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         inflater.inflate(R.menu.menu_game, menu);
         mMenu = menu;
 
-        if (mGameService.isGameCompleted()) {
+        if (mScoreService.isMatchCompleted()) {
             disableMenu();
         }
 
@@ -207,7 +212,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
     private void navigateHomeWithDialog() {
         Log.i("VBR-GameActivity", "Navigate home");
-        if (mGameService.isGameCompleted()) {
+        if (mScoreService.isMatchCompleted()) {
             navigateHome();
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
@@ -220,7 +225,9 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {}
             });
-            builder.show();
+
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         }
     }
 
@@ -233,7 +240,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
     private void share() {
         Log.i("VBR-GameActivity", "Share game");
-        UiUtils.shareScreen(this, getWindow(), mGameService.getGameSummary());
+        UiUtils.shareScreen(this, getWindow(), mScoreService.getGameSummary());
     }
 
     // UI Callbacks
@@ -245,12 +252,12 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
 
     public void swapFirstService(View view) {
         Log.i("VBR-GameActivity", "Swap first service");
-        mGameService.swapServiceAtStart();
+        mScoreService.swapServiceAtStart();
     }
 
     public void removeLastPoint(View view) {
         Log.i("VBR-GameActivity", "Remove last point");
-        mGameService.removeLastPoint();
+        mScoreService.removeLastPoint();
     }
 
     public void increaseLeftScore(View view) {
@@ -269,15 +276,15 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     }
 
     private void increaseScoreWithDialog(final TeamType teamType) {
-        if ((mGameService.isGamePoint() || mGameService.isSetPoint()) && mGameService.getLeadingTeam().equals(teamType)) {
-            String title = mGameService.isGamePoint() ? getResources().getString(R.string.match_point) : getResources().getString(R.string.set_point);
+        if ((mScoreService.isMatchPoint() || mScoreService.isSetPoint()) && mScoreService.getLeadingTeam().equals(teamType)) {
+            String title = mScoreService.isMatchPoint() ? getResources().getString(R.string.match_point) : getResources().getString(R.string.set_point);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(title).setMessage(getResources().getString(R.string.confirm_set_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Log.i("VBR-GameActivity", "User accepts the set point");
-                    mGameService.addPoint(teamType);
+                    mScoreService.addPoint(teamType);
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -285,9 +292,10 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
                     Log.i("VBR-GameActivity", "User refuses the set point");
                 }
             });
-            builder.show();
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
-            mGameService.addPoint(teamType);
+            mScoreService.addPoint(teamType);
         }
     }
 
@@ -334,15 +342,15 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         mRightTeamNameText.setText(mTeamService.getTeamName(mTeamOnRightSide));
         UiUtils.colorTeamButton(this, mTeamService.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
 
-        onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
-        onSetsUpdated(mTeamOnLeftSide, mGameService.getSets(mTeamOnLeftSide));
-        onTimeoutUpdated(mTeamOnLeftSide, mGameService.getRules().getTeamTimeoutsPerSet(), mTimeoutService.getTimeouts(mTeamOnLeftSide));
+        onPointsUpdated(mTeamOnLeftSide, mScoreService.getPoints(mTeamOnLeftSide));
+        onSetsUpdated(mTeamOnLeftSide, mScoreService.getSets(mTeamOnLeftSide));
+        onTimeoutUpdated(mTeamOnLeftSide, mScoreService.getRules().getTeamTimeoutsPerSet(), mTimeoutService.getTimeouts(mTeamOnLeftSide));
 
-        onPointsUpdated(mTeamOnRightSide, mGameService.getPoints(mTeamOnRightSide));
-        onSetsUpdated(mTeamOnRightSide, mGameService.getSets(mTeamOnRightSide));
-        onTimeoutUpdated(mTeamOnRightSide, mGameService.getRules().getTeamTimeoutsPerSet(), mTimeoutService.getTimeouts(mTeamOnRightSide));
+        onPointsUpdated(mTeamOnRightSide, mScoreService.getPoints(mTeamOnRightSide));
+        onSetsUpdated(mTeamOnRightSide, mScoreService.getSets(mTeamOnRightSide));
+        onTimeoutUpdated(mTeamOnRightSide, mScoreService.getRules().getTeamTimeoutsPerSet(), mTimeoutService.getTimeouts(mTeamOnRightSide));
 
-        onServiceSwapped(mGameService.getServingTeam());
+        onServiceSwapped(mScoreService.getServingTeam());
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
             Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
@@ -356,8 +364,8 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     public void onTeamRotated(TeamType teamType) {}
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setScoreService(ScoreService scoreService) {
+        mScoreService = scoreService;
     }
 
     @Override
@@ -369,18 +377,18 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
         }
 
         StringBuilder builder = new StringBuilder();
-        for (int index = 0; index < mGameService.getNumberOfSets(); index++) {
-            int leftPointsCount = mGameService.getPoints(mTeamOnLeftSide, index);
-            int rightPointsCount = mGameService.getPoints(mTeamOnRightSide, index);
+        for (int index = 0; index < mScoreService.getNumberOfSets(); index++) {
+            int leftPointsCount = mScoreService.getPoints(mTeamOnLeftSide, index);
+            int rightPointsCount = mScoreService.getPoints(mTeamOnRightSide, index);
             builder.append(String.valueOf(leftPointsCount)).append('-').append(String.valueOf(rightPointsCount)).append('\t');
         }
         mSetsText.setText(builder.toString());
 
-        if (mGameService.isGamePoint()) {
+        if (mScoreService.isMatchPoint()) {
             String text = getResources().getString(R.string.match_point);
             setTitle(text);
             Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-        } else if (mGameService.isSetPoint()) {
+        } else if (mScoreService.isSetPoint()) {
             String text = getResources().getString(R.string.set_point);
             setTitle(text);
             Toast.makeText(this, text, Toast.LENGTH_LONG).show();
@@ -413,7 +421,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     public void onSetCompleted() {}
 
     @Override
-    public void onGameCompleted(final TeamType winner) {
+    public void onMatchCompleted(final TeamType winner) {
         disableAll();
         Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mTeamService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
@@ -476,7 +484,7 @@ public class GameActivity extends AppCompatActivity implements GameClient, Timeo
     }
 
     @Override
-    public void setGameHistoryService(GamesHistoryService gamesHistoryService) {
+    public void setGamesHistoryService(GamesHistoryService gamesHistoryService) {
         mGamesHistoryService = gamesHistoryService;
     }
 

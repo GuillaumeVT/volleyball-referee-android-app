@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces;
 
-import java.util.List;
+import java.util.Set;
 
 public interface TeamService extends BaseTeamService {
 
@@ -8,23 +8,17 @@ public interface TeamService extends BaseTeamService {
 
     void removeTeamListener(final TeamListener listener);
 
-    void setTeamName(TeamType teamType, String name);
+    Set<Integer> getPlayersOnCourt(TeamType teamType);
 
-    void setTeamColor(TeamType teamType, int color);
-
-    void addPlayer(TeamType teamType, int number);
-
-    void removePlayer(TeamType teamType, int number);
-
-    boolean hasPlayer(TeamType teamType, int number);
-
-    List<Integer> getPlayers(TeamType teamType);
-
-    List<Integer> getPlayersOnCourt(TeamType teamType);
+    Set<Integer> getPlayersOnCourt(TeamType teamType, int setIndex);
 
     PositionType getPlayerPosition(TeamType teamType, int number);
 
+    PositionType getPlayerPosition(TeamType teamType, int number, int setIndex);
+
     int getPlayerAtPosition(TeamType teamType, PositionType positionType);
+
+    int getPlayerAtPosition(TeamType teamType, PositionType positionType, int setIndex);
 
     void swapTeams(ActionOriginType actionOriginType);
 

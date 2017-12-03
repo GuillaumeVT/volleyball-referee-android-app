@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_margin="8dp"
+              android:layout_margin="@dimen/default_margin_size"
               android:gravity="top|center"
               android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/default_margin_size"
+        android:gravity="center|start"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -21,7 +21,7 @@
             android:layout_weight="3"
             android:text="@string/select_libero"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
 
         <Button
             android:id="@+id/libero_color_button"
@@ -37,11 +37,11 @@
         android:id="@+id/team_libero_numbers_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:columnWidth="50dp"
+        android:layout_marginTop="@dimen/default_margin_size"
+        android:columnWidth="@dimen/player_big_column_width"
         android:gravity="center"
-        android:horizontalSpacing="8dp"
+        android:horizontalSpacing="@dimen/default_margin_size"
         android:numColumns="auto_fit"
-        android:verticalSpacing="8dp"/>
+        android:verticalSpacing="@dimen/default_margin_size"/>
 
 </LinearLayout>

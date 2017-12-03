@@ -1,18 +1,18 @@
 package com.tonkar.volleyballreferee;
 
-import com.tonkar.volleyballreferee.interfaces.GameClient;
-import com.tonkar.volleyballreferee.interfaces.GameHistoryClient;
+import com.tonkar.volleyballreferee.interfaces.ScoreClient;
+import com.tonkar.volleyballreferee.interfaces.GamesHistoryClient;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TimeoutClient;
 import com.tonkar.volleyballreferee.interfaces.TimeoutService;
 
-public class ServicesProvider implements GameClient, TeamClient, TimeoutClient, GameHistoryClient {
+public class ServicesProvider implements ScoreClient, TeamClient, TimeoutClient, GamesHistoryClient {
 
     private static ServicesProvider    sServicesProvider;
-    private        GameService         mGameService;
+    private        ScoreService        mScoreService;
     private        TeamService         mTeamService;
     private        TimeoutService      mTimeoutService;
     private        GamesHistoryService mGamesHistoryService;
@@ -27,8 +27,8 @@ public class ServicesProvider implements GameClient, TeamClient, TimeoutClient, 
         return sServicesProvider;
     }
 
-    public GameService getGameService() {
-        return mGameService;
+    public ScoreService getScoreService() {
+        return mScoreService;
     }
 
     public TeamService getTeamService() {
@@ -44,8 +44,8 @@ public class ServicesProvider implements GameClient, TeamClient, TimeoutClient, 
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setScoreService(ScoreService scoreService) {
+        mScoreService = scoreService;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ServicesProvider implements GameClient, TeamClient, TimeoutClient, 
     }
 
     @Override
-    public void setGameHistoryService(GamesHistoryService gamesHistoryService) {
+    public void setGamesHistoryService(GamesHistoryService gamesHistoryService) {
         mGamesHistoryService = gamesHistoryService;
     }
 }

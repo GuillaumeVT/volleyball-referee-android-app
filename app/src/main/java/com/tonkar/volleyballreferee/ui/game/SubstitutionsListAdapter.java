@@ -8,11 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
-import java.util.AbstractMap;
 import java.util.List;
 
 public class SubstitutionsListAdapter extends BaseAdapter {
@@ -22,16 +22,22 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         Button playerOutButton;
     }
 
-    private final Context           mContext;
-    private final LayoutInflater    mLayoutInflater;
-    private final IndoorTeamService mIndoorTeamService;
-    private       TeamType          mTeamType;
+    private final Context               mContext;
+    private final LayoutInflater        mLayoutInflater;
+    private final BaseIndoorTeamService mIndoorTeamService;
+    private       TeamType              mTeamType;
+    private final int                   mSetIndex;
 
-    SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, IndoorTeamService indoorTeamService, TeamType teamType) {
+    SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseIndoorTeamService indoorTeamService, TeamType teamType) {
+        this(context, layoutInflater, indoorTeamService, teamType, -1);
+    }
+
+    public SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseIndoorTeamService indoorTeamService, TeamType teamType, int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mIndoorTeamService = indoorTeamService;
         mTeamType = teamType;
+        mSetIndex = setIndex;
     }
 
     public void setTeamType(TeamType teamType) {
@@ -44,7 +50,15 @@ public class SubstitutionsListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mIndoorTeamService.getNumberOfSubstitutions(mTeamType);
+        int count;
+
+        if (mSetIndex > 0) {
+            count = mIndoorTeamService.getSubstitutions(mTeamType, mSetIndex).size();
+        } else {
+            count = mIndoorTeamService.getSubstitutions(mTeamType).size();
+        }
+
+        return count;
     }
 
     @Override
@@ -73,10 +87,16 @@ public class SubstitutionsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) substitutionView.getTag();
         }
 
-        List<AbstractMap.SimpleEntry<Integer, Integer>> substitutions = mIndoorTeamService.getSubstitutions(mTeamType);
+        List<Substitution> substitutions;
 
-        viewHolder.playerInButton.setText(String.valueOf(substitutions.get(index).getKey()));
-        viewHolder.playerOutButton.setText(String.valueOf(substitutions.get(index).getValue()));
+        if (mSetIndex > 0) {
+            substitutions = mIndoorTeamService.getSubstitutions(mTeamType, mSetIndex);
+        } else {
+            substitutions = mIndoorTeamService.getSubstitutions(mTeamType);
+        }
+
+        viewHolder.playerInButton.setText(String.valueOf(substitutions.get(index).getPlayerIn()));
+        viewHolder.playerOutButton.setText(String.valueOf(substitutions.get(index).getPlayerOut()));
 
         UiUtils.colorTeamButton(mContext, mIndoorTeamService.getTeamColor(mTeamType), viewHolder.playerInButton);
         UiUtils.colorTeamButton(mContext, mIndoorTeamService.getTeamColor(mTeamType), viewHolder.playerOutButton);

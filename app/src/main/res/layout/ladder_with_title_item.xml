@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_margin="2dp"
+              android:layout_margin="@dimen/tiny_margin_size"
               android:orientation="vertical">
 
     <LinearLayout
@@ -15,28 +15,28 @@
             android:id="@+id/set_number_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginLeft="@dimen/default_margin_size"
+            android:layout_marginStart="@dimen/default_margin_size"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
 
         <TextView
             android:id="@+id/set_score_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="@dimen/big_margin_size"
+            android:layout_marginStart="@dimen/big_margin_size"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
 
         <TextView
             android:id="@+id/set_duration_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="@dimen/big_margin_size"
+            android:layout_marginStart="@dimen/big_margin_size"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
     </LinearLayout>
 
     <HorizontalScrollView

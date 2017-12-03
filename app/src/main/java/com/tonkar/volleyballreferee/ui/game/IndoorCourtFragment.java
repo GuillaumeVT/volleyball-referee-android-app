@@ -22,8 +22,10 @@ import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class IndoorCourtFragment extends CourtFragment {
 
@@ -70,7 +72,7 @@ public class IndoorCourtFragment extends CourtFragment {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final List<Integer> possibleReplacements = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
+                    final Set<Integer> possibleReplacements = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
                     if (possibleReplacements.size() > 0) {
                         Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
                         final PlayerAdapter playerAdapter = new PlayerAdapter(getContext(), mTeamOnLeftSide, possibleReplacements, positionType);
@@ -100,7 +102,7 @@ public class IndoorCourtFragment extends CourtFragment {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final List<Integer> possibleReplacements = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
+                    final Set<Integer> possibleReplacements = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
                     if (possibleReplacements.size() > 0) {
                         Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
                         final PlayerAdapter playerAdapter = new PlayerAdapter(getContext(), mTeamOnRightSide, possibleReplacements, positionType);
@@ -202,7 +204,7 @@ public class IndoorCourtFragment extends CourtFragment {
             applyColor(teamType, button);
         }
 
-        final List<Integer> players = mTeamService.getPlayersOnCourt(teamType);
+        final Set<Integer> players = mTeamService.getPlayersOnCourt(teamType);
 
         for (Integer number : players) {
             final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
@@ -252,6 +254,7 @@ public class IndoorCourtFragment extends CourtFragment {
         playerAdapter.setDialog(alertDialog);
 
         alertDialog.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
     private class PlayerAdapter extends BaseAdapter {
@@ -262,10 +265,10 @@ public class IndoorCourtFragment extends CourtFragment {
         private final PositionType  mPositionType;
         private       AlertDialog   mDialog;
 
-        private PlayerAdapter(Context context, final TeamType teamType, final List<Integer> possibleReplacements, final PositionType positionType) {
+        private PlayerAdapter(Context context, final TeamType teamType, final Set<Integer> possibleReplacements, final PositionType positionType) {
             mContext = context;
             mTeamType = teamType;
-            mPossibleReplacements = possibleReplacements;
+            mPossibleReplacements = new ArrayList<>(possibleReplacements);
             mPositionType = positionType;
         }
 

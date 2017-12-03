@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces;
 
-public interface GameListener {
+public interface ScoreListener {
 
     void onPointsUpdated(TeamType teamType, int newCount);
 
@@ -10,5 +10,5 @@ public interface GameListener {
 
     void onSetCompleted();
 
-    void onGameCompleted(final TeamType winner);
+    void onMatchCompleted(final TeamType winner);
 }

@@ -99,13 +99,15 @@ public class CountDownDialogFragment extends DialogFragment {
 
     private void playSound() {
         final MediaPlayer timeoutPlayer = MediaPlayer.create(getActivity(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        timeoutPlayer.setLooping(false);
-        timeoutPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                timeoutPlayer.release();
-            }
-        });
-        timeoutPlayer.start();
+        if (timeoutPlayer != null) {
+            timeoutPlayer.setLooping(false);
+            timeoutPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    timeoutPlayer.release();
+                }
+            });
+            timeoutPlayer.start();
+        }
     }
 }

@@ -127,4 +127,65 @@ public enum PositionType {
 
         return opposite;
     }
+
+    public static int toInt(PositionType positionType) {
+        final int position;
+
+        switch (positionType) {
+            case POSITION_1:
+                position = 1;
+                break;
+            case POSITION_2:
+                position = 2;
+                break;
+            case POSITION_3:
+                position = 3;
+                break;
+            case POSITION_4:
+                position = 4;
+                break;
+            case POSITION_5:
+                position = 5;
+                break;
+            case POSITION_6:
+                position = 6;
+                break;
+            default:
+            case BENCH:
+                position = 0;
+                break;
+        }
+
+        return position;
+    }
+
+    public static PositionType fromInt(int position) {
+        final PositionType positionType;
+
+        switch (position) {
+            case 1:
+                positionType = POSITION_1;
+                break;
+            case 2:
+                positionType = POSITION_2;
+                break;
+            case 3:
+                positionType = POSITION_3;
+                break;
+            case 4:
+                positionType = POSITION_4;
+                break;
+            case 5:
+                positionType = POSITION_5;
+                break;
+            case 6:
+                positionType = POSITION_6;
+                break;
+            default:
+                positionType = BENCH;
+                break;
+        }
+
+        return positionType;
+    }
 }

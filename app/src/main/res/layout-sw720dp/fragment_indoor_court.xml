@@ -27,7 +27,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -40,7 +40,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -53,7 +53,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
 
@@ -75,7 +75,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -88,7 +88,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -101,7 +101,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
 
@@ -122,7 +122,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -135,7 +135,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -148,7 +148,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
     </LinearLayout>
@@ -170,7 +170,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -183,7 +183,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
         <Button
@@ -196,7 +196,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:textSize="48sp"
+            android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
     </LinearLayout>

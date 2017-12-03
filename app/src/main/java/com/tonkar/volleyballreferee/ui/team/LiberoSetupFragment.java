@@ -22,6 +22,9 @@ import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LiberoSetupFragment extends Fragment implements TeamClient, TeamColorDialogFragment.TeamColorSelectionListener {
 
     private TeamType          mTeamType;
@@ -103,15 +106,17 @@ public class LiberoSetupFragment extends Fragment implements TeamClient, TeamCol
 
     private class LiberoAdapter extends BaseAdapter {
 
-        private final Context mContext;
+        private final Context       mContext;
+        private final List<Integer> mPlayers;
 
         private LiberoAdapter(Context context) {
             mContext = context;
+            mPlayers = new ArrayList<>(mTeamService.getPlayers(mTeamType));
         }
 
         @Override
         public int getCount() {
-            return mTeamService.getNumberOfPlayers(mTeamType);
+            return mPlayers.size();
         }
 
         @Override
@@ -126,7 +131,7 @@ public class LiberoSetupFragment extends Fragment implements TeamClient, TeamCol
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final int playerShirtNumber = mTeamService.getPlayers(mTeamType).get(position);
+            final int playerShirtNumber = mPlayers.get(position);
             final ToggleButton button;
 
             if (convertView == null) {

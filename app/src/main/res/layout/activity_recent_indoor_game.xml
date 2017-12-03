@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.history.RecentGameActivity">
+              tools:context="com.tonkar.volleyballreferee.ui.history.RecentIndoorGameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/default_margin_size"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="10">
@@ -23,31 +24,31 @@
             android:gravity="start"
             android:textAlignment="textStart"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="36sp"/>
+            android:textSize="@dimen/big_text_size"/>
 
         <TextView
             android:id="@+id/home_team_set_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginRight="@dimen/small_margin_size"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="36sp"/>
+            android:textSize="@dimen/big_text_size"/>
 
         <TextView
             android:id="@+id/guest_team_set_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginLeft="@dimen/small_margin_size"
+            android:layout_marginStart="@dimen/small_margin_size"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="36sp"/>
+            android:textSize="@dimen/big_text_size"/>
 
         <TextView
             android:id="@+id/guest_team_name_text"
@@ -58,13 +59,32 @@
             android:gravity="end"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="36sp"/>
+            android:textSize="@dimen/big_text_size"/>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/recent_game_set_list"
+    <TextView
+        android:id="@+id/game_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAppearance="@style/TextViewTheme"
+        android:textSize="@dimen/small_text_size"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/indoor_game_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/colorPrimary"/>
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                                       android:id="@+id/indoor_game_pager"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_gravity="top|center"
+                                       android:layout_margin="@dimen/default_margin_size"/>
 
 </LinearLayout>

@@ -6,9 +6,12 @@ import android.support.test.runner.AndroidJUnit4;
 import com.tonkar.volleyballreferee.business.history.JsonHistoryReader;
 import com.tonkar.volleyballreferee.business.history.JsonHistoryWriter;
 import com.tonkar.volleyballreferee.business.history.RecordedGame;
+import com.tonkar.volleyballreferee.business.history.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.history.RecordedSet;
 import com.tonkar.volleyballreferee.business.history.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import org.junit.Test;
@@ -18,7 +21,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -49,39 +52,143 @@ public class GameHistoryIOTest {
     }
 
     private RecordedGame someRecordedGame1() {
-        RecordedTeam team1 = new RecordedTeam("Team 1", Color.parseColor("#123456"));
-        RecordedTeam team2 = new RecordedTeam("Team 2", Color.parseColor("#a1b2c3"));
+        RecordedGame recordedGame = new RecordedGame();
+        recordedGame.setGameType(GameType.INDOOR);
+        recordedGame.setGameDate(123456L);
+        recordedGame.setMatchCompleted(false);
+        recordedGame.setSets(TeamType.HOME, 0);
+        recordedGame.setSets(TeamType.GUEST, 2);
 
-        List<RecordedSet> sets = new ArrayList<>();
+        RecordedTeam team1 = recordedGame.getTeam(TeamType.HOME);
+        team1.setName("Team 1");
+        team1.setColor(Color.parseColor("#123456"));
+        team1.setLiberoColor(Color.parseColor("#ffffff"));
+        Collections.addAll(team1.getPlayers(), 1, 3, 5, 7, 9, 11, 13);
+        Collections.addAll(team1.getLiberos(), 2);
 
-        List<TeamType> ladder1 = Arrays.asList(TeamType.HOME, TeamType.GUEST, TeamType.GUEST, TeamType.HOME, TeamType.HOME);
-        RecordedSet set1 = new RecordedSet(5555L, 3, 2, ladder1);
+        RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
+        team2.setName("Team 2");
+        team2.setColor(Color.parseColor("#a1b2c3"));
+        team2.setLiberoColor(Color.parseColor("#000000"));
+        Collections.addAll(team2.getPlayers(), 2, 4, 6, 8, 10, 12, 14, 16, 18);
 
-        List<TeamType> ladder2 = Arrays.asList(TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.GUEST);
-        RecordedSet set2 = new RecordedSet(4540L, 4, 3, ladder2);
+        RecordedSet set1 = new RecordedSet();
+        recordedGame.getSets().add(set1);
+        set1.setDuration(5555L);
+        set1.setPoints(TeamType.HOME, 3);
+        set1.setPoints(TeamType.GUEST, 2);
+        set1.setTimeouts(TeamType.HOME, 1);
+        set1.setTimeouts(TeamType.GUEST, 0);
+        Collections.addAll(set1.getPointsLadder(), TeamType.HOME, TeamType.GUEST, TeamType.GUEST, TeamType.HOME, TeamType.HOME);
+        set1.setServingTeam(TeamType.HOME);
+        for (int index = 1; index <= 6; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set1.getCurrentPlayers(TeamType.HOME).add(player);
+        }
+        for (int index = 1; index <= 4; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set1.getCurrentPlayers(TeamType.GUEST).add(player);
+        }
+        for (int index = 1; index <= 3; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set1.getStartingPlayers(TeamType.HOME).add(player);
+        }
+        for (int index = 1; index <= 2; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set1.getStartingPlayers(TeamType.GUEST).add(player);
+        }
+        Collections.addAll(set1.getSubstitutions(TeamType.HOME), new Substitution(1, 5), new Substitution(7, 2));
 
-        sets.add(set1);
-        sets.add(set2);
+        RecordedSet set2 = new RecordedSet();
+        recordedGame.getSets().add(set2);
+        set2.setDuration(4540L);
+        set2.setPoints(TeamType.HOME, 4);
+        set2.setPoints(TeamType.GUEST, 3);
+        set2.setTimeouts(TeamType.HOME, 2);
+        set2.setTimeouts(TeamType.GUEST, 1);
+        Collections.addAll(set2.getPointsLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.GUEST);
+        set2.setServingTeam(TeamType.GUEST);
+        for (int index = 1; index <= 6; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set2.getCurrentPlayers(TeamType.HOME).add(player);
+            set2.getStartingPlayers(TeamType.HOME).add(player);
+            set2.getCurrentPlayers(TeamType.GUEST).add(player);
+            set2.getStartingPlayers(TeamType.GUEST).add(player);
+        }
+        Collections.addAll(set2.getSubstitutions(TeamType.HOME), new Substitution(7, 1), new Substitution(4, 2));
+        Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new Substitution(10, 50));
 
-        return new RecordedGame(GameType.INDOOR, 123456L, team1, team2, sets);
+        return recordedGame;
     }
 
     private RecordedGame someRecordedGame2() {
-        RecordedTeam team1 = new RecordedTeam("Player A / Player B", Color.parseColor("#1234ab"));
-        RecordedTeam team2 = new RecordedTeam("Player C / Player D", Color.parseColor("#efa1c3"));
+        RecordedGame recordedGame = new RecordedGame();
+        recordedGame.setGameType(GameType.BEACH);
+        recordedGame.setGameDate(646516L);
+        recordedGame.setMatchCompleted(false);
+        recordedGame.setSets(TeamType.HOME, 1);
+        recordedGame.setSets(TeamType.GUEST, 0);
 
-        List<RecordedSet> sets = new ArrayList<>();
+        RecordedTeam team1 = recordedGame.getTeam(TeamType.HOME);
+        team1.setName("Player A / Player B");
+        team1.setColor(Color.parseColor("#1234ab"));
+        Collections.addAll(team1.getPlayers(), 1, 2);
 
-        List<TeamType> ladder1 = Arrays.asList(TeamType.GUEST, TeamType.GUEST);
-        RecordedSet set1 = new RecordedSet(12L, 0, 2, ladder1);
+        RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
+        team2.setName("Player C / Player D");
+        team2.setColor(Color.parseColor("#efa1c3"));
+        Collections.addAll(team2.getPlayers(), 1, 2);
 
-        List<TeamType> ladder2 = Arrays.asList(TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.HOME);
-        RecordedSet set2 = new RecordedSet(0L, 6, 2, ladder2);
+        RecordedSet set1 = new RecordedSet();
+        recordedGame.getSets().add(set1);
+        set1.setDuration(12L);
+        set1.setPoints(TeamType.HOME, 0);
+        set1.setPoints(TeamType.GUEST, 2);
+        set1.setTimeouts(TeamType.HOME, 1);
+        set1.setTimeouts(TeamType.GUEST, 1);
+        Collections.addAll(set1.getPointsLadder(), TeamType.GUEST, TeamType.GUEST);
+        set1.setServingTeam(TeamType.GUEST);
+        for (int index = 1; index <= 2; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set1.getCurrentPlayers(TeamType.HOME).add(player);
+        }
+        for (int index = 1; index <= 1; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set1.getCurrentPlayers(TeamType.GUEST).add(player);
+        }
 
-        sets.add(set1);
-        sets.add(set2);
+        RecordedSet set2 = new RecordedSet();
+        recordedGame.getSets().add(set2);
+        set2.setDuration(0L);
+        set2.setPoints(TeamType.HOME, 6);
+        set2.setPoints(TeamType.GUEST, 2);
+        set2.setTimeouts(TeamType.HOME, 0);
+        set2.setTimeouts(TeamType.GUEST, 0);
+        Collections.addAll(set2.getPointsLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.HOME);
+        set2.setServingTeam(TeamType.HOME);
+        for (int index = 1; index <= 2; index++) {
+            RecordedPlayer player = new RecordedPlayer();
+            player.setNumber(index);
+            player.setPositionType(PositionType.fromInt(index));
+            set2.getCurrentPlayers(TeamType.HOME).add(player);
+            set2.getCurrentPlayers(TeamType.GUEST).add(player);
+        }
 
-        return new RecordedGame(GameType.BEACH, 646516L, team1, team2, sets);
+        return recordedGame;
     }
 
 }

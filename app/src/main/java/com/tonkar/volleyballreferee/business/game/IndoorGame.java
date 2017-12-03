@@ -1,18 +1,19 @@
 package com.tonkar.volleyballreferee.business.game;
 
-import android.util.Log;
-
-import com.tonkar.volleyballreferee.business.team.Team;
+import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
+import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
+import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.business.team.IndoorTeam;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class IndoorGame extends Game implements IndoorTeamService {
 
@@ -21,12 +22,21 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
-    protected Team createTeam(TeamType teamType) {
-        return new IndoorTeam(teamType, getRules().getTeamSubstitutionsPerSet());
+    protected TeamDefinition createTeamDefinition(TeamType teamType) {
+        return new IndoorTeamDefinition(teamType);
     }
 
-    private IndoorTeam getIndoorTeam(TeamType teamType) {
-        return (IndoorTeam) getTeam(teamType);
+    @Override
+    protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart) {
+        return new IndoorSet(rules, isTieBreakSet ? 15 : rules.getPointsPerSet(), servingTeamAtStart);
+    }
+
+    private IndoorTeamDefinition getIndoorTeamDefinition(TeamType teamType) {
+        return (IndoorTeamDefinition) getTeamDefinition(teamType);
+    }
+
+    private IndoorTeamComposition getIndoorTeamComposition(TeamType teamType) {
+        return (IndoorTeamComposition) currentSet().getTeamComposition(teamType);
     }
 
     @Override
@@ -68,96 +78,131 @@ public class IndoorGame extends Game implements IndoorTeamService {
         }
     }
 
-    @Override
-    protected void onNewSet() {
-        // Both coaches must provide a team composition to the referee for each new set
-        putAllPlayersOnBench(TeamType.HOME);
-        putAllPlayersOnBench(TeamType.GUEST);
-    }
-
     private void checkPosition1(final TeamType scoringTeam) {
-        int number = getIndoorTeam(scoringTeam).checkPosition1Offence();
+        int number = getIndoorTeamComposition(scoringTeam).checkPosition1Offence();
         if (number > 0)  {
             substitutePlayer(scoringTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
 
         TeamType defendingTeam = scoringTeam.other();
-        number = getIndoorTeam(defendingTeam).checkPosition1Defence();
+        number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
         if (number > 0)  {
             substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
     }
 
-    private void putAllPlayersOnBench(final TeamType teamType) {
-        Log.i("VBR-Team", String.format("Put all players of %s team on bench", teamType.toString()));
-        getIndoorTeam(teamType).putAllPlayersOnBench();
-    }
-
-    @Override
-    public int getNumberOfPlayers(TeamType teamType) {
-        return getTeam(teamType).getNumberOfPlayers();
-    }
-
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getTeam(teamType).substitutePlayer(number, positionType)) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType)) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
 
     @Override
-    public List<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
-        return getIndoorTeam(teamType).getPossibleSubstitutions(positionType);
+    public java.util.Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
+        return getIndoorTeamComposition(teamType).getPossibleSubstitutions(positionType);
     }
 
     @Override
     public void confirmStartingLineup() {
-        getIndoorTeam(TeamType.HOME).confirmStartingLineup();
-        getIndoorTeam(TeamType.GUEST).confirmStartingLineup();
+        getIndoorTeamComposition(TeamType.HOME).confirmStartingLineup();
+        getIndoorTeamComposition(TeamType.GUEST).confirmStartingLineup();
     }
 
     @Override
     public boolean isStartingLineupConfirmed() {
-        return getIndoorTeam(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeam(TeamType.GUEST).isStartingLineupConfirmed();
+        return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
+    }
+
+    @Override
+    public java.util.Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
+        java.util.Set<Integer> players = new TreeSet<>();
+
+        Set set = getSet(setIndex);
+
+        if (set != null) {
+            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            players = indoorTeamComposition.getPlayersInStartingLineup();
+        }
+
+        return players;
+    }
+
+    @Override
+    public PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex) {
+        PositionType positionType = null;
+
+        Set set = getSet(setIndex);
+
+        if (set != null) {
+            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            positionType = indoorTeamComposition.getPlayerPositionInStartingLineup(number);
+        }
+
+        return positionType;
+    }
+
+    @Override
+    public int getPlayerAtPositionInStartingLineup(TeamType teamType, PositionType positionType, int setIndex) {
+        int number = -1;
+
+        Set set = getSet(setIndex);
+
+        if (set != null) {
+            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            number = indoorTeamComposition.getPlayerAtPositionInStartingLineup(positionType);
+        }
+
+        return number;
     }
 
     @Override
     public int getLiberoColor(TeamType teamType) {
-        return getIndoorTeam(teamType).getLiberoColor();
+        return getIndoorTeamDefinition(teamType).getLiberoColor();
     }
 
     @Override
     public void setLiberoColor(TeamType teamType, int color) {
-        getIndoorTeam(teamType).setLiberoColor(color);
+        getIndoorTeamDefinition(teamType).setLiberoColor(color);
     }
 
     @Override
     public void addLibero(TeamType teamType, int number) {
-        getIndoorTeam(teamType).addLibero(number);
+        getIndoorTeamDefinition(teamType).addLibero(number);
     }
 
     @Override
     public void removeLibero(TeamType teamType, int number) {
-        getIndoorTeam(teamType).removeLibero(number);
+        getIndoorTeamDefinition(teamType).removeLibero(number);
     }
 
     @Override
     public boolean isLibero(TeamType teamType, int number) {
-        return getIndoorTeam(teamType).isLibero(number);
+        return getIndoorTeamDefinition(teamType).isLibero(number);
     }
 
     @Override
     public boolean canAddLibero(TeamType teamType) {
-        return getIndoorTeam(teamType).canAddLibero();
+        return getIndoorTeamDefinition(teamType).canAddLibero();
     }
 
     @Override
-    public List<AbstractMap.SimpleEntry<Integer, Integer>> getSubstitutions(TeamType teamType) {
-        return getIndoorTeam(teamType).getSubstitutions();
+    public List<Substitution> getSubstitutions(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).getSubstitutions();
     }
 
     @Override
-    public int getNumberOfSubstitutions(TeamType teamType) {
-        return getIndoorTeam(teamType).getNumberOfSubstitutions();
+    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
+        List<Substitution> substitutions = new ArrayList<>();
+
+        Set set = getSet(setIndex);
+
+        if (set != null) {
+            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            substitutions = indoorTeamComposition.getSubstitutions();
+        }
+
+        return substitutions;
     }
+
 }

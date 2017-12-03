@@ -13,7 +13,7 @@
         style="@style/CardView.Light"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/default_margin_size"
         android:layout_weight="1">
 
         <LinearLayout
@@ -38,16 +38,16 @@
                 android:id="@+id/indoor_game_title"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:layout_marginLeft="@dimen/small_margin_size"
+                android:layout_marginRight="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="@string/indoor_game"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="24sp"/>
+                android:textSize="@dimen/default_text_size"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                     android:layout_weight="1"
                     android:onClick="startOfficialIndoorGame"
                     android:text="@string/official_rules"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/small_text_size"
                     android:theme="@style/ButtonTheme"/>
 
                 <Button
@@ -74,7 +74,7 @@
                     android:layout_weight="1"
                     android:onClick="startCustomIndoorGame"
                     android:text="@string/my_rules"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/small_text_size"
                     android:theme="@style/ButtonTheme"/>
             </LinearLayout>
 
@@ -86,7 +86,7 @@
         style="@style/CardView.Light"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/default_margin_size"
         android:layout_weight="1">
 
         <LinearLayout
@@ -111,16 +111,16 @@
                 android:id="@+id/beach_game_title"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:layout_marginLeft="@dimen/small_margin_size"
+                android:layout_marginRight="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="@string/beach_game"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="24sp"/>
+                android:textSize="@dimen/default_text_size"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,7 +137,7 @@
                     android:layout_weight="1"
                     android:onClick="startOfficialBeachGame"
                     android:text="@string/official_rules"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/small_text_size"
                     android:theme="@style/ButtonTheme"/>
 
                 <Button
@@ -147,7 +147,7 @@
                     android:layout_weight="1"
                     android:onClick="startCustomBeachGame"
                     android:text="@string/my_rules"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/small_text_size"
                     android:theme="@style/ButtonTheme"/>
             </LinearLayout>
 

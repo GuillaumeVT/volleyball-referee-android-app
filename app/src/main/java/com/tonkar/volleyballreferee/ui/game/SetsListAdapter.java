@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.BaseGameService;
+import com.tonkar.volleyballreferee.interfaces.BaseScoreService;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -29,21 +28,21 @@ public class SetsListAdapter extends BaseAdapter {
         GridLayout           setLadderGrid;
     }
 
-    private final boolean         mReverseOrder;
-    private final LayoutInflater  mLayoutInflater;
-    private final BaseGameService mBaseGameService;
-    private final BaseTeamService mBaseTeamService;
+    private final boolean          mReverseOrder;
+    private final LayoutInflater   mLayoutInflater;
+    private final BaseScoreService mBaseScoreService;
+    private final BaseTeamService  mBaseTeamService;
 
-    public SetsListAdapter(LayoutInflater layoutInflater, BaseGameService baseGameService, BaseTeamService baseTeamService, boolean reverseOrder) {
+    public SetsListAdapter(LayoutInflater layoutInflater, BaseScoreService baseScoreService, BaseTeamService baseTeamService, boolean reverseOrder) {
         mLayoutInflater = layoutInflater;
-        mBaseGameService = baseGameService;
+        mBaseScoreService = baseScoreService;
         mBaseTeamService = baseTeamService;
         mReverseOrder = reverseOrder;
     }
 
     @Override
     public int getCount() {
-        return mBaseGameService.getNumberOfSets();
+        return mBaseScoreService.getNumberOfSets();
     }
 
     @Override
@@ -75,13 +74,13 @@ public class SetsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) setView.getTag();
         }
 
-        int actualIndex = mReverseOrder ? (mBaseGameService.getNumberOfSets() - index - 1) : index;
+        int actualIndex = mReverseOrder ? (mBaseScoreService.getNumberOfSets() - index - 1) : index;
 
         viewHolder.setNumberText.setText(String.format(setView.getContext().getResources().getString(R.string.set_number), actualIndex+1));
-        viewHolder.setScoreText.setText(String.format(Locale.getDefault(), "%d\t-\t%d", mBaseGameService.getPoints(TeamType.HOME, actualIndex), mBaseGameService.getPoints(TeamType.GUEST, actualIndex)));
-        viewHolder.setDurationText.setText(String.format(setView.getContext().getResources().getString(R.string.set_duration), mBaseGameService.getSetDuration(actualIndex) / 60000L));
+        viewHolder.setScoreText.setText(String.format(Locale.getDefault(), "%d\t-\t%d", mBaseScoreService.getPoints(TeamType.HOME, actualIndex), mBaseScoreService.getPoints(TeamType.GUEST, actualIndex)));
+        viewHolder.setDurationText.setText(String.format(setView.getContext().getResources().getString(R.string.set_duration), mBaseScoreService.getSetDuration(actualIndex) / 60000L));
 
-        fillLadderGrid(viewHolder.setLadderGrid, mBaseGameService.getPointsLadder(actualIndex), mBaseTeamService.getTeamColor(TeamType.HOME), mBaseTeamService.getTeamColor(TeamType.GUEST));
+        fillLadderGrid(viewHolder.setLadderGrid, mBaseScoreService.getPointsLadder(actualIndex), mBaseTeamService.getTeamColor(TeamType.HOME), mBaseTeamService.getTeamColor(TeamType.GUEST));
 
         if (mReverseOrder && index == 0) {
             viewHolder.setLadderScroll.post(new Runnable() {
@@ -101,11 +100,11 @@ public class SetsListAdapter extends BaseAdapter {
         int guestCount = 0;
 
         for (int index = 0; index < ladder.size(); index++) {
-            TextView homeText = new TextView(context);
+            TextView homeText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
             applyStyle(homeText, context, homeTeamColor);
             setLadderGrid.addView(homeText, createGridLayoutParams(0, index));
 
-            TextView guestText = new TextView(context);
+            TextView guestText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
             applyStyle(guestText, context, guestTeamColor);
             setLadderGrid.addView(guestText, createGridLayoutParams(1, index));
 
@@ -130,11 +129,8 @@ public class SetsListAdapter extends BaseAdapter {
     }
 
     private void applyStyle(final TextView textView, final Context context, int color) {
-        textView.setTextAppearance(context, android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Headline);
-        textView.setGravity(Gravity.CENTER);
         textView.setTextColor(UiUtils.getTextColor(context, color));
         textView.setBackgroundColor(color);
-        textView.setTextSize(18);
     }
 
     private GridLayout.LayoutParams createGridLayoutParams(final int rowIndex, final int columnIndex) {

@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.preference.PreferenceManager;
 
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 
 public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private final GameService           mGameService;
+    private final ScoreService          mScoreService;
     private final Context               mContext;
     private       IndoorCourtFragment   mIndoorCourtFragment;
     private       BeachCourtFragment    mBeachCourtFragment;
@@ -19,14 +19,14 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
     private       SubstitutionsFragment mSubstitutionsFragment;
     private       int                   mCount;
 
-    GameFragmentPagerAdapter(GameService gameService, Context context, FragmentManager fm) {
+    GameFragmentPagerAdapter(ScoreService scoreService, Context context, FragmentManager fm) {
         super(fm);
 
-        mGameService = gameService;
+        mScoreService = scoreService;
         mContext = context;
         mScoresFragment = ScoresFragment.newInstance();
 
-        switch (mGameService.getGameType()) {
+        switch (mScoreService.getGameType()) {
             case INDOOR:
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                 boolean normalUsageSetting = Boolean.parseBoolean(sharedPreferences.getString("pref_application_usage", String.valueOf(true)));
@@ -59,7 +59,7 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
                 if (mCount == 1) {
                     fragment = mScoresFragment;
                 } else {
-                    switch (mGameService.getGameType()) {
+                    switch (mScoreService.getGameType()) {
                         case INDOOR:
                             fragment = mIndoorCourtFragment;
                             break;

@@ -25,8 +25,10 @@
         <activity android:name=".ui.team.TeamsSetupActivity" android:parentActivityName=".ui.MainActivity"/>
         <activity android:name=".ui.team.LiberosSetupActivity" android:parentActivityName=".ui.team.TeamsSetupActivity"/>
         <activity android:name=".ui.game.GameActivity"/>
+
         <activity android:name=".ui.history.RecentGamesListActivity" android:parentActivityName=".ui.MainActivity"/>
-        <activity android:name=".ui.history.RecentGameActivity" android:parentActivityName=".ui.history.RecentGamesListActivity"/>
+        <activity android:name=".ui.history.RecentIndoorGameActivity" android:parentActivityName=".ui.history.RecentGamesListActivity"/>
+        <activity android:name=".ui.history.RecentBeachGameActivity" android:parentActivityName=".ui.history.RecentGamesListActivity"/>
     </application>
 
 </manifest>

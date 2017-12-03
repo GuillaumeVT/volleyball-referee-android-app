@@ -1,37 +1,53 @@
 package com.tonkar.volleyballreferee.business.game;
 
+import com.tonkar.volleyballreferee.business.team.TeamComposition;
+import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Set implements Serializable {
+public abstract class Set implements Serializable {
 
-    private final int            mPointsPerSetSettings;
-    private       int            mHomeTeamPoints;
-    private       int            mGuestTeamPoints;
-    private       int            mHomeTeamTimeouts;
-    private       int            mGuestTeamTimeouts;
-    private final List<TeamType> mPointsLadder;
-    private       TeamType       mServingTeamAtStart;
-    private       long           mStartTime;
-    private       long           mEndTime;
+    private final int             mPointsToWinSet;
+    private       int             mHomeTeamPoints;
+    private       int             mGuestTeamPoints;
+    private       int             mHomeTeamTimeouts;
+    private       int             mGuestTeamTimeouts;
+    private final List<TeamType>  mPointsLadder;
+    private       TeamType        mServingTeamAtStart;
+    private       long            mStartTime;
+    private       long            mEndTime;
+    private       TeamComposition mHomeTeamComposition;
+    private       TeamComposition mGuestTeamComposition;
 
-    public Set(final int pointsPerSetSettings, final int teamTimeoutsPerSetSettings, final TeamType servingTeamAtStart) {
-        mPointsPerSetSettings = pointsPerSetSettings;
+    public Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
+        mPointsToWinSet = pointsToWinSet;
 
         mHomeTeamPoints = 0;
         mGuestTeamPoints = 0;
         mPointsLadder = new ArrayList<>();
 
-        mHomeTeamTimeouts = teamTimeoutsPerSetSettings;
-        mGuestTeamTimeouts = teamTimeoutsPerSetSettings;
+        mHomeTeamTimeouts = rules.getTeamTimeoutsPerSet();
+        mGuestTeamTimeouts = rules.getTeamTimeoutsPerSet();
 
         mServingTeamAtStart = servingTeamAtStart;
 
         mStartTime = 0L;
         mEndTime = 0L;
+    }
+
+    protected abstract TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition);
+
+    void createTeams(Rules rules, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
+        mHomeTeamComposition = createTeamComposition(rules, homeTeamDefinition);
+        mGuestTeamComposition = createTeamComposition(rules, guestTeamDefinition);
+    }
+
+    boolean areTeamsCreated() {
+        return mHomeTeamComposition != null && mGuestTeamComposition != null;
     }
 
     String getSetSummary() {
@@ -40,12 +56,12 @@ public class Set implements Serializable {
 
     public boolean isSetCompleted() {
         // Set is complete when a team reaches the number of points to win (e.g. 25, 21, 15) or more, with a 2-points difference
-        return (mHomeTeamPoints >= mPointsPerSetSettings || mGuestTeamPoints >= mPointsPerSetSettings) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 2);
+        return (mHomeTeamPoints >= mPointsToWinSet || mGuestTeamPoints >= mPointsToWinSet) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 2);
     }
 
     public boolean isSetPoint() {
         // Set ball when a team will reach the number of points to win  with 1 point (e.g. 25, 21, 15) or more, with at least 1-point difference
-        return !isSetCompleted() && (mHomeTeamPoints+1 >= mPointsPerSetSettings || mGuestTeamPoints+1 >= mPointsPerSetSettings) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
+        return !isSetCompleted() && (mHomeTeamPoints+1 >= mPointsToWinSet || mGuestTeamPoints+1 >= mPointsToWinSet) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
     }
 
     public TeamType getLeadingTeam() {
@@ -186,6 +202,18 @@ public class Set implements Serializable {
         }
 
         return duration;
+    }
+
+    TeamComposition getTeamComposition(final TeamType teamType) {
+        TeamComposition teamComposition;
+
+        if (TeamType.HOME.equals(teamType)) {
+            teamComposition = mHomeTeamComposition;
+        } else {
+            teamComposition = mGuestTeamComposition;
+        }
+
+        return teamComposition;
     }
 
 }

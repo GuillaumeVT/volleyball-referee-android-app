@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface GamesHistoryService {
 
-    String GAMES_HISTORY_FILE = "games_history.json";
+    String GAMES_HISTORY_FILE = "device_games_history.json";
 
     String CURRENT_GAME_FILE  = "current_game.bin";
 
@@ -30,7 +30,4 @@ public interface GamesHistoryService {
 
     void deleteCurrentGame();
 
-    void enableAutoSaveCurrentGame();
-
-    void disableAutoSaveCurrentGame();
 }

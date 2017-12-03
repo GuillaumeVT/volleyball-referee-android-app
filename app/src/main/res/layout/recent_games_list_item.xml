@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="4dp">
+              android:padding="@dimen/small_margin_size">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,10 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:drawablePadding="2dp"
+            android:drawablePadding="@dimen/small_margin_size"
             android:gravity="center|start"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/default_text_size"/>
 
         <TextView
             android:id="@+id/recent_game_date"
@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:gravity="end"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/small_text_size"/>
 
     </LinearLayout>
 
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:gravity="center|start"
             android:textAppearance="@style/TextViewTheme"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/small_text_size"/>
 
         <ImageView
             android:id="@+id/recent_game_image"

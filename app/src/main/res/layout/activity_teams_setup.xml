@@ -4,7 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="8dp"
+              android:layout_margin="@dimen/default_margin_size"
               android:gravity="top|center"
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity">
@@ -13,11 +13,11 @@
         android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minWidth="200dp"
+        android:layout_margin="@dimen/default_margin_size"
+        android:minWidth="@dimen/next_button_min_width"
         android:onClick="validateTeams"
         android:text="@string/next"
-        android:textSize="16sp"
+        android:textSize="@dimen/default_text_size"
         android:theme="@style/ButtonTheme"/>
 
     <android.support.design.widget.TabLayout
@@ -32,6 +32,6 @@
                                        android:layout_width="match_parent"
                                        android:layout_height="wrap_content"
                                        android:layout_gravity="top|center"
-                                       android:layout_margin="8dp"/>
+                                       android:layout_margin="@dimen/default_margin_size"/>
 
 </LinearLayout>
