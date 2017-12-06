@@ -10,7 +10,7 @@ public class RecordedTeam {
     private int          mLiberoColor;
     private Set<Integer> mPlayers;
     private Set<Integer> mLiberos;
-
+    private int          mCaptain;
 
     RecordedTeam() {
         mName = "";
@@ -18,6 +18,7 @@ public class RecordedTeam {
         mLiberoColor = -1; // white
         mPlayers = new TreeSet<>();
         mLiberos = new TreeSet<>();
+        mCaptain = -1;
     }
 
     String getName() {
@@ -52,6 +53,14 @@ public class RecordedTeam {
         return mLiberos;
     }
 
+    public void setCaptain(int number) {
+        mCaptain = number;
+    }
+
+    int getCaptain() {
+        return mCaptain;
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
@@ -64,7 +73,8 @@ public class RecordedTeam {
                     && (this.getLiberoColor() == other.getLiberoColor())
                     && this.getName().equals(other.getName())
                     && this.getPlayers().equals(other.getPlayers())
-                    && this.getLiberos().equals(other.getLiberos());
+                    && this.getLiberos().equals(other.getLiberos())
+                    && (this.getCaptain() == other.getCaptain());
         }
 
         return result;

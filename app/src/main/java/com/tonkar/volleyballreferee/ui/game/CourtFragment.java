@@ -14,7 +14,6 @@ import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,10 +71,6 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
         mTeamOnRightSide = rightTeamType;
-    }
-
-    protected void applyColor(TeamType teamType, Button button) {
-        UiUtils.colorTeamButton(mView.getContext(), mTeamService.getTeamColor(teamType), button);
     }
 
 }

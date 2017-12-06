@@ -68,6 +68,7 @@ public class JsonHistoryWriter {
         writePlayers(writer, recordedTeam.getPlayers());
         writer.name("liberos");
         writePlayers(writer, recordedTeam.getLiberos());
+        writer.name("captain").value(recordedTeam.getCaptain());
         writer.endObject();
     }
 
@@ -110,6 +111,8 @@ public class JsonHistoryWriter {
         writeSubstitutions(writer, recordedSet.getSubstitutions(TeamType.HOME));
         writer.name("gSubstitutions");
         writeSubstitutions(writer, recordedSet.getSubstitutions(TeamType.GUEST));
+        writer.name("hCaptain").value(recordedSet.getActingCaptain(TeamType.HOME));
+        writer.name("gCaptain").value(recordedSet.getActingCaptain(TeamType.GUEST));
         writer.endObject();
     }
 

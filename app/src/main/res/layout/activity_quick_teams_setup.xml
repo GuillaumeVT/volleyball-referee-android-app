@@ -44,6 +44,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:onClick="selectHomeTeamColor"
+            android:textSize="@dimen/default_text_size"
             android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
 
@@ -72,6 +73,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:onClick="selectGuestTeamColor"
+            android:textSize="@dimen/default_text_size"
             android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
 

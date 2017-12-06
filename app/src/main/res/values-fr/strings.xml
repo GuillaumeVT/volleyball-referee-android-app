@@ -25,6 +25,7 @@
     <string name="guest_team_hint">Nom de l\'équipe à l\'extérieur</string>
     <string name="select_players">Sélectionner les joueurs (dont les libéros)</string>
     <string name="select_shirts_color">Sélectionner la couleur des maillots</string>
+    <string name="select_captain">Sélectionner le capitaine</string>
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="next">Suivant</string>
     <string name="confirm_teams_setup_question">Confirmez-vous cette composition?</string>
@@ -144,6 +145,7 @@
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
     <string name="pref_application_usage">Utilisation de l\'application</string>
+    <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
 
     <string-array name="pref_application_usage_entries">
         <item>Utilisation classique: les joueurs doivent être configurés et placés, et le terrain est affiché</item>

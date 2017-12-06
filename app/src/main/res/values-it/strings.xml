@@ -25,6 +25,7 @@
     <string name="guest_team_hint">Nome della squadra avversaria</string>
     <string name="select_players">Seleziona i giocatori (anche i liberi)</string>
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
+    <string name="select_captain">Seleziona il capitano</string>
     <string name="select_libero">Seleziona il libero (opzionale)</string>
     <string name="next">Prossimo</string>
     <string name="confirm_teams_setup_question">Confermate questa formazione?</string>
@@ -144,6 +145,7 @@
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
     <string name="pref_application_usage">Uso dell\'applicazione</string>
+    <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
 
     <string-array name="pref_application_usage_entries">
         <item>Uso classico: i giocatori devono essere configurati e posizionati per visualizzare la formazione in campo</item>

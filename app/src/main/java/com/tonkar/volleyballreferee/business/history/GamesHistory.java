@@ -240,6 +240,9 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
                     guestTeam.getPlayers().add(number);
                 }
             }
+
+            homeTeam.setCaptain(indoorTeamService.getCaptain(TeamType.HOME));
+            guestTeam.setCaptain(indoorTeamService.getCaptain(TeamType.GUEST));
         } else {
             homeTeam.getPlayers().addAll(mTeamService.getPlayers(TeamType.HOME));
             guestTeam.getPlayers().addAll(mTeamService.getPlayers(TeamType.GUEST));
@@ -307,6 +310,9 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
                         Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut());
                         set.getSubstitutions(TeamType.GUEST).add(sub);
                     }
+
+                    set.setActingCaptain(TeamType.HOME, indoorTeamService.getActingCaptain(TeamType.HOME, setIndex));
+                    set.setActingCaptain(TeamType.GUEST, indoorTeamService.getActingCaptain(TeamType.GUEST, setIndex));
                 }
 
                 mRecordedGame.getSets().add(set);

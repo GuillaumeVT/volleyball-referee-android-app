@@ -29,4 +29,12 @@ public interface BaseIndoorTeamService extends BaseTeamService {
 
     int getPlayerAtPositionInStartingLineup(TeamType teamType, PositionType positionType, int setIndex);
 
+    void setCaptain(TeamType teamType, int number);
+
+    int getCaptain(TeamType teamType);
+
+    Set<Integer> getPossibleCaptains(TeamType teamType);
+
+    boolean isCaptain(TeamType teamType, int number);
+
 }

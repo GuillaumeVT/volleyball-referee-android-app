@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
@@ -23,10 +24,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.io.ByteArrayOutputStream;
 
 public class UiUtils {
+
+    public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, Button button) {
+        UiUtils.colorTeamButton(context, teamService.getTeamColor(teamType), button);
+    }
+
+    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button, boolean inGame) {
+        button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
+        if (indoorTeamService.isLibero(teamType, number)) {
+            colorTeamButton(context, indoorTeamService.getLiberoColor(teamType), button);
+        } else {
+            colorTeamButton(context, indoorTeamService.getTeamColor(teamType), button);
+            if (indoorTeamService.isCaptain(teamType, number) || (inGame && indoorTeamService.isActingCaptain(teamType, number))) {
+                button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            }
+        }
+    }
+
+    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button) {
+        styleIndoorTeamButton(context, indoorTeamService, teamType, number, button, false);
+    }
 
     public static void colorTeamButton(Context context, int color, Button button) {
         button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));

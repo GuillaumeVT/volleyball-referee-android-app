@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,11 +10,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -74,6 +77,12 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         setContentView(R.layout.activity_game);
 
         Log.i("VBR-GameActivity", "Create game activity");
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean keepScreenOnSetting = sharedPreferences.getBoolean("pref_keep_screen_on", false);
+        if (keepScreenOnSetting) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
 
         setTitle("");
 
@@ -318,7 +327,8 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
                 Log.i("VBR-GameActivity", "User refuses the timeout");
             }
         });
-        builder.show();
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
     // Listeners

@@ -65,12 +65,14 @@ public class GameHistoryIOTest {
         team1.setLiberoColor(Color.parseColor("#ffffff"));
         Collections.addAll(team1.getPlayers(), 1, 3, 5, 7, 9, 11, 13);
         Collections.addAll(team1.getLiberos(), 2);
+        team1.setCaptain(11);
 
         RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
         team2.setName("Team 2");
         team2.setColor(Color.parseColor("#a1b2c3"));
         team2.setLiberoColor(Color.parseColor("#000000"));
         Collections.addAll(team2.getPlayers(), 2, 4, 6, 8, 10, 12, 14, 16, 18);
+        team2.setCaptain(2);
 
         RecordedSet set1 = new RecordedSet();
         recordedGame.getSets().add(set1);
@@ -106,6 +108,8 @@ public class GameHistoryIOTest {
             set1.getStartingPlayers(TeamType.GUEST).add(player);
         }
         Collections.addAll(set1.getSubstitutions(TeamType.HOME), new Substitution(1, 5), new Substitution(7, 2));
+        set1.setActingCaptain(TeamType.HOME, 1);
+        set1.setActingCaptain(TeamType.GUEST, 2);
 
         RecordedSet set2 = new RecordedSet();
         recordedGame.getSets().add(set2);
@@ -127,6 +131,8 @@ public class GameHistoryIOTest {
         }
         Collections.addAll(set2.getSubstitutions(TeamType.HOME), new Substitution(7, 1), new Substitution(4, 2));
         Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new Substitution(10, 50));
+        set2.setActingCaptain(TeamType.HOME, 1);
+        set2.setActingCaptain(TeamType.GUEST, 2);
 
         return recordedGame;
     }

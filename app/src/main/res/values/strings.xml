@@ -25,6 +25,7 @@
     <string name="guest_team_hint">Guest team name</string>
     <string name="select_players">Select the players (including the liberos)</string>
     <string name="select_shirts_color">Select the shirts colour</string>
+    <string name="select_captain">Select the captain</string>
     <string name="select_libero">Select the liberos (optional)</string>
     <string name="next">Next</string>
     <string name="confirm_teams_setup_question">Do you confirm this setup?</string>
@@ -144,6 +145,7 @@
     <!-- Settings activity -->
     <string name="settings">Settings</string>
     <string name="pref_application_usage">Application usage</string>
+    <string name="pref_keep_screen_on">Keep the screen on during games</string>
 
     <string-array name="pref_application_usage_entries">
         <item>Normal usage: the players must be configured and placed, and the court is displayed</item>

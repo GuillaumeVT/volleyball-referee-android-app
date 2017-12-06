@@ -73,7 +73,7 @@ public class IndoorTeamCompositionTest {
     }
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = (new IndoorTeamDefinition(TeamType.GUEST));
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);
@@ -84,6 +84,7 @@ public class IndoorTeamCompositionTest {
 
     private IndoorTeamComposition createTeamWithNPlayersAndFillCourt(int playerCount) {
         IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(playerCount);
+        teamDefinition.setCaptain(3);
         IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, 6);
         int playersOnCourt = 6;
 
@@ -326,6 +327,45 @@ public class IndoorTeamCompositionTest {
         assertEquals(PositionType.POSITION_6, team.getPlayerPosition(5));
         assertEquals(PositionType.POSITION_1, team.getPlayerPosition(6));
         assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
+    }
+
+    @Test
+    public void captain_definition() {
+        IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(13);
+
+        teamDefinition.setCaptain(11);
+        assertEquals(11, teamDefinition.getCaptain());
+    }
+
+    @Test
+    public void captain_possible() {
+        IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(13);
+
+        teamDefinition.addLibero(4);
+        assertEquals(false, teamDefinition.getPossibleCaptains().contains(4));
+    }
+
+    @Test
+    public void captain_composition() {
+        IndoorTeamComposition teamComposition = createTeamWithNPlayersAndFillCourt(12);
+
+        assertEquals(false, teamComposition.hasActingCaptainOnCourt());
+        teamComposition.confirmStartingLineup();
+        assertEquals(true, teamComposition.hasActingCaptainOnCourt());
+
+        int captain = 3;
+        assertEquals(captain, teamComposition.getActingCaptain());
+
+        teamComposition.substitutePlayer(10, PositionType.POSITION_3);
+        assertEquals(false, teamComposition.hasActingCaptainOnCourt());
+
+        teamComposition.setActingCaptain(5);
+        assertEquals(5, teamComposition.getActingCaptain());
+        assertEquals(true, teamComposition.hasActingCaptainOnCourt());
+
+        teamComposition.substitutePlayer(captain, PositionType.POSITION_3);
+        assertEquals(captain, teamComposition.getActingCaptain());
+        assertEquals(true, teamComposition.hasActingCaptainOnCourt());
     }
 
 }

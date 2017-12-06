@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Log.i("VBR-MainActivity", "Create main activity");
 
@@ -183,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void initServices(Game game) {
+    public void initServices(Game game) {
         ServicesProvider.getInstance().setScoreService(game);
         ServicesProvider.getInstance().setTeamService(game);
         ServicesProvider.getInstance().setTimeoutService(game);

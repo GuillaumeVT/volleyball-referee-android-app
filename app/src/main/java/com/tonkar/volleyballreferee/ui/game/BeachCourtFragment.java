@@ -17,6 +17,7 @@ import com.tonkar.volleyballreferee.interfaces.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Map;
 
@@ -140,14 +141,14 @@ public class BeachCourtFragment extends CourtFragment implements ScoreClient, Sc
         PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
         Button button = teamPositions.get(PositionType.POSITION_1);
         button.setText(String.valueOf(number));
-        applyColor(teamType, button);
+        UiUtils.styleBaseTeamButton(mView.getContext(), mBeachTeamService, teamType, button);
         applyService(teamType, positionType, serviceImage1);
 
         number = 2;
         positionType = mTeamService.getPlayerPosition(teamType, number);
         button = teamPositions.get(PositionType.POSITION_2);
         button.setText(String.valueOf(number));
-        applyColor(teamType, button);
+        UiUtils.styleBaseTeamButton(mView.getContext(), mBeachTeamService, teamType, button);
         applyService(teamType, positionType, serviceImage2);
     }
 

@@ -43,13 +43,17 @@ public class SetFragment extends Fragment {
         SetsListAdapter setsListAdapter = new SetsListAdapter(inflater, gameService, gameService, false);
         ladderLayout.addView(setsListAdapter.getView(setIndex, null, ladderLayout));
 
-        GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
-        LineupAdapter homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
-        homeTeamLineup.setAdapter(homeTeamLineupAdapter);
+        if (gameService.getPlayersInStartingLineup(TeamType.HOME, setIndex).size() > 0) {
+            GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
+            LineupAdapter homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
+            homeTeamLineup.setAdapter(homeTeamLineupAdapter);
+        }
 
-        GridView guestTeamLineup = view.findViewById(R.id.guest_team_lineup);
-        LineupAdapter guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
-        guestTeamLineup.setAdapter(guestTeamLineupAdapter);
+        if (gameService.getPlayersInStartingLineup(TeamType.GUEST, setIndex).size() > 0) {
+            GridView guestTeamLineup = view.findViewById(R.id.guest_team_lineup);
+            LineupAdapter guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
+            guestTeamLineup.setAdapter(guestTeamLineupAdapter);
+        }
 
         ListView homeTeamSubstitutions = view.findViewById(R.id.home_team_substitutions);
         SubstitutionsListAdapter homeTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.HOME, setIndex);

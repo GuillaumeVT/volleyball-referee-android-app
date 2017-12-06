@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/default_margin_size"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        app:cardBackgroundColor="@color/colorBackgroundCardview">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,7 +92,8 @@
         android:layout_marginLeft="@dimen/default_margin_size"
         android:layout_marginRight="@dimen/default_margin_size"
         android:layout_marginStart="@dimen/default_margin_size"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        app:cardBackgroundColor="@color/colorBackgroundCardview">
 
         <LinearLayout
             android:layout_width="match_parent"

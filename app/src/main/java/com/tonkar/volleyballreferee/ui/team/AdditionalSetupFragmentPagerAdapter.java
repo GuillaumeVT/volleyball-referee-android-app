@@ -9,18 +9,18 @@ import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class LiberoSetupFragmentPagerAdapter extends FragmentPagerAdapter implements TeamClient {
+public class AdditionalSetupFragmentPagerAdapter extends FragmentPagerAdapter implements TeamClient {
 
-    private LiberoSetupFragment mHomeTeamLiberoSetupFragment;
-    private LiberoSetupFragment mGuestTeamLiberoSetupFragment;
-    private TeamService         mTeamService;
+    private AdditionalSetupFragment mHomeTeamAdditionalSetupFragment;
+    private AdditionalSetupFragment mGuestTeamAdditionalSetupFragment;
+    private TeamService             mTeamService;
 
-    LiberoSetupFragmentPagerAdapter(FragmentManager fm) {
+    AdditionalSetupFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
 
         setTeamService(ServicesProvider.getInstance().getTeamService());
-        mHomeTeamLiberoSetupFragment = LiberoSetupFragment.newInstance(TeamType.HOME);
-        mGuestTeamLiberoSetupFragment = LiberoSetupFragment.newInstance(TeamType.GUEST);
+        mHomeTeamAdditionalSetupFragment = AdditionalSetupFragment.newInstance(TeamType.HOME);
+        mGuestTeamAdditionalSetupFragment = AdditionalSetupFragment.newInstance(TeamType.GUEST);
     }
 
     @Override
@@ -34,10 +34,10 @@ public class LiberoSetupFragmentPagerAdapter extends FragmentPagerAdapter implem
 
         switch (position) {
             case 0:
-                fragment = mHomeTeamLiberoSetupFragment;
+                fragment = mHomeTeamAdditionalSetupFragment;
                 break;
             case 1:
-                fragment = mGuestTeamLiberoSetupFragment;
+                fragment = mGuestTeamAdditionalSetupFragment;
                 break;
         }
 

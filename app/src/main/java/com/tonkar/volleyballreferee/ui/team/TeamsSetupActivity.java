@@ -61,7 +61,7 @@ public class TeamsSetupActivity extends AppCompatActivity implements TeamClient 
         Log.i("VBR-TSActivity", "Validate teams");
 
         Log.i("VBR-TSActivity", "Start liberos setup activity");
-        final Intent gameIntent = new Intent(this, LiberosSetupActivity.class);
+        final Intent gameIntent = new Intent(this, AdditionalSetupActivity.class);
         startActivity(gameIntent);
     }
 

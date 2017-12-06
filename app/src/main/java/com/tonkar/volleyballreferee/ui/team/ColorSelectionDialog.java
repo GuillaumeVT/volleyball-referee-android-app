@@ -1,10 +1,7 @@
 package com.tonkar.volleyballreferee.ui.team;
 
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
@@ -17,55 +14,51 @@ import android.widget.GridView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
-public class TeamColorDialogFragment extends DialogFragment {
+public abstract class ColorSelectionDialog {
 
-    private Context                    mContext;
-    private AlertDialog                mDialog;
-    private TeamColorSelectionListener mTeamColorSelectionListener;
+    private AlertDialog mAlertDialog;
 
-    public static TeamColorDialogFragment newInstance() {
-        TeamColorDialogFragment fragment = new TeamColorDialogFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mContext = getActivity();
-        TeamColorAdapter teamColorAdapter = new TeamColorAdapter();
-
-        final GridView gridView = new GridView(mContext);
+    ColorSelectionDialog(Context context, String title) {
+        final GridView gridView = new GridView(context);
         gridView.setNumColumns(4);
         gridView.setGravity(Gravity.CENTER);
         gridView.setPadding(8, 8, 8, 8);
-        gridView.setAdapter(teamColorAdapter);
+        ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(context) {
+            @Override
+            public void onColorSelected(int selectedColor) {
+                ColorSelectionDialog.this.onColorSelected(selectedColor);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.select_shirts_color)).setView(gridView);
+                if (mAlertDialog != null) {
+                    mAlertDialog.dismiss();
+                }
+            }
+        };
+        gridView.setAdapter(colorSelectionAdapter);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
+        builder.setTitle(title).setView(gridView);
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {}
         });
-        mDialog = builder.create();
 
-        return mDialog;
+        mAlertDialog = builder.create();
     }
 
-    void setTeamColorSelectionListener(TeamColorSelectionListener teamColorSelectionListener) {
-        mTeamColorSelectionListener = teamColorSelectionListener;
+    public void show() {
+        if (mAlertDialog != null) {
+            mAlertDialog.show();
+        }
     }
 
-    public interface TeamColorSelectionListener {
+    public abstract void onColorSelected(int selectedColor);
 
-        void onTeamColorSelected(int color);
+    private abstract class ColorSelectionAdapter extends BaseAdapter {
 
-    }
+        private final Context mContext;
+        private final int[]   mColorIds;
 
-    private class TeamColorAdapter extends BaseAdapter {
-
-        private final int[] mColorIds;
-
-        TeamColorAdapter() {
+        ColorSelectionAdapter(Context context) {
+            mContext = context;
             mColorIds = ShirtColors.getShirtColorIds();
         }
 
@@ -100,14 +93,12 @@ public class TeamColorDialogFragment extends DialogFragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mTeamColorSelectionListener.onTeamColorSelected(color);
-
-                    if (mDialog != null) {
-                        mDialog.dismiss();
-                    }
+                    onColorSelected(color);
                 }
             });
             return button;
         }
+
+        public abstract void onColorSelected(int selectedColor);
     }
 }

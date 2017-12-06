@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.history;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,10 +59,17 @@ public class PlayersListAdapter extends BaseAdapter {
 
         int number = mPlayers.get(index);
         playerButton.setText(String.valueOf(number));
+
         if (mIndoorTeamService.isLibero(mTeamType, number)) {
             UiUtils.colorTeamButton(mContext, mIndoorTeamService.getLiberoColor(mTeamType), playerButton);
         } else {
             UiUtils.colorTeamButton(mContext, mIndoorTeamService.getTeamColor(mTeamType), playerButton);
+        }
+
+        if (mIndoorTeamService.isCaptain(mTeamType, number)) {
+            playerButton.setPaintFlags(playerButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            playerButton.setPaintFlags(playerButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
         }
 
         return playerButton;

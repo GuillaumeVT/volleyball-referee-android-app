@@ -3,6 +3,8 @@
     <color name="colorPrimary">#1f4294</color>
     <color name="colorPrimaryDark">#1f4294</color>
     <color name="colorAccent">#1f4294</color>
+    <color name="colorBackgroundMain">#f1f1f1</color>
+    <color name="colorBackgroundCardview">#f3f3f3</color>
 
     <color name="colorBeach">#f2bb1a</color>
 

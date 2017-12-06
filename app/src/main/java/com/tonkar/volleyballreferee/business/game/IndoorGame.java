@@ -110,6 +110,40 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
+    public boolean hasActingCaptainOnCourt(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).hasActingCaptainOnCourt();
+    }
+
+    @Override
+    public int getActingCaptain(TeamType teamType, int setIndex) {
+        int number = -1;
+
+        Set set = getSet(setIndex);
+
+        if (set != null) {
+            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            number = indoorTeamComposition.getActingCaptain();
+        }
+
+        return number;
+    }
+
+    @Override
+    public void setActingCaptain(TeamType teamType, int number) {
+        getIndoorTeamComposition(teamType).setActingCaptain(number);
+    }
+
+    @Override
+    public boolean isActingCaptain(TeamType teamType, int number) {
+        return getIndoorTeamComposition(teamType).isActingCaptain(number);
+    }
+
+    @Override
+    public java.util.Set<Integer> getPossibleActingCaptains(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).getPossibleActingCaptains();
+    }
+
+    @Override
     public boolean isStartingLineupConfirmed() {
         return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
     }
@@ -203,6 +237,26 @@ public class IndoorGame extends Game implements IndoorTeamService {
         }
 
         return substitutions;
+    }
+
+    @Override
+    public void setCaptain(TeamType teamType, int number) {
+        getIndoorTeamDefinition(teamType).setCaptain(number);
+    }
+
+    @Override
+    public int getCaptain(TeamType teamType) {
+        return getIndoorTeamDefinition(teamType).getCaptain();
+    }
+
+    @Override
+    public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
+        return getIndoorTeamDefinition(teamType).getPossibleCaptains();
+    }
+
+    @Override
+    public boolean isCaptain(TeamType teamType, int number) {
+        return getIndoorTeamDefinition(teamType).isCaptain(number);
     }
 
 }

@@ -120,6 +120,9 @@ public class JsonHistoryReader {
                 case "liberos":
                     readPlayerArray(reader, recordedTeam.getLiberos());
                     break;
+                case "captain":
+                    recordedTeam.setCaptain(reader.nextInt());
+                    break;
                 default:
                     reader.skipValue();
                     break;
@@ -189,6 +192,12 @@ public class JsonHistoryReader {
                     break;
                 case "gSubstitutions":
                     readSubstitutionArray(reader, recordedSet.getSubstitutions(TeamType.GUEST));
+                    break;
+                case "hCaptain":
+                    recordedSet.setActingCaptain(TeamType.HOME, reader.nextInt());
+                    break;
+                case "gCaptain":
+                    recordedSet.setActingCaptain(TeamType.GUEST, reader.nextInt());
                     break;
                 default:
                     reader.skipValue();

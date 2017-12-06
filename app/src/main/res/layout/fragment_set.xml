@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context="com.tonkar.volleyballreferee.ui.history.SetFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.tonkar.volleyballreferee.ui.history.SetFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +15,8 @@
             style="@style/CardView.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size">
+            android:layout_margin="@dimen/default_margin_size"
+            app:cardBackgroundColor="@color/colorBackgroundCardview">
 
             <FrameLayout
                 android:id="@+id/ladder_layout"
@@ -28,7 +31,8 @@
             style="@style/CardView.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size">
+            android:layout_margin="@dimen/default_margin_size"
+            app:cardBackgroundColor="@color/colorBackgroundCardview">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +92,8 @@
             style="@style/CardView.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size">
+            android:layout_margin="@dimen/default_margin_size"
+            app:cardBackgroundColor="@color/colorBackgroundCardview">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,7 +130,7 @@
                         android:layout_marginRight="@dimen/default_margin_size"
                         android:layout_marginStart="@dimen/default_margin_size"
                         android:layout_weight="1"
-                        android:numColumns="3"/>
+                        />
 
                     <view
                         android:id="@+id/guest_team_substitutions"
@@ -137,7 +142,7 @@
                         android:layout_marginRight="@dimen/default_margin_size"
                         android:layout_marginStart="@dimen/default_margin_size"
                         android:layout_weight="1"
-                        android:numColumns="3"/>
+                        />
 
                 </LinearLayout>
 

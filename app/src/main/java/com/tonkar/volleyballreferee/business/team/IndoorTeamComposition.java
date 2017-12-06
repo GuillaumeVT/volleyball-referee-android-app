@@ -23,6 +23,7 @@ public class IndoorTeamComposition extends TeamComposition {
     private       int                   mActingLibero;
     private final Set<Integer>          mMiddleBlockers;
     private       int                   mWaitingMiddleBlocker;
+    private       int                   mActingCaptain;
 
     public IndoorTeamComposition(final TeamDefinition teamDefinition, int maxSubstitutionsPerSet) {
         super(teamDefinition);
@@ -35,6 +36,7 @@ public class IndoorTeamComposition extends TeamComposition {
         mActingLibero = -1;
         mMiddleBlockers = new HashSet<>();
         mWaitingMiddleBlocker = -1;
+        mActingCaptain = -1;
     }
 
     @Override
@@ -55,31 +57,43 @@ public class IndoorTeamComposition extends TeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType) {
-        Log.i("VBR-Team", String.format("Replacing %d by %d for position %s of %s team", oldNumber, newNumber, positionType.toString(), mIndoorTeamDefinition.getTeamType().toString()));
+        Log.i("VBR-Team", String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), mIndoorTeamDefinition.getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {
             if (mIndoorTeamDefinition.isLibero(newNumber)) {
-                Log.i("VBR-Team", String.format("%d of %s team is a libero and becomes acting libero", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                Log.i("VBR-Team", String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
                 mActingLibero = newNumber;
 
                 if (!mIndoorTeamDefinition.isLibero(oldNumber)) {
-                    Log.i("VBR-Team", String.format("%d of %s team is a middle blocker and is waiting outside", oldNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                    Log.i("VBR-Team", String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, mIndoorTeamDefinition.getTeamType().toString()));
                     mMiddleBlockers.clear();
                     mWaitingMiddleBlocker = oldNumber;
                     mMiddleBlockers.add(oldNumber);
                     mMiddleBlockers.add(getPlayerAtPosition(positionType.oppositePosition()));
                 }
             } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && mIndoorTeamDefinition.isLibero(oldNumber)) {
-                Log.i("VBR-Team", String.format("%d of %s team is a middle blocker and is back on court", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                Log.i("VBR-Team", String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
                 mWaitingMiddleBlocker = -1;
             } else {
                 Log.i("VBR-Team", "Actual substitution");
                 mSubstitutions.put(newNumber, oldNumber);
 
                 if (isMiddleBlocker(oldNumber)) {
-                    Log.i("VBR-Team", String.format("%d of %s team is a new middle blocker", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                    Log.i("VBR-Team", String.format("Player #%d of %s team is a new middle blocker", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
+                }
+
+                // A captain on the bench can no longer be acting captain
+                if (mIndoorTeamDefinition.isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
+                    Log.i("VBR-Team", String.format("Player #%d acting captain of %s team leaves the court", oldNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                    mActingCaptain = -1;
+                }
+
+                // The game captain coming back on the court is automatically the captain again
+                if (mIndoorTeamDefinition.isCaptain(newNumber)) {
+                    Log.i("VBR-Team", String.format("Player #%d captain of %s team is back on court", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                    setActingCaptain(mIndoorTeamDefinition.getCaptain());
                 }
             }
         }
@@ -92,6 +106,10 @@ public class IndoorTeamComposition extends TeamComposition {
             Player player = createPlayer(number);
             player.setPosition(getPlayerPosition(number));
             mStartingLineup.put(number, player);
+        }
+
+        if (!PositionType.BENCH.equals(getPlayerPosition(mIndoorTeamDefinition.getCaptain()))) {
+            setActingCaptain(mIndoorTeamDefinition.getCaptain());
         }
     }
 
@@ -326,5 +344,43 @@ public class IndoorTeamComposition extends TeamComposition {
             }
         }
         return number;
+    }
+
+    public int getActingCaptain() {
+        return mActingCaptain;
+    }
+
+    public void setActingCaptain(int number) {
+        if (isStartingLineupConfirmed() && mIndoorTeamDefinition.hasPlayer(number) && !mIndoorTeamDefinition.isLibero(number)) {
+            Log.i("VBR-Team", String.format("Player #%d of %s team is now acting captain", number, mIndoorTeamDefinition.getTeamType().toString()));
+            mActingCaptain = number;
+        }
+    }
+
+    public boolean hasActingCaptainOnCourt() {
+        return mActingCaptain > 0;
+    }
+
+    public boolean isActingCaptain(int number) {
+        return number == mActingCaptain;
+    }
+
+    public Set<Integer> getPossibleActingCaptains() {
+        Set<Integer> players = new TreeSet<>();
+
+        if (mActingCaptain > 0) {
+            players.add(mActingCaptain);
+        } else {
+            for (int number : getPlayersOnCourt()) {
+                if (!mIndoorTeamDefinition.isLibero(number)) {
+                    players.add(number);
+                }
+            }
+            if (hasWaitingMiddleBlocker()) {
+                players.add(mWaitingMiddleBlocker);
+            }
+        }
+
+        return players;
     }
 }

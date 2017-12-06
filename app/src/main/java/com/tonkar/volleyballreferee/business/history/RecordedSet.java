@@ -21,6 +21,8 @@ public class RecordedSet {
     private final List<RecordedPlayer> mGuestTeamStartingPlayers;
     private final List<Substitution>   mHomeTeamSubstitutions;
     private final List<Substitution>   mGuestTeamSubstitutions;
+    private       int                  mHomeTeamActingCaptain;
+    private       int                  mGuestTeamActingCaptain;
 
     public RecordedSet() {
         mDuration = 0L;
@@ -36,6 +38,8 @@ public class RecordedSet {
         mGuestTeamStartingPlayers = new ArrayList<>();
         mHomeTeamSubstitutions = new ArrayList<>();
         mGuestTeamSubstitutions = new ArrayList<>();
+        mHomeTeamActingCaptain = 0;
+        mGuestTeamActingCaptain = 0;
     }
 
     long getDuration() {
@@ -134,6 +138,26 @@ public class RecordedSet {
         return substitutions;
     }
 
+    int getActingCaptain(TeamType teamType) {
+        int number;
+
+        if (TeamType.HOME.equals(teamType)) {
+            number = mHomeTeamActingCaptain;
+        } else {
+            number = mGuestTeamActingCaptain;
+        }
+
+        return number;
+    }
+
+    public void setActingCaptain(TeamType teamType, int number) {
+        if (TeamType.HOME.equals(teamType)) {
+            mHomeTeamActingCaptain = number;
+        } else {
+            mGuestTeamActingCaptain = number;
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
@@ -154,7 +178,9 @@ public class RecordedSet {
                     && this.getStartingPlayers(TeamType.HOME).equals(other.getStartingPlayers(TeamType.HOME))
                     && this.getStartingPlayers(TeamType.GUEST).equals(other.getStartingPlayers(TeamType.GUEST))
                     && this.getSubstitutions(TeamType.HOME).equals(other.getSubstitutions(TeamType.HOME))
-                    && this.getSubstitutions(TeamType.GUEST).equals(other.getSubstitutions(TeamType.GUEST));
+                    && this.getSubstitutions(TeamType.GUEST).equals(other.getSubstitutions(TeamType.GUEST))
+                    && (this.getActingCaptain(TeamType.HOME) == other.getActingCaptain(TeamType.HOME))
+                    && (this.getActingCaptain(TeamType.GUEST) == other.getActingCaptain(TeamType.GUEST));
         }
 
         return result;

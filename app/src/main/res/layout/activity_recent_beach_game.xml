@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="4"
-            android:gravity="start"
-            android:textAlignment="textStart"
+            android:gravity="center"
+            android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 
@@ -33,6 +33,7 @@
             android:layout_marginEnd="@dimen/small_margin_size"
             android:layout_marginRight="@dimen/small_margin_size"
             android:layout_weight="1"
+            android:elevation="@dimen/cardview_default_elevation"
             android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
@@ -45,6 +46,7 @@
             android:layout_marginLeft="@dimen/small_margin_size"
             android:layout_marginStart="@dimen/small_margin_size"
             android:layout_weight="1"
+            android:elevation="@dimen/cardview_default_elevation"
             android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
@@ -55,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="4"
-            android:gravity="end"
-            android:textAlignment="textEnd"
+            android:gravity="center"
+            android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 

@@ -11,12 +11,14 @@ public class IndoorTeamDefinition extends TeamDefinition {
 
     private       int          mLiberoColor;
     private final Set<Integer> mLiberos;
+    private       int          mCaptain;
 
     public IndoorTeamDefinition(final TeamType teamType) {
         super(teamType);
 
         mLiberoColor = Integer.MIN_VALUE;
         mLiberos = new TreeSet<>();
+        mCaptain = -1;
     }
 
     public int getLiberoColor() {
@@ -64,4 +66,32 @@ public class IndoorTeamDefinition extends TeamDefinition {
     Set<Integer> getLiberos() {
         return new TreeSet<>(mLiberos);
     }
+
+    public void setCaptain(int number) {
+        if (hasPlayer(number)) {
+            Log.i("VBR-Team", String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
+            mCaptain = number;
+        }
+    }
+
+    public int getCaptain() {
+        return mCaptain;
+    }
+
+    public boolean isCaptain(int number) {
+        return number == mCaptain;
+    }
+
+    public Set<Integer> getPossibleCaptains() {
+        Set<Integer> possibleCaptains = new TreeSet<>();
+
+        for (int number : getPlayers()) {
+            if (!isLibero(number)) {
+                possibleCaptains.add(number);
+            }
+        }
+
+        return possibleCaptains;
+    }
+
 }

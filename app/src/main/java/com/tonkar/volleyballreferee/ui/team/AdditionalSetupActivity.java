@@ -15,32 +15,32 @@ import com.tonkar.volleyballreferee.ServicesProvider;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
-public class LiberosSetupActivity extends AppCompatActivity {
+public class AdditionalSetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_liberos_setup);
+        setContentView(R.layout.activity_additional_setup);
 
-        Log.i("VBR-LSActivity", "Create liberos setup activity");
+        Log.i("VBR-ASActivity", "Create additional setup activity");
 
-        final ViewPager liberoSetupPager = findViewById(R.id.libero_setup_pager);
-        liberoSetupPager.setAdapter(new LiberoSetupFragmentPagerAdapter(getSupportFragmentManager()));
+        final ViewPager additionalSetupPager = findViewById(R.id.additional_setup_pager);
+        additionalSetupPager.setAdapter(new AdditionalSetupFragmentPagerAdapter(getSupportFragmentManager()));
 
-        TabLayout liberoSetupTabs = findViewById(R.id.libero_setup_tabs);
-        liberoSetupTabs.setupWithViewPager(liberoSetupPager);
+        TabLayout additionalSetupTabs = findViewById(R.id.additional_setup_tabs);
+        additionalSetupTabs.setupWithViewPager(additionalSetupPager);
     }
 
-    public void validateLiberos(View view) {
-        Log.i("VBR-LSActivity", "Validate liberos");
+    public void validateTeams(View view) {
+        Log.i("VBR-ASActivity", "Validate teams");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.confirm_teams_setup_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 ServicesProvider.getInstance().getTeamService().initTeams();
-                Log.i("VBR-LSActivity", "Start game activity");
-                final Intent gameIntent = new Intent(LiberosSetupActivity.this, GameActivity.class);
+                Log.i("VBR-ASActivity", "Start game activity");
+                final Intent gameIntent = new Intent(AdditionalSetupActivity.this, GameActivity.class);
                 startActivity(gameIntent);
             }
         });

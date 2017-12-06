@@ -20,8 +20,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="start"
-            android:textAlignment="textStart"
+            android:gravity="center"
+            android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"/>
 
@@ -42,8 +42,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="end"
-            android:textAlignment="textEnd"
+            android:gravity="center"
+            android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"/>
 

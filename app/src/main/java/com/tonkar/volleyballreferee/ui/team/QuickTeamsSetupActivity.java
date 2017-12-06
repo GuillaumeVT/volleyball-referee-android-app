@@ -74,7 +74,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
 
         if (savedInstanceState == null) {
             int homeTeamColor = ShirtColors.getRandomShirtColor(this);
-            onTeamColorSelected(TeamType.HOME, homeTeamColor);
+            teamColorSelected(TeamType.HOME, homeTeamColor);
 
             boolean sameColor = true;
             int guestTeamColor = 0;
@@ -83,23 +83,13 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
                 guestTeamColor = ShirtColors.getRandomShirtColor(this);
                 sameColor = (guestTeamColor == homeTeamColor);
             }
-            onTeamColorSelected(TeamType.GUEST, guestTeamColor);
+            teamColorSelected(TeamType.GUEST, guestTeamColor);
         } else {
             homeTeamNameInput.setText(mTeamService.getTeamName(TeamType.HOME));
             guestTeamNameInput.setText(mTeamService.getTeamName(TeamType.GUEST));
 
-            onTeamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
-            onTeamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
-
-            TeamColorDialogFragment teamColorDialogFragment = (TeamColorDialogFragment) getFragmentManager().findFragmentByTag("select_home_team_color");
-            if (teamColorDialogFragment != null) {
-                initTeamColorSelectionListener(TeamType.HOME, teamColorDialogFragment);
-            }
-
-            teamColorDialogFragment = (TeamColorDialogFragment) getFragmentManager().findFragmentByTag("select_guest_team_color");
-            if (teamColorDialogFragment != null) {
-                initTeamColorSelectionListener(TeamType.GUEST, teamColorDialogFragment);
-            }
+            teamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
+            teamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
         }
 
         computeNextButtonActivation();
@@ -122,28 +112,27 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
 
     public void selectHomeTeamColor(View view) {
         Log.i("VBR-TSActivity", "Select home team color");
-        TeamColorDialogFragment teamColorDialogFragment = TeamColorDialogFragment.newInstance();
-        initTeamColorSelectionListener(TeamType.HOME, teamColorDialogFragment);
-        teamColorDialogFragment.show(getFragmentManager(), "select_home_team_color");
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(this, getResources().getString(R.string.select_shirts_color)) {
+            @Override
+            public void onColorSelected(int selectedColor) {
+                teamColorSelected(TeamType.HOME, selectedColor);
+            }
+        };
+        colorSelectionDialog.show();
     }
 
     public void selectGuestTeamColor(View view) {
         Log.i("VBR-TSActivity", "Select guest team color");
-        TeamColorDialogFragment teamColorDialogFragment = TeamColorDialogFragment.newInstance();
-        initTeamColorSelectionListener(TeamType.GUEST, teamColorDialogFragment);
-        teamColorDialogFragment.show(getFragmentManager(), "select_guest_team_color");
-    }
-
-    private void initTeamColorSelectionListener(final TeamType teamType, TeamColorDialogFragment teamColorDialogFragment) {
-        teamColorDialogFragment.setTeamColorSelectionListener(new TeamColorDialogFragment.TeamColorSelectionListener() {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(this, getResources().getString(R.string.select_shirts_color)) {
             @Override
-            public void onTeamColorSelected(int colorId) {
-                QuickTeamsSetupActivity.this.onTeamColorSelected(teamType, colorId);
+            public void onColorSelected(int selectedColor) {
+                teamColorSelected(TeamType.GUEST, selectedColor);
             }
-        });
+        };
+        colorSelectionDialog.show();
     }
 
-    private void onTeamColorSelected(TeamType teamType, int colorId) {
+    private void teamColorSelected(TeamType teamType, int colorId) {
         Log.i("VBR-TSActivity", String.format("Update %s team color", teamType.toString()));
         final Button button;
 

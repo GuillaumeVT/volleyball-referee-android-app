@@ -235,7 +235,7 @@ public class RecordedGame implements RecordedGameService {
     @Override
     public boolean isStartingLineupConfirmed() {
         RecordedSet set = mSets.get(currentSetIndex());
-        return !set.getSubstitutions(TeamType.HOME).isEmpty() && !set.getSubstitutions(TeamType.GUEST).isEmpty();
+        return !set.getStartingPlayers(TeamType.HOME).isEmpty() && !set.getStartingPlayers(TeamType.GUEST).isEmpty();
     }
 
     @Override
@@ -276,6 +276,34 @@ public class RecordedGame implements RecordedGameService {
         }
 
         return number;
+    }
+
+    @Override
+    public void setCaptain(TeamType teamType, int number) {
+        getTeam(teamType).setCaptain(number);
+    }
+
+    @Override
+    public int getCaptain(TeamType teamType) {
+        return getTeam(teamType).getCaptain();
+    }
+
+    @Override
+    public Set<Integer> getPossibleCaptains(TeamType teamType) {
+        Set<Integer> possibleCaptains = new TreeSet<>();
+
+        for (int number : getTeam(teamType).getPlayers()) {
+            if (!isLibero(teamType, number)) {
+                possibleCaptains.add(number);
+            }
+        }
+
+        return possibleCaptains;
+    }
+
+    @Override
+    public boolean isCaptain(TeamType teamType, int number) {
+        return number == getTeam(teamType).getCaptain();
     }
 
     @Override
