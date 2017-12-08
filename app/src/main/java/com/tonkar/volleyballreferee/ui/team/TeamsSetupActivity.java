@@ -81,7 +81,7 @@ public class TeamsSetupActivity extends AppCompatActivity implements TeamClient 
                 UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
                 return true;
             default:
-                return true;
+                return super.onOptionsItemSelected(item);
         }
     }
 
