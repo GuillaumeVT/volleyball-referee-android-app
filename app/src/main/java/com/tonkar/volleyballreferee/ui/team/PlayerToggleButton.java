@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
@@ -58,11 +56,11 @@ class PlayerToggleButton extends AppCompatButton {
 
     private void color() {
         if (mChecked) {
+            UiUtils.colorTeamButton(getContext(), mCheckedBackgroundColor, this);
             setTextColor(mCheckedTextColor);
-            getBackground().setColorFilter(new PorterDuffColorFilter(mCheckedBackgroundColor, PorterDuff.Mode.SRC));
         } else {
+            UiUtils.colorTeamButton(getContext(), mBackgroundColor, this);
             setTextColor(mTextColor);
-            getBackground().setColorFilter(new PorterDuffColorFilter(mBackgroundColor, PorterDuff.Mode.SRC));
         }
     }
 

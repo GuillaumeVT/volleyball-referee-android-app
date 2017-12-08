@@ -1,8 +1,10 @@
 package com.tonkar.volleyballreferee.ui.game;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -105,6 +107,8 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
 
         mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
         mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
+        UiUtils.addMarginLegacyButton(mLeftTeamScoreButton);
+        UiUtils.addMarginLegacyButton(mRightTeamScoreButton);
 
         mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
         mRightTeamSetsText = findViewById(R.id.right_team_set_text);
@@ -148,7 +152,7 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         }
 
         final ViewPager gamePager = findViewById(R.id.game_pager);
-        final GameFragmentPagerAdapter gamePagerAdapter = new GameFragmentPagerAdapter(mScoreService, this, getSupportFragmentManager());
+        final GameFragmentPagerAdapter gamePagerAdapter = new GameFragmentPagerAdapter(this, getSupportFragmentManager());
         gamePager.setAdapter(gamePagerAdapter);
 
         final TabLayout gameTabs = findViewById(R.id.game_tabs);
@@ -191,6 +195,11 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
 
         if (mScoreService.isMatchCompleted()) {
             disableMenu();
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            MenuItem shareMenu = menu.findItem(R.id.action_share);
+            shareMenu.setVisible(false);
         }
 
         return true;

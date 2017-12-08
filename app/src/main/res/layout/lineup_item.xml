@@ -13,12 +13,11 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size"/>
 
-    <Button
+    <include
         android:id="@+id/position"
+        layout="@layout/player_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="@dimen/default_text_size"
-        android:theme="@style/TeamButtonTheme"/>
+        android:layout_gravity="center"/>
 
 </LinearLayout>

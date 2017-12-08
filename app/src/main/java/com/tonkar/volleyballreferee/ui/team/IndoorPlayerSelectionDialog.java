@@ -28,7 +28,9 @@ public abstract class IndoorPlayerSelectionDialog {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
-        gridView.setPadding(8, 8, 8, 8);
+        int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
+        gridView.setPadding(pixels, pixels, pixels, pixels);
+        UiUtils.addSpacingLegacyGrid(gridView);
         IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, indoorTeamService, teamType, players) {
             @Override
             public void onPlayerSelected(int selectedNumber) {

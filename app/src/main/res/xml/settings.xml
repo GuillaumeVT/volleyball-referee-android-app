@@ -6,17 +6,4 @@
         android:key="pref_keep_screen_on"
         android:title="@string/pref_keep_screen_on"/>
 
-    <android.support.v7.preference.PreferenceCategory
-        android:title="@string/indoor_preferences">
-
-        <android.support.v7.preference.ListPreference
-            android:defaultValue="true"
-            android:key="pref_application_usage"
-            android:title="@string/pref_application_usage"
-            android:summary="%s"
-            android:entries="@array/pref_application_usage_entries"
-            android:entryValues="@array/pref_application_usage_values"/>
-
-    </android.support.v7.preference.PreferenceCategory>
-
 </android.support.v7.preference.PreferenceScreen>

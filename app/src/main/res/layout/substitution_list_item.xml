@@ -8,13 +8,12 @@
               android:orientation="horizontal"
               android:weightSum="8">
 
-    <Button
+    <include
         android:id="@+id/player_in_button"
+        layout="@layout/player_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:textSize="@dimen/default_text_size"
-        android:theme="@style/TeamButtonTheme"/>
+        android:layout_weight="3"/>
 
     <ImageView
         android:layout_width="0dp"
@@ -30,11 +29,10 @@
         android:tint="@android:color/holo_red_dark"
         app:srcCompat="@drawable/ic_player_out"/>
 
-    <Button
+    <include
         android:id="@+id/player_out_button"
+        layout="@layout/player_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:textSize="@dimen/default_text_size"
-        android:theme="@style/TeamButtonTheme"/>
+        android:layout_weight="3"/>
 </LinearLayout>

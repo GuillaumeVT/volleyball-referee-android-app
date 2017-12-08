@@ -29,6 +29,9 @@
     <string name="select_libero">Seleziona il libero (opzionale)</string>
     <string name="next">Prossimo</string>
     <string name="confirm_teams_setup_question">Confermate questa formazione?</string>
+    <string name="scoreboard_usage">&#x25b6; Solo punteggio</string>
+    <string name="scoreboard_usage_title">Schermata solo punteggio</string>
+    <string name="scoreboard_usage_message">I giocatori non sono configurati e la formazione in campo non é visualizzata</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Croce</string>
@@ -144,18 +147,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
-    <string name="pref_application_usage">Uso dell\'applicazione</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
-
-    <string-array name="pref_application_usage_entries">
-        <item>Uso classico: i giocatori devono essere configurati e posizionati per visualizzare la formazione in campo</item>
-        <item>Schermata solo punteggio: i giocatori non sono configurati e la formazione in campo non é visualizzata</item>
-    </string-array>
-
-    <string-array name="pref_application_usage_values">
-        <item>true</item>
-        <item>false</item>
-    </string-array>
 
     <!-- Recent games activity -->
     <string name="recent_games">Partite recenti</string>

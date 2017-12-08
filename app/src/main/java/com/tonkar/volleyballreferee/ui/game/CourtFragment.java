@@ -14,6 +14,7 @@ import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,10 +57,12 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
 
     protected void addButtonOnLeftSide(final PositionType positionType, final Button button) {
         mLeftTeamPositions.put(positionType, button);
+        UiUtils.addMarginLegacyButton(button);
     }
 
     protected void addButtonOnRightSide(final PositionType positionType, final Button button) {
         mRightTeamPositions.put(positionType, button);
+        UiUtils.addMarginLegacyButton(button);
     }
 
     @Override

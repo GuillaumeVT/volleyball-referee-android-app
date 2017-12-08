@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -13,7 +14,7 @@ public class AdditionalSetupFragmentPagerAdapter extends FragmentPagerAdapter im
 
     private AdditionalSetupFragment mHomeTeamAdditionalSetupFragment;
     private AdditionalSetupFragment mGuestTeamAdditionalSetupFragment;
-    private TeamService             mTeamService;
+    private BaseTeamService         mTeamService;
 
     AdditionalSetupFragmentPagerAdapter(FragmentManager fm) {
         super(fm);

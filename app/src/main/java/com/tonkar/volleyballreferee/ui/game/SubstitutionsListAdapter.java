@@ -81,6 +81,8 @@ public class SubstitutionsListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.playerInButton = substitutionView.findViewById(R.id.player_in_button);
             viewHolder.playerOutButton = substitutionView.findViewById(R.id.player_out_button);
+            UiUtils.addMarginLegacyButton(viewHolder.playerInButton);
+            UiUtils.addMarginLegacyButton(viewHolder.playerOutButton);
             substitutionView.setTag(viewHolder);
         }
         else {

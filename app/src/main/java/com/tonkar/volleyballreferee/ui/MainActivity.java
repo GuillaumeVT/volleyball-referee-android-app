@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -156,18 +155,9 @@ public class MainActivity extends AppCompatActivity {
 
         initServices(game);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean normalUsageSetting = Boolean.parseBoolean(sharedPreferences.getString("pref_application_usage", String.valueOf(true)));
-
-        if (normalUsageSetting) {
-            Log.i("VBR-MainActivity", "Start activity to setup both teams normally");
-            final Intent intent = new Intent(this, TeamsSetupActivity.class);
-            startActivity(intent);
-        } else {
-            Log.i("VBR-MainActivity", "Start activity to setup both teams quickly");
-            final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
-            startActivity(intent);
-        }
+        Log.i("VBR-MainActivity", "Start activity to setup teams");
+        final Intent intent = new Intent(this, TeamsSetupActivity.class);
+        startActivity(intent);
     }
 
     private void startBeachGame(final boolean custom) {
@@ -181,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
         initServices(game);
 
-        Log.i("VBR-MainActivity", "Start activity to setup both teams quickly");
+        Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
         startActivity(intent);
     }

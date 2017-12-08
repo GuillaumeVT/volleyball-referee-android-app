@@ -24,4 +24,8 @@ public interface BaseTeamService {
 
     void initTeams();
 
+    UsageType getUsageType();
+
+    void setUsageType(UsageType usageType);
+
 }

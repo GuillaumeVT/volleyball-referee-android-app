@@ -1,17 +1,21 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.preference.PreferenceManager;
 
+import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.ScoreClient;
 import com.tonkar.volleyballreferee.interfaces.ScoreService;
+import com.tonkar.volleyballreferee.interfaces.TeamClient;
+import com.tonkar.volleyballreferee.interfaces.TeamService;
+import com.tonkar.volleyballreferee.interfaces.UsageType;
 
-public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
+public class GameFragmentPagerAdapter extends FragmentPagerAdapter implements ScoreClient, TeamClient {
 
-    private final ScoreService          mScoreService;
+    private       ScoreService          mScoreService;
+    private       TeamService           mTeamService;
     private final Context               mContext;
     private       IndoorCourtFragment   mIndoorCourtFragment;
     private       BeachCourtFragment    mBeachCourtFragment;
@@ -19,18 +23,17 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
     private       SubstitutionsFragment mSubstitutionsFragment;
     private       int                   mCount;
 
-    GameFragmentPagerAdapter(ScoreService scoreService, Context context, FragmentManager fm) {
+    GameFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
 
-        mScoreService = scoreService;
+        setScoreService(ServicesProvider.getInstance().getScoreService());
+        setTeamService(ServicesProvider.getInstance().getTeamService());
         mContext = context;
         mScoresFragment = ScoresFragment.newInstance();
 
         switch (mScoreService.getGameType()) {
             case INDOOR:
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-                boolean normalUsageSetting = Boolean.parseBoolean(sharedPreferences.getString("pref_application_usage", String.valueOf(true)));
-                if (normalUsageSetting) {
+                if (UsageType.NORMAL.equals(mTeamService.getUsageType())) {
                     mIndoorCourtFragment = IndoorCourtFragment.newInstance();
                     mSubstitutionsFragment = SubstitutionsFragment.newInstance();
                     mCount = 3;
@@ -83,5 +86,15 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return ((NamedGameFragment) getItem(position)).getGameFragmentTitle(mContext);
+    }
+
+    @Override
+    public void setTeamService(TeamService teamService) {
+        mTeamService = teamService;
+    }
+
+    @Override
+    public void setScoreService(ScoreService scoreService) {
+        mScoreService = scoreService;
     }
 }

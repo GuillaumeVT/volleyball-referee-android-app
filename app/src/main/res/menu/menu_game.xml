@@ -1,7 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.tonkar.volleyballreferee.OldGameActivity">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_navigate_home"
         android:icon="@drawable/ic_home_menu"

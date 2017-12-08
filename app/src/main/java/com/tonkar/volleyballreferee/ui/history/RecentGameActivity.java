@@ -1,7 +1,10 @@
 package com.tonkar.volleyballreferee.ui.history;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,6 +29,12 @@ public abstract class RecentGameActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_recent_game, menu);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            MenuItem shareMenu = menu.findItem(R.id.action_share_game);
+            shareMenu.setVisible(false);
+        }
+
         return true;
     }
 

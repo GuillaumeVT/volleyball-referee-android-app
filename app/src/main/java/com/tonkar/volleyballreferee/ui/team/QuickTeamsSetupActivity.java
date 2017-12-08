@@ -34,6 +34,8 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
 
         setTeamService(ServicesProvider.getInstance().getTeamService());
 
+        setTitle("");
+
         mNextButton = findViewById(R.id.next_button);
 
         final EditText homeTeamNameInput = findViewById(R.id.home_team_name_input_text);
@@ -72,22 +74,28 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
         mHomeTeamColorButton = findViewById(R.id.home_team_color_button);
         mGuestTeamColorButton = findViewById(R.id.guest_team_color_button);
 
+        homeTeamNameInput.setText(mTeamService.getTeamName(TeamType.HOME));
+        guestTeamNameInput.setText(mTeamService.getTeamName(TeamType.GUEST));
+
         if (savedInstanceState == null) {
-            int homeTeamColor = ShirtColors.getRandomShirtColor(this);
-            teamColorSelected(TeamType.HOME, homeTeamColor);
+            // Coming for the teams setup activity, the color are kept
+            if (getIntent().getBooleanExtra("scoreboard_usage", false)) {
+                teamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
+                teamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
+            } else {
+                int homeTeamColor = ShirtColors.getRandomShirtColor(this);
+                teamColorSelected(TeamType.HOME, homeTeamColor);
 
-            boolean sameColor = true;
-            int guestTeamColor = 0;
+                boolean sameColor = true;
+                int guestTeamColor = 0;
 
-            while (sameColor) {
-                guestTeamColor = ShirtColors.getRandomShirtColor(this);
-                sameColor = (guestTeamColor == homeTeamColor);
+                while (sameColor) {
+                    guestTeamColor = ShirtColors.getRandomShirtColor(this);
+                    sameColor = (guestTeamColor == homeTeamColor);
+                }
+                teamColorSelected(TeamType.GUEST, guestTeamColor);
             }
-            teamColorSelected(TeamType.GUEST, guestTeamColor);
         } else {
-            homeTeamNameInput.setText(mTeamService.getTeamName(TeamType.HOME));
-            guestTeamNameInput.setText(mTeamService.getTeamName(TeamType.GUEST));
-
             teamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
             teamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
         }

@@ -29,6 +29,9 @@
     <string name="select_libero">Выбрать либеро (факультативно)</string>
     <string name="next">Далее</string>
     <string name="confirm_teams_setup_question">Подтвердить составы команд?</string>
+    <string name="scoreboard_usage">&#x25b6; Использовать как счётное табло</string>
+    <string name="scoreboard_usage_title">Исключительно счётное табло</string>
+    <string name="scoreboard_usage_message">Не нужно вводить игроков и расстановку. Площадка не отображается</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>
@@ -143,18 +146,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Настройки</string>
-    <string name="pref_application_usage">Использование приложения</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
-
-    <string-array name="pref_application_usage_entries">
-        <item>Стандартное использование: нужно выбрать игроков и ввести расстановку. Площадка отображена под счётным таблом</item>
-        <item>Исключительно счётное табло: не нужно вводить игроков и расстановку. Площадка не отображается</item>
-    </string-array>
-
-    <string-array name="pref_application_usage_values">
-        <item>true</item>
-        <item>false</item>
-    </string-array>
 
     <!-- Recent games activity -->
     <string name="recent_games">Сохранённые матчи</string>

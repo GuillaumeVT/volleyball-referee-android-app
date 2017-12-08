@@ -22,7 +22,9 @@ public abstract class ColorSelectionDialog {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(4);
         gridView.setGravity(Gravity.CENTER);
-        gridView.setPadding(8, 8, 8, 8);
+        int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
+        gridView.setPadding(pixels, pixels, pixels, pixels);
+        UiUtils.addSpacingLegacyGrid(gridView);
         ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(context) {
             @Override
             public void onColorSelected(int selectedColor) {

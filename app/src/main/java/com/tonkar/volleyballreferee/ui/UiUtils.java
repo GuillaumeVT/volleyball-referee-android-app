@@ -12,14 +12,17 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class UiUtils {
 
     public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, Button button) {
         UiUtils.colorTeamButton(context, teamService.getTeamColor(teamType), button);
+        button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
     }
 
     public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button, boolean inGame) {
@@ -54,7 +58,11 @@ public class UiUtils {
     }
 
     public static void colorTeamButton(Context context, int color, Button button) {
-        button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            button.setBackgroundColor(color);
+        } else {
+            button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        }
         button.setTextColor(getTextColor(context, color));
     }
 
@@ -86,19 +94,23 @@ public class UiUtils {
 
             String title = summary.replaceAll("-|\t|\n", "_");
             String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, null);
-            Uri bitmapUri = Uri.parse(path);
-
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_SEND);
-            intent.setType("image/*");
-
-            intent.putExtra(android.content.Intent.EXTRA_TEXT, summary);
-            intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
-            try {
-                context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
-            } catch (ActivityNotFoundException e) {
-                Log.e("VBR-Share", "Exception while sharing", e);
+            if (path == null) {
                 Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+            } else {
+                Uri bitmapUri = Uri.parse(path);
+
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("image/*");
+
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, summary);
+                intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                try {
+                    context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
+                } catch (ActivityNotFoundException e) {
+                    Log.e("VBR-Share", "Exception while sharing", e);
+                    Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                }
             }
         } else {
             Log.w("VBR-Share", "No permission to share");
@@ -109,6 +121,25 @@ public class UiUtils {
         TextView textView = alertDialog.findViewById(android.R.id.message);
         if (textView != null) {
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.default_text_size));
+        }
+    }
+
+    public static void addMarginLegacyButton(Button button) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && button.getLayoutParams() != null) {
+            if (button.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                int pixels = button.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
+                ((ViewGroup.MarginLayoutParams) button.getLayoutParams()).setMargins(pixels, pixels, pixels, pixels);
+            }
+            int pixels = button.getResources().getDimensionPixelSize(R.dimen.small_margin_size);
+            button.setPadding(pixels, pixels, pixels, pixels);
+        }
+    }
+
+    public static void addSpacingLegacyGrid(GridView gridView) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            int pixels = gridView.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
+            gridView.setVerticalSpacing(pixels);
+            gridView.setHorizontalSpacing(pixels);
         }
     }
 

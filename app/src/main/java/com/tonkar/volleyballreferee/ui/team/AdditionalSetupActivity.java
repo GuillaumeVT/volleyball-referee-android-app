@@ -24,6 +24,8 @@ public class AdditionalSetupActivity extends AppCompatActivity {
 
         Log.i("VBR-ASActivity", "Create additional setup activity");
 
+        setTitle("");
+
         final ViewPager additionalSetupPager = findViewById(R.id.additional_setup_pager);
         additionalSetupPager.setAdapter(new AdditionalSetupFragmentPagerAdapter(getSupportFragmentManager()));
 
