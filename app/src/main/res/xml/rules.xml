@@ -105,4 +105,18 @@
             android:title="@string/pref_change_side_every_7_points"/>
 
     </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/specific_leagues_preferences">
+
+        <android.support.v7.preference.ListPreference
+            android:defaultValue="9999"
+            android:key="pref_consecutive_serves_per_player"
+            android:title="@string/pref_consecutive_serves_per_player"
+            android:summary="%s"
+            android:entries="@array/consecutive_serves_per_player_entries"
+            android:entryValues="@array/consecutive_serves_per_player_values"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
 </android.support.v7.preference.PreferenceScreen>

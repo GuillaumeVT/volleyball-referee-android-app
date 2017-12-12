@@ -139,8 +139,8 @@ public class JsonHistoryWriter {
         writer.beginArray();
         for (Substitution substitution : substitutions) {
             writer.beginObject();
-            writer.name("in").value(substitution.getPlayerIn());
-            writer.name("out").value(substitution.getPlayerOut());
+            writer.name("pIn").value(substitution.getPlayerIn());
+            writer.name("pOut").value(substitution.getPlayerOut());
             writer.endObject();
         }
         writer.endArray();

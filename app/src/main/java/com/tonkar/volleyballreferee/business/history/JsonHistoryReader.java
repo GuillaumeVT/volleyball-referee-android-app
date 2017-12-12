@@ -256,9 +256,11 @@ public class JsonHistoryReader {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
+                case "pIn":
                 case "in":
                     substitution.setPlayerIn(reader.nextInt());
                     break;
+                case "pOut":
                 case "out":
                     substitution.setPlayerOut(reader.nextInt());
                     break;

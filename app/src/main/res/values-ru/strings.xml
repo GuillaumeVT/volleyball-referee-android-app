@@ -70,6 +70,7 @@
     <string name="timeout_preferences">Перерывы</string>
     <string name="indoor_preferences">Классический волейбол</string>
     <string name="beach_preferences">Пляжный волейбол</string>
+    <string name="specific_leagues_preferences">Специфические правила для некоторых лиг</string>
 
     <string name="pref_points_per_set">Количество очков в партии</string>
     <string name="pref_sets_per_game">Количество партий в матче</string>
@@ -82,6 +83,7 @@
     <string name="pref_game_intervals">Перерывы между партиями</string>
     <string name="pref_game_intervals_duration">Длительность перерывов между партиями</string>
     <string name="pref_team_substitutions_per_set">Количество замен в партии</string>
+    <string name="pref_consecutive_serves_per_player">Максимальное число последовательных подач одним игроком</string>
     <string name="pref_change_side_every_7_points">Смены сторон площадки после каждых набранных 7 очков</string>
 
     <string-array name="points_per_set_entries">
@@ -107,11 +109,17 @@
     <string-array name="game_interval_duration_entries">
         <item>3 минуты</item>
         <item>2 минуты</item>
-        <item>1 минуты</item>
+        <item>1 минута</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>12 замен в партии</item>
         <item>6 замен в партии</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_entries">
+        <item>Не ограничено</item>
+        <item>5 подач</item>
+        <item>4 подачи</item>
+        <item>3 подачи</item>
     </string-array>
 
     <string-array name="points_per_set_values">
@@ -142,6 +150,12 @@
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
         <item>6</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_values">
+        <item>9999</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
     </string-array>
 
     <!-- Settings activity -->

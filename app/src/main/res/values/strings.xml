@@ -71,6 +71,7 @@
     <string name="timeout_preferences">Timeout</string>
     <string name="indoor_preferences">Indoor volleyball</string>
     <string name="beach_preferences">Beach volleyball</string>
+    <string name="specific_leagues_preferences">Custom rules for specific leagues</string>
 
     <string name="pref_points_per_set">Number of points per set</string>
     <string name="pref_sets_per_game">Number of sets per game</string>
@@ -83,6 +84,7 @@
     <string name="pref_game_intervals">Game intervals</string>
     <string name="pref_game_intervals_duration">Duration of a game interval</string>
     <string name="pref_team_substitutions_per_set">Number of team substitutions per set</string>
+    <string name="pref_consecutive_serves_per_player">Limit of consecutive serves per player</string>
     <string name="pref_change_side_every_7_points">Change sides every 7 points</string>
 
     <string-array name="points_per_set_entries">
@@ -114,6 +116,12 @@
         <item>12 substitutions per set</item>
         <item>6 substitutions per set</item>
     </string-array>
+    <string-array name="consecutive_serves_per_player_entries">
+        <item>Unlimited</item>
+        <item>5 serves</item>
+        <item>4 serves</item>
+        <item>3 serves</item>
+    </string-array>
 
     <string-array name="points_per_set_values">
         <item>25</item>
@@ -143,6 +151,12 @@
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
         <item>6</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_values">
+        <item>9999</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
     </string-array>
 
     <!-- Settings activity -->

@@ -495,13 +495,13 @@ public abstract class Game implements ScoreService, TimeoutService, TeamService,
         mUsageType = usageType;
     }
 
-    private void rotateToNextPositions(TeamType teamType) {
+    void rotateToNextPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to next position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToNextPositions();
         notifyTeamRotated(teamType);
     }
 
-    private void rotateToPreviousPositions(TeamType teamType) {
+    void rotateToPreviousPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to previous position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToPreviousPositions();
         notifyTeamRotated(teamType);

@@ -19,12 +19,13 @@ public class Rules implements Serializable {
     private final int     mGameIntervalDuration;
     private final int     mTeamSubstitutionsPerSet;
     private final boolean mChangeSidesEvery7Points;
+    private final int     mCustomConsecutiveServesPerPlayer;
 
     public Rules(final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet,
                  final boolean teamTimeoutsEnabled, final int teamTimeoutsPerSet, final int teamTimeoutDuration,
                  final boolean technicalTimeoutsEnabled, final int technicalTimeoutDuration,
                  final boolean gameIntervalsEnabled, final int gameIntervalDuration,
-                 final int teamSubstitutionsPerSet, final boolean changeSidesEvery7Points) {
+                 final int teamSubstitutionsPerSet, final boolean changeSidesEvery7Points, final int customConsecutiveServesPerPlayer) {
         mSetsPerGame = setsPerGame;
         mPointsPerSet = pointsPerSet;
         mTieBreakInLastSet = tieBreakInLastSet;
@@ -41,10 +42,14 @@ public class Rules implements Serializable {
 
         mTeamSubstitutionsPerSet = teamSubstitutionsPerSet;
         mChangeSidesEvery7Points = changeSidesEvery7Points;
+
+        mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
     }
 
-    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, 2, 30, true, 60, true, 180, 6, false);
-    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, 1, 30, true, 30, true, 60, 0, true);
+    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, 2, 30,
+            true, 60, true, 180, 6, false, 9999);
+    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, 1, 30,
+            true, 30, true, 60, 0, true, 9999);
 
     public static Rules createRulesFromPref(final SharedPreferences sharedPreferences, final Rules defaultRules) {
         int setsPerGame = getInt(sharedPreferences, "pref_sets_per_game", defaultRules.getSetsPerGame());
@@ -65,8 +70,10 @@ public class Rules implements Serializable {
 
         boolean changeSidesEvery7Points = sharedPreferences.getBoolean("pref_change_side_every_7_points", defaultRules.isChangeSidesEvery7Points());
 
+        int customConsecutiveServesPerPlayer = getInt(sharedPreferences,"pref_consecutive_serves_per_player", defaultRules.getCustomConsecutiveServesPerPlayer());
+
         return new Rules(setsPerGame, pointsPerSet, tieBreakInLastSet, teamTimeoutsEnabled, teamTimeoutsPerSet, teamTimeoutDuration,
-                technicalTimeoutsEnabled, technicalTimeoutDuration, gameIntervalsEnabled, gameIntervalDuration, teamSubstitutionsPerSet, changeSidesEvery7Points);
+                technicalTimeoutsEnabled, technicalTimeoutDuration, gameIntervalsEnabled, gameIntervalDuration, teamSubstitutionsPerSet, changeSidesEvery7Points, customConsecutiveServesPerPlayer);
     }
 
     private static int getInt(final SharedPreferences sharedPreferences, final String key, final int defaultValue) {
@@ -117,6 +124,10 @@ public class Rules implements Serializable {
 
     public boolean isChangeSidesEvery7Points() { return mChangeSidesEvery7Points; }
 
+    public int getCustomConsecutiveServesPerPlayer() {
+        return mCustomConsecutiveServesPerPlayer;
+    }
+
     public void printRules() {
         Log.i("VBR-Rules", String.format("pref_sets_per_game: %d", mSetsPerGame));
         Log.i("VBR-Rules", String.format("pref_points_per_set: %d", mPointsPerSet));
@@ -130,5 +141,6 @@ public class Rules implements Serializable {
         Log.i("VBR-Rules", String.format("pref_game_intervals_duration: %d", mGameIntervalDuration));
         Log.i("VBR-Rules", String.format("pref_team_substitutions_per_set: %d", mTeamSubstitutionsPerSet));
         Log.i("VBR-Rules", String.format("pref_change_side_every_7_points: %b", mChangeSidesEvery7Points));
+        Log.i("VBR-Rules", String.format("pref_consecutive_serves_per_player: %d", mCustomConsecutiveServesPerPlayer));
     }
 }

@@ -17,7 +17,7 @@ import java.util.TreeSet;
 
 public class IndoorGame extends Game implements IndoorTeamService {
 
-    IndoorGame(final Rules rules) {
+    public IndoorGame(final Rules rules) {
         super(GameType.INDOOR, rules);
     }
 
@@ -61,20 +61,32 @@ public class IndoorGame extends Game implements IndoorTeamService {
                     && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
                 notifyTechnicalTimeoutReached();
             }
+
+            // Specific custom rule
+            if (samePlayerServedNConsecutiveTimes(teamType, getPoints(teamType), getPointsLadder())) {
+                rotateToNextPositions(teamType);
+            }
         }
     }
 
     @Override
     public void removeLastPoint() {
+        TeamType oldServingTeam = getServingTeam();
         super.removeLastPoint();
 
-        checkPosition1(getServingTeam());
+        TeamType newServingTeam = getServingTeam();
+        checkPosition1(newServingTeam);
 
         final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
         // In indoor volley, the teams change sides after the 8th during the tie break
         if (isTieBreakSet() && leadingScore == 7) {
             swapTeams(ActionOriginType.APPLICATION);
+        }
+
+        // Specific custom rule
+        if (oldServingTeam.equals(newServingTeam) && samePlayerHadServedNConsecutiveTimes(oldServingTeam, getPoints(oldServingTeam), getPointsLadder())) {
+            rotateToPreviousPositions(oldServingTeam);
         }
     }
 
@@ -257,6 +269,59 @@ public class IndoorGame extends Game implements IndoorTeamService {
     @Override
     public boolean isCaptain(TeamType teamType, int number) {
         return getIndoorTeamDefinition(teamType).isCaptain(number);
+    }
+
+    /* *******************************
+     * Specific custom rules section *
+     * *******************************/
+
+    public boolean samePlayerServedNConsecutiveTimes(TeamType teamType, int teamPoints, List<TeamType> pointsLadder) {
+        boolean result = false;
+
+        int limit = getRules().getCustomConsecutiveServesPerPlayer();
+        if (limit <= teamPoints) {
+            int consecutiveServes = getConsecutiveServes(teamType, pointsLadder);
+
+            if (consecutiveServes > 0 && consecutiveServes % limit == 0) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    public boolean samePlayerHadServedNConsecutiveTimes(TeamType teamType, int teamPoints, List<TeamType> pointsLadder) {
+        List<TeamType> tempPointsLadder = new ArrayList<>(pointsLadder);
+        tempPointsLadder.add(teamType);
+        int tempTeamPoints = teamPoints + 1;
+        return samePlayerServedNConsecutiveTimes(teamType, tempTeamPoints, tempPointsLadder);
+    }
+
+    private int getConsecutiveServes(TeamType teamType, List<TeamType> pointsLadder) {
+        int consecutiveServes;
+        int ladderIndex = pointsLadder.size() - 1;
+
+        if (pointsLadder.isEmpty()) {
+            consecutiveServes = 0;
+        } else if (teamType.equals(pointsLadder.get(ladderIndex))) {
+            List<TeamType> consecutivePoints = new ArrayList<>();
+            while (ladderIndex >= 0 && teamType.equals(pointsLadder.get(ladderIndex))) {
+                consecutivePoints.add(teamType);
+                ladderIndex--;
+            }
+            consecutiveServes = consecutivePoints.size();
+
+            // Side-out doesn't count as a serve
+            if (ladderIndex >= 0 && !teamType.equals(pointsLadder.get(ladderIndex))) {
+                consecutiveServes--;
+            } else if (ladderIndex < 0 && !currentSet().getServingTeamAtStart().equals(teamType)) {
+                consecutiveServes--;
+            }
+        } else {
+            consecutiveServes = 0;
+        }
+
+        return consecutiveServes;
     }
 
 }
