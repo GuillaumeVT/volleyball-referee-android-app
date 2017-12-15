@@ -12,17 +12,15 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdditionalSetupFragment extends Fragment implements TeamClient {
+public class AdditionalSetupFragment extends Fragment {
 
     private LayoutInflater        mLayoutInflater;
     private TeamType              mTeamType;
@@ -43,26 +41,15 @@ public class AdditionalSetupFragment extends Fragment implements TeamClient {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-ASActivity", "Create additional setup fragment");
+        mLayoutInflater = inflater;
+        View view = mLayoutInflater.inflate(R.layout.fragment_additional_setup, container, false);
 
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
-        setTeamService(ServicesProvider.getInstance().getTeamService());
-    }
-
-    @Override
-    public void setTeamService(TeamService teamService) {
-        mIndoorTeamService = (IndoorTeamService) teamService;
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mLayoutInflater = inflater;
-        View view = mLayoutInflater.inflate(R.layout.fragment_additional_setup, container, false);
+        mIndoorTeamService = (IndoorTeamService) ServicesProvider.getInstance().getTeamService();
 
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
         updateCaptain();
@@ -95,7 +82,7 @@ public class AdditionalSetupFragment extends Fragment implements TeamClient {
 
     private void selectLiberoColor() {
         Log.i("VBR-ASActivity", String.format("Select %s team libero color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getContext(), getResources().getString(R.string.select_shirts_color)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_shirts_color)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);

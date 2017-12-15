@@ -10,17 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-
-public class SubstitutionsFragment extends Fragment implements NamedGameFragment, TeamClient, TeamListener {
+public class SubstitutionsFragment extends Fragment implements NamedGameFragment, TeamListener {
 
     private IndoorTeamService        mIndoorTeamService;
     private SubstitutionsListAdapter mLeftTeamSubstitutionsListAdapter;
@@ -43,10 +40,10 @@ public class SubstitutionsFragment extends Fragment implements NamedGameFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Substitutions", "Create substitutions fragment");
-        setTeamService(ServicesProvider.getInstance().getTeamService());
-        mIndoorTeamService.addTeamListener(this);
-
         View view = inflater.inflate(R.layout.fragment_substitutions, container, false);
+
+        mIndoorTeamService = (IndoorTeamService) ServicesProvider.getInstance().getTeamService();
+        mIndoorTeamService.addTeamListener(this);
 
         ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
         mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnLeftSide());
@@ -63,12 +60,6 @@ public class SubstitutionsFragment extends Fragment implements NamedGameFragment
     public void onDestroyView() {
         super.onDestroyView();
         mIndoorTeamService.removeTeamListener(this);
-    }
-
-
-    @Override
-    public void setTeamService(TeamService teamService) {
-        mIndoorTeamService = (IndoorTeamService) teamService;
     }
 
     @Override

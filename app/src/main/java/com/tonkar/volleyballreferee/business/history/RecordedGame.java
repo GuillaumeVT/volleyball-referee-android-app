@@ -5,7 +5,6 @@ import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -309,14 +308,6 @@ public class RecordedGame implements RecordedGameService {
 
     @Override
     public void initTeams() {}
-
-    @Override
-    public UsageType getUsageType() {
-        return UsageType.NORMAL;
-    }
-
-    @Override
-    public void setUsageType(UsageType usageType) {}
 
     @Override
     public int getTimeouts(TeamType teamType) {

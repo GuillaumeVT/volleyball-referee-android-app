@@ -17,10 +17,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.business.game.Game;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.business.history.GamesHistory;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.history.RecentGamesListActivity;
@@ -37,13 +35,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i("VBR-MainActivity", "Create main activity");
         setContentView(R.layout.activity_main);
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        Log.i("VBR-MainActivity", "Create main activity");
-
         PreferenceManager.setDefaultValues(this, R.xml.rules, false);
+
+        ServicesProvider.getInstance().restoreGamesHistoryService(getApplicationContext());
+        mGamesHistoryService = ServicesProvider.getInstance().getGamesHistoryService();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
@@ -73,14 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-
-        if (savedInstanceState == null) {
-            mGamesHistoryService = new GamesHistory(getApplicationContext());
-            mGamesHistoryService.loadRecordedGames();
-            ServicesProvider.getInstance().setGamesHistoryService(mGamesHistoryService);
-        } else {
-            mGamesHistoryService = ServicesProvider.getInstance().getGameHistoryService();
         }
 
         resumeCurrentGameWithDialog(savedInstanceState);
@@ -145,15 +137,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startIndoorGame(final boolean custom) {
-        final Game game;
-
         if (custom) {
-            game = GameFactory.createIndoorGame(PreferenceManager.getDefaultSharedPreferences(this));
+            GameFactory.createIndoorGame(PreferenceManager.getDefaultSharedPreferences(this));
         } else {
-            game = GameFactory.createIndoorGame();
+            GameFactory.createIndoorGame();
         }
-
-        initServices(game);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams");
         final Intent intent = new Intent(this, TeamsSetupActivity.class);
@@ -161,32 +149,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startBeachGame(final boolean custom) {
-        final Game game;
-
         if (custom) {
-            game = GameFactory.createBeachGame(PreferenceManager.getDefaultSharedPreferences(this));
+            GameFactory.createBeachGame(PreferenceManager.getDefaultSharedPreferences(this));
         } else {
-            game = GameFactory.createBeachGame();
+            GameFactory.createBeachGame();
         }
-
-        initServices(game);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
         startActivity(intent);
     }
 
-    public void initServices(Game game) {
-        ServicesProvider.getInstance().setScoreService(game);
-        ServicesProvider.getInstance().setTeamService(game);
-        ServicesProvider.getInstance().setTimeoutService(game);
-    }
-
     private void resumeCurrentGameWithDialog(Bundle savedInstanceState) {
-        boolean autoIgnore = getIntent().getBooleanExtra("auto_ignore_resume_game", false);
-        getIntent().removeExtra("auto_ignore_resume_game");
+        boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true);
+        getIntent().removeExtra("show_resume_game");
 
-        if (mGamesHistoryService.hasCurrentGame() && !autoIgnore) {
+        if (mGamesHistoryService.hasCurrentGame() && showResumeGameDialog) {
             AlertDialogFragment alertDialogFragment;
 
             if (savedInstanceState == null) {
@@ -210,10 +188,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onPositiveButtonClicked() {
-                        Log.i("VBR-MainActivity", "Resume current game");
-                        mGamesHistoryService.resumeCurrentGame();
-
-                        Log.i("VBR-MainActivity", "Start game activity");
+                        Log.i("VBR-MainActivity", "Start game activity and esume current game");
+                        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
                         final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
                         startActivity(gameIntent);
                     }

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,14 +19,13 @@ public abstract class ColorSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    ColorSelectionDialog(Context context, String title) {
+    ColorSelectionDialog(LayoutInflater layoutInflater, Context context, String title) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(4);
         gridView.setGravity(Gravity.CENTER);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        UiUtils.addSpacingLegacyGrid(gridView);
-        ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(context) {
+        ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(layoutInflater, context) {
             @Override
             public void onColorSelected(int selectedColor) {
                 ColorSelectionDialog.this.onColorSelected(selectedColor);
@@ -56,10 +56,12 @@ public abstract class ColorSelectionDialog {
 
     private abstract class ColorSelectionAdapter extends BaseAdapter {
 
-        private final Context mContext;
-        private final int[]   mColorIds;
+        private final LayoutInflater mLayoutInflater;
+        private final Context        mContext;
+        private final int[]          mColorIds;
 
-        ColorSelectionAdapter(Context context) {
+        ColorSelectionAdapter(LayoutInflater layoutInflater, Context context) {
+            mLayoutInflater = layoutInflater;
             mContext = context;
             mColorIds = ShirtColors.getShirtColorIds();
         }
@@ -84,7 +86,7 @@ public abstract class ColorSelectionDialog {
             Button button;
 
             if (convertView == null) {
-                button = new Button(mContext);
+                button = (Button) mLayoutInflater.inflate(R.layout.player_item, null);
             } else {
                 button = (Button) convertView;
             }

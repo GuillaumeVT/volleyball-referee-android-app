@@ -62,7 +62,6 @@ public class LineupAdapter extends BaseAdapter {
             viewHolder.positionTitle = positionView.findViewById(R.id.position_title);
             viewHolder.positionButton = positionView.findViewById(R.id.position);
             positionView.setTag(viewHolder);
-            UiUtils.addMarginLegacyButton(viewHolder.positionButton);
         }
         else {
             viewHolder = (ViewHolder) positionView.getTag();

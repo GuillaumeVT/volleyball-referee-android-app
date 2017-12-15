@@ -4,13 +4,11 @@ import android.util.Log;
 
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
-import com.tonkar.volleyballreferee.interfaces.TimeoutService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -24,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class Game implements ScoreService, TimeoutService, TeamService, Serializable {
+public abstract class Game implements GameService, Serializable {
 
     private           UsageType                      mUsageType;
     private final     GameType                       mGameType;
@@ -490,11 +488,6 @@ public abstract class Game implements ScoreService, TimeoutService, TeamService,
         return mUsageType;
     }
 
-    @Override
-    public void setUsageType(UsageType usageType) {
-        mUsageType = usageType;
-    }
-
     void rotateToNextPositions(TeamType teamType) {
         Log.i("VBR-Team", String.format("Rotate all players of %s team to next position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToNextPositions();
@@ -598,4 +591,8 @@ public abstract class Game implements ScoreService, TimeoutService, TeamService,
         initTransientFields();
     }
 
+    @Override
+    public void setUsageType(UsageType usageType) {
+        mUsageType = usageType;
+    }
 }

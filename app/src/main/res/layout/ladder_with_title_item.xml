@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_margin="@dimen/tiny_margin_size"
@@ -44,14 +43,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.GridLayout
-            android:id="@+id/set_ladder_grid"
+        <TableLayout
+            android:id="@+id/set_ladder_table"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            app:rowCount="2">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/small_margin_size">
 
-        </android.support.v7.widget.GridLayout>
+            <TableRow
+                android:id="@+id/set_ladder_home_team_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginRight="@dimen/small_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:gravity="start"/>
+
+            <TableRow
+                android:id="@+id/set_ladder_guest_team_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginRight="@dimen/small_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:gravity="start"/>
+
+        </TableLayout>
 
     </HorizontalScrollView>
 

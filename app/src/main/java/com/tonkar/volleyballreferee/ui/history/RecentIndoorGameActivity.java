@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -22,9 +22,11 @@ public class RecentIndoorGameActivity extends RecentGameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recent_indoor_game);
 
         Log.i("VBR-RecentActivity", "Create recent indoor game activity");
+        setContentView(R.layout.activity_recent_indoor_game);
+
+        ServicesProvider.getInstance().restoreGamesHistoryService(getApplicationContext());
 
         Intent intent = getIntent();
         mGameDate = intent.getLongExtra("game_date", 0L);
@@ -34,7 +36,7 @@ public class RecentIndoorGameActivity extends RecentGameActivity {
 
         setTitle(formatter.format(new Date(mGameDate)));
 
-        mGamesHistoryService = ServicesProvider.getInstance().getGameHistoryService();
+        mGamesHistoryService = ServicesProvider.getInstance().getGamesHistoryService();
 
         RecordedGameService recordedGameService = mGamesHistoryService.getRecordedGameService(mGameDate);
 

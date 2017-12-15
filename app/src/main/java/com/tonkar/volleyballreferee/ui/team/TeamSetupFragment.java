@@ -15,13 +15,12 @@ import android.widget.EditText;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
-public class TeamSetupFragment extends Fragment implements TeamClient {
+public class TeamSetupFragment extends Fragment {
 
     private TeamType      mTeamType;
     private TeamService   mTeamService;
@@ -40,25 +39,14 @@ public class TeamSetupFragment extends Fragment implements TeamClient {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-TSActivity", "Create team setup fragment");
+        View view = inflater.inflate(R.layout.fragment_team_setup, container, false);
 
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
-        setTeamService(ServicesProvider.getInstance().getTeamService());
-    }
-
-    @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_team_setup, container, false);
+        mTeamService = ServicesProvider.getInstance().getTeamService();
 
         final EditText teamNameInput = view.findViewById(R.id.team_name_input_text);
         teamNameInput.setText(mTeamService.getTeamName(mTeamType));
@@ -111,7 +99,7 @@ public class TeamSetupFragment extends Fragment implements TeamClient {
 
     private void selectTeamColor() {
         Log.i("VBR-TSActivity", String.format("Select %s team color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getContext(), getResources().getString(R.string.select_shirts_color)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);
@@ -192,7 +180,10 @@ public class TeamSetupFragment extends Fragment implements TeamClient {
     }
 
     void computeNextButtonActivation() {
-        ((TeamsSetupActivity) getActivity()).computeNextButtonActivation();
+        TeamsSetupActivity activity = (TeamsSetupActivity) getActivity();
+        if (activity != null) {
+            activity.computeNextButtonActivation();
+        }
     }
 
 }

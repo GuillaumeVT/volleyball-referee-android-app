@@ -8,6 +8,8 @@ public interface GamesHistoryService {
 
     String CURRENT_GAME_FILE  = "current_game.bin";
 
+    String SETUP_GAME_FILE    = "setup_game.bin";
+
     void connectGameRecorder();
 
     void disconnectGameRecorder();
@@ -24,10 +26,18 @@ public interface GamesHistoryService {
 
     boolean hasCurrentGame();
 
-    void resumeCurrentGame();
+    GameService loadCurrentGame();
 
     void saveCurrentGame();
 
     void deleteCurrentGame();
+
+    boolean hasSetupGame();
+
+    GameService loadSetupGame();
+
+    void saveSetupGame(GameService gameService);
+
+    void deleteSetupGame();
 
 }

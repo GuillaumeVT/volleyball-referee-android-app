@@ -11,14 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamClient {
+public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     private TeamService mTeamService;
     private Button      mNextButton;
@@ -28,11 +27,15 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quick_teams_setup);
 
         Log.i("VBR-QTSActivity", "Create quick teams setup activity");
+        setContentView(R.layout.activity_quick_teams_setup);
 
-        setTeamService(ServicesProvider.getInstance().getTeamService());
+        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+            ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
+        }
+
+        mTeamService = ServicesProvider.getInstance().getTeamService();
 
         setTitle("");
 
@@ -41,7 +44,8 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
         final EditText homeTeamNameInput = findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -51,13 +55,15 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         final EditText guestTeamNameInput = findViewById(R.id.guest_team_name_input_text);
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -67,7 +73,8 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
 
@@ -104,8 +111,9 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
     }
 
     @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
+    protected void onPause() {
+        super.onPause();
+        ServicesProvider.getInstance().getGamesHistoryService().saveSetupGame(ServicesProvider.getInstance().getGameService());
     }
 
     private void computeNextButtonActivation() {
@@ -119,8 +127,8 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
     }
 
     public void selectHomeTeamColor(View view) {
-        Log.i("VBR-TSActivity", "Select home team color");
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(this, getResources().getString(R.string.select_shirts_color)) {
+        Log.i("VBR-QTSActivity", "Select home team color");
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), this, getResources().getString(R.string.select_shirts_color)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(TeamType.HOME, selectedColor);
@@ -130,8 +138,8 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
     }
 
     public void selectGuestTeamColor(View view) {
-        Log.i("VBR-TSActivity", "Select guest team color");
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(this, getResources().getString(R.string.select_shirts_color)) {
+        Log.i("VBR-QTSActivity", "Select guest team color");
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), this, getResources().getString(R.string.select_shirts_color)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(TeamType.GUEST, selectedColor);
@@ -141,7 +149,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity implements TeamCl
     }
 
     private void teamColorSelected(TeamType teamType, int colorId) {
-        Log.i("VBR-TSActivity", String.format("Update %s team color", teamType.toString()));
+        Log.i("VBR-QTSActivity", String.format("Update %s team color", teamType.toString()));
         final Button button;
 
         if (TeamType.HOME.equals(teamType)) {

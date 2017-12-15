@@ -39,12 +39,12 @@ public class IndoorCourtFragment extends CourtFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Court", "Create indoor court view");
+        mView = inflater.inflate(R.layout.fragment_indoor_court, container, false);
+
         initView();
 
         mIndoorTeamService = (IndoorTeamService) mTeamService;
         mLayoutInflater = inflater;
-
-        mView = inflater.inflate(R.layout.fragment_indoor_court, container, false);
 
         addButtonOnLeftSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.left_team_position_1));
         addButtonOnLeftSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.left_team_position_2));
@@ -62,7 +62,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
-        for (Map.Entry<PositionType,Button> entry : mLeftTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, Button> entry : mLeftTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,7 +91,7 @@ public class IndoorCourtFragment extends CourtFragment {
             });
         }
 
-        for (Map.Entry<PositionType,Button> entry : mRightTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, Button> entry : mRightTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override

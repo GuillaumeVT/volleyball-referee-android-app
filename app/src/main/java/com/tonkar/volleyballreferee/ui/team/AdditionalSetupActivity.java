@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
@@ -20,9 +20,13 @@ public class AdditionalSetupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_additional_setup);
 
         Log.i("VBR-ASActivity", "Create additional setup activity");
+        setContentView(R.layout.activity_additional_setup);
+
+        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+            ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
+        }
 
         setTitle("");
 
@@ -31,6 +35,12 @@ public class AdditionalSetupActivity extends AppCompatActivity {
 
         TabLayout additionalSetupTabs = findViewById(R.id.additional_setup_tabs);
         additionalSetupTabs.setupWithViewPager(additionalSetupPager);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ServicesProvider.getInstance().getGamesHistoryService().saveSetupGame(ServicesProvider.getInstance().getGameService());
     }
 
     public void validateTeams(View view) {

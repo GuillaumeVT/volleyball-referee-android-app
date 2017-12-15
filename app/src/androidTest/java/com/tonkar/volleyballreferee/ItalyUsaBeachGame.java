@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -57,8 +58,7 @@ public class ItalyUsaBeachGame {
         beachGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt1));
         beachGame.initTeams();
 
-        mActivityRule.getActivity().initServices(beachGame);
-        ServicesProvider.getInstance().getGameHistoryService().connectGameRecorder();
+        ServicesProvider.getInstance().getGamesHistoryService().connectGameRecorder();
     }
 
     private void playSet1_complete(BeachGame beachGame) {

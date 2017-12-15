@@ -53,7 +53,6 @@ public class PlayersListAdapter extends BaseAdapter {
 
         if (view == null) {
             playerButton = (Button) mLayoutInflater.inflate(R.layout.player_item, null);
-            UiUtils.addMarginLegacyButton(playerButton);
         } else {
             playerButton = (Button) view;
         }

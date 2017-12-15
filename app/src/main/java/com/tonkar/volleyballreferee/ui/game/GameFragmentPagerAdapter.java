@@ -5,17 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.ScoreClient;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 
-public class GameFragmentPagerAdapter extends FragmentPagerAdapter implements ScoreClient, TeamClient {
+public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private       ScoreService          mScoreService;
-    private       TeamService           mTeamService;
     private final Context               mContext;
     private       IndoorCourtFragment   mIndoorCourtFragment;
     private       BeachCourtFragment    mBeachCourtFragment;
@@ -26,14 +20,12 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter implements Sc
     GameFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
 
-        setScoreService(ServicesProvider.getInstance().getScoreService());
-        setTeamService(ServicesProvider.getInstance().getTeamService());
         mContext = context;
         mScoresFragment = ScoresFragment.newInstance();
 
-        switch (mScoreService.getGameType()) {
+        switch (ServicesProvider.getInstance().getScoreService().getGameType()) {
             case INDOOR:
-                if (UsageType.NORMAL.equals(mTeamService.getUsageType())) {
+                if (UsageType.NORMAL.equals(ServicesProvider.getInstance().getGameService().getUsageType())) {
                     mIndoorCourtFragment = IndoorCourtFragment.newInstance();
                     mSubstitutionsFragment = SubstitutionsFragment.newInstance();
                     mCount = 3;
@@ -62,7 +54,7 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter implements Sc
                 if (mCount == 1) {
                     fragment = mScoresFragment;
                 } else {
-                    switch (mScoreService.getGameType()) {
+                    switch (ServicesProvider.getInstance().getScoreService().getGameType()) {
                         case INDOOR:
                             fragment = mIndoorCourtFragment;
                             break;
@@ -88,13 +80,4 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter implements Sc
         return ((NamedGameFragment) getItem(position)).getGameFragmentTitle(mContext);
     }
 
-    @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
-    }
-
-    @Override
-    public void setScoreService(ScoreService scoreService) {
-        mScoreService = scoreService;
-    }
 }

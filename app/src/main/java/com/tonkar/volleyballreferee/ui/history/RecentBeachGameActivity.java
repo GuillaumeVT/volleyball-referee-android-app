@@ -7,7 +7,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.game.SetsListAdapter;
@@ -22,9 +22,11 @@ public class RecentBeachGameActivity extends RecentGameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recent_beach_game);
 
         Log.i("VBR-RecentActivity", "Create recent beach game activity");
+        setContentView(R.layout.activity_recent_beach_game);
+
+        ServicesProvider.getInstance().restoreGamesHistoryService(getApplicationContext());
 
         Intent intent = getIntent();
         mGameDate = intent.getLongExtra("game_date", 0L);
@@ -34,7 +36,7 @@ public class RecentBeachGameActivity extends RecentGameActivity {
 
         setTitle(formatter.format(new Date(mGameDate)));
 
-        mGamesHistoryService = ServicesProvider.getInstance().getGameHistoryService();
+        mGamesHistoryService = ServicesProvider.getInstance().getGamesHistoryService();
 
         RecordedGameService recordedGameService = mGamesHistoryService.getRecordedGameService(mGameDate);
 

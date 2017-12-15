@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui.game;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -27,31 +26,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.ScoreClient;
-import com.tonkar.volleyballreferee.interfaces.GamesHistoryClient;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.TimeoutClient;
 import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
-import com.tonkar.volleyballreferee.interfaces.TimeoutService;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements ScoreClient, TimeoutClient, TeamClient, GamesHistoryClient, ScoreListener, TimeoutListener, TeamListener {
+public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener {
 
-    private ScoreService        mScoreService;
-    private TimeoutService      mTimeoutService;
-    private TeamService         mTeamService;
+    private GameService         mGameService;
     private GamesHistoryService mGamesHistoryService;
     private Random              mRandom;
     private TeamType            mTeamOnLeftSide;
@@ -76,9 +66,13 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
 
         Log.i("VBR-GameActivity", "Create game activity");
+        setContentView(R.layout.activity_game);
+
+        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+            ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+        }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean keepScreenOnSetting = sharedPreferences.getBoolean("pref_keep_screen_on", false);
@@ -88,14 +82,12 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
 
         setTitle("");
 
-        setScoreService(ServicesProvider.getInstance().getScoreService());
-        setTimeoutService(ServicesProvider.getInstance().getTimeoutService());
-        setTeamService(ServicesProvider.getInstance().getTeamService());
-        setGamesHistoryService(ServicesProvider.getInstance().getGameHistoryService());
+        mGameService = ServicesProvider.getInstance().getGameService();
+        mGamesHistoryService = ServicesProvider.getInstance().getGamesHistoryService();
 
-        mScoreService.addScoreListener(this);
-        mTimeoutService.addTimeoutListener(this);
-        mTeamService.addTeamListener(this);
+        mGameService.addScoreListener(this);
+        mGameService.addTimeoutListener(this);
+        mGameService.addTeamListener(this);
         mGamesHistoryService.connectGameRecorder();
 
         mRandom = new Random();
@@ -107,8 +99,6 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
 
         mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
         mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
-        UiUtils.addMarginLegacyButton(mLeftTeamScoreButton);
-        UiUtils.addMarginLegacyButton(mRightTeamScoreButton);
 
         mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
         mRightTeamSetsText = findViewById(R.id.right_team_set_text);
@@ -126,8 +116,8 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         mLeftTeamTimeoutLayout = findViewById(R.id.left_team_timeout_layout);
         mRightTeamTimeoutLayout = findViewById(R.id.right_team_timeout_layout);
 
-        if (mScoreService.getRules().areTeamTimeoutsEnabled()) {
-            for (int index = 0; index < mScoreService.getRules().getTeamTimeoutsPerSet(); index++) {
+        if (mGameService.getRules().areTeamTimeoutsEnabled()) {
+            for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
                 final ImageView leftTimeout = new ImageView(this);
                 leftTimeout.setImageResource(R.drawable.timeout_shape);
                 final LinearLayout.LayoutParams leftTimeoutLayout = new LinearLayout.LayoutParams(
@@ -142,8 +132,7 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
                 rightTimeout.setLayoutParams(rightTimeoutLayout);
                 mRightTeamTimeoutLayout.addView(rightTimeout);
             }
-        }
-        else {
+        } else {
             mLeftTeamTimeoutButton.setVisibility(View.INVISIBLE);
             mRightTeamTimeoutButton.setVisibility(View.INVISIBLE);
 
@@ -162,11 +151,11 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
             gameTabs.setVisibility(View.GONE);
         }
 
-        mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
-        mTeamOnRightSide = mTeamService.getTeamOnRightSide();
+        mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
+        mTeamOnRightSide = mGameService.getTeamOnRightSide();
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, ActionOriginType.USER);
 
-        if (mScoreService.isMatchCompleted()) {
+        if (mGameService.isMatchCompleted()) {
             disableView();
         }
     }
@@ -174,15 +163,15 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mScoreService.removeScoreListener(this);
-        mTimeoutService.removeTimeoutListener(this);
-        mTeamService.removeTeamListener(this);
+        mGameService.removeScoreListener(this);
+        mGameService.removeTimeoutListener(this);
+        mGameService.removeTeamListener(this);
         mGamesHistoryService.disconnectGameRecorder();
     }
 
     @Override
     public void onBackPressed() {
-        navigateHomeWithDialog();
+        navigateToHomeWithDialog();
     }
 
     // Menu
@@ -193,13 +182,15 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         inflater.inflate(R.menu.menu_game, menu);
         mMenu = menu;
 
-        if (mScoreService.isMatchCompleted()) {
-            disableMenu();
-        }
+        if (ServicesProvider.getInstance().areServicesAvailable()) {
+            if (mGameService.isMatchCompleted()) {
+                disableMenu();
+            }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            MenuItem shareMenu = menu.findItem(R.id.action_share);
-            shareMenu.setVisible(false);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                MenuItem shareMenu = menu.findItem(R.id.action_share);
+                shareMenu.setVisible(false);
+            }
         }
 
         return true;
@@ -212,7 +203,7 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
                 tossACoin();
                 return true;
             case R.id.action_navigate_home:
-                navigateHomeWithDialog();
+                navigateToHomeWithDialog();
                 return true;
             case R.id.action_share:
                 share();
@@ -228,16 +219,16 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         Toast.makeText(this, tossResult, Toast.LENGTH_LONG).show();
     }
 
-    private void navigateHomeWithDialog() {
-        Log.i("VBR-GameActivity", "Navigate home");
-        if (mScoreService.isMatchCompleted()) {
-            navigateHome();
+    private void navigateToHomeWithDialog() {
+        Log.i("VBR-GameActivity", "Navigate to home");
+        if (mGameService.isMatchCompleted()) {
+            navigateToHome();
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(getResources().getString(R.string.navigated_home)).setMessage(getResources().getString(R.string.navigated_home_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    navigateHome();
+                    navigateToHome();
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -249,33 +240,30 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         }
     }
 
-    private void navigateHome() {
-        final Intent intent = new Intent(GameActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("auto_ignore_resume_game", true);
-        startActivity(intent);
+    private void navigateToHome() {
+        UiUtils.navigateToHome(this, false);
     }
 
     private void share() {
         Log.i("VBR-GameActivity", "Share game");
-        UiUtils.shareScreen(this, getWindow(), mScoreService.getGameSummary());
+        UiUtils.shareScreen(this, getWindow(), mGameService.getGameSummary());
     }
 
     // UI Callbacks
 
     public void swapTeams(View view) {
         Log.i("VBR-GameActivity", "Swap teams");
-        mTeamService.swapTeams(ActionOriginType.USER);
+        mGameService.swapTeams(ActionOriginType.USER);
     }
 
     public void swapFirstService(View view) {
         Log.i("VBR-GameActivity", "Swap first service");
-        mScoreService.swapServiceAtStart();
+        mGameService.swapServiceAtStart();
     }
 
     public void removeLastPoint(View view) {
         Log.i("VBR-GameActivity", "Remove last point");
-        mScoreService.removeLastPoint();
+        mGameService.removeLastPoint();
     }
 
     public void increaseLeftScore(View view) {
@@ -294,15 +282,15 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     }
 
     private void increaseScoreWithDialog(final TeamType teamType) {
-        if ((mScoreService.isMatchPoint() || mScoreService.isSetPoint()) && mScoreService.getLeadingTeam().equals(teamType)) {
-            String title = mScoreService.isMatchPoint() ? getResources().getString(R.string.match_point) : getResources().getString(R.string.set_point);
+        if ((mGameService.isMatchPoint() || mGameService.isSetPoint()) && mGameService.getLeadingTeam().equals(teamType)) {
+            String title = mGameService.isMatchPoint() ? getResources().getString(R.string.match_point) : getResources().getString(R.string.set_point);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(title).setMessage(getResources().getString(R.string.confirm_set_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Log.i("VBR-GameActivity", "User accepts the set point");
-                    mScoreService.addPoint(teamType);
+                    mGameService.addPoint(teamType);
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -313,7 +301,7 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
-            mScoreService.addPoint(teamType);
+            mGameService.addPoint(teamType);
         }
     }
 
@@ -324,11 +312,11 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
 
     private void callTimeoutWithDialog(final TeamType teamType) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mTeamService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
+        builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("VBR-GameActivity", "User accepts the timeout");
-                mTimeoutService.callTimeout(teamType);
+                mGameService.callTimeout(teamType);
             }
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -343,33 +331,28 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     // Listeners
 
     @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
-    }
-
-    @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
         mTeamOnRightSide = rightTeamType;
 
         // Left
-        mLeftTeamNameText.setText(mTeamService.getTeamName(mTeamOnLeftSide));
-        UiUtils.colorTeamButton(this, mTeamService.getTeamColor(mTeamOnLeftSide), mLeftTeamScoreButton);
+        mLeftTeamNameText.setText(mGameService.getTeamName(mTeamOnLeftSide));
+        UiUtils.colorTeamButton(this, mGameService.getTeamColor(mTeamOnLeftSide), mLeftTeamScoreButton);
 
         // Right
 
-        mRightTeamNameText.setText(mTeamService.getTeamName(mTeamOnRightSide));
-        UiUtils.colorTeamButton(this, mTeamService.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
+        mRightTeamNameText.setText(mGameService.getTeamName(mTeamOnRightSide));
+        UiUtils.colorTeamButton(this, mGameService.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
 
-        onPointsUpdated(mTeamOnLeftSide, mScoreService.getPoints(mTeamOnLeftSide));
-        onSetsUpdated(mTeamOnLeftSide, mScoreService.getSets(mTeamOnLeftSide));
-        onTimeoutUpdated(mTeamOnLeftSide, mScoreService.getRules().getTeamTimeoutsPerSet(), mTimeoutService.getTimeouts(mTeamOnLeftSide));
+        onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
+        onSetsUpdated(mTeamOnLeftSide, mGameService.getSets(mTeamOnLeftSide));
+        onTimeoutUpdated(mTeamOnLeftSide, mGameService.getRules().getTeamTimeoutsPerSet(), mGameService.getTimeouts(mTeamOnLeftSide));
 
-        onPointsUpdated(mTeamOnRightSide, mScoreService.getPoints(mTeamOnRightSide));
-        onSetsUpdated(mTeamOnRightSide, mScoreService.getSets(mTeamOnRightSide));
-        onTimeoutUpdated(mTeamOnRightSide, mScoreService.getRules().getTeamTimeoutsPerSet(), mTimeoutService.getTimeouts(mTeamOnRightSide));
+        onPointsUpdated(mTeamOnRightSide, mGameService.getPoints(mTeamOnRightSide));
+        onSetsUpdated(mTeamOnRightSide, mGameService.getSets(mTeamOnRightSide));
+        onTimeoutUpdated(mTeamOnRightSide, mGameService.getRules().getTeamTimeoutsPerSet(), mGameService.getTimeouts(mTeamOnRightSide));
 
-        onServiceSwapped(mScoreService.getServingTeam());
+        onServiceSwapped(mGameService.getServingTeam());
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
             Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
@@ -383,11 +366,6 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     public void onTeamRotated(TeamType teamType) {}
 
     @Override
-    public void setScoreService(ScoreService scoreService) {
-        mScoreService = scoreService;
-    }
-
-    @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
             mLeftTeamScoreButton.setText(String.valueOf(newCount));
@@ -396,18 +374,18 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
         }
 
         StringBuilder builder = new StringBuilder();
-        for (int index = 0; index < mScoreService.getNumberOfSets(); index++) {
-            int leftPointsCount = mScoreService.getPoints(mTeamOnLeftSide, index);
-            int rightPointsCount = mScoreService.getPoints(mTeamOnRightSide, index);
+        for (int index = 0; index < mGameService.getNumberOfSets(); index++) {
+            int leftPointsCount = mGameService.getPoints(mTeamOnLeftSide, index);
+            int rightPointsCount = mGameService.getPoints(mTeamOnRightSide, index);
             builder.append(String.valueOf(leftPointsCount)).append('-').append(String.valueOf(rightPointsCount)).append('\t');
         }
         mSetsText.setText(builder.toString());
 
-        if (mScoreService.isMatchPoint()) {
+        if (mGameService.isMatchPoint()) {
             String text = getResources().getString(R.string.match_point);
             setTitle(text);
             Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-        } else if (mScoreService.isSetPoint()) {
+        } else if (mGameService.isSetPoint()) {
             String text = getResources().getString(R.string.set_point);
             setTitle(text);
             Toast.makeText(this, text, Toast.LENGTH_LONG).show();
@@ -442,12 +420,7 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     @Override
     public void onMatchCompleted(final TeamType winner) {
         disableAll();
-        Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mTeamService.getTeamName(winner)), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void setTimeoutService(TimeoutService timeoutService) {
-        mTimeoutService = timeoutService;
+        Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -486,7 +459,7 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
 
     @Override
     public void onTimeout(TeamType teamType, int duration) {
-        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mTeamService.getTeamName(teamType)));
+        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
         timeoutFragment.show(getFragmentManager(), "timeout");
     }
 
@@ -500,11 +473,6 @@ public class GameActivity extends AppCompatActivity implements ScoreClient, Time
     public void onGameInterval(int duration) {
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
         timeoutFragment.show(getFragmentManager(), "game_interval");
-    }
-
-    @Override
-    public void setGamesHistoryService(GamesHistoryService gamesHistoryService) {
-        mGamesHistoryService = gamesHistoryService;
     }
 
     private void disableView() {

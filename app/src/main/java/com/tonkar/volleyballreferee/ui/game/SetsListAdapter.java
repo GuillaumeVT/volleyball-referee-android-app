@@ -1,12 +1,12 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
@@ -25,7 +25,8 @@ public class SetsListAdapter extends BaseAdapter {
         TextView             setScoreText;
         TextView             setDurationText;
         HorizontalScrollView setLadderScroll;
-        GridLayout           setLadderGrid;
+        TableRow             homeTeamLadder;
+        TableRow             guestTeamLadder;
     }
 
     private final boolean          mReverseOrder;
@@ -67,7 +68,8 @@ public class SetsListAdapter extends BaseAdapter {
             viewHolder.setScoreText = setView.findViewById(R.id.set_score_text);
             viewHolder.setDurationText = setView.findViewById(R.id.set_duration_text);
             viewHolder.setLadderScroll = setView.findViewById(R.id.set_ladder_scroll);
-            viewHolder.setLadderGrid = setView.findViewById(R.id.set_ladder_grid);
+            viewHolder.homeTeamLadder = setView.findViewById(R.id.set_ladder_home_team_row);
+            viewHolder.guestTeamLadder = setView.findViewById(R.id.set_ladder_guest_team_row);
             setView.setTag(viewHolder);
         }
         else {
@@ -80,7 +82,7 @@ public class SetsListAdapter extends BaseAdapter {
         viewHolder.setScoreText.setText(String.format(Locale.getDefault(), "%d\t-\t%d", mBaseScoreService.getPoints(TeamType.HOME, actualIndex), mBaseScoreService.getPoints(TeamType.GUEST, actualIndex)));
         viewHolder.setDurationText.setText(String.format(setView.getContext().getResources().getString(R.string.set_duration), mBaseScoreService.getSetDuration(actualIndex) / 60000L));
 
-        fillLadderGrid(viewHolder.setLadderGrid, mBaseScoreService.getPointsLadder(actualIndex), mBaseTeamService.getTeamColor(TeamType.HOME), mBaseTeamService.getTeamColor(TeamType.GUEST));
+        fillLadder(viewHolder.homeTeamLadder, viewHolder.guestTeamLadder, mBaseScoreService.getPointsLadder(actualIndex), mBaseTeamService.getTeamColor(TeamType.HOME), mBaseTeamService.getTeamColor(TeamType.GUEST));
 
         if (mReverseOrder && index == 0) {
             viewHolder.setLadderScroll.post(new Runnable() {
@@ -93,37 +95,31 @@ public class SetsListAdapter extends BaseAdapter {
         return setView;
     }
 
-    private void fillLadderGrid(GridLayout setLadderGrid, List<TeamType> ladder, int homeTeamColor, int guestTeamColor) {
-        setLadderGrid.removeAllViews();
-        Context context = setLadderGrid.getContext();
+    private void fillLadder(TableRow homeTeamLadder, TableRow guestTeamLadder, List<TeamType> ladder, int homeTeamColor, int guestTeamColor) {
+        homeTeamLadder.removeAllViews();
+        guestTeamLadder.removeAllViews();
+
         int homeCount = 0;
         int guestCount = 0;
+        int width = measureTextWidth();
 
         for (int index = 0; index < ladder.size(); index++) {
-            TextView homeText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
-            applyStyle(homeText, context, homeTeamColor);
-            setLadderGrid.addView(homeText, createGridLayoutParams(0, index));
-
-            TextView guestText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
-            applyStyle(guestText, context, guestTeamColor);
-            setLadderGrid.addView(guestText, createGridLayoutParams(1, index));
-
             final TeamType teamType = ladder.get(index);
 
             if (TeamType.HOME.equals(teamType)) {
+                TextView homeText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
                 homeCount++;
                 homeText.setText(String.valueOf(homeCount));
-                guestText.setText("");
-
-                homeText.setVisibility(View.VISIBLE);
-                guestText.setVisibility(View.INVISIBLE);
+                applyStyle(homeText, homeText.getContext(), homeTeamColor);
+                homeTeamLadder.addView(homeText);
+                homeText.setLayoutParams(createTableRowLayoutParams(homeText.getContext(), width, index));
             } else {
+                TextView guestText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
                 guestCount++;
-                homeText.setText("");
                 guestText.setText(String.valueOf(guestCount));
-
-                homeText.setVisibility(View.INVISIBLE);
-                guestText.setVisibility(View.VISIBLE);
+                applyStyle(guestText, guestText.getContext(), guestTeamColor);
+                guestTeamLadder.addView(guestText);
+                guestText.setLayoutParams(createTableRowLayoutParams(guestText.getContext(), width, index));
             }
         }
     }
@@ -133,16 +129,36 @@ public class SetsListAdapter extends BaseAdapter {
         textView.setBackgroundColor(color);
     }
 
-    private GridLayout.LayoutParams createGridLayoutParams(final int rowIndex, final int columnIndex) {
-        final GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.columnSpec = GridLayout.spec(columnIndex, GridLayout.FILL);
-        params.rowSpec = GridLayout.spec(rowIndex, GridLayout.FILL);
-        params.leftMargin = 4;
-        params.rightMargin = 4;
-        params.topMargin = 4;
-        params.bottomMargin = 4;
-        params.width = 80;
+    private TableRow.LayoutParams createTableRowLayoutParams(Context context, int width, int columnIndex) {
+        TableRow.LayoutParams params = new TableRow.LayoutParams(width, TableRow.LayoutParams.WRAP_CONTENT);
+        params.column = columnIndex;
+
+        int margin = getTextMargin(context);
+        params.leftMargin = margin;
+        params.rightMargin = margin;
+        params.topMargin = margin;
+        params.bottomMargin = margin;
 
         return params;
+    }
+
+    private int measureTextWidth() {
+        TextView text = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
+        text.setText("##");
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        int margin = getTextMargin(text.getContext());
+        params.leftMargin = margin;
+        params.rightMargin = margin;
+        params.topMargin = margin;
+        params.bottomMargin = margin;
+
+        text.setLayoutParams(params);
+        text.measure(0, 0);
+        return text.getMeasuredWidth();
+    }
+
+    private int getTextMargin(Context context) {
+        return (int) context.getResources().getDimension(R.dimen.tiny_margin_size);
     }
 }

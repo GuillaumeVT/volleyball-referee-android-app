@@ -9,10 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.BeachTeamService;
-import com.tonkar.volleyballreferee.interfaces.ScoreClient;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -21,7 +20,7 @@ import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Map;
 
-public class BeachCourtFragment extends CourtFragment implements ScoreClient, ScoreListener {
+public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     private BeachTeamService mBeachTeamService;
     private ScoreService     mScoreService;
@@ -44,13 +43,13 @@ public class BeachCourtFragment extends CourtFragment implements ScoreClient, Sc
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Court", "Create beach court view");
+        mView = inflater.inflate(R.layout.fragment_beach_court, container, false);
+
         initView();
 
         mBeachTeamService = (BeachTeamService) mTeamService;
-        setScoreService(ServicesProvider.getInstance().getScoreService());
+        mScoreService = ServicesProvider.getInstance().getScoreService();
         mScoreService.addScoreListener(this);
-
-        mView = inflater.inflate(R.layout.fragment_beach_court, container, false);
 
         addButtonOnLeftSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.left_team_position_1));
         addButtonOnLeftSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.left_team_position_2));
@@ -65,7 +64,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreClient, Sc
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
-        for (Map.Entry<PositionType,Button> entry : mLeftTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, Button> entry : mLeftTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,7 +76,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreClient, Sc
             });
         }
 
-        for (Map.Entry<PositionType,Button> entry : mRightTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, Button> entry : mRightTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,11 +95,6 @@ public class BeachCourtFragment extends CourtFragment implements ScoreClient, Sc
     public void onDestroyView() {
         super.onDestroyView();
         mScoreService.removeScoreListener(this);
-    }
-
-    @Override
-    public void setScoreService(ScoreService scoreService) {
-        mScoreService = scoreService;
     }
 
     @Override

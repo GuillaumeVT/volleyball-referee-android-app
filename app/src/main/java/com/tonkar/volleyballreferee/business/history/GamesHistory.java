@@ -3,36 +3,29 @@ package com.tonkar.volleyballreferee.business.history;
 import android.content.Context;
 import android.util.Log;
 
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.ScoreClient;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.TimeoutClient;
 import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
-import com.tonkar.volleyballreferee.interfaces.TimeoutService;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClient, TimeoutClient, ScoreListener, TeamListener, TimeoutListener {
+public class GamesHistory implements GamesHistoryService, ScoreListener, TeamListener, TimeoutListener {
 
     private final Context            mContext;
-    private       ScoreService       mScoreService;
-    private       TeamService        mTeamService;
-    private       TimeoutService     mTimeoutService;
+    private       GameService        mGameService;
     private       RecordedGame       mRecordedGame;
     private final List<RecordedGame> mRecordedGames;
 
@@ -42,29 +35,15 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
     }
 
     @Override
-    public void setScoreService(ScoreService scoreService) {
-        mScoreService = scoreService;
-    }
-
-    @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
-    }
-
-    @Override
-    public void setTimeoutService(TimeoutService timeoutService) {
-        mTimeoutService = timeoutService;
-    }
-
-    @Override
     public void connectGameRecorder() {
         Log.i("VBR-History", "Connect the game recorder");
-        setScoreService(ServicesProvider.getInstance().getScoreService());
-        setTeamService(ServicesProvider.getInstance().getTeamService());
-        setTimeoutService(ServicesProvider.getInstance().getTimeoutService());
-        mScoreService.addScoreListener(this);
-        mTeamService.addTeamListener(this);
-        mTimeoutService.addTimeoutListener(this);
+        if (hasSetupGame()) {
+            deleteSetupGame();
+        }
+        mGameService = ServicesProvider.getInstance().getGameService();
+        mGameService.addScoreListener(this);
+        mGameService.addTeamListener(this);
+        mGameService.addTimeoutListener(this);
         createRecordedGame();
         saveCurrentGame();
     }
@@ -73,9 +52,9 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
     public void disconnectGameRecorder() {
         Log.i("VBR-History", "Disconnect the game recorder");
         saveCurrentGame();
-        mScoreService.removeScoreListener(this);
-        mTeamService.removeTeamListener(this);
-        mTimeoutService.removeTimeoutListener(this);
+        mGameService.removeScoreListener(this);
+        mGameService.removeTeamListener(this);
+        mGameService.removeTimeoutListener(this);
     }
 
     @Override
@@ -128,21 +107,15 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
     }
 
     @Override
-    public void resumeCurrentGame() {
-        Game game  = SerializedGameReader.readGame(mContext, CURRENT_GAME_FILE);
-
-        if (game != null) {
-            ServicesProvider.getInstance().setScoreService(game);
-            ServicesProvider.getInstance().setTeamService(game);
-            ServicesProvider.getInstance().setTimeoutService(game);
-        }
+    public GameService loadCurrentGame() {
+        return SerializedGameReader.readGame(mContext, CURRENT_GAME_FILE);
     }
 
     @Override
     public void saveCurrentGame() {
         updateRecordedGame();
-        if (!mScoreService.isMatchCompleted()) {
-            SerializedGameWriter.writeGame(mContext, CURRENT_GAME_FILE, (Game) mScoreService);
+        if (!mGameService.isMatchCompleted()) {
+            SerializedGameWriter.writeGame(mContext, CURRENT_GAME_FILE, (Game) mGameService);
         }
     }
 
@@ -151,6 +124,28 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
         Log.d("VBR-History", String.format("Delete serialized game in %s", CURRENT_GAME_FILE));
         mContext.deleteFile(CURRENT_GAME_FILE);
         mRecordedGame = null;
+    }
+
+    @Override
+    public boolean hasSetupGame() {
+        File setupGameFile = mContext.getFileStreamPath(GamesHistoryService.SETUP_GAME_FILE);
+        return setupGameFile != null && setupGameFile.exists();
+    }
+
+    @Override
+    public GameService loadSetupGame() {
+        return SerializedGameReader.readGame(mContext, SETUP_GAME_FILE);
+    }
+
+    @Override
+    public void saveSetupGame(GameService gameService) {
+        SerializedGameWriter.writeGame(mContext, SETUP_GAME_FILE, (Game) gameService);
+    }
+
+    @Override
+    public void deleteSetupGame() {
+        Log.d("VBR-History", String.format("Delete serialized setup game in %s", SETUP_GAME_FILE));
+        mContext.deleteFile(SETUP_GAME_FILE);
     }
 
     @Override
@@ -209,31 +204,31 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
 
     private void createRecordedGame() {
         mRecordedGame = new RecordedGame();
-        mRecordedGame.setGameType(mScoreService.getGameType());
-        mRecordedGame.setGameDate(mScoreService.getGameDate());
+        mRecordedGame.setGameType(mGameService.getGameType());
+        mRecordedGame.setGameDate(mGameService.getGameDate());
 
         RecordedTeam homeTeam = mRecordedGame.getTeam(TeamType.HOME);
-        homeTeam.setName(mTeamService.getTeamName(TeamType.HOME));
-        homeTeam.setColor(mTeamService.getTeamColor(TeamType.HOME));
+        homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
+        homeTeam.setColor(mGameService.getTeamColor(TeamType.HOME));
 
         RecordedTeam guestTeam = mRecordedGame.getTeam(TeamType.GUEST);
-        guestTeam.setName(mTeamService.getTeamName(TeamType.GUEST));
-        guestTeam.setColor(mTeamService.getTeamColor(TeamType.GUEST));
+        guestTeam.setName(mGameService.getTeamName(TeamType.GUEST));
+        guestTeam.setColor(mGameService.getTeamColor(TeamType.GUEST));
 
-        if (mTeamService instanceof IndoorTeamService) {
-            IndoorTeamService indoorTeamService = (IndoorTeamService) mTeamService;
+        if (mGameService instanceof IndoorTeamService) {
+            IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
 
             homeTeam.setLiberoColor(indoorTeamService.getLiberoColor(TeamType.HOME));
             guestTeam.setLiberoColor(indoorTeamService.getLiberoColor(TeamType.GUEST));
 
-            for (int number : mTeamService.getPlayers(TeamType.HOME)) {
+            for (int number : mGameService.getPlayers(TeamType.HOME)) {
                 if (indoorTeamService.isLibero(TeamType.HOME, number)) {
                     homeTeam.getLiberos().add(number);
                 } else {
                     homeTeam.getPlayers().add(number);
                 }
             }
-            for (int number : mTeamService.getPlayers(TeamType.GUEST)) {
+            for (int number : mGameService.getPlayers(TeamType.GUEST)) {
                 if (indoorTeamService.isLibero(TeamType.GUEST, number)) {
                     guestTeam.getLiberos().add(number);
                 } else {
@@ -244,8 +239,8 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
             homeTeam.setCaptain(indoorTeamService.getCaptain(TeamType.HOME));
             guestTeam.setCaptain(indoorTeamService.getCaptain(TeamType.GUEST));
         } else {
-            homeTeam.getPlayers().addAll(mTeamService.getPlayers(TeamType.HOME));
-            guestTeam.getPlayers().addAll(mTeamService.getPlayers(TeamType.GUEST));
+            homeTeam.getPlayers().addAll(mGameService.getPlayers(TeamType.HOME));
+            guestTeam.getPlayers().addAll(mGameService.getPlayers(TeamType.GUEST));
         }
 
         updateRecordedGame();
@@ -253,39 +248,39 @@ public class GamesHistory implements GamesHistoryService, ScoreClient, TeamClien
 
     private void updateRecordedGame() {
         if (mRecordedGame != null) {
-            mRecordedGame.setMatchCompleted(mScoreService.isMatchCompleted());
-            mRecordedGame.setSets(TeamType.HOME, mScoreService.getSets(TeamType.HOME));
-            mRecordedGame.setSets(TeamType.GUEST, mScoreService.getSets(TeamType.GUEST));
+            mRecordedGame.setMatchCompleted(mGameService.isMatchCompleted());
+            mRecordedGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
+            mRecordedGame.setSets(TeamType.GUEST, mGameService.getSets(TeamType.GUEST));
 
             mRecordedGame.getSets().clear();
 
-            for (int setIndex = 0 ; setIndex < mScoreService.getNumberOfSets(); setIndex++) {
+            for (int setIndex = 0 ; setIndex < mGameService.getNumberOfSets(); setIndex++) {
                 RecordedSet set = new RecordedSet();
 
-                set.setDuration(mScoreService.getSetDuration(setIndex));
-                set.getPointsLadder().addAll(mScoreService.getPointsLadder(setIndex));
-                set.setServingTeam(mScoreService.getServingTeam());
+                set.setDuration(mGameService.getSetDuration(setIndex));
+                set.getPointsLadder().addAll(mGameService.getPointsLadder(setIndex));
+                set.setServingTeam(mGameService.getServingTeam());
 
-                set.setPoints(TeamType.HOME, mScoreService.getPoints(TeamType.HOME, setIndex));
-                set.setTimeouts(TeamType.HOME, mTimeoutService.getTimeouts(TeamType.HOME, setIndex));
-                for (int number : mTeamService.getPlayersOnCourt(TeamType.HOME, setIndex)) {
+                set.setPoints(TeamType.HOME, mGameService.getPoints(TeamType.HOME, setIndex));
+                set.setTimeouts(TeamType.HOME, mGameService.getTimeouts(TeamType.HOME, setIndex));
+                for (int number : mGameService.getPlayersOnCourt(TeamType.HOME, setIndex)) {
                     RecordedPlayer player = new RecordedPlayer();
                     player.setNumber(number);
-                    player.setPositionType(mTeamService.getPlayerPosition(TeamType.HOME, number));
+                    player.setPositionType(mGameService.getPlayerPosition(TeamType.HOME, number));
                     set.getCurrentPlayers(TeamType.HOME).add(player);
                 }
 
-                set.setPoints(TeamType.GUEST, mScoreService.getPoints(TeamType.GUEST, setIndex));
-                set.setTimeouts(TeamType.GUEST, mTimeoutService.getTimeouts(TeamType.GUEST, setIndex));
-                for (int number : mTeamService.getPlayersOnCourt(TeamType.GUEST, setIndex)) {
+                set.setPoints(TeamType.GUEST, mGameService.getPoints(TeamType.GUEST, setIndex));
+                set.setTimeouts(TeamType.GUEST, mGameService.getTimeouts(TeamType.GUEST, setIndex));
+                for (int number : mGameService.getPlayersOnCourt(TeamType.GUEST, setIndex)) {
                     RecordedPlayer player = new RecordedPlayer();
                     player.setNumber(number);
-                    player.setPositionType(mTeamService.getPlayerPosition(TeamType.GUEST, number));
+                    player.setPositionType(mGameService.getPlayerPosition(TeamType.GUEST, number));
                     set.getCurrentPlayers(TeamType.GUEST).add(player);
                 }
 
-                if (mTeamService instanceof IndoorTeamService) {
-                    IndoorTeamService indoorTeamService = (IndoorTeamService) mTeamService;
+                if (mGameService instanceof IndoorTeamService) {
+                    IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
 
                     for (int number : indoorTeamService.getPlayersInStartingLineup(TeamType.HOME, setIndex)) {
                         RecordedPlayer player = new RecordedPlayer();

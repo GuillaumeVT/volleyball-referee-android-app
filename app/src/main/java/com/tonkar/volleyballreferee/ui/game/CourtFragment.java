@@ -7,19 +7,17 @@ import android.view.View;
 import android.widget.Button;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamClient;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamClient, TeamListener {
+public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamListener {
 
     protected       View                      mView;
     protected       TeamService               mTeamService;
@@ -48,7 +46,7 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
 
     protected void initView() {
         Log.i("VBR-Court", "Create court fragment");
-        setTeamService(ServicesProvider.getInstance().getTeamService());
+        mTeamService = ServicesProvider.getInstance().getTeamService();
 
         mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
         mTeamOnRightSide = mTeamService.getTeamOnRightSide();
@@ -57,17 +55,10 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
 
     protected void addButtonOnLeftSide(final PositionType positionType, final Button button) {
         mLeftTeamPositions.put(positionType, button);
-        UiUtils.addMarginLegacyButton(button);
     }
 
     protected void addButtonOnRightSide(final PositionType positionType, final Button button) {
         mRightTeamPositions.put(positionType, button);
-        UiUtils.addMarginLegacyButton(button);
-    }
-
-    @Override
-    public void setTeamService(TeamService teamService) {
-        mTeamService = teamService;
     }
 
     @Override

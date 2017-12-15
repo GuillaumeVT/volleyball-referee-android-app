@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -87,8 +88,6 @@ public class BrazilFranceIndoorGame {
     }
 
     private void defineTeams(IndoorGame indoorGame) {
-        mActivityRule.getActivity().initServices(indoorGame);
-
         indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
         indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
         indoorGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt10));
@@ -137,7 +136,7 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.initTeams();
 
-        ServicesProvider.getInstance().getGameHistoryService().connectGameRecorder();
+        ServicesProvider.getInstance().getGamesHistoryService().connectGameRecorder();
     }
 
     private void composeTeamsSet1(IndoorGame indoorGame) {

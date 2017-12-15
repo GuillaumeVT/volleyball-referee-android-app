@@ -16,19 +16,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.GamesHistoryClient;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Collections;
 import java.util.List;
 
-public class RecentGamesListActivity extends AppCompatActivity implements GamesHistoryClient {
+public class RecentGamesListActivity extends AppCompatActivity {
 
     private GamesHistoryService    mGamesHistoryService;
     private RecentGamesListAdapter mRecentGamesListAdapter;
@@ -36,13 +34,15 @@ public class RecentGamesListActivity extends AppCompatActivity implements GamesH
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recent_games_list);
 
         Log.i("VBR-RecentListActivity", "Create recent games list activity");
+        setContentView(R.layout.activity_recent_games_list);
+
+        ServicesProvider.getInstance().restoreGamesHistoryService(getApplicationContext());
 
         setTitle(getResources().getString(R.string.recent_games));
 
-        setGamesHistoryService(ServicesProvider.getInstance().getGameHistoryService());
+        mGamesHistoryService = ServicesProvider.getInstance().getGamesHistoryService();
 
         List<RecordedGameService> recordedGameServiceList = mGamesHistoryService.getRecordedGameServiceList();
         // Inverse list to have most recent games on top of the list
@@ -87,7 +87,8 @@ public class RecentGamesListActivity extends AppCompatActivity implements GamesH
 
         searchGamesView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {}
+            public void onFocusChange(View v, boolean hasFocus) {
+            }
         });
 
         searchGamesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -127,9 +128,7 @@ public class RecentGamesListActivity extends AppCompatActivity implements GamesH
             public void onClick(DialogInterface dialog, int which) {
                 mGamesHistoryService.deleteAllRecordedGames();
                 Toast.makeText(RecentGamesListActivity.this, getResources().getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
-                final Intent intent = new Intent(RecentGamesListActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                UiUtils.navigateToHome(RecentGamesListActivity.this);
             }
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -137,11 +136,6 @@ public class RecentGamesListActivity extends AppCompatActivity implements GamesH
         });
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-    }
-
-    @Override
-    public void setGamesHistoryService(GamesHistoryService gamesHistoryService) {
-        mGamesHistoryService = gamesHistoryService;
     }
 
 }

@@ -1,10 +1,12 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,14 +17,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class UiUtils {
 
     public static void colorTeamButton(Context context, int color, Button button) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            button.setBackgroundColor(color);
+            ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
         } else {
             button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         }
@@ -124,23 +125,15 @@ public class UiUtils {
         }
     }
 
-    public static void addMarginLegacyButton(Button button) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && button.getLayoutParams() != null) {
-            if (button.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-                int pixels = button.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
-                ((ViewGroup.MarginLayoutParams) button.getLayoutParams()).setMargins(pixels, pixels, pixels, pixels);
-            }
-            int pixels = button.getResources().getDimensionPixelSize(R.dimen.small_margin_size);
-            button.setPadding(pixels, pixels, pixels, pixels);
-        }
+    public static void navigateToHome(Activity activity) {
+        navigateToHome(activity, true);
     }
 
-    public static void addSpacingLegacyGrid(GridView gridView) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            int pixels = gridView.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
-            gridView.setVerticalSpacing(pixels);
-            gridView.setHorizontalSpacing(pixels);
-        }
+    public static void navigateToHome(Activity activity, boolean showResumeGameDialog) {
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("show_resume_game", showResumeGameDialog);
+        activity.startActivity(intent);
     }
 
 }
