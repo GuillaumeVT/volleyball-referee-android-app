@@ -22,6 +22,10 @@ public interface BaseTeamService {
 
     Set<Integer> getPlayers(TeamType teamType);
 
+    GenderType getGenderType();
+
+    void setGenderType(GenderType genderType);
+
     void initTeams();
 
 }

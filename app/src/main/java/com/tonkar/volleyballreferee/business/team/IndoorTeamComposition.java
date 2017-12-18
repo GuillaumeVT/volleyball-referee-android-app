@@ -20,6 +20,7 @@ public class IndoorTeamComposition extends TeamComposition {
     private final Map<Integer, Player>  mStartingLineup;
     private final int                   mMaxSubstitutionsPerSet;
     private final Map<Integer, Integer> mSubstitutions;
+    private final List<Substitution>    mFullSubstitutions;
     private       int                   mActingLibero;
     private final Set<Integer>          mMiddleBlockers;
     private       int                   mWaitingMiddleBlocker;
@@ -33,6 +34,7 @@ public class IndoorTeamComposition extends TeamComposition {
         mStartingLineup = new LinkedHashMap<>();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
         mSubstitutions = new LinkedHashMap<>();
+        mFullSubstitutions = new ArrayList<>();
         mActingLibero = -1;
         mMiddleBlockers = new HashSet<>();
         mWaitingMiddleBlocker = -1;
@@ -45,18 +47,18 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     @Override
-    public boolean substitutePlayer(final int number, final PositionType positionType) {
+    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
         boolean result = false;
 
         if (isPossibleSubstitution(number, positionType)) {
-            result = super.substitutePlayer(number, positionType);
+            result = super.substitutePlayer(number, positionType, homeTeamPoints, guestTeamPoints);
         }
 
         return result;
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType) {
+    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
         Log.i("VBR-Team", String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), mIndoorTeamDefinition.getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {
@@ -77,6 +79,7 @@ public class IndoorTeamComposition extends TeamComposition {
             } else {
                 Log.i("VBR-Team", "Actual substitution");
                 mSubstitutions.put(newNumber, oldNumber);
+                mFullSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
                 if (isMiddleBlocker(oldNumber)) {
                     Log.i("VBR-Team", String.format("Player #%d of %s team is a new middle blocker", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
@@ -318,13 +321,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     public List<Substitution> getSubstitutions() {
-        List<Substitution> substitutions = new ArrayList<>();
-
-        for (Map.Entry<Integer, Integer> entry : mSubstitutions.entrySet()) {
-            substitutions.add(new Substitution(entry.getKey(), entry.getValue()));
-        }
-
-        return substitutions;
+        return new ArrayList<>(mFullSubstitutions);
     }
 
     public Set<Integer> getPlayersInStartingLineup() {

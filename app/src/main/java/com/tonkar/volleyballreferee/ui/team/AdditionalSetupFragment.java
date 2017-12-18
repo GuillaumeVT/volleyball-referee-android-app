@@ -111,7 +111,7 @@ public class AdditionalSetupFragment extends Fragment {
         Log.i("VBR-ASActivity", String.format("Update %s team captain", mTeamType.toString()));
         mIndoorTeamService.setCaptain(teamType, number);
         mCaptainButton.setText(String.valueOf(number));
-        UiUtils.styleIndoorTeamButton(getContext(), mIndoorTeamService, mTeamType, number, mCaptainButton);
+        UiUtils.styleBaseIndoorTeamButton(getContext(), mIndoorTeamService, mTeamType, number, mCaptainButton);
     }
 
     private void selectCaptain() {

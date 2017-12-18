@@ -47,6 +47,7 @@ public class JsonHistoryWriter {
         writer.beginObject();
         writer.name("kind").value(recordedGame.getGameType().toString());
         writer.name("date").value(recordedGame.getGameDate());
+        writer.name("gender").value(recordedGame.getGenderType().toString());
         writer.name("live").value(!recordedGame.isMatchCompleted());
         writer.name("hTeam");
         writeTeam(writer, recordedGame.getTeam(TeamType.HOME));
@@ -141,6 +142,8 @@ public class JsonHistoryWriter {
             writer.beginObject();
             writer.name("pIn").value(substitution.getPlayerIn());
             writer.name("pOut").value(substitution.getPlayerOut());
+            writer.name("hPoints").value(substitution.getHomeTeamPoints());
+            writer.name("gPoints").value(substitution.getGuestTeamPoints());
             writer.endObject();
         }
         writer.endArray();

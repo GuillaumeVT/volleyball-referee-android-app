@@ -206,6 +206,7 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
         mRecordedGame = new RecordedGame();
         mRecordedGame.setGameType(mGameService.getGameType());
         mRecordedGame.setGameDate(mGameService.getGameDate());
+        mRecordedGame.setGenderType(mGameService.getGenderType());
 
         RecordedTeam homeTeam = mRecordedGame.getTeam(TeamType.HOME);
         homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
@@ -290,7 +291,7 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
                     }
 
                     for (Substitution substitution : indoorTeamService.getSubstitutions(TeamType.HOME, setIndex)) {
-                        Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut());
+                        Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomeTeamPoints(), substitution.getGuestTeamPoints());
                         set.getSubstitutions(TeamType.HOME).add(sub);
                     }
 
@@ -302,7 +303,7 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
                     }
 
                     for (Substitution substitution : indoorTeamService.getSubstitutions(TeamType.GUEST, setIndex)) {
-                        Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut());
+                        Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomeTeamPoints(), substitution.getGuestTeamPoints());
                         set.getSubstitutions(TeamType.GUEST).add(sub);
                     }
 

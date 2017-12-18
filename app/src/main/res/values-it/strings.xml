@@ -32,6 +32,7 @@
     <string name="scoreboard_usage">&#x25b6; Solo punteggio</string>
     <string name="scoreboard_usage_title">Schermata solo punteggio</string>
     <string name="scoreboard_usage_message">I giocatori non sono configurati e la formazione in campo non é visualizzata</string>
+    <string name="gender_description">Genere</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Croce</string>

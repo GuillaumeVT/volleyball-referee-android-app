@@ -102,7 +102,7 @@ public abstract class IndoorPlayerSelectionDialog {
             }
 
             button.setText(String.valueOf(number));
-            UiUtils.styleIndoorTeamButton(mContext, mIndoorTeamService, mTeamType, number, button);
+            UiUtils.styleBaseIndoorTeamButton(mContext, mIndoorTeamService, mTeamType, number, button);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

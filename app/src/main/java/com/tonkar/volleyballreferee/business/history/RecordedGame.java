@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.business.history;
 
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
@@ -16,6 +17,7 @@ public class RecordedGame implements RecordedGameService {
 
     private GameType          mGameType;
     private long              mGameDate;
+    private GenderType        mGenderType;
     private boolean           mLive;
     private RecordedTeam      mHomeTeam;
     private RecordedTeam      mGuestTeam;
@@ -26,6 +28,7 @@ public class RecordedGame implements RecordedGameService {
     public RecordedGame() {
         mGameType = GameType.INDOOR;
         mGameDate = 0L;
+        mGenderType = GenderType.MIXED;
         mLive = false;
         mHomeTeam = new RecordedTeam();
         mGuestTeam = new RecordedTeam();
@@ -196,6 +199,16 @@ public class RecordedGame implements RecordedGameService {
         players.addAll(getTeam(teamType).getPlayers());
         players.addAll(getTeam(teamType).getLiberos());
         return players;
+    }
+
+    @Override
+    public GenderType getGenderType() {
+        return mGenderType;
+    }
+
+    @Override
+    public void setGenderType(GenderType genderType) {
+        mGenderType = genderType;
     }
 
     @Override

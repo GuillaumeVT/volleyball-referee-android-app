@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.history;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,17 +66,11 @@ public class LineupAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) positionView.getTag();
         }
 
-        UiUtils.colorTeamButton(mContext, mIndoorTeamService.getTeamColor(mTeamType), viewHolder.positionButton);
-
         PositionType positionType = viewIndexToPosition(index);
         int number = mIndoorTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
         viewHolder.positionButton.setText(String.valueOf(number));
 
-        if (mIndoorTeamService.isCaptain(mTeamType, number)) {
-            viewHolder.positionButton.setPaintFlags(viewHolder.positionButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        } else {
-            viewHolder.positionButton.setPaintFlags(viewHolder.positionButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
-        }
+        UiUtils.styleBaseIndoorTeamButton(mContext, mIndoorTeamService, mTeamType, number, viewHolder.positionButton);
 
         switch (positionType) {
             case POSITION_1:

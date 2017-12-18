@@ -56,11 +56,11 @@ public class SetFragment extends Fragment {
         }
 
         ListView homeTeamSubstitutions = view.findViewById(R.id.home_team_substitutions);
-        SubstitutionsListAdapter homeTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.HOME, setIndex);
+        SubstitutionsListAdapter homeTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.HOME, TeamType.HOME, setIndex);
         homeTeamSubstitutions.setAdapter(homeTeamSubstitutionsAdapter);
 
         ListView guestTeamSubstitutions = view.findViewById(R.id.guest_team_substitutions);
-        SubstitutionsListAdapter guestTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.GUEST, setIndex);
+        SubstitutionsListAdapter guestTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.GUEST, TeamType.HOME, setIndex);
         guestTeamSubstitutions.setAdapter(guestTeamSubstitutionsAdapter);
 
         return view;

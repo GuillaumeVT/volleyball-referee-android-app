@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -41,21 +42,43 @@ public class UiUtils {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
     }
 
-    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button, boolean inGame) {
+    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (indoorTeamService.isLibero(teamType, number)) {
             colorTeamButton(context, indoorTeamService.getLiberoColor(teamType), button);
         } else {
             colorTeamButton(context, indoorTeamService.getTeamColor(teamType), button);
-            if (indoorTeamService.isCaptain(teamType, number) || (inGame && indoorTeamService.isActingCaptain(teamType, number))) {
+            if (indoorTeamService.isCaptain(teamType, number) || indoorTeamService.isActingCaptain(teamType, number)) {
                 button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
         }
     }
 
-    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button) {
-        styleIndoorTeamButton(context, indoorTeamService, teamType, number, button, false);
+    public static void styleBaseIndoorTeamButton(Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int number, Button button) {
+        button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
+        if (indoorTeamService.isLibero(teamType, number)) {
+            colorTeamButton(context, indoorTeamService.getLiberoColor(teamType), button);
+        } else {
+            colorTeamButton(context, indoorTeamService.getTeamColor(teamType), button);
+            if (indoorTeamService.isCaptain(teamType, number)) {
+                button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            }
+        }
+    }
+
+    public static void styleBaseIndoorTeamText(Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int number, TextView text) {
+        text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
+        if (indoorTeamService.isLibero(teamType, number)) {
+            colorTeamText(context, indoorTeamService.getLiberoColor(teamType), text);
+        } else {
+            colorTeamText(context, indoorTeamService.getTeamColor(teamType), text);
+            if (indoorTeamService.isCaptain(teamType, number)) {
+                text.setPaintFlags(text.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            }
+        }
     }
 
     public static void colorTeamButton(Context context, int color, Button button) {
@@ -65,6 +88,11 @@ public class UiUtils {
             button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         }
         button.setTextColor(getTextColor(context, color));
+    }
+
+    public static void colorTeamText(Context context, int color, TextView text) {
+        text.setBackgroundColor(color);
+        text.setTextColor(UiUtils.getTextColor(context, color));
     }
 
     public static int getTextColor(Context context, int backgroundColor) {

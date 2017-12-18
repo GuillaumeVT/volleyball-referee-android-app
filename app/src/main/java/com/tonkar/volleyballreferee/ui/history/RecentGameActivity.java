@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
@@ -77,11 +76,6 @@ public abstract class RecentGameActivity extends AppCompatActivity {
         Log.i("VBR-RecentActivity", "Share game");
         String summary = mGamesHistoryService.getRecordedGameService(mGameDate).getGameSummary();
         UiUtils.shareScreen(this, getWindow(), summary);
-    }
-
-    protected void color(TextView textView, int color) {
-        textView.setTextColor(UiUtils.getTextColor(this, color));
-        textView.setBackgroundColor(color);
     }
 
     protected String buildScore(RecordedGameService recordedGameService) {

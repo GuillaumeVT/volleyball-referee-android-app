@@ -166,7 +166,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
             Button button = teamPositions.get(positionType);
             button.setText(String.valueOf(number));
-            UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button, true);
+            UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
 
             checkCaptain(teamType, number);
         }
@@ -197,7 +197,7 @@ public class IndoorCourtFragment extends CourtFragment {
             final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
             Button button = teamPositions.get(positionType);
             button.setText(String.valueOf(number));
-            UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button, true);
+            UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
         }
 
         confirmStartingLineup();

@@ -1,6 +1,9 @@
 package com.tonkar.volleyballreferee.ui.team;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,9 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
@@ -21,6 +26,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     private TeamService mTeamService;
     private Button      mNextButton;
+    private ImageButton mGenderButton;
     private Button      mHomeTeamColorButton;
     private Button      mGuestTeamColorButton;
 
@@ -40,6 +46,9 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         setTitle("");
 
         mNextButton = findViewById(R.id.next_button);
+        mGenderButton = findViewById(R.id.switch_gender_button);
+
+        updateGender(mTeamService.getGenderType());
 
         final EditText homeTeamNameInput = findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
@@ -160,6 +169,45 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
         UiUtils.colorTeamButton(this, colorId, button);
         mTeamService.setTeamColor(teamType, colorId);
+    }
+
+    public void switchGender(View view) {
+        Log.i("VBR-QTSActivity", "Switch gender");
+        GenderType genderType = mTeamService.getGenderType().next();
+        updateGender(genderType);
+    }
+
+    private void updateGender(GenderType genderType) {
+        mTeamService.setGenderType(genderType);
+        switch (genderType) {
+            case MIXED:
+                mGenderButton.setImageResource(R.drawable.ic_mixed);
+                break;
+            case LADIES:
+                mGenderButton.setImageResource(R.drawable.ic_ladies);
+                break;
+            case GENTS:
+                mGenderButton.setImageResource(R.drawable.ic_gents);
+                break;
+        }
+        colorGender(genderType);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void colorGender(GenderType genderType) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            switch (genderType) {
+                case MIXED:
+                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorMixed));
+                    break;
+                case LADIES:
+                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorLadies));
+                    break;
+                case GENTS:
+                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorGents));
+                    break;
+            }
+        }
     }
 
     public void validateTeams(View view) {

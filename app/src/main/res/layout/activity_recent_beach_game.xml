@@ -25,29 +25,21 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 
-        <TextView
+        <Button
             android:id="@+id/home_team_set_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginRight="@dimen/small_margin_size"
             android:layout_weight="1"
-            android:elevation="@dimen/cardview_default_elevation"
-            android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 
-        <TextView
+        <Button
             android:id="@+id/guest_team_set_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
             android:layout_weight="1"
-            android:elevation="@dimen/cardview_default_elevation"
-            android:textAlignment="center"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 

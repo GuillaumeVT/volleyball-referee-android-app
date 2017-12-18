@@ -28,6 +28,6 @@ public class BeachTeamComposition extends TeamComposition {
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType) {}
+    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {}
 
 }

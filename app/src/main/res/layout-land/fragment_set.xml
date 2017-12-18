@@ -137,8 +137,7 @@
                             android:layout_marginLeft="@dimen/default_margin_size"
                             android:layout_marginRight="@dimen/default_margin_size"
                             android:layout_marginStart="@dimen/default_margin_size"
-                            android:layout_weight="1"
-                            android:numColumns="3"/>
+                            android:layout_weight="1"/>
 
                         <view
                             android:id="@+id/guest_team_substitutions"
@@ -149,8 +148,7 @@
                             android:layout_marginLeft="@dimen/default_margin_size"
                             android:layout_marginRight="@dimen/default_margin_size"
                             android:layout_marginStart="@dimen/default_margin_size"
-                            android:layout_weight="1"
-                            android:numColumns="3"/>
+                            android:layout_weight="1"/>
 
                     </LinearLayout>
 

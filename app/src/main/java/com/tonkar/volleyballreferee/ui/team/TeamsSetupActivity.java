@@ -1,9 +1,12 @@
 package com.tonkar.volleyballreferee.ui.team;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -25,6 +30,7 @@ public class TeamsSetupActivity extends AppCompatActivity {
 
     private BaseTeamService mTeamService;
     private Button          mNextButton;
+    private ImageButton     mGenderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class TeamsSetupActivity extends AppCompatActivity {
         setTitle("");
 
         mNextButton = findViewById(R.id.next_button);
+        mGenderButton = findViewById(R.id.switch_gender_button);
+
+        updateGender(mTeamService.getGenderType());
 
         final ViewPager teamSetupPager = findViewById(R.id.team_setup_pager);
         teamSetupPager.setAdapter(new TeamSetupFragmentPagerAdapter(this, getSupportFragmentManager()));
@@ -101,6 +110,45 @@ public class TeamsSetupActivity extends AppCompatActivity {
         } else {
             Log.i("VBR-TSActivity", "Next button is enabled");
             mNextButton.setEnabled(true);
+        }
+    }
+
+    public void switchGender(View view) {
+        Log.i("VBR-TSActivity", "Switch gender");
+        GenderType genderType = mTeamService.getGenderType().next();
+        updateGender(genderType);
+    }
+
+    private void updateGender(GenderType genderType) {
+        mTeamService.setGenderType(genderType);
+        switch (genderType) {
+            case MIXED:
+                mGenderButton.setImageResource(R.drawable.ic_mixed);
+                break;
+            case LADIES:
+                mGenderButton.setImageResource(R.drawable.ic_ladies);
+                break;
+            case GENTS:
+                mGenderButton.setImageResource(R.drawable.ic_gents);
+                break;
+        }
+        colorGender(genderType);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void colorGender(GenderType genderType) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            switch (genderType) {
+                case MIXED:
+                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorMixed));
+                    break;
+                case LADIES:
+                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorLadies));
+                    break;
+                case GENTS:
+                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorGents));
+                    break;
+            }
         }
     }
 

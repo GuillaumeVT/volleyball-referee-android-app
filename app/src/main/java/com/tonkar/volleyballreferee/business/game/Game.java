@@ -5,6 +5,7 @@ import android.util.Log;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
@@ -28,6 +29,7 @@ public abstract class Game implements GameService, Serializable {
     private final     GameType                       mGameType;
     private final     long                           mGameDate;
     private final     Rules                          mRules;
+    private           GenderType                     mGenderType;
     private final     TeamDefinition                 mHomeTeam;
     private final     TeamDefinition                 mGuestTeam;
     private           TeamType                       mTeamOnLeftSide;
@@ -42,6 +44,7 @@ public abstract class Game implements GameService, Serializable {
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
         mRules = rules;
+        mGenderType = GenderType.MIXED;
         mGameDate = System.currentTimeMillis();
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
@@ -169,6 +172,16 @@ public abstract class Game implements GameService, Serializable {
         for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
         }
+    }
+
+    @Override
+    public GenderType getGenderType() {
+        return mGenderType;
+    }
+
+    @Override
+    public void setGenderType(GenderType genderType) {
+        mGenderType = genderType;
     }
 
     // Score

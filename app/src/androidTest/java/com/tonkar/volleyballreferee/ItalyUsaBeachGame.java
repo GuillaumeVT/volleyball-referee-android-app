@@ -8,6 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
@@ -52,6 +53,7 @@ public class ItalyUsaBeachGame {
     }
 
     private void defineTeams(BeachGame beachGame) {
+        beachGame.setGenderType(GenderType.GENTS);
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
         beachGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));

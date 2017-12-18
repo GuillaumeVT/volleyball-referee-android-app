@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -42,8 +44,8 @@ public class RecentIndoorGameActivity extends RecentGameActivity {
 
         TextView homeTeamName = findViewById(R.id.home_team_name_text);
         TextView guestTeamName = findViewById(R.id.guest_team_name_text);
-        TextView homeTeamSets = findViewById(R.id.home_team_set_text);
-        TextView guestTeamSets = findViewById(R.id.guest_team_set_text);
+        Button homeTeamSets = findViewById(R.id.home_team_set_text);
+        Button guestTeamSets = findViewById(R.id.guest_team_set_text);
         TextView gameScore = findViewById(R.id.game_score);
 
         homeTeamName.setText(recordedGameService.getTeamName(TeamType.HOME));
@@ -51,8 +53,8 @@ public class RecentIndoorGameActivity extends RecentGameActivity {
         homeTeamSets.setText(String.valueOf(recordedGameService.getSets(TeamType.HOME)));
         guestTeamSets.setText(String.valueOf(recordedGameService.getSets(TeamType.GUEST)));
 
-        color(homeTeamSets, recordedGameService.getTeamColor(TeamType.HOME));
-        color(guestTeamSets, recordedGameService.getTeamColor(TeamType.GUEST));
+        UiUtils.colorTeamButton(this, recordedGameService.getTeamColor(TeamType.HOME), homeTeamSets);
+        UiUtils.colorTeamButton(this, recordedGameService.getTeamColor(TeamType.GUEST), guestTeamSets);
 
         gameScore.setText(buildScore(recordedGameService));
 

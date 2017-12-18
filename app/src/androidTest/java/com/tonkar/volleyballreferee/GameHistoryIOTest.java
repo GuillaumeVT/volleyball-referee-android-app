@@ -10,6 +10,7 @@ import com.tonkar.volleyballreferee.business.history.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.history.RecordedSet;
 import com.tonkar.volleyballreferee.business.history.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -55,6 +56,7 @@ public class GameHistoryIOTest {
         RecordedGame recordedGame = new RecordedGame();
         recordedGame.setGameType(GameType.INDOOR);
         recordedGame.setGameDate(123456L);
+        recordedGame.setGenderType(GenderType.LADIES);
         recordedGame.setMatchCompleted(false);
         recordedGame.setSets(TeamType.HOME, 0);
         recordedGame.setSets(TeamType.GUEST, 2);
@@ -107,7 +109,7 @@ public class GameHistoryIOTest {
             player.setPositionType(PositionType.fromInt(index));
             set1.getStartingPlayers(TeamType.GUEST).add(player);
         }
-        Collections.addAll(set1.getSubstitutions(TeamType.HOME), new Substitution(1, 5), new Substitution(7, 2));
+        Collections.addAll(set1.getSubstitutions(TeamType.HOME), new Substitution(1, 5, 12, 10), new Substitution(7, 2, 37, 1));
         set1.setActingCaptain(TeamType.HOME, 1);
         set1.setActingCaptain(TeamType.GUEST, 2);
 
@@ -129,8 +131,8 @@ public class GameHistoryIOTest {
             set2.getCurrentPlayers(TeamType.GUEST).add(player);
             set2.getStartingPlayers(TeamType.GUEST).add(player);
         }
-        Collections.addAll(set2.getSubstitutions(TeamType.HOME), new Substitution(7, 1), new Substitution(4, 2));
-        Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new Substitution(10, 50));
+        Collections.addAll(set2.getSubstitutions(TeamType.HOME), new Substitution(7, 1, 1, 53), new Substitution(4, 2, 0, 32));
+        Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new Substitution(10, 50, 1, 1));
         set2.setActingCaptain(TeamType.HOME, 1);
         set2.setActingCaptain(TeamType.GUEST, 2);
 
@@ -141,6 +143,7 @@ public class GameHistoryIOTest {
         RecordedGame recordedGame = new RecordedGame();
         recordedGame.setGameType(GameType.BEACH);
         recordedGame.setGameDate(646516L);
+        recordedGame.setGenderType(GenderType.GENTS);
         recordedGame.setMatchCompleted(false);
         recordedGame.setSets(TeamType.HOME, 1);
         recordedGame.setSets(TeamType.GUEST, 0);

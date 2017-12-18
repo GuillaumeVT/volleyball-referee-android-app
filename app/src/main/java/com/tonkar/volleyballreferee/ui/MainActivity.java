@@ -75,7 +75,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        resumeCurrentGameWithDialog(savedInstanceState);
+        if (mGamesHistoryService.hasCurrentGame()) {
+            if (mGamesHistoryService.loadCurrentGame() == null) {
+                mGamesHistoryService.deleteCurrentGame();
+            } else {
+                resumeCurrentGameWithDialog(savedInstanceState);
+            }
+        }
     }
 
     @Override

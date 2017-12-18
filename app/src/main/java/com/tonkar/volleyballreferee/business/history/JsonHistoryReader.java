@@ -6,6 +6,7 @@ import android.util.JsonReader;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -71,6 +72,9 @@ public class JsonHistoryReader {
                     break;
                 case "date":
                     recordedGame.setGameDate(reader.nextLong());
+                    break;
+                case "gender":
+                    recordedGame.setGenderType(GenderType.valueOf(reader.nextString()));
                     break;
                 case "live":
                     recordedGame.setMatchCompleted(!reader.nextBoolean());
@@ -263,6 +267,12 @@ public class JsonHistoryReader {
                 case "pOut":
                 case "out":
                     substitution.setPlayerOut(reader.nextInt());
+                    break;
+                case "hPoints":
+                    substitution.setHomeTeamPoints(reader.nextInt());
+                    break;
+                case "gPoints":
+                    substitution.setGuestTeamPoints(reader.nextInt());
                     break;
             }
         }

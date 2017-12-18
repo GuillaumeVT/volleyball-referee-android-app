@@ -32,6 +32,7 @@
     <string name="scoreboard_usage">&#x25b6; Use only for scoring</string>
     <string name="scoreboard_usage_title">Simple scoreboard</string>
     <string name="scoreboard_usage_message">The players are not configured, and the court is not displayed</string>
+    <string name="gender_description">Gender</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>

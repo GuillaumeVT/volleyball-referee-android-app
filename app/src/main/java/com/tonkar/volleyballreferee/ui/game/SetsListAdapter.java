@@ -110,23 +110,18 @@ public class SetsListAdapter extends BaseAdapter {
                 TextView homeText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
                 homeCount++;
                 homeText.setText(String.valueOf(homeCount));
-                applyStyle(homeText, homeText.getContext(), homeTeamColor);
+                UiUtils.colorTeamText(homeText.getContext(), homeTeamColor, homeText);
                 homeTeamLadder.addView(homeText);
                 homeText.setLayoutParams(createTableRowLayoutParams(homeText.getContext(), width, index));
             } else {
                 TextView guestText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
                 guestCount++;
                 guestText.setText(String.valueOf(guestCount));
-                applyStyle(guestText, guestText.getContext(), guestTeamColor);
+                UiUtils.colorTeamText(guestText.getContext(), guestTeamColor, guestText);
                 guestTeamLadder.addView(guestText);
                 guestText.setLayoutParams(createTableRowLayoutParams(guestText.getContext(), width, index));
             }
         }
-    }
-
-    private void applyStyle(final TextView textView, final Context context, int color) {
-        textView.setTextColor(UiUtils.getTextColor(context, color));
-        textView.setBackgroundColor(color);
     }
 
     private TableRow.LayoutParams createTableRowLayoutParams(Context context, int width, int columnIndex) {

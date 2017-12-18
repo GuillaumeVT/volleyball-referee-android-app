@@ -29,4 +29,11 @@
     <color name="colorShirt10">#f3bc07</color>
     <color name="colorShirt11">#ffffff</color>
     <color name="colorShirt12">#0d1017</color>
+
+    <color name="colorPlayerIn">#006032</color>
+    <color name="colorPlayerOut">#bc0019</color>
+
+    <color name="colorMixed">#006032</color>
+    <color name="colorLadies">#c2185b</color>
+    <color name="colorGents">#1f4294</color>
 </resources>

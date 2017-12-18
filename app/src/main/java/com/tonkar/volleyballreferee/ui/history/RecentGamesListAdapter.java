@@ -1,5 +1,8 @@
 package com.tonkar.volleyballreferee.ui.history;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -25,7 +29,8 @@ public class RecentGamesListAdapter extends BaseAdapter {
         TextView  summaryText;
         TextView  dateText;
         TextView  scoreText;
-        ImageView image;
+        ImageView genderTypeImage;
+        ImageView gameTypeImage;
     }
 
     private final LayoutInflater            mLayoutInflater;
@@ -68,7 +73,8 @@ public class RecentGamesListAdapter extends BaseAdapter {
             viewHolder.summaryText = gameView.findViewById(R.id.recent_game_summary);
             viewHolder.dateText = gameView.findViewById(R.id.recent_game_date);
             viewHolder.scoreText = gameView.findViewById(R.id.recent_game_score);
-            viewHolder.image = gameView.findViewById(R.id.recent_game_image);
+            viewHolder.genderTypeImage = gameView.findViewById(R.id.recent_game_gender_image);
+            viewHolder.gameTypeImage = gameView.findViewById(R.id.recent_game_type_image);
             gameView.setTag(viewHolder);
         }
         else {
@@ -94,7 +100,26 @@ public class RecentGamesListAdapter extends BaseAdapter {
         }
         viewHolder.scoreText.setText(builder.toString());
 
-        viewHolder.image.setVisibility(GameType.INDOOR.equals(recordedGameService.getGameType()) ? View.INVISIBLE : View.VISIBLE);
+        viewHolder.genderTypeImage.setImageResource(GenderType.LADIES.equals(recordedGameService.getGenderType())? R.drawable.ic_ladies : R.drawable.ic_gents);
+        colorGender(viewHolder.genderTypeImage, recordedGameService);
+        viewHolder.gameTypeImage.setVisibility(GameType.INDOOR.equals(recordedGameService.getGameType()) ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void colorGender(ImageView genderImage, RecordedGameService recordedGameService) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            switch (recordedGameService.getGenderType()) {
+                case MIXED:
+                    genderImage.setImageTintList(ContextCompat.getColorStateList(genderImage.getContext(), R.color.colorMixed));
+                    break;
+                case LADIES:
+                    genderImage.setImageTintList(ContextCompat.getColorStateList(genderImage.getContext(), R.color.colorLadies));
+                    break;
+                case GENTS:
+                    genderImage.setImageTintList(ContextCompat.getColorStateList(genderImage.getContext(), R.color.colorGents));
+                    break;
+            }
+        }
     }
 
     void filter(String text) {

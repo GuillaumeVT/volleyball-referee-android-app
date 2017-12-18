@@ -50,12 +50,22 @@
             android:textSize="@dimen/small_text_size"/>
 
         <ImageView
-            android:id="@+id/recent_game_image"
+            android:id="@+id/recent_game_type_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/default_margin_size"
+            android:layout_marginRight="@dimen/default_margin_size"
             android:tint="@color/colorBeach"
             app:srcCompat="@drawable/ic_sun"/>
+
+        <ImageView
+            android:id="@+id/recent_game_gender_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_ladies"/>
 
     </LinearLayout>
 

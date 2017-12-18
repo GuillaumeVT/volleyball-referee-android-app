@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:weightSum="3">
 
                     <view
                         android:id="@+id/home_team_substitutions"
@@ -129,8 +129,7 @@
                         android:layout_marginLeft="@dimen/default_margin_size"
                         android:layout_marginRight="@dimen/default_margin_size"
                         android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_weight="1"
-                        android:numColumns="3"/>
+                        android:layout_weight="1"/>
 
                     <view
                         android:id="@+id/guest_team_substitutions"
@@ -141,8 +140,7 @@
                         android:layout_marginLeft="@dimen/default_margin_size"
                         android:layout_marginRight="@dimen/default_margin_size"
                         android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_weight="1"
-                        android:numColumns="3"/>
+                        android:layout_weight="1"/>
 
                 </LinearLayout>
 

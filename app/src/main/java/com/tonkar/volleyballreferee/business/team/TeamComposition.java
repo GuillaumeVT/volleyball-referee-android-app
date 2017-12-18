@@ -55,6 +55,10 @@ public abstract class TeamComposition implements Serializable {
     }
 
     public boolean substitutePlayer(final int number, final PositionType positionType) {
+        return substitutePlayer(number, positionType, 0, 0);
+    }
+
+    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
         boolean result = false;
 
         int oldNumber = getPlayerAtPosition(positionType);
@@ -72,13 +76,13 @@ public abstract class TeamComposition implements Serializable {
         }
 
         if (result) {
-            onSubstitution(oldNumber, number, positionType);
+            onSubstitution(oldNumber, number, positionType, homeTeamPoints, guestTeamPoints);
         }
 
         return result;
     }
 
-    protected abstract void onSubstitution(int oldNumber, int newNumber, PositionType positionType);
+    protected abstract void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints);
 
     public int getPlayerAtPosition(final PositionType positionType) {
         int number = -1;

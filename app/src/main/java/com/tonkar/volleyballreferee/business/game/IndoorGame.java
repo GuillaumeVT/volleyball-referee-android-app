@@ -105,7 +105,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType)) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST))) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
