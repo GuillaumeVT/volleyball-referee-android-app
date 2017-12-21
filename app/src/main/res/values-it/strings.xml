@@ -15,6 +15,7 @@
     <string name="resume">Riprendi</string>
     <string name="delete">Cancella</string>
     <string name="ignore">Ignora</string>
+    <string name="facebook">Facebook</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Configura le squadre</string>
@@ -27,7 +28,8 @@
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
     <string name="select_captain">Seleziona il capitano</string>
     <string name="select_libero">Seleziona il libero (opzionale)</string>
-    <string name="next">Prossimo</string>
+    <string name="select_gender">Seleziona il tipo di squadra</string>
+    <string name="confirm">Confermare</string>
     <string name="confirm_teams_setup_question">Confermate questa formazione?</string>
     <string name="scoreboard_usage">&#x25b6; Solo punteggio</string>
     <string name="scoreboard_usage_title">Schermata solo punteggio</string>
@@ -174,5 +176,19 @@
     <string name="deleted_game">La partita è stata cancellata</string>
     <string name="deleted_games">Tutte le partite son state cancellate</string>
     <string name="players">Giocatori</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Squadre salvate</string>
+    <string name="search_teams">Cerca le squadre</string>
+    <string name="delete_teams">Cancella tutte le squadre</string>
+    <string name="delete_team">Cancella una squadra</string>
+    <string name="save_team">Salva la squadra</string>
+    <string name="delete_teams_question">Vuoi cancellare tutte le squadre salvate?</string>
+    <string name="delete_team_question">Vuoi cancellare la squadra salvata?</string>
+    <string name="deleted_team">La squadra é stata cancellata</string>
+    <string name="saved_team">La squadra é stata salvata</string>
+    <string name="deleted_teams">Tutte le squadre sono state cancellate</string>
+    <string name="leave_team_creation">Esci dalla creazione della squadra</string>
+    <string name="leave_team_creation_question">Questa squadra non sarà salvata, continuare?</string>
 
 </resources>

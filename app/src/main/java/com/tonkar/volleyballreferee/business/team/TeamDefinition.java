@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.business.team;
 
 import android.util.Log;
 
+import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.io.Serializable;
@@ -14,12 +15,14 @@ public abstract class TeamDefinition implements Serializable {
     private final TeamType     mTeamType;
     private       int          mColor;
     private final Set<Integer> mPlayers;
+    private       GenderType   mGenderType;
 
     public TeamDefinition(final TeamType teamType) {
         mName = "";
         mTeamType = teamType;
         mColor = Integer.MIN_VALUE;
         mPlayers = new TreeSet<>();
+        mGenderType = GenderType.MIXED;
     }
 
     public String getName() {
@@ -63,5 +66,13 @@ public abstract class TeamDefinition implements Serializable {
 
     public void setColor(int color) {
         mColor = color;
+    }
+
+    public GenderType getGenderType() {
+        return mGenderType;
+    }
+
+    public void setGenderType(GenderType genderType) {
+        mGenderType = genderType;
     }
 }

@@ -133,7 +133,12 @@ public class RecordedGame implements RecordedGameService {
 
     @Override
     public TeamType getServingTeam() {
-        return TeamType.HOME;
+        return getServingTeam(currentSetIndex());
+    }
+
+    @Override
+    public TeamType getServingTeam(int setIndex) {
+        return mSets.get(setIndex).getServingTeam();
     }
 
     @Override
@@ -207,8 +212,18 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public GenderType getGenderType(TeamType teamType) {
+        return getTeam(teamType).getGenderType();
+    }
+
+    @Override
     public void setGenderType(GenderType genderType) {
         mGenderType = genderType;
+    }
+
+    @Override
+    public void setGenderType(TeamType teamType, GenderType genderType) {
+        getTeam(teamType).setGenderType(genderType);
     }
 
     @Override
@@ -233,6 +248,11 @@ public class RecordedGame implements RecordedGameService {
     @Override
     public boolean canAddLibero(TeamType teamType) {
         return false;
+    }
+
+    @Override
+    public Set<Integer> getLiberos(TeamType teamType) {
+        return getTeam(teamType).getLiberos();
     }
 
     @Override
@@ -349,6 +369,7 @@ public class RecordedGame implements RecordedGameService {
             RecordedGame other = (RecordedGame) obj;
             result = (this.getGameDate() == other.getGameDate())
                     && this.getGameType().equals(other.getGameType())
+                    && (this.getGenderType().equals(other.getGenderType()))
                     && (this.isMatchCompleted() == other.isMatchCompleted())
                     && this.getTeam(TeamType.HOME).equals(other.getTeam(TeamType.HOME))
                     && this.getTeam(TeamType.GUEST).equals(other.getTeam(TeamType.GUEST))

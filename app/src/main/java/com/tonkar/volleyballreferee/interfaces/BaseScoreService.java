@@ -26,5 +26,7 @@ public interface BaseScoreService {
 
     TeamType getServingTeam();
 
+    TeamType getServingTeam(int setIndex);
+
     boolean isMatchCompleted();
 }

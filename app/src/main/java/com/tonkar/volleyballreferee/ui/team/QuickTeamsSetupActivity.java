@@ -1,14 +1,17 @@
 package com.tonkar.volleyballreferee.ui.team;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +28,7 @@ import com.tonkar.volleyballreferee.interfaces.TeamType;
 public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     private TeamService mTeamService;
-    private Button      mNextButton;
+    private MenuItem    mConfirmItem;
     private ImageButton mGenderButton;
     private Button      mHomeTeamColorButton;
     private Button      mGuestTeamColorButton;
@@ -45,7 +48,6 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
         setTitle("");
 
-        mNextButton = findViewById(R.id.next_button);
         mGenderButton = findViewById(R.id.switch_gender_button);
 
         updateGender(mTeamService.getGenderType());
@@ -60,7 +62,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-QTSActivity", String.format("Update %s team name", TeamType.HOME.toString()));
                 mTeamService.setTeamName(TeamType.HOME, s.toString());
-                computeNextButtonActivation();
+                computeConfirmItemVisibility();
             }
 
             @Override
@@ -78,7 +80,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-QTSActivity", String.format("Update %s team name", TeamType.GUEST.toString()));
                 mTeamService.setTeamName(TeamType.GUEST, s.toString());
-                computeNextButtonActivation();
+                computeConfirmItemVisibility();
             }
 
             @Override
@@ -116,7 +118,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
             teamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
         }
 
-        computeNextButtonActivation();
+        computeConfirmItemVisibility();
     }
 
     @Override
@@ -125,13 +127,37 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         ServicesProvider.getInstance().getGamesHistoryService().saveSetupGame(ServicesProvider.getInstance().getGameService());
     }
 
-    private void computeNextButtonActivation() {
-        if (mTeamService.getTeamName(TeamType.HOME).isEmpty() || mTeamService.getTeamName(TeamType.GUEST).isEmpty()) {
-            Log.i("VBR-QTSActivity", "Next button is disabled");
-            mNextButton.setEnabled(false);
-        } else {
-            Log.i("VBR-QTSActivity", "Next button is enabled");
-            mNextButton.setEnabled(true);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_quick_teams_setup, menu);
+
+        mConfirmItem = menu.findItem(R.id.action_confirm);
+        computeConfirmItemVisibility();
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_confirm:
+                confirmTeams();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void computeConfirmItemVisibility() {
+        if (mConfirmItem != null) {
+            if (mTeamService.getTeamName(TeamType.HOME).isEmpty() || mTeamService.getTeamName(TeamType.GUEST).isEmpty()) {
+                Log.i("VBR-QTSActivity", "Confirm button is invisible");
+                mConfirmItem.setVisible(false);
+            } else {
+                Log.i("VBR-QTSActivity", "Confirm button is visible");
+                mConfirmItem.setVisible(true);
+            }
         }
     }
 
@@ -173,7 +199,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     public void switchGender(View view) {
         Log.i("VBR-QTSActivity", "Switch gender");
-        GenderType genderType = mTeamService.getGenderType().next();
+        GenderType genderType = mTeamService.getGenderType(TeamType.HOME).next();
         updateGender(genderType);
     }
 
@@ -182,35 +208,20 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);
+                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 mGenderButton.setImageResource(R.drawable.ic_ladies);
+                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 mGenderButton.setImageResource(R.drawable.ic_gents);
+                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorGents), PorterDuff.Mode.SRC_IN));
                 break;
         }
-        colorGender(genderType);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void colorGender(GenderType genderType) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            switch (genderType) {
-                case MIXED:
-                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorMixed));
-                    break;
-                case LADIES:
-                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorLadies));
-                    break;
-                case GENTS:
-                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorGents));
-                    break;
-            }
-        }
-    }
-
-    public void validateTeams(View view) {
+    public void confirmTeams() {
         Log.i("VBR-QTSActivity", "Validate teams");
         mTeamService.initTeams();
 

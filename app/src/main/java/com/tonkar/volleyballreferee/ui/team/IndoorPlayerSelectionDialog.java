@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -24,7 +24,7 @@ public abstract class IndoorPlayerSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
+    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
@@ -61,13 +61,13 @@ public abstract class IndoorPlayerSelectionDialog {
 
     private abstract class IndoorPlayerSelectionAdapter extends BaseAdapter {
 
-        private final LayoutInflater    mLayoutInflater;
-        private final Context           mContext;
-        private final IndoorTeamService mIndoorTeamService;
-        private final TeamType          mTeamType;
-        private final List<Integer>     mPlayers;
+        private final LayoutInflater        mLayoutInflater;
+        private final Context               mContext;
+        private final BaseIndoorTeamService mIndoorTeamService;
+        private final TeamType              mTeamType;
+        private final List<Integer>         mPlayers;
 
-        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, IndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
+        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mIndoorTeamService = indoorTeamService;

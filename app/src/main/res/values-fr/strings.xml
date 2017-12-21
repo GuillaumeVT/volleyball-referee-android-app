@@ -15,6 +15,7 @@
     <string name="resume">Reprendre</string>
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
+    <string name="facebook">Facebook</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Configuration des équipes</string>
@@ -27,7 +28,8 @@
     <string name="select_shirts_color">Sélectionner la couleur des maillots</string>
     <string name="select_captain">Sélectionner le capitaine</string>
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
-    <string name="next">Suivant</string>
+    <string name="select_gender">Sélectionner le genre</string>
+    <string name="confirm">Confirmer</string>
     <string name="confirm_teams_setup_question">Confirmez-vous cette composition?</string>
     <string name="scoreboard_usage">&#x25b6; Utiliser pour scorer</string>
     <string name="scoreboard_usage_title">Simple panneau de score</string>
@@ -174,5 +176,19 @@
     <string name="deleted_game">Le match a été supprimé</string>
     <string name="deleted_games">Tous les matchs ont été supprimés</string>
     <string name="players">Joueurs</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Équipes enregistrées</string>
+    <string name="search_teams">Rechercher des équipes</string>
+    <string name="delete_teams">Supprimer toutes les équipes</string>
+    <string name="delete_team">Supprimer une équipe</string>
+    <string name="save_team">Enregistrer l\'équipe</string>
+    <string name="delete_teams_question">Voulez-vous supprimer toutes les équipes enregistrées?</string>
+    <string name="delete_team_question">Voulez-vous supprimer cette équipe enregistrée?</string>
+    <string name="deleted_team">L\'équipe a été supprimée</string>
+    <string name="saved_team">L\'équipe a été enregistrée</string>
+    <string name="deleted_teams">Toutes les équipes ont été supprimées</string>
+    <string name="leave_team_creation">Quitter la création d\'équipe</string>
+    <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée, continuer?</string>
 
 </resources>

@@ -28,8 +28,8 @@ public abstract class Game implements GameService, Serializable {
     private           UsageType                      mUsageType;
     private final     GameType                       mGameType;
     private final     long                           mGameDate;
-    private final     Rules                          mRules;
     private           GenderType                     mGenderType;
+    private final     Rules                          mRules;
     private final     TeamDefinition                 mHomeTeam;
     private final     TeamDefinition                 mGuestTeam;
     private           TeamType                       mTeamOnLeftSide;
@@ -43,8 +43,8 @@ public abstract class Game implements GameService, Serializable {
     protected Game(final GameType gameType, final Rules rules) {
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
-        mRules = rules;
         mGenderType = GenderType.MIXED;
+        mRules = rules;
         mGameDate = System.currentTimeMillis();
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
@@ -172,16 +172,6 @@ public abstract class Game implements GameService, Serializable {
         for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
         }
-    }
-
-    @Override
-    public GenderType getGenderType() {
-        return mGenderType;
-    }
-
-    @Override
-    public void setGenderType(GenderType genderType) {
-        mGenderType = genderType;
     }
 
     // Score
@@ -345,6 +335,11 @@ public abstract class Game implements GameService, Serializable {
     }
 
     @Override
+    public TeamType getServingTeam(int setIndex) {
+        return getSet(setIndex).getServingTeam();
+    }
+
+    @Override
     public void swapServiceAtStart() {
         if (getPointsLadder().isEmpty()) {
             switch (mServingTeamAtStart) {
@@ -424,8 +419,39 @@ public abstract class Game implements GameService, Serializable {
     }
 
     @Override
+    public GenderType getGenderType() {
+        return mGenderType;
+    }
+
+    @Override
+    public GenderType getGenderType(TeamType teamType) {
+        return getTeamDefinition(teamType).getGenderType();
+    }
+
+    @Override
+    public void setGenderType(GenderType genderType) {
+        mGenderType = genderType;
+        setGenderType(TeamType.HOME, genderType);
+        setGenderType(TeamType.GUEST, genderType);
+    }
+
+    @Override
+    public void setGenderType(TeamType teamType, GenderType genderType) {
+        getTeamDefinition(teamType).setGenderType(genderType);
+    }
+
+    @Override
     public void initTeams() {
         if (!currentSet().areTeamsCreated()) {
+            GenderType homeGender = getGenderType(TeamType.HOME);
+            GenderType guestGender = getGenderType(TeamType.GUEST);
+
+            if (homeGender.equals(guestGender)) {
+                mGenderType = homeGender;
+            } else {
+                mGenderType = GenderType.MIXED;
+            }
+
             currentSet().createTeams(mRules, mHomeTeam, mGuestTeam);
         }
     }

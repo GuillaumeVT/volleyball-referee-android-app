@@ -233,6 +233,11 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
+    public java.util.Set<Integer> getLiberos(TeamType teamType) {
+        return getIndoorTeamDefinition(teamType).getLiberos();
+    }
+
+    @Override
     public List<Substitution> getSubstitutions(TeamType teamType) {
         return getIndoorTeamComposition(teamType).getSubstitutions();
     }

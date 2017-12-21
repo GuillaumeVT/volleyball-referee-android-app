@@ -1,9 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_confirm"
+        android:icon="@drawable/ic_confirm_menu"
+        android:iconTint="@android:color/white"
+        android:orderInCategory="1"
+        android:title="@string/confirm"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/action_setup_scoreboard_usage"
         android:iconTint="@android:color/white"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:title="@string/scoreboard_usage"
-        app:showAsAction="always|withText"/>
+        app:showAsAction="never"/>
 </menu>

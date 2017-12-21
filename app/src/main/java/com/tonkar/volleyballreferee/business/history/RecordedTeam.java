@@ -1,5 +1,7 @@
 package com.tonkar.volleyballreferee.business.history;
 
+import com.tonkar.volleyballreferee.interfaces.GenderType;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,6 +13,7 @@ public class RecordedTeam {
     private Set<Integer> mPlayers;
     private Set<Integer> mLiberos;
     private int          mCaptain;
+    private GenderType   mGenderType;
 
     RecordedTeam() {
         mName = "";
@@ -19,6 +22,7 @@ public class RecordedTeam {
         mPlayers = new TreeSet<>();
         mLiberos = new TreeSet<>();
         mCaptain = -1;
+        mGenderType = GenderType.MIXED;
     }
 
     String getName() {
@@ -61,6 +65,14 @@ public class RecordedTeam {
         return mCaptain;
     }
 
+    public GenderType getGenderType() {
+        return mGenderType;
+    }
+
+    public void setGenderType(GenderType genderType) {
+        mGenderType = genderType;
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
@@ -72,6 +84,7 @@ public class RecordedTeam {
             result = (this.getColor() == other.getColor())
                     && (this.getLiberoColor() == other.getLiberoColor())
                     && this.getName().equals(other.getName())
+                    && this.getGenderType().equals(other.getGenderType())
                     && this.getPlayers().equals(other.getPlayers())
                     && this.getLiberos().equals(other.getLiberos())
                     && (this.getCaptain() == other.getCaptain());

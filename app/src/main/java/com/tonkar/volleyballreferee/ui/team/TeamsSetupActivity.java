@@ -1,12 +1,9 @@
 package com.tonkar.volleyballreferee.ui.team;
 
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,23 +11,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
+import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
 public class TeamsSetupActivity extends AppCompatActivity {
 
-    private BaseTeamService mTeamService;
-    private Button          mNextButton;
-    private ImageButton     mGenderButton;
+    private BaseIndoorTeamService mIndoorTeamService;
+    private MenuItem              mConfirmItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +36,9 @@ public class TeamsSetupActivity extends AppCompatActivity {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
         }
 
-        mTeamService = ServicesProvider.getInstance().getTeamService();
+        mIndoorTeamService = (BaseIndoorTeamService) ServicesProvider.getInstance().getTeamService();
 
         setTitle("");
-
-        mNextButton = findViewById(R.id.next_button);
-        mGenderButton = findViewById(R.id.switch_gender_button);
-
-        updateGender(mTeamService.getGenderType());
 
         final ViewPager teamSetupPager = findViewById(R.id.team_setup_pager);
         teamSetupPager.setAdapter(new TeamSetupFragmentPagerAdapter(this, getSupportFragmentManager()));
@@ -58,7 +46,7 @@ public class TeamsSetupActivity extends AppCompatActivity {
         TabLayout teamSetupTabs = findViewById(R.id.team_setup_tabs);
         teamSetupTabs.setupWithViewPager(teamSetupPager);
 
-        computeNextButtonActivation();
+        computeConfirmItemVisibility();
     }
 
     @Override
@@ -72,12 +60,18 @@ public class TeamsSetupActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_teams_setup, menu);
 
+        mConfirmItem = menu.findItem(R.id.action_confirm);
+        computeConfirmItemVisibility();
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_confirm:
+                confirmTeams();
+                return true;
             case R.id.action_setup_scoreboard_usage:
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
                 builder.setTitle(getResources().getString(R.string.scoreboard_usage_title)).setMessage(getResources().getString(R.string.scoreboard_usage_message));
@@ -102,62 +96,38 @@ public class TeamsSetupActivity extends AppCompatActivity {
         }
     }
 
-    public void computeNextButtonActivation() {
-        if (mTeamService.getTeamName(TeamType.HOME).isEmpty() || mTeamService.getNumberOfPlayers(TeamType.HOME) < 6
-                ||mTeamService.getTeamName(TeamType.GUEST).isEmpty() || mTeamService.getNumberOfPlayers(TeamType.GUEST) < 6) {
-            Log.i("VBR-TSActivity", "Next button is disabled");
-            mNextButton.setEnabled(false);
-        } else {
-            Log.i("VBR-TSActivity", "Next button is enabled");
-            mNextButton.setEnabled(true);
-        }
-    }
-
-    public void switchGender(View view) {
-        Log.i("VBR-TSActivity", "Switch gender");
-        GenderType genderType = mTeamService.getGenderType().next();
-        updateGender(genderType);
-    }
-
-    private void updateGender(GenderType genderType) {
-        mTeamService.setGenderType(genderType);
-        switch (genderType) {
-            case MIXED:
-                mGenderButton.setImageResource(R.drawable.ic_mixed);
-                break;
-            case LADIES:
-                mGenderButton.setImageResource(R.drawable.ic_ladies);
-                break;
-            case GENTS:
-                mGenderButton.setImageResource(R.drawable.ic_gents);
-                break;
-        }
-        colorGender(genderType);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void colorGender(GenderType genderType) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            switch (genderType) {
-                case MIXED:
-                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorMixed));
-                    break;
-                case LADIES:
-                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorLadies));
-                    break;
-                case GENTS:
-                    mGenderButton.setImageTintList(ContextCompat.getColorStateList(this, R.color.colorGents));
-                    break;
+    public void computeConfirmItemVisibility() {
+        if (mConfirmItem != null) {
+            if (mIndoorTeamService.getTeamName(TeamType.HOME).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.HOME) < 6
+                    || mIndoorTeamService.getTeamName(TeamType.GUEST).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.GUEST) < 6
+                    || mIndoorTeamService.getCaptain(TeamType.HOME) < 1 || mIndoorTeamService.getCaptain(TeamType.GUEST) < 1) {
+                Log.i("VBR-TSActivity", "Confirm button is invisible");
+                mConfirmItem.setVisible(false);
+            } else {
+                Log.i("VBR-TSActivity", "Confirm button is visible");
+                mConfirmItem.setVisible(true);
             }
         }
     }
 
-    public void validateTeams(View view) {
+    public void confirmTeams() {
         Log.i("VBR-TSActivity", "Validate teams");
 
-        Log.i("VBR-TSActivity", "Start liberos setup activity");
-        final Intent intent = new Intent(this, AdditionalSetupActivity.class);
-        startActivity(intent);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+        builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.confirm_teams_setup_question));
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                ServicesProvider.getInstance().getTeamService().initTeams();
+                Log.i("VBR-TSActivity", "Start game activity");
+                final Intent gameIntent = new Intent(TeamsSetupActivity.this, GameActivity.class);
+                startActivity(gameIntent);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
 }

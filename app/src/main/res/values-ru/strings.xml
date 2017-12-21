@@ -15,6 +15,7 @@
     <string name="resume">Продолжить</string>
     <string name="delete">Удалить</string>
     <string name="ignore">Пропустить</string>
+    <string name="facebook">Facebook</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Настройка команд</string>
@@ -23,11 +24,12 @@
     <string name="home_team_hint">Имя принимающей команды</string>
     <string name="guest_team_tab">Гости</string>
     <string name="guest_team_hint">Имя гостевой команды</string>
-    <string name="select_players">Выбрать номера игроков, включая либеро</string>
-    <string name="select_shirts_color">Выбрать цвет игровой формы</string>
-    <string name="select_captain">Sélectionner le capitaine</string>
-    <string name="select_libero">Выбрать либеро (факультативно)</string>
-    <string name="next">Далее</string>
+    <string name="select_players">Выберите номера игроков, включая либеро</string>
+    <string name="select_shirts_color">Выберите цвет игровой формы</string>
+    <string name="select_captain">Выберите капитана</string>
+    <string name="select_libero">Выберите либеро (факультативно)</string>
+    <string name="select_gender">Выберите категорию (пол)</string>
+    <string name="confirm">Подтвердить</string>
     <string name="confirm_teams_setup_question">Подтвердить составы команд?</string>
     <string name="scoreboard_usage">&#x25b6; Использовать как счётное табло</string>
     <string name="scoreboard_usage_title">Исключительно счётное табло</string>
@@ -174,5 +176,19 @@
     <string name="deleted_games">Все матчи успешно удалены</string>
     <string name="scores_tab">Счёт по сетам</string>
     <string name="players">Игроки</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Сохранённые команды</string>
+    <string name="search_teams">Поиск команды</string>
+    <string name="delete_teams">Удалить все команды</string>
+    <string name="delete_team">Удалить данную команду</string>
+    <string name="save_team">Сохранить команду</string>
+    <string name="delete_teams_question">Удалить все сохранённые команды?</string>
+    <string name="delete_team_question">Удалить эту команду?</string>
+    <string name="deleted_team">Команда успешно удалена</string>
+    <string name="saved_team">Команда сохранена</string>
+    <string name="deleted_teams">/Все команды успешно удалены</string>
+    <string name="leave_team_creation">Покинуть создание команды</string>
+    <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
 
 </resources>

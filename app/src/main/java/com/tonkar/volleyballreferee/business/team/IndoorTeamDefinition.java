@@ -21,6 +21,14 @@ public class IndoorTeamDefinition extends TeamDefinition {
         mCaptain = -1;
     }
 
+    @Override
+    public void removePlayer(final int number) {
+        if (isLibero(number)) {
+            removeLibero(number);
+        }
+        super.removePlayer(number);
+    }
+
     public int getLiberoColor() {
         return mLiberoColor;
     }
@@ -63,7 +71,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
         }
     }
 
-    Set<Integer> getLiberos() {
+    public Set<Integer> getLiberos() {
         return new TreeSet<>(mLiberos);
     }
 

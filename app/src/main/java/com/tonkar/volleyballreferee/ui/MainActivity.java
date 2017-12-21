@@ -1,8 +1,10 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.history.RecentGamesListActivity;
+import com.tonkar.volleyballreferee.ui.history.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesActivity;
 import com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity;
 import com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity;
@@ -113,9 +116,25 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, RecentGamesListActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_saved_teams:
+                Log.i("VBR-MainActivity", "Saved teams");
+                intent = new Intent(this, SavedTeamsListActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.action_important_message:
                 Log.i("VBR-MainActivity", "Resume game");
                 resumeCurrentGameWithDialog(null);
+                return true;
+            case R.id.action_facebook:
+                Log.i("VBR-MainActivity", "Facebook");
+                Intent browserIntent;
+                try {
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
+                    startActivity(browserIntent);
+                } catch (ActivityNotFoundException e) {
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
+                    startActivity(browserIntent);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

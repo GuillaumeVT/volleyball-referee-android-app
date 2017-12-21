@@ -15,6 +15,7 @@
     <string name="resume">Resume</string>
     <string name="delete">Delete</string>
     <string name="ignore">Ignore</string>
+    <string name="facebook">Facebook</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Setup teams</string>
@@ -27,7 +28,8 @@
     <string name="select_shirts_color">Select the shirts colour</string>
     <string name="select_captain">Select the captain</string>
     <string name="select_libero">Select the liberos (optional)</string>
-    <string name="next">Next</string>
+    <string name="select_gender">Select the gender</string>
+    <string name="confirm">Confirm</string>
     <string name="confirm_teams_setup_question">Do you confirm this setup?</string>
     <string name="scoreboard_usage">&#x25b6; Use only for scoring</string>
     <string name="scoreboard_usage_title">Simple scoreboard</string>
@@ -174,5 +176,19 @@
     <string name="deleted_game">Game was deleted</string>
     <string name="deleted_games">All games were deleted</string>
     <string name="players">Players</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Saved teams</string>
+    <string name="search_teams">Search teams</string>
+    <string name="delete_teams">Delete all teams</string>
+    <string name="delete_team">Delete team</string>
+    <string name="save_team">Save team</string>
+    <string name="delete_teams_question">Do you want to delete all the saved teams?</string>
+    <string name="delete_team_question">Do you want to delete this saved team?</string>
+    <string name="deleted_team">Team was deleted</string>
+    <string name="saved_team">Team was saved</string>
+    <string name="deleted_teams">All teams were deleted</string>
+    <string name="leave_team_creation">Leaving team creation</string>
+    <string name="leave_team_creation_question">This team will not be saved, proceed anyway?</string>
 
 </resources>

@@ -24,7 +24,11 @@ public interface BaseTeamService {
 
     GenderType getGenderType();
 
+    GenderType getGenderType(TeamType teamType);
+
     void setGenderType(GenderType genderType);
+
+    void setGenderType(TeamType teamType, GenderType genderType);
 
     void initTeams();
 

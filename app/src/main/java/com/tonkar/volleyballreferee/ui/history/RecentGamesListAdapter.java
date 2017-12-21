@@ -1,29 +1,31 @@
 package com.tonkar.volleyballreferee.ui.history;
 
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class RecentGamesListAdapter extends BaseAdapter {
+public class RecentGamesListAdapter extends ArrayAdapter<RecordedGameService> {
 
     static class ViewHolder {
         TextView  summaryText;
@@ -37,14 +39,17 @@ public class RecentGamesListAdapter extends BaseAdapter {
     private final List<RecordedGameService> mRecordedGameServiceList;
     private final List<RecordedGameService> mFilteredRecordedGameServiceList;
     private final DateFormat                mFormatter;
+    private final NamesFilter               mNamesFilter;
 
-    RecentGamesListAdapter(LayoutInflater layoutInflater, List<RecordedGameService> recordedGameServiceList) {
+    RecentGamesListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedGameService> recordedGameServiceList) {
+        super(context, R.layout.recent_games_list_item, recordedGameServiceList);
         mLayoutInflater = layoutInflater;
         mRecordedGameServiceList = recordedGameServiceList;
         mFilteredRecordedGameServiceList = new ArrayList<>();
         mFilteredRecordedGameServiceList.addAll(mRecordedGameServiceList);
         mFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
+        mNamesFilter = new NamesFilter();
     }
 
     @Override
@@ -53,7 +58,7 @@ public class RecentGamesListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int index) {
+    public RecordedGameService getItem(int index) {
         return mFilteredRecordedGameServiceList.get(index);
     }
 
@@ -100,45 +105,72 @@ public class RecentGamesListAdapter extends BaseAdapter {
         }
         viewHolder.scoreText.setText(builder.toString());
 
-        viewHolder.genderTypeImage.setImageResource(GenderType.LADIES.equals(recordedGameService.getGenderType())? R.drawable.ic_ladies : R.drawable.ic_gents);
-        colorGender(viewHolder.genderTypeImage, recordedGameService);
+        switch (recordedGameService.getGenderType()) {
+            case MIXED:
+                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
+                viewHolder.genderTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                break;
+            case LADIES:
+                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_ladies);
+                viewHolder.genderTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                break;
+            case GENTS:
+                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_gents);
+                viewHolder.genderTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                break;
+        }
+
         viewHolder.gameTypeImage.setVisibility(GameType.INDOOR.equals(recordedGameService.getGameType()) ? View.INVISIBLE : View.VISIBLE);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void colorGender(ImageView genderImage, RecordedGameService recordedGameService) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            switch (recordedGameService.getGenderType()) {
-                case MIXED:
-                    genderImage.setImageTintList(ContextCompat.getColorStateList(genderImage.getContext(), R.color.colorMixed));
-                    break;
-                case LADIES:
-                    genderImage.setImageTintList(ContextCompat.getColorStateList(genderImage.getContext(), R.color.colorLadies));
-                    break;
-                case GENTS:
-                    genderImage.setImageTintList(ContextCompat.getColorStateList(genderImage.getContext(), R.color.colorGents));
-                    break;
-            }
-        }
+    @Override
+    public Filter getFilter() {
+        return mNamesFilter;
     }
 
-    void filter(String text) {
-        String lowerCaseText = text.toLowerCase(Locale.getDefault());
+    private class NamesFilter extends Filter {
 
-        mFilteredRecordedGameServiceList.clear();
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            FilterResults results = new FilterResults();
 
-        if (lowerCaseText.isEmpty()) {
-            mFilteredRecordedGameServiceList.addAll(mRecordedGameServiceList);
+            if (prefix == null || prefix.length() == 0) {
+                results.values = mRecordedGameServiceList;
+                results.count = mRecordedGameServiceList.size();
+            } else {
+                String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-        } else {
-            for (RecordedGameService recordedGameService : mRecordedGameServiceList) {
-                if (recordedGameService.matchesFilter(lowerCaseText)) {
-                    mFilteredRecordedGameServiceList.add(recordedGameService);
+                List<RecordedGameService> matchValues = new ArrayList<>();
+
+                for (RecordedGameService recordedGameService : mRecordedGameServiceList) {
+                    if (recordedGameService.matchesFilter(lowerCaseText)) {
+                        matchValues.add(recordedGameService);
+                    }
                 }
+
+                results.values = matchValues;
+                results.count = matchValues.size();
+            }
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mFilteredRecordedGameServiceList.clear();
+
+            if (results.values != null) {
+                mFilteredRecordedGameServiceList.clear();
+                mFilteredRecordedGameServiceList.addAll((Collection<? extends RecordedGameService>) results.values);
+            }
+
+            if (results.count > 0) {
+                notifyDataSetChanged();
+            } else {
+                notifyDataSetInvalidated();
             }
         }
 
-        notifyDataSetChanged();
     }
 
 }

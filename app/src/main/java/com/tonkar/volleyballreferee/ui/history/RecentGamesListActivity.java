@@ -49,13 +49,13 @@ public class RecentGamesListActivity extends AppCompatActivity {
         Collections.reverse(recordedGameServiceList);
 
         final ListView recentGamesList = findViewById(R.id.recent_games_list);
-        mRecentGamesListAdapter = new RecentGamesListAdapter(getLayoutInflater(), recordedGameServiceList);
+        mRecentGamesListAdapter = new RecentGamesListAdapter(this, getLayoutInflater(), recordedGameServiceList);
         recentGamesList.setAdapter(mRecentGamesListAdapter);
 
         recentGamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                RecordedGameService recordedGameService = (RecordedGameService) mRecentGamesListAdapter.getItem(i);
+                RecordedGameService recordedGameService = mRecentGamesListAdapter.getItem(i);
                 Log.i("VBR-RecentListActivity", String.format("Start activity to display recent game %s", recordedGameService.getGameSummary()));
 
                 final Intent intent;
@@ -99,7 +99,7 @@ public class RecentGamesListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String searchQuery) {
-                mRecentGamesListAdapter.filter(searchQuery.trim());
+                mRecentGamesListAdapter.getFilter().filter(searchQuery.trim());
                 return true;
             }
         });

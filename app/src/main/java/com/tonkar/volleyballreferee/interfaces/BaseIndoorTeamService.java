@@ -17,6 +17,8 @@ public interface BaseIndoorTeamService extends BaseTeamService {
 
     boolean canAddLibero(TeamType teamType);
 
+    Set<Integer> getLiberos(TeamType teamType);
+
     List<Substitution> getSubstitutions(TeamType teamType);
 
     List<Substitution> getSubstitutions(TeamType teamType, int setIndex);

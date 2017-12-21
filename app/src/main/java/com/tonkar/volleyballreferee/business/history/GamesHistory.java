@@ -211,10 +211,12 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
         RecordedTeam homeTeam = mRecordedGame.getTeam(TeamType.HOME);
         homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
         homeTeam.setColor(mGameService.getTeamColor(TeamType.HOME));
+        homeTeam.setGenderType(mGameService.getGenderType(TeamType.HOME));
 
         RecordedTeam guestTeam = mRecordedGame.getTeam(TeamType.GUEST);
         guestTeam.setName(mGameService.getTeamName(TeamType.GUEST));
         guestTeam.setColor(mGameService.getTeamColor(TeamType.GUEST));
+        guestTeam.setGenderType(mGameService.getGenderType(TeamType.GUEST));
 
         if (mGameService instanceof IndoorTeamService) {
             IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
@@ -260,14 +262,14 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
 
                 set.setDuration(mGameService.getSetDuration(setIndex));
                 set.getPointsLadder().addAll(mGameService.getPointsLadder(setIndex));
-                set.setServingTeam(mGameService.getServingTeam());
+                set.setServingTeam(mGameService.getServingTeam(setIndex));
 
                 set.setPoints(TeamType.HOME, mGameService.getPoints(TeamType.HOME, setIndex));
                 set.setTimeouts(TeamType.HOME, mGameService.getTimeouts(TeamType.HOME, setIndex));
                 for (int number : mGameService.getPlayersOnCourt(TeamType.HOME, setIndex)) {
                     RecordedPlayer player = new RecordedPlayer();
                     player.setNumber(number);
-                    player.setPositionType(mGameService.getPlayerPosition(TeamType.HOME, number));
+                    player.setPositionType(mGameService.getPlayerPosition(TeamType.HOME, number, setIndex));
                     set.getCurrentPlayers(TeamType.HOME).add(player);
                 }
 
@@ -276,7 +278,7 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
                 for (int number : mGameService.getPlayersOnCourt(TeamType.GUEST, setIndex)) {
                     RecordedPlayer player = new RecordedPlayer();
                     player.setNumber(number);
-                    player.setPositionType(mGameService.getPlayerPosition(TeamType.GUEST, number));
+                    player.setPositionType(mGameService.getPlayerPosition(TeamType.GUEST, number, setIndex));
                     set.getCurrentPlayers(TeamType.GUEST).add(player);
                 }
 
