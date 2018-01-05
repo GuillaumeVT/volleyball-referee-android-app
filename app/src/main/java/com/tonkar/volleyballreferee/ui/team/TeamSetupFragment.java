@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
@@ -65,6 +66,10 @@ public class TeamSetupFragment extends Fragment {
         mLayoutInflater = inflater;
         View view = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
 
+        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+            ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
+        }
+
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
@@ -83,8 +88,6 @@ public class TeamSetupFragment extends Fragment {
         final GridView liberoNumbersGrid = view.findViewById(R.id.team_libero_numbers_grid);
         mLiberoColorButton = view.findViewById(R.id.libero_color_button);
 
-        teamNameInput.setText(mIndoorTeamService.getTeamName(mTeamType));
-
         switch (mTeamType) {
             case HOME:
                 teamNameInput.setHint(R.string.home_team_hint);
@@ -92,6 +95,27 @@ public class TeamSetupFragment extends Fragment {
             case GUEST:
                 teamNameInput.setHint(R.string.guest_team_hint);
                 break;
+        }
+
+        final String teamName = mIndoorTeamService.getTeamName(mTeamType);
+
+        teamNameInput.setText(teamName);
+
+        if (isGameContext) {
+            teamNameInput.setThreshold(2);
+            teamNameInput.setAdapter(new SavedTeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamServiceList()));
+            teamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
+                    BaseIndoorTeamService indoorTeamService = (BaseIndoorTeamService) teamNameInput.getAdapter().getItem(index);
+                    teamNameInput.setText(indoorTeamService.getTeamName(mTeamType));
+                    updateTeamFrom(indoorTeamService);
+                }
+            });
+        }
+
+        if (!teamName.isEmpty()) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
 
         teamNameInput.addTextChangedListener(new TextWatcher() {
@@ -108,19 +132,6 @@ public class TeamSetupFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        if (isGameContext) {
-            teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new SavedTeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamServiceList()));
-            teamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    BaseIndoorTeamService indoorTeamService = (BaseIndoorTeamService) teamNameInput.getAdapter().getItem(index);
-                    teamNameInput.setText(indoorTeamService.getTeamName(mTeamType));
-                    updateTeamFrom(indoorTeamService);
-                }
-            });
-        }
 
         mPlayerAdapter = new PlayerAdapter(getActivity(), mIndoorTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);

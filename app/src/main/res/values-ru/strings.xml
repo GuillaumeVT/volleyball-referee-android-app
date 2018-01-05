@@ -47,6 +47,7 @@
     <string name="navigated_home_question">Закончить данный матч позже, продолжить?</string>
     <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
     <string name="court_position_tab">Расстановка</string>
+    <string name="points_tab">Очки</string>
     <string name="substitutions_tab">Замены</string>
     <string name="set_number">Партия %d</string>
     <string name="set_duration">%d мин.</string>
@@ -174,8 +175,9 @@
     <string name="delete_game_question">Удалить данный матч?</string>
     <string name="deleted_game">Матч успешно удалён</string>
     <string name="deleted_games">Все матчи успешно удалены</string>
-    <string name="scores_tab">Счёт по сетам</string>
     <string name="players">Игроки</string>
+    <string name="report_game">Создать отчёт по матчу</string>
+    <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Сохранённые команды</string>
@@ -188,7 +190,7 @@
     <string name="deleted_team">Команда успешно удалена</string>
     <string name="saved_team">Команда сохранена</string>
     <string name="deleted_teams">/Все команды успешно удалены</string>
-    <string name="leave_team_creation">Покинуть создание команды</string>
+    <string name="leave_team_creation_title">Покинуть создание команды</string>
     <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
 
 </resources>

@@ -33,7 +33,7 @@ public class ScoresFragment extends Fragment implements NamedGameFragment, Score
 
     @Override
     public String getGameFragmentTitle(Context context) {
-        return context.getResources().getString(R.string.scores_tab);
+        return context.getResources().getString(R.string.points_tab);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.tonkar.volleyballreferee.ui.history;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +16,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.history.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
+
+import java.io.File;
 
 public abstract class RecentGameActivity extends AppCompatActivity {
 
@@ -40,6 +45,9 @@ public abstract class RecentGameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_generate_pdf:
+                generatePdf();
+                return true;
             case R.id.action_delete_game:
                 deleteGame();
                 return true;
@@ -48,6 +56,26 @@ public abstract class RecentGameActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void generatePdf() {
+        Log.i("VBR-RecentActivity", "Generate PDF");
+        File file = PdfGameWriter.writeRecordedGame(this, mGamesHistoryService.getRecordedGameService(mGameDate));
+        if (file == null) {
+            Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+        } else {
+            Intent target = new Intent(Intent.ACTION_VIEW);
+            target.setDataAndType(Uri.fromFile(file),"application/pdf");
+            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            Intent intent = Intent.createChooser(target, file.getName());
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Log.e("VBR-RecentActivity", "Exception while showing PDF", e);
+                Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -74,8 +102,7 @@ public abstract class RecentGameActivity extends AppCompatActivity {
 
     private void shareGame() {
         Log.i("VBR-RecentActivity", "Share game");
-        String summary = mGamesHistoryService.getRecordedGameService(mGameDate).getGameSummary();
-        UiUtils.shareScreen(this, getWindow(), summary);
+        UiUtils.shareRecordedGame(this, mGamesHistoryService.getRecordedGameService(mGameDate));
     }
 
     protected String buildScore(RecordedGameService recordedGameService) {

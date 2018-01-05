@@ -43,11 +43,11 @@
     <string name="swap_first_service">Échanger le premier service</string>
     <string name="navigated_home">Retour à la page d\'accueil</string>
     <string name="share">Partager</string>
-    <string name="share_exception">Echec du partage du match</string>
+    <string name="share_exception">Échec du partage du match</string>
     <string name="navigated_home_question">Il sera possible de reprendre le match en cours, continuer?</string>
     <string name="select_player_title">Sélectionner un joueur du banc</string>
     <string name="court_position_tab">Positions</string>
-    <string name="scores_tab">Scores</string>
+    <string name="points_tab">Points</string>
     <string name="substitutions_tab">Changements</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d min</string>
@@ -176,6 +176,8 @@
     <string name="deleted_game">Le match a été supprimé</string>
     <string name="deleted_games">Tous les matchs ont été supprimés</string>
     <string name="players">Joueurs</string>
+    <string name="report_game">Générer un rapport pour le match</string>
+    <string name="report_exception">Échec de la génération ou de l\'affichage du rapport</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Équipes enregistrées</string>
@@ -188,7 +190,7 @@
     <string name="deleted_team">L\'équipe a été supprimée</string>
     <string name="saved_team">L\'équipe a été enregistrée</string>
     <string name="deleted_teams">Toutes les équipes ont été supprimées</string>
-    <string name="leave_team_creation">Quitter la création d\'équipe</string>
+    <string name="leave_team_creation_title">Quitter la création d\'équipe</string>
     <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée, continuer?</string>
 
 </resources>

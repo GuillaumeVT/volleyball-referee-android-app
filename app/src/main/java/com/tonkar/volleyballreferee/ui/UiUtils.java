@@ -15,6 +15,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -28,12 +29,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.history.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.Locale;
 
 public class UiUtils {
 
@@ -109,7 +115,7 @@ public class UiUtils {
         return textColor;
     }
 
-    public static void shareScreen(Context context, Window window, String summary) {
+    public static void shareGame(Context context, Window window, GameService gameService) {
         Log.i("VBR-Share", "Share screen");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             View rootView = window.getDecorView().findViewById(android.R.id.content);
@@ -121,7 +127,10 @@ public class UiUtils {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
-            String title = summary.replaceAll("-|\t|\n", "_");
+            File filedir = new File(Environment.getExternalStorageDirectory(),"Screenshots");
+            filedir.mkdirs();
+
+            String title = String.format(Locale.getDefault(), "%s_%s_%d", gameService.getTeamName(TeamType.HOME), gameService.getTeamName(TeamType.GUEST), System.currentTimeMillis());
             String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, null);
             if (path == null) {
                 Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
@@ -132,12 +141,38 @@ public class UiUtils {
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType("image/*");
 
-                intent.putExtra(android.content.Intent.EXTRA_TEXT, summary);
+                intent.putExtra(Intent.EXTRA_TEXT, gameService.getGameSummary());
                 intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
                 try {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
                     Log.e("VBR-Share", "Exception while sharing", e);
+                    Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                }
+            }
+        } else {
+            Log.w("VBR-Share", "No permission to share");
+        }
+    }
+
+    public static void shareRecordedGame(Context context, RecordedGameService recordedGameService) {
+        Log.i("VBR-Share", "Share recorded game");
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            File file = PdfGameWriter.writeRecordedGame(context, recordedGameService);
+            if (file == null) {
+                Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getResources().getString(R.string.app_name), file.getName()));
+                intent.putExtra(Intent.EXTRA_TEXT, recordedGameService.getGameSummary());
+                intent.setType("application/pdf");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                try {
+                    context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
+                } catch (ActivityNotFoundException e) {
+                    Log.e("VBR-Share", "Exception while sharing recorded game", e);
                     Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }

@@ -47,7 +47,7 @@
     <string name="navigated_home_question">You may resume the current match later, proceed?</string>
     <string name="select_player_title">Select a player from the bench</string>
     <string name="court_position_tab">Positions</string>
-    <string name="scores_tab">Scores</string>
+    <string name="points_tab">Points</string>
     <string name="substitutions_tab">Substitutions</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d min</string>
@@ -176,6 +176,8 @@
     <string name="deleted_game">Game was deleted</string>
     <string name="deleted_games">All games were deleted</string>
     <string name="players">Players</string>
+    <string name="report_game">Generate game report</string>
+    <string name="report_exception">Failed to generate or to display the game report</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Saved teams</string>
@@ -188,7 +190,7 @@
     <string name="deleted_team">Team was deleted</string>
     <string name="saved_team">Team was saved</string>
     <string name="deleted_teams">All teams were deleted</string>
-    <string name="leave_team_creation">Leaving team creation</string>
+    <string name="leave_team_creation_title">Leaving team creation</string>
     <string name="leave_team_creation_question">This team will not be saved, proceed anyway?</string>
 
 </resources>

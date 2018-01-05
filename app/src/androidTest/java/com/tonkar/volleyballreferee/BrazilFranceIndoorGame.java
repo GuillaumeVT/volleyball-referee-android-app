@@ -8,9 +8,11 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
+import com.tonkar.volleyballreferee.business.history.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
@@ -45,6 +47,9 @@ public class BrazilFranceIndoorGame {
 
         composeTeamsSet5(indoorGame);
         playSet5_complete(indoorGame);
+
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getGamesHistoryService().getRecordedGameService(indoorGame.getGameDate());
+        PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
     @Test

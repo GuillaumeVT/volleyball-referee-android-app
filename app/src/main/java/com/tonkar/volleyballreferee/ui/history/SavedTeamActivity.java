@@ -107,7 +107,7 @@ public class SavedTeamActivity extends AppCompatActivity {
 
     private void cancelTeam() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.leave_team_creation)).setMessage(getResources().getString(R.string.leave_team_creation_question));
+        builder.setTitle(getResources().getString(R.string.leave_team_creation_title)).setMessage(getResources().getString(R.string.leave_team_creation_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 mSavedTeamsService.loadSavedTeams();

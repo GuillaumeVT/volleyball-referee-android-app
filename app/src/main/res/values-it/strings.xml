@@ -47,8 +47,8 @@
     <string name="navigated_home_question">Potrai riprendere l\'attuale partita più tardi, continua?</string>
     <string name="select_player_title">Scegli un giocatore dalla panchina</string>
     <string name="court_position_tab">Posizioni</string>
+    <string name="points_tab">Punti</string>
     <string name="substitutions_tab">Cambi</string>
-    <string name="scores_tab">Punteggio</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d minuti</string>
     <string name="switch_sides">Cambio campo</string>
@@ -176,6 +176,8 @@
     <string name="deleted_game">La partita è stata cancellata</string>
     <string name="deleted_games">Tutte le partite son state cancellate</string>
     <string name="players">Giocatori</string>
+    <string name="report_game">Generare il referto della partita</string>
+    <string name="report_exception">Errore di generazione o visualizzazione del referto della partita</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Squadre salvate</string>
@@ -188,7 +190,7 @@
     <string name="deleted_team">La squadra é stata cancellata</string>
     <string name="saved_team">La squadra é stata salvata</string>
     <string name="deleted_teams">Tutte le squadre sono state cancellate</string>
-    <string name="leave_team_creation">Esci dalla creazione della squadra</string>
+    <string name="leave_team_creation_title">Esci dalla creazione della squadra</string>
     <string name="leave_team_creation_question">Questa squadra non sarà salvata, continuare?</string>
 
 </resources>

@@ -246,7 +246,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
     private void share() {
         Log.i("VBR-GameActivity", "Share game");
-        UiUtils.shareScreen(this, getWindow(), mGameService.getGameSummary());
+        UiUtils.shareGame(this, getWindow(), mGameService);
     }
 
     // UI Callbacks
