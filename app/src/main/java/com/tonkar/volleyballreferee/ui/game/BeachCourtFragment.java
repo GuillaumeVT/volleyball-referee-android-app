@@ -67,8 +67,9 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         for (Map.Entry<PositionType, Button> entry : mLeftTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     if (mScoreService.getServingTeam().equals(mTeamOnLeftSide)) {
+                        UiUtils.animate(getContext(), view);
                         Log.i("VBR-Court", String.format("Swap %s team player", mTeamOnLeftSide.toString()));
                         mBeachTeamService.swapPlayers(mTeamOnLeftSide);
                     }
@@ -79,8 +80,9 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         for (Map.Entry<PositionType, Button> entry : mRightTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     if (mScoreService.getServingTeam().equals(mTeamOnRightSide)) {
+                        UiUtils.animate(getContext(), view);
                         Log.i("VBR-Court", String.format("Swap %s team player", mTeamOnRightSide.toString()));
                         mBeachTeamService.swapPlayers(mTeamOnRightSide);
                     }

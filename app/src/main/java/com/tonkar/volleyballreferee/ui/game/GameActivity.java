@@ -18,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -121,14 +123,24 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
                 final ImageView leftTimeout = new ImageView(this);
                 leftTimeout.setImageResource(R.drawable.timeout_shape);
                 final LinearLayout.LayoutParams leftTimeoutLayout = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                int margin = (int) getResources().getDimension(R.dimen.tiny_margin_size);
+                leftTimeoutLayout.topMargin = margin;
+                leftTimeoutLayout.bottomMargin = margin;
+                leftTimeoutLayout.leftMargin = margin;
+                leftTimeoutLayout.rightMargin = margin;
                 leftTimeout.setLayoutParams(leftTimeoutLayout);
                 mLeftTeamTimeoutLayout.addView(leftTimeout);
 
                 final ImageView rightTimeout = new ImageView(this);
                 rightTimeout.setImageResource(R.drawable.timeout_shape);
                 final LinearLayout.LayoutParams rightTimeoutLayout = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                margin = (int) getResources().getDimension(R.dimen.tiny_margin_size);
+                rightTimeoutLayout.topMargin = margin;
+                rightTimeoutLayout.bottomMargin = margin;
+                rightTimeoutLayout.leftMargin = margin;
+                rightTimeoutLayout.rightMargin = margin;
                 rightTimeout.setLayoutParams(rightTimeoutLayout);
                 mRightTeamTimeoutLayout.addView(rightTimeout);
             }
@@ -158,6 +170,9 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         if (mGameService.isMatchCompleted()) {
             disableView();
         }
+
+        Animation courtAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_from_right);
+        gamePager.startAnimation(courtAnimation);
     }
 
     @Override
@@ -253,6 +268,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
     public void swapTeams(View view) {
         Log.i("VBR-GameActivity", "Swap teams");
+        UiUtils.animate(this, mSwapTeamsButton);
         mGameService.swapTeams(ActionOriginType.USER);
     }
 
@@ -263,22 +279,32 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
     public void removeLastPoint(View view) {
         Log.i("VBR-GameActivity", "Remove last point");
+        UiUtils.animate(this, mScoreRemoveButton);
         mGameService.removeLastPoint();
     }
 
     public void increaseLeftScore(View view) {
         Log.i("VBR-GameActivity", "Increase left score");
+        UiUtils.animate(this, mLeftTeamScoreButton);
         increaseScoreWithDialog(mTeamOnLeftSide);
     }
 
     public void callLeftTimeout(View view) {
         Log.i("VBR-GameActivity", "Call left timeout");
+        UiUtils.animate(this, mLeftTeamTimeoutButton);
         callTimeoutWithDialog(mTeamOnLeftSide);
     }
 
     public void increaseRightScore(View view) {
         Log.i("VBR-GameActivity", "Increase right score");
+        UiUtils.animate(this, mRightTeamScoreButton);
         increaseScoreWithDialog(mTeamOnRightSide);
+    }
+
+    public void callRightTimeout(View view) {
+        Log.i("VBR-GameActivity", "Call right timeout");
+        UiUtils.animate(this, mRightTeamTimeoutButton);
+        callTimeoutWithDialog(mTeamOnRightSide);
     }
 
     private void increaseScoreWithDialog(final TeamType teamType) {
@@ -303,11 +329,6 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         } else {
             mGameService.addPoint(teamType);
         }
-    }
-
-    public void callRightTimeout(View view) {
-        Log.i("VBR-GameActivity", "Call right timeout");
-        callTimeoutWithDialog(mTeamOnRightSide);
     }
 
     private void callTimeoutWithDialog(final TeamType teamType) {
@@ -346,13 +367,21 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
         onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
         onSetsUpdated(mTeamOnLeftSide, mGameService.getSets(mTeamOnLeftSide));
-        onTimeoutUpdated(mTeamOnLeftSide, mGameService.getRules().getTeamTimeoutsPerSet(), mGameService.getTimeouts(mTeamOnLeftSide));
+        onTimeoutUpdated(mTeamOnLeftSide, mGameService.getRules().getTeamTimeoutsPerSet(), mGameService.getRemainingTimeouts(mTeamOnLeftSide));
 
         onPointsUpdated(mTeamOnRightSide, mGameService.getPoints(mTeamOnRightSide));
         onSetsUpdated(mTeamOnRightSide, mGameService.getSets(mTeamOnRightSide));
-        onTimeoutUpdated(mTeamOnRightSide, mGameService.getRules().getTeamTimeoutsPerSet(), mGameService.getTimeouts(mTeamOnRightSide));
+        onTimeoutUpdated(mTeamOnRightSide, mGameService.getRules().getTeamTimeoutsPerSet(), mGameService.getRemainingTimeouts(mTeamOnRightSide));
 
         onServiceSwapped(mGameService.getServingTeam());
+
+        UiUtils.animateBounce(this, mLeftTeamNameText);
+        UiUtils.animateBounce(this, mRightTeamNameText);
+        UiUtils.animateBounce(this, mLeftTeamScoreButton);
+        UiUtils.animateBounce(this, mRightTeamScoreButton);
+        UiUtils.animateBounce(this, mLeftTeamSetsText);
+        UiUtils.animateBounce(this, mRightTeamSetsText);
+        UiUtils.animateBounce(this, mSetsText);
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
             Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
@@ -374,10 +403,11 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         }
 
         StringBuilder builder = new StringBuilder();
+        builder.append("\t\t");
         for (int index = 0; index < mGameService.getNumberOfSets(); index++) {
             int leftPointsCount = mGameService.getPoints(mTeamOnLeftSide, index);
             int rightPointsCount = mGameService.getPoints(mTeamOnRightSide, index);
-            builder.append(String.valueOf(leftPointsCount)).append('-').append(String.valueOf(rightPointsCount)).append('\t');
+            builder.append(String.valueOf(leftPointsCount)).append('-').append(String.valueOf(rightPointsCount)).append("\t\t");
         }
         mSetsText.setText(builder.toString());
 

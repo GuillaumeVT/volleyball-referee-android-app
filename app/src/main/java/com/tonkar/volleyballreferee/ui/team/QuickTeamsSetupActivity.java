@@ -163,6 +163,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     public void selectHomeTeamColor(View view) {
         Log.i("VBR-QTSActivity", "Select home team color");
+        UiUtils.animate(this, mHomeTeamColorButton);
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), this, getResources().getString(R.string.select_shirts_color)) {
             @Override
             public void onColorSelected(int selectedColor) {
@@ -174,6 +175,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     public void selectGuestTeamColor(View view) {
         Log.i("VBR-QTSActivity", "Select guest team color");
+        UiUtils.animate(this, mGuestTeamColorButton);
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), this, getResources().getString(R.string.select_shirts_color)) {
             @Override
             public void onColorSelected(int selectedColor) {
@@ -199,6 +201,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     public void switchGender(View view) {
         Log.i("VBR-QTSActivity", "Switch gender");
+        UiUtils.animate(this, mGenderButton);
         GenderType genderType = mTeamService.getGenderType(TeamType.HOME).next();
         updateGender(genderType);
     }
@@ -229,4 +232,5 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         final Intent gameIntent = new Intent(this, GameActivity.class);
         startActivity(gameIntent);
     }
+
 }

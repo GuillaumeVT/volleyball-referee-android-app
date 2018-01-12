@@ -83,9 +83,10 @@ public class GameTest {
         Game game = GameFactory.createIndoorGame();
         game.initTeams();
 
-        assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.getTimeouts(TeamType.HOME));
+        assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.getRemainingTimeouts(TeamType.HOME));
         game.callTimeout(TeamType.HOME);
-        assertEquals(game.getRules().getTeamTimeoutsPerSet() - 1, game.getTimeouts(TeamType.HOME));
+        assertEquals(game.getRules().getTeamTimeoutsPerSet() - 1, game.getRemainingTimeouts(TeamType.HOME));
+        assertEquals(1, game.getCalledTimeouts(TeamType.HOME).size());
     }
 
 }

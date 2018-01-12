@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -65,9 +66,12 @@ public abstract class RecentGameActivity extends AppCompatActivity {
         if (file == null) {
             Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
         } else {
+            Uri uri = FileProvider.getUriForFile(this, "com.tonkar.volleyballreferee.fileprovider", file);
+            grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Intent target = new Intent(Intent.ACTION_VIEW);
-            target.setDataAndType(Uri.fromFile(file),"application/pdf");
-            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            target.setDataAndType(uri,"application/pdf");
+            target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             Intent intent = Intent.createChooser(target, file.getName());
             try {
@@ -107,6 +111,7 @@ public abstract class RecentGameActivity extends AppCompatActivity {
 
     protected String buildScore(RecordedGameService recordedGameService) {
         StringBuilder builder = new StringBuilder();
+        builder.append("\t\t");
         for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
             int homePoints = recordedGameService.getPoints(TeamType.HOME, setIndex);
             int guestPoints = recordedGameService.getPoints(TeamType.GUEST, setIndex);

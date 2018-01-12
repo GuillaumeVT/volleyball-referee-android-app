@@ -6,4 +6,12 @@
         android:key="pref_keep_screen_on"
         android:title="@string/pref_keep_screen_on"/>
 
+    <android.support.v7.preference.ListPreference
+        android:defaultValue="25"
+        android:key="pref_number_of_shirts"
+        android:title="@string/pref_number_of_shirts"
+        android:summary="%s"
+        android:entries="@array/number_of_shirts"
+        android:entryValues="@array/number_of_shirts"/>
+
 </android.support.v7.preference.PreferenceScreen>

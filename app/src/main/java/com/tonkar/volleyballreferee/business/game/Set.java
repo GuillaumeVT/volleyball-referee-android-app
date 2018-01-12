@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.business.game;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.io.Serializable;
@@ -14,14 +15,16 @@ public abstract class Set implements Serializable {
     private final int             mPointsToWinSet;
     private       int             mHomeTeamPoints;
     private       int             mGuestTeamPoints;
-    private       int             mHomeTeamTimeouts;
-    private       int             mGuestTeamTimeouts;
+    private       int             mHomeTeamRemainingTimeouts;
+    private       int             mGuestTeamRemainingTimeouts;
     private final List<TeamType>  mPointsLadder;
     private       TeamType        mServingTeamAtStart;
     private       long            mStartTime;
     private       long            mEndTime;
     private       TeamComposition mHomeTeamComposition;
     private       TeamComposition mGuestTeamComposition;
+    private final List<Timeout>   mHomeTeamCalledTimeouts;
+    private final List<Timeout>   mGuestTeamCalledTimeouts;
 
     public Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
         mPointsToWinSet = pointsToWinSet;
@@ -30,13 +33,16 @@ public abstract class Set implements Serializable {
         mGuestTeamPoints = 0;
         mPointsLadder = new ArrayList<>();
 
-        mHomeTeamTimeouts = rules.getTeamTimeoutsPerSet();
-        mGuestTeamTimeouts = rules.getTeamTimeoutsPerSet();
+        mHomeTeamRemainingTimeouts = rules.getTeamTimeoutsPerSet();
+        mGuestTeamRemainingTimeouts = rules.getTeamTimeoutsPerSet();
 
         mServingTeamAtStart = servingTeamAtStart;
 
         mStartTime = 0L;
         mEndTime = 0L;
+
+        mHomeTeamCalledTimeouts = new ArrayList<>();
+        mGuestTeamCalledTimeouts = new ArrayList<>();
     }
 
     protected abstract TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition);
@@ -136,15 +142,30 @@ public abstract class Set implements Serializable {
         return new ArrayList<>(mPointsLadder);
     }
 
-    int getTimeouts(final TeamType teamType) {
+    int getRemainingTimeouts(final TeamType teamType) {
         int timeouts = 0;
 
         switch (teamType) {
             case HOME:
-                timeouts = mHomeTeamTimeouts;
+                timeouts = mHomeTeamRemainingTimeouts;
                 break;
             case GUEST:
-                timeouts = mGuestTeamTimeouts;
+                timeouts = mGuestTeamRemainingTimeouts;
+                break;
+        }
+
+        return timeouts;
+    }
+
+    List<Timeout> getCalledTimeouts(final TeamType teamType) {
+        List<Timeout> timeouts = new ArrayList<>();
+
+        switch (teamType) {
+            case HOME:
+                timeouts = new ArrayList<>(mHomeTeamCalledTimeouts);
+                break;
+            case GUEST:
+                timeouts = new ArrayList<>(mGuestTeamCalledTimeouts);
                 break;
         }
 
@@ -156,12 +177,14 @@ public abstract class Set implements Serializable {
 
         switch (teamType) {
             case HOME:
-                mHomeTeamTimeouts--;
-                timeouts = mHomeTeamTimeouts;
+                mHomeTeamRemainingTimeouts--;
+                timeouts = mHomeTeamRemainingTimeouts;
+                mHomeTeamCalledTimeouts.add(new Timeout(mHomeTeamPoints, mGuestTeamPoints));
                 break;
             case GUEST:
-                mGuestTeamTimeouts--;
-                timeouts = mGuestTeamTimeouts;
+                mGuestTeamRemainingTimeouts--;
+                timeouts = mGuestTeamRemainingTimeouts;
+                mGuestTeamCalledTimeouts.add(new Timeout(mHomeTeamPoints, mGuestTeamPoints));
                 break;
         }
 

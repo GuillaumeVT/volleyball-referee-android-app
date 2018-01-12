@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/position"
-    android:gravity="center"
+    android:id="@+id/ladder_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:elevation="@dimen/cardview_default_elevation"
-    android:textSize="@dimen/default_text_size"
-    android:textAppearance="@style/TextViewTheme"/>
+    android:gravity="center"
+    android:textAppearance="@style/TextViewTheme"
+    android:textSize="@dimen/default_text_size"/>

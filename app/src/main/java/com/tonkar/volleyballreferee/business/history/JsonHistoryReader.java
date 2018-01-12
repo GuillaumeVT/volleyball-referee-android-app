@@ -11,6 +11,7 @@ import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -208,6 +209,12 @@ public class JsonHistoryReader {
                 case "gCaptain":
                     recordedSet.setActingCaptain(TeamType.GUEST, reader.nextInt());
                     break;
+                case "hCalledTimeouts":
+                    readTimeoutArray(reader, recordedSet.getCalledTimeouts(TeamType.HOME));
+                    break;
+                case "gCalledTimeouts":
+                    readTimeoutArray(reader, recordedSet.getCalledTimeouts(TeamType.GUEST));
+                    break;
                 default:
                     reader.skipValue();
                     break;
@@ -278,6 +285,32 @@ public class JsonHistoryReader {
                     break;
                 case "gPoints":
                     substitution.setGuestTeamPoints(reader.nextInt());
+                    break;
+            }
+        }
+        reader.endObject();
+    }
+
+    private static void readTimeoutArray(JsonReader reader, List<Timeout> timeouts) throws IOException {
+        reader.beginArray();
+        while (reader.hasNext()) {
+            Timeout timeout = new Timeout();
+            timeouts.add(timeout);
+            readTimeout(reader, timeout);
+        }
+        reader.endArray();
+    }
+
+    private static void readTimeout(JsonReader reader, Timeout timeout) throws IOException {
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            switch (name) {
+                case "hPoints":
+                    timeout.setHomeTeamPoints(reader.nextInt());
+                    break;
+                case "gPoints":
+                    timeout.setGuestTeamPoints(reader.nextInt());
                     break;
             }
         }

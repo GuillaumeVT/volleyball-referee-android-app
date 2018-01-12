@@ -15,6 +15,7 @@ import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
 
 import java.io.File;
@@ -265,21 +266,29 @@ public class GamesHistory implements GamesHistoryService, ScoreListener, TeamLis
                 set.setServingTeam(mGameService.getServingTeam(setIndex));
 
                 set.setPoints(TeamType.HOME, mGameService.getPoints(TeamType.HOME, setIndex));
-                set.setTimeouts(TeamType.HOME, mGameService.getTimeouts(TeamType.HOME, setIndex));
+                set.setTimeouts(TeamType.HOME, mGameService.getRemainingTimeouts(TeamType.HOME, setIndex));
                 for (int number : mGameService.getPlayersOnCourt(TeamType.HOME, setIndex)) {
                     RecordedPlayer player = new RecordedPlayer();
                     player.setNumber(number);
                     player.setPositionType(mGameService.getPlayerPosition(TeamType.HOME, number, setIndex));
                     set.getCurrentPlayers(TeamType.HOME).add(player);
                 }
+                for (Timeout timeout : mGameService.getCalledTimeouts(TeamType.HOME, setIndex)) {
+                    Timeout to = new Timeout(timeout.getHomeTeamPoints(), timeout.getGuestTeamPoints());
+                    set.getCalledTimeouts(TeamType.HOME).add(to);
+                }
 
                 set.setPoints(TeamType.GUEST, mGameService.getPoints(TeamType.GUEST, setIndex));
-                set.setTimeouts(TeamType.GUEST, mGameService.getTimeouts(TeamType.GUEST, setIndex));
+                set.setTimeouts(TeamType.GUEST, mGameService.getRemainingTimeouts(TeamType.GUEST, setIndex));
                 for (int number : mGameService.getPlayersOnCourt(TeamType.GUEST, setIndex)) {
                     RecordedPlayer player = new RecordedPlayer();
                     player.setNumber(number);
                     player.setPositionType(mGameService.getPlayerPosition(TeamType.GUEST, number, setIndex));
                     set.getCurrentPlayers(TeamType.GUEST).add(player);
+                }
+                for (Timeout timeout : mGameService.getCalledTimeouts(TeamType.GUEST, setIndex)) {
+                    Timeout to = new Timeout(timeout.getHomeTeamPoints(), timeout.getGuestTeamPoints());
+                    set.getCalledTimeouts(TeamType.GUEST).add(to);
                 }
 
                 if (mGameService instanceof IndoorTeamService) {

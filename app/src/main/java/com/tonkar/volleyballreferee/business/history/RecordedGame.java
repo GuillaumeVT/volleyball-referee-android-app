@@ -6,6 +6,7 @@ import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -343,13 +344,23 @@ public class RecordedGame implements RecordedGameService {
     public void initTeams() {}
 
     @Override
-    public int getTimeouts(TeamType teamType) {
+    public int getRemainingTimeouts(TeamType teamType) {
         return mSets.get(currentSetIndex()).getTimeouts(teamType);
     }
 
     @Override
-    public int getTimeouts(TeamType teamType, int setIndex) {
+    public int getRemainingTimeouts(TeamType teamType, int setIndex) {
         return mSets.get(setIndex).getTimeouts(teamType);
+    }
+
+    @Override
+    public List<Timeout> getCalledTimeouts(TeamType teamType) {
+        return mSets.get(currentSetIndex()).getCalledTimeouts(teamType);
+    }
+
+    @Override
+    public List<Timeout> getCalledTimeouts(TeamType teamType, int setIndex) {
+        return mSets.get(setIndex).getCalledTimeouts(teamType);
     }
 
     @Override

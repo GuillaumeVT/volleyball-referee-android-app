@@ -18,12 +18,17 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,12 +167,14 @@ public class UiUtils {
             if (file == null) {
                 Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
+                Uri uri = FileProvider.getUriForFile(context, "com.tonkar.volleyballreferee.fileprovider", file);
+                context.grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getResources().getString(R.string.app_name), file.getName()));
                 intent.putExtra(Intent.EXTRA_TEXT, recordedGameService.getGameSummary());
                 intent.setType("application/pdf");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 try {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
@@ -197,6 +204,18 @@ public class UiUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("show_resume_game", showResumeGameDialog);
         activity.startActivity(intent);
+    }
+
+    public static void animate(Context context, final View view) {
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.press_button);
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        view.startAnimation(animation);
+    }
+
+    public static void animateBounce(Context context, View view) {
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.bounce_view);
+        animation.setInterpolator(new BounceInterpolator());
+        view.startAnimation(animation);
     }
 
 }

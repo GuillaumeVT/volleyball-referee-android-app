@@ -50,6 +50,7 @@
     <string name="court_position_tab">Állásrend</string>
     <string name="points_tab">Pontok</string>
     <string name="substitutions_tab">Cserék</string>
+    <string name="timeouts_tab">Időkérés</string>
     <string name="set_number">Játszma %d</string>
     <string name="set_duration">%d perc</string>
     <string name="switch_sides">Térfélcsere</string>
@@ -166,6 +167,13 @@
     <!-- Settings activity -->
     <string name="settings">Beállítások</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
+    <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
 
     <!-- Recent games activity -->
     <string name="recent_games">Korábbi mérkőzések</string>

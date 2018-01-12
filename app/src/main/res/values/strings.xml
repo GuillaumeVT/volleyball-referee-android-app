@@ -49,6 +49,7 @@
     <string name="court_position_tab">Positions</string>
     <string name="points_tab">Points</string>
     <string name="substitutions_tab">Substitutions</string>
+    <string name="timeouts_tab">Timeouts</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d min</string>
     <string name="switch_sides">Switch sides</string>
@@ -165,6 +166,13 @@
     <!-- Settings activity -->
     <string name="settings">Settings</string>
     <string name="pref_keep_screen_on">Keep the screen on during games</string>
+    <string name="pref_number_of_shirts">Number of shirts in team definition</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
 
     <!-- Recent games activity -->
     <string name="recent_games">Recent games</string>

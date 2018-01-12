@@ -49,6 +49,7 @@
     <string name="court_position_tab">Расстановка</string>
     <string name="points_tab">Очки</string>
     <string name="substitutions_tab">Замены</string>
+    <string name="timeouts_tab">Перерывы</string>
     <string name="set_number">Партия %d</string>
     <string name="set_duration">%d мин.</string>
     <string name="switch_sides">Смена сторон площадки</string>
@@ -165,6 +166,13 @@
     <!-- Settings activity -->
     <string name="settings">Настройки</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
+    <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
 
     <!-- Recent games activity -->
     <string name="recent_games">Сохранённые матчи</string>

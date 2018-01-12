@@ -1,9 +1,15 @@
 package com.tonkar.volleyballreferee.interfaces;
 
+import java.util.List;
+
 public interface BaseTimeoutService {
 
-    int getTimeouts(TeamType teamType);
+    int getRemainingTimeouts(TeamType teamType);
 
-    int getTimeouts(TeamType teamType, int setIndex);
+    int getRemainingTimeouts(TeamType teamType, int setIndex);
+
+    List<Timeout> getCalledTimeouts(TeamType teamType);
+
+    List<Timeout> getCalledTimeouts(TeamType teamType, int setIndex);
 
 }

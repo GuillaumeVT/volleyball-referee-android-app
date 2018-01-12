@@ -49,6 +49,7 @@
     <string name="court_position_tab">Posizioni</string>
     <string name="points_tab">Punti</string>
     <string name="substitutions_tab">Cambi</string>
+    <string name="timeouts_tab">Tempo di riposo</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d minuti</string>
     <string name="switch_sides">Cambio campo</string>
@@ -165,6 +166,13 @@
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
+    <string name="pref_number_of_shirts">Numero di divise nella configurazione della squadra</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
 
     <!-- Recent games activity -->
     <string name="recent_games">Partite recenti</string>

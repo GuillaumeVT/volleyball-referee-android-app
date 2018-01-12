@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBackgroundMain</item>
         <item name="android:windowBackground">@color/colorBackgroundMain</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorPrimaryInverse">@android:color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -34,6 +36,12 @@
     <style name="ImageButtonTheme" parent="Widget.AppCompat.ImageButton">
         <item name="colorButtonNormal">@android:color/white</item>
         <item name="colorAccent">@color/colorButtonDisabled</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:tint">@color/colorPrimary</item>
+    </style>
+
+    <style name="RoundButtonTheme" parent="Widget.AppCompat.ImageButton">
+        <item name="colorAccent">@android:color/white</item>
         <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:tint">@color/colorPrimary</item>
     </style>

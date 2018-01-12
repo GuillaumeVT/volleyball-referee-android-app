@@ -1,11 +1,13 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -144,6 +146,7 @@ public class TeamSetupFragment extends Fragment {
         mTeamColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UiUtils.animate(getContext(), mTeamColorButton);
                 selectTeamColor();
             }
         });
@@ -152,6 +155,7 @@ public class TeamSetupFragment extends Fragment {
         mCaptainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UiUtils.animate(getContext(), mCaptainButton);
                 selectCaptain();
             }
         });
@@ -167,6 +171,7 @@ public class TeamSetupFragment extends Fragment {
         mLiberoColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UiUtils.animate(getContext(), mLiberoColorButton);
                 selectLiberoColor();
             }
         });
@@ -176,6 +181,7 @@ public class TeamSetupFragment extends Fragment {
         mGenderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UiUtils.animate(getContext(), mGenderButton);
                 GenderType genderType = mIndoorTeamService.getGenderType(mTeamType).next();
                 updateGender(genderType);
             }
@@ -209,15 +215,18 @@ public class TeamSetupFragment extends Fragment {
 
         private final Context mContext;
         private       int     mColor;
+        private final int     mCount;
 
         private PlayerAdapter(Context context, int color) {
             mContext = context;
             mColor = color;
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            mCount = Integer.valueOf(sharedPreferences.getString("pref_number_of_shirts", "25"));
         }
 
         @Override
         public int getCount() {
-            return 25;
+            return mCount;
         }
 
         @Override
@@ -248,6 +257,7 @@ public class TeamSetupFragment extends Fragment {
             button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(PlayerToggleButton button, boolean isChecked) {
+                    UiUtils.animate(mContext, button);
                     final int number = Integer.parseInt(button.getText().toString());
                     if (isChecked) {
                         Log.i("VBR-TSActivity", String.format("Checked #%d player of %s team", number, mTeamType.toString()));
@@ -361,6 +371,7 @@ public class TeamSetupFragment extends Fragment {
             button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(PlayerToggleButton button, boolean isChecked) {
+                    UiUtils.animate(mContext, button);
                     final int number = Integer.parseInt(button.getText().toString());
                     if (isChecked) {
                         if (mIndoorTeamService.canAddLibero(mTeamType)) {
@@ -388,19 +399,20 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void updateGender(GenderType genderType) {
+        Context context = getContext();
         mIndoorTeamService.setGenderType(mTeamType, genderType);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);
-                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 mGenderButton.setImageResource(R.drawable.ic_ladies);
-                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 mGenderButton.setImageResource(R.drawable.ic_gents);
-                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorGents), PorterDuff.Mode.SRC_IN));
                 break;
         }
     }
@@ -417,7 +429,6 @@ public class TeamSetupFragment extends Fragment {
         mIndoorTeamService.setTeamName(mTeamType, indoorTeamService.getTeamName(mTeamType));
         mIndoorTeamService.setTeamColor(mTeamType, indoorTeamService.getTeamColor(mTeamType));
         mIndoorTeamService.setLiberoColor(mTeamType, indoorTeamService.getLiberoColor(mTeamType));
-        mIndoorTeamService.setCaptain(mTeamType, indoorTeamService.getCaptain(mTeamType));
         mIndoorTeamService.setGenderType(mTeamType, indoorTeamService.getGenderType(mTeamType));
 
         for (Integer number: mIndoorTeamService.getPlayers(mTeamType)) {
@@ -433,6 +444,8 @@ public class TeamSetupFragment extends Fragment {
         for (Integer number: indoorTeamService.getLiberos(mTeamType)) {
             mIndoorTeamService.addLibero(mTeamType, number);
         }
+
+        mIndoorTeamService.setCaptain(mTeamType, indoorTeamService.getCaptain(mTeamType));
 
         if (getActivity() instanceof TeamsSetupActivity) {
             getActivity().recreate();

@@ -46,11 +46,11 @@ public class SubstitutionsFragment extends Fragment implements NamedGameFragment
         mIndoorTeamService.addTeamListener(this);
 
         ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
-        mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnLeftSide(), mIndoorTeamService.getTeamOnLeftSide());
+        mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnLeftSide());
         leftTeamSubstitutionsList.setAdapter(mLeftTeamSubstitutionsListAdapter);
 
         ListView rightTeamSubstitutionsList = view.findViewById(R.id.right_team_substitutions_list);
-        mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnRightSide(), mIndoorTeamService.getTeamOnLeftSide());
+        mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnRightSide());
         rightTeamSubstitutionsList.setAdapter(mRightTeamSubstitutionsListAdapter);
 
         return view;
@@ -65,9 +65,7 @@ public class SubstitutionsFragment extends Fragment implements NamedGameFragment
     @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mLeftTeamSubstitutionsListAdapter.setTeamType(leftTeamType);
-        mLeftTeamSubstitutionsListAdapter.setTeamOnLeftSide(leftTeamType);
         mRightTeamSubstitutionsListAdapter.setTeamType(rightTeamType);
-        mRightTeamSubstitutionsListAdapter.setTeamOnLeftSide(leftTeamType);
         mLeftTeamSubstitutionsListAdapter.notifyDataSetChanged();
         mRightTeamSubstitutionsListAdapter.notifyDataSetChanged();
     }

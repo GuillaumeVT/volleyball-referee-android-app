@@ -66,9 +66,10 @@ public class IndoorCourtFragment extends CourtFragment {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     final Set<Integer> possibleReplacements = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
                     if (possibleReplacements.size() > 0) {
+                        UiUtils.animate(getContext(), view);
                         Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
                         showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleReplacements);
                     } else {
@@ -83,6 +84,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     if (!mIndoorTeamService.isStartingLineupConfirmed()) {
                         int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnLeftSide, positionType);
                         if (number > 0) {
+                            UiUtils.animateBounce(getContext(), view);
                             mIndoorTeamService.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
                         }
                     }
@@ -95,9 +97,10 @@ public class IndoorCourtFragment extends CourtFragment {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     final Set<Integer> possibleReplacements = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
                     if (possibleReplacements.size() > 0) {
+                        UiUtils.animate(getContext(), view);
                         Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
                         showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleReplacements);
                     } else {
@@ -112,6 +115,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     if (!mIndoorTeamService.isStartingLineupConfirmed()) {
                         int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnRightSide, positionType);
                         if (number > 0) {
+                            UiUtils.animateBounce(getContext(), view);
                             mIndoorTeamService.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
                         }
                     }

@@ -20,6 +20,8 @@ import java.util.Locale;
 
 public class SetsListAdapter extends BaseAdapter {
 
+    private static final int sMaxLadderItems = 100;
+
     static class ViewHolder {
         TextView             setNumberText;
         TextView             setScoreText;
@@ -70,6 +72,8 @@ public class SetsListAdapter extends BaseAdapter {
             viewHolder.setLadderScroll = setView.findViewById(R.id.set_ladder_scroll);
             viewHolder.homeTeamLadder = setView.findViewById(R.id.set_ladder_home_team_row);
             viewHolder.guestTeamLadder = setView.findViewById(R.id.set_ladder_guest_team_row);
+            createLadderRow(viewHolder.homeTeamLadder, mBaseTeamService.getTeamColor(TeamType.HOME));
+            createLadderRow(viewHolder.guestTeamLadder, mBaseTeamService.getTeamColor(TeamType.GUEST));
             setView.setTag(viewHolder);
         }
         else {
@@ -82,7 +86,7 @@ public class SetsListAdapter extends BaseAdapter {
         viewHolder.setScoreText.setText(String.format(Locale.getDefault(), "%d\t-\t%d", mBaseScoreService.getPoints(TeamType.HOME, actualIndex), mBaseScoreService.getPoints(TeamType.GUEST, actualIndex)));
         viewHolder.setDurationText.setText(String.format(setView.getContext().getResources().getString(R.string.set_duration), mBaseScoreService.getSetDuration(actualIndex) / 60000L));
 
-        fillLadder(viewHolder.homeTeamLadder, viewHolder.guestTeamLadder, mBaseScoreService.getPointsLadder(actualIndex), mBaseTeamService.getTeamColor(TeamType.HOME), mBaseTeamService.getTeamColor(TeamType.GUEST));
+        fillLadder(viewHolder.homeTeamLadder, viewHolder.guestTeamLadder, mBaseScoreService.getPointsLadder(actualIndex));
 
         if (mReverseOrder && index == 0) {
             viewHolder.setLadderScroll.post(new Runnable() {
@@ -95,32 +99,45 @@ public class SetsListAdapter extends BaseAdapter {
         return setView;
     }
 
-    private void fillLadder(TableRow homeTeamLadder, TableRow guestTeamLadder, List<TeamType> ladder, int homeTeamColor, int guestTeamColor) {
-        homeTeamLadder.removeAllViews();
-        guestTeamLadder.removeAllViews();
+    private void createLadderRow(TableRow ladderRow, int color) {
+        int width = measureTextWidth();
+        for (int index = 0; index < sMaxLadderItems; index++) {
+            TextView text = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
+            text.setLayoutParams(createTableRowLayoutParams(text.getContext(), width, index));
+            UiUtils.colorTeamText(text.getContext(), color, text);
+            ladderRow.addView(text);
+            text.setVisibility(View.GONE);
+        }
+    }
 
+    private void fillLadder(TableRow homeTeamLadder, TableRow guestTeamLadder, List<TeamType> ladder) {
         int homeCount = 0;
         int guestCount = 0;
-        int width = measureTextWidth();
 
         for (int index = 0; index < ladder.size(); index++) {
-            final TeamType teamType = ladder.get(index);
+            if (index < sMaxLadderItems) {
+                final TeamType teamType = ladder.get(index);
 
-            if (TeamType.HOME.equals(teamType)) {
-                TextView homeText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
-                homeCount++;
-                homeText.setText(String.valueOf(homeCount));
-                UiUtils.colorTeamText(homeText.getContext(), homeTeamColor, homeText);
-                homeTeamLadder.addView(homeText);
-                homeText.setLayoutParams(createTableRowLayoutParams(homeText.getContext(), width, index));
-            } else {
-                TextView guestText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
-                guestCount++;
-                guestText.setText(String.valueOf(guestCount));
-                UiUtils.colorTeamText(guestText.getContext(), guestTeamColor, guestText);
-                guestTeamLadder.addView(guestText);
-                guestText.setLayoutParams(createTableRowLayoutParams(guestText.getContext(), width, index));
+                TextView homeText = (TextView) homeTeamLadder.getChildAt(index);
+                TextView guestText = (TextView) guestTeamLadder.getChildAt(index);
+
+                if (TeamType.HOME.equals(teamType)) {
+                    homeText.setVisibility(View.VISIBLE);
+                    guestText.setVisibility(View.INVISIBLE);
+                    homeCount++;
+                    homeText.setText(String.valueOf(homeCount));
+                } else {
+                    guestText.setVisibility(View.VISIBLE);
+                    homeText.setVisibility(View.INVISIBLE);
+                    guestCount++;
+                    guestText.setText(String.valueOf(guestCount));
+                }
             }
+        }
+
+        for (int index = ladder.size(); index < sMaxLadderItems; index++) {
+            homeTeamLadder.getChildAt(index).setVisibility(View.GONE);
+            guestTeamLadder.getChildAt(index).setVisibility(View.GONE);
         }
     }
 

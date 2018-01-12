@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.business.history;
 
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class RecordedSet {
     private final List<Substitution>   mGuestTeamSubstitutions;
     private       int                  mHomeTeamActingCaptain;
     private       int                  mGuestTeamActingCaptain;
+    private final List<Timeout>        mHomeTeamCalledTimeouts;
+    private final List<Timeout>        mGuestTeamCalledTimeouts;
+
 
     public RecordedSet() {
         mDuration = 0L;
@@ -40,6 +44,9 @@ public class RecordedSet {
         mGuestTeamSubstitutions = new ArrayList<>();
         mHomeTeamActingCaptain = 0;
         mGuestTeamActingCaptain = 0;
+
+        mHomeTeamCalledTimeouts = new ArrayList<>();
+        mGuestTeamCalledTimeouts = new ArrayList<>();
     }
 
     long getDuration() {
@@ -158,6 +165,18 @@ public class RecordedSet {
         }
     }
 
+    public List<Timeout> getCalledTimeouts(TeamType teamType) {
+        List<Timeout> timeouts;
+
+        if (TeamType.HOME.equals(teamType)) {
+            timeouts = mHomeTeamCalledTimeouts;
+        } else {
+            timeouts = mGuestTeamCalledTimeouts;
+        }
+
+        return timeouts;
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
@@ -180,7 +199,9 @@ public class RecordedSet {
                     && this.getSubstitutions(TeamType.HOME).equals(other.getSubstitutions(TeamType.HOME))
                     && this.getSubstitutions(TeamType.GUEST).equals(other.getSubstitutions(TeamType.GUEST))
                     && (this.getActingCaptain(TeamType.HOME) == other.getActingCaptain(TeamType.HOME))
-                    && (this.getActingCaptain(TeamType.GUEST) == other.getActingCaptain(TeamType.GUEST));
+                    && (this.getActingCaptain(TeamType.GUEST) == other.getActingCaptain(TeamType.GUEST))
+                    && this.getCalledTimeouts(TeamType.HOME).equals(other.getCalledTimeouts(TeamType.HOME))
+                    && this.getCalledTimeouts(TeamType.GUEST).equals(other.getCalledTimeouts(TeamType.GUEST));
         }
 
         return result;

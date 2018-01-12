@@ -7,6 +7,7 @@ import android.util.Log;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -115,6 +116,10 @@ public class JsonHistoryWriter {
         writeSubstitutions(writer, recordedSet.getSubstitutions(TeamType.GUEST));
         writer.name("hCaptain").value(recordedSet.getActingCaptain(TeamType.HOME));
         writer.name("gCaptain").value(recordedSet.getActingCaptain(TeamType.GUEST));
+        writer.name("hCalledTimeouts");
+        writeTimeouts(writer, recordedSet.getCalledTimeouts(TeamType.HOME));
+        writer.name("gCalledTimeouts");
+        writeTimeouts(writer, recordedSet.getCalledTimeouts(TeamType.GUEST));
         writer.endObject();
     }
 
@@ -145,6 +150,17 @@ public class JsonHistoryWriter {
             writer.name("pOut").value(substitution.getPlayerOut());
             writer.name("hPoints").value(substitution.getHomeTeamPoints());
             writer.name("gPoints").value(substitution.getGuestTeamPoints());
+            writer.endObject();
+        }
+        writer.endArray();
+    }
+
+    private static void writeTimeouts(JsonWriter writer, List<Timeout> timeouts) throws IOException {
+        writer.beginArray();
+        for (Timeout timeout : timeouts) {
+            writer.beginObject();
+            writer.name("hPoints").value(timeout.getHomeTeamPoints());
+            writer.name("gPoints").value(timeout.getGuestTeamPoints());
             writer.endObject();
         }
         writer.endArray();

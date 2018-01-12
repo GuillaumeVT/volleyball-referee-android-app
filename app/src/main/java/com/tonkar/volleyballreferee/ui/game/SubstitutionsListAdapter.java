@@ -27,19 +27,17 @@ public class SubstitutionsListAdapter extends BaseAdapter {
     private final LayoutInflater        mLayoutInflater;
     private final BaseIndoorTeamService mIndoorTeamService;
     private       TeamType              mTeamType;
-    private       TeamType              mTeamOnLeftSide;
     private final int                   mSetIndex;
 
-    SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseIndoorTeamService indoorTeamService, TeamType teamType, TeamType teamOnLeftSide) {
-        this(context, layoutInflater, indoorTeamService, teamType, teamOnLeftSide, -1);
+    SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseIndoorTeamService indoorTeamService, TeamType teamType) {
+        this(context, layoutInflater, indoorTeamService, teamType, -1);
     }
 
-    public SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseIndoorTeamService indoorTeamService, TeamType teamType, TeamType teamOnLeftSide, int setIndex) {
+    public SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseIndoorTeamService indoorTeamService, TeamType teamType, int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mIndoorTeamService = indoorTeamService;
         mTeamType = teamType;
-        mTeamOnLeftSide = teamOnLeftSide;
         mSetIndex = setIndex;
     }
 
@@ -49,10 +47,6 @@ public class SubstitutionsListAdapter extends BaseAdapter {
 
     public TeamType getTeamType() {
         return mTeamType;
-    }
-
-    public void setTeamOnLeftSide(TeamType teamType) {
-        mTeamOnLeftSide = teamType;
     }
 
     @Override
@@ -103,7 +97,7 @@ public class SubstitutionsListAdapter extends BaseAdapter {
             substitution = mIndoorTeamService.getSubstitutions(mTeamType, mSetIndex).get(index);
         }
 
-        if (TeamType.HOME.equals(mTeamOnLeftSide)) {
+        if (TeamType.HOME.equals(mTeamType)) {
             viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getHomeTeamPoints(), substitution.getGuestTeamPoints()));
         } else {
             viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getGuestTeamPoints(), substitution.getHomeTeamPoints()));

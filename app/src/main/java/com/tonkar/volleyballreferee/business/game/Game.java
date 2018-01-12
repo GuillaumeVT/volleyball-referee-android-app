@@ -9,6 +9,7 @@ import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.Timeout;
 import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -563,17 +564,34 @@ public abstract class Game implements GameService, Serializable {
     // Timeout
 
     @Override
-    public int getTimeouts(TeamType teamType) {
-        return currentSet().getTimeouts(teamType);
+    public int getRemainingTimeouts(TeamType teamType) {
+        return currentSet().getRemainingTimeouts(teamType);
     }
 
     @Override
-    public int getTimeouts(TeamType teamType, int setIndex) {
+    public int getRemainingTimeouts(TeamType teamType, int setIndex) {
         int timeouts = 0;
         Set set = mSets.get(setIndex);
 
         if (set != null) {
-            timeouts = set.getTimeouts(teamType);
+            timeouts = set.getRemainingTimeouts(teamType);
+        }
+
+        return timeouts;
+    }
+
+    @Override
+    public List<Timeout> getCalledTimeouts(TeamType teamType) {
+        return currentSet().getCalledTimeouts(teamType);
+    }
+
+    @Override
+    public List<Timeout> getCalledTimeouts(TeamType teamType, int setIndex) {
+        List<Timeout> timeouts = new ArrayList<>();
+        Set set = mSets.get(setIndex);
+
+        if (set != null) {
+            timeouts = set.getCalledTimeouts(teamType);
         }
 
         return timeouts;
@@ -581,7 +599,7 @@ public abstract class Game implements GameService, Serializable {
 
     @Override
     public void callTimeout(final TeamType teamType) {
-        final int oldCount = currentSet().getTimeouts(teamType);
+        final int oldCount = currentSet().getRemainingTimeouts(teamType);
 
         if (mRules.areTeamTimeoutsEnabled() && oldCount > 0) {
             final int newCount = currentSet().removeTimeout(teamType);
