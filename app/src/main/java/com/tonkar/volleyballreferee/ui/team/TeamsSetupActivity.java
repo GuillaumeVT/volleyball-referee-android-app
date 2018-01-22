@@ -15,8 +15,8 @@ import android.view.MenuItem;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
@@ -52,7 +52,7 @@ public class TeamsSetupActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ServicesProvider.getInstance().getGamesHistoryService().saveSetupGame(ServicesProvider.getInstance().getGameService());
+        ServicesProvider.getInstance().getRecordedGamesService().saveSetupGame(ServicesProvider.getInstance().getGameService());
     }
 
     @Override
@@ -71,25 +71,6 @@ public class TeamsSetupActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_confirm:
                 confirmTeams();
-                return true;
-            case R.id.action_setup_scoreboard_usage:
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-                builder.setTitle(getResources().getString(R.string.scoreboard_usage_title)).setMessage(getResources().getString(R.string.scoreboard_usage_message));
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        ServicesProvider.getInstance().getGameService().setUsageType(UsageType.SCOREBOARD);
-
-                        Log.i("VBR-TSActivity", "Start activity to setup teams quickly");
-                        final Intent intent = new Intent(TeamsSetupActivity.this, QuickTeamsSetupActivity.class);
-                        intent.putExtra("scoreboard_usage", true);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {}
-                });
-                AlertDialog alertDialog = builder.show();
-                UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -117,7 +98,8 @@ public class TeamsSetupActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.confirm_teams_setup_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                ServicesProvider.getInstance().getTeamService().initTeams();
+                mIndoorTeamService.initTeams();
+                saveTeams();
                 Log.i("VBR-TSActivity", "Start game activity");
                 final Intent gameIntent = new Intent(TeamsSetupActivity.this, GameActivity.class);
                 startActivity(gameIntent);
@@ -128,6 +110,12 @@ public class TeamsSetupActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+    }
+
+    private void saveTeams() {
+        SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
+        savedTeamsService.createAndSaveTeamFrom(mIndoorTeamService, TeamType.HOME);
+        savedTeamsService.createAndSaveTeamFrom(mIndoorTeamService, TeamType.GUEST);
     }
 
 }

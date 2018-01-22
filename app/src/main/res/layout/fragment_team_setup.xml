@@ -67,7 +67,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/gender_description"
-                android:elevation="@dimen/cardview_default_elevation"
+                android:elevation="@dimen/round_button_elevation"
                 android:theme="@style/ImageButtonTheme"
                 app:srcCompat="@drawable/ic_mixed"/>
 

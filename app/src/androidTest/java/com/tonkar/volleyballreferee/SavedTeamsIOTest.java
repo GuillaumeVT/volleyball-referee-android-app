@@ -5,17 +5,19 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.history.JsonHistoryReader;
-import com.tonkar.volleyballreferee.business.history.JsonHistoryWriter;
-import com.tonkar.volleyballreferee.business.history.SavedTeam;
+import com.tonkar.volleyballreferee.business.data.JsonDataReader;
+import com.tonkar.volleyballreferee.business.data.JsonDataWriter;
+import com.tonkar.volleyballreferee.business.data.SavedTeam;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,6 +29,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SavedTeamsIOTest {
 
     @Rule
@@ -108,9 +111,9 @@ public class SavedTeamsIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonHistoryWriter.writeSavedTeamsStream(outputStream, expectedList);
+            JsonDataWriter.writeSavedTeamsStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonHistoryReader.readSavedTeamsStream(inputStream);
+            actualList = JsonDataReader.readSavedTeamsStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();

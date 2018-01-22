@@ -13,25 +13,36 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
+import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
+import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
+import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
+
+import java.util.ArrayList;
 
 public class QuickTeamsSetupActivity extends AppCompatActivity {
 
-    private TeamService mTeamService;
-    private MenuItem    mConfirmItem;
-    private ImageButton mGenderButton;
-    private Button      mHomeTeamColorButton;
-    private Button      mGuestTeamColorButton;
+    private TeamService  mTeamService;
+    private ScoreService mScoreService;
+    private MenuItem     mConfirmItem;
+    private ImageButton  mGenderButton;
+    private Button       mHomeTeamColorButton;
+    private Button       mGuestTeamColorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +56,33 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         }
 
         mTeamService = ServicesProvider.getInstance().getTeamService();
+        mScoreService = ServicesProvider.getInstance().getScoreService();
 
         setTitle("");
 
         mGenderButton = findViewById(R.id.switch_gender_button);
 
         updateGender(mTeamService.getGenderType());
+
+        final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
+        leagueNameInput.setThreshold(2);
+        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues()));
+        leagueNameInput.setAdapter(leagueNameAdapter);
+        leagueNameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("VBR-QTSActivity", "Update league name");
+                mTeamService.setLeagueName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         final EditText homeTeamNameInput = findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
@@ -92,30 +124,46 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         mHomeTeamColorButton = findViewById(R.id.home_team_color_button);
         mGuestTeamColorButton = findViewById(R.id.guest_team_color_button);
 
+        leagueNameInput.setText(mTeamService.getLeagueName());
         homeTeamNameInput.setText(mTeamService.getTeamName(TeamType.HOME));
         guestTeamNameInput.setText(mTeamService.getTeamName(TeamType.GUEST));
 
         if (savedInstanceState == null) {
-            // Coming for the teams setup activity, the color are kept
-            if (getIntent().getBooleanExtra("scoreboard_usage", false)) {
-                teamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
-                teamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
-            } else {
-                int homeTeamColor = ShirtColors.getRandomShirtColor(this);
-                teamColorSelected(TeamType.HOME, homeTeamColor);
+            int homeTeamColor = ShirtColors.getRandomShirtColor(this);
+            teamColorSelected(TeamType.HOME, homeTeamColor);
 
-                boolean sameColor = true;
-                int guestTeamColor = 0;
+            boolean sameColor = true;
+            int guestTeamColor = 0;
 
-                while (sameColor) {
-                    guestTeamColor = ShirtColors.getRandomShirtColor(this);
-                    sameColor = (guestTeamColor == homeTeamColor);
-                }
-                teamColorSelected(TeamType.GUEST, guestTeamColor);
+            while (sameColor) {
+                guestTeamColor = ShirtColors.getRandomShirtColor(this);
+                sameColor = (guestTeamColor == homeTeamColor);
             }
+            teamColorSelected(TeamType.GUEST, guestTeamColor);
         } else {
             teamColorSelected(TeamType.HOME, mTeamService.getTeamColor(TeamType.HOME));
             teamColorSelected(TeamType.GUEST, mTeamService.getTeamColor(TeamType.GUEST));
+        }
+
+        NumberPicker matchDurationPicker = findViewById(R.id.match_duration_picker);
+        TextView matchDurationText = findViewById(R.id.match_duration_text);
+
+        if (UsageType.TIME_SCOREBOARD.equals(mScoreService.getUsageType())) {
+            final TimeBasedGameService timeBasedGameService = (TimeBasedGameService) ServicesProvider.getInstance().getGameService();
+            matchDurationPicker.setWrapSelectorWheel(false);
+            matchDurationPicker.setMinValue(10);
+            matchDurationPicker.setMaxValue(40);
+            matchDurationPicker.setValue((int) (timeBasedGameService.getDuration() / 60000L));
+
+            matchDurationPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldValue, int newValue){
+                    timeBasedGameService.setDuration(newValue * 60000L);
+                }
+            });
+        } else {
+            matchDurationPicker.setVisibility(View.GONE);
+            matchDurationText.setVisibility(View.GONE);
         }
 
         computeConfirmItemVisibility();
@@ -124,7 +172,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ServicesProvider.getInstance().getGamesHistoryService().saveSetupGame(ServicesProvider.getInstance().getGameService());
+        ServicesProvider.getInstance().getRecordedGamesService().saveSetupGame(ServicesProvider.getInstance().getGameService());
     }
 
     @Override
@@ -228,9 +276,15 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         Log.i("VBR-QTSActivity", "Validate teams");
         mTeamService.initTeams();
 
-        Log.i("VBR-QTSActivity", "Start game activity");
-        final Intent gameIntent = new Intent(this, GameActivity.class);
-        startActivity(gameIntent);
+        if (UsageType.TIME_SCOREBOARD.equals(mScoreService.getUsageType())) {
+            Log.i("VBR-QTSActivity", "Start time-based game activity");
+            final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
+            startActivity(gameIntent);
+        } else {
+            Log.i("VBR-QTSActivity", "Start game activity");
+            final Intent gameIntent = new Intent(this, GameActivity.class);
+            startActivity(gameIntent);
+        }
     }
 
 }

@@ -29,4 +29,8 @@ public interface BaseScoreService {
     TeamType getServingTeam(int setIndex);
 
     boolean isMatchCompleted();
+
+    UsageType getUsageType();
+
+    void setUsageType(UsageType usageType);
 }

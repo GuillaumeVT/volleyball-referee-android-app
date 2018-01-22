@@ -2,8 +2,8 @@ package com.tonkar.volleyballreferee;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.game.Game;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class GameTest {
 
     @Test
     public void point_remove() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         assertEquals(0, game.getPoints(TeamType.HOME));
@@ -26,7 +26,7 @@ public class GameTest {
 
     @Test
     public void service_swapFirst() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -36,7 +36,7 @@ public class GameTest {
 
     @Test
     public void service_keep() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -46,7 +46,7 @@ public class GameTest {
 
     @Test
     public void service_sideOut() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -56,7 +56,7 @@ public class GameTest {
 
     @Test
     public void service_keep_Reverse() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         game.addPoint(TeamType.HOME);
@@ -68,7 +68,7 @@ public class GameTest {
 
     @Test
     public void service_sideOut_Reverse() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         game.addPoint(TeamType.HOME);
@@ -80,7 +80,7 @@ public class GameTest {
 
     @Test
     public void timeout() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.getRemainingTimeouts(TeamType.HOME));

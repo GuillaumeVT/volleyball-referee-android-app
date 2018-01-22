@@ -4,8 +4,8 @@
     <!-- Main activity -->
     <string name="indoor_game">Começar uma partida de Voleibol de Quadra</string>
     <string name="beach_game">Começar uma partida de Vôlei de Praia</string>
-    <string name="official_rules">Regras Oficiais</string>
-    <string name="my_rules">Regras Personalizadas</string>
+    <string name="official_rules">Regras oficiais</string>
+    <string name="my_rules">Regras personalizadas</string>
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">Permissões</string>
@@ -16,6 +16,12 @@
     <string name="delete">Deletar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">Partida por tempo</string>
+    <string name="start_score_based_game_official">Placar (regras oficiais)</string>
+    <string name="start_score_based_game_custom">Placar (regras personalizadas)</string>
+    <string name="match_group">Iniciar uma partida básica</string>
+    <string name="data_group">Dados</string>
+    <string name="configuration_group">Configurações</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Selecionar Equipes</string>
@@ -31,10 +37,10 @@
     <string name="select_gender">Selecionar o naipe</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_teams_setup_question">Você confirma essa seleção?</string>
-    <string name="scoreboard_usage">&#x25b6; Utilizar apenas o placar</string>
-    <string name="scoreboard_usage_title">Placar Simples</string>
-    <string name="scoreboard_usage_message">Os jogadores não foram configurados, e a quadra não será exibida.</string>
     <string name="gender_description">Gênero</string>
+    <string name="match_duration_text">Escolha a duração da partida</string>
+    <string name="league_name_hint">Nome da Competição (opcional)</string>
+    <string name="misc_tab">Diversos</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Coroa</string>
@@ -59,6 +65,7 @@
     <string name="technical_timeout_title">Tempo Técnico</string>
     <string name="game_interval_title">Intervalo</string>
     <string name="skip">Pular</string>
+    <string name="run_background">Exibir em segundo plano</string>
     <string name="switch_sides_description">Troca de lados manual</string>
     <string name="remove_point_description">Deletar o último ponto</string>
     <string name="call_timeout_description">Pedir tempo</string>
@@ -68,9 +75,13 @@
     <string name="confirm_lineup_question">Você confirma essa escalação para ambos as equipes neste set?</string>
     <string name="no_substitution_message">Não há substituição disponível</string>
     <string name="confirm_set_question">Você confirma esse ponto?</string>
+    <string name="start_match_description">Iniciar partida</string>
+    <string name="stop_match_description">Encerrar partida</string>
+    <string name="confirm_start_match_question">Deseja iniciar essa partida?</string>
+    <string name="confirm_stop_match_question">Deseja encerrar essa partida?</string>
 
     <!-- Rules activity -->
-    <string name="rules">Regras</string>
+    <string name="rules">Regras personalizadas</string>
     <string name="general_preferences">Preferências</string>
     <string name="timeout_preferences">Tempo</string>
     <string name="indoor_preferences">Voleibol de quadra</string>
@@ -174,8 +185,8 @@
         <item>99</item>
     </string-array>
 
-    <!-- Recent games activity -->
-    <string name="recent_games">Partidas recentes</string>
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Partidas recentes</string>
     <string name="search_games">Procurar partidas</string>
     <string name="delete_games">Deletar todas as partidas</string>
     <string name="delete_game">Deletar partida</string>

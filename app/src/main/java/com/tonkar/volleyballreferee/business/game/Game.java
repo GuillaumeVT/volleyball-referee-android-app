@@ -31,6 +31,7 @@ public abstract class Game implements GameService, Serializable {
     private final     long                           mGameDate;
     private           GenderType                     mGenderType;
     private final     Rules                          mRules;
+    private           String                         mLeagueName;
     private final     TeamDefinition                 mHomeTeam;
     private final     TeamDefinition                 mGuestTeam;
     private           TeamType                       mTeamOnLeftSide;
@@ -47,6 +48,7 @@ public abstract class Game implements GameService, Serializable {
         mGenderType = GenderType.MIXED;
         mRules = rules;
         mGameDate = System.currentTimeMillis();
+        mLeagueName = "";
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
@@ -140,7 +142,7 @@ public abstract class Game implements GameService, Serializable {
 
         // In volley, the team obtaining the service rotates to next positions
         if (!oldServingTeam.equals(newServingTeam)) {
-            notifyServiceSwapped(currentSet().getServingTeam());
+            notifyServiceSwapped(newServingTeam);
             rotateToNextPositions(newServingTeam);
         }
 
@@ -161,7 +163,7 @@ public abstract class Game implements GameService, Serializable {
             final TeamType newServingTeam = currentSet().getServingTeam();
 
             if (!oldServingTeam.equals(newServingTeam)) {
-                notifyServiceSwapped(currentSet().getServingTeam());
+                notifyServiceSwapped(newServingTeam);
                 rotateToPreviousPositions(oldServingTeam);
             }
         }
@@ -194,7 +196,7 @@ public abstract class Game implements GameService, Serializable {
 
     @Override
     public String getGameSummary() {
-        StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME),getSets(TeamType.GUEST), mGuestTeam.getName()));
+        StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName()));
 
         for (Set set : mSets) {
             builder.append(set.getSetSummary());
@@ -377,6 +379,16 @@ public abstract class Game implements GameService, Serializable {
         }
 
         return teamDefinition;
+    }
+
+    @Override
+    public String getLeagueName() {
+        return mLeagueName;
+    }
+
+    @Override
+    public void setLeagueName(String name) {
+        mLeagueName = name;
     }
 
     @Override

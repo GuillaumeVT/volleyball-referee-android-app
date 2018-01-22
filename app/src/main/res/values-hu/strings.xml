@@ -17,6 +17,12 @@
     <string name="delete">Törlés</string>
     <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">Időalapú</string>
+    <string name="start_score_based_game_official">Eredménytábla (hivatalos szabályok)</string>
+    <string name="start_score_based_game_custom">Eredménytábla (saját szabályok)</string>
+    <string name="match_group">Mérkőzés indítása</string>
+    <string name="data_group">Adatok</string>
+    <string name="configuration_group">Beállítások</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Csapatok beállítása</string>
@@ -32,10 +38,10 @@
     <string name="select_gender">Válaszd ki a csapat nemét</string>
     <string name="confirm">Jóváhagyás</string>
     <string name="confirm_teams_setup_question">Jóváhagyod a csapatok összeállítását?</string>
-    <string name="scoreboard_usage">&#x25b6; Csak az eredmény számlálása</string>
-    <string name="scoreboard_usage_title">Egyszerűsített eredménytábla</string>
-    <string name="scoreboard_usage_message">A játékosok és a pálya nem lesz megjelenítve.</string>
     <string name="gender_description">Nem</string>
+    <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
+    <string name="league_name_hint">Bajnokság / torna neve (opcionális)</string>
+    <string name="misc_tab">Egyéb</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Írás</string>
@@ -60,6 +66,7 @@
     <string name="technical_timeout_title">Technikai idő</string>
     <string name="game_interval_title">Szünet</string>
     <string name="skip">Kihagyás</string>
+    <string name="run_background">Futtatás háttérben</string>
     <string name="switch_sides_description">Kézi térfélcsere</string>
     <string name="remove_point_description">Utolsó pont visszavonása</string>
     <string name="call_timeout_description">Idő kérése</string>
@@ -69,9 +76,13 @@
     <string name="confirm_lineup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="no_substitution_message">Nincsen elérhető cserejátékos</string>
     <string name="confirm_set_question">Jóváhagyod ezt a pontot?</string>
+    <string name="start_match_description">Mérkőzés indítása</string>
+    <string name="stop_match_description">Mérkőzés megállítása</string>
+    <string name="confirm_start_match_question">Biztosan elindítod a mérkőzést?</string>
+    <string name="confirm_stop_match_question">Biztosan megállítod a mérkőzést?</string>
 
     <!-- Rules activity -->
-    <string name="rules">Szabályok</string>
+    <string name="rules">Egyedi szabályok</string>
     <string name="general_preferences">Általános</string>
     <string name="timeout_preferences">Időkérés</string>
     <string name="indoor_preferences">Teremröplabda</string>
@@ -175,8 +186,8 @@
         <item>99</item>
     </string-array>
 
-    <!-- Recent games activity -->
-    <string name="recent_games">Korábbi mérkőzések</string>
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Korábbi mérkőzések</string>
     <string name="search_games">Keresés</string>
     <string name="delete_games">Összes mérkőzés törlése</string>
     <string name="delete_game">Mérkőzés törlése</string>

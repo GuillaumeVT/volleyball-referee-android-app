@@ -28,8 +28,8 @@ import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
-import com.tonkar.volleyballreferee.ui.history.SavedTeamActivity;
-import com.tonkar.volleyballreferee.ui.history.SavedTeamsListAdapter;
+import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
+import com.tonkar.volleyballreferee.ui.data.SavedTeamsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +111,10 @@ public class TeamSetupFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
                     BaseIndoorTeamService indoorTeamService = (BaseIndoorTeamService) teamNameInput.getAdapter().getItem(index);
                     teamNameInput.setText(indoorTeamService.getTeamName(mTeamType));
-                    updateTeamFrom(indoorTeamService);
+                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(indoorTeamService, mIndoorTeamService, mTeamType);
+                    if (getActivity() instanceof TeamsSetupActivity) {
+                        getActivity().recreate();
+                    }
                 }
             });
         }
@@ -422,33 +425,6 @@ public class TeamSetupFragment extends Fragment {
             ((TeamsSetupActivity) getActivity()).computeConfirmItemVisibility();
         } else if (getActivity() instanceof SavedTeamActivity) {
             ((SavedTeamActivity) getActivity()).computeSaveItemVisibility();
-        }
-    }
-
-    private void updateTeamFrom(BaseIndoorTeamService indoorTeamService) {
-        mIndoorTeamService.setTeamName(mTeamType, indoorTeamService.getTeamName(mTeamType));
-        mIndoorTeamService.setTeamColor(mTeamType, indoorTeamService.getTeamColor(mTeamType));
-        mIndoorTeamService.setLiberoColor(mTeamType, indoorTeamService.getLiberoColor(mTeamType));
-        mIndoorTeamService.setGenderType(mTeamType, indoorTeamService.getGenderType(mTeamType));
-
-        for (Integer number: mIndoorTeamService.getPlayers(mTeamType)) {
-            mIndoorTeamService.removePlayer(mTeamType, number);
-        }
-        for (Integer number: mIndoorTeamService.getLiberos(mTeamType)) {
-            mIndoorTeamService.removeLibero(mTeamType, number);
-        }
-
-        for (Integer number: indoorTeamService.getPlayers(mTeamType)) {
-            mIndoorTeamService.addPlayer(mTeamType, number);
-        }
-        for (Integer number: indoorTeamService.getLiberos(mTeamType)) {
-            mIndoorTeamService.addLibero(mTeamType, number);
-        }
-
-        mIndoorTeamService.setCaptain(mTeamType, indoorTeamService.getCaptain(mTeamType));
-
-        if (getActivity() instanceof TeamsSetupActivity) {
-            getActivity().recreate();
         }
     }
 

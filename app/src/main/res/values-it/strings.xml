@@ -16,6 +16,12 @@
     <string name="delete">Cancella</string>
     <string name="ignore">Ignora</string>
     <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">A tempo</string>
+    <string name="start_score_based_game_official">A punti (regole ufficiali)</string>
+    <string name="start_score_based_game_custom">A punti (regole personalizzate)</string>
+    <string name="match_group">Iniziare una partita in modalità semplice</string>
+    <string name="data_group">Dati</string>
+    <string name="configuration_group">Configurazione</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Configura le squadre</string>
@@ -31,10 +37,10 @@
     <string name="select_gender">Seleziona il tipo di squadra</string>
     <string name="confirm">Confermare</string>
     <string name="confirm_teams_setup_question">Confermate questa formazione?</string>
-    <string name="scoreboard_usage">&#x25b6; Solo punteggio</string>
-    <string name="scoreboard_usage_title">Schermata solo punteggio</string>
-    <string name="scoreboard_usage_message">I giocatori non sono configurati e la formazione in campo non é visualizzata</string>
     <string name="gender_description">Genere</string>
+    <string name="match_duration_text">Selezionare la durata di una partita</string>
+    <string name="league_name_hint">Nome della categoria o del torneo (opzionale)</string>
+    <string name="misc_tab">Varie</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Croce</string>
@@ -59,6 +65,7 @@
     <string name="technical_timeout_title">Tempo tecnico</string>
     <string name="game_interval_title">Intervallo tra i set</string>
     <string name="skip">Passa</string>
+    <string name="run_background">Eseguire in secondo piano</string>
     <string name="switch_sides_description">Cambio campo manuale</string>
     <string name="remove_point_description">Togli l\'ultimo punto</string>
     <string name="call_timeout_description">Chiama tempo di riposo</string>
@@ -68,9 +75,13 @@
     <string name="confirm_lineup_question">Confermi la composizione di entrambe le squadre titolari per il set?</string>
     <string name="no_substitution_message">Nessun cambio possibile</string>
     <string name="confirm_set_question">Vuoi confermare il punto?</string>
+    <string name="start_match_description">Iniziare la partita</string>
+    <string name="stop_match_description">Interrompere la partita</string>
+    <string name="confirm_start_match_question">Volete iniziare la partita?</string>
+    <string name="confirm_stop_match_question">Volete interrompere la partita?</string>
 
     <!-- Rules activity -->
-    <string name="rules">Regole</string>
+    <string name="rules">Regole personalizzate</string>
     <string name="general_preferences">Generali</string>
     <string name="timeout_preferences">Tempo di riposo</string>
     <string name="indoor_preferences">Pallavolo</string>
@@ -174,8 +185,8 @@
         <item>99</item>
     </string-array>
 
-    <!-- Recent games activity -->
-    <string name="recent_games">Partite recenti</string>
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Partite recenti</string>
     <string name="search_games">Cerca partite</string>
     <string name="delete_games">Cancella tutte le partite</string>
     <string name="delete_game">Cancella partita</string>

@@ -63,4 +63,9 @@
         <item name="android:windowBackground">@color/colorBackgroundMain</item>
     </style>
 
+    <style name="NumberPickerTheme" parent="AppTheme" >
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
+
 </resources>

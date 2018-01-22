@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -31,7 +32,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
+import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamListener;
@@ -43,19 +44,19 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener {
 
-    private GameService         mGameService;
-    private GamesHistoryService mGamesHistoryService;
-    private Random              mRandom;
-    private TeamType            mTeamOnLeftSide;
-    private TeamType            mTeamOnRightSide;
-    private TextView            mLeftTeamNameText;
-    private TextView            mRightTeamNameText;
-    private ImageButton         mSwapTeamsButton;
-    private Button              mLeftTeamScoreButton;
-    private Button              mRightTeamScoreButton;
-    private TextView            mLeftTeamSetsText;
-    private TextView            mRightTeamSetsText;
-    private ImageButton         mLeftTeamServiceButton;
+    private GameService          mGameService;
+    private RecordedGamesService mRecordedGamesService;
+    private Random               mRandom;
+    private TeamType             mTeamOnLeftSide;
+    private TeamType             mTeamOnRightSide;
+    private TextView             mLeftTeamNameText;
+    private TextView             mRightTeamNameText;
+    private ImageButton          mSwapTeamsButton;
+    private Button               mLeftTeamScoreButton;
+    private Button               mRightTeamScoreButton;
+    private TextView             mLeftTeamSetsText;
+    private TextView             mRightTeamSetsText;
+    private ImageButton          mLeftTeamServiceButton;
     private ImageButton         mRightTeamServiceButton;
     private TextView            mSetsText;
     private ImageButton         mScoreRemoveButton;
@@ -64,6 +65,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     private LinearLayout        mLeftTeamTimeoutLayout;
     private LinearLayout        mRightTeamTimeoutLayout;
     private Menu                mMenu;
+    private CountDown           mCountDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +84,21 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        setTitle("");
+        if (savedInstanceState == null) {
+            setTitle("");
+        }
+        else {
+            long duration = savedInstanceState.getLong("saved_timeout_duration");
+            startToolbarCountDown(duration);
+        }
 
         mGameService = ServicesProvider.getInstance().getGameService();
-        mGamesHistoryService = ServicesProvider.getInstance().getGamesHistoryService();
+        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
 
         mGameService.addScoreListener(this);
         mGameService.addTimeoutListener(this);
         mGameService.addTeamListener(this);
-        mGamesHistoryService.connectGameRecorder();
+        mRecordedGamesService.connectGameRecorder();
 
         mRandom = new Random();
 
@@ -181,7 +189,20 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mGameService.removeScoreListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeTeamListener(this);
-        mGamesHistoryService.disconnectGameRecorder();
+        mRecordedGamesService.disconnectGameRecorder();
+
+        if (mCountDown != null) {
+            mCountDown.getCountDownTimer().cancel();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mCountDown != null) {
+            outState.putLong("saved_timeout_duration", mCountDown.getDuration());
+        }
     }
 
     @Override
@@ -359,11 +380,13 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         // Left
         mLeftTeamNameText.setText(mGameService.getTeamName(mTeamOnLeftSide));
         UiUtils.colorTeamButton(this, mGameService.getTeamColor(mTeamOnLeftSide), mLeftTeamScoreButton);
+        UiUtils.colorTeamIconButton(this, mGameService.getTeamColor(mTeamOnLeftSide), mLeftTeamTimeoutButton);
 
         // Right
 
         mRightTeamNameText.setText(mGameService.getTeamName(mTeamOnRightSide));
         UiUtils.colorTeamButton(this, mGameService.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
+        UiUtils.colorTeamIconButton(this, mGameService.getTeamColor(mTeamOnRightSide), mRightTeamTimeoutButton);
 
         onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
         onSetsUpdated(mTeamOnLeftSide, mGameService.getSets(mTeamOnLeftSide));
@@ -382,6 +405,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         UiUtils.animateBounce(this, mLeftTeamSetsText);
         UiUtils.animateBounce(this, mRightTeamSetsText);
         UiUtils.animateBounce(this, mSetsText);
+        UiUtils.animateBounce(this, mLeftTeamTimeoutButton);
+        UiUtils.animateBounce(this, mRightTeamTimeoutButton);
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
             Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
@@ -503,6 +528,30 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     public void onGameInterval(int duration) {
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
         timeoutFragment.show(getFragmentManager(), "game_interval");
+    }
+
+    public void startToolbarCountDown(long duration) {
+        if (duration > 0L) {
+            mCountDown = new CountDown(duration);
+            mCountDown.setCountDownTimer(new CountDownTimer(mCountDown.getDuration(), 1000L) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mCountDown.setDuration(millisUntilFinished);
+                    setTitle(mCountDown.format(millisUntilFinished));
+                }
+
+                @Override
+                public void onFinish() {
+                    mCountDown = null;
+                    UiUtils.playNotificationSound(GameActivity.this);
+                    // Reset the title and possibly replaces it with set point or match point
+                    setTitle("");
+                    onPointsUpdated(TeamType.HOME, mGameService.getPoints(TeamType.HOME));
+                }
+            });
+
+            mCountDown.getCountDownTimer().start();
+        }
     }
 
     private void disableView() {

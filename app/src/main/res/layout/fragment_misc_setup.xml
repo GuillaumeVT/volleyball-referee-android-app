@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/default_margin_size"
+              android:gravity="top|center"
+              android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/league_name_input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        android:ems="10"
+        android:hint="@string/league_name_hint"
+        android:inputType="textCapWords"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"/>
+
+</LinearLayout>

@@ -5,5 +5,5 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:gravity="top|center"
-             tools:context="com.tonkar.volleyballreferee.ui.history.SavedTeamActivity"/>
+             tools:context="com.tonkar.volleyballreferee.ui.data.SavedTeamActivity"/>
 

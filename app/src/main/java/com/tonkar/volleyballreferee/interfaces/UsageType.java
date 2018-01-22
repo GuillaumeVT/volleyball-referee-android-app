@@ -1,5 +1,5 @@
 package com.tonkar.volleyballreferee.interfaces;
 
 public enum UsageType {
-    NORMAL, SCOREBOARD
+    NORMAL, POINTS_SCOREBOARD, TIME_SCOREBOARD
 }

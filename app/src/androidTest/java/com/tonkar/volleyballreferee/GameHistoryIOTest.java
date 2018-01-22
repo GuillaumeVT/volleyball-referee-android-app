@@ -3,12 +3,12 @@ package com.tonkar.volleyballreferee;
 import android.graphics.Color;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.history.JsonHistoryReader;
-import com.tonkar.volleyballreferee.business.history.JsonHistoryWriter;
-import com.tonkar.volleyballreferee.business.history.RecordedGame;
-import com.tonkar.volleyballreferee.business.history.RecordedPlayer;
-import com.tonkar.volleyballreferee.business.history.RecordedSet;
-import com.tonkar.volleyballreferee.business.history.RecordedTeam;
+import com.tonkar.volleyballreferee.business.data.JsonDataReader;
+import com.tonkar.volleyballreferee.business.data.JsonDataWriter;
+import com.tonkar.volleyballreferee.business.data.RecordedGame;
+import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
+import com.tonkar.volleyballreferee.business.data.RecordedSet;
+import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -40,9 +40,9 @@ public class GameHistoryIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonHistoryWriter.writeRecordedGamesStream(outputStream, expectedList);
+            JsonDataWriter.writeRecordedGamesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonHistoryReader.readRecordedGamesStream(inputStream);
+            actualList = JsonDataReader.readRecordedGamesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();

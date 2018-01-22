@@ -86,7 +86,9 @@ public class AlertDialogFragment extends DialogFragment {
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+                if (isAdded()) {
+                    UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+                }
             }
         });
         return alertDialog;

@@ -9,6 +9,17 @@
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity">
 
+    <AutoCompleteTextView
+        android:id="@+id/league_name_input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        android:ems="10"
+        android:hint="@string/league_name_hint"
+        android:inputType="textCapWords"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +63,7 @@
             android:layout_weight="3"
             android:ems="10"
             android:hint="@string/guest_team_hint"
+            android:imeOptions="actionDone"
             android:inputType="textCapWords"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/default_text_size"/>
@@ -75,9 +87,37 @@
         android:layout_margin="@dimen/default_margin_size"
         android:adjustViewBounds="true"
         android:contentDescription="@string/gender_description"
-        android:elevation="@dimen/cardview_default_elevation"
+        android:elevation="@dimen/round_button_elevation"
         android:onClick="switchGender"
         android:theme="@style/ImageButtonTheme"
         app:srcCompat="@drawable/ic_mixed"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/match_duration_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/match_duration_text"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size"/>
+
+        <NumberPicker
+            android:id="@+id/match_duration_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
+            android:theme="@style/NumberPickerTheme"/>
+
+    </LinearLayout>
 
 </LinearLayout>

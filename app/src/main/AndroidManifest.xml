@@ -34,21 +34,22 @@
             android:name=".ui.team.TeamsSetupActivity"
             android:parentActivityName=".ui.MainActivity"/>
         <activity android:name=".ui.game.GameActivity"/>
+        <activity android:name=".ui.game.TimeBasedGameActivity"/>
         <activity
-            android:name=".ui.history.RecentGamesListActivity"
+            android:name=".ui.data.RecordedGamesListActivity"
             android:parentActivityName=".ui.MainActivity"/>
         <activity
-            android:name=".ui.history.RecentIndoorGameActivity"
-            android:parentActivityName=".ui.history.RecentGamesListActivity"/>
+            android:name=".ui.data.RecordedIndoorGameActivity"
+            android:parentActivityName=".ui.data.RecordedGamesListActivity"/>
         <activity
-            android:name=".ui.history.RecentBeachGameActivity"
-            android:parentActivityName=".ui.history.RecentGamesListActivity"/>
+            android:name=".ui.data.RecordedBeachGameActivity"
+            android:parentActivityName=".ui.data.RecordedGamesListActivity"/>
         <activity
-            android:name=".ui.history.SavedTeamsListActivity"
+            android:name=".ui.data.SavedTeamsListActivity"
             android:parentActivityName=".ui.MainActivity"/>
         <activity
-            android:name=".ui.history.SavedTeamActivity"
-            android:parentActivityName=".ui.history.SavedTeamsListActivity"/>
+            android:name=".ui.data.SavedTeamActivity"
+            android:parentActivityName=".ui.data.SavedTeamsListActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

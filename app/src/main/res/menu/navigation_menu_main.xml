@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/match_group"
+        android:title="@string/match_group">
+        <menu>
+            <item
+                android:id="@+id/action_start_time_based_game"
+                android:icon="@drawable/ic_timeout"
+                android:title="@string/start_time_based_game"/>
+
+            <item
+                android:id="@+id/action_start_score_based_game_official"
+                android:icon="@drawable/ic_volley_ball"
+                android:title="@string/start_score_based_game_official"/>
+
+            <item
+                android:id="@+id/action_start_score_based_game_custom"
+                android:icon="@drawable/ic_volley_ball"
+                android:title="@string/start_score_based_game_custom"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/data_group"
+        android:title="@string/data_group">
+        <menu>
+            <item
+                android:id="@+id/action_recorded_games"
+                android:icon="@drawable/ic_games_menu"
+                android:title="@string/recorded_games"/>
+            <item
+                android:id="@+id/action_saved_teams"
+                android:icon="@drawable/ic_teams_menu"
+                android:title="@string/saved_teams"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/configuration_group"
+        android:title="@string/configuration_group">
+        <menu>
+            <item
+                android:id="@+id/action_rules"
+                android:icon="@drawable/ic_rules_menu"
+                android:title="@string/rules"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/action_settings"
+                android:icon="@drawable/ic_settings_menu"
+                android:title="@string/settings"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/action_facebook"
+        android:icon="@drawable/ic_facebook_menu"
+        android:title="@string/facebook"/>
+</menu>

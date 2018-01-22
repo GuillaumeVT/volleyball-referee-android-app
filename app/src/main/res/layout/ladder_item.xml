@@ -4,7 +4,7 @@
     android:id="@+id/ladder_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:elevation="@dimen/cardview_default_elevation"
+    android:elevation="@dimen/number_text_elevation"
     android:gravity="center"
     android:textAppearance="@style/TextViewTheme"
     android:textSize="@dimen/default_text_size"/>

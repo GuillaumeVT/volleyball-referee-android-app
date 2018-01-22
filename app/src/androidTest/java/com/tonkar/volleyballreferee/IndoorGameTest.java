@@ -2,8 +2,8 @@ package com.tonkar.volleyballreferee;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.game.Game;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_normal() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -32,7 +32,7 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -57,7 +57,7 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_normal() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -84,7 +84,7 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        Game game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame();
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {

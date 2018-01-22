@@ -23,4 +23,8 @@ public interface SavedTeamsService {
     void deleteSavedTeam(String teamName, GenderType genderType);
 
     void deleteAllSavedTeams();
+
+    void createAndSaveTeamFrom(BaseIndoorTeamService indoorTeamService, TeamType teamType);
+
+    void copyTeam(BaseIndoorTeamService source, BaseIndoorTeamService dest, TeamType teamType);
 }

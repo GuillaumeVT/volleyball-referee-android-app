@@ -8,7 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
-import com.tonkar.volleyballreferee.business.history.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -48,7 +48,7 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet5(indoorGame);
         playSet5_complete(indoorGame);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getGamesHistoryService().getRecordedGameService(indoorGame.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(indoorGame.getGameDate());
         PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -95,6 +95,8 @@ public class BrazilFranceIndoorGame {
 
     private void defineTeams(IndoorGame indoorGame) {
         indoorGame.setGenderType(GenderType.GENTS);
+
+        indoorGame.setLeagueName("FIVB Volleyball World League 2017");
 
         indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
         indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
@@ -144,7 +146,7 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.initTeams();
 
-        ServicesProvider.getInstance().getGamesHistoryService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }
 
     private void composeTeamsSet1(IndoorGame indoorGame) {

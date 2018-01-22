@@ -16,6 +16,12 @@
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">En temps</string>
+    <string name="start_score_based_game_official">Panneau de score (règles officielles)</string>
+    <string name="start_score_based_game_custom">Panneau de score (mes règles)</string>
+    <string name="match_group">Démarrer un match simplifié</string>
+    <string name="data_group">Données</string>
+    <string name="configuration_group">Configuration</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Configuration des équipes</string>
@@ -31,10 +37,10 @@
     <string name="select_gender">Sélectionner le genre</string>
     <string name="confirm">Confirmer</string>
     <string name="confirm_teams_setup_question">Confirmez-vous cette composition?</string>
-    <string name="scoreboard_usage">&#x25b6; Utiliser pour scorer</string>
-    <string name="scoreboard_usage_title">Simple panneau de score</string>
-    <string name="scoreboard_usage_message">Les joueurs ne sont pas configurés, et le terrain n\'est pas affiché</string>
     <string name="gender_description">Genre</string>
+    <string name="match_duration_text">Sélectionner la durée du match</string>
+    <string name="league_name_hint">Nom de la ligue / du tournoi (optionnel)</string>
+    <string name="misc_tab">Divers</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Pile</string>
@@ -59,6 +65,7 @@
     <string name="technical_timeout_title">Temps mort technique</string>
     <string name="game_interval_title">Pause entre les sets</string>
     <string name="skip">Passer</string>
+    <string name="run_background">Exécuter en arrière-plan</string>
     <string name="switch_sides_description">Changement de côté manuel</string>
     <string name="remove_point_description">Retirer dernier point</string>
     <string name="call_timeout_description">Appeler un temps mort</string>
@@ -68,9 +75,13 @@
     <string name="confirm_lineup_question">Confirmez-vous les compositions d\'équipe pour ce set?</string>
     <string name="no_substitution_message">Pas de changement possible</string>
     <string name="confirm_set_question">Confirmez-vous ce point?</string>
+    <string name="start_match_description">Démarrer le match</string>
+    <string name="stop_match_description">Arrêter le match</string>
+    <string name="confirm_start_match_question">Voulez-vous démarrer le match?</string>
+    <string name="confirm_stop_match_question">Voulez-vous arrêter le match?</string>
 
     <!-- Rules activity -->
-    <string name="rules">Règles</string>
+    <string name="rules">Mes règles</string>
     <string name="general_preferences">Générales</string>
     <string name="timeout_preferences">Temps morts</string>
     <string name="indoor_preferences">Volley-ball en salle</string>
@@ -174,8 +185,8 @@
         <item>99</item>
     </string-array>
 
-    <!-- Recent games activity -->
-    <string name="recent_games">Matchs récents</string>
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Matchs enregistrés</string>
     <string name="search_games">Rechercher des matchs</string>
     <string name="delete_games">Supprimer tous les matchs</string>
     <string name="delete_game">Supprimer un match</string>

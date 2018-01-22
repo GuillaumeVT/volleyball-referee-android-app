@@ -4,6 +4,10 @@ import java.util.Set;
 
 public interface BaseTeamService {
 
+    String getLeagueName();
+
+    void setLeagueName(String name);
+
     String getTeamName(TeamType teamType);
 
     int getTeamColor(TeamType teamType);

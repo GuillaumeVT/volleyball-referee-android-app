@@ -8,7 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.business.history.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -34,7 +34,7 @@ public class ItalyUsaBeachGame {
         playSet1_complete(beachGame);
         playSet2_complete(beachGame);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getGamesHistoryService().getRecordedGameService(beachGame.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(beachGame.getGameDate());
         PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -59,13 +59,14 @@ public class ItalyUsaBeachGame {
 
     private void defineTeams(BeachGame beachGame) {
         beachGame.setGenderType(GenderType.GENTS);
+        beachGame.setLeagueName("FIVB Beach Volleyball World Championship 2017");
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
         beachGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));
         beachGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt1));
         beachGame.initTeams();
 
-        ServicesProvider.getInstance().getGamesHistoryService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }
 
     private void playSet1_complete(BeachGame beachGame) {

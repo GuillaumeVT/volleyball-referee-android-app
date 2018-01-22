@@ -16,6 +16,12 @@
     <string name="delete">Unsun</string>
     <string name="ignore">Ignoruj</string>
     <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">Rozpocznij grę na czas</string>
+    <string name="start_score_based_game_official">Tablica wyników (oficjalne zasady)</string>
+    <string name="start_score_based_game_custom">Tablica wyników (moje zasady)</string>
+    <string name="match_group">Rozpocznij grę podstawową</string>
+    <string name="data_group">Dane</string>
+    <string name="configuration_group">Konfiguracja</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Skonfiguruj zespoły</string>
@@ -31,10 +37,10 @@
     <string name="select_gender">Wybierz płeć</string>
     <string name="confirm">Potwierdz</string>
     <string name="confirm_teams_setup_question">Czy potwierdzasz te ustawienia?</string>
-    <string name="scoreboard_usage">▶ Używaj tylko do zapisu punktów</string>
-    <string name="scoreboard_usage_title">Prosta tablica wyników</string>
-    <string name="scoreboard_usage_message">Gracze nie są skonfigurowani i boisko do gry nie jest wyświetlane</string>
     <string name="gender_description">Płeć</string>
+    <string name="match_duration_text">Wybierz czas trwania meczu</string>
+    <string name="league_name_hint">Liga / turniej (opcjonalnie)</string>
+    <string name="misc_tab">Różne</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Reszka</string>
@@ -59,6 +65,7 @@
     <string name="technical_timeout_title">Przerwa techniczna</string>
     <string name="game_interval_title">Przerwa miedzy setami</string>
     <string name="skip">Pomin</string>
+    <string name="run_background">Praca w tle</string>
     <string name="switch_sides_description">Zmien strony recznie</string>
     <string name="remove_point_description">Odejmij ostatni punkt</string>
     <string name="call_timeout_description">Wez czas</string>
@@ -68,9 +75,13 @@
     <string name="confirm_lineup_question">Czy potwierdzasz skład wyjsciowy obu drużyn w tym secie?</string>
     <string name="no_substitution_message">Brak zmiany</string>
     <string name="confirm_set_question">Czy potwierdzasz ten punkt</string>
+    <string name="start_match_description">Rozpocznij mecz</string>
+    <string name="stop_match_description">Zatrzymaj mecz</string>
+    <string name="confirm_start_match_question">Czy chcesz rozpocząć mecz?</string>
+    <string name="confirm_stop_match_question">Czy chcesz zatrzymać mecz?</string>
 
     <!-- Rules activity -->
-    <string name="rules">Zasady</string>
+    <string name="rules">Moje zasady</string>
     <string name="general_preferences">Ogólne</string>
     <string name="timeout_preferences">Czas</string>
     <string name="indoor_preferences">Siatkówka halowa</string>
@@ -174,8 +185,8 @@
         <item>99</item>
     </string-array>
 
-    <!-- Recent games activity -->
-    <string name="recent_games">Najnowsze mecze</string>
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Najnowsze mecze</string>
     <string name="search_games">Szukaj meczy</string>
     <string name="delete_games">Usun wszystkie mecze</string>
     <string name="delete_game">Usun mecz</string>

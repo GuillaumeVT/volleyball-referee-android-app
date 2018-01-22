@@ -10,9 +10,10 @@ import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 public class TeamSetupFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private final Context             mContext;
-    private       TeamSetupFragment   mHomeTeamSetupFragment;
-    private       TeamSetupFragment   mGuestTeamSetupFragment;
+    private final Context           mContext;
+    private final TeamSetupFragment mHomeTeamSetupFragment;
+    private final TeamSetupFragment mGuestTeamSetupFragment;
+    private final MiscSetupFragment mMiscSetupFragment;
 
     TeamSetupFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -20,11 +21,12 @@ public class TeamSetupFragmentPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
         mHomeTeamSetupFragment = TeamSetupFragment.newInstance(TeamType.HOME);
         mGuestTeamSetupFragment = TeamSetupFragment.newInstance(TeamType.GUEST);
+        mMiscSetupFragment = MiscSetupFragment.newInstance();
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -37,6 +39,9 @@ public class TeamSetupFragmentPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 1:
                 fragment = mGuestTeamSetupFragment;
+                break;
+            case 2:
+                fragment = mMiscSetupFragment;
                 break;
         }
 
@@ -53,6 +58,9 @@ public class TeamSetupFragmentPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 1:
                 title = mContext.getResources().getString(R.string.guest_team_tab);
+                break;
+            case 2:
+                title = mContext.getResources().getString(R.string.misc_tab);
                 break;
         }
 

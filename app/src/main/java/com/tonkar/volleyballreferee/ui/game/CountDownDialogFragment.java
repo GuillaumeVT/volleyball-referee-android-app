@@ -3,8 +3,6 @@ package com.tonkar.volleyballreferee.ui.game;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -13,22 +11,17 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 public class CountDownDialogFragment extends DialogFragment {
 
-    private int              mDuration;
-    private SimpleDateFormat mTimeoutFormat;
-    private CountDownTimer   mCountDownTimer;
-    private TextView         mCountDownView;
+    private CountDown mCountDown;
+    private TextView  mCountDownView;
 
     public static CountDownDialogFragment newInstance(int duration, String title) {
         CountDownDialogFragment fragment = new CountDownDialogFragment();
         Bundle args = new Bundle();
-        args.putInt("duration", duration);
+        args.putLong("timeout_duration", 1000L * (long) duration);
         args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
@@ -36,15 +29,17 @@ public class CountDownDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mTimeoutFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
+        long duration;
 
         if (savedInstanceState == null) {
-            mDuration = getArguments().getInt("duration");
-            playSound();
+            duration = getArguments().getLong("timeout_duration");
+            UiUtils.playNotificationSound(getActivity());
         }
         else {
-            mDuration = savedInstanceState.getInt("saved_duration");
+            duration = savedInstanceState.getLong("saved_timeout_duration");
         }
+
+        mCountDown = new CountDown(duration);
 
         String title = getArguments().getString("title");
 
@@ -58,26 +53,36 @@ public class CountDownDialogFragment extends DialogFragment {
         builder.setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("VBR-CountDown", "User cancels the countdown");
-                mCountDownTimer.cancel();
+                mCountDown.getCountDownTimer().cancel();
+            }
+        });
+        builder.setNeutralButton(R.string.run_background, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i("VBR-CountDown", "User runs the countdown in background");
+                mCountDown.getCountDownTimer().cancel();
+                if (isAdded() && getActivity() instanceof GameActivity) {
+                    GameActivity activity = (GameActivity) getActivity();
+                    activity.startToolbarCountDown(mCountDown.getDuration());
+                }
             }
         });
         final AlertDialog alertDialog = builder.create();
 
-        mCountDownTimer = new CountDownTimer(mDuration * 1000L, 1000L) {
+        mCountDown.setCountDownTimer(new CountDownTimer(mCountDown.getDuration(), 1000L) {
             @Override
             public void onTick(long millisUntilFinished) {
-                mDuration = (int) (millisUntilFinished / 1000);
-                mCountDownView.setText(mTimeoutFormat.format(new Date(millisUntilFinished)));
+                mCountDown.setDuration(millisUntilFinished);
+                mCountDownView.setText(mCountDown.format(millisUntilFinished));
             }
 
             @Override
             public void onFinish() {
-                playSound();
+                UiUtils.playNotificationSound(getActivity());
                 alertDialog.dismiss();
             }
-        };
+        });
 
-        mCountDownTimer.start();
+        mCountDown.getCountDownTimer().start();
 
         setCancelable(false);
 
@@ -88,26 +93,13 @@ public class CountDownDialogFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("saved_duration", mDuration);
+        outState.putLong("saved_timeout_duration", mCountDown.getDuration());
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCountDownTimer.cancel();
+        mCountDown.getCountDownTimer().cancel();
     }
 
-    private void playSound() {
-        final MediaPlayer timeoutPlayer = MediaPlayer.create(getActivity(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        if (timeoutPlayer != null) {
-            timeoutPlayer.setLooping(false);
-            timeoutPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    timeoutPlayer.release();
-                }
-            });
-            timeoutPlayer.start();
-        }
-    }
 }

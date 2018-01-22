@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              tools:context="com.tonkar.volleyballreferee.ui.data.RecordedBeachGameActivity">
+
+    <TextView
+        android:id="@+id/game_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/tiny_margin_size"
+        android:gravity="center"
+        android:textAppearance="@style/TextViewTheme"
+        android:textSize="@dimen/small_text_size"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/home_team_name_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/big_text_size"/>
+
+        <TextView
+            android:id="@+id/home_team_set_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1"
+            android:elevation="@dimen/number_text_elevation"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/big_text_size"/>
+
+        <TextView
+            android:id="@+id/guest_team_set_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1"
+            android:elevation="@dimen/number_text_elevation"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/big_text_size"/>
+
+        <TextView
+            android:id="@+id/guest_team_name_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/big_text_size"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/game_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAppearance="@style/TextViewTheme"
+        android:textSize="@dimen/small_text_size"/>
+
+    <ListView
+        android:id="@+id/recorded_game_set_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

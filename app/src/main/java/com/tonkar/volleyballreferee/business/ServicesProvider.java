@@ -2,10 +2,10 @@ package com.tonkar.volleyballreferee.business;
 
 import android.content.Context;
 
-import com.tonkar.volleyballreferee.business.history.GamesHistory;
-import com.tonkar.volleyballreferee.business.history.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GamesHistoryService;
+import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.TeamService;
@@ -15,8 +15,8 @@ public class ServicesProvider {
 
     private static ServicesProvider sServicesProvider;
     private        GameService      mCurrentGame;
-    private        GamesHistory     mCurrentGamesHistory;
-    private        SavedTeams       mCurrentSavedTeams;
+    private        RecordedGames    mRecordedGames;
+    private        SavedTeams       mSavedTeams;
 
     private ServicesProvider() {}
 
@@ -42,28 +42,28 @@ public class ServicesProvider {
         return mCurrentGame;
     }
 
-    public GamesHistoryService getGamesHistoryService() {
-        return mCurrentGamesHistory;
+    public RecordedGamesService getRecordedGamesService() {
+        return mRecordedGames;
     }
 
     public SavedTeamsService getSavedTeamsService() {
-        return  mCurrentSavedTeams;
+        return mSavedTeams;
     }
 
     private boolean isGameServiceAvailable() {
         return mCurrentGame != null;
     }
 
-    private boolean isGamesHistoryServiceAvailable() {
-        return mCurrentGamesHistory != null;
+    private boolean isRecordedGamesServiceAvailable() {
+        return mRecordedGames != null;
     }
 
     private boolean isSavedTeamsServiceAvailable() {
-        return mCurrentSavedTeams != null;
+        return mSavedTeams != null;
     }
 
     public boolean areServicesAvailable() {
-        return isGameServiceAvailable() && isGamesHistoryServiceAvailable() && isSavedTeamsServiceAvailable();
+        return isGameServiceAvailable() && isRecordedGamesServiceAvailable() && isSavedTeamsServiceAvailable();
     }
 
     public void initGameService(GameService gameService) {
@@ -71,33 +71,33 @@ public class ServicesProvider {
     }
 
     public void restoreGameService(Context context) {
-        restoreGamesHistoryService(context);
+        restoreRecordedGamesService(context);
         restoreSavedTeamsService(context);
-        if (mCurrentGamesHistory.hasCurrentGame()) {
-            initGameService(mCurrentGamesHistory.loadCurrentGame());
+        if (mRecordedGames.hasCurrentGame()) {
+            initGameService(mRecordedGames.loadCurrentGame());
         }
     }
 
     public void restoreGameServiceForSetup(Context context) {
-        restoreGamesHistoryService(context);
+        restoreRecordedGamesService(context);
         restoreSavedTeamsService(context);
-        if (mCurrentGamesHistory.hasSetupGame()) {
-            initGameService(mCurrentGamesHistory.loadSetupGame());
+        if (mRecordedGames.hasSetupGame()) {
+            initGameService(mRecordedGames.loadSetupGame());
         }
     }
 
-    public void restoreGamesHistoryService(Context context) {
-        if (!isGamesHistoryServiceAvailable()) {
-            mCurrentGamesHistory = new GamesHistory(context);
-            mCurrentGamesHistory.loadRecordedGames();
+    public void restoreRecordedGamesService(Context context) {
+        if (!isRecordedGamesServiceAvailable()) {
+            mRecordedGames = new RecordedGames(context);
+            mRecordedGames.loadRecordedGames();
         }
         restoreSavedTeamsService(context);
     }
 
     public void restoreSavedTeamsService(Context context) {
         if (!isSavedTeamsServiceAvailable()) {
-            mCurrentSavedTeams = new SavedTeams(context);
-            mCurrentSavedTeams.loadSavedTeams();
+            mSavedTeams = new SavedTeams(context);
+            mSavedTeams.loadSavedTeams();
         }
     }
 }

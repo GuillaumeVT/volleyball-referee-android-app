@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.tonkar.volleyballreferee.ui.history.SavedTeamsListActivity">
+    tools:context="com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity">
 
     <ListView
         android:id="@+id/saved_teams_list"

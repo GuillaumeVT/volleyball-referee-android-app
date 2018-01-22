@@ -16,6 +16,12 @@
     <string name="delete">Удалить</string>
     <string name="ignore">Пропустить</string>
     <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">Ограничение по времени</string>
+    <string name="start_score_based_game_official">Счётное табло (офиц. правила)</string>
+    <string name="start_score_based_game_custom">Счётное табло (мои правила)</string>
+    <string name="match_group">Начать упрощённый матч</string>
+    <string name="data_group">Данные</string>
+    <string name="configuration_group">Настройки</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Настройка команд</string>
@@ -31,10 +37,10 @@
     <string name="select_gender">Выберите категорию (пол)</string>
     <string name="confirm">Подтвердить</string>
     <string name="confirm_teams_setup_question">Подтвердить составы команд?</string>
-    <string name="scoreboard_usage">&#x25b6; Использовать как счётное табло</string>
-    <string name="scoreboard_usage_title">Исключительно счётное табло</string>
-    <string name="scoreboard_usage_message">Не нужно вводить игроков и расстановку. Площадка не отображается</string>
     <string name="gender_description">Пол</string>
+    <string name="match_duration_text">Выберите длительность матча</string>
+    <string name="league_name_hint">Название лиги / турнира (факультативно)</string>
+    <string name="misc_tab">Разное</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>
@@ -59,6 +65,7 @@
     <string name="technical_timeout_title">Технический перерыв</string>
     <string name="game_interval_title">Перерыв между партиями</string>
     <string name="skip">Пропустить</string>
+    <string name="run_background">Отправить на задний план</string>
     <string name="switch_sides_description">Поменять стороны площадки вручную</string>
     <string name="remove_point_description">Отменить последнее очко</string>
     <string name="call_timeout_description">Вызвать перерыв</string>
@@ -68,9 +75,13 @@
     <string name="confirm_lineup_question">Подтвердить стартовую расстановку обеих команд в данной партии?</string>
     <string name="no_substitution_message">Замена невозможна</string>
     <string name="confirm_set_question">Подтвердить окончание данной партии?</string>
+    <string name="start_match_description">Начать матч</string>
+    <string name="stop_match_description">Остановить матч</string>
+    <string name="confirm_start_match_question">Начать матч?</string>
+    <string name="confirm_stop_match_question">Остановить матч?</string>
 
     <!-- Rules activity -->
-    <string name="rules">Правила</string>
+    <string name="rules">Мои правила</string>
     <string name="general_preferences">Общие</string>
     <string name="timeout_preferences">Перерывы</string>
     <string name="indoor_preferences">Классический волейбол</string>
@@ -89,7 +100,7 @@
     <string name="pref_game_intervals_duration">Длительность перерывов между партиями</string>
     <string name="pref_team_substitutions_per_set">Количество замен в партии</string>
     <string name="pref_consecutive_serves_per_player">Максимальное число последовательных подач одним игроком</string>
-    <string name="pref_change_side_every_7_points">Смены сторон площадки после каждых набранных 7 очков</string>
+    <string name="pref_change_side_every_7_points">Смены сторон площадки каждые 7 очков</string>
 
     <string-array name="points_per_set_entries">
         <item>Партия из 25 очков</item>
@@ -164,7 +175,7 @@
     </string-array>
 
     <!-- Settings activity -->
-    <string name="settings">Настройки</string>
+    <string name="settings">Параметры</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
 
@@ -174,8 +185,8 @@
         <item>99</item>
     </string-array>
 
-    <!-- Recent games activity -->
-    <string name="recent_games">Сохранённые матчи</string>
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Сохранённые матчи</string>
     <string name="search_games">Поиск матча</string>
     <string name="delete_games">Удалить все матчи</string>
     <string name="delete_game">Удалить данный матч</string>

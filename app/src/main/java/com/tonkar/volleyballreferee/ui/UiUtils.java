@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -30,11 +32,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.history.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -118,6 +121,15 @@ public class UiUtils {
         }
 
         return textColor;
+    }
+
+    public static void colorTeamIconButton(Context context, int color, ImageButton button) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
+        } else {
+            button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        }
+        button.getDrawable().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
     }
 
     public static void shareGame(Context context, Window window, GameService gameService) {
@@ -216,6 +228,20 @@ public class UiUtils {
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.bounce_view);
         animation.setInterpolator(new BounceInterpolator());
         view.startAnimation(animation);
+    }
+
+    public static void playNotificationSound(Context context) {
+        final MediaPlayer timeoutPlayer = MediaPlayer.create(context, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        if (timeoutPlayer != null) {
+            timeoutPlayer.setLooping(false);
+            timeoutPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    timeoutPlayer.release();
+                }
+            });
+            timeoutPlayer.start();
+        }
     }
 
 }
