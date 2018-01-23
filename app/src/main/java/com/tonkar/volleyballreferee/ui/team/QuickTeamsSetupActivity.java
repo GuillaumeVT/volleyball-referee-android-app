@@ -279,10 +279,16 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         if (UsageType.TIME_SCOREBOARD.equals(mScoreService.getUsageType())) {
             Log.i("VBR-QTSActivity", "Start time-based game activity");
             final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
         } else {
             Log.i("VBR-QTSActivity", "Start game activity");
             final Intent gameIntent = new Intent(this, GameActivity.class);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
         }
     }

@@ -102,6 +102,9 @@ public class TeamsSetupActivity extends AppCompatActivity {
                 saveTeams();
                 Log.i("VBR-TSActivity", "Start game activity");
                 final Intent gameIntent = new Intent(TeamsSetupActivity.this, GameActivity.class);
+                gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(gameIntent);
             }
         });
