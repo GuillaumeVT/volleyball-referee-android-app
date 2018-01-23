@@ -125,15 +125,8 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     public Set<Integer> getPossibleSubstitutions(PositionType positionType) {
-        Set<Integer> availablePlayers = new TreeSet<>();
-
-        // Can only do a fix number of substitutions
-        if (canSubstitute()) {
-            availablePlayers.addAll(getPossibleSubstitutionsNoMax(positionType));
-        }
-
+        Set<Integer> availablePlayers = new TreeSet<>(getPossibleSubstitutionsNoMax(positionType));
         Log.i("VBR-Team", String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), mIndoorTeamDefinition.getTeamType().toString(), availablePlayers.toString()));
-
         return availablePlayers;
     }
 
@@ -153,16 +146,19 @@ public class IndoorTeamComposition extends TeamComposition {
                     availablePlayers.add(mWaitingMiddleBlocker);
                 }
             } else {
-                // A player who was replaced can only do one return trip with his regular replacement player
-                if (hasReplacementPlayer(number)) {
-                    if (canSubstitute(number)) {
-                        availablePlayers.add(getReplacementPlayer(number));
-                    }
-                } else {
-                    availablePlayers.addAll(getFreePlayersOnBench());
-                    // The waiting middle blocker may be on the bench, but it should never be available
-                    if (hasWaitingMiddleBlocker() && !hasReplacementPlayer(mWaitingMiddleBlocker)) {
-                        availablePlayers.remove(mWaitingMiddleBlocker);
+                // Can only do a fix number of substitutions
+                if (canSubstitute()) {
+                    // A player who was replaced can only do one return trip with his regular replacement player
+                    if (hasReplacementPlayer(number)) {
+                        if (canSubstitute(number)) {
+                            availablePlayers.add(getReplacementPlayer(number));
+                        }
+                    } else {
+                        availablePlayers.addAll(getFreePlayersOnBench());
+                        // The waiting middle blocker may be on the bench, but it should never be available
+                        if (hasWaitingMiddleBlocker() && !hasReplacementPlayer(mWaitingMiddleBlocker)) {
+                            availablePlayers.remove(mWaitingMiddleBlocker);
+                        }
                     }
                 }
                 // If no libero is on the court, they can replace the player if he is at the back

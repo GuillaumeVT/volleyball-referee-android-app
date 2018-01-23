@@ -223,7 +223,7 @@ public class IndoorTeamCompositionTest {
 
     @Test
     public void substitution_changePlayer_max() {
-        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10);
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(14);
         team.confirmStartingLineup();
 
         assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_1));
@@ -368,4 +368,69 @@ public class IndoorTeamCompositionTest {
         assertEquals(true, teamComposition.hasActingCaptainOnCourt());
     }
 
+    private IndoorTeamComposition createTeamWith16PlayersAnd2LiberosAndFillCourt() {
+        IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(16);
+        teamDefinition.addLibero(7);
+        teamDefinition.addLibero(8);
+        teamDefinition.setCaptain(3);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, 6);
+        int playersOnCourt = 6;
+
+        for (int index = 1; index <= playersOnCourt; index++) {
+            team.substitutePlayer(index, PositionType.fromInt(index));
+        }
+
+        return team;
+    }
+
+    @Test
+    public void substitution_changePlayer_max_putLibero() {
+        IndoorTeamComposition team = createTeamWith16PlayersAnd2LiberosAndFillCourt();
+        team.confirmStartingLineup();
+
+        assertEquals(true, team.substitutePlayer(11, PositionType.POSITION_1));
+        assertEquals(true, team.substitutePlayer(1, PositionType.POSITION_1));
+        assertEquals(true, team.substitutePlayer(12, PositionType.POSITION_2));
+        assertEquals(true, team.substitutePlayer(2, PositionType.POSITION_2));
+        assertEquals(true, team.substitutePlayer(13, PositionType.POSITION_3));
+        assertEquals(true, team.substitutePlayer(3, PositionType.POSITION_3));
+
+        assertEquals(0, team.getPossibleSubstitutions(PositionType.POSITION_4).size());
+        // The 2 liberos
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_6).size());
+
+        assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_5));
+        assertEquals(true, team.substitutePlayer(8, PositionType.POSITION_5));
+        assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_5));
+    }
+
+    @Test
+    public void substitution_changePlayer_max_changeLibero() {
+        IndoorTeamComposition team = createTeamWith16PlayersAnd2LiberosAndFillCourt();
+        team.confirmStartingLineup();
+
+        assertEquals(true, team.substitutePlayer(11, PositionType.POSITION_1));
+        assertEquals(true, team.substitutePlayer(1, PositionType.POSITION_1));
+        assertEquals(true, team.substitutePlayer(12, PositionType.POSITION_2));
+        assertEquals(true, team.substitutePlayer(2, PositionType.POSITION_2));
+
+        assertEquals(true, team.substitutePlayer(15, PositionType.POSITION_5));
+        assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_6));
+        // The other libero and #6
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_6).size());
+        assertEquals(true, team.substitutePlayer(5, PositionType.POSITION_5));
+        assertEquals(0, team.getPossibleSubstitutions(PositionType.POSITION_3).size());
+
+        // The other libero and #6
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_6).size());
+        assertEquals(true, team.substitutePlayer(8, PositionType.POSITION_6));
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_6).size());
+        assertEquals(true, team.substitutePlayer(7, PositionType.POSITION_6));
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_6).size());
+        assertEquals(true, team.substitutePlayer(6, PositionType.POSITION_6));
+        // The 2 liberos
+        assertEquals(2, team.getPossibleSubstitutions(PositionType.POSITION_6).size());
+
+        assertEquals(true, team.substitutePlayer(8, PositionType.POSITION_1));
+    }
 }

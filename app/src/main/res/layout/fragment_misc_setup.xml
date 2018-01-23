@@ -13,6 +13,7 @@
         android:layout_margin="@dimen/default_margin_size"
         android:ems="10"
         android:hint="@string/league_name_hint"
+        android:imeOptions="actionDone"
         android:inputType="textCapWords"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/default_text_size"/>
