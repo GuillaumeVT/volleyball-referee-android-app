@@ -38,7 +38,6 @@ If your language is missing and you feel like helping the community, you may con
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| Time-based matches                | Pending delivery                       |
 | Web recording / viewing           | In progress                            |
 
 
