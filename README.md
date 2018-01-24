@@ -39,5 +39,6 @@ If your language is missing and you feel like helping the community, you may con
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
 | Web recording / viewing           | In progress                            |
+| Penalty cards                     | Planned                                |
 
 
