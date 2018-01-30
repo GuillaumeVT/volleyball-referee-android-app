@@ -168,6 +168,9 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     }
 
     @Override
+    public void onSetStarted() {}
+
+    @Override
     public void onSetCompleted() {}
 
     @Override

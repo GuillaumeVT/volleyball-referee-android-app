@@ -27,6 +27,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
+import com.tonkar.volleyballreferee.interfaces.WebGamesService;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
@@ -34,10 +35,11 @@ import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesActivity;
 import com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity;
 import com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity;
+import com.tonkar.volleyballreferee.ui.web.WebActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int  PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
+    private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
     private RecordedGamesService mRecordedGamesService;
     private DrawerLayout         mDrawerLayout;
@@ -101,55 +103,67 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-                public boolean onNavigationItemSelected(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.action_rules:
-                            Log.i("VBR-MainActivity", "Rules");
-                            Intent intent = new Intent(MainActivity.this, RulesActivity.class);
-                            startActivity(intent);
-                            break;
-                        case R.id.action_settings:
-                            Log.i("VBR-MainActivity", "Settings");
-                            intent = new Intent(MainActivity.this, SettingsActivity.class);
-                            startActivity(intent);
-                            break;
-                        case R.id.action_recorded_games:
-                            Log.i("VBR-MainActivity", "Recorded games");
-                            intent = new Intent(MainActivity.this, RecordedGamesListActivity.class);
-                            startActivity(intent);
-                            break;
-                        case R.id.action_saved_teams:
-                            Log.i("VBR-MainActivity", "Saved teams");
-                            intent = new Intent(MainActivity.this, SavedTeamsListActivity.class);
-                            startActivity(intent);
-                            break;
-                        case R.id.action_facebook:
-                            Log.i("VBR-MainActivity", "Facebook");
-                            Intent browserIntent;
-                            try {
-                                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
-                                startActivity(browserIntent);
-                            } catch (ActivityNotFoundException e) {
-                                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
-                                startActivity(browserIntent);
-                            }
-                            break;
-                        case R.id.action_start_time_based_game:
-                            Log.i("VBR-MainActivity", "Start a time-based game");
-                            startTimeBasedGame();
-                            break;
-                        case R.id.action_start_score_based_game_official:
-                            Log.i("VBR-MainActivity", "Start an official score-based game");
-                            startScoreBasedGame(false);
-                            break;
-                        case R.id.action_start_score_based_game_custom:
-                            Log.i("VBR-MainActivity", "Start a custom score-based game");
-                            startScoreBasedGame(true);
-                            break;
-                    }
-                    mDrawerLayout.closeDrawers();
-                    return true;
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_rules:
+                        Log.i("VBR-MainActivity", "Rules");
+                        Intent intent = new Intent(MainActivity.this, RulesActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_settings:
+                        Log.i("VBR-MainActivity", "Settings");
+                        intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_recorded_games:
+                        Log.i("VBR-MainActivity", "Recorded games");
+                        intent = new Intent(MainActivity.this, RecordedGamesListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_saved_teams:
+                        Log.i("VBR-MainActivity", "Saved teams");
+                        intent = new Intent(MainActivity.this, SavedTeamsListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_view_live_games:
+                        Log.i("VBR-MainActivity", "Live games");
+                        intent = new Intent(MainActivity.this, WebActivity.class);
+                        intent.putExtra("url", WebGamesService.LIVE_URL);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_search_online_games:
+                        Log.i("VBR-MainActivity", "Search online games");
+                        intent = new Intent(MainActivity.this, WebActivity.class);
+                        intent.putExtra("url", WebGamesService.SEARCH_URL);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_facebook:
+                        Log.i("VBR-MainActivity", "Facebook");
+                        Intent browserIntent;
+                        try {
+                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
+                            startActivity(browserIntent);
+                        } catch (ActivityNotFoundException e) {
+                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
+                            startActivity(browserIntent);
+                        }
+                        break;
+                    case R.id.action_start_time_based_game:
+                        Log.i("VBR-MainActivity", "Start a time-based game");
+                        startTimeBasedGame();
+                        break;
+                    case R.id.action_start_score_based_game_official:
+                        Log.i("VBR-MainActivity", "Start an official score-based game");
+                        startScoreBasedGame(false);
+                        break;
+                    case R.id.action_start_score_based_game_custom:
+                        Log.i("VBR-MainActivity", "Start a custom score-based game");
+                        startScoreBasedGame(true);
+                        break;
                 }
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
         });
 
         ActionBar actionBar = getSupportActionBar();

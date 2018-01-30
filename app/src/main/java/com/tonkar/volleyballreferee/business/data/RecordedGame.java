@@ -8,6 +8,7 @@ import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.Timeout;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
+import com.tonkar.volleyballreferee.interfaces.WebGamesService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class RecordedGame implements RecordedGameService {
     private int               mHomeSets;
     private int               mGuestSets;
     private List<RecordedSet> mSets;
+    private boolean           mIsRecordedOnline;
 
     public RecordedGame() {
         mGameType = GameType.INDOOR;
@@ -41,14 +43,22 @@ public class RecordedGame implements RecordedGameService {
         mHomeSets = 0;
         mGuestSets = 0;
         mSets = new ArrayList<>();
+        mIsRecordedOnline = false;
     }
 
     @Override
     public String getGameSummary() {
-        return String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
+        String summary = String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
+
+        if (mIsRecordedOnline) {
+            String url = GameType.INDOOR.equals(mGameType) ? WebGamesService.VIEW_INDOOR_URL : WebGamesService.VIEW_BEACH_URL;
+            summary = summary + "\n" + String.format(Locale.getDefault(), url, mGameDate);
+        }
+
+        return summary;
     }
 
-    private int currentSetIndex() {
+    int currentSetIndex() {
         return mSets.size() -1;
     }
 
@@ -430,4 +440,13 @@ public class RecordedGame implements RecordedGameService {
         return result;
     }
 
+    @Override
+    public boolean isRecordedOnline() {
+        return mIsRecordedOnline;
+    }
+
+    @Override
+    public void setRecordedOnline(boolean recordedOnline) {
+        mIsRecordedOnline = recordedOnline;
+    }
 }

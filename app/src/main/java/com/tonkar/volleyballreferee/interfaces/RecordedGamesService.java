@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.interfaces;
 import java.util.List;
 import java.util.Set;
 
-public interface RecordedGamesService {
+public interface RecordedGamesService extends WebGamesService {
 
     String RECORDED_GAMES_FILE = "device_games_history.json";
 
@@ -13,7 +13,7 @@ public interface RecordedGamesService {
 
     void connectGameRecorder();
 
-    void disconnectGameRecorder();
+    void disconnectGameRecorder(boolean exiting);
 
     void loadRecordedGames();
 

@@ -8,6 +8,8 @@ public interface ScoreListener {
 
     void onServiceSwapped(TeamType teamType);
 
+    void onSetStarted();
+
     void onSetCompleted();
 
     void onMatchCompleted(final TeamType winner);

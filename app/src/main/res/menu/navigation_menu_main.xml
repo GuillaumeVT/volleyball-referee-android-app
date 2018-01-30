@@ -29,12 +29,20 @@
         <menu>
             <item
                 android:id="@+id/action_recorded_games"
-                android:icon="@drawable/ic_games_menu"
+                android:icon="@drawable/ic_recorded_games_menu"
                 android:title="@string/recorded_games"/>
             <item
                 android:id="@+id/action_saved_teams"
-                android:icon="@drawable/ic_teams_menu"
+                android:icon="@drawable/ic_saved_teams_menu"
                 android:title="@string/saved_teams"/>
+            <item
+                android:id="@+id/action_view_live_games"
+                android:icon="@drawable/ic_search_live_games_menu"
+                android:title="@string/view_live_games"/>
+            <item
+                android:id="@+id/action_search_online_games"
+                android:icon="@drawable/ic_search_online_games_menu"
+                android:title="@string/search_online_games"/>
         </menu>
     </item>
 

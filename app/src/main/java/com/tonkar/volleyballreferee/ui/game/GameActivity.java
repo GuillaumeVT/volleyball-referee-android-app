@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
@@ -57,15 +58,14 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     private TextView             mLeftTeamSetsText;
     private TextView             mRightTeamSetsText;
     private ImageButton          mLeftTeamServiceButton;
-    private ImageButton         mRightTeamServiceButton;
-    private TextView            mSetsText;
-    private ImageButton         mScoreRemoveButton;
-    private ImageButton         mLeftTeamTimeoutButton;
-    private ImageButton         mRightTeamTimeoutButton;
-    private LinearLayout        mLeftTeamTimeoutLayout;
-    private LinearLayout        mRightTeamTimeoutLayout;
-    private Menu                mMenu;
-    private CountDown           mCountDown;
+    private ImageButton          mRightTeamServiceButton;
+    private TextView             mSetsText;
+    private ImageButton          mScoreRemoveButton;
+    private ImageButton          mLeftTeamTimeoutButton;
+    private ImageButton          mRightTeamTimeoutButton;
+    private LinearLayout         mLeftTeamTimeoutLayout;
+    private LinearLayout         mRightTeamTimeoutLayout;
+    private CountDown            mCountDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,11 +189,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mGameService.removeScoreListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeTeamListener(this);
-        mRecordedGamesService.disconnectGameRecorder();
-
-        if (mCountDown != null) {
-            mCountDown.getCountDownTimer().cancel();
-        }
+        mRecordedGamesService.disconnectGameRecorder(isFinishing());
+        deleteToolbarCountdown();
     }
 
     @Override
@@ -202,6 +199,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
         if (mCountDown != null) {
             outState.putLong("saved_timeout_duration", mCountDown.getDuration());
+            deleteToolbarCountdown();
         }
     }
 
@@ -216,17 +214,28 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game, menu);
-        mMenu = menu;
 
-        if (ServicesProvider.getInstance().areServicesAvailable()) {
-            if (mGameService.isMatchCompleted()) {
-                disableMenu();
-            }
+        MenuItem recordMenu = menu.findItem(R.id.action_record_game);
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                MenuItem shareMenu = menu.findItem(R.id.action_share);
-                shareMenu.setVisible(false);
+        if (mGameService.isMatchCompleted()) {
+            MenuItem tossCoinMenu = menu.findItem(R.id.action_toss_coin);
+            tossCoinMenu.setVisible(false);
+            recordMenu.setVisible(false);
+        } else {
+            if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+                if (mRecordedGamesService.isOnlineRecordingEnabled()) {
+                    recordMenu.setIcon(R.drawable.ic_record_on_menu);
+                } else {
+                    recordMenu.setIcon(R.drawable.ic_record_off_menu);
+                }
+            } else {
+                recordMenu.setVisible(false);
             }
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            MenuItem shareMenu = menu.findItem(R.id.action_share);
+            shareMenu.setVisible(false);
         }
 
         return true;
@@ -243,6 +252,9 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
                 return true;
             case R.id.action_share:
                 share();
+                return true;
+            case R.id.action_record_game:
+                toggleOnlineRecording();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -261,7 +273,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             navigateToHome();
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-            builder.setTitle(getResources().getString(R.string.navigated_home)).setMessage(getResources().getString(R.string.navigated_home_question));
+            builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     navigateToHome();
@@ -282,7 +294,22 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
     private void share() {
         Log.i("VBR-GameActivity", "Share game");
-        UiUtils.shareGame(this, getWindow(), mGameService);
+        if (mGameService.isMatchCompleted()) {
+            UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
+        } else {
+            UiUtils.shareGame(this, getWindow(), mGameService, mRecordedGamesService.isOnlineRecordingEnabled());
+        }
+    }
+
+    private void toggleOnlineRecording() {
+        Log.i("VBR-GameActivity", "Toggle online recording");
+        mRecordedGamesService.toggleOnlineRecording();
+        if (mRecordedGamesService.isOnlineRecordingEnabled()) {
+            Toast.makeText(this, getResources().getString(R.string.stream_online_on_message), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.stream_online_off_message), Toast.LENGTH_LONG).show();
+        }
+        invalidateOptionsMenu();
     }
 
     // UI Callbacks
@@ -470,11 +497,15 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     }
 
     @Override
+    public void onSetStarted() {}
+
+    @Override
     public void onSetCompleted() {}
 
     @Override
     public void onMatchCompleted(final TeamType winner) {
-        disableAll();
+        disableView();
+        invalidateOptionsMenu();
         Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
 
@@ -514,30 +545,36 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
     @Override
     public void onTimeout(TeamType teamType, int duration) {
+        deleteToolbarCountdown();
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
         timeoutFragment.show(getFragmentManager(), "timeout");
     }
 
     @Override
     public void onTechnicalTimeout(int duration) {
+        deleteToolbarCountdown();
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.technical_timeout_title));
         timeoutFragment.show(getFragmentManager(), "technical_timeout");
     }
 
     @Override
     public void onGameInterval(int duration) {
+        deleteToolbarCountdown();
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
         timeoutFragment.show(getFragmentManager(), "game_interval");
     }
 
     public void startToolbarCountDown(long duration) {
         if (duration > 0L) {
+            deleteToolbarCountdown();
             mCountDown = new CountDown(duration);
             mCountDown.setCountDownTimer(new CountDownTimer(mCountDown.getDuration(), 1000L) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    mCountDown.setDuration(millisUntilFinished);
-                    setTitle(mCountDown.format(millisUntilFinished));
+                    if (mCountDown != null) {
+                        mCountDown.setDuration(millisUntilFinished);
+                        setTitle(mCountDown.format(millisUntilFinished));
+                    }
                 }
 
                 @Override
@@ -554,6 +591,15 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         }
     }
 
+    private void deleteToolbarCountdown() {
+        if (mCountDown != null) {
+            mCountDown.getCountDownTimer().cancel();
+            mCountDown = null;
+            setTitle("");
+            onPointsUpdated(TeamType.HOME, mGameService.getPoints(TeamType.HOME));
+        }
+    }
+
     private void disableView() {
         Log.i("VBR-GameActivity", "Disable game activity view");
         mSwapTeamsButton.setEnabled(false);
@@ -562,18 +608,6 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mScoreRemoveButton.setEnabled(false);
         mLeftTeamTimeoutButton.setEnabled(false);
         mRightTeamTimeoutButton.setEnabled(false);
-    }
-
-    private void disableMenu() {
-        Log.i("VBR-GameActivity", "Disable game activity menu");
-        final MenuItem tossCoinMenu = mMenu.findItem(R.id.action_toss_coin);
-        tossCoinMenu.setEnabled(false);
-    }
-
-    private void disableAll() {
-        Log.i("VBR-GameActivity", "Disable all game activity");
-        disableView();
-        disableMenu();
     }
 
 }

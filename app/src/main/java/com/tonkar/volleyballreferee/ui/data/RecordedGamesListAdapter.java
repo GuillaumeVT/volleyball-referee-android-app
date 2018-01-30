@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -35,9 +36,11 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         ImageView genderTypeImage;
         ImageView gameTypeImage;
         ImageView usageTypeImage;
+        ImageView statusImage;
         TextView  leagueText;
     }
 
+    private final Context                   mContext;
     private final LayoutInflater            mLayoutInflater;
     private final List<RecordedGameService> mRecordedGameServiceList;
     private final List<RecordedGameService> mFilteredRecordedGameServiceList;
@@ -46,6 +49,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
 
     RecordedGamesListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedGameService> recordedGameServiceList) {
         super(context, R.layout.recorded_games_list_item, recordedGameServiceList);
+        mContext = context;
         mLayoutInflater = layoutInflater;
         mRecordedGameServiceList = recordedGameServiceList;
         mFilteredRecordedGameServiceList = new ArrayList<>();
@@ -84,6 +88,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
             viewHolder.genderTypeImage = gameView.findViewById(R.id.recorded_game_gender_image);
             viewHolder.gameTypeImage = gameView.findViewById(R.id.recorded_game_type_image);
             viewHolder.usageTypeImage = gameView.findViewById(R.id.recorded_game_usage_image);
+            viewHolder.statusImage = gameView.findViewById(R.id.recorded_game_status_image);
             viewHolder.leagueText = gameView.findViewById(R.id.recorded_game_league);
             gameView.setTag(viewHolder);
         }
@@ -127,6 +132,19 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
 
         viewHolder.gameTypeImage.setVisibility(GameType.INDOOR.equals(recordedGameService.getGameType()) ? View.GONE : View.VISIBLE);
         viewHolder.usageTypeImage.setVisibility(UsageType.TIME_SCOREBOARD.equals(recordedGameService.getUsageType()) ? View.VISIBLE : View.GONE);
+
+        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext)) {
+            viewHolder.statusImage.setVisibility(View.VISIBLE);
+            if (recordedGameService.isRecordedOnline()) {
+                viewHolder.statusImage.setImageResource(R.drawable.ic_record_ok);
+                viewHolder.statusImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark), PorterDuff.Mode.SRC_IN));
+            } else {
+                viewHolder.statusImage.setImageResource(R.drawable.ic_record_off);
+                viewHolder.statusImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
+            }
+        } else {
+            viewHolder.statusImage.setVisibility(View.GONE);
+        }
 
         viewHolder.leagueText.setText(recordedGameService.getLeagueName());
         viewHolder.leagueText.setVisibility(recordedGameService.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);

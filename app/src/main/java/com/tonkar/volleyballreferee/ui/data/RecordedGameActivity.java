@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -38,6 +39,21 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             MenuItem shareMenu = menu.findItem(R.id.action_share_game);
             shareMenu.setVisible(false);
+
+            MenuItem pdfMenu = menu.findItem(R.id.action_generate_pdf);
+            pdfMenu.setVisible(false);
+        }
+
+        MenuItem recordMenu = menu.findItem(R.id.action_record_game);
+
+        if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+            if (mRecordedGamesService.isGameRecordedOnline(mGameDate)) {
+                recordMenu.setIcon(R.drawable.ic_record_ok_menu);
+            } else {
+                recordMenu.setIcon(R.drawable.ic_record_on_menu);
+            }
+        } else {
+            recordMenu.setVisible(false);
         }
 
         return true;
@@ -46,6 +62,9 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_record_game:
+                uploadGame();
+                return true;
             case R.id.action_generate_pdf:
                 generatePdf();
                 return true;
@@ -57,6 +76,14 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void uploadGame() {
+        Log.i("VBR-RGameActivity", "Upload game");
+        if (!mRecordedGamesService.isGameRecordedOnline(mGameDate)) {
+            mRecordedGamesService.uploadRecordedGameOnline(mGameDate);
+            invalidateOptionsMenu();
         }
     }
 

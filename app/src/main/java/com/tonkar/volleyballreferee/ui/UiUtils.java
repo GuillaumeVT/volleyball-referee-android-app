@@ -41,9 +41,11 @@ import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.WebGamesService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -132,7 +134,7 @@ public class UiUtils {
         button.getDrawable().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
     }
 
-    public static void shareGame(Context context, Window window, GameService gameService) {
+    public static void shareGame(Context context, Window window, GameService gameService, boolean online) {
         Log.i("VBR-Share", "Share screen");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             View rootView = window.getDecorView().findViewById(android.R.id.content);
@@ -158,7 +160,13 @@ public class UiUtils {
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType("image/*");
 
-                intent.putExtra(Intent.EXTRA_TEXT, gameService.getGameSummary());
+                String summary = gameService.getGameSummary();
+                if (online) {
+                    String url = GameType.INDOOR.equals(gameService.getGameType()) ? WebGamesService.VIEW_INDOOR_URL : WebGamesService.VIEW_BEACH_URL;
+                    summary = summary + "\n" + String.format(Locale.getDefault(), url, gameService.getGameDate());
+                }
+
+                intent.putExtra(Intent.EXTRA_TEXT, summary);
                 intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
                 try {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
@@ -214,6 +222,8 @@ public class UiUtils {
     public static void navigateToHome(Activity activity, boolean showResumeGameDialog) {
         Intent intent = new Intent(activity, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("show_resume_game", showResumeGameDialog);
         activity.startActivity(intent);
     }

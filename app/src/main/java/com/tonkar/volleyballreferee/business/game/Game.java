@@ -302,6 +302,8 @@ public abstract class Game implements GameService, Serializable {
             if (mRules.areGameIntervalsEnabled()) {
                 notifyGameIntervalReached();
             }
+
+            notifySetStarted();
         }
     }
 
@@ -319,8 +321,16 @@ public abstract class Game implements GameService, Serializable {
         }
     }
 
+    private void notifySetStarted() {
+        Log.i("VBR-Score", "Set is started");
+
+        for (final ScoreListener listener : mScoreListeners) {
+            listener.onSetStarted();
+        }
+    }
+
     private void notifySetCompleted() {
-        Log.i("VBR-Score", "Set is completed ");
+        Log.i("VBR-Score", "Set is completed");
 
         notifySetsUpdated(TeamType.HOME, getSets(TeamType.HOME));
         notifySetsUpdated(TeamType.GUEST, getSets(TeamType.GUEST));

@@ -9,6 +9,7 @@ import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.Timeout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 public class JsonDataWriter {
+
+    // Games
 
     static void writeRecordedGames(Context context, String fileName, List<RecordedGame> recordedGames) {
         Log.i("VBR-Data", String.format("Write recorded games into %s", fileName));
@@ -41,6 +44,30 @@ public class JsonDataWriter {
             writeGame(writer, recordedGame);
         }
         writer.endArray();
+    }
+
+    static byte[] getGame(RecordedGame recordedGame) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+        writeGame(writer, recordedGame);
+        writer.close();
+
+        outputStream.close();
+
+        return outputStream.toByteArray();
+    }
+
+    static byte[] getSet(RecordedSet recordedSet) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+        writeSet(writer, recordedSet);
+        writer.close();
+
+        outputStream.close();
+
+        return outputStream.toByteArray();
     }
 
     private static void writeGame(JsonWriter writer, RecordedGame recordedGame) throws IOException {
@@ -168,6 +195,8 @@ public class JsonDataWriter {
         }
         writer.endArray();
     }
+
+    // Teams
 
     static void writeSavedTeams(Context context, String fileName, List<SavedTeam> savedTeams) {
         Log.i("VBR-SavedTeams", String.format("Write saved teams into %s", fileName));

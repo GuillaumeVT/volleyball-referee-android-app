@@ -56,6 +56,11 @@ public class TeamsSetupActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        cancelTeams();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_teams_setup, menu);
@@ -71,6 +76,9 @@ public class TeamsSetupActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_confirm:
                 confirmTeams();
+                return true;
+            case android.R.id.home:
+                cancelTeams();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -119,6 +127,24 @@ public class TeamsSetupActivity extends AppCompatActivity {
         SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
         savedTeamsService.createAndSaveTeamFrom(mIndoorTeamService, TeamType.HOME);
         savedTeamsService.createAndSaveTeamFrom(mIndoorTeamService, TeamType.GUEST);
+    }
+
+    private void cancelTeams() {
+        Log.i("VBR-TSActivity", "Cancel teams");
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+        builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.leave_teams_setup_question));
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                UiUtils.navigateToHome(TeamsSetupActivity.this, false);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
 }

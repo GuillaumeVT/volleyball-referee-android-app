@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -56,7 +57,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     private TextView             mRemainingTimeText;
     private ImageButton          mStartMatchButton;
     private ImageButton          mStopMatchButton;
-    private Menu                 mMenu;
     private SimpleDateFormat     mTimeFormat;
     private CountDownTimer       mCountDownTimer;
 
@@ -129,10 +129,11 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         super.onDestroy();
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
+            mCountDownTimer = null;
         }
         mGameService.removeScoreListener(this);
         mGameService.removeTeamListener(this);
-        mRecordedGamesService.disconnectGameRecorder();
+        mRecordedGamesService.disconnectGameRecorder(isFinishing());
     }
 
     @Override
@@ -146,17 +147,28 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game, menu);
-        mMenu = menu;
 
-        if (ServicesProvider.getInstance().areServicesAvailable()) {
-            if (mGameService.isMatchCompleted()) {
-                disableMenu();
-            }
+        MenuItem recordMenu = menu.findItem(R.id.action_record_game);
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                MenuItem shareMenu = menu.findItem(R.id.action_share);
-                shareMenu.setVisible(false);
+        if (mGameService.isMatchCompleted()) {
+            MenuItem tossCoinMenu = menu.findItem(R.id.action_toss_coin);
+            tossCoinMenu.setVisible(false);
+            recordMenu.setVisible(false);
+        } else {
+            if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+                if (mRecordedGamesService.isOnlineRecordingEnabled()) {
+                    recordMenu.setIcon(R.drawable.ic_record_on_menu);
+                } else {
+                    recordMenu.setIcon(R.drawable.ic_record_off_menu);
+                }
+            } else {
+                recordMenu.setVisible(false);
             }
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            MenuItem shareMenu = menu.findItem(R.id.action_share);
+            shareMenu.setVisible(false);
         }
 
         return true;
@@ -173,6 +185,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
                 return true;
             case R.id.action_share:
                 share();
+                return true;
+            case R.id.action_record_game:
+                toggleOnlineRecording();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -192,7 +207,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         } else {
             if (mGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-                builder.setTitle(getResources().getString(R.string.navigated_home)).setMessage(getResources().getString(R.string.navigated_home_question));
+                builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         navigateToHome();
@@ -232,7 +247,22 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
 
     private void share() {
         Log.i("VBR-TBGameActivity", "Share game");
-        UiUtils.shareGame(this, getWindow(), mGameService);
+        if (mGameService.isMatchCompleted()) {
+            UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
+        } else {
+            UiUtils.shareGame(this, getWindow(), mGameService, mRecordedGamesService.isOnlineRecordingEnabled());
+        }
+    }
+
+    private void toggleOnlineRecording() {
+        Log.i("VBR-GameActivity", "Toggle online recording");
+        mRecordedGamesService.toggleOnlineRecording();
+        if (mRecordedGamesService.isOnlineRecordingEnabled()) {
+            Toast.makeText(this, getResources().getString(R.string.stream_online_on_message), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.stream_online_off_message), Toast.LENGTH_LONG).show();
+        }
+        invalidateOptionsMenu();
     }
 
     // UI Callbacks
@@ -316,7 +346,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
                 Log.i("VBR-TBGameActivity", "User accepts to stop");
                 mGameService.stop();
                 mCountDownTimer.cancel();
-                disableAll();
+                disableView();
+                invalidateOptionsMenu();
                 computeStartStopVisibility();
             }
         });
@@ -387,6 +418,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     @Override
+    public void onSetStarted() {}
+
+    @Override
     public void onSetCompleted() {}
 
     @Override
@@ -410,18 +444,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         mLeftTeamScoreButton.setEnabled(false);
         mRightTeamScoreButton.setEnabled(false);
         mScoreRemoveButton.setEnabled(false);
-    }
-
-    private void disableMenu() {
-        Log.i("VBR-GameActivity", "Disable game activity menu");
-        final MenuItem tossCoinMenu = mMenu.findItem(R.id.action_toss_coin);
-        tossCoinMenu.setEnabled(false);
-    }
-
-    private void disableAll() {
-        Log.i("VBR-GameActivity", "Disable all game activity");
-        disableView();
-        disableMenu();
     }
 
     private void computeStartStopVisibility() {

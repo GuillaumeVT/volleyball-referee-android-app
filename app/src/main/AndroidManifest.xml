@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -50,6 +51,9 @@
         <activity
             android:name=".ui.data.SavedTeamActivity"
             android:parentActivityName=".ui.data.SavedTeamsListActivity"/>
+        <activity
+            android:name=".ui.web.WebActivity"
+            android:parentActivityName=".ui.MainActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -60,6 +64,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+
     </application>
 
 </manifest>

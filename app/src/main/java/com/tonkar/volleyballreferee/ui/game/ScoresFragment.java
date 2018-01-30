@@ -71,6 +71,9 @@ public class ScoresFragment extends Fragment implements NamedGameFragment, Score
     public void onServiceSwapped(TeamType teamType) {}
 
     @Override
+    public void onSetStarted() {}
+
+    @Override
     public void onSetCompleted() {}
 
     @Override

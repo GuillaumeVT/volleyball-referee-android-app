@@ -69,6 +69,15 @@
             app:srcCompat="@drawable/ic_sun"/>
 
         <ImageView
+            android:id="@+id/recorded_game_status_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginRight="@dimen/small_margin_size"
+            app:srcCompat="@drawable/ic_record_off"/>
+
+        <ImageView
             android:id="@+id/recorded_game_gender_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

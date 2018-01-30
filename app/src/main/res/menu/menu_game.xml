@@ -5,20 +5,27 @@
         android:icon="@drawable/ic_home_menu"
         android:iconTint="@android:color/white"
         android:orderInCategory="1"
-        android:title="@string/navigated_home"
+        android:title="@string/navigate_home"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_record_game"
+        android:icon="@drawable/ic_record_off_menu"
+        android:iconTint="@android:color/white"
+        android:orderInCategory="2"
+        android:title="@string/stream_game"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share_menu"
         android:iconTint="@android:color/white"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:title="@string/share"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_toss_coin"
         android:icon="@drawable/ic_coin_menu"
         android:iconTint="@android:color/white"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:title="@string/toss_coin"
         app:showAsAction="always"/>
 </menu>
