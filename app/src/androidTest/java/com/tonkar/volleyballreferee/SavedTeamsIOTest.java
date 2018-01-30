@@ -5,8 +5,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.JsonDataReader;
-import com.tonkar.volleyballreferee.business.data.JsonDataWriter;
+import com.tonkar.volleyballreferee.business.data.JsonSavedTeamsReader;
+import com.tonkar.volleyballreferee.business.data.JsonSavedTeamsWriter;
 import com.tonkar.volleyballreferee.business.data.SavedTeam;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
@@ -111,9 +111,9 @@ public class SavedTeamsIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonDataWriter.writeSavedTeamsStream(outputStream, expectedList);
+            JsonSavedTeamsWriter.writeSavedTeamsStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonDataReader.readSavedTeamsStream(inputStream);
+            actualList = JsonSavedTeamsReader.readSavedTeamsStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();

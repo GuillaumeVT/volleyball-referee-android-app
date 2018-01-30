@@ -27,7 +27,7 @@ public class SavedTeams implements SavedTeamsService {
     public void loadSavedTeams() {
         mSavedTeam = null;
         mSavedTeams.clear();
-        mSavedTeams.addAll(JsonDataReader.readSavedTeams(mContext, SAVED_TEAMS_FILE));
+        mSavedTeams.addAll(JsonSavedTeamsReader.readSavedTeams(mContext, SAVED_TEAMS_FILE));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SavedTeams implements SavedTeamsService {
     @Override
     public void saveCurrentTeam() {
         mSavedTeams.add(mSavedTeam);
-        JsonDataWriter.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
+        JsonSavedTeamsWriter.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
         mSavedTeam = null;
     }
 
@@ -81,13 +81,13 @@ public class SavedTeams implements SavedTeamsService {
                 iterator.remove();
             }
         }
-        JsonDataWriter.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
+        JsonSavedTeamsWriter.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
     }
 
     @Override
     public void deleteAllSavedTeams() {
         mSavedTeams.clear();
-        JsonDataWriter.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
+        JsonSavedTeamsWriter.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
     }
 
     @Override

@@ -88,7 +88,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     public void loadRecordedGames() {
         mRecordedGames.clear();
         mRecordedLeagues.clear();
-        mRecordedGames.addAll(JsonDataReader.readRecordedGames(mContext, RECORDED_GAMES_FILE));
+        mRecordedGames.addAll(JsonRecordedGamesReader.readRecordedGames(mContext, RECORDED_GAMES_FILE));
         assessAreRecordedOnline();
         for (RecordedGame recordedGame : mRecordedGames) {
             mRecordedLeagues.add(recordedGame.getLeagueName());
@@ -128,13 +128,13 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                 iterator.remove();
             }
         }
-        JsonDataWriter.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
+        JsonRecordedGamesWriter.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
     }
 
     @Override
     public void deleteAllRecordedGames() {
         mRecordedGames.clear();
-        JsonDataWriter.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
+        JsonRecordedGamesWriter.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
     }
 
     @Override
@@ -258,7 +258,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         if (onlineRecordingEnabled && recordedGameService != null) {
             RecordedGame recordedGame = (RecordedGame) recordedGameService;
             try {
-                final byte[] bytes = JsonDataWriter.getGame(recordedGame);
+                final byte[] bytes = JsonRecordedGamesWriter.getGame(recordedGame);
 
                 RequestQueue queue = Volley.newRequestQueue(mContext);
                 String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, recordedGameService.getGameDate());
@@ -299,7 +299,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
             RecordedSet recordedSet = mRecordedGame.getSets().get(setIndex);
 
             try {
-                final byte[] bytes = JsonDataWriter.getSet(recordedSet);
+                final byte[] bytes = JsonRecordedGamesWriter.getSet(recordedSet);
 
                 RequestQueue queue = Volley.newRequestQueue(mContext);
                 String url = String.format(Locale.getDefault(), WebGamesService.SET_API_URL, mRecordedGame.getGameDate(), setIndex);
@@ -348,7 +348,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         if (mRecordedGame != null) {
             mRecordedGames.add(mRecordedGame);
         }
-        JsonDataWriter.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
+        JsonRecordedGamesWriter.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
         uploadCurrentGameOnline();
         deleteCurrentGame();
     }

@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee;
 import android.graphics.Color;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.data.JsonDataReader;
-import com.tonkar.volleyballreferee.business.data.JsonDataWriter;
+import com.tonkar.volleyballreferee.business.data.JsonRecordedGamesReader;
+import com.tonkar.volleyballreferee.business.data.JsonRecordedGamesWriter;
 import com.tonkar.volleyballreferee.business.data.RecordedGame;
 import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.data.RecordedSet;
@@ -40,9 +40,9 @@ public class GameHistoryIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonDataWriter.writeRecordedGamesStream(outputStream, expectedList);
+            JsonRecordedGamesWriter.writeRecordedGamesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonDataReader.readRecordedGamesStream(inputStream);
+            actualList = JsonRecordedGamesReader.readRecordedGamesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
