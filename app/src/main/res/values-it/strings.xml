@@ -9,7 +9,7 @@
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">Autorizzazioni</string>
-    <string name="permission_message">L\'applicazione richiede l\'autorizzazione al salvataggio dei dati per poter condividere i risultati. Rifiutando inattivi l'opzione.</string>
+    <string name="permission_message">Questa applicazione richiede l\'autorizzazione al salvataggio dei risultati delle partite per la condivisione.</string>
     <string name="resume_game_title">Riprendi la partita</string>
     <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
     <string name="resume">Riprendi</string>
@@ -22,10 +22,11 @@
     <string name="match_group">Iniziare una partita in modalità semplice</string>
     <string name="data_group">Dati</string>
     <string name="configuration_group">Configurazione</string>
+    <string name="view_live_games">Guardare le partite in diretta in linea</string>
+    <string name="search_online_games">Cercare le partite in linea</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Configura le squadre</string>
-    <string name="liberos_setup_title">Configura i liberi</string>
     <string name="home_team_tab">Squadra ospitante</string>
     <string name="home_team_hint">Nome della squadra ospitante</string>
     <string name="guest_team_tab">Squadra avversaria</string>
@@ -41,16 +42,17 @@
     <string name="match_duration_text">Selezionare la durata di una partita</string>
     <string name="league_name_hint">Nome della categoria o del torneo (opzionale)</string>
     <string name="misc_tab">Varie</string>
+    <string name="leave_teams_setup_question">Questa configurazione di partita sarà persa. Uscrire?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Croce</string>
     <string name="toss_heads">Testa</string>
     <string name="toss_coin">Lancia la moneta</string>
     <string name="swap_first_service">Cambia il primo servizio</string>
-    <string name="navigated_home">Torna alla pagina principale</string>
+    <string name="navigate_home">Torna alla pagina principale</string>
     <string name="share">Condividi</string>
     <string name="share_exception">Errore nella condivisione della partita</string>
-    <string name="navigated_home_question">Potrai riprendere l\'attuale partita più tardi, continua?</string>
+    <string name="navigate_home_question">Potrai riprendere l\'attuale partita più tardi. Uscrire?</string>
     <string name="select_player_title">Scegli un giocatore dalla panchina</string>
     <string name="court_position_tab">Posizioni</string>
     <string name="points_tab">Punti</string>
@@ -79,6 +81,9 @@
     <string name="stop_match_description">Interrompere la partita</string>
     <string name="confirm_start_match_question">Volete iniziare la partita?</string>
     <string name="confirm_stop_match_question">Volete interrompere la partita?</string>
+    <string name="stream_game">Trasmettere la partita in linea</string>
+    <string name="stream_online_on_message">La partita é stata trasmessa in linea</string>
+    <string name="stream_online_off_message">La partita non é più trasmessa in linea</string>
 
     <!-- Rules activity -->
     <string name="rules">Regole personalizzate</string>
@@ -104,7 +109,15 @@
 
     <string-array name="points_per_set_entries">
         <item>Set a 25 punti</item>
+        <item>Set a 24 punti</item>
+        <item>Set a 23 punti</item>
+        <item>Set a 22 punti</item>
         <item>Set a 21 punti</item>
+        <item>Set a 20 punti</item>
+        <item>Set a 19 punti</item>
+        <item>Set a 18 punti</item>
+        <item>Set a 17 punti</item>
+        <item>Set a 16 punti</item>
         <item>Set a 15 punti</item>
     </string-array>
     <string-array name="sets_per_game_entries">
@@ -140,7 +153,15 @@
 
     <string-array name="points_per_set_values">
         <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
         <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
         <item>15</item>
     </string-array>
     <string-array name="sets_per_game_values">
@@ -176,6 +197,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
+    <string name="pref_stream_online">Trasmettere le partite in linea</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
     <string name="pref_number_of_shirts">Numero di divise nella configurazione della squadra</string>
 
@@ -197,6 +219,8 @@
     <string name="players">Giocatori</string>
     <string name="report_game">Generare il referto della partita</string>
     <string name="report_exception">Errore di generazione o visualizzazione del referto della partita</string>
+    <string name="upload_success_message">La partita é stata salvata sul server</string>
+    <string name="upload_error_message">La partita non ha potuto essere salvata sul server</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Squadre salvate</string>
@@ -210,6 +234,6 @@
     <string name="saved_team">La squadra é stata salvata</string>
     <string name="deleted_teams">Tutte le squadre sono state cancellate</string>
     <string name="leave_team_creation_title">Esci dalla creazione della squadra</string>
-    <string name="leave_team_creation_question">Questa squadra non sarà salvata, continuare?</string>
+    <string name="leave_team_creation_question">Questa squadra non sarà salvata. Uscrire?</string>
 
 </resources>

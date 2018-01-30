@@ -10,7 +10,7 @@
     <string name="indoor_description">Teremröplabda kép</string>
     <string name="beach_description">Strandröplabda kép</string>
     <string name="permission_title">App jogosultságok</string>
-    <string name="permission_message">Az alkalmazásnak hozzá kell férnie a készülék tárhelyéhez azért, hogy tárolja a mérkőzések eredményeit. Az engedély nélkül ez a funkció letiltásra kerül.</string>
+    <string name="permission_message">Tárhely jogosultság szükséges a mérkőzés eredmények megosztásához.</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
     <string name="resume">Folytatás</string>
@@ -23,10 +23,11 @@
     <string name="match_group">Mérkőzés indítása</string>
     <string name="data_group">Adatok</string>
     <string name="configuration_group">Beállítások</string>
+    <string name="view_live_games">Élő mérközések megtekintése online</string>
+    <string name="search_online_games">Online mérkőzések keresése</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Csapatok beállítása</string>
-    <string name="liberos_setup_title">Liberók beállítása</string>
     <string name="home_team_tab">Hazai csapat</string>
     <string name="home_team_hint">Hazai csapat neve</string>
     <string name="guest_team_tab">Vendég csapat</string>
@@ -42,16 +43,17 @@
     <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
     <string name="league_name_hint">Bajnokság / torna neve (opcionális)</string>
     <string name="misc_tab">Egyéb</string>
+    <string name="leave_teams_setup_question">A mérközés beállításai el fognak veszni. Biztosan kilépsz?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Írás</string>
     <string name="toss_heads">Fej</string>
     <string name="toss_coin">Pénzfeldobás</string>
     <string name="swap_first_service">Nyító csapat váltása</string>
-    <string name="navigated_home">Vissza a kezdő képernyőre</string>
+    <string name="navigate_home">Vissza a kezdő képernyőre</string>
     <string name="share">Megosztás</string>
     <string name="share_exception">Nem sikerült a mérkőzés megosztása</string>
-    <string name="navigated_home_question">Később folytathatod a mérkőzést. Nyugodtan kiléphetsz.</string>
+    <string name="navigate_home_question">Később folytathatod a mérkőzést. Nyugodtan kiléphetsz.</string>
     <string name="select_player_title">Válassz egy cserejátékost</string>
     <string name="court_position_tab">Állásrend</string>
     <string name="points_tab">Pontok</string>
@@ -80,6 +82,9 @@
     <string name="stop_match_description">Mérkőzés megállítása</string>
     <string name="confirm_start_match_question">Biztosan elindítod a mérkőzést?</string>
     <string name="confirm_stop_match_question">Biztosan megállítod a mérkőzést?</string>
+    <string name="stream_game">Mérkőzés közvetítése</string>
+    <string name="stream_online_on_message">A mérkőzés online közvetítve van</string>
+    <string name="stream_online_off_message">A mérközés online közvetítése véget ért</string>
 
     <!-- Rules activity -->
     <string name="rules">Egyedi szabályok</string>
@@ -105,7 +110,15 @@
 
     <string-array name="points_per_set_entries">
         <item>25 pontos játszmák</item>
+        <item>24 pontos játszmák</item>
+        <item>23 pontos játszmák</item>
+        <item>22 pontos játszmák</item>
         <item>21 pontos játszmák</item>
+        <item>20 pontos játszmák</item>
+        <item>19 pontos játszmák</item>
+        <item>18 pontos játszmák</item>
+        <item>17 pontos játszmák</item>
+        <item>16 pontos játszmák</item>
         <item>15 pontos játszmák</item>
     </string-array>
     <string-array name="sets_per_game_entries">
@@ -141,7 +154,15 @@
 
     <string-array name="points_per_set_values">
         <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
         <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
         <item>15</item>
     </string-array>
     <string-array name="sets_per_game_values">
@@ -177,6 +198,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Beállítások</string>
+    <string name="pref_stream_online">Mérközések online közvetítése</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
     <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>
 
@@ -198,6 +220,8 @@
     <string name="players">Játékosok</string>
     <string name="report_game">Jegyzőkönyv generálása</string>
     <string name="report_exception">Nem sikerült a jegyzőkönyv generálása</string>
+    <string name="upload_success_message">A mérközés feltöltése sikeres volt</string>
+    <string name="upload_error_message">A mérközést nem sikerült feltölteni</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Mentett csapatok</string>

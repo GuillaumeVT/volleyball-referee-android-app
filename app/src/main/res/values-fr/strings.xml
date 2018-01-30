@@ -9,7 +9,7 @@
     <string name="indoor_description">Image volley-ball en salle</string>
     <string name="beach_description">Image beach volley-ball</string>
     <string name="permission_title">À propos des autorisations</string>
-    <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats. Les refuser désactivera cette fonctionnalité.</string>
+    <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Reprendre le match</string>
     <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le reprendre ou le supprimer?</string>
     <string name="resume">Reprendre</string>
@@ -22,10 +22,11 @@
     <string name="match_group">Démarrer un match simplifié</string>
     <string name="data_group">Données</string>
     <string name="configuration_group">Configuration</string>
+    <string name="view_live_games">Regarder les matchs en direct en ligne</string>
+    <string name="search_online_games">Chercher des matchs en ligne</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Configuration des équipes</string>
-    <string name="liberos_setup_title">Configuration des libéros</string>
     <string name="home_team_tab">Équipe à domicile</string>
     <string name="home_team_hint">Nom de l\'équipe à domicile</string>
     <string name="guest_team_tab">Équipe à l\'extérieur</string>
@@ -41,16 +42,17 @@
     <string name="match_duration_text">Sélectionner la durée du match</string>
     <string name="league_name_hint">Nom de la ligue / du tournoi (optionnel)</string>
     <string name="misc_tab">Divers</string>
+    <string name="leave_teams_setup_question">Cette configuration de match sera perdue. Quitter?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Pile</string>
     <string name="toss_heads">Face</string>
     <string name="toss_coin">Tirer au sort</string>
     <string name="swap_first_service">Échanger le premier service</string>
-    <string name="navigated_home">Retour à la page d\'accueil</string>
+    <string name="navigate_home">Retour à la page d\'accueil</string>
     <string name="share">Partager</string>
     <string name="share_exception">Échec du partage du match</string>
-    <string name="navigated_home_question">Il sera possible de reprendre le match en cours, continuer?</string>
+    <string name="navigate_home_question">Il sera possible de reprendre le match en cours. Quitter?</string>
     <string name="select_player_title">Sélectionner un joueur du banc</string>
     <string name="court_position_tab">Positions</string>
     <string name="points_tab">Points</string>
@@ -79,6 +81,9 @@
     <string name="stop_match_description">Arrêter le match</string>
     <string name="confirm_start_match_question">Voulez-vous démarrer le match?</string>
     <string name="confirm_stop_match_question">Voulez-vous arrêter le match?</string>
+    <string name="stream_game">Diffuser le match en ligne</string>
+    <string name="stream_online_on_message">Le match est diffusé en ligne</string>
+    <string name="stream_online_off_message">Le match n\'est plus diffusé en ligne</string>
 
     <!-- Rules activity -->
     <string name="rules">Mes règles</string>
@@ -104,7 +109,15 @@
 
     <string-array name="points_per_set_entries">
         <item>Set de 25 points</item>
+        <item>Set de 24 points</item>
+        <item>Set de 23 points</item>
+        <item>Set de 22 points</item>
         <item>Set de 21 points</item>
+        <item>Set de 20 points</item>
+        <item>Set de 19 points</item>
+        <item>Set de 18 points</item>
+        <item>Set de 17 points</item>
+        <item>Set de 16 points</item>
         <item>Set de 15 points</item>
     </string-array>
     <string-array name="sets_per_game_entries">
@@ -140,7 +153,15 @@
 
     <string-array name="points_per_set_values">
         <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
         <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
         <item>15</item>
     </string-array>
     <string-array name="sets_per_game_values">
@@ -176,6 +197,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
+    <string name="pref_stream_online">Diffuser les matchs en ligne</string>
     <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
     <string name="pref_number_of_shirts">Nombre de maillots dans la définition d\'équipe</string>
 
@@ -197,6 +219,8 @@
     <string name="players">Joueurs</string>
     <string name="report_game">Générer un rapport pour le match</string>
     <string name="report_exception">Échec de la génération ou de l\'affichage du rapport</string>
+    <string name="upload_success_message">Le match a été téléchargé vers le serveur</string>
+    <string name="upload_error_message">Le match n\'a pas pu être téléchargé vers le serveur</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Équipes enregistrées</string>
@@ -210,6 +234,6 @@
     <string name="saved_team">L\'équipe a été enregistrée</string>
     <string name="deleted_teams">Toutes les équipes ont été supprimées</string>
     <string name="leave_team_creation_title">Quitter la création d\'équipe</string>
-    <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée, continuer?</string>
+    <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée. Quitter?</string>
 
 </resources>

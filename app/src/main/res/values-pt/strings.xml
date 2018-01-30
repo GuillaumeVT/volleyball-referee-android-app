@@ -9,7 +9,7 @@
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">Permissões</string>
-    <string name="permission_message">Essa aplicação precisa de permissão ao seu armazenamento para compartilhar os resultados. Negar a permissão desabilita essa função.</string>
+    <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
     <string name="resume_game_title">Encerrar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume">Continuar</string>
@@ -22,10 +22,11 @@
     <string name="match_group">Iniciar uma partida básica</string>
     <string name="data_group">Dados</string>
     <string name="configuration_group">Configurações</string>
+    <string name="view_live_games">Acompanhe partidas ao vivo</string>
+    <string name="search_online_games">Procurar partidas ao vivo</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Selecionar Equipes</string>
-    <string name="liberos_setup_title">Selecionar Líberos</string>
     <string name="home_team_tab">Equipe da casa</string>
     <string name="home_team_hint">Nome da Equipe da casa</string>
     <string name="guest_team_tab">Equipe visitante</string>
@@ -41,16 +42,17 @@
     <string name="match_duration_text">Escolha a duração da partida</string>
     <string name="league_name_hint">Nome da Competição (opcional)</string>
     <string name="misc_tab">Diversos</string>
+    <string name="leave_teams_setup_question">A configuração desta partida será perdida, continuar assim mesmo?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Coroa</string>
     <string name="toss_heads">Cara</string>
     <string name="toss_coin">Jogue a moeda</string>
     <string name="swap_first_service">Alterar primeiro saque</string>
-    <string name="navigated_home">Retornar ao Início</string>
+    <string name="navigate_home">Retornar ao Início</string>
     <string name="share">Compartilhar</string>
     <string name="share_exception">Falha ao compartilhar partida</string>
-    <string name="navigated_home_question">Deseja continuar a partida atual depois?</string>
+    <string name="navigate_home_question">Deseja continuar a partida atual depois?</string>
     <string name="select_player_title">Escolha um jogador do banco</string>
     <string name="court_position_tab">Posições</string>
     <string name="points_tab">Pontos</string>
@@ -79,6 +81,9 @@
     <string name="stop_match_description">Encerrar partida</string>
     <string name="confirm_start_match_question">Deseja iniciar essa partida?</string>
     <string name="confirm_stop_match_question">Deseja encerrar essa partida?</string>
+    <string name="stream_game">Transmitir a partida ao vivo</string>
+    <string name="stream_online_on_message">A partida está sendo transmitida ao vivo</string>
+    <string name="stream_online_off_message">A trnasmissão desta partida ao vivo terminou</string>
 
     <!-- Rules activity -->
     <string name="rules">Regras personalizadas</string>
@@ -104,7 +109,15 @@
 
     <string-array name="points_per_set_entries">
         <item>Set de 25 pontos</item>
+        <item>Set de 24 pontos</item>
+        <item>Set de 23 pontos</item>
+        <item>Set de 22 pontos</item>
         <item>Set de 21 pontos</item>
+        <item>Set de 20 pontos</item>
+        <item>Set de 19 pontos</item>
+        <item>Set de 18 pontos</item>
+        <item>Set de 17 pontos</item>
+        <item>Set de 16 pontos</item>
         <item>Set de 15 pontos</item>
     </string-array>
     <string-array name="sets_per_game_entries">
@@ -140,7 +153,15 @@
 
     <string-array name="points_per_set_values">
         <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
         <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
         <item>15</item>
     </string-array>
     <string-array name="sets_per_game_values">
@@ -176,6 +197,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
+    <string name="pref_stream_online">Transmitir as partidas ao vivo</string>
     <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
     <string name="pref_number_of_shirts">Selecione a numeração da camisa mais alta de sua equipe</string>
 
@@ -197,6 +219,8 @@
     <string name="players">Jogadores</string>
     <string name="report_game">Gerar relatório da partida</string>
     <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
+    <string name="upload_success_message">O upload desta partida foi concluído com sucesso</string>
+    <string name="upload_error_message">Não foi possível concluir o upload desta partida</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Equipes salvas</string>
