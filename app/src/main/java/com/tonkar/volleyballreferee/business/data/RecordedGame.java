@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.business.data;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
@@ -18,18 +19,29 @@ import java.util.TreeSet;
 
 public class RecordedGame implements RecordedGameService {
 
+    @SerializedName("kind")
     private GameType          mGameType;
+    @SerializedName("date")
     private long              mGameDate;
+    @SerializedName("gender")
     private GenderType        mGenderType;
+    @SerializedName("usage")
     private UsageType         mUsageType;
+    @SerializedName("live")
     private boolean           mLive;
+    @SerializedName("league")
     private String            mLeagueName;
+    @SerializedName("hTeam")
     private RecordedTeam      mHomeTeam;
+    @SerializedName("gTeam")
     private RecordedTeam      mGuestTeam;
+    @SerializedName("hSets")
     private int               mHomeSets;
+    @SerializedName("gSets")
     private int               mGuestSets;
+    @SerializedName("sets")
     private List<RecordedSet> mSets;
-    private boolean           mIsRecordedOnline;
+    private transient boolean mIsRecordedOnline;
 
     public RecordedGame() {
         mGameType = GameType.INDOOR;

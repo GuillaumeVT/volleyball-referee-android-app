@@ -1,31 +1,51 @@
 package com.tonkar.volleyballreferee.business.data;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.Timeout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecordedSet {
 
+    @SerializedName("duration")
     private       long                 mDuration;
+    @SerializedName("hPoints")
     private       int                  mHomeTeamPoints;
+    @SerializedName("gPoints")
     private       int                  mGuestTeamPoints;
+    @SerializedName("hTimeouts")
     private       int                  mHomeTeamTimeouts;
+    @SerializedName("gTimeouts")
     private       int                  mGuestTeamTimeouts;
+    @SerializedName("ladder")
     private final List<TeamType>       mPointsLadder;
+    @SerializedName("serving")
     private       TeamType             mServingTeam;
+    @SerializedName("hCurrentPlayers")
     private final List<RecordedPlayer> mHomeTeamCurrentPlayers;
+    @SerializedName("gCurrentPlayers")
     private final List<RecordedPlayer> mGuestTeamCurrentPlayers;
+    @SerializedName("hStartingPlayers")
     private final List<RecordedPlayer> mHomeTeamStartingPlayers;
+    @SerializedName("gStartingPlayers")
     private final List<RecordedPlayer> mGuestTeamStartingPlayers;
+    @SerializedName("hSubstitutions")
     private final List<Substitution>   mHomeTeamSubstitutions;
+    @SerializedName("gSubstitutions")
     private final List<Substitution>   mGuestTeamSubstitutions;
+    @SerializedName("hCaptain")
     private       int                  mHomeTeamActingCaptain;
+    @SerializedName("gCaptain")
     private       int                  mGuestTeamActingCaptain;
+    @SerializedName("hCalledTimeouts")
     private final List<Timeout>        mHomeTeamCalledTimeouts;
+    @SerializedName("gCalledTimeouts")
     private final List<Timeout>        mGuestTeamCalledTimeouts;
+    @SerializedName("rTime")
     private       long                 mRemainingTime;
 
     public RecordedSet() {

@@ -1,10 +1,13 @@
 package com.tonkar.volleyballreferee.business.data;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 
 public class RecordedPlayer {
 
+    @SerializedName("num")
     private int          mNumber;
+    @SerializedName("pos")
     private PositionType mPositionType;
 
     public RecordedPlayer() {

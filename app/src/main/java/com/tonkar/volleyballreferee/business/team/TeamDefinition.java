@@ -1,7 +1,9 @@
 package com.tonkar.volleyballreferee.business.team;
 
+import android.graphics.Color;
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -11,16 +13,21 @@ import java.util.TreeSet;
 
 public abstract class TeamDefinition implements Serializable {
 
+    @SerializedName("name")
     private       String       mName;
+    @SerializedName("team")
     private final TeamType     mTeamType;
-    private       int          mColor;
+    @SerializedName("color")
+    private       String       mColor;
+    @SerializedName("players")
     private final Set<Integer> mPlayers;
+    @SerializedName("gender")
     private       GenderType   mGenderType;
 
     public TeamDefinition(final TeamType teamType) {
         mName = "";
         mTeamType = teamType;
-        mColor = Integer.MIN_VALUE;
+        mColor = colorIntToHtml(Integer.MIN_VALUE);
         mPlayers = new TreeSet<>();
         mGenderType = GenderType.MIXED;
     }
@@ -61,11 +68,11 @@ public abstract class TeamDefinition implements Serializable {
     }
 
     public int getColor() {
-        return mColor;
+        return Color.parseColor(mColor);
     }
 
     public void setColor(int color) {
-        mColor = color;
+        mColor = colorIntToHtml(color);
     }
 
     public GenderType getGenderType() {
@@ -74,5 +81,9 @@ public abstract class TeamDefinition implements Serializable {
 
     public void setGenderType(GenderType genderType) {
         mGenderType = genderType;
+    }
+
+    String colorIntToHtml(int color) {
+        return String.format("#%06X", (0xFFFFFF & color)).toLowerCase();
     }
 }

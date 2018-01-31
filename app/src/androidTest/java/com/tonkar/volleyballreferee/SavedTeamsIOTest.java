@@ -5,9 +5,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.JsonSavedTeamsReader;
-import com.tonkar.volleyballreferee.business.data.JsonSavedTeamsWriter;
+import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.SavedTeam;
+import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -109,14 +109,24 @@ public class SavedTeamsIOTest {
         expectedList.add((SavedTeam) ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamService("FRANCE", GenderType.GENTS));
         List<SavedTeam> actualList = new ArrayList<>();
 
+        List<IndoorTeamDefinition> expectedDefinitionList = new ArrayList<>();
+        for (SavedTeam savedTeam : expectedList) {
+            expectedDefinitionList.add(savedTeam.getIndoorTeamDefinition());
+        }
+        List<IndoorTeamDefinition> actualDefinitionList = new ArrayList<>();
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonSavedTeamsWriter.writeSavedTeamsStream(outputStream, expectedList);
+            JsonIOUtils.writeTeamDefinitionsStream(outputStream, expectedDefinitionList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonSavedTeamsReader.readSavedTeamsStream(inputStream);
+            actualDefinitionList = JsonIOUtils.readTeamDefinitionsStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        for (IndoorTeamDefinition teamDefinition : actualDefinitionList) {
+            actualList.add(new SavedTeam(teamDefinition));
         }
 
         assertEquals(expectedList, actualList);

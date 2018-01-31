@@ -1,5 +1,8 @@
 package com.tonkar.volleyballreferee.business.data;
 
+import android.graphics.Color;
+
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 
 import java.util.Set;
@@ -7,18 +10,25 @@ import java.util.TreeSet;
 
 public class RecordedTeam {
 
+    @SerializedName("name")
     private String       mName;
-    private int          mColor;
-    private int          mLiberoColor;
+    @SerializedName("color")
+    private String       mColor;
+    @SerializedName("liberoColor")
+    private String       mLiberoColor;
+    @SerializedName("players")
     private Set<Integer> mPlayers;
+    @SerializedName("liberos")
     private Set<Integer> mLiberos;
+    @SerializedName("captain")
     private int          mCaptain;
+    @SerializedName("gender")
     private GenderType   mGenderType;
 
     RecordedTeam() {
         mName = "";
-        mColor = -1; // white
-        mLiberoColor = -1; // white
+        mColor = "#ffffff"; // white
+        mLiberoColor = "#ffffff"; // white
         mPlayers = new TreeSet<>();
         mLiberos = new TreeSet<>();
         mCaptain = -1;
@@ -34,19 +44,19 @@ public class RecordedTeam {
     }
 
     int getColor() {
-        return mColor;
+        return Color.parseColor(mColor);
     }
 
     public void setColor(int color) {
-        mColor = color;
+        mColor = colorIntToHtml(color);
     }
 
     int getLiberoColor() {
-        return mLiberoColor;
+        return Color.parseColor(mLiberoColor);
     }
 
     public void setLiberoColor(int liberoColor) {
-        mLiberoColor = liberoColor;
+        mLiberoColor = colorIntToHtml(liberoColor);
     }
 
     public Set<Integer> getPlayers() {
@@ -91,5 +101,9 @@ public class RecordedTeam {
         }
 
         return result;
+    }
+
+    private String colorIntToHtml(int color) {
+        return String.format("#%06X", (0xFFFFFF & color)).toLowerCase();
     }
 }

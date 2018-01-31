@@ -1,12 +1,18 @@
 package com.tonkar.volleyballreferee.interfaces;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Substitution implements Serializable {
 
+    @SerializedName("pIn")
     private int mPlayerIn;
+    @SerializedName("pOut")
     private int mPlayerOut;
+    @SerializedName("hPoints")
     private int mHomeTeamPoints;
+    @SerializedName("gPoints")
     private int mGuestTeamPoints;
 
     public Substitution() {

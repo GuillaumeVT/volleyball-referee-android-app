@@ -1,7 +1,9 @@
 package com.tonkar.volleyballreferee.business.team;
 
+import android.graphics.Color;
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
 import java.util.Set;
@@ -9,16 +11,24 @@ import java.util.TreeSet;
 
 public class IndoorTeamDefinition extends TeamDefinition {
 
-    private       int          mLiberoColor;
+    @SerializedName("liberoColor")
+    private       String       mLiberoColor;
+    @SerializedName("liberos")
     private final Set<Integer> mLiberos;
+    @SerializedName("captain")
     private       int          mCaptain;
 
     public IndoorTeamDefinition(final TeamType teamType) {
         super(teamType);
 
-        mLiberoColor = Integer.MIN_VALUE;
+        mLiberoColor = colorIntToHtml(Integer.MIN_VALUE);
         mLiberos = new TreeSet<>();
         mCaptain = -1;
+    }
+
+    // For GSON Deserialization
+    public IndoorTeamDefinition() {
+        this(TeamType.HOME);
     }
 
     @Override
@@ -30,11 +40,11 @@ public class IndoorTeamDefinition extends TeamDefinition {
     }
 
     public int getLiberoColor() {
-        return mLiberoColor;
+        return Color.parseColor(mLiberoColor);
     }
 
     public void setLiberoColor(int color) {
-        mLiberoColor = color;
+        mLiberoColor = colorIntToHtml(color);
     }
 
     public boolean isLibero(int number) {

@@ -1,10 +1,14 @@
 package com.tonkar.volleyballreferee.interfaces;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Timeout implements Serializable {
 
+    @SerializedName("hPoints")
     private int mHomeTeamPoints;
+    @SerializedName("gPoints")
     private int mGuestTeamPoints;
 
     public Timeout() {

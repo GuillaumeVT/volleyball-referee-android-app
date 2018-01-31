@@ -20,6 +20,10 @@ public class SavedTeam implements BaseIndoorTeamService {
         mIndoorTeamDefinition = teamDefinition;
     }
 
+    public IndoorTeamDefinition getIndoorTeamDefinition() {
+        return mIndoorTeamDefinition;
+    }
+
     @Override
     public String getLeagueName() {
         return "";
