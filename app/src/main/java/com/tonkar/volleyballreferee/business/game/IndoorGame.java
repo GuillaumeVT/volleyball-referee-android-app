@@ -21,6 +21,11 @@ public class IndoorGame extends Game implements IndoorTeamService {
         super(GameType.INDOOR, rules);
     }
 
+    // For GSON Deserialization
+    public IndoorGame() {
+        this(Rules.OFFICIAL_INDOOR_RULES);
+    }
+
     @Override
     protected TeamDefinition createTeamDefinition(TeamType teamType) {
         return new IndoorTeamDefinition(teamType);

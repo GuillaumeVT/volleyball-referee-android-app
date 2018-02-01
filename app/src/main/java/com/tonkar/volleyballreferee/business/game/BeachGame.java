@@ -14,6 +14,11 @@ public class BeachGame extends Game implements BeachTeamService {
         super(GameType.BEACH, rules);
     }
 
+    // For GSON Deserialization
+    public BeachGame() {
+        this(Rules.OFFICIAL_BEACH_RULES);
+    }
+
     @Override
     protected TeamDefinition createTeamDefinition(TeamType teamType) {
         return new BeachTeamDefinition(teamType);

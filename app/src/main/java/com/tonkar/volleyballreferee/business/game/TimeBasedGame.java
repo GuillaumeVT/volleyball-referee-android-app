@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.business.game;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -16,36 +17,50 @@ import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
-public class TimeBasedGame implements TimeBasedGameService, Serializable {
+public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
-    private final     long                         mGameDate;
-    private           GenderType                   mGenderType;
-    private           String                       mLeagueName;
-    private final     TeamDefinition               mHomeTeam;
-    private final     TeamDefinition               mGuestTeam;
-    private           TeamType                     mTeamOnLeftSide;
-    private           TeamType                     mTeamOnRightSide;
-    private           int                          mHomeTeamPoints;
-    private           int                          mGuestTeamPoints;
-    private final     List<TeamType>               mPointsLadder;
-    private           long                         mDuration;
-    private           long                         mStartTime;
-    private           long                         mEndTime;
-    private           boolean                      mIsStopped;
-    private           TeamType                     mServingTeamAtStart;
+    @SerializedName("gameDate")
+    private final long           mGameDate;
+    @SerializedName("genderType")
+    private       GenderType     mGenderType;
+    @SerializedName("leagueName")
+    private       String         mLeagueName;
+    @SerializedName("homeTeam")
+    private final TeamDefinition mHomeTeam;
+    @SerializedName("guestTeam")
+    private final TeamDefinition mGuestTeam;
+    @SerializedName("teamOnLeftSide")
+    private       TeamType       mTeamOnLeftSide;
+    @SerializedName("teamOnRightSide")
+    private       TeamType       mTeamOnRightSide;
+    @SerializedName("homeTeamPoints")
+    private       int            mHomeTeamPoints;
+    @SerializedName("guestTeamPoints")
+    private       int            mGuestTeamPoints;
+    @SerializedName("pointsLadder")
+    private final List<TeamType> mPointsLadder;
+    @SerializedName("duration")
+    private       long           mDuration;
+    @SerializedName("startTime")
+    private       long           mStartTime;
+    @SerializedName("endTime")
+    private       long           mEndTime;
+    @SerializedName("isStopped")
+    private       boolean        mIsStopped;
+    @SerializedName("servingTeamAtStart")
+    private       TeamType       mServingTeamAtStart;
+
     private transient java.util.Set<ScoreListener> mScoreListeners;
     private transient java.util.Set<TeamListener>  mTeamListeners;
 
     TimeBasedGame() {
+        super();
         mGameDate = System.currentTimeMillis();
         mGenderType = GenderType.MIXED;
         mLeagueName = "";
@@ -500,11 +515,6 @@ public class TimeBasedGame implements TimeBasedGameService, Serializable {
     private void initTransientFields() {
         mScoreListeners = new HashSet<>();
         mTeamListeners = new HashSet<>();
-    }
-
-    private void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        inputStream.defaultReadObject();
-        initTransientFields();
     }
 
     @Override

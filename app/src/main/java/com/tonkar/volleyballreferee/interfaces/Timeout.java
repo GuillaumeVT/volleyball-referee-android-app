@@ -2,18 +2,15 @@ package com.tonkar.volleyballreferee.interfaces;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Timeout implements Serializable {
+public class Timeout {
 
     @SerializedName("hPoints")
-    private int mHomeTeamPoints;
+    private final int mHomeTeamPoints;
     @SerializedName("gPoints")
-    private int mGuestTeamPoints;
+    private final int mGuestTeamPoints;
 
     public Timeout() {
-        mHomeTeamPoints = 0;
-        mGuestTeamPoints = 0;
+        this(0, 0);
     }
 
     public Timeout(int homeTeamPoints, int guestTeamPoints) {
@@ -27,14 +24,6 @@ public class Timeout implements Serializable {
 
     public int getGuestTeamPoints() {
         return mGuestTeamPoints;
-    }
-
-    public void setHomeTeamPoints(int homeTeamPoints) {
-        mHomeTeamPoints = homeTeamPoints;
-    }
-
-    public void setGuestTeamPoints(int guestTeamPoints) {
-        mGuestTeamPoints = guestTeamPoints;
     }
 
     @Override

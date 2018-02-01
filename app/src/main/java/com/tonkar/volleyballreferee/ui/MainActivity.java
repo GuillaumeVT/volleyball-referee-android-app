@@ -90,11 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (mRecordedGamesService.hasCurrentGame()) {
-            if (mRecordedGamesService.loadCurrentGame() == null) {
-                mRecordedGamesService.deleteCurrentGame();
-            } else {
-                resumeCurrentGameWithDialog(savedInstanceState);
-            }
+            resumeCurrentGameWithDialog(savedInstanceState);
         }
     }
 

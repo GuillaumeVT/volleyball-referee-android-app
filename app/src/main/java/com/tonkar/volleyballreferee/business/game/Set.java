@@ -1,32 +1,48 @@
 package com.tonkar.volleyballreferee.business.game;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.Timeout;
 import com.tonkar.volleyballreferee.rules.Rules;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Set implements Serializable {
+public abstract class Set {
 
+    @SerializedName("classType")
+    private       String          mClassType;
+    @SerializedName("pointsToWinSet")
     private final int             mPointsToWinSet;
+    @SerializedName("homeTeamPoints")
     private       int             mHomeTeamPoints;
+    @SerializedName("guestTeamPoints")
     private       int             mGuestTeamPoints;
+    @SerializedName("homeTeamRemainingTimeouts")
     private       int             mHomeTeamRemainingTimeouts;
+    @SerializedName("guestTeamRemainingTimeouts")
     private       int             mGuestTeamRemainingTimeouts;
+    @SerializedName("pointsLadder")
     private final List<TeamType>  mPointsLadder;
+    @SerializedName("servingTeamAtStart")
     private       TeamType        mServingTeamAtStart;
+    @SerializedName("startTime")
     private       long            mStartTime;
+    @SerializedName("endTime")
     private       long            mEndTime;
+    @SerializedName("homeTeamComposition")
     private       TeamComposition mHomeTeamComposition;
+    @SerializedName("guestTeamComposition")
     private       TeamComposition mGuestTeamComposition;
+    @SerializedName("homeTeamCalledTimeouts")
     private final List<Timeout>   mHomeTeamCalledTimeouts;
+    @SerializedName("guestTeamCalledTimeouts")
     private final List<Timeout>   mGuestTeamCalledTimeouts;
 
     public Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
+        mClassType = getClass().getName();
         mPointsToWinSet = pointsToWinSet;
 
         mHomeTeamPoints = 0;
@@ -237,6 +253,34 @@ public abstract class Set implements Serializable {
         }
 
         return teamComposition;
+    }
+
+    private String getClassType() {
+        return mClassType;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof Set) {
+            Set other = (Set) obj;
+            result = (this.getClassType().equals(other.getClassType()))
+                    && (this.getPoints(TeamType.HOME) == other.getPoints(TeamType.HOME))
+                    && (this.getPoints(TeamType.GUEST) == other.getPoints(TeamType.GUEST))
+                    && (this.getRemainingTimeouts(TeamType.HOME) == other.getRemainingTimeouts(TeamType.HOME))
+                    && (this.getRemainingTimeouts(TeamType.GUEST) == other.getRemainingTimeouts(TeamType.GUEST))
+                    && (this.getPointsLadder().equals(other.getPointsLadder()))
+                    && (this.getServingTeamAtStart().equals(other.getServingTeamAtStart()))
+                    && (this.getTeamComposition(TeamType.HOME).equals(other.getTeamComposition(TeamType.HOME)))
+                    && (this.getTeamComposition(TeamType.GUEST).equals(other.getTeamComposition(TeamType.GUEST)))
+                    && (this.getCalledTimeouts(TeamType.HOME).equals(other.getCalledTimeouts(TeamType.HOME)))
+                    && (this.getCalledTimeouts(TeamType.GUEST).equals(other.getCalledTimeouts(TeamType.GUEST)));
+        }
+
+        return result;
     }
 
 }

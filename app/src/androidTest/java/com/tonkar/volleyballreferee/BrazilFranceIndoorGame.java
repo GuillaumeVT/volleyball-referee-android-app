@@ -20,6 +20,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class BrazilFranceIndoorGame {
@@ -72,6 +74,9 @@ public class BrazilFranceIndoorGame {
 
         composeTeamsSet5(indoorGame);
         playSet5_lastSetEnd(indoorGame);
+
+        IndoorGame loadedGame = (IndoorGame) ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
+        assertEquals(indoorGame, loadedGame);
     }
 
     @Test

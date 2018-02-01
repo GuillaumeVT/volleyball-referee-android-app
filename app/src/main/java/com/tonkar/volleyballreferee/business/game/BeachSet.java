@@ -12,6 +12,11 @@ public class BeachSet extends Set {
         super(rules, pointsToWinSet, servingTeamAtStart);
     }
 
+    // For GSON Deserialization
+    public BeachSet() {
+        this(Rules.OFFICIAL_BEACH_RULES, 0, TeamType.HOME);
+    }
+
     @Override
     protected TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition) {
         return new BeachTeamComposition(teamDefinition);

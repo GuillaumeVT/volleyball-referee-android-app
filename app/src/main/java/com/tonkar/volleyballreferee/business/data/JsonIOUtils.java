@@ -8,13 +8,20 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.tonkar.volleyballreferee.business.game.BaseGame;
+import com.tonkar.volleyballreferee.business.game.Set;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
+import com.tonkar.volleyballreferee.business.team.Player;
+import com.tonkar.volleyballreferee.business.team.TeamComposition;
+import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
@@ -33,51 +40,74 @@ import java.util.List;
 
 public class JsonIOUtils {
 
-    private static final Type RECORDED_GAME_LIST_TYPE   = new TypeToken<List<RecordedGame>>() {}.getType();
-    private static final Type RECORDED_GAME_TYPE        = new TypeToken<RecordedGame>() {}.getType();
-    private static final Type RECORDED_SET_TYPE         = new TypeToken<RecordedSet>() {}.getType();
-    private static final Type TEAM_DEFINITION_LIST_TYPE = new TypeToken<List<IndoorTeamDefinition>>() {}.getType();
+    private static final Type CURRENT_GAME_TYPE         = new TypeToken<BaseGame>() {
+    }.getType();
+    private static final Type RECORDED_GAME_LIST_TYPE   = new TypeToken<List<RecordedGame>>() {
+    }.getType();
+    private static final Type RECORDED_GAME_TYPE        = new TypeToken<RecordedGame>() {
+    }.getType();
+    private static final Type RECORDED_SET_TYPE         = new TypeToken<RecordedSet>() {
+    }.getType();
+    private static final Type TEAM_DEFINITION_LIST_TYPE = new TypeToken<List<IndoorTeamDefinition>>() {
+    }.getType();
 
     private static final Gson sGson = new GsonBuilder()
-            .registerTypeAdapter(TeamType.class, new TeamTypeSerializer())
+            .registerTypeAdapter(BaseGame.class, new InheritanceDeserializer<BaseGame>())
+            .registerTypeAdapter(BaseGame.class, new InheritanceSerializer<BaseGame>())
+            .registerTypeAdapter(Set.class, new InheritanceDeserializer<Set>())
+            .registerTypeAdapter(Set.class, new InheritanceSerializer<Set>())
+            .registerTypeAdapter(TeamComposition.class, new InheritanceDeserializer<TeamComposition>())
+            .registerTypeAdapter(TeamComposition.class, new InheritanceSerializer<TeamComposition>())
+            .registerTypeAdapter(TeamDefinition.class, new InheritanceDeserializer<TeamDefinition>())
+            .registerTypeAdapter(TeamDefinition.class, new InheritanceSerializer<TeamDefinition>())
+            .registerTypeAdapter(Player.class, new InheritanceDeserializer<Player>())
+            .registerTypeAdapter(Player.class, new InheritanceSerializer<Player>())
             .registerTypeAdapter(TeamType.class, new TeamTypeDeserializer())
-            .registerTypeAdapter(PositionType.class, new PositionTypeSerializer())
+            .registerTypeAdapter(TeamType.class, new TeamTypeSerializer())
             .registerTypeAdapter(PositionType.class, new PositionTypeDeserializer())
+            .registerTypeAdapter(PositionType.class, new PositionTypeSerializer())
             .create();
 
+    // Read current game
+
+    static GameService readCurrentGame(Context context, String fileName) {
+        Log.i("VBR-Data", String.format("Read current game from %s", fileName));
+        BaseGame game = null;
+
+        try {
+            FileInputStream inputStream = context.openFileInput(fileName);
+            JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+            try {
+                game = sGson.fromJson(reader, CURRENT_GAME_TYPE);
+            } finally {
+                reader.close();
+            }
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.i("VBR-Data", String.format("%s current game file does not yet exist", fileName));
+        } catch (IOException e) {
+            Log.e("VBR-Data", "Exception while reading current game", e);
+        }
+
+        return game;
+    }
+
+    // Write current game
+
+    static void writeCurrentGame(Context context, String fileName, GameService gameService) {
+        Log.i("VBR-Data", String.format("Write current game into %s", fileName));
+        try {
+            FileOutputStream outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+            sGson.toJson(gameService, CURRENT_GAME_TYPE, writer);
+            writer.close();
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("VBR-Data", "Exception while writing current game", e);
+        }
+    }
+
     // Read recorded games
-
-    public static class TeamTypeSerializer implements JsonSerializer<TeamType> {
-
-        @Override
-        public JsonElement serialize(TeamType src, Type typeOfSrc, JsonSerializationContext context) {
-            return new JsonPrimitive(TeamType.toLetter(src));
-        }
-    }
-
-    public static class TeamTypeDeserializer implements JsonDeserializer<TeamType> {
-
-        @Override
-        public TeamType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return TeamType.fromLetter(json.getAsJsonPrimitive().getAsString());
-        }
-    }
-
-    public static class PositionTypeSerializer implements JsonSerializer<PositionType> {
-
-        @Override
-        public JsonElement serialize(PositionType src, Type typeOfSrc, JsonSerializationContext context) {
-            return new JsonPrimitive(PositionType.toInt(src));
-        }
-    }
-
-    public static class PositionTypeDeserializer implements JsonDeserializer<PositionType> {
-
-        @Override
-        public PositionType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return PositionType.fromInt(json.getAsJsonPrimitive().getAsInt());
-        }
-    }
 
     static List<RecordedGame> readRecordedGames(Context context, String fileName) {
         Log.i("VBR-Data", String.format("Read recorded games from %s", fileName));
@@ -114,7 +144,7 @@ public class JsonIOUtils {
             writeRecordedGamesStream(outputStream, recordedGames);
             outputStream.close();
         } catch (IOException e) {
-            Log.e("VBR-Data", "Exception while writing game", e);
+            Log.e("VBR-Data", "Exception while writing games", e);
         }
     }
 
@@ -180,7 +210,7 @@ public class JsonIOUtils {
         }
     }
 
-    // Write saved team
+    // Write saved teams
 
     static void writeSavedTeams(Context context, String fileName, List<SavedTeam> savedTeams) {
         Log.i("VBR-SavedTeams", String.format("Write saved teams into %s", fileName));
@@ -193,7 +223,7 @@ public class JsonIOUtils {
             writeTeamDefinitionsStream(outputStream, teamDefinitions);
             outputStream.close();
         } catch (IOException e) {
-            Log.e("VBR-SavedTeams", "Exception while writing team", e);
+            Log.e("VBR-SavedTeams", "Exception while writing teams", e);
         }
     }
 
@@ -201,5 +231,63 @@ public class JsonIOUtils {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         sGson.toJson(teamDefinitions, TEAM_DEFINITION_LIST_TYPE, writer);
         writer.close();
+    }
+
+    public static class TeamTypeSerializer implements JsonSerializer<TeamType> {
+
+        @Override
+        public JsonElement serialize(TeamType src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(TeamType.toLetter(src));
+        }
+    }
+
+    public static class TeamTypeDeserializer implements JsonDeserializer<TeamType> {
+
+        @Override
+        public TeamType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return TeamType.fromLetter(json.getAsJsonPrimitive().getAsString());
+        }
+    }
+
+    public static class PositionTypeSerializer implements JsonSerializer<PositionType> {
+
+        @Override
+        public JsonElement serialize(PositionType src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(PositionType.toInt(src));
+        }
+    }
+
+    public static class PositionTypeDeserializer implements JsonDeserializer<PositionType> {
+
+        @Override
+        public PositionType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return PositionType.fromInt(json.getAsJsonPrimitive().getAsInt());
+        }
+    }
+
+    public static class InheritanceDeserializer<T> implements JsonDeserializer<T> {
+
+        @Override
+        public T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            JsonPrimitive classNamePrimitive = (JsonPrimitive) jsonObject.get("classType");
+
+            String className = classNamePrimitive.getAsString();
+
+            Class<?> clazz;
+            try {
+                clazz = Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                throw new JsonParseException(e.getMessage());
+            }
+            return context.deserialize(jsonObject, clazz);
+        }
+    }
+
+    public static class InheritanceSerializer<T> implements JsonSerializer<T> {
+        @Override
+        public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
+            return context.serialize(src, src.getClass());
+        }
     }
 }

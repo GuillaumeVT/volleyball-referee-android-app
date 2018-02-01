@@ -7,9 +7,9 @@ public interface RecordedGamesService extends WebGamesService {
 
     String RECORDED_GAMES_FILE = "device_games_history.json";
 
-    String CURRENT_GAME_FILE   = "current_game.bin";
+    String CURRENT_GAME_FILE   = "current_game.json";
 
-    String SETUP_GAME_FILE     = "setup_game.bin";
+    String SETUP_GAME_FILE     = "setup_game.json";
 
     void connectGameRecorder();
 

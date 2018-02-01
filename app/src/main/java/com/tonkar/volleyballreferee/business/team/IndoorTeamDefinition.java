@@ -112,4 +112,21 @@ public class IndoorTeamDefinition extends TeamDefinition {
         return possibleCaptains;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof IndoorTeamDefinition) {
+            IndoorTeamDefinition other = (IndoorTeamDefinition) obj;
+            result = super.equals(other)
+                    && (this.getLiberoColor() == other.getLiberoColor())
+                    && (this.getLiberos().equals(other.getLiberos()))
+                    && (this.getCaptain() == other.getCaptain());
+        }
+
+        return result;
+    }
+
 }

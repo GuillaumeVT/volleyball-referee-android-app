@@ -145,22 +145,22 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public GameService loadCurrentGame() {
-        return SerializedGameReader.readGame(mContext, CURRENT_GAME_FILE);
+        return JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE);
     }
 
     @Override
     public void saveCurrentGame() {
         updateRecordedGame();
         if (!mGameService.isMatchCompleted()) {
-            SerializedGameWriter.writeGame(mContext, CURRENT_GAME_FILE, mGameService);
+            JsonIOUtils.writeCurrentGame(mContext, CURRENT_GAME_FILE, mGameService);
         }
     }
 
     @Override
     public void deleteCurrentGame() {
         Log.d("VBR-Data", String.format("Delete serialized game in %s", CURRENT_GAME_FILE));
-        mContext.deleteFile(CURRENT_GAME_FILE);
         deleteCurrentGameOnline();
+        mContext.deleteFile(CURRENT_GAME_FILE);
         mRecordedGame = null;
     }
 
@@ -172,12 +172,12 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public GameService loadSetupGame() {
-        return SerializedGameReader.readGame(mContext, SETUP_GAME_FILE);
+        return JsonIOUtils.readCurrentGame(mContext, SETUP_GAME_FILE);
     }
 
     @Override
     public void saveSetupGame(GameService gameService) {
-        SerializedGameWriter.writeGame(mContext, SETUP_GAME_FILE, gameService);
+        JsonIOUtils.writeCurrentGame(mContext, SETUP_GAME_FILE, gameService);
     }
 
     @Override
@@ -323,23 +323,46 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     }
 
     private void deleteCurrentGameOnline() {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && mRecordedGame != null && !mRecordedGame.isMatchCompleted()) {
-            RequestQueue queue = Volley.newRequestQueue(mContext);
-            String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, mRecordedGame.getGameDate());
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            mRecordedGame.setRecordedOnline(false);
-                        }
-                    }, new Response.ErrorListener() {
+        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext)) {
+            // The match is not loaded in memory => need to read it to retrieve the date
+            if (mRecordedGame == null) {
+                GameService gameService = loadCurrentGame();
+                if (gameService != null) {
+                    RequestQueue queue = Volley.newRequestQueue(mContext);
+                    String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, gameService.getGameDate());
+                    JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {}
+                            }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("VBR-Data", "Exception while deleting game", error);
                         }
                     }
-            );
-            queue.add(stringRequest);
+                    );
+                    queue.add(stringRequest);
+                }
+            } else { // The match is loaded in memory
+                if (!mRecordedGame.isMatchCompleted()) {
+                    RequestQueue queue = Volley.newRequestQueue(mContext);
+                    String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, mRecordedGame.getGameDate());
+                    JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    mRecordedGame.setRecordedOnline(false);
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("VBR-Data", "Exception while deleting game", error);
+                        }
+                    }
+                    );
+                    queue.add(stringRequest);
+                }
+            }
         }
     }
 

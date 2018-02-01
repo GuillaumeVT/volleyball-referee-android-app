@@ -7,12 +7,13 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class TeamDefinition implements Serializable {
+public abstract class TeamDefinition {
 
+    @SerializedName("classType")
+    private       String       mClassType;
     @SerializedName("name")
     private       String       mName;
     @SerializedName("team")
@@ -25,6 +26,7 @@ public abstract class TeamDefinition implements Serializable {
     private       GenderType   mGenderType;
 
     public TeamDefinition(final TeamType teamType) {
+        mClassType = getClass().getName();
         mName = "";
         mTeamType = teamType;
         mColor = colorIntToHtml(Integer.MIN_VALUE);
@@ -85,5 +87,28 @@ public abstract class TeamDefinition implements Serializable {
 
     String colorIntToHtml(int color) {
         return String.format("#%06X", (0xFFFFFF & color)).toLowerCase();
+    }
+
+    private String getClassType() {
+        return mClassType;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof TeamDefinition) {
+            TeamDefinition other = (TeamDefinition) obj;
+            result = (this.getClassType().equals(other.getClassType()))
+                    && (this.getName().equals(other.getName()))
+                    && (this.getTeamType().equals(other.getTeamType()))
+                    && (this.getColor() == other.getColor())
+                    && (this.getPlayers().equals(other.getPlayers()))
+                    && (this.getGenderType().equals(other.getGenderType()));
+        }
+
+        return result;
     }
 }

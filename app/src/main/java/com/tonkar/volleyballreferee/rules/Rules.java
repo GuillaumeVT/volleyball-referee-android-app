@@ -3,22 +3,35 @@ package com.tonkar.volleyballreferee.rules;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
 
-public class Rules implements Serializable {
+public class Rules {
 
+    @SerializedName("pref_sets_per_game")
     private final int     mSetsPerGame;
+    @SerializedName("pref_points_per_set")
     private final int     mPointsPerSet;
+    @SerializedName("pref_tie_break")
     private final boolean mTieBreakInLastSet;
+    @SerializedName("pref_team_timeouts")
     private final boolean mTeamTimeoutsEnabled;
+    @SerializedName("pref_team_timeouts_per_set")
     private final int     mTeamTimeoutsPerSet;
+    @SerializedName("pref_team_timeout_duration")
     private final int     mTeamTimeoutDuration;
+    @SerializedName("pref_technical_timeouts")
     private final boolean mTechnicalTimeoutsEnabled;
+    @SerializedName("pref_technical_timeout_duration")
     private final int     mTechnicalTimeoutDuration;
+    @SerializedName("pref_game_intervals")
     private final boolean mGameIntervalsEnabled;
+    @SerializedName("pref_game_intervals_duration")
     private final int     mGameIntervalDuration;
+    @SerializedName("pref_team_substitutions_per_set")
     private final int     mTeamSubstitutionsPerSet;
+    @SerializedName("pref_change_side_every_7_points")
     private final boolean mChangeSidesEvery7Points;
+    @SerializedName("pref_consecutive_serves_per_player")
     private final int     mCustomConsecutiveServesPerPlayer;
 
     public Rules(final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet,
@@ -142,5 +155,31 @@ public class Rules implements Serializable {
         Log.i("VBR-Rules", String.format("pref_team_substitutions_per_set: %d", mTeamSubstitutionsPerSet));
         Log.i("VBR-Rules", String.format("pref_change_side_every_7_points: %b", mChangeSidesEvery7Points));
         Log.i("VBR-Rules", String.format("pref_consecutive_serves_per_player: %d", mCustomConsecutiveServesPerPlayer));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof Rules) {
+            Rules other = (Rules) obj;
+            result = (this.getSetsPerGame() == other.getSetsPerGame())
+                    && (this.getPointsPerSet() == other.getPointsPerSet())
+                    && (this.isTieBreakInLastSet() == other.isTieBreakInLastSet())
+                    && (this.areTeamTimeoutsEnabled() == other.areTeamTimeoutsEnabled())
+                    && (this.getTeamTimeoutsPerSet() == other.getTeamTimeoutsPerSet())
+                    && (this.getTeamTimeoutDuration() == other.getTeamTimeoutDuration())
+                    && (this.areTechnicalTimeoutsEnabled() == other.areTechnicalTimeoutsEnabled())
+                    && (this.getTechnicalTimeoutDuration() == other.getTechnicalTimeoutDuration())
+                    && (this.areGameIntervalsEnabled() == other.areGameIntervalsEnabled())
+                    && (this.getGameIntervalDuration() == other.getGameIntervalDuration())
+                    && (this.getTeamSubstitutionsPerSet() == other.getTeamSubstitutionsPerSet())
+                    && (this.isChangeSidesEvery7Points() == other.isChangeSidesEvery7Points())
+                    && (this.getCustomConsecutiveServesPerPlayer() == other.getCustomConsecutiveServesPerPlayer());
+        }
+
+        return result;
     }
 }

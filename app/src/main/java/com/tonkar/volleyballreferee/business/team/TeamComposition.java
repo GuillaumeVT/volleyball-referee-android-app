@@ -2,20 +2,25 @@ package com.tonkar.volleyballreferee.business.team;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 
-import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class TeamComposition implements Serializable {
+public abstract class TeamComposition {
 
+    @SerializedName("classType")
+    private       String               mClassType;
+    @SerializedName("teamDef")
     private final TeamDefinition       mTeamDefinition;
+    @SerializedName("players")
     private final Map<Integer, Player> mPlayers;
 
     TeamComposition(final TeamDefinition teamDefinition) {
+        mClassType = getClass().getName();
         mTeamDefinition = teamDefinition;
         mPlayers = new LinkedHashMap<>();
 
@@ -110,6 +115,24 @@ public abstract class TeamComposition implements Serializable {
             final Player player = mPlayers.get(number);
             player.turnToPreviousPosition();
         }
+    }
+
+    private String getClassType() {
+        return mClassType;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof TeamComposition) {
+            TeamComposition other = (TeamComposition) obj;
+            result = (this.getClassType().equals(other.getClassType())) && (this.getTeamDefinition().equals(other.getTeamDefinition()));
+        }
+
+        return result;
     }
 
 }

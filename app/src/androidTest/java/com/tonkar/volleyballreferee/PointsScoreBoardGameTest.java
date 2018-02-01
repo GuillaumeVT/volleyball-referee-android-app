@@ -18,6 +18,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(AndroidJUnit4.class)
 public class PointsScoreBoardGameTest {
 
@@ -32,6 +34,10 @@ public class PointsScoreBoardGameTest {
         defineTeams(indoorGame);
         playSet(indoorGame);
         playSet(indoorGame);
+
+        IndoorGame loadedGame = (IndoorGame) ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
+        assertEquals(indoorGame, loadedGame);
+
         playSet(indoorGame);
 
         RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(indoorGame.getGameDate());

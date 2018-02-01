@@ -6,6 +6,11 @@ public class IndoorPlayer extends Player {
         super(number);
     }
 
+    // For GSON Deserialization
+    public IndoorPlayer() {
+        this(-1);
+    }
+
     @Override
     public void turnToNextPosition() {
         setPosition(getPosition().nextPosition());

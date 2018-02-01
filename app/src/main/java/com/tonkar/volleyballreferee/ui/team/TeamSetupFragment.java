@@ -21,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -45,6 +46,7 @@ public class TeamSetupFragment extends Fragment {
     private Button                mCaptainButton;
     private LiberoAdapter         mLiberoAdapter;
     private ImageButton           mGenderButton;
+    private ScrollView            mScrollView;
 
     public TeamSetupFragment() {
     }
@@ -83,6 +85,8 @@ public class TeamSetupFragment extends Fragment {
             mIndoorTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
         }
 
+        mScrollView = view.findViewById(R.id.team_setup_scroll);
+
         final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
         mTeamColorButton = view.findViewById(R.id.team_color_button);
         final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
@@ -112,9 +116,19 @@ public class TeamSetupFragment extends Fragment {
                     BaseIndoorTeamService indoorTeamService = (BaseIndoorTeamService) teamNameInput.getAdapter().getItem(index);
                     teamNameInput.setText(indoorTeamService.getTeamName(mTeamType));
                     ServicesProvider.getInstance().getSavedTeamsService().copyTeam(indoorTeamService, mIndoorTeamService, mTeamType);
-                    if (getActivity() instanceof TeamsSetupActivity) {
-                        getActivity().recreate();
-                    }
+
+                    teamColorSelected(mIndoorTeamService.getTeamColor(mTeamType));
+                    updateGender(mIndoorTeamService.getGenderType(mTeamType));
+                    mPlayerAdapter.notifyDataSetChanged();
+                    captainUpdated(mTeamType, mIndoorTeamService.getCaptain(mTeamType));
+                    liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
+                    mLiberoAdapter.notifyDataSetChanged();
+                    mScrollView.post(new Runnable() {
+                        public void run() {
+                            mScrollView.fullScroll(ScrollView.FOCUS_UP);
+                        }
+                    });
+                    computeConfirmItemVisibility();
                 }
             });
         }

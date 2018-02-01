@@ -11,6 +11,11 @@ public class BeachTeamComposition extends TeamComposition {
         substitutePlayer(2, PositionType.POSITION_2);
     }
 
+    // For GSON Deserialization
+    public BeachTeamComposition() {
+        this(new BeachTeamDefinition());
+    }
+
     @Override
     protected Player createPlayer(int number) {
         return new BeachPlayer(number);
@@ -29,5 +34,21 @@ public class BeachTeamComposition extends TeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {}
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof BeachTeamComposition) {
+            BeachTeamComposition other = (BeachTeamComposition) obj;
+            result = super.equals(other)
+                    && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(PositionType.POSITION_1)))
+                    && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(PositionType.POSITION_2)));
+        }
+
+        return result;
+    }
 
 }

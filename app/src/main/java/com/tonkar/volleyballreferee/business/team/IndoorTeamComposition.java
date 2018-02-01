@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.business.team;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.Substitution;
 
@@ -15,21 +16,28 @@ import java.util.TreeSet;
 
 public class IndoorTeamComposition extends TeamComposition {
 
-    private final IndoorTeamDefinition  mIndoorTeamDefinition;
+    @SerializedName("startingLineupConfirmed")
     private       boolean               mStartingLineupConfirmed;
+    @SerializedName("startingLineup")
     private final Map<Integer, Player>  mStartingLineup;
+    @SerializedName("maxSubstitutionsPerSet")
     private final int                   mMaxSubstitutionsPerSet;
+    @SerializedName("substitutions")
     private final Map<Integer, Integer> mSubstitutions;
+    @SerializedName("fullSubstitutions")
     private final List<Substitution>    mFullSubstitutions;
+    @SerializedName("actingLibero")
     private       int                   mActingLibero;
+    @SerializedName("middleBlockers")
     private final Set<Integer>          mMiddleBlockers;
+    @SerializedName("waitingMiddleBlocker")
     private       int                   mWaitingMiddleBlocker;
+    @SerializedName("actingCaptain")
     private       int                   mActingCaptain;
 
     public IndoorTeamComposition(final TeamDefinition teamDefinition, int maxSubstitutionsPerSet) {
         super(teamDefinition);
 
-        mIndoorTeamDefinition = (IndoorTeamDefinition) teamDefinition;
         mStartingLineupConfirmed = false;
         mStartingLineup = new LinkedHashMap<>();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
@@ -41,9 +49,18 @@ public class IndoorTeamComposition extends TeamComposition {
         mActingCaptain = -1;
     }
 
+    // For GSON Deserialization
+    public IndoorTeamComposition() {
+        this(new IndoorTeamDefinition(), 0);
+    }
+
     @Override
     protected Player createPlayer(int number) {
         return new IndoorPlayer(number);
+    }
+
+    private IndoorTeamDefinition indoorTeamDefinition() {
+        return (IndoorTeamDefinition) getTeamDefinition();
     }
 
     @Override
@@ -59,22 +76,22 @@ public class IndoorTeamComposition extends TeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
-        Log.i("VBR-Team", String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), mIndoorTeamDefinition.getTeamType().toString()));
+        Log.i("VBR-Team", String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), indoorTeamDefinition().getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {
-            if (mIndoorTeamDefinition.isLibero(newNumber)) {
-                Log.i("VBR-Team", String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+            if (indoorTeamDefinition().isLibero(newNumber)) {
+                Log.i("VBR-Team", String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, indoorTeamDefinition().getTeamType().toString()));
                 mActingLibero = newNumber;
 
-                if (!mIndoorTeamDefinition.isLibero(oldNumber)) {
-                    Log.i("VBR-Team", String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                if (!indoorTeamDefinition().isLibero(oldNumber)) {
+                    Log.i("VBR-Team", String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, indoorTeamDefinition().getTeamType().toString()));
                     mMiddleBlockers.clear();
                     mWaitingMiddleBlocker = oldNumber;
                     mMiddleBlockers.add(oldNumber);
                     mMiddleBlockers.add(getPlayerAtPosition(positionType.oppositePosition()));
                 }
-            } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && mIndoorTeamDefinition.isLibero(oldNumber)) {
-                Log.i("VBR-Team", String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+            } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(oldNumber)) {
+                Log.i("VBR-Team", String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
                 mWaitingMiddleBlocker = -1;
             } else {
                 Log.i("VBR-Team", "Actual substitution");
@@ -82,21 +99,21 @@ public class IndoorTeamComposition extends TeamComposition {
                 mFullSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
                 if (isMiddleBlocker(oldNumber)) {
-                    Log.i("VBR-Team", String.format("Player #%d of %s team is a new middle blocker", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                    Log.i("VBR-Team", String.format("Player #%d of %s team is a new middle blocker", newNumber, indoorTeamDefinition().getTeamType().toString()));
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
                 }
 
                 // A captain on the bench can no longer be acting captain
-                if (mIndoorTeamDefinition.isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
-                    Log.i("VBR-Team", String.format("Player #%d acting captain of %s team leaves the court", oldNumber, mIndoorTeamDefinition.getTeamType().toString()));
+                if (indoorTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
+                    Log.i("VBR-Team", String.format("Player #%d acting captain of %s team leaves the court", oldNumber, indoorTeamDefinition().getTeamType().toString()));
                     mActingCaptain = -1;
                 }
 
                 // The game captain coming back on the court is automatically the captain again
-                if (mIndoorTeamDefinition.isCaptain(newNumber)) {
-                    Log.i("VBR-Team", String.format("Player #%d captain of %s team is back on court", newNumber, mIndoorTeamDefinition.getTeamType().toString()));
-                    setActingCaptain(mIndoorTeamDefinition.getCaptain());
+                if (indoorTeamDefinition().isCaptain(newNumber)) {
+                    Log.i("VBR-Team", String.format("Player #%d captain of %s team is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
+                    setActingCaptain(indoorTeamDefinition().getCaptain());
                 }
             }
         }
@@ -111,8 +128,8 @@ public class IndoorTeamComposition extends TeamComposition {
             mStartingLineup.put(number, player);
         }
 
-        if (!PositionType.BENCH.equals(getPlayerPosition(mIndoorTeamDefinition.getCaptain()))) {
-            setActingCaptain(mIndoorTeamDefinition.getCaptain());
+        if (!PositionType.BENCH.equals(getPlayerPosition(indoorTeamDefinition().getCaptain()))) {
+            setActingCaptain(indoorTeamDefinition().getCaptain());
         }
     }
 
@@ -126,7 +143,7 @@ public class IndoorTeamComposition extends TeamComposition {
 
     public Set<Integer> getPossibleSubstitutions(PositionType positionType) {
         Set<Integer> availablePlayers = new TreeSet<>(getPossibleSubstitutionsNoMax(positionType));
-        Log.i("VBR-Team", String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), mIndoorTeamDefinition.getTeamType().toString(), availablePlayers.toString()));
+        Log.i("VBR-Team", String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), indoorTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
         return availablePlayers;
     }
 
@@ -163,7 +180,7 @@ public class IndoorTeamComposition extends TeamComposition {
                 }
                 // If no libero is on the court, they can replace the player if he is at the back
                 if (!hasLiberoOnCourt() && positionType.isAtTheBack()) {
-                    availablePlayers.addAll(mIndoorTeamDefinition.getLiberos());
+                    availablePlayers.addAll(indoorTeamDefinition().getLiberos());
                 }
             }
         } else {
@@ -188,7 +205,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean involvesLibero(int number, PositionType positionType) {
-        return mIndoorTeamDefinition.isLibero(number) || mIndoorTeamDefinition.isLibero(getPlayerAtPosition(positionType));
+        return indoorTeamDefinition().isLibero(number) || indoorTeamDefinition().isLibero(getPlayerAtPosition(positionType));
     }
 
     private boolean hasReplacementPlayer(int number) {
@@ -226,8 +243,8 @@ public class IndoorTeamComposition extends TeamComposition {
     private List<Integer> getFreePlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
-        for (int number : mIndoorTeamDefinition.getPlayers()) {
-            if (PositionType.BENCH.equals(getPlayerPosition(number)) && !hasReplacementPlayer(number) && !mIndoorTeamDefinition.isLibero(number)) {
+        for (int number : indoorTeamDefinition().getPlayers()) {
+            if (PositionType.BENCH.equals(getPlayerPosition(number)) && !hasReplacementPlayer(number) && !indoorTeamDefinition().isLibero(number)) {
                 players.add(number);
             }
         }
@@ -238,7 +255,7 @@ public class IndoorTeamComposition extends TeamComposition {
     private boolean hasLiberoOnCourt() {
         boolean result = false;
 
-        for (int number : mIndoorTeamDefinition.getLiberos()) {
+        for (int number : indoorTeamDefinition().getLiberos()) {
             if (!PositionType.BENCH.equals(getPlayerPosition(number))) {
                 result = true;
             }
@@ -252,13 +269,13 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean hasSecondLibero() {
-        return mIndoorTeamDefinition.getLiberos().size() > 1;
+        return indoorTeamDefinition().getLiberos().size() > 1;
     }
 
     private int getSecondLibero() {
         int secondLibero = -1;
 
-        for (int number : mIndoorTeamDefinition.getLiberos()) {
+        for (int number : indoorTeamDefinition().getLiberos()) {
             if (number != mActingLibero) {
                 secondLibero = number;
             }
@@ -279,7 +296,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public void rotateToNextPositions() {
         super.rotateToNextPositions();
 
-        if (hasLiberoOnCourt() && hasWaitingMiddleBlocker() && mIndoorTeamDefinition.isLibero(getPlayerAtPosition(PositionType.POSITION_4))) {
+        if (hasLiberoOnCourt() && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_4))) {
             substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_4);
         }
     }
@@ -288,7 +305,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public void rotateToPreviousPositions() {
         super.rotateToPreviousPositions();
 
-        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && mIndoorTeamDefinition.isLibero(getPlayerAtPosition(PositionType.POSITION_2))) {
+        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_2))) {
             substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_2);
         }
         if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(getPlayerAtPosition(PositionType.POSITION_5))) {
@@ -299,7 +316,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public int checkPosition1Offence() {
         int middleBlockerNumber = -1;
 
-        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && mIndoorTeamDefinition.isLibero(getPlayerAtPosition(PositionType.POSITION_1))) {
+        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_1))) {
             middleBlockerNumber = mWaitingMiddleBlocker;
         }
 
@@ -344,8 +361,8 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     public void setActingCaptain(int number) {
-        if (isStartingLineupConfirmed() && mIndoorTeamDefinition.hasPlayer(number) && !mIndoorTeamDefinition.isLibero(number)) {
-            Log.i("VBR-Team", String.format("Player #%d of %s team is now acting captain", number, mIndoorTeamDefinition.getTeamType().toString()));
+        if (isStartingLineupConfirmed() && indoorTeamDefinition().hasPlayer(number) && !indoorTeamDefinition().isLibero(number)) {
+            Log.i("VBR-Team", String.format("Player #%d of %s team is now acting captain", number, indoorTeamDefinition().getTeamType().toString()));
             mActingCaptain = number;
         }
     }
@@ -365,7 +382,7 @@ public class IndoorTeamComposition extends TeamComposition {
             players.add(mActingCaptain);
         } else {
             for (int number : getPlayersOnCourt()) {
-                if (!mIndoorTeamDefinition.isLibero(number)) {
+                if (!indoorTeamDefinition().isLibero(number)) {
                     players.add(number);
                 }
             }
@@ -375,5 +392,38 @@ public class IndoorTeamComposition extends TeamComposition {
         }
 
         return players;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof IndoorTeamComposition) {
+            IndoorTeamComposition other = (IndoorTeamComposition) obj;
+            result = super.equals(other)
+                    && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(PositionType.POSITION_1)))
+                    && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(PositionType.POSITION_2)))
+                    && (this.getPlayerAtPosition(PositionType.POSITION_3) == (other.getPlayerAtPosition(PositionType.POSITION_3)))
+                    && (this.getPlayerAtPosition(PositionType.POSITION_4) == (other.getPlayerAtPosition(PositionType.POSITION_4)))
+                    && (this.getPlayerAtPosition(PositionType.POSITION_5) == (other.getPlayerAtPosition(PositionType.POSITION_5)))
+                    && (this.getPlayerAtPosition(PositionType.POSITION_6) == (other.getPlayerAtPosition(PositionType.POSITION_6)))
+                    && (this.isStartingLineupConfirmed() == other.isStartingLineupConfirmed())
+                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_1) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_1)))
+                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_2) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_2)))
+                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_3) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_3)))
+                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_4) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_4)))
+                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_5) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_5)))
+                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_6) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_6)))
+                    && (this.canSubstitute() == other.canSubstitute())
+                    && (this.getSubstitutions().equals(other.getSubstitutions()))
+                    && (this.hasActingLibero() == other.hasActingLibero())
+                    && (this.hasWaitingMiddleBlocker() == other.hasWaitingMiddleBlocker())
+                    && (this.getActingCaptain() == other.getActingCaptain())
+                    && (this.hasLiberoOnCourt() == other.hasLiberoOnCourt());
+        }
+
+        return result;
     }
 }

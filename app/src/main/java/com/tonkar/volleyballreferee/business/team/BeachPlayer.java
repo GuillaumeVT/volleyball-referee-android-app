@@ -8,6 +8,11 @@ public class BeachPlayer extends Player {
         super(number);
     }
 
+    // For GSON Deserialization
+    public BeachPlayer() {
+        this(-1);
+    }
+
     @Override
     public void turnToNextPosition() {
         turn();

@@ -2,24 +2,19 @@ package com.tonkar.volleyballreferee.interfaces;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Substitution implements Serializable {
+public class Substitution {
 
     @SerializedName("pIn")
-    private int mPlayerIn;
+    private final int mPlayerIn;
     @SerializedName("pOut")
-    private int mPlayerOut;
+    private final int mPlayerOut;
     @SerializedName("hPoints")
-    private int mHomeTeamPoints;
+    private final int mHomeTeamPoints;
     @SerializedName("gPoints")
-    private int mGuestTeamPoints;
+    private final int mGuestTeamPoints;
 
     public Substitution() {
-        mPlayerIn = 0;
-        mPlayerOut = 0;
-        mHomeTeamPoints = 0;
-        mGuestTeamPoints = 0;
+        this(0, 0, 0, 0);
     }
 
     public Substitution(int playerIn, int playerOut, int homeTeamPoints, int guestTeamPoints) {
@@ -43,22 +38,6 @@ public class Substitution implements Serializable {
 
     public int getGuestTeamPoints() {
         return mGuestTeamPoints;
-    }
-
-    public void setPlayerIn(int playerIn) {
-        mPlayerIn = playerIn;
-    }
-
-    public void setPlayerOut(int playerOut) {
-        mPlayerOut = playerOut;
-    }
-
-    public void setHomeTeamPoints(int homeTeamPoints) {
-        mHomeTeamPoints = homeTeamPoints;
-    }
-
-    public void setGuestTeamPoints(int guestTeamPoints) {
-        mGuestTeamPoints = guestTeamPoints;
     }
 
     @Override

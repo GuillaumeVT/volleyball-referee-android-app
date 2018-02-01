@@ -2,9 +2,9 @@ package com.tonkar.volleyballreferee.business.game;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -16,33 +16,44 @@ import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.PositionType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class Game implements GameService, Serializable {
+public abstract class Game extends BaseGame {
 
-    private           UsageType                      mUsageType;
-    private final     GameType                       mGameType;
-    private final     long                           mGameDate;
-    private           GenderType                     mGenderType;
-    private final     Rules                          mRules;
-    private           String                         mLeagueName;
-    private final     TeamDefinition                 mHomeTeam;
-    private final     TeamDefinition                 mGuestTeam;
-    private           TeamType                       mTeamOnLeftSide;
-    private           TeamType                       mTeamOnRightSide;
-    private final     List<Set>                      mSets;
-    private           TeamType                       mServingTeamAtStart;
+    @SerializedName("usageType")
+    private       UsageType      mUsageType;
+    @SerializedName("gameType")
+    private final GameType       mGameType;
+    @SerializedName("gameDate")
+    private final long           mGameDate;
+    @SerializedName("genderType")
+    private       GenderType     mGenderType;
+    @SerializedName("rules")
+    private final Rules          mRules;
+    @SerializedName("leagueName")
+    private       String         mLeagueName;
+    @SerializedName("homeTeam")
+    private final TeamDefinition mHomeTeam;
+    @SerializedName("guestTeam")
+    private final TeamDefinition mGuestTeam;
+    @SerializedName("teamOnLeftSide")
+    private       TeamType       mTeamOnLeftSide;
+    @SerializedName("teamOnRightSide")
+    private       TeamType       mTeamOnRightSide;
+    @SerializedName("sets")
+    private final List<Set>      mSets;
+    @SerializedName("servingTeamAtStart")
+    private       TeamType       mServingTeamAtStart;
+
     private transient java.util.Set<ScoreListener>   mScoreListeners;
     private transient java.util.Set<TimeoutListener> mTimeoutListeners;
     private transient java.util.Set<TeamListener>    mTeamListeners;
 
     protected Game(final GameType gameType, final Rules rules) {
+        super();
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
         mGenderType = GenderType.MIXED;
@@ -665,13 +676,38 @@ public abstract class Game implements GameService, Serializable {
         mTeamListeners = new HashSet<>();
     }
 
-    private void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        inputStream.defaultReadObject();
-        initTransientFields();
-    }
-
     @Override
     public void setUsageType(UsageType usageType) {
         mUsageType = usageType;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        } else if (obj instanceof Game) {
+            Game other = (Game) obj;
+            result = super.equals(other)
+                    && (this.getUsageType().equals(other.getUsageType()))
+                    && (this.getGameType().equals(other.getGameType()))
+                    && (this.getGameDate() == other.getGameDate())
+                    && (this.getGenderType().equals(other.getGenderType()))
+                    && (this.getRules().equals(other.getRules()))
+                    && (this.getLeagueName().equals(other.getLeagueName()))
+                    && (this.getTeamDefinition(TeamType.HOME).equals(other.getTeamDefinition(TeamType.HOME)))
+                    && (this.getTeamDefinition(TeamType.GUEST).equals(other.getTeamDefinition(TeamType.GUEST)))
+                    && (this.getTeamOnLeftSide().equals(other.getTeamOnLeftSide()))
+                    && (this.getTeamOnRightSide().equals(other.getTeamOnRightSide()));
+
+            if (result) {
+                for (int setIndex = 0; setIndex < getNumberOfSets(); setIndex++) {
+                    result = result && this.getSet(setIndex).equals(other.getSet(setIndex));
+                }
+            }
+        }
+
+        return result;
     }
 }

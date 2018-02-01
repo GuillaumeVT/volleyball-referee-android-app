@@ -11,4 +11,8 @@ public class BeachTeamDefinition extends TeamDefinition {
         addPlayer(2);
     }
 
+    // For GSON Deserialization
+    public BeachTeamDefinition() {
+        this(TeamType.HOME);
+    }
 }

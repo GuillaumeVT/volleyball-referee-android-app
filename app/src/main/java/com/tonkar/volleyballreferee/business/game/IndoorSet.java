@@ -12,6 +12,11 @@ public class IndoorSet extends Set {
         super(rules, pointsToWinSet, servingTeamAtStart);
     }
 
+    // For GSON Deserialization
+    public IndoorSet() {
+        this(Rules.OFFICIAL_INDOOR_RULES, 0, TeamType.HOME);
+    }
+
     @Override
     protected TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition) {
         return new IndoorTeamComposition(teamDefinition, rules.getTeamSubstitutionsPerSet());
