@@ -375,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
                                 Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, response, Snackbar.LENGTH_INDEFINITE);
                                 TextView textView = infoSnackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
                                 textView.setMaxLines(3);
-                                infoSnackbar.setActionTextColor(getResources().getColor(android.R.color.holo_blue_light));
+                                infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
                                 infoSnackbar.setAction("Close", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
