@@ -9,7 +9,7 @@
     <string name="indoor_description">Indoor Volleyball Image</string>
     <string name="beach_description">Beach Volleyball Image</string>
     <string name="permission_title">Разрешения</string>
-    <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами. Отклонение этого разрешения повлечёт отмену этой функции.</string>
+    <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён неоконченный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume">Продолжить</string>
@@ -22,10 +22,11 @@
     <string name="match_group">Начать упрощённый матч</string>
     <string name="data_group">Данные</string>
     <string name="configuration_group">Настройки</string>
+    <string name="view_live_games">Смотреть прямые трансляции матчей онлайн</string>
+    <string name="search_online_games">Искать матчи онлайн</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Настройка команд</string>
-    <string name="liberos_setup_title">Либеро</string>
     <string name="home_team_tab">Хозяева</string>
     <string name="home_team_hint">Имя принимающей команды</string>
     <string name="guest_team_tab">Гости</string>
@@ -41,16 +42,17 @@
     <string name="match_duration_text">Выберите длительность матча</string>
     <string name="league_name_hint">Название лиги / турнира (факультативно)</string>
     <string name="misc_tab">Разное</string>
+    <string name="leave_teams_setup_question">Настройки данного матча будут потеряны. Покинуть страницу?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>
     <string name="toss_heads">Орёл</string>
     <string name="toss_coin">Жеребьёвка</string>
     <string name="swap_first_service">Поменять первую подачу</string>
-    <string name="navigated_home">Вернуться на главную страницу</string>
+    <string name="navigate_home">Вернуться на главную страницу</string>
     <string name="share">Поделиться</string>
     <string name="share_exception">Ошибка! Не удалось поделиться результатами матча</string>
-    <string name="navigated_home_question">Закончить данный матч позже, продолжить?</string>
+    <string name="navigate_home_question">Закончить данный матч позже. Покинуть страницу?</string>
     <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
     <string name="court_position_tab">Расстановка</string>
     <string name="points_tab">Очки</string>
@@ -79,6 +81,9 @@
     <string name="stop_match_description">Остановить матч</string>
     <string name="confirm_start_match_question">Начать матч?</string>
     <string name="confirm_stop_match_question">Остановить матч?</string>
+    <string name="stream_game">Транслировать матч онлайн</string>
+    <string name="stream_online_on_message">Матч транслируется онлайн</string>
+    <string name="stream_online_off_message">Трансляция матча остановлена</string>
 
     <!-- Rules activity -->
     <string name="rules">Мои правила</string>
@@ -104,7 +109,15 @@
 
     <string-array name="points_per_set_entries">
         <item>Партия из 25 очков</item>
+        <item>Партия из 24 очков</item>
+        <item>Партия из 23 очков</item>
+        <item>Партия из 22 очков</item>
         <item>Партия из 21 очка</item>
+        <item>Партия из 20 очков</item>
+        <item>Партия из 19 очков</item>
+        <item>Партия из 18 очков</item>
+        <item>Партия из 17 очков</item>
+        <item>Партия из 16 очков</item>
         <item>Партия из 15 очков</item>
     </string-array>
     <string-array name="sets_per_game_entries">
@@ -140,7 +153,15 @@
 
     <string-array name="points_per_set_values">
         <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
         <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
         <item>15</item>
     </string-array>
     <string-array name="sets_per_game_values">
@@ -176,6 +197,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Параметры</string>
+    <string name="pref_stream_online">Транслировать матчи онлайн</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
 
@@ -197,6 +219,8 @@
     <string name="players">Игроки</string>
     <string name="report_game">Создать отчёт по матчу</string>
     <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
+    <string name="upload_success_message">Матч успешно загружен на сервер</string>
+    <string name="upload_error_message">Не удалось загрузить матч на сервер</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Сохранённые команды</string>

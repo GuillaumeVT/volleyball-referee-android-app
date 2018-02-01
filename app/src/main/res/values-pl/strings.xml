@@ -9,7 +9,7 @@
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">O uprawnieniach</string>
-    <string name="permission_message">Ta aplikacja potrzebuje uprawnień dostępu do pamięci w celu udostępnienia wyników gry. Odmowa dostępu spowoduje wyłączenie tej funkcji.</string>
+    <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
     <string name="resume_game_title">Wznów gre</string>
     <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ja wznowić czy usunąć?</string>
     <string name="resume">"Wznów "</string>
@@ -22,10 +22,11 @@
     <string name="match_group">Rozpocznij grę podstawową</string>
     <string name="data_group">Dane</string>
     <string name="configuration_group">Konfiguracja</string>
+    <string name="view_live_games">Oglądaj mecze na żywo w Internecie</string>
+    <string name="search_online_games">Wyszukaj mecze online</string>
 
     <!-- Setup activities -->
     <string name="teams_setup_title">Skonfiguruj zespoły</string>
-    <string name="liberos_setup_title">Skonfiguruj Libero</string>
     <string name="home_team_tab">Drużyna gospodarzy</string>
     <string name="home_team_hint">Nazwa druzyny gospodarzy</string>
     <string name="guest_team_tab">Drużyna gosci</string>
@@ -41,16 +42,17 @@
     <string name="match_duration_text">Wybierz czas trwania meczu</string>
     <string name="league_name_hint">Liga / turniej (opcjonalnie)</string>
     <string name="misc_tab">Różne</string>
+    <string name="leave_teams_setup_question">Ustawienia meczowe zostaną utracone. Wyjść mimo to?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Reszka</string>
     <string name="toss_heads">Orzel</string>
     <string name="toss_coin">Rzut moneta</string>
     <string name="swap_first_service">Zmien druzyne serwujaca</string>
-    <string name="navigated_home">Powrot na strone glowna</string>
+    <string name="navigate_home">Powrot na strone glowna</string>
     <string name="share">Udostepnij</string>
     <string name="share_exception">Nie udało się udostępnić meczu</string>
-    <string name="navigated_home_question">Możesz wznowić bieżący mecz później, kontynuowac?</string>
+    <string name="navigate_home_question">Możesz wznowić bieżący mecz później, kontynuowac?</string>
     <string name="select_player_title">Wybierz zawodnika z ławki</string>
     <string name="court_position_tab">Pozycje</string>
     <string name="points_tab">Punkty</string>
@@ -79,6 +81,9 @@
     <string name="stop_match_description">Zatrzymaj mecz</string>
     <string name="confirm_start_match_question">Czy chcesz rozpocząć mecz?</string>
     <string name="confirm_stop_match_question">Czy chcesz zatrzymać mecz?</string>
+    <string name="stream_game">Transmituj mecz przez stream online</string>
+    <string name="stream_online_on_message">Mecz jest transmitowany online</string>
+    <string name="stream_online_off_message">Transmisja online dobiegła końca</string>
 
     <!-- Rules activity -->
     <string name="rules">Moje zasady</string>
@@ -104,7 +109,15 @@
 
     <string-array name="points_per_set_entries">
         <item>Set do 25 punktów</item>
+        <item>Set do 24 punktów</item>
+        <item>Set do 23 punktów</item>
+        <item>Set do 22 punktów</item>
         <item>Set do 21 punktów</item>
+        <item>Set do 20 punktów</item>
+        <item>Set do 19 punktów</item>
+        <item>Set do 18 punktów</item>
+        <item>Set do 17 punktów</item>
+        <item>Set do 16 punktów</item>
         <item>Set do 15 punktów</item>
     </string-array>
     <string-array name="sets_per_game_entries">
@@ -140,7 +153,15 @@
 
     <string-array name="points_per_set_values">
         <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
         <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
         <item>15</item>
     </string-array>
     <string-array name="sets_per_game_values">
@@ -176,6 +197,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Ustawienia</string>
+    <string name="pref_stream_online">Transmituj mecze przez stream online</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
     <string name="pref_number_of_shirts">Wybierz numer koszulki w ustawieniach drużyny</string>
 
@@ -197,6 +219,8 @@
     <string name="players">Gracze</string>
     <string name="report_game">Wygeneruj raport meczowy</string>
     <string name="report_exception">Nie udało się wygenerować ani wyświetlić raportu meczowego</string>
+    <string name="upload_success_message">Mecz został pomyślnie przesłany</string>
+    <string name="upload_error_message">Nie można przesłać meczu</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Zapisane zespoły</string>
