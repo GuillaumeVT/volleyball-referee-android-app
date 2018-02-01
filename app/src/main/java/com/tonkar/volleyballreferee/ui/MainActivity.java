@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -20,10 +21,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.BooleanRequest;
+import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
@@ -177,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
         MenuItem importantMessageItem = menu.findItem(R.id.action_important_message);
         importantMessageItem.setVisible(mRecordedGamesService.hasCurrentGame());
 
+        final MenuItem messageItem = menu.findItem(R.id.action_message);
+        initMessageMenuVisibility(messageItem);
+
         return true;
     }
 
@@ -194,6 +207,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_important_message:
                 Log.i("VBR-MainActivity", "Resume game");
                 resumeCurrentGameWithDialog(null);
+                return true;
+            case R.id.action_message:
+                Log.i("VBR-MainActivity", "VBR Message");
+                showMessage();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -322,5 +339,58 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isNavDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START);
+    }
+
+    private void initMessageMenuVisibility(final MenuItem messageItem) {
+        messageItem.setVisible(false);
+
+        if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+            String url = WebGamesService.BASE_URL + "/api/message/has";
+            BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
+                    new Response.Listener<Boolean>() {
+                        @Override
+                        public void onResponse(Boolean response) {
+                            messageItem.setVisible(response);
+                        }
+                    }, new Response.ErrorListener() {
+                         @Override
+                        public void onErrorResponse(VolleyError error) {
+                            messageItem.setVisible(false);
+                        }
+                    }
+            );
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(booleanRequest);
+        }
+    }
+
+    private void showMessage() {
+        if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+            String url = WebGamesService.BASE_URL + "/api/message";
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response != null) {
+                                Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, response, Snackbar.LENGTH_INDEFINITE);
+                                TextView textView = infoSnackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                                textView.setMaxLines(3);
+                                infoSnackbar.setActionTextColor(getResources().getColor(android.R.color.holo_blue_light));
+                                infoSnackbar.setAction("Close", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                    }
+                                });
+                                infoSnackbar.show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {}
+                    }
+            );
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(stringRequest);
+        }
     }
 }

@@ -17,7 +17,7 @@ public class BooleanRequest extends Request<Boolean> {
     private final Object mLock = new Object();
     private Listener<Boolean> mListener;
 
-    BooleanRequest(int method, String url, Listener<Boolean> listener, ErrorListener errorListener) {
+    public BooleanRequest(int method, String url, Listener<Boolean> listener, ErrorListener errorListener) {
         super(method, url, errorListener);
         mListener = listener;
     }
