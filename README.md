@@ -33,13 +33,11 @@ If your language is missing and you feel like helping the community, you may con
 | Polish           | Available                       |
 | Portuguese       | Available                       |
 | Russian          | Available                       |
-| Spanish          | In progress                     |
 
 ## Planned Features
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| Web recording / viewing           | In progress                            |
 | Penalty cards                     | Planned                                |
 
 
