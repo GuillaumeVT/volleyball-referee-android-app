@@ -208,6 +208,15 @@ public class UiUtils {
         }
     }
 
+    public static void shareUrl(Context context, String url) {
+        Log.i("VBR-Share", "Share url");
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, url);
+        intent.setType("text/plain");
+        context.startActivity(Intent.createChooser(intent, context.getResources().getText(R.string.share)));
+    }
+
     public static void setAlertDialogMessageSize(AlertDialog alertDialog, Resources resources) {
         TextView textView = alertDialog.findViewById(android.R.id.message);
         if (textView != null) {
