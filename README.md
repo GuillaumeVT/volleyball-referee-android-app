@@ -1,6 +1,6 @@
 # VolleyballReferee
 
-Volleyball Referee is a user-friendly and complete application for refereeing indoor and beach volley-ball matches.
+Volleyball Referee is a user-friendly and complete application for refereeing indoor and beach volleyball matches.
 
 <ul>
   <li>Create indoor volleyball matches with official or user-defined rules:  select the team names, the shirt colours, and the player numbers.</li>
@@ -16,7 +16,7 @@ Volleyball Referee is a user-friendly and complete application for refereeing in
   <li>Create your own rules from an exhaustive set of rules. For instance, you may change the number of points per set or disable the timeouts.</li>
   <li>Resume the current match: feel free to quit or restart, your latest game is always automatically saved.</li>
   <li>Stream and share the live matches online: all the referees, the team members, the audience and your friends can monitor the match data in real time.</li>
-  <li>Browse and view the recorded matches on your device or online.</li>
+  <li>Browse and view the recorded matches on your device or online. (http://www.volleyball-referee.com/search)</li>
   <li>Create and share the score sheets from your recorded matches, in PDF format.</li>
 </ul>
 
