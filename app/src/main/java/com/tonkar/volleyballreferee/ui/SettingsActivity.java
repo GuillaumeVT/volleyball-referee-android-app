@@ -34,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         mStreamOnlineListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if(key.equals(PrefUtils.PREF_STREAM_ONLINE)) {
-                    ServicesProvider.getInstance().restoreRecordedGamesService(SettingsActivity.this);
+                    ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
                     ServicesProvider.getInstance().getRecordedGamesService().assessAreRecordedOnline();
                 }
             }

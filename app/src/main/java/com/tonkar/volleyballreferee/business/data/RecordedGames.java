@@ -45,12 +45,14 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     private final List<RecordedGame> mRecordedGames;
     private final Set<String>        mRecordedLeagues;
     private       boolean            mOnlineRecordingEnabled;
+    private       RequestQueue       mRequestQueue;
 
     public RecordedGames(Context context) {
         mContext = context;
         mRecordedGames = new ArrayList<>();
         mRecordedLeagues = new TreeSet<>();
         mOnlineRecordingEnabled = true;
+        mRequestQueue = Volley.newRequestQueue(mContext);
     }
 
     @Override
@@ -207,8 +209,6 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     @Override
     public void assessAreRecordedOnline() {
         if (PrefUtils.isPrefOnlineRecordingEnabled(mContext)) {
-            RequestQueue queue = Volley.newRequestQueue(mContext);
-
             for (final RecordedGame recordedGame : mRecordedGames) {
                 String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, recordedGame.getGameDate());
                 BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
@@ -224,7 +224,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                     }
                 }
                 );
-                queue.add(booleanRequest);
+                mRequestQueue.add(booleanRequest);
             }
         }
     }
@@ -247,6 +247,11 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         }
     }
 
+    @Override
+    public RequestQueue getRequestQueue() {
+        return mRequestQueue;
+    }
+
     private void uploadRecordedGameOnline(final RecordedGameService recordedGameService, final boolean fromPref, final boolean notify) {
         boolean onlineRecordingEnabled;
         if (fromPref) {
@@ -260,7 +265,6 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
             try {
                 final byte[] bytes = JsonIOUtils.recordedGameToByteArray(recordedGame);
 
-                RequestQueue queue = Volley.newRequestQueue(mContext);
                 String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, recordedGameService.getGameDate());
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
                         new Response.Listener<String>() {
@@ -282,7 +286,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             }
                         }
                 );
-                queue.add(stringRequest);
+                mRequestQueue.add(stringRequest);
             } catch (IOException e) {
                 Log.e("VBR-Data", "Exception while writing game", e);
             }
@@ -301,7 +305,6 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
             try {
                 final byte[] bytes = JsonIOUtils.recordedSetToByteArray(recordedSet);
 
-                RequestQueue queue = Volley.newRequestQueue(mContext);
                 String url = String.format(Locale.getDefault(), WebGamesService.SET_API_URL, mRecordedGame.getGameDate(), setIndex);
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
                         new Response.Listener<String>() {
@@ -315,7 +318,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             }
                         }
                 );
-                queue.add(stringRequest);
+                mRequestQueue.add(stringRequest);
             } catch (IOException e) {
                 Log.e("VBR-Data", "Exception while writing game", e);
             }
@@ -328,7 +331,6 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
             if (mRecordedGame == null) {
                 GameService gameService = loadCurrentGame();
                 if (gameService != null) {
-                    RequestQueue queue = Volley.newRequestQueue(mContext);
                     String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, gameService.getGameDate());
                     JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
                             new Response.Listener<String>() {
@@ -341,11 +343,10 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                         }
                     }
                     );
-                    queue.add(stringRequest);
+                    mRequestQueue.add(stringRequest);
                 }
             } else { // The match is loaded in memory
                 if (!mRecordedGame.isMatchCompleted()) {
-                    RequestQueue queue = Volley.newRequestQueue(mContext);
                     String url = String.format(Locale.getDefault(), WebGamesService.GAME_API_URL, mRecordedGame.getGameDate());
                     JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
                             new Response.Listener<String>() {
@@ -360,7 +361,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                         }
                     }
                     );
-                    queue.add(stringRequest);
+                    mRequestQueue.add(stringRequest);
                 }
             }
         }

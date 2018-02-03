@@ -1,5 +1,7 @@
 package com.tonkar.volleyballreferee.interfaces;
 
+import com.android.volley.RequestQueue;
+
 public interface WebGamesService {
 
     String BASE_URL        = "http://www.volleyball-referee.com";
@@ -19,4 +21,6 @@ public interface WebGamesService {
     boolean isGameRecordedOnline(long gameDate);
 
     void uploadRecordedGameOnline(long gameDate);
+
+    RequestQueue getRequestQueue();
 }

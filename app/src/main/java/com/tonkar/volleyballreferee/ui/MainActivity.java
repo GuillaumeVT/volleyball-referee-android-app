@@ -25,10 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -359,8 +357,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
             );
-            RequestQueue queue = Volley.newRequestQueue(this);
-            queue.add(booleanRequest);
+            mRecordedGamesService.getRequestQueue().add(booleanRequest);
         }
     }
 
@@ -389,8 +386,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {}
                     }
             );
-            RequestQueue queue = Volley.newRequestQueue(this);
-            queue.add(stringRequest);
+            mRecordedGamesService.getRequestQueue().add(stringRequest);
         }
     }
 }
