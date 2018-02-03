@@ -21,7 +21,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public IndoorTeamDefinition(final TeamType teamType) {
         super(teamType);
 
-        mLiberoColor = colorIntToHtml(Integer.MIN_VALUE);
+        mLiberoColor = DEFAULT_COLOR;
         mLiberos = new TreeSet<>();
         mCaptain = -1;
     }

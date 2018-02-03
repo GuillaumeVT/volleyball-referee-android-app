@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.ScrollView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.GenderType;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
@@ -155,7 +157,7 @@ public class TeamSetupFragment extends Fragment {
         mPlayerAdapter = new PlayerAdapter(getActivity(), mIndoorTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);
 
-        if (mIndoorTeamService.getTeamColor(mTeamType) == Integer.MIN_VALUE) {
+        if (mIndoorTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
             teamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
         } else {
             teamColorSelected(mIndoorTeamService.getTeamColor(mTeamType));
@@ -180,7 +182,7 @@ public class TeamSetupFragment extends Fragment {
         mLiberoAdapter = new LiberoAdapter(getActivity(), mIndoorTeamService.getLiberoColor(mTeamType));
         liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
-        if (mIndoorTeamService.getLiberoColor(mTeamType) == Integer.MIN_VALUE) {
+        if (mIndoorTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
             liberoColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
         } else {
             liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));

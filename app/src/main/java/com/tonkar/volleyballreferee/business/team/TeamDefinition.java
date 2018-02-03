@@ -12,6 +12,8 @@ import java.util.TreeSet;
 
 public abstract class TeamDefinition {
 
+    public static final String DEFAULT_COLOR = "#633303";
+
     @SerializedName("classType")
     private       String       mClassType;
     @SerializedName("name")
@@ -29,7 +31,7 @@ public abstract class TeamDefinition {
         mClassType = getClass().getName();
         mName = "";
         mTeamType = teamType;
-        mColor = colorIntToHtml(Integer.MIN_VALUE);
+        mColor = DEFAULT_COLOR;
         mPlayers = new TreeSet<>();
         mGenderType = GenderType.MIXED;
     }
