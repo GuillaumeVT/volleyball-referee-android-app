@@ -85,7 +85,7 @@ public class JsonIOUtils {
             inputStream.close();
         } catch (FileNotFoundException e) {
             Log.i("VBR-Data", String.format("%s current game file does not yet exist", fileName));
-        } catch (IOException e) {
+        } catch (JsonParseException | IOException e) {
             Log.e("VBR-Data", "Exception while reading current game", e);
         }
 
@@ -102,7 +102,7 @@ public class JsonIOUtils {
             sGson.toJson(gameService, CURRENT_GAME_TYPE, writer);
             writer.close();
             outputStream.close();
-        } catch (IOException e) {
+        } catch (JsonParseException | IOException e) {
             Log.e("VBR-Data", "Exception while writing current game", e);
         }
     }
@@ -119,14 +119,14 @@ public class JsonIOUtils {
             inputStream.close();
         } catch (FileNotFoundException e) {
             Log.i("VBR-Data", String.format("%s recorded games file does not yet exist", fileName));
-        } catch (IOException e) {
+        } catch (JsonParseException | IOException e) {
             Log.e("VBR-Data", "Exception while reading games", e);
         }
 
         return games;
     }
 
-    public static List<RecordedGame> readRecordedGamesStream(InputStream inputStream) throws IOException {
+    public static List<RecordedGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
         try {
             return sGson.fromJson(reader, RECORDED_GAME_LIST_TYPE);
@@ -143,18 +143,18 @@ public class JsonIOUtils {
             FileOutputStream outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             writeRecordedGamesStream(outputStream, recordedGames);
             outputStream.close();
-        } catch (IOException e) {
+        } catch (JsonParseException | IOException e) {
             Log.e("VBR-Data", "Exception while writing games", e);
         }
     }
 
-    public static void writeRecordedGamesStream(OutputStream outputStream, List<RecordedGame> recordedGames) throws IOException {
+    public static void writeRecordedGamesStream(OutputStream outputStream, List<RecordedGame> recordedGames) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         sGson.toJson(recordedGames, RECORDED_GAME_LIST_TYPE, writer);
         writer.close();
     }
 
-    static byte[] recordedGameToByteArray(RecordedGame recordedGame) throws IOException {
+    static byte[] recordedGameToByteArray(RecordedGame recordedGame) throws JsonParseException, IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
@@ -166,7 +166,7 @@ public class JsonIOUtils {
         return outputStream.toByteArray();
     }
 
-    static byte[] recordedSetToByteArray(RecordedSet recordedSet) throws IOException {
+    static byte[] recordedSetToByteArray(RecordedSet recordedSet) throws JsonParseException, IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
@@ -194,14 +194,14 @@ public class JsonIOUtils {
             }
         } catch (FileNotFoundException e) {
             Log.i("VBR-SavedTeams", String.format("%s saved teams file does not yet exist", fileName));
-        } catch (IOException e) {
+        } catch (JsonParseException | IOException e) {
             Log.e("VBR-SavedTeams", "Exception while reading teams", e);
         }
 
         return teams;
     }
 
-    public static List<IndoorTeamDefinition> readTeamDefinitionsStream(InputStream inputStream) throws IOException {
+    public static List<IndoorTeamDefinition> readTeamDefinitionsStream(InputStream inputStream) throws IOException, JsonParseException {
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
         try {
             return sGson.fromJson(reader, TEAM_DEFINITION_LIST_TYPE);
@@ -222,12 +222,12 @@ public class JsonIOUtils {
             FileOutputStream outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             writeTeamDefinitionsStream(outputStream, teamDefinitions);
             outputStream.close();
-        } catch (IOException e) {
+        } catch (JsonParseException | IOException e) {
             Log.e("VBR-SavedTeams", "Exception while writing teams", e);
         }
     }
 
-    public static void writeTeamDefinitionsStream(OutputStream outputStream, List<IndoorTeamDefinition> teamDefinitions) throws IOException {
+    public static void writeTeamDefinitionsStream(OutputStream outputStream, List<IndoorTeamDefinition> teamDefinitions) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         sGson.toJson(teamDefinitions, TEAM_DEFINITION_LIST_TYPE, writer);
         writer.close();

@@ -5,7 +5,6 @@ import com.tonkar.volleyballreferee.interfaces.Substitution;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
 import com.tonkar.volleyballreferee.interfaces.Timeout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

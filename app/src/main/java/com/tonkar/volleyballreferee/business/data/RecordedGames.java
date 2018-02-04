@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonParseException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -287,7 +288,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                         }
                 );
                 mRequestQueue.add(stringRequest);
-            } catch (IOException e) {
+            } catch (JsonParseException | IOException e) {
                 Log.e("VBR-Data", "Exception while writing game", e);
             }
         }
@@ -319,7 +320,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                         }
                 );
                 mRequestQueue.add(stringRequest);
-            } catch (IOException e) {
+            } catch (JsonParseException | IOException e) {
                 Log.e("VBR-Data", "Exception while writing game", e);
             }
         }
