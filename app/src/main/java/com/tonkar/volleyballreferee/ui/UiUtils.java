@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -45,7 +46,6 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.WebGamesService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -162,7 +162,7 @@ public class UiUtils {
 
                 String summary = gameService.getGameSummary();
                 if (online) {
-                    String url = GameType.INDOOR.equals(gameService.getGameType()) ? WebGamesService.VIEW_INDOOR_URL : WebGamesService.VIEW_BEACH_URL;
+                    String url = GameType.INDOOR.equals(gameService.getGameType()) ? WebUtils.VIEW_INDOOR_URL : WebUtils.VIEW_BEACH_URL;
                     summary = summary + "\n" + String.format(Locale.getDefault(), url, gameService.getGameDate());
                 }
 

@@ -32,10 +32,10 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
+import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.interfaces.WebGamesService;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
@@ -132,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_view_live_games:
                         Log.i("VBR-MainActivity", "Live games");
                         intent = new Intent(MainActivity.this, WebActivity.class);
-                        intent.putExtra("url", WebGamesService.LIVE_URL);
+                        intent.putExtra("url", WebUtils.LIVE_URL);
                         startActivity(intent);
                         break;
                     case R.id.action_search_online_games:
                         Log.i("VBR-MainActivity", "Search online games");
                         intent = new Intent(MainActivity.this, WebActivity.class);
-                        intent.putExtra("url", WebGamesService.SEARCH_URL);
+                        intent.putExtra("url", WebUtils.SEARCH_URL);
                         startActivity(intent);
                         break;
                     case R.id.action_facebook:
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
         messageItem.setVisible(false);
 
         if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
-            String url = WebGamesService.BASE_URL + "/api/message/has";
+            String url = WebUtils.HAS_MESSAGE_URL;
             BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
                     new Response.Listener<Boolean>() {
                         @Override
@@ -357,13 +357,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
             );
-            mRecordedGamesService.getRequestQueue().add(booleanRequest);
+            WebUtils.getInstance().getRequestQueue(this).add(booleanRequest);
         }
     }
 
     private void showMessage() {
         if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
-            String url = WebGamesService.BASE_URL + "/api/message";
+            String url = WebUtils.MESSAGE_URL;
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
                     new Response.Listener<String>() {
                         @Override
@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {}
                     }
             );
-            mRecordedGamesService.getRequestQueue().add(stringRequest);
+            WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
         }
     }
 }

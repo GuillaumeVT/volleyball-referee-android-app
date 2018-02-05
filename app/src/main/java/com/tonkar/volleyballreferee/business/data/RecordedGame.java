@@ -63,7 +63,7 @@ public class RecordedGame implements RecordedGameService {
         String summary = String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
 
         if (mIsRecordedOnline) {
-            String url = GameType.INDOOR.equals(mGameType) ? WebGamesService.VIEW_INDOOR_URL : WebGamesService.VIEW_BEACH_URL;
+            String url = GameType.INDOOR.equals(mGameType) ? WebUtils.VIEW_INDOOR_URL : WebUtils.VIEW_BEACH_URL;
             summary = summary + "\n" + String.format(Locale.getDefault(), url, mGameDate);
         }
 

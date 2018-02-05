@@ -11,7 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.WebGamesService;
+import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Locale;
@@ -77,7 +77,7 @@ public class WebActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String searchQuery) {
                 String searchQueryTrim = searchQuery.trim();
                 if (searchQueryTrim.length() > 2) {
-                    mWebView.loadUrl(String.format(Locale.getDefault(), "%s/%s", WebGamesService.SEARCH_URL, searchQueryTrim));
+                    mWebView.loadUrl(String.format(Locale.getDefault(), "%s/%s", WebUtils.SEARCH_URL, searchQueryTrim));
                 }
                 return true;
             }
@@ -97,7 +97,7 @@ public class WebActivity extends AppCompatActivity {
             case R.id.action_search_online_games:
                 return true;
             case R.id.action_view_live_games:
-                mWebView.loadUrl(WebGamesService.LIVE_URL);
+                mWebView.loadUrl(WebUtils.LIVE_URL);
                 return true;
             case R.id.action_share:
                 UiUtils.shareUrl(this, mWebView.getTitle() + "\n" + mWebView.getUrl());

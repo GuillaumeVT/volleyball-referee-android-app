@@ -67,7 +67,7 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     @Override
-    public void saveCurrentTeam() {
+    public synchronized void saveCurrentTeam() {
         mSavedTeams.add(mSavedTeam);
         JsonIOUtils.writeSavedTeams(mContext, SAVED_TEAMS_FILE, mSavedTeams);
         mSavedTeam = null;
