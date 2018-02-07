@@ -13,6 +13,8 @@ public class Rules {
     private final int     mPointsPerSet;
     @SerializedName("pref_tie_break")
     private final boolean mTieBreakInLastSet;
+    @SerializedName("pref_two_points_difference")
+    private final boolean m2PointsDifference;
     @SerializedName("pref_team_timeouts")
     private final boolean mTeamTimeoutsEnabled;
     @SerializedName("pref_team_timeouts_per_set")
@@ -34,7 +36,7 @@ public class Rules {
     @SerializedName("pref_consecutive_serves_per_player")
     private final int     mCustomConsecutiveServesPerPlayer;
 
-    public Rules(final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet,
+    public Rules(final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet, final boolean twoPointsDifference,
                  final boolean teamTimeoutsEnabled, final int teamTimeoutsPerSet, final int teamTimeoutDuration,
                  final boolean technicalTimeoutsEnabled, final int technicalTimeoutDuration,
                  final boolean gameIntervalsEnabled, final int gameIntervalDuration,
@@ -42,6 +44,7 @@ public class Rules {
         mSetsPerGame = setsPerGame;
         mPointsPerSet = pointsPerSet;
         mTieBreakInLastSet = tieBreakInLastSet;
+        m2PointsDifference = twoPointsDifference;
 
         mTeamTimeoutsEnabled = teamTimeoutsEnabled;
         mTeamTimeoutsPerSet = teamTimeoutsPerSet;
@@ -59,15 +62,16 @@ public class Rules {
         mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
     }
 
-    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, 2, 30,
+    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, true, 2, 30,
             true, 60, true, 180, 6, false, 9999);
-    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, 1, 30,
+    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, true, 1, 30,
             true, 30, true, 60, 0, true, 9999);
 
     public static Rules createRulesFromPref(final SharedPreferences sharedPreferences, final Rules defaultRules) {
         int setsPerGame = getInt(sharedPreferences, "pref_sets_per_game", defaultRules.getSetsPerGame());
         int pointsPerSet = getInt(sharedPreferences,"pref_points_per_set", defaultRules.getPointsPerSet());
         boolean tieBreakInLastSet = sharedPreferences.getBoolean("pref_tie_break", defaultRules.isTieBreakInLastSet());
+        boolean twoPointsDifference = sharedPreferences.getBoolean("pref_two_points_difference", defaultRules.is2PointsDifference());
 
         boolean teamTimeoutsEnabled = sharedPreferences.getBoolean("pref_team_timeouts", defaultRules.areTeamTimeoutsEnabled());
         int teamTimeoutsPerSet = getInt(sharedPreferences,"pref_team_timeouts_per_set", defaultRules.getTeamTimeoutsPerSet());
@@ -85,7 +89,7 @@ public class Rules {
 
         int customConsecutiveServesPerPlayer = getInt(sharedPreferences,"pref_consecutive_serves_per_player", defaultRules.getCustomConsecutiveServesPerPlayer());
 
-        return new Rules(setsPerGame, pointsPerSet, tieBreakInLastSet, teamTimeoutsEnabled, teamTimeoutsPerSet, teamTimeoutDuration,
+        return new Rules(setsPerGame, pointsPerSet, tieBreakInLastSet, twoPointsDifference, teamTimeoutsEnabled, teamTimeoutsPerSet, teamTimeoutDuration,
                 technicalTimeoutsEnabled, technicalTimeoutDuration, gameIntervalsEnabled, gameIntervalDuration, teamSubstitutionsPerSet, changeSidesEvery7Points, customConsecutiveServesPerPlayer);
     }
 
@@ -103,6 +107,10 @@ public class Rules {
 
     public boolean isTieBreakInLastSet() {
         return mTieBreakInLastSet;
+    }
+
+    public boolean is2PointsDifference() {
+        return m2PointsDifference;
     }
 
     public boolean areTeamTimeoutsEnabled() { return mTeamTimeoutsEnabled; }
@@ -145,6 +153,7 @@ public class Rules {
         Log.i("VBR-Rules", String.format("pref_sets_per_game: %d", mSetsPerGame));
         Log.i("VBR-Rules", String.format("pref_points_per_set: %d", mPointsPerSet));
         Log.i("VBR-Rules", String.format("pref_tie_break: %b", mTieBreakInLastSet));
+        Log.i("VBR-Rules", String.format("pref_two_points_difference: %b", m2PointsDifference));
         Log.i("VBR-Rules", String.format("pref_team_timeouts: %b", mTeamTimeoutsEnabled));
         Log.i("VBR-Rules", String.format("pref_team_timeouts_per_set: %d", mTeamTimeoutsPerSet));
         Log.i("VBR-Rules", String.format("pref_team_timeout_duration: %d", mTeamTimeoutDuration));
@@ -168,6 +177,7 @@ public class Rules {
             result = (this.getSetsPerGame() == other.getSetsPerGame())
                     && (this.getPointsPerSet() == other.getPointsPerSet())
                     && (this.isTieBreakInLastSet() == other.isTieBreakInLastSet())
+                    && (this.is2PointsDifference() == other.is2PointsDifference())
                     && (this.areTeamTimeoutsEnabled() == other.areTeamTimeoutsEnabled())
                     && (this.getTeamTimeoutsPerSet() == other.getTeamTimeoutsPerSet())
                     && (this.getTeamTimeoutDuration() == other.getTeamTimeoutDuration())

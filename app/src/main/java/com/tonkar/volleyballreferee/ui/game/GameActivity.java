@@ -380,21 +380,25 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     }
 
     private void callTimeoutWithDialog(final TeamType teamType) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-GameActivity", "User accepts the timeout");
-                mGameService.callTimeout(teamType);
-            }
-        });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-GameActivity", "User refuses the timeout");
-            }
-        });
-        AlertDialog alertDialog = builder.show();
-        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+        if (mGameService.getRemainingTimeouts(teamType) > 0) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+            builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
+            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("VBR-GameActivity", "User accepts the timeout");
+                    mGameService.callTimeout(teamType);
+                }
+            });
+            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("VBR-GameActivity", "User refuses the timeout");
+                }
+            });
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+        } else {
+            Toast.makeText(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+        }
     }
 
     // Listeners
@@ -512,17 +516,12 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     @Override
     public void onTimeoutUpdated(TeamType teamType, int maxCount, int newCount) {
         final LinearLayout linearLayout;
-        final ImageButton imageButton;
 
         if (mTeamOnLeftSide.equals(teamType)) {
             linearLayout = mLeftTeamTimeoutLayout;
-            imageButton = mLeftTeamTimeoutButton;
         } else {
             linearLayout = mRightTeamTimeoutLayout;
-            imageButton = mRightTeamTimeoutButton;
         }
-
-        imageButton.setEnabled(newCount != 0);
 
         for (int index = 0; index < linearLayout.getChildCount(); index++) {
             View view = linearLayout.getChildAt(index);
@@ -548,6 +547,10 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         deleteToolbarCountdown();
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
         timeoutFragment.show(getFragmentManager(), "timeout");
+
+        if (mGameService.getRemainingTimeouts(teamType) == 0) {
+            Toast.makeText(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

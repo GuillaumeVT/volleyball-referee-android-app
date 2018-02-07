@@ -20,4 +20,6 @@ public interface IndoorTeamService extends TeamService, BaseIndoorTeamService {
 
     Set<Integer> getPossibleActingCaptains(TeamType teamType);
 
+    boolean hasRemainingSubstitutions(TeamType teamType);
+
 }

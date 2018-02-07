@@ -137,7 +137,7 @@ public class IndoorTeamComposition extends TeamComposition {
         return mStartingLineupConfirmed;
     }
 
-    private boolean canSubstitute() {
+    public boolean canSubstitute() {
         return mSubstitutions.size() < mMaxSubstitutionsPerSet;
     }
 

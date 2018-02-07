@@ -16,6 +16,8 @@ public abstract class Set {
     private       String          mClassType;
     @SerializedName("pointsToWinSet")
     private final int             mPointsToWinSet;
+    @SerializedName("twoPointsDifference")
+    private final boolean         m2PointsDifference;
     @SerializedName("homeTeamPoints")
     private       int             mHomeTeamPoints;
     @SerializedName("guestTeamPoints")
@@ -44,6 +46,7 @@ public abstract class Set {
     public Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
         mClassType = getClass().getName();
         mPointsToWinSet = pointsToWinSet;
+        m2PointsDifference = rules.is2PointsDifference();
 
         mHomeTeamPoints = 0;
         mGuestTeamPoints = 0;
@@ -78,12 +81,12 @@ public abstract class Set {
 
     public boolean isSetCompleted() {
         // Set is complete when a team reaches the number of points to win (e.g. 25, 21, 15) or more, with a 2-points difference
-        return (mHomeTeamPoints >= mPointsToWinSet || mGuestTeamPoints >= mPointsToWinSet) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 2);
+        return (mHomeTeamPoints >= mPointsToWinSet || mGuestTeamPoints >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 2);
     }
 
     public boolean isSetPoint() {
         // Set ball when a team will reach the number of points to win  with 1 point (e.g. 25, 21, 15) or more, with at least 1-point difference
-        return !isSetCompleted() && (mHomeTeamPoints+1 >= mPointsToWinSet || mGuestTeamPoints+1 >= mPointsToWinSet) && (Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
+        return !isSetCompleted() && (mHomeTeamPoints+1 >= mPointsToWinSet || mGuestTeamPoints+1 >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
     }
 
     public TeamType getLeadingTeam() {

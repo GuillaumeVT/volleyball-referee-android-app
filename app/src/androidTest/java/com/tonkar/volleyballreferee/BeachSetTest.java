@@ -92,4 +92,21 @@ public class BeachSetTest {
         set.addPoint(TeamType.HOME);
         assertEquals(true, set.isSetCompleted());
     }
+
+    @Test
+    public void winSet_1PointGap() {
+        Rules rules = new Rules(3, 21, true, false, true, 1, 30,
+                true, 30, true, 180, 0, true, 9999);
+        BeachSet set = new BeachSet(rules, rules.getPointsPerSet(), TeamType.GUEST);
+
+        for (int index = 0; index < 20; index++) {
+            assertEquals(false, set.isSetCompleted());
+            set.addPoint(TeamType.GUEST);
+            set.addPoint(TeamType.HOME);
+        }
+
+        assertEquals(true, set.isSetPoint());
+        set.addPoint(TeamType.GUEST);
+        assertEquals(true, set.isSetCompleted());
+    }
 }

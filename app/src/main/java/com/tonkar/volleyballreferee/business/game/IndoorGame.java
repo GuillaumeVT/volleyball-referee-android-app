@@ -161,6 +161,11 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
+    public boolean hasRemainingSubstitutions(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).canSubstitute();
+    }
+
+    @Override
     public boolean isStartingLineupConfirmed() {
         return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
     }
