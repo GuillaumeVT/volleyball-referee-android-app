@@ -28,9 +28,12 @@
 
     <dimen name="score_button_height">160dp</dimen>
 
-    <dimen name="game_buttons_horizontal_spacing">160dp</dimen>
-    <dimen name="game_buttons_horizontal_spacing_landscape">80dp</dimen>
+    <dimen name="game_buttons_horizontal_spacing">48dp</dimen>
 
     <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
+
+    <dimen name="penalty_card_size">32dp</dimen>
+    <dimen name="penalty_card_half_size">16dp</dimen>
+    <dimen name="penalty_card_max_width">64dp</dimen>
 
 </resources>

@@ -84,6 +84,17 @@
     <string name="stream_game">Stream the match online</string>
     <string name="stream_online_on_message">The match is streamed online</string>
     <string name="stream_online_off_message">The match is no longer streamed online</string>
+    <string name="all_timeouts_called">%s has no more available timeout</string>
+    <string name="all_substitutions_used">%s has no more available substitution</string>
+    <string name="penalty_cards_tab">Cards</string>
+    <string name="penalty_card">Penalty card (%s)</string>
+    <string name="yellow_card">Simple warning</string>
+    <string name="red_card">A point and service to the opponent</string>
+    <string name="red_card_expulsion">Expulsion for the remainder of the set</string>
+    <string name="red_card_disqualification">Disqualification for the remainder of the match</string>
+    <string name="coach_abbreviation">C.</string>
+    <string name="set_lost_incomplete">%s lost the set because the team is incomplete</string>
+    <string name="match_lost_incomplete">%s lost the match because the team is incomplete</string>
 
     <!-- Rules activity -->
     <string name="rules">My own rules</string>
@@ -96,6 +107,8 @@
     <string name="pref_points_per_set">Number of points per set</string>
     <string name="pref_sets_per_game">Number of sets per game</string>
     <string name="pref_tie_break">Tie break in last set</string>
+    <string name="pref_two_points_difference">2 points difference to win set</string>
+    <string name="pref_penalty_cards">Penalty cards</string>
     <string name="pref_team_timeouts">Team timeouts</string>
     <string name="pref_team_timeouts_per_set">Number of team timeouts per set</string>
     <string name="pref_team_timeout_duration">Duration of a team timeout</string>

@@ -19,9 +19,9 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.io.File;

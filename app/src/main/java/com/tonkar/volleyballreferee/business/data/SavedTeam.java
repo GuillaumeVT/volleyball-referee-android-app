@@ -1,11 +1,11 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.Substitution;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.ArrayList;
 import java.util.List;

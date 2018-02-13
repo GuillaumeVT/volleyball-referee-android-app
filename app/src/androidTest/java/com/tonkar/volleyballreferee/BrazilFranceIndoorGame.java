@@ -10,10 +10,10 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;

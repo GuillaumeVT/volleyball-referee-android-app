@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.business.data;
 import android.graphics.Color;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 
 import java.util.Set;
 import java.util.TreeSet;

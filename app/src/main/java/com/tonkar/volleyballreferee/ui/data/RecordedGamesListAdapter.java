@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 
 import java.text.DateFormat;

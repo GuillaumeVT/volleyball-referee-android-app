@@ -35,7 +35,7 @@
 
     <style name="ImageButtonTheme" parent="Widget.AppCompat.ImageButton">
         <item name="colorButtonNormal">@android:color/white</item>
-        <item name="colorAccent">@color/colorButtonDisabled</item>
+        <item name="colorAccent">@color/colorDisabledButton</item>
         <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:tint">@color/colorPrimary</item>
     </style>
@@ -63,7 +63,7 @@
         <item name="android:windowBackground">@color/colorBackgroundMain</item>
     </style>
 
-    <style name="NumberPickerTheme" parent="AppTheme" >
+    <style name="NumberPickerTheme" parent="AppTheme">
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
     </style>

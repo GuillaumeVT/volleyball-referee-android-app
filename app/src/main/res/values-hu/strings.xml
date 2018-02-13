@@ -85,6 +85,17 @@
     <string name="stream_game">Mérkőzés közvetítése</string>
     <string name="stream_online_on_message">A mérkőzés online közvetítve van</string>
     <string name="stream_online_off_message">A mérközés online közvetítése véget ért</string>
+    <string name="all_timeouts_called">%s csapatnak nincs több időkérése</string>
+    <string name="all_substitutions_used">%s csapatnak nincs több cserelehetősége</string>
+    <string name="penalty_cards_tab">Kártyák</string>
+    <string name="penalty_card">Büntetőkártya (%s)</string>
+    <string name="yellow_card">Sárga kártya</string>
+    <string name="red_card">Piros kártya</string>
+    <string name="red_card_expulsion">Sárga és piros kártya egy kézben</string>
+    <string name="red_card_disqualification">Sárga és piros kártya külön kézben</string>
+    <string name="coach_abbreviation">E.</string>
+    <string name="set_lost_incomplete">%s elveszítette a játszmát, mert nem teljes a csapat</string>
+    <string name="match_lost_incomplete">%s elveszítette a mérkőzést, mert nem teljes a csapat</string>
 
     <!-- Rules activity -->
     <string name="rules">Egyedi szabályok</string>
@@ -97,6 +108,8 @@
     <string name="pref_points_per_set">Játszmánkénti pontok</string>
     <string name="pref_sets_per_game">Játszmák száma</string>
     <string name="pref_tie_break">Rövidített döntő játszma</string>
+    <string name="pref_two_points_difference">Két pontos különbséggel lehet nyerni</string>
+    <string name="pref_penalty_cards">Büntetőkártyák</string>
     <string name="pref_team_timeouts">Csapat időkérések</string>
     <string name="pref_team_timeouts_per_set">Csapat időkérések száma játszmánként</string>
     <string name="pref_team_timeout_duration">Csapat időkérés hossza</string>

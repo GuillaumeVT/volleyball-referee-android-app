@@ -10,9 +10,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.BaseScoreService;
-import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.score.BaseScoreService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.List;

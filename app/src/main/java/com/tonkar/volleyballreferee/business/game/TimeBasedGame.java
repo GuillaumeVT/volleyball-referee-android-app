@@ -6,22 +6,22 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.Timeout;
-import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
+import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.Set;
 
 public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
@@ -119,6 +119,12 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
         return teamDefinition;
     }
+
+    @Override
+    public void addPenaltyCardListener(PenaltyCardListener listener) {}
+
+    @Override
+    public void removePenaltyCardListener(PenaltyCardListener listener) {}
 
     @Override
     public String getLeagueName() {
@@ -573,5 +579,38 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public boolean isMatchStopped() {
         return mIsStopped;
+    }
+
+    @Override
+    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {}
+
+    @Override
+    public Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
+        return new HashSet<>();
+    }
+
+    @Override
+    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType, int setIndex) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<PenaltyCard> getPenaltyCards(TeamType teamType, int number) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean hasPenaltyCards(TeamType teamType, int number) {
+        return false;
+    }
+
+    @Override
+    public boolean areNotificationsEnabled() {
+        return true;
     }
 }

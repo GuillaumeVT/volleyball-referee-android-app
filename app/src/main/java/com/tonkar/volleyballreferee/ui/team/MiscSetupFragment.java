@@ -13,7 +13,7 @@ import android.widget.AutoCompleteTextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 
 import java.util.ArrayList;
 

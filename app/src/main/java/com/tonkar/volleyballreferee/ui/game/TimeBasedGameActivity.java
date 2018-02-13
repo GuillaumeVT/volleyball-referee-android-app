@@ -26,11 +26,11 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 

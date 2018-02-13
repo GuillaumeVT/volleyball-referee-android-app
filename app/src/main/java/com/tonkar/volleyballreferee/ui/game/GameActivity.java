@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -33,17 +34,21 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
+import com.tonkar.volleyballreferee.interfaces.UsageType;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
+import java.util.Locale;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener {
+public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener, PenaltyCardListener {
 
     private GameService          mGameService;
     private RecordedGamesService mRecordedGamesService;
@@ -65,6 +70,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     private ImageButton          mRightTeamTimeoutButton;
     private LinearLayout         mLeftTeamTimeoutLayout;
     private LinearLayout         mRightTeamTimeoutLayout;
+    private ImageButton          mLeftTeamCardsButton;
+    private ImageButton          mRightTeamCardsButton;
     private CountDown            mCountDown;
 
     @Override
@@ -98,6 +105,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mGameService.addScoreListener(this);
         mGameService.addTimeoutListener(this);
         mGameService.addTeamListener(this);
+        mGameService.addPenaltyCardListener(this);
         mRecordedGamesService.connectGameRecorder();
 
         mRandom = new Random();
@@ -125,6 +133,9 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
         mLeftTeamTimeoutLayout = findViewById(R.id.left_team_timeout_layout);
         mRightTeamTimeoutLayout = findViewById(R.id.right_team_timeout_layout);
+
+        mLeftTeamCardsButton = findViewById(R.id.left_team_cards_button);
+        mRightTeamCardsButton = findViewById(R.id.right_team_cards_button);
 
         if (mGameService.getRules().areTeamTimeoutsEnabled()) {
             for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
@@ -160,6 +171,11 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             mRightTeamTimeoutLayout.setVisibility(View.GONE);
         }
 
+        if (!mGameService.getRules().arePenaltyCardsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
+            mLeftTeamCardsButton.setVisibility(View.INVISIBLE);
+            mRightTeamCardsButton.setVisibility(View.INVISIBLE);
+        }
+
         final ViewPager gamePager = findViewById(R.id.game_pager);
         final GameFragmentPagerAdapter gamePagerAdapter = new GameFragmentPagerAdapter(this, getSupportFragmentManager());
         gamePager.setAdapter(gamePagerAdapter);
@@ -189,6 +205,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mGameService.removeScoreListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeTeamListener(this);
+        mGameService.removePenaltyCardListener(this);
         mRecordedGamesService.disconnectGameRecorder(isFinishing());
         deleteToolbarCountdown();
     }
@@ -343,6 +360,12 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         callTimeoutWithDialog(mTeamOnLeftSide);
     }
 
+    public void giveLeftPenaltyCard(View view) {
+        Log.i("VBR-GameActivity", "Give left penalty card");
+        UiUtils.animate(this, mLeftTeamCardsButton);
+        showPenaltyCardDialog(mTeamOnLeftSide);
+    }
+
     public void increaseRightScore(View view) {
         Log.i("VBR-GameActivity", "Increase right score");
         UiUtils.animate(this, mRightTeamScoreButton);
@@ -353,6 +376,12 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         Log.i("VBR-GameActivity", "Call right timeout");
         UiUtils.animate(this, mRightTeamTimeoutButton);
         callTimeoutWithDialog(mTeamOnRightSide);
+    }
+
+    public void giveRightPenaltyCard(View view) {
+        Log.i("VBR-GameActivity", "Give right penalty card");
+        UiUtils.animate(this, mRightTeamCardsButton);
+        showPenaltyCardDialog(mTeamOnRightSide);
     }
 
     private void increaseScoreWithDialog(final TeamType teamType) {
@@ -401,6 +430,17 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         }
     }
 
+    private void showPenaltyCardDialog(final TeamType teamType) {
+        final String title = String.format(Locale.getDefault(), getResources().getString(R.string.penalty_card), mGameService.getTeamName(teamType));
+        PenaltyCardSelectionDialog penaltyCardSelectionDialog = new PenaltyCardSelectionDialog(getLayoutInflater(), this, title, mGameService, teamType) {
+            @Override
+            public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+                mGameService.givePenaltyCard(teamType, penaltyCardType, number);
+            }
+        };
+        penaltyCardSelectionDialog.show();
+    }
+
     // Listeners
 
     @Override
@@ -412,12 +452,14 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mLeftTeamNameText.setText(mGameService.getTeamName(mTeamOnLeftSide));
         UiUtils.colorTeamButton(this, mGameService.getTeamColor(mTeamOnLeftSide), mLeftTeamScoreButton);
         UiUtils.colorTeamIconButton(this, mGameService.getTeamColor(mTeamOnLeftSide), mLeftTeamTimeoutButton);
+        UiUtils.colorTeamIconButton(this, mGameService.getTeamColor(mTeamOnLeftSide), mLeftTeamCardsButton);
 
         // Right
 
         mRightTeamNameText.setText(mGameService.getTeamName(mTeamOnRightSide));
         UiUtils.colorTeamButton(this, mGameService.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
         UiUtils.colorTeamIconButton(this, mGameService.getTeamColor(mTeamOnRightSide), mRightTeamTimeoutButton);
+        UiUtils.colorTeamIconButton(this, mGameService.getTeamColor(mTeamOnRightSide), mRightTeamCardsButton);
 
         onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
         onSetsUpdated(mTeamOnLeftSide, mGameService.getSets(mTeamOnLeftSide));
@@ -438,8 +480,10 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         UiUtils.animateBounce(this, mSetsText);
         UiUtils.animateBounce(this, mLeftTeamTimeoutButton);
         UiUtils.animateBounce(this, mRightTeamTimeoutButton);
+        UiUtils.animateBounce(this, mLeftTeamCardsButton);
+        UiUtils.animateBounce(this, mRightTeamCardsButton);
 
-        if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
+        if (mGameService.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
             Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
         }
     }
@@ -470,11 +514,15 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         if (mGameService.isMatchPoint()) {
             String text = getResources().getString(R.string.match_point);
             setTitle(text);
-            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+            if (mGameService.areNotificationsEnabled()) {
+                Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+            }
         } else if (mGameService.isSetPoint()) {
             String text = getResources().getString(R.string.set_point);
             setTitle(text);
-            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+            if (mGameService.areNotificationsEnabled()) {
+                Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+            }
         } else {
             setTitle("");
         }
@@ -510,6 +558,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     public void onMatchCompleted(final TeamType winner) {
         disableView();
         invalidateOptionsMenu();
+        deleteToolbarCountdown();
+        deleteFragmentCountdown();
         Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
 
@@ -532,7 +582,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
                 final int colorId;
 
                 if (maxCount - newCount > index) {
-                    colorId = R.color.colorButtonDisabled;
+                    colorId = R.color.colorDisabledButton;
                 } else {
                     colorId = android.R.color.holo_orange_dark;
                 }
@@ -545,6 +595,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     @Override
     public void onTimeout(TeamType teamType, int duration) {
         deleteToolbarCountdown();
+        deleteFragmentCountdown();
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
         timeoutFragment.show(getFragmentManager(), "timeout");
 
@@ -555,16 +606,22 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
     @Override
     public void onTechnicalTimeout(int duration) {
-        deleteToolbarCountdown();
-        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.technical_timeout_title));
-        timeoutFragment.show(getFragmentManager(), "technical_timeout");
+        if (mGameService.areNotificationsEnabled()) {
+            deleteToolbarCountdown();
+            deleteFragmentCountdown();
+            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.technical_timeout_title));
+            timeoutFragment.show(getFragmentManager(), "timeout");
+        }
     }
 
     @Override
     public void onGameInterval(int duration) {
-        deleteToolbarCountdown();
-        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
-        timeoutFragment.show(getFragmentManager(), "game_interval");
+        if (mGameService.areNotificationsEnabled()) {
+            deleteToolbarCountdown();
+            deleteFragmentCountdown();
+            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
+            timeoutFragment.show(getFragmentManager(), "timeout");
+        }
     }
 
     public void startToolbarCountDown(long duration) {
@@ -603,6 +660,13 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         }
     }
 
+    private void deleteFragmentCountdown() {
+        Fragment timeoutFragment = getFragmentManager().findFragmentByTag("timeout");
+        if (timeoutFragment != null) {
+            getFragmentManager().beginTransaction().remove(timeoutFragment).commit();
+        }
+    }
+
     private void disableView() {
         Log.i("VBR-GameActivity", "Disable game activity view");
         mSwapTeamsButton.setEnabled(false);
@@ -611,6 +675,25 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mScoreRemoveButton.setEnabled(false);
         mLeftTeamTimeoutButton.setEnabled(false);
         mRightTeamTimeoutButton.setEnabled(false);
+        mLeftTeamCardsButton.setEnabled(false);
+        mRightTeamCardsButton.setEnabled(false);
     }
 
+    @Override
+    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        switch (penaltyCardType) {
+            case YELLOW:
+                Toast.makeText(this, getResources().getString(R.string.yellow_card), Toast.LENGTH_LONG).show();
+                break;
+            case RED:
+                Toast.makeText(this, getResources().getString(R.string.red_card), Toast.LENGTH_LONG).show();
+                break;
+            case RED_EXPULSION:
+                Toast.makeText(this, getResources().getString(R.string.red_card_expulsion), Toast.LENGTH_LONG).show();
+                break;
+            case RED_DISQUALIFICATION:
+                Toast.makeText(this, getResources().getString(R.string.red_card_disqualification), Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 }

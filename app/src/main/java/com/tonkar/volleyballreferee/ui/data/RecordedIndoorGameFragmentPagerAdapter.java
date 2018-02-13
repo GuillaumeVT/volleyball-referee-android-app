@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 
 import java.util.ArrayList;
 import java.util.List;

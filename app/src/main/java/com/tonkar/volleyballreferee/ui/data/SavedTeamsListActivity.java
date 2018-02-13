@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.List;

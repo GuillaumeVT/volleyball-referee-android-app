@@ -23,14 +23,14 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 
 import java.util.ArrayList;

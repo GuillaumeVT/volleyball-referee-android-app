@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.business.team;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

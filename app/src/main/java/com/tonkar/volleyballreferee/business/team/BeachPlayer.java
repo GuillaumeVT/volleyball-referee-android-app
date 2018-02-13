@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.business.team;
 
-import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 
 public class BeachPlayer extends Player {
 

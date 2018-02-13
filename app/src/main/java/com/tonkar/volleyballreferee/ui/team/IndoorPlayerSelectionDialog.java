@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,8 +13,9 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.ArrayList;
@@ -24,13 +26,17 @@ public abstract class IndoorPlayerSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
+    IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
+        this(layoutInflater, context, title, indoorTeamService, null, teamType, players);
+    }
+
+    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, PenaltyCardService penaltyCardService, TeamType teamType, Set<Integer> players) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, indoorTeamService, teamType, players) {
+        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, indoorTeamService, penaltyCardService, teamType, players) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 IndoorPlayerSelectionDialog.this.onPlayerSelected(selectedNumber);
@@ -64,13 +70,15 @@ public abstract class IndoorPlayerSelectionDialog {
         private final LayoutInflater        mLayoutInflater;
         private final Context               mContext;
         private final BaseIndoorTeamService mIndoorTeamService;
+        private final PenaltyCardService    mPenaltyCardService;
         private final TeamType              mTeamType;
         private final List<Integer>         mPlayers;
 
-        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
+        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, PenaltyCardService penaltyCardService, TeamType teamType, Set<Integer> players) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mIndoorTeamService = indoorTeamService;
+            mPenaltyCardService = penaltyCardService;
             mTeamType = teamType;
             mPlayers = new ArrayList<>(players);
         }
@@ -104,18 +112,36 @@ public abstract class IndoorPlayerSelectionDialog {
             button.setText(String.valueOf(number));
             UiUtils.styleBaseIndoorTeamButton(mContext, mIndoorTeamService, mTeamType, number, button);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final int selectedNumber = Integer.parseInt(((Button) view).getText().toString());
-                    onPlayerSelected(selectedNumber);
-                }
-            });
+            if (isExpulsedOrDisqualified(number)) {
+                button.setEnabled(false);
+                UiUtils.colorTeamButton(mContext, ContextCompat.getColor(mContext, R.color.colorDisabledButton), button);
+                button.setTextColor(ContextCompat.getColor(mContext, R.color.colorRedCard));
+
+            } else {
+                button.setEnabled(true);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final int selectedNumber = Integer.parseInt(((Button) view).getText().toString());
+                        onPlayerSelected(selectedNumber);
+                    }
+                });
+            }
 
             return button;
         }
 
         public abstract void onPlayerSelected(int selectedNumber);
+
+        private boolean isExpulsedOrDisqualified(int number) {
+            boolean result = false;
+
+            if (mPenaltyCardService != null) {
+                result = mPenaltyCardService.getExpulsedOrDisqualifiedPlayersForCurrentSet(mTeamType).contains(number);
+            }
+
+            return result;
+        }
 
     }
 

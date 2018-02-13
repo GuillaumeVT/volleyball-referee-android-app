@@ -8,71 +8,53 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final Context               mContext;
-    private       IndoorCourtFragment   mIndoorCourtFragment;
-    private       BeachCourtFragment    mBeachCourtFragment;
-    private final ScoresFragment        mScoresFragment;
-    private       SubstitutionsFragment mSubstitutionsFragment;
-    private       int                   mCount;
+    private final List<Fragment>        mFragments;
 
     GameFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
 
         mContext = context;
-        mScoresFragment = ScoresFragment.newInstance();
+        mFragments = new ArrayList<>();
 
         switch (ServicesProvider.getInstance().getScoreService().getGameType()) {
             case INDOOR:
                 if (UsageType.NORMAL.equals(ServicesProvider.getInstance().getGameService().getUsageType())) {
-                    mIndoorCourtFragment = IndoorCourtFragment.newInstance();
-                    mSubstitutionsFragment = SubstitutionsFragment.newInstance();
-                    mCount = 3;
+                    mFragments.add(IndoorCourtFragment.newInstance());
+                    mFragments.add(ScoresFragment.newInstance());
+                    mFragments.add(SubstitutionsFragment.newInstance());
                 } else {
-                    mCount = 1;
+                    mFragments.add(ScoresFragment.newInstance());
                 }
                 break;
             case BEACH:
-                mBeachCourtFragment = BeachCourtFragment.newInstance();
-                mCount = 2;
+                mFragments.add(BeachCourtFragment.newInstance());
+                mFragments.add(ScoresFragment.newInstance());
                 break;
+        }
+
+        if (ServicesProvider.getInstance().getGameService().getRules().areTeamTimeoutsEnabled()) {
+            mFragments.add(TimeoutsFragment.newInstance());
+        }
+
+        if (ServicesProvider.getInstance().getGameService().getRules().arePenaltyCardsEnabled()) {
+            mFragments.add(PenaltyCardsFragment.newInstance());
         }
     }
 
     @Override
     public int getCount() {
-        return mCount;
+        return mFragments.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
-
-        switch (position) {
-            case 0:
-                if (mCount == 1) {
-                    fragment = mScoresFragment;
-                } else {
-                    switch (ServicesProvider.getInstance().getScoreService().getGameType()) {
-                        case INDOOR:
-                            fragment = mIndoorCourtFragment;
-                            break;
-                        case BEACH:
-                            fragment = mBeachCourtFragment;
-                            break;
-                    }
-                }
-                break;
-            case 1:
-                fragment = mScoresFragment;
-                break;
-            case 2:
-                fragment = mSubstitutionsFragment;
-                break;
-        }
-
-        return fragment;
+        return mFragments.get(position);
     }
 
     @Override

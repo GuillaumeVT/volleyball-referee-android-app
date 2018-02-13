@@ -12,10 +12,10 @@ import android.widget.ListView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class SubstitutionsFragment extends Fragment implements NamedGameFragment, TeamListener {
 

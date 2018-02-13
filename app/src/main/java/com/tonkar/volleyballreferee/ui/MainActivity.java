@@ -34,7 +34,7 @@ import com.tonkar.volleyballreferee.business.data.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;

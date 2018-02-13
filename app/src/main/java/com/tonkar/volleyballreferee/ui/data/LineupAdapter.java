@@ -5,20 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 public class LineupAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView positionTitle;
-        Button   positionButton;
+        TextView positionText;
     }
 
     private final LayoutInflater        mLayoutInflater;
@@ -59,7 +58,7 @@ public class LineupAdapter extends BaseAdapter {
             positionView = mLayoutInflater.inflate(R.layout.lineup_item, null);
             viewHolder = new ViewHolder();
             viewHolder.positionTitle = positionView.findViewById(R.id.position_title);
-            viewHolder.positionButton = positionView.findViewById(R.id.position);
+            viewHolder.positionText = positionView.findViewById(R.id.position);
             positionView.setTag(viewHolder);
         }
         else {
@@ -68,9 +67,10 @@ public class LineupAdapter extends BaseAdapter {
 
         PositionType positionType = viewIndexToPosition(index);
         int number = mIndoorTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
-        viewHolder.positionButton.setText(String.valueOf(number));
+        viewHolder.positionText.setText(String.valueOf(number));
+        viewHolder.positionText.setWidth(measureTextWidth());
 
-        UiUtils.styleBaseIndoorTeamButton(mContext, mIndoorTeamService, mTeamType, number, viewHolder.positionButton);
+        UiUtils.styleBaseIndoorTeamText(mContext, mIndoorTeamService, mTeamType, number, viewHolder.positionText);
 
         switch (positionType) {
             case POSITION_1:
@@ -121,5 +121,13 @@ public class LineupAdapter extends BaseAdapter {
         }
 
         return positionType;
+    }
+
+    private int measureTextWidth() {
+        View view = mLayoutInflater.inflate(R.layout.lineup_item, null);
+        TextView text = view.findViewById(R.id.position) ;
+        text.setText("###");
+        text.measure(0, 0);
+        return text.getMeasuredWidth();
     }
 }

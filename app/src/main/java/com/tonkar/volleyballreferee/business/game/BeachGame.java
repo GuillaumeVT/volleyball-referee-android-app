@@ -2,11 +2,12 @@ package com.tonkar.volleyballreferee.business.game;
 
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.BeachTeamService;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class BeachGame extends Game implements BeachTeamService {
 
@@ -83,5 +84,18 @@ public class BeachGame extends Game implements BeachTeamService {
         }
 
         return first;
+    }
+
+    @Override
+    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        super.givePenaltyCard(teamType, penaltyCardType, number);
+
+        if (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType)) {
+            // The team is excluded for this set, the other team wins
+            forceFinishSet(teamType.other());
+        } else if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType)) {
+            // The team is excluded for this match, the other team wins
+            forceFinishMatch(teamType.other());
+        }
     }
 }

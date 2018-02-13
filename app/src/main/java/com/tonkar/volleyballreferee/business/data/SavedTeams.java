@@ -3,10 +3,10 @@ package com.tonkar.volleyballreferee.business.data;
 import android.content.Context;
 
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.SavedTeamsService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.ArrayList;
 import java.util.Iterator;

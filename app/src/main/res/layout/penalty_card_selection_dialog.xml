@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/default_margin_size"
+              android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/penalty_card_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:spinnerMode="dialog"/>
+
+    <GridView
+        android:id="@+id/penalty_card_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/player_big_column_width"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/default_margin_size"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="@dimen/default_margin_size"/>
+</LinearLayout>

@@ -8,9 +8,9 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.SavedTeam;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.FixMethodOrder;

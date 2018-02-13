@@ -4,8 +4,8 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.team.BeachTeamComposition;
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

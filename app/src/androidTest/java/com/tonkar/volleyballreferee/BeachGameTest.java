@@ -4,7 +4,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,7 @@ public class BeachGameTest {
     @Test
     public void winSet_normal() {
         GameService game = GameFactory.createBeachGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -57,6 +58,7 @@ public class BeachGameTest {
     @Test
     public void winGame_normal() {
         GameService game = GameFactory.createBeachGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -75,6 +77,7 @@ public class BeachGameTest {
     @Test
     public void winGame_tieBreak() {
         GameService game = GameFactory.createBeachGame();
+        game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);

@@ -4,7 +4,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

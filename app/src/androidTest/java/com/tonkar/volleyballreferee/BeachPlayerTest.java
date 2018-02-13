@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.team.BeachPlayer;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

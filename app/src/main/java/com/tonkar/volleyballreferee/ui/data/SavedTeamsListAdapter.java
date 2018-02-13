@@ -13,7 +13,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 
 import java.util.ArrayList;
 import java.util.Collection;

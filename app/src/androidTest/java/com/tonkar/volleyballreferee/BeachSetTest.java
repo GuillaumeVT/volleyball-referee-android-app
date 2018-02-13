@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.BeachSet;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import org.junit.Test;
@@ -95,7 +95,7 @@ public class BeachSetTest {
 
     @Test
     public void winSet_1PointGap() {
-        Rules rules = new Rules(3, 21, true, false, true, 1, 30,
+        Rules rules = new Rules(3, 21, true, false, true, true, 1, 30,
                 true, 30, true, 180, 0, true, 9999);
         BeachSet set = new BeachSet(rules, rules.getPointsPerSet(), TeamType.GUEST);
 

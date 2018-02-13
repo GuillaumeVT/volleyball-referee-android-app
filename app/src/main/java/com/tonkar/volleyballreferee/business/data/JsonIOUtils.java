@@ -22,8 +22,9 @@ import com.tonkar.volleyballreferee.business.team.Player;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -66,6 +67,8 @@ public class JsonIOUtils {
             .registerTypeAdapter(TeamType.class, new TeamTypeSerializer())
             .registerTypeAdapter(PositionType.class, new PositionTypeDeserializer())
             .registerTypeAdapter(PositionType.class, new PositionTypeSerializer())
+            .registerTypeAdapter(PenaltyCardType.class, new PenaltyCardTypeDeserializer())
+            .registerTypeAdapter(PenaltyCardType.class, new PenaltyCardTypeSerializer())
             .create();
 
     // Read current game
@@ -288,6 +291,22 @@ public class JsonIOUtils {
         @Override
         public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
             return context.serialize(src, src.getClass());
+        }
+    }
+
+    public static class PenaltyCardTypeSerializer implements JsonSerializer<PenaltyCardType> {
+
+        @Override
+        public JsonElement serialize(PenaltyCardType src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(PenaltyCardType.toLetter(src));
+        }
+    }
+
+    public static class PenaltyCardTypeDeserializer implements JsonDeserializer<PenaltyCardType> {
+
+        @Override
+        public PenaltyCardType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return PenaltyCardType.fromLetter(json.getAsJsonPrimitive().getAsString());
         }
     }
 }

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:baselineAligned="true"
               android:orientation="horizontal"
-              android:weightSum="2"
-              tools:context="com.tonkar.volleyballreferee.ui.data.TeamsFragment">
+              android:weightSum="2">
 
     <GridView
         android:id="@+id/home_team_players_list"

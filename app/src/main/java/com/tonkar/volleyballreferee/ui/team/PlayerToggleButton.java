@@ -10,7 +10,7 @@ import android.view.View;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
-class PlayerToggleButton extends AppCompatButton {
+public class PlayerToggleButton extends AppCompatButton {
 
     private boolean                      mChecked;
     private int                          mBackgroundColor;
@@ -36,7 +36,7 @@ class PlayerToggleButton extends AppCompatButton {
 
     private void init(Context context) {
         mChecked = false;
-        mBackgroundColor = ContextCompat.getColor(context, R.color.colorButtonDisabled);
+        mBackgroundColor = ContextCompat.getColor(context, R.color.colorDisabledButton);
         mTextColor = ContextCompat.getColor(context, R.color.colorDisabledText);
         mCheckedBackgroundColor = ContextCompat.getColor(context, R.color.colorPrimary);
         mCheckedTextColor = ContextCompat.getColor(context, R.color.colorEnabledText);

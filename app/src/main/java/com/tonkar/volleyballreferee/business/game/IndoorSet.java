@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.business.game;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 public class IndoorSet extends Set {

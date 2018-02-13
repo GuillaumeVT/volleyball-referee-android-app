@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.Set;
 import java.util.TreeSet;

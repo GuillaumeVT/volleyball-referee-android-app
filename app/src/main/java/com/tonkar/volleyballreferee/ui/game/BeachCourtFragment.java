@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.BeachTeamService;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.Map;
@@ -175,4 +177,15 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     @Override
     public void onMatchCompleted(TeamType winner) {}
+
+    @Override
+    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        if (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType)) {
+            // The team is excluded for this set, the other team wins
+            Toast.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+        } else if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType)) {
+            // The team is excluded for this match, the other team wins
+            Toast.makeText(getActivity(), String.format(getResources().getString(R.string.match_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+        }
+    }
 }

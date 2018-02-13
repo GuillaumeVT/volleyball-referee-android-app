@@ -2,14 +2,14 @@ package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.Substitution;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.Timeout;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.interfaces.WebGamesService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +41,10 @@ public class RecordedGame implements RecordedGameService {
     private int               mGuestSets;
     @SerializedName("sets")
     private List<RecordedSet> mSets;
+    @SerializedName("hCards")
+    private List<PenaltyCard> mHomePenaltyCards;
+    @SerializedName("gCards")
+    private List<PenaltyCard> mGuestPenaltyCards;
     private transient boolean mIsRecordedOnline;
 
     public RecordedGame() {
@@ -55,6 +59,8 @@ public class RecordedGame implements RecordedGameService {
         mHomeSets = 0;
         mGuestSets = 0;
         mSets = new ArrayList<>();
+        mHomePenaltyCards = new ArrayList<>();
+        mGuestPenaltyCards = new ArrayList<>();
         mIsRecordedOnline = false;
     }
 
@@ -429,6 +435,60 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public boolean isRecordedOnline() {
+        return mIsRecordedOnline;
+    }
+
+    @Override
+    public void setRecordedOnline(boolean recordedOnline) {
+        mIsRecordedOnline = recordedOnline;
+    }
+
+    @Override
+    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType) {
+        List<PenaltyCard> penaltyCards;
+
+        if (TeamType.HOME.equals(teamType)) {
+            penaltyCards = mHomePenaltyCards;
+        } else {
+            penaltyCards = mGuestPenaltyCards;
+        }
+
+        return penaltyCards;
+    }
+
+    @Override
+    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType, int setIndex) {
+        List<PenaltyCard> penaltyCardsForSet = new ArrayList<>();
+
+        for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
+            if (penaltyCard.getSetIndex() == setIndex) {
+                penaltyCardsForSet.add(penaltyCard);
+            }
+        }
+
+        return penaltyCardsForSet;
+    }
+
+    @Override
+    public List<PenaltyCard> getPenaltyCards(TeamType teamType, int number) {
+        List<PenaltyCard> penaltyCardsForPlayer = new ArrayList<>();
+
+        for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
+            if (penaltyCard.getPlayer() == number) {
+                penaltyCardsForPlayer.add(penaltyCard);
+            }
+        }
+
+        return penaltyCardsForPlayer;
+    }
+
+    @Override
+    public boolean hasPenaltyCards(TeamType teamType, int number) {
+        return getPenaltyCards(teamType, number).size() > 0;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
 
@@ -446,19 +506,11 @@ public class RecordedGame implements RecordedGameService {
                     && this.getTeam(TeamType.GUEST).equals(other.getTeam(TeamType.GUEST))
                     && (this.getSets(TeamType.HOME) == other.getSets(TeamType.HOME))
                     && (this.getSets(TeamType.GUEST) == other.getSets(TeamType.GUEST))
-                    && this.getSets().equals(other.getSets());
+                    && this.getSets().equals(other.getSets())
+                    && this.getGivenPenaltyCards(TeamType.HOME).equals(other.getGivenPenaltyCards(TeamType.HOME))
+                    && this.getGivenPenaltyCards(TeamType.GUEST).equals(other.getGivenPenaltyCards(TeamType.GUEST));
         }
 
         return result;
-    }
-
-    @Override
-    public boolean isRecordedOnline() {
-        return mIsRecordedOnline;
-    }
-
-    @Override
-    public void setRecordedOnline(boolean recordedOnline) {
-        mIsRecordedOnline = recordedOnline;
     }
 }

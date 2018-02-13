@@ -4,8 +4,8 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import org.junit.Test;
@@ -85,7 +85,7 @@ public class RuleConsecutiveServesTest {
     }
 
     private IndoorGame createGame(int consecutiveServes) {
-        IndoorGame game = new IndoorGame(new Rules(5, 25, true, true, true, 2, 30,
+        IndoorGame game = new IndoorGame(new Rules(5, 25, true, true, true, true, 2, 30,
                 true, 60, true, 180, 6, false, consecutiveServes));
 
         for (int index = 1; index <= 6; index++) {

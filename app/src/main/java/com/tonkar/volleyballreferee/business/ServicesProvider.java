@@ -5,11 +5,12 @@ import android.content.Context;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.SavedTeamsService;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
-import com.tonkar.volleyballreferee.interfaces.TimeoutService;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamService;
+import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutService;
 
 public class ServicesProvider {
 
@@ -39,6 +40,10 @@ public class ServicesProvider {
     }
 
     public TimeoutService getTimeoutService() {
+        return mCurrentGame;
+    }
+
+    public PenaltyCardService getPenaltyCardService() {
         return mCurrentGame;
     }
 

@@ -11,10 +11,10 @@ import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.ScoreService;
-import com.tonkar.volleyballreferee.interfaces.TeamService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class ScoresFragment extends Fragment implements NamedGameFragment, ScoreListener {
 

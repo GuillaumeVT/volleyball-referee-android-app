@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.business.team;
 
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class BeachTeamDefinition extends TeamDefinition {
 

@@ -12,10 +12,12 @@ import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.game.PenaltyCardsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.SetsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.SubstitutionsListAdapter;
+import com.tonkar.volleyballreferee.ui.game.TimeoutsListAdapter;
 
 public class SetFragment extends Fragment {
 
@@ -70,6 +72,14 @@ public class SetFragment extends Fragment {
         ListView guestTeamTimeouts = view.findViewById(R.id.guest_team_timeouts);
         TimeoutsListAdapter guestTeamTimeoutsAdapter = new TimeoutsListAdapter(inflater, gameService, gameService, TeamType.GUEST, setIndex);
         guestTeamTimeouts.setAdapter(guestTeamTimeoutsAdapter);
+
+        ListView homeTeamPenaltyCards = view.findViewById(R.id.home_team_penalty_cards);
+        PenaltyCardsListAdapter homeTeamPenaltyCardsAdapter = new PenaltyCardsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.HOME, setIndex);
+        homeTeamPenaltyCards.setAdapter(homeTeamPenaltyCardsAdapter);
+
+        ListView guestTeamPenaltyCards = view.findViewById(R.id.guest_team_penalty_cards);
+        PenaltyCardsListAdapter guestTeamPenaltyCardsAdapter = new PenaltyCardsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.GUEST, setIndex);
+        guestTeamPenaltyCards.setAdapter(guestTeamPenaltyCardsAdapter);
 
         return view;
     }

@@ -5,16 +5,19 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GenderType;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.GenderType;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.Timeout;
-import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
+import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,33 +27,40 @@ import java.util.Locale;
 public abstract class Game extends BaseGame {
 
     @SerializedName("usageType")
-    private       UsageType      mUsageType;
+    private       UsageType         mUsageType;
     @SerializedName("gameType")
-    private final GameType       mGameType;
+    private final GameType          mGameType;
     @SerializedName("gameDate")
-    private final long           mGameDate;
+    private final long              mGameDate;
     @SerializedName("genderType")
-    private       GenderType     mGenderType;
+    private       GenderType        mGenderType;
     @SerializedName("rules")
-    private final Rules          mRules;
+    private final Rules             mRules;
     @SerializedName("leagueName")
-    private       String         mLeagueName;
+    private       String            mLeagueName;
     @SerializedName("homeTeam")
-    private final TeamDefinition mHomeTeam;
+    private final TeamDefinition    mHomeTeam;
     @SerializedName("guestTeam")
-    private final TeamDefinition mGuestTeam;
+    private final TeamDefinition    mGuestTeam;
     @SerializedName("teamOnLeftSide")
-    private       TeamType       mTeamOnLeftSide;
+    private       TeamType          mTeamOnLeftSide;
     @SerializedName("teamOnRightSide")
-    private       TeamType       mTeamOnRightSide;
+    private       TeamType          mTeamOnRightSide;
     @SerializedName("sets")
-    private final List<Set>      mSets;
+    private final List<Set>         mSets;
     @SerializedName("servingTeamAtStart")
-    private       TeamType       mServingTeamAtStart;
+    private       TeamType          mServingTeamAtStart;
+    @SerializedName("homeTeamCards")
+    private final List<PenaltyCard> mHomeTeamPenaltyCards;
+    @SerializedName("guestTeamCards")
+    private final List<PenaltyCard> mGuestTeamPenaltyCards;
 
-    private transient java.util.Set<ScoreListener>   mScoreListeners;
-    private transient java.util.Set<TimeoutListener> mTimeoutListeners;
-    private transient java.util.Set<TeamListener>    mTeamListeners;
+    private transient boolean mEnableNotifications;
+
+    private transient java.util.Set<ScoreListener>       mScoreListeners;
+    private transient java.util.Set<TimeoutListener>     mTimeoutListeners;
+    private transient java.util.Set<TeamListener>        mTeamListeners;
+    private transient java.util.Set<PenaltyCardListener> mPenaltyCardListeners;
 
     protected Game(final GameType gameType, final Rules rules) {
         super();
@@ -65,6 +75,8 @@ public abstract class Game extends BaseGame {
         mTeamOnLeftSide = TeamType.HOME;
         mTeamOnRightSide = TeamType.GUEST;
         mSets = new ArrayList<>();
+        mHomeTeamPenaltyCards = new ArrayList<>();
+        mGuestTeamPenaltyCards = new ArrayList<>();
 
         mServingTeamAtStart = TeamType.HOME;
         mSets.add(createSet(mRules, false, mServingTeamAtStart));
@@ -104,6 +116,16 @@ public abstract class Game extends BaseGame {
     @Override
     public void removeTeamListener(final TeamListener listener) {
         mTeamListeners.remove(listener);
+    }
+
+    @Override
+    public void addPenaltyCardListener(PenaltyCardListener listener) {
+        mPenaltyCardListeners.add(listener);
+    }
+
+    @Override
+    public void removePenaltyCardListener(PenaltyCardListener listener) {
+        mPenaltyCardListeners.remove(listener);
     }
 
     // Points
@@ -259,7 +281,11 @@ public abstract class Game extends BaseGame {
     // Sets
 
     Set currentSet() {
-        return mSets.get(mSets.size() - 1);
+        return mSets.get(currentSetIndex());
+    }
+
+    private int currentSetIndex() {
+        return mSets.size() - 1;
     }
 
     Set getSet(int setIndex) {
@@ -670,15 +696,131 @@ public abstract class Game extends BaseGame {
         }
     }
 
+    @Override
+    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        PenaltyCard penaltyCard = new PenaltyCard(number, penaltyCardType, currentSetIndex(), getPoints(TeamType.HOME), getPoints(TeamType.GUEST));
+        if (TeamType.HOME.equals(teamType)) {
+            mHomeTeamPenaltyCards.add(penaltyCard);
+        } else {
+            mGuestTeamPenaltyCards.add(penaltyCard);
+        }
+
+        if (PenaltyCardType.RED.equals(penaltyCardType)) {
+            addPoint(teamType.other());
+        }
+
+        notifyPenaltyCardGiven(teamType, penaltyCardType, number);
+    }
+
+    private void notifyPenaltyCardGiven(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        Log.i("VBR-Card", String.format("Player %d of %s team was given a %s card", number, teamType.toString(), penaltyCardType.toString()));
+        for (final PenaltyCardListener listener : mPenaltyCardListeners) {
+            listener.onPenaltyCard(teamType, penaltyCardType, number);
+        }
+    }
+
+    @Override
+    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType) {
+        List<PenaltyCard> penaltyCards;
+
+        if (TeamType.HOME.equals(teamType)) {
+            penaltyCards = new ArrayList<>(mHomeTeamPenaltyCards);
+        } else {
+            penaltyCards = new ArrayList<>(mGuestTeamPenaltyCards);
+        }
+
+        return penaltyCards;
+    }
+
+    @Override
+    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType, int setIndex) {
+        List<PenaltyCard> penaltyCardsForSet = new ArrayList<>();
+
+        for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
+            if (penaltyCard.getSetIndex() == setIndex) {
+                penaltyCardsForSet.add(penaltyCard);
+            }
+        }
+
+        return penaltyCardsForSet;
+    }
+
+    @Override
+    public List<PenaltyCard> getPenaltyCards(TeamType teamType, int number) {
+        List<PenaltyCard> penaltyCardsForPlayer = new ArrayList<>();
+
+        for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
+            if (penaltyCard.getPlayer() == number) {
+                penaltyCardsForPlayer.add(penaltyCard);
+            }
+        }
+
+        return penaltyCardsForPlayer;
+    }
+
+    @Override
+    public boolean hasPenaltyCards(TeamType teamType, int number) {
+        return getPenaltyCards(teamType, number).size() > 0;
+    }
+
+    @Override
+    public java.util.Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
+        java.util.Set<Integer> players = new HashSet<>();
+
+        List<PenaltyCard> penaltyCardsForSet = getGivenPenaltyCards(teamType);
+        int currentSetIndex = currentSetIndex();
+
+        for (PenaltyCard penaltyCard : penaltyCardsForSet) {
+            if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCard.getPenaltyCardType())) {
+                players.add(penaltyCard.getPlayer());
+            } else if (PenaltyCardType.RED_EXPULSION.equals(penaltyCard.getPenaltyCardType()) && penaltyCard.getSetIndex() == currentSetIndex) {
+                players.add(penaltyCard.getPlayer());
+            }
+        }
+
+        return players;
+    }
+
     private void initTransientFields() {
+        mEnableNotifications = true;
         mScoreListeners = new HashSet<>();
         mTimeoutListeners = new HashSet<>();
         mTeamListeners = new HashSet<>();
+        mPenaltyCardListeners = new HashSet<>();
     }
 
     @Override
     public void setUsageType(UsageType usageType) {
         mUsageType = usageType;
+    }
+
+    @Override
+    public boolean areNotificationsEnabled() {
+        return mEnableNotifications;
+    }
+
+    void forceFinishSet(TeamType teamType) {
+        mEnableNotifications = false;
+
+        // By using the variable currentSet, we add points until this set is finished
+        Set currentSet = currentSet();
+
+        while(!currentSet.isSetCompleted()) {
+            addPoint(teamType);
+        }
+
+        mEnableNotifications = true;
+    }
+
+    void forceFinishMatch(TeamType teamType) {
+        mEnableNotifications = false;
+
+        // By using the function currentSet(), we add points until every set is finished (= match)
+        while(!currentSet().isSetCompleted()) {
+            addPoint(teamType);
+        }
+
+        mEnableNotifications = true;
     }
 
     @Override

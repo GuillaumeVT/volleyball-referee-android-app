@@ -84,6 +84,17 @@
     <string name="stream_game">Diffuser le match en ligne</string>
     <string name="stream_online_on_message">Le match est diffusé en ligne</string>
     <string name="stream_online_off_message">Le match n\'est plus diffusé en ligne</string>
+    <string name="all_timeouts_called">%s n\'a plus de temps mort disponible</string>
+    <string name="all_substitutions_used">%s n\'a plus de changement disponible</string>
+    <string name="penalty_cards_tab">Cartons</string>
+    <string name="penalty_card">Carton (%s)</string>
+    <string name="yellow_card">Simple avertissement</string>
+    <string name="red_card">Un point et le service pour l\'adversaire</string>
+    <string name="red_card_expulsion">Expulsion pour le reste du set</string>
+    <string name="red_card_disqualification">Disqualification pour le reste du match</string>
+    <string name="coach_abbreviation">C.</string>
+    <string name="set_lost_incomplete">%s perd le set car l\'équipe est incomplète</string>
+    <string name="match_lost_incomplete">%s perd le match car l\'équipe est incomplète</string>
 
     <!-- Rules activity -->
     <string name="rules">Mes règles</string>
@@ -96,6 +107,8 @@
     <string name="pref_points_per_set">Nombre de points par set</string>
     <string name="pref_sets_per_game">Nombre de sets par match</string>
     <string name="pref_tie_break">Tie break dans le dernier set</string>
+    <string name="pref_two_points_difference">2 points d\'écart pour gagner un set</string>
+    <string name="pref_penalty_cards">Cartons</string>
     <string name="pref_team_timeouts">Temps morts d\'équipe</string>
     <string name="pref_team_timeouts_per_set">Nombre de temps morts d\'équipe par set</string>
     <string name="pref_team_timeout_duration">Durée d\'un temps mort d\'équipe</string>

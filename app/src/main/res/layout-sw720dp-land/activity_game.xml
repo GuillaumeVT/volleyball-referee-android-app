@@ -187,9 +187,18 @@
                 android:theme="@style/RoundButtonTheme"
                 app:srcCompat="@drawable/ic_timeout"/>
 
-            <Space
-                android:layout_width="@dimen/game_buttons_horizontal_spacing_landscape"
-                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/left_team_cards_button"
+                android:layout_width="@dimen/round_button_size"
+                android:layout_height="@dimen/round_button_size"
+                android:layout_margin="@dimen/small_margin_size"
+                android:adjustViewBounds="true"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@android:color/white"
+                android:elevation="@dimen/round_button_elevation"
+                android:onClick="giveLeftPenaltyCard"
+                android:theme="@style/RoundButtonTheme"
+                app:srcCompat="@drawable/ic_penalty_card"/>
 
             <ImageButton
                 android:id="@+id/score_remove_button"
@@ -205,9 +214,18 @@
                 android:theme="@style/RoundButtonTheme"
                 app:srcCompat="@drawable/ic_score_revert"/>
 
-            <Space
-                android:layout_width="@dimen/game_buttons_horizontal_spacing_landscape"
-                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/right_team_cards_button"
+                android:layout_width="@dimen/round_button_size"
+                android:layout_height="@dimen/round_button_size"
+                android:layout_margin="@dimen/small_margin_size"
+                android:adjustViewBounds="true"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@android:color/white"
+                android:elevation="@dimen/round_button_elevation"
+                android:onClick="giveRightPenaltyCard"
+                android:theme="@style/RoundButtonTheme"
+                app:srcCompat="@drawable/ic_penalty_card"/>
 
             <ImageButton
                 android:id="@+id/right_team_timeout_button"
@@ -249,6 +267,7 @@
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabMaxWidth="0dp"
+            app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/colorPrimary">
 
         </android.support.design.widget.TabLayout>

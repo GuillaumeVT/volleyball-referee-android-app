@@ -8,7 +8,7 @@
 
     <color name="colorBeach">#f2bb1a</color>
 
-    <color name="colorButtonDisabled">#d6d7d7</color>
+    <color name="colorDisabledButton">#d6d7d7</color>
 
     <color name="colorPrimaryText">#de000000</color>
     <color name="colorEnabledText">#ffffff</color>
@@ -38,4 +38,7 @@
     <color name="colorGents">#1f4294</color>
 
     <color name="colorReportDuplicate">#d6d7d7</color>
+
+    <color name="colorYellowCard">#f3bc07</color>
+    <color name="colorRedCard">#bc0019</color>
 </resources>

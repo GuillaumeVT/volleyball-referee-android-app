@@ -33,4 +33,8 @@
 
     <dimen tools:override="true" name="design_navigation_icon_padding">8dp</dimen>
 
+    <dimen name="penalty_card_size">24dp</dimen>
+    <dimen name="penalty_card_half_size">12dp</dimen>
+    <dimen name="penalty_card_max_width">48dp</dimen>
+
 </resources>

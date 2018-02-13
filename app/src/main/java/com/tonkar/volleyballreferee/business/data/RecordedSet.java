@@ -1,9 +1,9 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.interfaces.Substitution;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.Timeout;
+import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 
 import java.util.ArrayList;
 import java.util.List;

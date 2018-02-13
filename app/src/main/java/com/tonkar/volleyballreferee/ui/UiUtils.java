@@ -39,13 +39,13 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
-import com.tonkar.volleyballreferee.interfaces.BaseIndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,7 +54,7 @@ import java.util.Locale;
 public class UiUtils {
 
     public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, Button button) {
-        UiUtils.colorTeamButton(context, teamService.getTeamColor(teamType), button);
+        colorTeamButton(context, teamService.getTeamColor(teamType), button);
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
     }
 
@@ -84,6 +84,11 @@ public class UiUtils {
         }
     }
 
+    public static void styleBaseTeamText(Context context, BaseTeamService teamService, TeamType teamType, TextView text) {
+        colorTeamText(context, teamService.getTeamColor(teamType), text);
+        text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+    }
+
     public static void styleBaseIndoorTeamText(Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int number, TextView text) {
         text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
@@ -108,7 +113,7 @@ public class UiUtils {
 
     public static void colorTeamText(Context context, int color, TextView text) {
         text.setBackgroundColor(color);
-        text.setTextColor(UiUtils.getTextColor(context, color));
+        text.setTextColor(getTextColor(context, color));
     }
 
     public static int getTextColor(Context context, int backgroundColor) {

@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 
 public class RecordedPlayer {
 

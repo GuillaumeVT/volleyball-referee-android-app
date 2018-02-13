@@ -14,17 +14,20 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.Substitution;
-import com.tonkar.volleyballreferee.interfaces.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.Timeout;
-import com.tonkar.volleyballreferee.interfaces.TimeoutListener;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
+import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 
 import java.io.File;
@@ -36,7 +39,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class RecordedGames implements RecordedGamesService, ScoreListener, TeamListener, TimeoutListener {
+public class RecordedGames implements RecordedGamesService, ScoreListener, TeamListener, TimeoutListener, PenaltyCardListener {
 
     private final Context            mContext;
     private       GameService        mGameService;
@@ -63,6 +66,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mGameService.addScoreListener(this);
         mGameService.addTeamListener(this);
         mGameService.addTimeoutListener(this);
+        mGameService.addPenaltyCardListener(this);
 
         createRecordedGame();
         saveCurrentGame();
@@ -81,6 +85,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mGameService.removeScoreListener(this);
         mGameService.removeTeamListener(this);
         mGameService.removeTimeoutListener(this);
+        mGameService.removePenaltyCardListener(this);
     }
 
     @Override
@@ -215,11 +220,11 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                                 recordedGame.setRecordedOnline(response);
                             }
                         }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        recordedGame.setRecordedOnline(false);
-                    }
-                }
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                recordedGame.setRecordedOnline(false);
+                            }
+                        }
                 );
                 WebUtils.getInstance().getRequestQueue(mContext).add(booleanRequest);
             }
@@ -311,8 +316,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
                         new Response.Listener<String>() {
                             @Override
-                            public void onResponse(String response) {
-                            }
+                            public void onResponse(String response) {}
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
@@ -357,14 +361,17 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    mRecordedGame.setRecordedOnline(false);
+                                    // mRecordedGame may be already deleted
+                                    if (mRecordedGame != null) {
+                                        mRecordedGame.setRecordedOnline(false);
+                                    }
                                 }
                             }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("VBR-Data", "Exception while deleting game", error);
-                        }
-                    }
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("VBR-Data", "Exception while deleting game", error);
+                                }
+                            }
                     );
                     WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
                 }
@@ -439,6 +446,12 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public void onGameInterval(int duration) {}
+
+    @Override
+    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        saveCurrentGame();
+        uploadCurrentGameOnline();
+    }
 
     private void createRecordedGame() {
         mRecordedGame = new RecordedGame();
@@ -568,7 +581,20 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
                 mRecordedGame.getSets().add(set);
             }
+
+            mRecordedGame.getGivenPenaltyCards(TeamType.HOME).clear();
+
+            for (PenaltyCard penaltyCard : mGameService.getGivenPenaltyCards(TeamType.HOME)) {
+                PenaltyCard card = new PenaltyCard(penaltyCard.getPlayer(), penaltyCard.getPenaltyCardType(), penaltyCard.getSetIndex(), penaltyCard.getHomeTeamPoints(), penaltyCard.getGuestTeamPoints());
+                mRecordedGame.getGivenPenaltyCards(TeamType.HOME).add(card);
+            }
+
+            mRecordedGame.getGivenPenaltyCards(TeamType.GUEST).clear();
+
+            for (PenaltyCard penaltyCard : mGameService.getGivenPenaltyCards(TeamType.GUEST)) {
+                PenaltyCard card = new PenaltyCard(penaltyCard.getPlayer(), penaltyCard.getPenaltyCardType(), penaltyCard.getSetIndex(), penaltyCard.getHomeTeamPoints(), penaltyCard.getGuestTeamPoints());
+                mRecordedGame.getGivenPenaltyCards(TeamType.GUEST).add(card);
+            }
         }
     }
-
 }

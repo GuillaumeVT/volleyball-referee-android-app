@@ -3,15 +3,19 @@ package com.tonkar.volleyballreferee.business.game;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.PositionType;
-import com.tonkar.volleyballreferee.interfaces.Substitution;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -166,6 +170,23 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
+    public java.util.Set<Integer> filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType, int excludedNumber, java.util.Set<Integer> possibleSubstitutions) {
+        final java.util.Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
+        final java.util.Set<Integer> excludedNumbers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+
+        for(Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
+            int possibleReplacement = iterator.next();
+            if (excludedNumbers.contains(possibleReplacement)) {
+                iterator.remove();
+            } else if (!isLibero(teamType, excludedNumber) && isLibero(teamType, possibleReplacement)) {
+                iterator.remove();
+            }
+        }
+
+        return filteredSubstitutions;
+    }
+
+    @Override
     public boolean isStartingLineupConfirmed() {
         return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
     }
@@ -286,6 +307,50 @@ public class IndoorGame extends Game implements IndoorTeamService {
         return getIndoorTeamDefinition(teamType).isCaptain(number);
     }
 
+    @Override
+    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+        super.givePenaltyCard(teamType, penaltyCardType, number);
+
+        if (number > 0 && (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType) || PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType))) {
+            // The player excluded for the set/match has to be legally replaced
+            PositionType positionType = getPlayerPosition(teamType, number);
+
+            if (!PositionType.BENCH.equals(positionType)) {
+                final java.util.Set<Integer> possibleSubstitutions = getPossibleSubstitutions(teamType, positionType);
+                final java.util.Set<Integer> filteredSubstitutions = filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+
+                // If there is no possible legal substituion, the set is lost
+                if (filteredSubstitutions.size() == 0) {
+                    forceFinishSet(teamType.other());
+                }
+            }
+        }
+
+        if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType) && !isMatchCompleted()) {
+            // check that the team has enough players to continue the match
+            java.util.Set<Integer> players = getIndoorTeamDefinition(teamType).getPlayers();
+
+            // first remove the liberos
+
+            for (int libero : getIndoorTeamDefinition(teamType).getLiberos()) {
+                players.remove(libero);
+            }
+
+            // then remove the disqualified players
+
+            for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
+                if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCard.getPenaltyCardType())) {
+                    players.remove(penaltyCard.getPlayer());
+                }
+            }
+
+            if (players.size() < 6) {
+                // not enought players: finish the match
+                forceFinishMatch(teamType.other());
+            }
+        }
+    }
+
     /* *******************************
      * Specific custom rules section *
      * *******************************/
@@ -338,5 +403,4 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
         return consecutiveServes;
     }
-
 }

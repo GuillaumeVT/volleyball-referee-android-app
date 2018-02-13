@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee.business.game;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.TeamType;
-import com.tonkar.volleyballreferee.interfaces.Timeout;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.ArrayList;

@@ -84,6 +84,17 @@
     <string name="stream_game">Transmitir a partida ao vivo</string>
     <string name="stream_online_on_message">A partida está sendo transmitida ao vivo</string>
     <string name="stream_online_off_message">A trnasmissão desta partida ao vivo terminou</string>
+    <string name="all_timeouts_called">%s não possui mais tempos no set</string>
+    <string name="all_substitutions_used">%s não possui mais substituições no set</string>
+    <string name="penalty_cards_tab">Cartões</string>
+    <string name="penalty_card">Punições (%s)</string>
+    <string name="yellow_card">Advertência</string>
+    <string name="red_card">Perda do ponto</string>
+    <string name="red_card_expulsion">Expulsão do set</string>
+    <string name="red_card_disqualification">Desqualificação da partida</string>
+    <string name="coach_abbreviation">T.</string>
+    <string name="set_lost_incomplete">%s perdeu o set por não ter cota mínima de atletas</string>
+    <string name="match_lost_incomplete">%s perdeu a partida por não ter cota mínima de atletas</string>
 
     <!-- Rules activity -->
     <string name="rules">Regras personalizadas</string>
@@ -96,6 +107,8 @@
     <string name="pref_points_per_set">Número de pontos por set</string>
     <string name="pref_sets_per_game">Número de sets por partida</string>
     <string name="pref_tie_break">Tie break no último set</string>
+    <string name="pref_two_points_difference">São necessários 2 pontos de diferença para vencer o set</string>
+    <string name="pref_penalty_cards">Punições</string>
     <string name="pref_team_timeouts">Tempos por equipe</string>
     <string name="pref_team_timeouts_per_set">Número de tempos por set</string>
     <string name="pref_team_timeout_duration">Duração do tempo solicitado</string>
