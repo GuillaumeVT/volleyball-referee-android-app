@@ -18,6 +18,7 @@ Volleyball Referee is a user-friendly and complete application for refereeing in
   <li>Stream and share the live matches online: all the referees, the team members, the audience and your friends can monitor the match data in real time.</li>
   <li>Browse and view the recorded matches on your device or online. (http://www.volleyball-referee.com/search)</li>
   <li>Create and share the score sheets from your recorded matches, in PDF format.</li>
+  <li>Sanction players and coaches with yellow, red, expulsion and disqualification penalty cards.</li>
 </ul>
 
 ## Languages
@@ -38,6 +39,6 @@ If your language is missing and you feel like helping the community, you may con
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| Penalty cards                     | Prototyping                            |
+| TBD                               |                                        |
 
 
