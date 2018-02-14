@@ -84,8 +84,7 @@ public class SubstitutionsListAdapter extends BaseAdapter {
             viewHolder.playerInText = substitutionView.findViewById(R.id.player_in_text);
             viewHolder.playerOutText = substitutionView.findViewById(R.id.player_out_text);
             substitutionView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) substitutionView.getTag();
         }
 

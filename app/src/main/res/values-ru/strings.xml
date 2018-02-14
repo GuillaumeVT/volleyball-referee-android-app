@@ -61,8 +61,8 @@
     <string name="set_number">Партия %d</string>
     <string name="set_duration">%d мин.</string>
     <string name="switch_sides">Смена сторон площадки</string>
-    <string name="won_game">%s выиграл(а) матч</string>
-    <string name="timeout_title">Перерыв (%s)</string>
+    <string name="won_game">Команда \"%s\" выиграла матч</string>
+    <string name="timeout_title">Перерыв (\"%s\")</string>
     <string name="timeout_question">Запросить перерыв?</string>
     <string name="technical_timeout_title">Технический перерыв</string>
     <string name="game_interval_title">Перерыв между партиями</string>
@@ -84,6 +84,17 @@
     <string name="stream_game">Транслировать матч онлайн</string>
     <string name="stream_online_on_message">Матч транслируется онлайн</string>
     <string name="stream_online_off_message">Трансляция матча остановлена</string>
+    <string name="all_timeouts_called">Команда \"%s\": нет командных тайм аутов</string>
+    <string name="all_substitutions_used">Команда \"%s\": нет доступных замен в данной партии</string>
+    <string name="penalty_cards_tab">Карточки</string>
+    <string name="penalty_card">Карточка (%s)</string>
+    <string name="yellow_card">Замечание</string>
+    <string name="red_card">Наказание очком и подачей соперника (проигрыш розыгрыша)</string>
+    <string name="red_card_expulsion">Удаление до конца партии</string>
+    <string name="red_card_disqualification">Дисквалификация до конца матча</string>
+    <string name="coach_abbreviation">Тр</string>
+    <string name="set_lost_incomplete">Команда \"%s\" проигрывает партию (неполная команда)</string>
+    <string name="match_lost_incomplete">Команда \"%s\" проигрывает матч (неполная команда)</string>
 
     <!-- Rules activity -->
     <string name="rules">Мои правила</string>
@@ -96,6 +107,8 @@
     <string name="pref_points_per_set">Количество очков в партии</string>
     <string name="pref_sets_per_game">Количество партий в матче</string>
     <string name="pref_tie_break">Решающая партия в конце матча</string>
+    <string name="pref_two_points_difference">Разница в счёте в 2 очка для победы в партии</string>
+    <string name="pref_penalty_cards">Карточки</string>
     <string name="pref_team_timeouts">Командные перерывы</string>
     <string name="pref_team_timeouts_per_set">Количество командных перерывов в партии</string>
     <string name="pref_team_timeout_duration">Длительность командных перерывов</string>

@@ -107,7 +107,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         mStopMatchButton = findViewById(R.id.stop_match_button);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, ScoresFragment.newInstance());
+        fragmentTransaction.replace(R.id.fragment_container, LaddersFragment.newInstance());
         fragmentTransaction.commit();
 
 

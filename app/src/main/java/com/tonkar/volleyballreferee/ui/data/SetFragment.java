@@ -15,7 +15,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.PenaltyCardsListAdapter;
-import com.tonkar.volleyballreferee.ui.game.SetsListAdapter;
+import com.tonkar.volleyballreferee.ui.game.LadderListAdapter;
 import com.tonkar.volleyballreferee.ui.game.SubstitutionsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.TimeoutsListAdapter;
 
@@ -42,8 +42,8 @@ public class SetFragment extends Fragment {
         RecordedGameService gameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(gameDate);
 
         FrameLayout ladderLayout = view.findViewById(R.id.ladder_layout);
-        SetsListAdapter setsListAdapter = new SetsListAdapter(inflater, gameService, gameService, false);
-        ladderLayout.addView(setsListAdapter.getView(setIndex, null, ladderLayout));
+        LadderListAdapter ladderListAdapter = new LadderListAdapter(inflater, gameService, gameService, gameService, gameService, false);
+        ladderLayout.addView(ladderListAdapter.getView(setIndex, null, ladderLayout));
 
         if (gameService.getPlayersInStartingLineup(TeamType.HOME, setIndex).size() > 0) {
             GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);

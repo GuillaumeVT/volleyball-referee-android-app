@@ -91,8 +91,7 @@ public class PenaltyCardsListAdapter extends BaseAdapter {
             viewHolder.playerText = penaltyCardView.findViewById(R.id.player_text);
             viewHolder.cardTypeImage = penaltyCardView.findViewById(R.id.penalty_card_image);
             penaltyCardView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) penaltyCardView.getTag();
         }
 

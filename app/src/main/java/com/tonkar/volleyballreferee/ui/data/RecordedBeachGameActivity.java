@@ -11,7 +11,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
-import com.tonkar.volleyballreferee.ui.game.SetsListAdapter;
+import com.tonkar.volleyballreferee.ui.game.LadderListAdapter;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -59,8 +59,8 @@ public class RecordedBeachGameActivity extends RecordedGameActivity {
         gameScore.setText(buildScore(recordedGameService));
 
         ListView setsList = findViewById(R.id.recorded_game_set_list);
-        SetsListAdapter setsListAdapter = new SetsListAdapter(getLayoutInflater(), recordedGameService, recordedGameService, false);
-        setsList.setAdapter(setsListAdapter);
+        LadderListAdapter ladderListAdapter = new LadderListAdapter(getLayoutInflater(), recordedGameService, recordedGameService, recordedGameService, recordedGameService, false);
+        setsList.setAdapter(ladderListAdapter);
     }
 
 }

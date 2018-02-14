@@ -26,15 +26,15 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
             case INDOOR:
                 if (UsageType.NORMAL.equals(ServicesProvider.getInstance().getGameService().getUsageType())) {
                     mFragments.add(IndoorCourtFragment.newInstance());
-                    mFragments.add(ScoresFragment.newInstance());
+                    mFragments.add(LaddersFragment.newInstance());
                     mFragments.add(SubstitutionsFragment.newInstance());
                 } else {
-                    mFragments.add(ScoresFragment.newInstance());
+                    mFragments.add(LaddersFragment.newInstance());
                 }
                 break;
             case BEACH:
                 mFragments.add(BeachCourtFragment.newInstance());
-                mFragments.add(ScoresFragment.newInstance());
+                mFragments.add(LaddersFragment.newInstance());
                 break;
         }
 
