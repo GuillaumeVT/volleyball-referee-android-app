@@ -86,8 +86,8 @@
     <string name="stream_online_off_message">Transmisja online dobiegła końca</string>
     <string name="all_timeouts_called">%s brak dostępnych przerw na żądanie</string>
     <string name="all_substitutions_used">%s brak dostępnych zmian</string>
-    <string name="penalty_cards_tab">Kartki</string>
-    <string name="penalty_card">Kartki (%s)</string>
+    <string name="sanctions_tab">Sankcje</string>
+    <string name="sanction">Sankcja (%s)</string>
     <string name="yellow_card">Upomnienie</string>
     <string name="red_card">Punkt i serwis dla przeciwnika</string>
     <string name="red_card_expulsion">Wykluczenie na resztę seta</string>
@@ -108,7 +108,7 @@
     <string name="pref_sets_per_game">Ilosc punktów na mecz</string>
     <string name="pref_tie_break">Tie Break w ostatnim secie</string>
     <string name="pref_two_points_difference">Gra na przewagi (potrzebne 2 punkty przewagi aby wygrać set)</string>
-    <string name="pref_penalty_cards">Kartki</string>
+    <string name="pref_sanctions">Sankcje</string>
     <string name="pref_team_timeouts">Przerwa na zadanie</string>
     <string name="pref_team_timeouts_per_set">Ilosc przerw na set</string>
     <string name="pref_team_timeout_duration">Czas trwania przerwy na zadanie</string>

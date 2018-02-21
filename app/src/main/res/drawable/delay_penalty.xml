@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="5dp" />
+            <solid android:color="@color/colorRedCard"/>
+            <size android:width="@dimen/sanction_size" android:height="@dimen/sanction_size"/>
+        </shape>
+    </item>
+    <item>
+        <bitmap android:src="@drawable/ic_thumb_timeout_white" android:gravity="center"/>
+    </item>
+</layer-list>

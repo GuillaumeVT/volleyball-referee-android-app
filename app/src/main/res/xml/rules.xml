@@ -32,8 +32,8 @@
 
         <android.support.v7.preference.SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="pref_penalty_cards"
-            android:title="@string/pref_penalty_cards"/>
+            android:key="pref_sanctions"
+            android:title="@string/pref_sanctions"/>
 
     </android.support.v7.preference.PreferenceCategory>
 

@@ -6,7 +6,7 @@
               android:orientation="vertical">
 
     <Spinner
-        android:id="@+id/penalty_card_spinner"
+        android:id="@+id/sanction_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/big_margin_size"
@@ -14,7 +14,7 @@
         android:spinnerMode="dialog"/>
 
     <GridView
-        android:id="@+id/penalty_card_grid"
+        android:id="@+id/sanction_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/player_big_column_width"

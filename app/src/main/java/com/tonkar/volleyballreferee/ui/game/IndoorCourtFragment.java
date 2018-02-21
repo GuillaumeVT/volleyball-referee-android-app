@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -227,7 +227,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
         IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getResources().getString(R.string.select_player_title),
-                mIndoorTeamService, mPenaltyService, teamType, possibleReplacements) {
+                mIndoorTeamService, mSanctionService, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i("VBR-Court", String.format("Substitute %s team player at %s position by #%d player", teamType.toString(), positionType.toString(), selectedNumber));
@@ -251,7 +251,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showCaptainSelectionDialog(final TeamType teamType) {
         IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getResources().getString(R.string.select_captain),
-                mIndoorTeamService, mPenaltyService, teamType, mIndoorTeamService.getPossibleActingCaptains(teamType)) {
+                mIndoorTeamService, mSanctionService, teamType, mIndoorTeamService.getPossibleActingCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i("VBR-Court", String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
@@ -264,8 +264,8 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     @Override
-    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
-        if (number > 0 && (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType) || PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType))) {
+    public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        if (number > 0 && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
             PositionType positionType = mIndoorTeamService.getPlayerPosition(teamType, number);
 
             if (!PositionType.BENCH.equals(positionType)) {
@@ -276,7 +276,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void checkExplusions(TeamType teamType) {
         final Set<Integer> players = mTeamService.getPlayersOnCourt(teamType);
-        final Set<Integer> excludedNumbers = mPenaltyService.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+        final Set<Integer> excludedNumbers = mSanctionService.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
 
         for (Integer number : players) {
             if (excludedNumbers.contains(number)) {

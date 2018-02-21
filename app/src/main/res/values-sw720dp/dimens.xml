@@ -32,8 +32,8 @@
 
     <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
 
-    <dimen name="penalty_card_size">32dp</dimen>
-    <dimen name="penalty_card_half_size">16dp</dimen>
-    <dimen name="penalty_card_max_width">64dp</dimen>
+    <dimen name="sanction_size">32dp</dimen>
+    <dimen name="sanction_half_size">16dp</dimen>
+    <dimen name="sanction_max_width">64dp</dimen>
 
 </resources>

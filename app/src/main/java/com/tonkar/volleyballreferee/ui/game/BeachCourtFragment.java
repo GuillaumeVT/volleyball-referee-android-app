@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
@@ -179,11 +179,11 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onMatchCompleted(TeamType winner) {}
 
     @Override
-    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
-        if (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType)) {
+    public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        if (SanctionType.RED_EXPULSION.equals(sanctionType)) {
             // The team is excluded for this set, the other team wins
             Toast.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
-        } else if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType)) {
+        } else if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
             // The team is excluded for this match, the other team wins
             Toast.makeText(getActivity(), String.format(getResources().getString(R.string.match_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }

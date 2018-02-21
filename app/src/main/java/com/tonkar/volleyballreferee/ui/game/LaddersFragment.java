@@ -13,15 +13,15 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
-public class LaddersFragment extends Fragment implements NamedGameFragment, ScoreListener, TimeoutListener, TeamListener, PenaltyCardListener {
+public class LaddersFragment extends Fragment implements NamedGameFragment, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private LadderListAdapter mLadderListAdapter;
     private GameService       mGameService;
@@ -51,7 +51,7 @@ public class LaddersFragment extends Fragment implements NamedGameFragment, Scor
         mGameService.addScoreListener(this);
         mGameService.addTimeoutListener(this);
         mGameService.addTeamListener(this);
-        mGameService.addPenaltyCardListener(this);
+        mGameService.addSanctionListener(this);
 
         ListView setsList = view.findViewById(R.id.set_list);
         mLadderListAdapter = new LadderListAdapter(inflater, mGameService, mGameService, mGameService, mGameService, true);
@@ -66,7 +66,7 @@ public class LaddersFragment extends Fragment implements NamedGameFragment, Scor
         mGameService.removeScoreListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeTeamListener(this);
-        mGameService.removePenaltyCardListener(this);
+        mGameService.removeSanctionListener(this);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class LaddersFragment extends Fragment implements NamedGameFragment, Scor
     public void onTeamRotated(TeamType teamType) {}
 
     @Override
-    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+    public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         mLadderListAdapter.notifyDataSetChanged();
     }
 }

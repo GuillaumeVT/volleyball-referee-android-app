@@ -3,5 +3,5 @@
        android:shape="rectangle">
     <corners android:radius="5dp" />
     <solid android:color="@color/colorYellowCard"/>
-    <size android:width="@dimen/penalty_card_size" android:height="@dimen/penalty_card_size"/>
+    <size android:width="@dimen/sanction_size" android:height="@dimen/sanction_size"/>
 </shape>

@@ -14,7 +14,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.game.PenaltyCardsListAdapter;
+import com.tonkar.volleyballreferee.ui.game.SanctionsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.LadderListAdapter;
 import com.tonkar.volleyballreferee.ui.game.SubstitutionsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.TimeoutsListAdapter;
@@ -73,13 +73,13 @@ public class SetFragment extends Fragment {
         TimeoutsListAdapter guestTeamTimeoutsAdapter = new TimeoutsListAdapter(inflater, gameService, gameService, TeamType.GUEST, setIndex);
         guestTeamTimeouts.setAdapter(guestTeamTimeoutsAdapter);
 
-        ListView homeTeamPenaltyCards = view.findViewById(R.id.home_team_penalty_cards);
-        PenaltyCardsListAdapter homeTeamPenaltyCardsAdapter = new PenaltyCardsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.HOME, setIndex);
-        homeTeamPenaltyCards.setAdapter(homeTeamPenaltyCardsAdapter);
+        ListView homeTeamSanctions = view.findViewById(R.id.home_team_sanctions);
+        SanctionsListAdapter homeTeamSanctionsAdapter = new SanctionsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.HOME, setIndex);
+        homeTeamSanctions.setAdapter(homeTeamSanctionsAdapter);
 
-        ListView guestTeamPenaltyCards = view.findViewById(R.id.guest_team_penalty_cards);
-        PenaltyCardsListAdapter guestTeamPenaltyCardsAdapter = new PenaltyCardsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.GUEST, setIndex);
-        guestTeamPenaltyCards.setAdapter(guestTeamPenaltyCardsAdapter);
+        ListView guestTeamSanctions = view.findViewById(R.id.guest_team_sanctions);
+        SanctionsListAdapter guestTeamSanctionsAdapter = new SanctionsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.GUEST, setIndex);
+        guestTeamSanctions.setAdapter(guestTeamSanctionsAdapter);
 
         return view;
     }

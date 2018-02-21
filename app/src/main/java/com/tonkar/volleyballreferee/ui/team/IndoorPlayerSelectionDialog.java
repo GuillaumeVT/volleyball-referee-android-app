@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardService;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -30,13 +30,13 @@ public abstract class IndoorPlayerSelectionDialog {
         this(layoutInflater, context, title, indoorTeamService, null, teamType, players);
     }
 
-    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, PenaltyCardService penaltyCardService, TeamType teamType, Set<Integer> players) {
+    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, SanctionService sanctionService, TeamType teamType, Set<Integer> players) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, indoorTeamService, penaltyCardService, teamType, players) {
+        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, indoorTeamService, sanctionService, teamType, players) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 IndoorPlayerSelectionDialog.this.onPlayerSelected(selectedNumber);
@@ -70,15 +70,15 @@ public abstract class IndoorPlayerSelectionDialog {
         private final LayoutInflater        mLayoutInflater;
         private final Context               mContext;
         private final BaseIndoorTeamService mIndoorTeamService;
-        private final PenaltyCardService    mPenaltyCardService;
+        private final SanctionService       mSanctionService;
         private final TeamType              mTeamType;
         private final List<Integer>         mPlayers;
 
-        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, PenaltyCardService penaltyCardService, TeamType teamType, Set<Integer> players) {
+        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, SanctionService sanctionService, TeamType teamType, Set<Integer> players) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mIndoorTeamService = indoorTeamService;
-            mPenaltyCardService = penaltyCardService;
+            mSanctionService = sanctionService;
             mTeamType = teamType;
             mPlayers = new ArrayList<>(players);
         }
@@ -136,8 +136,8 @@ public abstract class IndoorPlayerSelectionDialog {
         private boolean isExpulsedOrDisqualified(int number) {
             boolean result = false;
 
-            if (mPenaltyCardService != null) {
-                result = mPenaltyCardService.getExpulsedOrDisqualifiedPlayersForCurrentSet(mTeamType).contains(number);
+            if (mSanctionService != null) {
+                result = mSanctionService.getExpulsedOrDisqualifiedPlayersForCurrentSet(mTeamType).contains(number);
             }
 
             return result;

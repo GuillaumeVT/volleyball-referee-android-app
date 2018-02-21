@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
@@ -121,10 +121,10 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public void addPenaltyCardListener(PenaltyCardListener listener) {}
+    public void addSanctionListener(SanctionListener listener) {}
 
     @Override
-    public void removePenaltyCardListener(PenaltyCardListener listener) {}
+    public void removeSanctionListener(SanctionListener listener) {}
 
     @Override
     public String getLeagueName() {
@@ -582,7 +582,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {}
+    public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {}
 
     @Override
     public Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
@@ -590,22 +590,22 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType) {
+    public List<Sanction> getGivenSanctions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType, int setIndex) {
+    public List<Sanction> getGivenSanctions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<PenaltyCard> getPenaltyCards(TeamType teamType, int number) {
+    public List<Sanction> getSanctions(TeamType teamType, int number) {
         return new ArrayList<>();
     }
 
     @Override
-    public boolean hasPenaltyCards(TeamType teamType, int number) {
+    public boolean hasSanctions(TeamType teamType, int number) {
         return false;
     }
 

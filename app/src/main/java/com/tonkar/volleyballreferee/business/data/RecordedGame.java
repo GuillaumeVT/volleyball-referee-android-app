@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -42,9 +42,9 @@ public class RecordedGame implements RecordedGameService {
     @SerializedName("sets")
     private List<RecordedSet> mSets;
     @SerializedName("hCards")
-    private List<PenaltyCard> mHomePenaltyCards;
+    private List<Sanction>    mHomeSanctions;
     @SerializedName("gCards")
-    private List<PenaltyCard> mGuestPenaltyCards;
+    private List<Sanction>    mGuestSanctions;
     private transient boolean mIsRecordedOnline;
 
     public RecordedGame() {
@@ -59,8 +59,8 @@ public class RecordedGame implements RecordedGameService {
         mHomeSets = 0;
         mGuestSets = 0;
         mSets = new ArrayList<>();
-        mHomePenaltyCards = new ArrayList<>();
-        mGuestPenaltyCards = new ArrayList<>();
+        mHomeSanctions = new ArrayList<>();
+        mGuestSanctions = new ArrayList<>();
         mIsRecordedOnline = false;
     }
 
@@ -445,47 +445,47 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
-    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType) {
-        List<PenaltyCard> penaltyCards;
+    public List<Sanction> getGivenSanctions(TeamType teamType) {
+        List<Sanction> sanctions;
 
         if (TeamType.HOME.equals(teamType)) {
-            penaltyCards = mHomePenaltyCards;
+            sanctions = mHomeSanctions;
         } else {
-            penaltyCards = mGuestPenaltyCards;
+            sanctions = mGuestSanctions;
         }
 
-        return penaltyCards;
+        return sanctions;
     }
 
     @Override
-    public List<PenaltyCard> getGivenPenaltyCards(TeamType teamType, int setIndex) {
-        List<PenaltyCard> penaltyCardsForSet = new ArrayList<>();
+    public List<Sanction> getGivenSanctions(TeamType teamType, int setIndex) {
+        List<Sanction> sanctionsForSet = new ArrayList<>();
 
-        for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
-            if (penaltyCard.getSetIndex() == setIndex) {
-                penaltyCardsForSet.add(penaltyCard);
+        for (Sanction sanction : getGivenSanctions(teamType)) {
+            if (sanction.getSetIndex() == setIndex) {
+                sanctionsForSet.add(sanction);
             }
         }
 
-        return penaltyCardsForSet;
+        return sanctionsForSet;
     }
 
     @Override
-    public List<PenaltyCard> getPenaltyCards(TeamType teamType, int number) {
-        List<PenaltyCard> penaltyCardsForPlayer = new ArrayList<>();
+    public List<Sanction> getSanctions(TeamType teamType, int number) {
+        List<Sanction> sanctionsForPlayer = new ArrayList<>();
 
-        for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
-            if (penaltyCard.getPlayer() == number) {
-                penaltyCardsForPlayer.add(penaltyCard);
+        for (Sanction sanction : getGivenSanctions(teamType)) {
+            if (sanction.getPlayer() == number) {
+                sanctionsForPlayer.add(sanction);
             }
         }
 
-        return penaltyCardsForPlayer;
+        return sanctionsForPlayer;
     }
 
     @Override
-    public boolean hasPenaltyCards(TeamType teamType, int number) {
-        return getPenaltyCards(teamType, number).size() > 0;
+    public boolean hasSanctions(TeamType teamType, int number) {
+        return getSanctions(teamType, number).size() > 0;
     }
 
     @Override
@@ -507,8 +507,8 @@ public class RecordedGame implements RecordedGameService {
                     && (this.getSets(TeamType.HOME) == other.getSets(TeamType.HOME))
                     && (this.getSets(TeamType.GUEST) == other.getSets(TeamType.GUEST))
                     && this.getSets().equals(other.getSets())
-                    && this.getGivenPenaltyCards(TeamType.HOME).equals(other.getGivenPenaltyCards(TeamType.HOME))
-                    && this.getGivenPenaltyCards(TeamType.GUEST).equals(other.getGivenPenaltyCards(TeamType.GUEST));
+                    && this.getGivenSanctions(TeamType.HOME).equals(other.getGivenSanctions(TeamType.HOME))
+                    && this.getGivenSanctions(TeamType.GUEST).equals(other.getGivenSanctions(TeamType.GUEST));
         }
 
         return result;

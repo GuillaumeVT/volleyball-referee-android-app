@@ -14,9 +14,9 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
@@ -39,7 +39,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class RecordedGames implements RecordedGamesService, ScoreListener, TeamListener, TimeoutListener, PenaltyCardListener {
+public class RecordedGames implements RecordedGamesService, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
     private final Context            mContext;
     private       GameService        mGameService;
@@ -66,7 +66,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mGameService.addScoreListener(this);
         mGameService.addTeamListener(this);
         mGameService.addTimeoutListener(this);
-        mGameService.addPenaltyCardListener(this);
+        mGameService.addSanctionListener(this);
 
         createRecordedGame();
         saveCurrentGame();
@@ -85,7 +85,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mGameService.removeScoreListener(this);
         mGameService.removeTeamListener(this);
         mGameService.removeTimeoutListener(this);
-        mGameService.removePenaltyCardListener(this);
+        mGameService.removeSanctionListener(this);
     }
 
     @Override
@@ -448,7 +448,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     public void onGameInterval(int duration) {}
 
     @Override
-    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
+    public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         saveCurrentGame();
         uploadCurrentGameOnline();
     }
@@ -582,18 +582,18 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                 mRecordedGame.getSets().add(set);
             }
 
-            mRecordedGame.getGivenPenaltyCards(TeamType.HOME).clear();
+            mRecordedGame.getGivenSanctions(TeamType.HOME).clear();
 
-            for (PenaltyCard penaltyCard : mGameService.getGivenPenaltyCards(TeamType.HOME)) {
-                PenaltyCard card = new PenaltyCard(penaltyCard.getPlayer(), penaltyCard.getPenaltyCardType(), penaltyCard.getSetIndex(), penaltyCard.getHomeTeamPoints(), penaltyCard.getGuestTeamPoints());
-                mRecordedGame.getGivenPenaltyCards(TeamType.HOME).add(card);
+            for (Sanction sanction : mGameService.getGivenSanctions(TeamType.HOME)) {
+                Sanction sanct = new Sanction(sanction.getPlayer(), sanction.getSanctionType(), sanction.getSetIndex(), sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints());
+                mRecordedGame.getGivenSanctions(TeamType.HOME).add(sanct);
             }
 
-            mRecordedGame.getGivenPenaltyCards(TeamType.GUEST).clear();
+            mRecordedGame.getGivenSanctions(TeamType.GUEST).clear();
 
-            for (PenaltyCard penaltyCard : mGameService.getGivenPenaltyCards(TeamType.GUEST)) {
-                PenaltyCard card = new PenaltyCard(penaltyCard.getPlayer(), penaltyCard.getPenaltyCardType(), penaltyCard.getSetIndex(), penaltyCard.getHomeTeamPoints(), penaltyCard.getGuestTeamPoints());
-                mRecordedGame.getGivenPenaltyCards(TeamType.GUEST).add(card);
+            for (Sanction sanction : mGameService.getGivenSanctions(TeamType.GUEST)) {
+                Sanction sanct = new Sanction(sanction.getPlayer(), sanction.getSanctionType(), sanction.getSetIndex(), sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints());
+                mRecordedGame.getGivenSanctions(TeamType.GUEST).add(sanct);
             }
         }
     }

@@ -35,8 +35,8 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -48,7 +48,7 @@ import com.tonkar.volleyballreferee.ui.UiUtils;
 import java.util.Locale;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener, PenaltyCardListener {
+public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private GameService          mGameService;
     private RecordedGamesService mRecordedGamesService;
@@ -105,7 +105,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mGameService.addScoreListener(this);
         mGameService.addTimeoutListener(this);
         mGameService.addTeamListener(this);
-        mGameService.addPenaltyCardListener(this);
+        mGameService.addSanctionListener(this);
         mRecordedGamesService.connectGameRecorder();
 
         mRandom = new Random();
@@ -171,7 +171,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             mRightTeamTimeoutLayout.setVisibility(View.GONE);
         }
 
-        if (!mGameService.getRules().arePenaltyCardsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
+        if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
             mLeftTeamCardsButton.setVisibility(View.INVISIBLE);
             mRightTeamCardsButton.setVisibility(View.INVISIBLE);
         }
@@ -205,7 +205,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         mGameService.removeScoreListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeTeamListener(this);
-        mGameService.removePenaltyCardListener(this);
+        mGameService.removeSanctionListener(this);
         mRecordedGamesService.disconnectGameRecorder(isFinishing());
         deleteToolbarCountdown();
     }
@@ -360,10 +360,10 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         callTimeoutWithDialog(mTeamOnLeftSide);
     }
 
-    public void giveLeftPenaltyCard(View view) {
-        Log.i("VBR-GameActivity", "Give left penalty card");
+    public void giveLeftSanction(View view) {
+        Log.i("VBR-GameActivity", "Give left sanction");
         UiUtils.animate(this, mLeftTeamCardsButton);
-        showPenaltyCardDialog(mTeamOnLeftSide);
+        showSanctionDialog(mTeamOnLeftSide);
     }
 
     public void increaseRightScore(View view) {
@@ -378,10 +378,10 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         callTimeoutWithDialog(mTeamOnRightSide);
     }
 
-    public void giveRightPenaltyCard(View view) {
-        Log.i("VBR-GameActivity", "Give right penalty card");
+    public void giveRightSanction(View view) {
+        Log.i("VBR-GameActivity", "Give right sanction");
         UiUtils.animate(this, mRightTeamCardsButton);
-        showPenaltyCardDialog(mTeamOnRightSide);
+        showSanctionDialog(mTeamOnRightSide);
     }
 
     private void increaseScoreWithDialog(final TeamType teamType) {
@@ -430,15 +430,15 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         }
     }
 
-    private void showPenaltyCardDialog(final TeamType teamType) {
-        final String title = String.format(Locale.getDefault(), getResources().getString(R.string.penalty_card), mGameService.getTeamName(teamType));
-        PenaltyCardSelectionDialog penaltyCardSelectionDialog = new PenaltyCardSelectionDialog(getLayoutInflater(), this, title, mGameService, teamType) {
+    private void showSanctionDialog(final TeamType teamType) {
+        final String title = String.format(Locale.getDefault(), getResources().getString(R.string.sanction), mGameService.getTeamName(teamType));
+        SanctionSelectionDialog sanctionSelectionDialog = new SanctionSelectionDialog(getLayoutInflater(), this, title, mGameService, teamType) {
             @Override
-            public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
-                mGameService.givePenaltyCard(teamType, penaltyCardType, number);
+            public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
+                mGameService.giveSanction(teamType, sanctionType, number);
             }
         };
-        penaltyCardSelectionDialog.show();
+        sanctionSelectionDialog.show();
     }
 
     // Listeners
@@ -680,8 +680,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     }
 
     @Override
-    public void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
-        switch (penaltyCardType) {
+    public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        switch (sanctionType) {
             case YELLOW:
                 Toast.makeText(this, getResources().getString(R.string.yellow_card), Toast.LENGTH_LONG).show();
                 break;
@@ -693,6 +693,12 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
                 break;
             case RED_DISQUALIFICATION:
                 Toast.makeText(this, getResources().getString(R.string.red_card_disqualification), Toast.LENGTH_LONG).show();
+                break;
+            case DELAY_WARNING:
+                Toast.makeText(this, getResources().getString(R.string.yellow_card), Toast.LENGTH_LONG).show();
+                break;
+            case DELAY_PENALTY:
+                Toast.makeText(this, getResources().getString(R.string.red_card), Toast.LENGTH_LONG).show();
                 break;
         }
     }

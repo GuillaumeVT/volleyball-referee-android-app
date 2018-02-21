@@ -22,10 +22,11 @@ import com.tonkar.volleyballreferee.business.team.Player;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -67,8 +68,8 @@ public class JsonIOUtils {
             .registerTypeAdapter(TeamType.class, new TeamTypeSerializer())
             .registerTypeAdapter(PositionType.class, new PositionTypeDeserializer())
             .registerTypeAdapter(PositionType.class, new PositionTypeSerializer())
-            .registerTypeAdapter(PenaltyCardType.class, new PenaltyCardTypeDeserializer())
-            .registerTypeAdapter(PenaltyCardType.class, new PenaltyCardTypeSerializer())
+            .registerTypeAdapter(SanctionType.class, new SanctionTypeDeserializer())
+            .registerTypeAdapter(SanctionType.class, new SanctionTypeSerializer())
             .create();
 
     // Read current game
@@ -138,6 +139,15 @@ public class JsonIOUtils {
         }
     }
 
+    public static RecordedGame byteArrayToRecordedGame(byte[] bytes) throws IOException, JsonParseException {
+        JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(bytes)));
+        try {
+            return sGson.fromJson(reader, RECORDED_GAME_TYPE);
+        } finally {
+            reader.close();
+        }
+    }
+
     // Write recorded games
 
     static void writeRecordedGames(Context context, String fileName, List<RecordedGame> recordedGames) {
@@ -157,7 +167,7 @@ public class JsonIOUtils {
         writer.close();
     }
 
-    static byte[] recordedGameToByteArray(RecordedGame recordedGame) throws JsonParseException, IOException {
+    public static byte[] recordedGameToByteArray(RecordedGame recordedGame) throws JsonParseException, IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
@@ -294,19 +304,19 @@ public class JsonIOUtils {
         }
     }
 
-    public static class PenaltyCardTypeSerializer implements JsonSerializer<PenaltyCardType> {
+    public static class SanctionTypeSerializer implements JsonSerializer<SanctionType> {
 
         @Override
-        public JsonElement serialize(PenaltyCardType src, Type typeOfSrc, JsonSerializationContext context) {
-            return new JsonPrimitive(PenaltyCardType.toLetter(src));
+        public JsonElement serialize(SanctionType src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(SanctionType.toLetter(src));
         }
     }
 
-    public static class PenaltyCardTypeDeserializer implements JsonDeserializer<PenaltyCardType> {
+    public static class SanctionTypeDeserializer implements JsonDeserializer<SanctionType> {
 
         @Override
-        public PenaltyCardType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return PenaltyCardType.fromLetter(json.getAsJsonPrimitive().getAsString());
+        public SanctionType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return SanctionType.fromLetter(json.getAsJsonPrimitive().getAsString());
         }
     }
 }

@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
@@ -47,9 +47,9 @@ public class LadderEventsDialog {
         SubstitutionsListAdapter substitutionsListAdapter = new SubstitutionsListAdapter(TeamType.HOME.equals(mTeamType) ? ladderItem.getHomeSubstitutions() : ladderItem.getGuestSubstitutions());
         substitutionList.setAdapter(substitutionsListAdapter);
 
-        ListView cardList = view.findViewById(R.id.card_list);
-        PenaltyCardsListAdapter penaltyCardsListAdapter = new PenaltyCardsListAdapter(TeamType.HOME.equals(mTeamType) ? ladderItem.getHomePenaltyCards() : ladderItem.getGuestPenaltyCards());
-        cardList.setAdapter(penaltyCardsListAdapter);
+        ListView cardList = view.findViewById(R.id.sanction_list);
+        SanctionsListAdapter sanctionsListAdapter = new SanctionsListAdapter(TeamType.HOME.equals(mTeamType) ? ladderItem.getHomeSanctions() : ladderItem.getGuestSanctions());
+        cardList.setAdapter(sanctionsListAdapter);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
         builder.setView(view);
@@ -148,17 +148,17 @@ public class LadderEventsDialog {
         }
     }
 
-    private class PenaltyCardsListAdapter extends BaseAdapter {
+    private class SanctionsListAdapter extends BaseAdapter {
 
-        private List<PenaltyCard> mPenaltyCards;
+        private List<Sanction> mSanctions;
 
-        private PenaltyCardsListAdapter(List<PenaltyCard> penaltyCards) {
-            mPenaltyCards = penaltyCards;
+        private SanctionsListAdapter(List<Sanction> sanctions) {
+            mSanctions = sanctions;
         }
 
         @Override
         public int getCount() {
-            return mPenaltyCards.size();
+            return mSanctions.size();
         }
 
         @Override
@@ -173,53 +173,59 @@ public class LadderEventsDialog {
 
         @Override
         public View getView(int index, View view, ViewGroup viewGroup) {
-            View penaltyCardView = view;
+            View sanctionView = view;
 
-            if (penaltyCardView == null) {
-                penaltyCardView = mLayoutInflater.inflate(R.layout.penalty_card_list_item, null);
+            if (sanctionView == null) {
+                sanctionView = mLayoutInflater.inflate(R.layout.sanction_list_item, null);
             }
 
-            TextView setText = penaltyCardView.findViewById(R.id.set_text);
+            TextView setText = sanctionView.findViewById(R.id.set_text);
             setText.setVisibility(View.GONE);
-            TextView scoreText = penaltyCardView.findViewById(R.id.score_text);
+            TextView scoreText = sanctionView.findViewById(R.id.score_text);
             scoreText.setVisibility(View.GONE);
-            TextView playerText = penaltyCardView.findViewById(R.id.player_text);
-            ImageView cardTypeImage = penaltyCardView.findViewById(R.id.penalty_card_image);
+            TextView playerText = sanctionView.findViewById(R.id.player_text);
+            ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
-            PenaltyCard penaltyCard = mPenaltyCards.get(index);
+            Sanction sanction = mSanctions.get(index);
 
-            switch (penaltyCard.getPenaltyCardType()) {
+            switch (sanction.getSanctionType()) {
                 case YELLOW:
-                    cardTypeImage.setImageResource(R.drawable.yellow_card);
+                    sanctionTypeImage.setImageResource(R.drawable.yellow_card);
                     break;
                 case RED:
-                    cardTypeImage.setImageResource(R.drawable.red_card);
+                    sanctionTypeImage.setImageResource(R.drawable.red_card);
                     break;
                 case RED_EXPULSION:
-                    cardTypeImage.setImageResource(R.drawable.expulsion_card);
+                    sanctionTypeImage.setImageResource(R.drawable.expulsion_card);
                     break;
                 case RED_DISQUALIFICATION:
-                    cardTypeImage.setImageResource(R.drawable.disqualification_card);
+                    sanctionTypeImage.setImageResource(R.drawable.disqualification_card);
+                    break;
+                case DELAY_WARNING:
+                    sanctionTypeImage.setImageResource(R.drawable.delay_warning);
+                    break;
+                case DELAY_PENALTY:
+                    sanctionTypeImage.setImageResource(R.drawable.delay_penalty);
                     break;
             }
 
-            if (penaltyCard.getPlayer() < 0) {
+            if (sanction.getPlayer() < 0) {
                 playerText.setVisibility(View.GONE);
             } else {
-                if (penaltyCard.getPlayer() > 0) {
-                    playerText.setText(String.valueOf(penaltyCard.getPlayer()));
+                if (sanction.getPlayer() > 0) {
+                    playerText.setText(String.valueOf(sanction.getPlayer()));
                 } else {
                     playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
                 }
 
                 if (mBaseTeamService instanceof BaseIndoorTeamService) {
-                    UiUtils.styleBaseIndoorTeamText(mContext, (BaseIndoorTeamService) mBaseTeamService, mTeamType, penaltyCard.getPlayer(), playerText);
+                    UiUtils.styleBaseIndoorTeamText(mContext, (BaseIndoorTeamService) mBaseTeamService, mTeamType, sanction.getPlayer(), playerText);
                 } else {
                     UiUtils.styleBaseTeamText(mContext, mBaseTeamService, mTeamType, playerText);
                 }
             }
 
-            return penaltyCardView;
+            return sanctionView;
         }
     }
 }

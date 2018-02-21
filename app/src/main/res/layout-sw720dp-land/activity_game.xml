@@ -196,7 +196,7 @@
                 android:background="@drawable/round_button"
                 android:backgroundTint="@android:color/white"
                 android:elevation="@dimen/round_button_elevation"
-                android:onClick="giveLeftPenaltyCard"
+                android:onClick="giveLeftSanction"
                 android:theme="@style/RoundButtonTheme"
                 app:srcCompat="@drawable/ic_penalty_card"/>
 
@@ -223,7 +223,7 @@
                 android:background="@drawable/round_button"
                 android:backgroundTint="@android:color/white"
                 android:elevation="@dimen/round_button_elevation"
-                android:onClick="giveRightPenaltyCard"
+                android:onClick="giveRightSanction"
                 android:theme="@style/RoundButtonTheme"
                 app:srcCompat="@drawable/ic_penalty_card"/>
 

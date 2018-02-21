@@ -242,7 +242,7 @@
                         android:layout_marginStart="@dimen/set_title_margin_size"
                         android:layout_marginTop="@dimen/tiny_margin_size"
                         android:gravity="center|start"
-                        android:text="@string/penalty_cards_tab"
+                        android:text="@string/sanctions_tab"
                         android:textAlignment="textStart"
                         android:textAppearance="@style/TextViewTheme"
                         android:textSize="@dimen/default_text_size"/>
@@ -254,7 +254,7 @@
                         android:weightSum="2">
 
                         <view
-                            android:id="@+id/home_team_penalty_cards"
+                            android:id="@+id/home_team_sanctions"
                             class="com.tonkar.volleyballreferee.ui.ExpandedListView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -265,7 +265,7 @@
                             android:layout_weight="1"/>
 
                         <view
-                            android:id="@+id/guest_team_penalty_cards"
+                            android:id="@+id/guest_team_sanctions"
                             class="com.tonkar.volleyballreferee.ui.ExpandedListView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"

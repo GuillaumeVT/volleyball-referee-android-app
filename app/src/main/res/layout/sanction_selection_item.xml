@@ -9,15 +9,15 @@
     >
 
     <ImageView
-        android:id="@+id/penalty_card_image"
-        android:layout_width="@dimen/penalty_card_max_width"
+        android:id="@+id/sanction_type_image"
+        android:layout_width="@dimen/sanction_max_width"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin_size"
         android:layout_marginRight="@dimen/default_margin_size"
         app:srcCompat="@drawable/yellow_card"/>
 
     <TextView
-        android:id="@+id/penalty_card_text"
+        android:id="@+id/sanction_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center|start"

@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
@@ -25,38 +26,53 @@ import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PenaltyCardSelectionDialog {
+public abstract class SanctionSelectionDialog {
 
     private AlertDialog         mAlertDialog;
     private GameType            mGameType;
+    private GridView            mSanctionGrid;
     private IndoorPlayerAdapter mPlayerAdapter;
+    private SanctionType        mSelectedSanctionType;
 
-    PenaltyCardSelectionDialog(LayoutInflater layoutInflater, final Context context, String title, final GameService gameService, final TeamType teamType) {
+    SanctionSelectionDialog(LayoutInflater layoutInflater, final Context context, String title, final GameService gameService, final TeamType teamType) {
         mGameType = gameService.getGameType();
 
-        View penaltyCardsView = layoutInflater.inflate(R.layout.penalty_card_selection_dialog, null);
+        View sanctionsView = layoutInflater.inflate(R.layout.sanction_selection_dialog, null);
 
-        final Spinner penaltyCardSpinner = penaltyCardsView.findViewById(R.id.penalty_card_spinner);
-        final PenaltyCardTypeAdapter penaltyCardTypeAdapter = new PenaltyCardTypeAdapter(layoutInflater, context);
-        penaltyCardSpinner.setAdapter(penaltyCardTypeAdapter);
+        final Spinner sanctionSpinner = sanctionsView.findViewById(R.id.sanction_spinner);
+        final SanctionTypeAdapter sanctionTypeAdapter = new SanctionTypeAdapter(layoutInflater, context);
+        sanctionSpinner.setAdapter(sanctionTypeAdapter);
 
-        final GridView penaltyCardGrid = penaltyCardsView.findViewById(R.id.penalty_card_grid);
+        sanctionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                mSelectedSanctionType = sanctionTypeAdapter.getItem(index);
+                computePlayersVisibility();
+                computeOkAvailability();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+        mSanctionGrid = sanctionsView.findViewById(R.id.sanction_grid);
 
         if (GameType.INDOOR.equals(mGameType)) {
             mPlayerAdapter = new IndoorPlayerAdapter(context, gameService, teamType);
-            penaltyCardGrid.setAdapter(mPlayerAdapter);
-        } else {
-            penaltyCardGrid.setVisibility(View.GONE);
+            mSanctionGrid.setAdapter(mPlayerAdapter);
         }
 
+        mSelectedSanctionType = sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition());
+        computePlayersVisibility();
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
-        builder.setTitle(title).setView(penaltyCardsView);
+        builder.setTitle(title).setView(sanctionsView);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                if (GameType.INDOOR.equals(mGameType)) {
-                    onPenaltyCard(teamType, penaltyCardTypeAdapter.getItem(penaltyCardSpinner.getSelectedItemPosition()), mPlayerAdapter.getSelectedPlayer());
+                if (GameType.BEACH.equals(mGameType) || SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
+                    onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), -1);
                 } else {
-                    onPenaltyCard(teamType, penaltyCardTypeAdapter.getItem(penaltyCardSpinner.getSelectedItemPosition()), -1);
+                    onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), mPlayerAdapter.getSelectedPlayer());
                 }
             }
         });
@@ -67,42 +83,67 @@ public abstract class PenaltyCardSelectionDialog {
         mAlertDialog = builder.create();
     }
 
-    public void show() {
-        if (mAlertDialog != null) {
-            mAlertDialog.show();
-
-            if (GameType.INDOOR.equals(mGameType)) {
-                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+    private void computePlayersVisibility() {
+        if (GameType.INDOOR.equals(mGameType)) {
+            if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
+                mSanctionGrid.setVisibility(View.GONE);
+            } else {
+                mSanctionGrid.setVisibility(View.VISIBLE);
             }
+        } else {
+            mSanctionGrid.setVisibility(View.GONE);
         }
     }
 
-    public abstract void onPenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int player);
+    private void computeOkAvailability() {
+        if (GameType.INDOOR.equals(mGameType)) {
+            if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
+                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+            } else if (mPlayerAdapter.getSelectedPlayer() >= 0) {
+                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+            } else {
+                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+            }
+        } else {
+            mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+        }
+    }
 
-    private class PenaltyCardTypeAdapter extends BaseAdapter {
+    public void show() {
+        if (mAlertDialog != null) {
+            mAlertDialog.show();
+            computeOkAvailability();
+        }
+    }
 
-        private final LayoutInflater        mLayoutInflater;
-        private final Context               mContext;
-        private final List<PenaltyCardType> mPenaltyCardTypes;
+    public abstract void onSanction(TeamType teamType, SanctionType sanctionType, int player);
 
-        PenaltyCardTypeAdapter(LayoutInflater layoutInflater, Context context) {
+    private class SanctionTypeAdapter extends BaseAdapter {
+
+        private final LayoutInflater     mLayoutInflater;
+        private final Context            mContext;
+        private final List<SanctionType> mSanctionTypes;
+
+        SanctionTypeAdapter(LayoutInflater layoutInflater, Context context) {
             mLayoutInflater = layoutInflater;
             mContext = context;
-            mPenaltyCardTypes = new ArrayList<>();
-            mPenaltyCardTypes.add(PenaltyCardType.YELLOW);
-            mPenaltyCardTypes.add(PenaltyCardType.RED);
-            mPenaltyCardTypes.add(PenaltyCardType.RED_EXPULSION);
-            mPenaltyCardTypes.add(PenaltyCardType.RED_DISQUALIFICATION);
+            mSanctionTypes = new ArrayList<>();
+            mSanctionTypes.add(SanctionType.DELAY_WARNING);
+            mSanctionTypes.add(SanctionType.DELAY_PENALTY);
+            mSanctionTypes.add(SanctionType.YELLOW);
+            mSanctionTypes.add(SanctionType.RED);
+            mSanctionTypes.add(SanctionType.RED_EXPULSION);
+            mSanctionTypes.add(SanctionType.RED_DISQUALIFICATION);
         }
 
         @Override
         public int getCount() {
-            return mPenaltyCardTypes.size();
+            return mSanctionTypes.size();
         }
 
         @Override
-        public PenaltyCardType getItem(int i) {
-            return mPenaltyCardTypes.get(i);
+        public SanctionType getItem(int i) {
+            return mSanctionTypes.get(i);
         }
 
         @Override
@@ -115,30 +156,38 @@ public abstract class PenaltyCardSelectionDialog {
             View itemView;
 
             if (view == null) {
-                itemView = mLayoutInflater.inflate(R.layout.penalty_card_selection_item, null);
+                itemView = mLayoutInflater.inflate(R.layout.sanction_selection_item, null);
             } else {
                 itemView = view;
             }
 
-            ImageView penaltyCardImage = itemView.findViewById(R.id.penalty_card_image);
-            TextView penaltyCardText = itemView.findViewById(R.id.penalty_card_text);
+            ImageView sanctionImage = itemView.findViewById(R.id.sanction_type_image);
+            TextView sanctionText = itemView.findViewById(R.id.sanction_text);
 
-            switch (mPenaltyCardTypes.get(index)) {
+            switch (mSanctionTypes.get(index)) {
                 case YELLOW:
-                    penaltyCardText.setText(mContext.getResources().getString(R.string.yellow_card));
-                    penaltyCardImage.setImageResource(R.drawable.yellow_card);
+                    sanctionText.setText(mContext.getResources().getString(R.string.yellow_card));
+                    sanctionImage.setImageResource(R.drawable.yellow_card);
                     break;
                 case RED:
-                    penaltyCardText.setText(mContext.getResources().getString(R.string.red_card));
-                    penaltyCardImage.setImageResource(R.drawable.red_card);
+                    sanctionText.setText(mContext.getResources().getString(R.string.red_card));
+                    sanctionImage.setImageResource(R.drawable.red_card);
                     break;
                 case RED_EXPULSION:
-                    penaltyCardText.setText(mContext.getResources().getString(R.string.red_card_expulsion));
-                    penaltyCardImage.setImageResource(R.drawable.expulsion_card);
+                    sanctionText.setText(mContext.getResources().getString(R.string.red_card_expulsion));
+                    sanctionImage.setImageResource(R.drawable.expulsion_card);
                     break;
                 case RED_DISQUALIFICATION:
-                    penaltyCardText.setText(mContext.getResources().getString(R.string.red_card_disqualification));
-                    penaltyCardImage.setImageResource(R.drawable.disqualification_card);
+                    sanctionText.setText(mContext.getResources().getString(R.string.red_card_disqualification));
+                    sanctionImage.setImageResource(R.drawable.disqualification_card);
+                    break;
+                case DELAY_WARNING:
+                    sanctionText.setText(mContext.getResources().getString(R.string.yellow_card));
+                    sanctionImage.setImageResource(R.drawable.delay_warning);
+                    break;
+                case DELAY_PENALTY:
+                    sanctionText.setText(mContext.getResources().getString(R.string.red_card));
+                    sanctionImage.setImageResource(R.drawable.delay_penalty);
                     break;
             }
 
@@ -218,11 +267,10 @@ public abstract class PenaltyCardSelectionDialog {
                             }
                         }
                         mSelectedPlayer = player;
-                        mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                     } else {
                         mSelectedPlayer = -1;
-                        mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
                     }
+                    computeOkAvailability();
                 }
             });
 

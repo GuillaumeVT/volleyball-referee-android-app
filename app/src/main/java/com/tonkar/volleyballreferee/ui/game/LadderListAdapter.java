@@ -11,8 +11,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.card.BasePenaltyCardService;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.sanction.BaseSanctionService;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.score.BaseScoreService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -41,20 +41,20 @@ public class LadderListAdapter extends BaseAdapter {
         TableRow             guestTeamEventLadder;
     }
 
-    private final boolean                mReverseOrder;
-    private final LayoutInflater         mLayoutInflater;
-    private final BaseScoreService       mBaseScoreService;
-    private final BaseTeamService        mBaseTeamService;
-    private final BaseTimeoutService     mBaseTimeoutService;
-    private final BasePenaltyCardService mBasePenaltyCardService;
+    private final boolean             mReverseOrder;
+    private final LayoutInflater      mLayoutInflater;
+    private final BaseScoreService    mBaseScoreService;
+    private final BaseTeamService     mBaseTeamService;
+    private final BaseTimeoutService  mBaseTimeoutService;
+    private final BaseSanctionService mBaseSanctionService;
 
-    public LadderListAdapter(LayoutInflater layoutInflater, BaseScoreService baseScoreService, BaseTeamService baseTeamService, BaseTimeoutService baseTimeoutService, BasePenaltyCardService basePenaltyCardService, boolean reverseOrder) {
+    public LadderListAdapter(LayoutInflater layoutInflater, BaseScoreService baseScoreService, BaseTeamService baseTeamService, BaseTimeoutService baseTimeoutService, BaseSanctionService baseSanctionService, boolean reverseOrder) {
         mLayoutInflater = layoutInflater;
         mBaseScoreService = baseScoreService;
         mBaseTeamService = baseTeamService;
         mReverseOrder = reverseOrder;
         mBaseTimeoutService = baseTimeoutService;
-        mBasePenaltyCardService = basePenaltyCardService;
+        mBaseSanctionService = baseSanctionService;
     }
 
     @Override
@@ -111,8 +111,8 @@ public class LadderListAdapter extends BaseAdapter {
         addSubstitutions(TeamType.GUEST, actualIndex, ladderItems);
         addTimeouts(TeamType.HOME, actualIndex, ladderItems);
         addTimeouts(TeamType.GUEST, actualIndex, ladderItems);
-        addPenaltyCards(TeamType.HOME, actualIndex, ladderItems);
-        addPenaltyCards(TeamType.GUEST, actualIndex, ladderItems);
+        addSanctions(TeamType.HOME, actualIndex, ladderItems);
+        addSanctions(TeamType.GUEST, actualIndex, ladderItems);
         fillLadder(viewHolder, ladderItems);
 
         if (mReverseOrder && index == 0) {
@@ -199,14 +199,14 @@ public class LadderListAdapter extends BaseAdapter {
         }
     }
 
-    private void addPenaltyCards(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (PenaltyCard penaltyCard : mBasePenaltyCardService.getGivenPenaltyCards(teamType, setIndex)) {
-            int homePoints = penaltyCard.getHomeTeamPoints();
-            int guestPoints = penaltyCard.getGuestTeamPoints();
+    private void addSanctions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
+        for (Sanction sanction : mBaseSanctionService.getGivenSanctions(teamType, setIndex)) {
+            int homePoints = sanction.getHomeTeamPoints();
+            int guestPoints = sanction.getGuestTeamPoints();
 
             for (LadderItem ladderItem : ladderItems) {
                 if (ladderItem.getHomePoints() == homePoints && ladderItem.getGuestPoints() == guestPoints) {
-                    ladderItem.addPenaltyCard(teamType, penaltyCard);
+                    ladderItem.addSanction(teamType, sanction);
                 }
             }
         }
@@ -312,7 +312,7 @@ public class LadderListAdapter extends BaseAdapter {
             id = R.drawable.ic_thumb_substitution;
         } else if (ladderItem.hasTimeoutEvents(teamType)) {
             id = R.drawable.ic_thumb_timeout;
-        } else if (ladderItem.hasPenaltyCardEvents(teamType)) {
+        } else if (ladderItem.hasSanctionEvents(teamType)) {
             id = R.drawable.ic_thumb_card;
         }
 

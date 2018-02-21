@@ -42,8 +42,8 @@ public class GameFragmentPagerAdapter extends FragmentPagerAdapter {
             mFragments.add(TimeoutsFragment.newInstance());
         }
 
-        if (ServicesProvider.getInstance().getGameService().getRules().arePenaltyCardsEnabled()) {
-            mFragments.add(PenaltyCardsFragment.newInstance());
+        if (ServicesProvider.getInstance().getGameService().getRules().areSanctionsEnabled()) {
+            mFragments.add(SanctionsFragment.newInstance());
         }
     }
 

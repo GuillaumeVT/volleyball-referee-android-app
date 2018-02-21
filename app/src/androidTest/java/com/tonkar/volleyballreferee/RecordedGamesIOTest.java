@@ -9,6 +9,8 @@ import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.data.RecordedSet;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
@@ -31,7 +33,7 @@ import static org.junit.Assert.assertNotEquals;
 public class RecordedGamesIOTest {
 
     @Test
-    public void writeThenRead() {
+    public void writeThenRead_all() {
         List<RecordedGame> expectedList = new ArrayList<>();
         expectedList.add(someRecordedGame1());
         expectedList.add(someRecordedGame2());
@@ -49,6 +51,27 @@ public class RecordedGamesIOTest {
 
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
+    }
+
+    @Test
+    public void writeThenRead_one() {
+        RecordedGame recordedGame1 = someRecordedGame1();
+        try {
+            byte[] bytes1 = JsonIOUtils.recordedGameToByteArray(recordedGame1);
+            RecordedGame readGame1 = JsonIOUtils.byteArrayToRecordedGame(bytes1);
+            assertEquals(recordedGame1, readGame1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        RecordedGame recordedGame2 = someRecordedGame2();
+        try {
+            byte[] bytes2 = JsonIOUtils.recordedGameToByteArray(recordedGame2);
+            RecordedGame readGame2 = JsonIOUtils.byteArrayToRecordedGame(bytes2);
+            assertEquals(recordedGame2, readGame2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private RecordedGame someRecordedGame1() {
@@ -135,6 +158,9 @@ public class RecordedGamesIOTest {
         set2.setActingCaptain(TeamType.HOME, 1);
         set2.setActingCaptain(TeamType.GUEST, 2);
 
+        recordedGame.getGivenSanctions(TeamType.HOME).add(new Sanction(5, SanctionType.YELLOW, 1, 12, 14));
+        recordedGame.getGivenSanctions(TeamType.GUEST).add(new Sanction(8, SanctionType.RED, 3, 20, 1));
+
         return recordedGame;
     }
 
@@ -195,6 +221,9 @@ public class RecordedGamesIOTest {
             set2.getCurrentPlayers(TeamType.HOME).add(player);
             set2.getCurrentPlayers(TeamType.GUEST).add(player);
         }
+
+        recordedGame.getGivenSanctions(TeamType.HOME).add(new Sanction(-1, SanctionType.RED_DISQUALIFICATION, 2, 4, 8));
+        recordedGame.getGivenSanctions(TeamType.GUEST).add(new Sanction(-1, SanctionType.RED_EXPULSION, 0, 5, 6));
 
         return recordedGame;
     }

@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.business.game;
 
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -87,13 +87,13 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
-        super.givePenaltyCard(teamType, penaltyCardType, number);
+    public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        super.giveSanction(teamType, sanctionType, number);
 
-        if (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType)) {
+        if (SanctionType.RED_EXPULSION.equals(sanctionType)) {
             // The team is excluded for this set, the other team wins
             forceFinishSet(teamType.other());
-        } else if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType)) {
+        } else if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
             // The team is excluded for this match, the other team wins
             forceFinishMatch(teamType.other());
         }

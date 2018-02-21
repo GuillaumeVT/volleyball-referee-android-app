@@ -86,8 +86,8 @@
     <string name="stream_online_off_message">Трансляция матча остановлена</string>
     <string name="all_timeouts_called">Команда \"%s\": нет командных тайм аутов</string>
     <string name="all_substitutions_used">Команда \"%s\": нет доступных замен в данной партии</string>
-    <string name="penalty_cards_tab">Карточки</string>
-    <string name="penalty_card">Карточка (%s)</string>
+    <string name="sanctions_tab">Санкции</string>
+    <string name="sanction">Санкция (%s)</string>
     <string name="yellow_card">Замечание</string>
     <string name="red_card">Наказание очком и подачей соперника (проигрыш розыгрыша)</string>
     <string name="red_card_expulsion">Удаление до конца партии</string>
@@ -108,7 +108,7 @@
     <string name="pref_sets_per_game">Количество партий в матче</string>
     <string name="pref_tie_break">Решающая партия в конце матча</string>
     <string name="pref_two_points_difference">Разница в счёте в 2 очка для победы в партии</string>
-    <string name="pref_penalty_cards">Карточки</string>
+    <string name="pref_sanctions">Санкции</string>
     <string name="pref_team_timeouts">Командные перерывы</string>
     <string name="pref_team_timeouts_per_set">Количество командных перерывов в партии</string>
     <string name="pref_team_timeout_duration">Длительность командных перерывов</string>

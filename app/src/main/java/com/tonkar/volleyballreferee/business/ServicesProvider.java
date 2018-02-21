@@ -5,7 +5,7 @@ import android.content.Context;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardService;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
@@ -43,7 +43,7 @@ public class ServicesProvider {
         return mCurrentGame;
     }
 
-    public PenaltyCardService getPenaltyCardService() {
+    public SanctionService getSanctionService() {
         return mCurrentGame;
     }
 

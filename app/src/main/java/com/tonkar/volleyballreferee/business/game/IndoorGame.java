@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee.business.game;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
@@ -308,10 +308,10 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
-    public void givePenaltyCard(TeamType teamType, PenaltyCardType penaltyCardType, int number) {
-        super.givePenaltyCard(teamType, penaltyCardType, number);
+    public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        super.giveSanction(teamType, sanctionType, number);
 
-        if (number > 0 && (PenaltyCardType.RED_EXPULSION.equals(penaltyCardType) || PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType))) {
+        if (number > 0 && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
             // The player excluded for the set/match has to be legally replaced
             PositionType positionType = getPlayerPosition(teamType, number);
 
@@ -326,7 +326,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
             }
         }
 
-        if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCardType) && !isMatchCompleted()) {
+        if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType) && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
             java.util.Set<Integer> players = getIndoorTeamDefinition(teamType).getPlayers();
 
@@ -338,9 +338,9 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
             // then remove the disqualified players
 
-            for (PenaltyCard penaltyCard : getGivenPenaltyCards(teamType)) {
-                if (PenaltyCardType.RED_DISQUALIFICATION.equals(penaltyCard.getPenaltyCardType())) {
-                    players.remove(penaltyCard.getPlayer());
+            for (Sanction sanction : getGivenSanctions(teamType)) {
+                if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getSanctionType())) {
+                    players.remove(sanction.getPlayer());
                 }
             }
 

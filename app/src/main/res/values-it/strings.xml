@@ -86,8 +86,8 @@
     <string name="stream_online_off_message">La partita non é più trasmessa in linea</string>
     <string name="all_timeouts_called">%s non ha più tempi di riposo disponibili</string>
     <string name="all_substitutions_used">%s non ha più sostituzioni di giocatori disponibili</string>
-    <string name="penalty_cards_tab">Cartellini</string>
-    <string name="penalty_card">Cartellino (%s)</string>
+    <string name="sanctions_tab">Sanzioni</string>
+    <string name="sanction">Sanzione (%s)</string>
     <string name="yellow_card">Avvertimento</string>
     <string name="red_card">Punto e servizio all\'avversario</string>
     <string name="red_card_expulsion">Espulsione per il resto del set</string>
@@ -108,7 +108,7 @@
     <string name="pref_sets_per_game">Numero di set per partita</string>
     <string name="pref_tie_break">Tie-break come ultimo set</string>
     <string name="pref_two_points_difference">Scarto di 2 punti per vincere il set</string>
-    <string name="pref_penalty_cards">Cartellini</string>
+    <string name="pref_sanctions">Sanzioni</string>
     <string name="pref_team_timeouts">Tempi di riposo</string>
     <string name="pref_team_timeouts_per_set">Numero di tempi di riposo per squadra e per set</string>
     <string name="pref_team_timeout_duration">Durata del tempo di riposo</string>

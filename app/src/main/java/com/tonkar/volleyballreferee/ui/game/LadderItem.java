@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCard;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
@@ -17,8 +17,8 @@ public class LadderItem {
     private final List<Substitution> mGuestSubstitutions;
     private final List<Timeout>      mHomeTimeouts;
     private final List<Timeout>      mGuestTimeouts;
-    private final List<PenaltyCard>  mHomePenaltyCards;
-    private final List<PenaltyCard>  mGuestPenaltyCards;
+    private final List<Sanction>     mHomeSanctions;
+    private final List<Sanction>     mGuestSanctions;
 
     LadderItem(TeamType teamType, int homePoints, int guestPoints) {
         mTeamType = teamType;
@@ -28,8 +28,8 @@ public class LadderItem {
         mGuestSubstitutions = new ArrayList<>();
         mHomeTimeouts = new ArrayList<>();
         mGuestTimeouts = new ArrayList<>();
-        mHomePenaltyCards = new ArrayList<>();
-        mGuestPenaltyCards = new ArrayList<>();
+        mHomeSanctions = new ArrayList<>();
+        mGuestSanctions = new ArrayList<>();
     }
 
     TeamType getTeamType() {
@@ -60,12 +60,12 @@ public class LadderItem {
         return mGuestTimeouts;
     }
 
-    List<PenaltyCard> getHomePenaltyCards() {
-        return mHomePenaltyCards;
+    List<Sanction> getHomeSanctions() {
+        return mHomeSanctions;
     }
 
-    List<PenaltyCard> getGuestPenaltyCards() {
-        return mGuestPenaltyCards;
+    List<Sanction> getGuestSanctions() {
+        return mGuestSanctions;
     }
 
     void addSubstitution(TeamType teamType, Substitution substitution) {
@@ -84,11 +84,11 @@ public class LadderItem {
         }
     }
 
-    void addPenaltyCard(TeamType teamType, PenaltyCard penaltyCard) {
+    void addSanction(TeamType teamType, Sanction sanction) {
         if (TeamType.HOME.equals(teamType)) {
-            mHomePenaltyCards.add(penaltyCard);
+            mHomeSanctions.add(sanction);
         } else {
-            mGuestPenaltyCards.add(penaltyCard);
+            mGuestSanctions.add(sanction);
         }
     }
 
@@ -108,16 +108,16 @@ public class LadderItem {
         }
     }
 
-    boolean hasPenaltyCardEvents(TeamType teamType) {
+    boolean hasSanctionEvents(TeamType teamType) {
         if (TeamType.HOME.equals(teamType)) {
-            return mHomePenaltyCards.size() > 0;
+            return mHomeSanctions.size() > 0;
         } else {
-            return mGuestPenaltyCards.size() > 0;
+            return mGuestSanctions.size() > 0;
         }
     }
 
     boolean hasEvent(TeamType teamType) {
-        return hasSubstitutionEvents(teamType) || hasTimeoutEvents(teamType) || hasPenaltyCardEvents(teamType);
+        return hasSubstitutionEvents(teamType) || hasTimeoutEvents(teamType) || hasSanctionEvents(teamType);
     }
 
     boolean hasSeveralEvents(TeamType teamType) {
@@ -129,7 +129,7 @@ public class LadderItem {
         if (hasTimeoutEvents(teamType)) {
             count++;
         }
-        if (hasPenaltyCardEvents(teamType)) {
+        if (hasSanctionEvents(teamType)) {
             count++;
         }
 

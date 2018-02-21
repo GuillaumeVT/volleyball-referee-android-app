@@ -5,7 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardType;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -23,10 +23,10 @@ public class PenaltyCardsTest {
         GameService game = GameFactory.createBeachGame();
         game.initTeams();
 
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.YELLOW, -1);
+        game.giveSanction(TeamType.HOME, SanctionType.YELLOW, -1);
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, -1));
-        assertEquals(PenaltyCardType.YELLOW, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, -1));
+        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
     }
 
     @Test
@@ -38,15 +38,15 @@ public class PenaltyCardsTest {
         assertEquals(0, game.getPoints(TeamType.HOME));
         assertEquals(0, game.getPoints(TeamType.GUEST));
 
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.RED, -1);
+        game.giveSanction(TeamType.HOME, SanctionType.RED, -1);
 
         assertEquals(TeamType.GUEST, game.getServingTeam());
         assertEquals(0, game.getPoints(TeamType.HOME));
         assertEquals(1, game.getPoints(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, -1));
-        assertEquals(false, game.hasPenaltyCards(TeamType.HOME, 5));
-        assertEquals(PenaltyCardType.RED, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, -1));
+        assertEquals(false, game.hasSanctions(TeamType.HOME, 5));
+        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
     }
 
     @Test
@@ -54,13 +54,13 @@ public class PenaltyCardsTest {
         GameService game = GameFactory.createBeachGame();
         game.initTeams();
 
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED_EXPULSION, -1);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, -1);
 
         assertEquals(1, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, -1));
-        assertEquals(PenaltyCardType.RED_EXPULSION, game.getGivenPenaltyCards(TeamType.GUEST).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, -1));
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
     }
 
     @Test
@@ -68,14 +68,14 @@ public class PenaltyCardsTest {
         GameService game = GameFactory.createBeachGame();
         game.initTeams();
 
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.RED_DISQUALIFICATION, -1);
+        game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, -1);
 
         assertEquals(0, game.getSets(TeamType.HOME));
         assertEquals(2, game.getSets(TeamType.GUEST));
         assertEquals(true, game.isMatchCompleted());
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, -1));
-        assertEquals(PenaltyCardType.RED_DISQUALIFICATION, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, -1));
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
     }
 
     @Test
@@ -89,13 +89,13 @@ public class PenaltyCardsTest {
 
         fillCourt((IndoorTeamService) game);
 
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.YELLOW, 3);
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.YELLOW, 0);
+        game.giveSanction(TeamType.HOME, SanctionType.YELLOW, 3);
+        game.giveSanction(TeamType.HOME, SanctionType.YELLOW, 0);
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, 3));
-        assertEquals(false, game.hasPenaltyCards(TeamType.HOME, 1));
-        assertEquals(PenaltyCardType.YELLOW, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
-        assertEquals(PenaltyCardType.YELLOW, game.getGivenPenaltyCards(TeamType.HOME).get(1).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, 3));
+        assertEquals(false, game.hasSanctions(TeamType.HOME, 1));
+        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(1).getSanctionType());
     }
 
     @Test
@@ -113,26 +113,26 @@ public class PenaltyCardsTest {
         assertEquals(0, game.getPoints(TeamType.HOME));
         assertEquals(0, game.getPoints(TeamType.GUEST));
 
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.RED, 1);
+        game.giveSanction(TeamType.HOME, SanctionType.RED, 1);
 
         assertEquals(TeamType.GUEST, game.getServingTeam());
         assertEquals(0, game.getPoints(TeamType.HOME));
         assertEquals(1, game.getPoints(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, 1));
-        assertEquals(false, game.hasPenaltyCards(TeamType.HOME, 6));
-        assertEquals(PenaltyCardType.RED, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, 1));
+        assertEquals(false, game.hasSanctions(TeamType.HOME, 6));
+        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
 
         // coach
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED, 0);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED, 0);
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         assertEquals(1, game.getPoints(TeamType.HOME));
         assertEquals(1, game.getPoints(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, 0));
-        assertEquals(false, game.hasPenaltyCards(TeamType.GUEST, 3));
-        assertEquals(PenaltyCardType.RED, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 0));
+        assertEquals(false, game.hasSanctions(TeamType.GUEST, 3));
+        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
     }
 
     @Test
@@ -148,38 +148,38 @@ public class PenaltyCardsTest {
 
         fillCourt(indoorTeamService);
 
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.RED_EXPULSION, 6);
+        game.giveSanction(TeamType.HOME, SanctionType.RED_EXPULSION, 6);
 
         assertEquals(0, game.getSets(TeamType.HOME));
         assertEquals(1, game.getSets(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, 6));
-        assertEquals(PenaltyCardType.RED_EXPULSION, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, 6));
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
 
         // coach
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED_EXPULSION, 0);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 0);
 
         assertEquals(0, game.getSets(TeamType.HOME));
         assertEquals(1, game.getSets(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, 0));
-        assertEquals(PenaltyCardType.RED_EXPULSION, game.getGivenPenaltyCards(TeamType.GUEST).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 0));
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
 
         fillCourt(indoorTeamService);
 
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED_EXPULSION, 1);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 1);
         indoorTeamService.substitutePlayer(TeamType.GUEST, 8, PositionType.POSITION_1, ActionOriginType.USER);
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, 1));
-        assertEquals(PenaltyCardType.RED_EXPULSION, game.getGivenPenaltyCards(TeamType.GUEST).get(1).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 1));
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(1).getSanctionType());
 
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED_EXPULSION, 5);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 5);
 
         assertEquals(1, game.getSets(TeamType.HOME));
         assertEquals(1, game.getSets(TeamType.GUEST));
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, 5));
-        assertEquals(PenaltyCardType.RED_EXPULSION, game.getGivenPenaltyCards(TeamType.GUEST).get(2).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 5));
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(2).getSanctionType());
     }
 
     @Test
@@ -196,29 +196,29 @@ public class PenaltyCardsTest {
         fillCourt(indoorTeamService);
 
         // coach
-        game.givePenaltyCard(TeamType.HOME, PenaltyCardType.RED_DISQUALIFICATION, 0);
+        game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, 0);
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.HOME, 0));
-        assertEquals(PenaltyCardType.RED_DISQUALIFICATION, game.getGivenPenaltyCards(TeamType.HOME).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.HOME, 0));
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
 
         assertEquals(0, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
         assertEquals(false, game.isMatchCompleted());
 
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED_DISQUALIFICATION, 3);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_DISQUALIFICATION, 3);
         indoorTeamService.substitutePlayer(TeamType.GUEST, 8, PositionType.POSITION_3, ActionOriginType.USER);
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, 3));
-        assertEquals(PenaltyCardType.RED_DISQUALIFICATION, game.getGivenPenaltyCards(TeamType.GUEST).get(0).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 3));
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
 
-        game.givePenaltyCard(TeamType.GUEST, PenaltyCardType.RED_DISQUALIFICATION, 2);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_DISQUALIFICATION, 2);
 
         assertEquals(3, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
         assertEquals(true, game.isMatchCompleted());
 
-        assertEquals(true, game.hasPenaltyCards(TeamType.GUEST, 2));
-        assertEquals(PenaltyCardType.RED_DISQUALIFICATION, game.getGivenPenaltyCards(TeamType.GUEST).get(1).getPenaltyCardType());
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 2));
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.GUEST).get(1).getSanctionType());
     }
 
     private void fillTeam(GameService game, TeamType teamType, int numberOfPlayers) {

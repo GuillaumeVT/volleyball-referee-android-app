@@ -9,8 +9,8 @@ import android.widget.Button;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardListener;
-import com.tonkar.volleyballreferee.interfaces.card.PenaltyCardService;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
@@ -19,11 +19,11 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamListener, PenaltyCardListener {
+public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamListener, SanctionListener {
 
     protected       View                      mView;
     protected       TeamService               mTeamService;
-    protected       PenaltyCardService        mPenaltyService;
+    protected       SanctionService           mSanctionService;
     protected       TeamType                  mTeamOnLeftSide;
     protected       TeamType                  mTeamOnRightSide;
     protected final Map<PositionType, Button> mLeftTeamPositions;
@@ -38,7 +38,7 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
     public void onDestroyView() {
         super.onDestroyView();
         mTeamService.removeTeamListener(this);
-        mPenaltyService.removePenaltyCardListener(this);
+        mSanctionService.removeSanctionListener(this);
         mLeftTeamPositions.clear();
         mRightTeamPositions.clear();
     }
@@ -51,12 +51,12 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
     protected void initView() {
         Log.i("VBR-Court", "Create court fragment");
         mTeamService = ServicesProvider.getInstance().getTeamService();
-        mPenaltyService = ServicesProvider.getInstance().getPenaltyCardService();
+        mSanctionService = ServicesProvider.getInstance().getSanctionService();
 
         mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
         mTeamOnRightSide = mTeamService.getTeamOnRightSide();
         mTeamService.addTeamListener(this);
-        mPenaltyService.addPenaltyCardListener(this);
+        mSanctionService.addSanctionListener(this);
     }
 
     protected void addButtonOnLeftSide(final PositionType positionType, final Button button) {

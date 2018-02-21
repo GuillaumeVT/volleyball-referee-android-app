@@ -1,27 +1,27 @@
-package com.tonkar.volleyballreferee.interfaces.card;
+package com.tonkar.volleyballreferee.interfaces.sanction;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PenaltyCard {
+public class Sanction {
 
     @SerializedName("num")
-    private final int             mPlayer;
+    private final int          mPlayer;
     @SerializedName("card")
-    private final PenaltyCardType mPenaltyCardType;
+    private final SanctionType mSanctionType;
     @SerializedName("set")
-    private final int             mSetIndex;
+    private final int          mSetIndex;
     @SerializedName("hPoints")
-    private final int             mHomeTeamPoints;
+    private final int          mHomeTeamPoints;
     @SerializedName("gPoints")
-    private final int             mGuestTeamPoints;
+    private final int          mGuestTeamPoints;
 
-    public PenaltyCard() {
-        this(0, PenaltyCardType.YELLOW, 0, 0, 0);
+    public Sanction() {
+        this(0, SanctionType.YELLOW, 0, 0, 0);
     }
 
-    public PenaltyCard(int player, PenaltyCardType penaltyCardType, int setIndex, int homeTeamPoints, int guestTeamPoints) {
+    public Sanction(int player, SanctionType sanctionType, int setIndex, int homeTeamPoints, int guestTeamPoints) {
         mPlayer = player;
-        mPenaltyCardType = penaltyCardType;
+        mSanctionType = sanctionType;
         mSetIndex = setIndex;
         mHomeTeamPoints = homeTeamPoints;
         mGuestTeamPoints = guestTeamPoints;
@@ -31,8 +31,8 @@ public class PenaltyCard {
         return mPlayer;
     }
 
-    public PenaltyCardType getPenaltyCardType() {
-        return mPenaltyCardType;
+    public SanctionType getSanctionType() {
+        return mSanctionType;
     }
 
     public int getSetIndex() {
@@ -53,10 +53,10 @@ public class PenaltyCard {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof PenaltyCard) {
-            PenaltyCard other = (PenaltyCard) obj;
+        } else if (obj instanceof Sanction) {
+            Sanction other = (Sanction) obj;
             result = (this.getPlayer() == other.getPlayer())
-                    && (this.getPenaltyCardType().equals(other.getPenaltyCardType()))
+                    && (this.getSanctionType().equals(other.getSanctionType()))
                     && (this.getSetIndex() == other.getSetIndex())
                     && (this.getHomeTeamPoints() == other.getHomeTeamPoints())
                     && (this.getGuestTeamPoints() == other.getGuestTeamPoints());
