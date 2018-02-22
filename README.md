@@ -39,5 +39,4 @@ If your language is missing and you feel like helping the community, you may con
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| HTTPS                             | In Progress                            |
-| Instant App                       | Under Review                           |
+| Instant App                       | Planned                                |
