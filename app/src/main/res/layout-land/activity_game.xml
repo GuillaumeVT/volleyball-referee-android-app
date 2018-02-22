@@ -278,11 +278,10 @@
             android:id="@+id/game_tabs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:tabTextAppearance="@style/DynamicTabText"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorPrimary">
-
-        </android.support.design.widget.TabLayout>
+            app:tabSelectedTextColor="@color/colorPrimary"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/game_pager"

@@ -3,16 +3,21 @@ package com.tonkar.volleyballreferee.business.data;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -22,6 +27,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
@@ -30,6 +37,7 @@ import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,18 +57,29 @@ public class PdfGameWriter {
     private Context             mContext;
     private RecordedGameService mRecordedGameService;
     private Document            mDocument;
-    private Font                mDefaultFont;
-    private Font                mHomeTeamFont;
-    private Font                mHomeCaptainFont;
-    private Font                mGuestTeamFont;
-    private Font                mGuestCaptainFont;
-    private Font                mHomeLiberoFont;
-    private Font                mGuestLiberoFont;
 
-    private BaseColor           mHomeTeamColor;
-    private BaseColor           mGuestTeamColor;
-    private BaseColor           mHomeLiberoColor;
-    private BaseColor           mGuestLiberoColor;
+    private Font mDefaultFont;
+    private Font mHomeTeamFont;
+    private Font mHomeCaptainFont;
+    private Font mGuestTeamFont;
+    private Font mGuestCaptainFont;
+    private Font mHomeLiberoFont;
+    private Font mGuestLiberoFont;
+
+    private BaseColor mHomeTeamColor;
+    private BaseColor mGuestTeamColor;
+    private BaseColor mHomeLiberoColor;
+    private BaseColor mGuestLiberoColor;
+
+    private Image mSubstitutionImage;
+    private Image mTimeoutGrayImage;
+    private Image mTimeoutWhiteImage;
+    private Image mYellowCardImage;
+    private Image mRedCardImage;
+    private Image mExpulsionCardImage;
+    private Image mDisqualificationCardImage;
+    private Image mDelayWarningImage;
+    private Image mDelayPenaltyImage;
 
     public static File writeRecordedGame(Context context, RecordedGameService recordedGameService) {
         File file;
@@ -106,7 +125,7 @@ public class PdfGameWriter {
         mDocument = document;
     }
 
-    private void init() {
+    private void init() throws IOException, BadElementException {
         mDocument.addAuthor("Volleyball Referee");
         mDocument.addCreator("Volleyball Referee");
 
@@ -132,6 +151,26 @@ public class PdfGameWriter {
 
         mGuestLiberoFont = FontFactory.getFont("Roboto", BaseFont.IDENTITY_H, true, mDefaultFont.getSize(), mDefaultFont.getStyle(), new BaseColor(UiUtils.getTextColor(mContext, mRecordedGameService.getLiberoColor(TeamType.GUEST))));
         mGuestLiberoColor = new BaseColor(mRecordedGameService.getLiberoColor(TeamType.GUEST));
+
+        mSubstitutionImage = Image.getInstance(convertToBytes(R.drawable.ic_thumb_substitution, 32, 32));
+        mTimeoutGrayImage = Image.getInstance(convertToBytes(R.drawable.ic_thumb_timeout, 32, 32));
+        mTimeoutWhiteImage = Image.getInstance(convertToBytes(R.drawable.ic_thumb_timeout_white, 32, 32));
+        mYellowCardImage = Image.getInstance(convertToBytes(R.drawable.yellow_card, 50, 50));
+        mRedCardImage = Image.getInstance(convertToBytes(R.drawable.red_card, 50, 50));
+        mExpulsionCardImage = Image.getInstance(convertToBytes(R.drawable.expulsion_card, 75, 50));
+        mDisqualificationCardImage = Image.getInstance(convertToBytes(R.drawable.disqualification_card, 120, 100));
+        mDelayWarningImage = Image.getInstance(convertToBytes(R.drawable.delay_warning, 50, 50));
+        mDelayPenaltyImage = Image.getInstance(convertToBytes(R.drawable.delay_penalty, 50, 50));
+
+        mSubstitutionImage.scaleAbsolute(12, 12);
+        mTimeoutGrayImage.scaleAbsolute(12, 12);
+        mTimeoutWhiteImage.scaleAbsolute(12, 12);
+        mYellowCardImage.scaleAbsolute(16, 16);
+        mRedCardImage.scaleAbsolute(16, 16);
+        mExpulsionCardImage.scaleAbsolute(24, 16);
+        mDisqualificationCardImage.scaleAbsolute(32, 16);
+        mDelayWarningImage.scaleAbsolute(16, 16);
+        mDelayPenaltyImage.scaleAbsolute(16, 16);
     }
 
     private void writeRecordedIndoorGame() throws DocumentException {
@@ -146,6 +185,7 @@ public class PdfGameWriter {
             writeRecordedStartingLineup(setIndex);
             writeRecordedSubstitutions(setIndex);
             writeRecordedTimeouts(setIndex);
+            writeRecordedSanctions(setIndex);
             writeRecordedLadder(setIndex);
         }
     }
@@ -268,11 +308,7 @@ public class PdfGameWriter {
         table.setWidthPercentage(100);
 
         for (int player: mRecordedGameService.getPlayers(teamType)) {
-            if (mRecordedGameService.isLibero(teamType, player)) {
-                table.addCell(createPlayerCell(teamType, player, true));
-            } else {
-                table.addCell(createPlayerCell(teamType, player, false));
-            }
+            table.addCell(createPlayerCell(teamType, player, mRecordedGameService.isLibero(teamType, player)));
         }
 
         int startIndex = mRecordedGameService.getPlayers(teamType).size();
@@ -486,18 +522,18 @@ public class PdfGameWriter {
     }
 
     private PdfPTable createSubstitutionsTable(TeamType teamType, int setIndex) {
-        float[] columnWidths = {0.166f, 0.166f, 0.166f, 0.166f, 0.166f, 0.166f};
+        float[] columnWidths = {0.1666f, 0.1666f, 0.1666f, 0.1666f, 0.1666f, 0.1666f};
         PdfPTable table = new PdfPTable(columnWidths);
         table.setWidthPercentage(100);
 
         List<Substitution> substitutions = mRecordedGameService.getSubstitutions(teamType, setIndex);
 
-        for (int index = 0; index < 12; index++) {
+        for (int index = 0; index < (2 * columnWidths.length); index++) {
             PdfPCell cell;
             if (index < substitutions.size()) {
                 cell = new PdfPCell(createSubstitutionTable(teamType, substitutions.get(index)));
                 cell.setBorder(Rectangle.NO_BORDER);
-            } else if (index < 6) {
+            } else if (index < columnWidths.length) {
                 cell = new PdfPCell(new Phrase(" "));
             } else {
                 cell = new PdfPCell();
@@ -517,10 +553,11 @@ public class PdfGameWriter {
 
         table.addCell(createPlayerCell(teamType, substitution.getPlayerIn(), false));
 
-        PdfPCell arrowCell = new PdfPCell(new Phrase("=>", mDefaultFont));
-        arrowCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        arrowCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.addCell(arrowCell);
+        PdfPCell imageCell = new PdfPCell(mSubstitutionImage);
+        imageCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        imageCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        imageCell.setPadding(1.f);
+        table.addCell(imageCell);
 
         table.addCell(createPlayerCell(teamType, substitution.getPlayerOut(), false));
 
@@ -559,7 +596,7 @@ public class PdfGameWriter {
     }
 
     private PdfPTable createTimeoutsTable(int setIndex) {
-        float[] columnWidths = {0.10f, 0.10f, 0.10f, 0.10f, 0.6f};
+        float[] columnWidths = {0.1666f, 0.1666f, 0.1666f, 0.1666f, 0.3336f};
         PdfPTable table = new PdfPTable(columnWidths);
         table.setWidthPercentage(100);
 
@@ -567,31 +604,163 @@ public class PdfGameWriter {
         List<Timeout> gTimeouts = mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex);
 
         for (Timeout timeout: hTimeouts) {
-            PdfPCell cell = new PdfPCell(new Phrase(String.format(Locale.getDefault(),"%d-%d", timeout.getHomeTeamPoints(), timeout.getGuestTeamPoints()), mHomeTeamFont));
-            cell.setBackgroundColor(mHomeTeamColor);
+            PdfPCell cell = new PdfPCell(createTimeoutTable(TeamType.HOME, timeout));
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setBorder(Rectangle.NO_BORDER);
             table.addCell(cell);
         }
 
         for (Timeout timeout: gTimeouts) {
-            PdfPCell cell = new PdfPCell(new Phrase(String.format(Locale.getDefault(),"%d-%d", timeout.getGuestTeamPoints(), timeout.getHomeTeamPoints()), mGuestTeamFont));
-            cell.setBackgroundColor(mGuestTeamColor);
+            PdfPCell cell = new PdfPCell(createTimeoutTable(TeamType.GUEST, timeout));
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setBorder(Rectangle.NO_BORDER);
             table.addCell(cell);
         }
 
-        for (int index = hTimeouts.size() + gTimeouts.size(); index < 4; index++) {
+        for (int index = hTimeouts.size() + gTimeouts.size(); index < columnWidths.length; index++) {
             PdfPCell cell = new PdfPCell(new Phrase(" "));
             table.addCell(cell);
         }
 
-        PdfPCell emptyCell = new PdfPCell();
-        emptyCell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(emptyCell);
+        return table;
+    }
+
+    private PdfPTable createTimeoutTable(TeamType teamType, Timeout timeout) {
+        float[] columnWidths = {0.38f, 0.62f};
+        PdfPTable table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+
+        table.addCell(createTimeoutCell(teamType));
+
+        String score;
+        if (TeamType.HOME.equals(teamType)) {
+            score = timeout.getHomeTeamPoints() + "-" + timeout.getGuestTeamPoints();
+        } else {
+            score = timeout.getGuestTeamPoints() + "-" + timeout.getHomeTeamPoints();
+        }
+
+        PdfPCell scoreCell = new PdfPCell(new Phrase(score, mDefaultFont));
+        scoreCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        scoreCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.addCell(scoreCell);
 
         return table;
+    }
+
+    private void writeRecordedSanctions(int setIndex) throws DocumentException {
+        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+            float[] columnWidths = {0.15f, 0.85f};
+            PdfPTable table = new PdfPTable(columnWidths);
+            table.setWidthPercentage(100);
+
+            PdfPCell titleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.sanctions_tab), mDefaultFont));
+            titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.addCell(titleCell);
+
+            PdfPCell sanctionsTable = new PdfPCell(createSanctionsTable(setIndex));
+            sanctionsTable.setBorder(Rectangle.NO_BORDER);
+            table.addCell(sanctionsTable);
+
+            mDocument.add(table);
+        }
+    }
+
+    private PdfPTable createSanctionsTable(int setIndex) {
+        float[] columnWidths = {0.1666f, 0.1666f, 0.1666f, 0.1666f, 0.1666f, 0.1666f};
+        PdfPTable table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+
+        List<Sanction> hSanctions = mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex);
+        List<Sanction> gSanctions = mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex);
+
+        for (Sanction sanction: hSanctions) {
+            PdfPCell cell = new PdfPCell(createSanctionTable(TeamType.HOME, sanction));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(cell);
+        }
+
+        for (Sanction sanction: gSanctions) {
+            PdfPCell cell = new PdfPCell(createSanctionTable(TeamType.GUEST, sanction));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(cell);
+        }
+
+        for (int index = hSanctions.size() + gSanctions.size(); index < (2 * columnWidths.length); index++) {
+            PdfPCell cell;
+
+            if (index < columnWidths.length) {
+                cell = new PdfPCell(new Phrase(" "));
+            } else {
+                cell = new PdfPCell();
+            }
+            table.addCell(cell);
+        }
+
+        return table;
+    }
+
+    private PdfPTable createSanctionTable(TeamType teamType, Sanction sanction) {
+        float[] columnWidths = {0.38f, 0.22f, 0.4f};
+        PdfPTable table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+
+        PdfPCell imageCell = new PdfPCell(getSanctionImage(sanction.getSanctionType()));
+        imageCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        imageCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        imageCell.setPadding(1.f);
+        table.addCell(imageCell);
+
+        int player = sanction.getPlayer();
+        table.addCell(createPlayerCell(teamType, player, mRecordedGameService.isLibero(teamType, player)));
+
+        String score;
+        if (TeamType.HOME.equals(teamType)) {
+            score = sanction.getHomeTeamPoints() + "-" + sanction.getGuestTeamPoints();
+        } else {
+            score = sanction.getGuestTeamPoints() + "-" + sanction.getHomeTeamPoints();
+        }
+
+        PdfPCell scoreCell = new PdfPCell(new Phrase(score, mDefaultFont));
+        scoreCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        scoreCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.addCell(scoreCell);
+
+        return table;
+    }
+
+    private Image getSanctionImage(SanctionType sanctionType) {
+        Image image;
+
+        switch (sanctionType) {
+            case YELLOW:
+                image = mYellowCardImage;
+                break;
+            case RED:
+                image = mRedCardImage;
+                break;
+            case RED_EXPULSION:
+                image = mExpulsionCardImage;
+                break;
+            case RED_DISQUALIFICATION:
+                image = mDisqualificationCardImage;
+                break;
+            case DELAY_WARNING:
+                image = mDelayWarningImage;
+                break;
+            case DELAY_PENALTY:
+            default:
+                image = mDelayPenaltyImage;
+                break;
+        }
+
+        return image;
     }
 
     private void writeRecordedLadder(int setIndex) throws DocumentException {
@@ -677,12 +846,64 @@ public class PdfGameWriter {
     }
 
     private PdfPCell createPlayerCell(int player, Font font, BaseColor color) {
-        PdfPCell cell = new PdfPCell(new Phrase(String.valueOf(player), font));
+        String playerStr = String.valueOf(player);
+
+        if (player < 0) {
+            playerStr = " ";
+        } else if (player == 0) {
+            playerStr = mContext.getResources().getString(R.string.coach_abbreviation);
+        }
+
+        PdfPCell cell = new PdfPCell(new Phrase(playerStr, font));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setPadding(5.f);
         cell.setBackgroundColor(color);
         return cell;
+    }
+
+    private PdfPCell createTimeoutCell(TeamType teamType) {
+        BaseColor backgroundColor;
+
+        if (TeamType.HOME.equals(teamType)) {
+            backgroundColor = mHomeTeamColor;
+        } else {
+            backgroundColor = mGuestTeamColor;
+        }
+
+        PdfPCell cell = new PdfPCell(getTimeoutImage(backgroundColor));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell.setPadding(2.f);
+        cell.setBackgroundColor(backgroundColor);
+        return cell;
+    }
+
+    private Image getTimeoutImage(BaseColor backgroundColor) {
+        Image image;
+
+        double a = 1 - ( 0.299 * backgroundColor.getRed() + 0.587 * backgroundColor.getGreen() + 0.114 * backgroundColor.getBlue()) / 255;
+
+        if (a < 0.5) {
+            image = mTimeoutGrayImage;
+        } else {
+            image = mTimeoutWhiteImage;
+        }
+
+        return image;
+    }
+
+    private byte[] convertToBytes(int id, int widthPixels, int heightPixels) {
+        Drawable drawable = ContextCompat.getDrawable(mContext, id);
+        Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels, heightPixels, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mutableBitmap);
+        drawable.setBounds(0, 0, widthPixels, heightPixels);
+        drawable.draw(canvas);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        mutableBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+        return stream.toByteArray();
     }
 
     private void writeRecordedBeachGame() throws DocumentException {
@@ -691,6 +912,7 @@ public class PdfGameWriter {
         for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
             writeRecordedBeachSetHeader(setIndex);
             writeRecordedTimeouts(setIndex);
+            writeRecordedSanctions(setIndex);
             writeRecordedLadder(setIndex);
         }
     }
@@ -769,5 +991,4 @@ public class PdfGameWriter {
 
         mDocument.add(table);
     }
-
 }

@@ -7,7 +7,7 @@ import com.android.volley.toolbox.Volley;
 
 public class WebUtils {
 
-    public static String BASE_URL        = "http://www.volleyball-referee.com";
+    public static String BASE_URL        = "https://www.volleyball-referee.com";
     public static String SEARCH_URL      = BASE_URL + "/search";
     public static String LIVE_URL        = BASE_URL + "/search/live";
     public static String VIEW_INDOOR_URL = BASE_URL + "/indoor/%d";

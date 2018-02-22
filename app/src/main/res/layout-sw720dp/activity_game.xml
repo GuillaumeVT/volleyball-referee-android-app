@@ -265,6 +265,7 @@
         android:id="@+id/game_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextAppearance="@style/DynamicTabText"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabMaxWidth="0dp"

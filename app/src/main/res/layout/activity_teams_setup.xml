@@ -12,6 +12,7 @@
         android:id="@+id/team_setup_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextAppearance="@style/DynamicTabText"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabSelectedTextColor="@color/colorPrimary"/>
 

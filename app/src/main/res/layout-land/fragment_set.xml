@@ -69,10 +69,10 @@
                             class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/small_margin_size"
-                            android:layout_marginLeft="@dimen/small_margin_size"
-                            android:layout_marginRight="@dimen/small_margin_size"
-                            android:layout_marginStart="@dimen/small_margin_size"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginLeft="@dimen/big_margin_size"
+                            android:layout_marginRight="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
                             android:layout_weight="1"
                             android:numColumns="3"/>
 
@@ -81,10 +81,10 @@
                             class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/small_margin_size"
-                            android:layout_marginLeft="@dimen/small_margin_size"
-                            android:layout_marginRight="@dimen/small_margin_size"
-                            android:layout_marginStart="@dimen/small_margin_size"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginLeft="@dimen/big_margin_size"
+                            android:layout_marginRight="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
                             android:layout_weight="1"
                             android:numColumns="3"/>
 
