@@ -178,15 +178,22 @@ public class PdfGameWriter {
         writeRecordedIndoorTeams();
 
         for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
-            if (setIndex %2 == 1) {
-                mDocument.newPage();
-            }
+            computeNewPage(setIndex);
+
             writeRecordedIndoorSetHeader(setIndex);
             writeRecordedStartingLineup(setIndex);
             writeRecordedSubstitutions(setIndex);
             writeRecordedTimeouts(setIndex);
             writeRecordedSanctions(setIndex);
             writeRecordedLadder(setIndex);
+        }
+    }
+
+    private void computeNewPage(int setIndex) {
+        if (setIndex %2 == 1 && UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+            mDocument.newPage();
+        } else if (setIndex == 3 && UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsageType())) {
+            mDocument.newPage();
         }
     }
 
