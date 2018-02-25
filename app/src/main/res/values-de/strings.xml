@@ -1,0 +1,252 @@
+<resources>
+    <string name="app_name">Volleyball Referee</string>
+
+    <!-- Main activity -->
+    <string name="indoor_game">Starte ein Hallenvolleyballspiel</string>
+    <string name="beach_game">Starte ein Beachvolleyballspiel</string>
+    <string name="official_rules">Offizielle Regeln</string>
+    <string name="my_rules">Eigene Regeln</string>
+    <string name="indoor_description">Indoor Volleyball image</string>
+    <string name="beach_description">Beach Volleyball image</string>
+    <string name="permission_title">Berechtigungen</string>
+    <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
+    <string name="resume_game_title">Spiel fortsetzen</string>
+    <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
+    <string name="resume">Fortsetzen</string>
+    <string name="delete">Löschen</string>
+    <string name="ignore">Ignorieren</string>
+    <string name="facebook">Facebook</string>
+    <string name="start_time_based_game">Zeitbasiert</string>
+    <string name="start_score_based_game_official">Anzeigetafel (Offizielle Regeln)</string>
+    <string name="start_score_based_game_custom">Anzeigetafel (Eigene Regeln)</string>
+    <string name="match_group">Starte ein Basic-Spiel</string>
+    <string name="data_group">Daten</string>
+    <string name="configuration_group">Konfiguration</string>
+    <string name="view_live_games">Live-Spiele online ansehen</string>
+    <string name="search_online_games">Spiele online suchen</string>
+
+    <!-- Setup activities -->
+    <string name="teams_setup_title">Mannschaftseinstellungen</string>
+    <string name="home_team_tab">Heimmannschaft</string>
+    <string name="home_team_hint">Name Heimmannschaft</string>
+    <string name="guest_team_tab">Gastmannschaft</string>
+    <string name="guest_team_hint">Name Gastmannschaft</string>
+    <string name="select_players">Spieler auswählen (inklusive Liberos)</string>
+    <string name="select_shirts_color">Trikotfarbe auswählen</string>
+    <string name="select_captain">Mannschaftskapitän auswählen</string>
+    <string name="select_libero">Liberos auswählen (optional)</string>
+    <string name="select_gender">Geschlecht auswählen</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="confirm_teams_setup_question">Stimmst du diesen Einstellungen zu?</string>
+    <string name="gender_description">Geschlecht</string>
+    <string name="match_duration_text">Spieldauer auswählen</string>
+    <string name="league_name_hint">Liga-/ Wettbewerbsbezeichnung (optional)</string>
+    <string name="misc_tab">Sonstiges</string>
+    <string name="leave_teams_setup_question">Diese Spieleinstellungen gehen verloren. Trotzdem fortfahren?</string>
+
+    <!-- Game activity -->
+    <string name="toss_tails">Zahl</string>
+    <string name="toss_heads">Kopf</string>
+    <string name="toss_coin">Wirf eine Münze</string>
+    <string name="swap_first_service">Wechsel erster Aufschlag</string>
+    <string name="navigate_home">Zurück zur Startseite</string>
+    <string name="share">Teilen</string>
+    <string name="share_exception">Fehler beim Teilen des Spiels</string>
+    <string name="navigate_home_question">Du kannst das aktuelle Spiel später fortsetzen. Verlassen?</string>
+    <string name="select_player_title">Wähle einen Spieler von der Bank aus</string>
+    <string name="court_position_tab">Aufstellung</string>
+    <string name="points_tab">Punkte</string>
+    <string name="substitutions_tab">Auswechslungen</string>
+    <string name="timeouts_tab">Auszeiten</string>
+    <string name="set_number">Satz %d</string>
+    <string name="set_duration">%d min</string>
+    <string name="switch_sides">Seiten wechseln</string>
+    <string name="won_game">%s hat das Spiel gewonnen</string>
+    <string name="timeout_title">Auszeit (%s)</string>
+    <string name="timeout_question">Auszeit nehmen?</string>
+    <string name="technical_timeout_title">Technische Auszeit</string>
+    <string name="game_interval_title">Satzpause</string>
+    <string name="skip">Überspringen</string>
+    <string name="run_background">Im Hintergrund laufen</string>
+    <string name="switch_sides_description">Seiten manuell wechseln</string>
+    <string name="remove_point_description">Entferne den letzten Punkt</string>
+    <string name="call_timeout_description">Auszeit nehmen</string>
+    <string name="match_point">Matchball</string>
+    <string name="set_point">Satzball</string>
+    <string name="confirm_lineup_title">Startaufstellung</string>
+    <string name="confirm_lineup_question">Bestätigst du die Startaufstellung für beide Mannschaften in diesem Satz?</string>
+    <string name="no_substitution_message">Kein Ersatz  möglich</string>
+    <string name="confirm_set_question">Bestätigst du diesen Punkt?</string>
+    <string name="start_match_description">Starte das Spiel</string>
+    <string name="stop_match_description">Beende das Spiel</string>
+    <string name="confirm_start_match_question">Willst du dieses Spiel starten?</string>
+    <string name="confirm_stop_match_question">Willst du dieses Spiel beenden?</string>
+    <string name="stream_game">Streame das Spiel online</string>
+    <string name="stream_online_on_message">Das Spiel wird online gestreamt</string>
+    <string name="stream_online_off_message">Das Spiel wird nicht mehr online gestreamt</string>
+    <string name="all_timeouts_called">%s kann keine weitere Auszeit mehr nehmen</string>
+    <string name="all_substitutions_used">%s kann keinen Spielerwechsel mehr durchführen</string>
+    <string name="sanctions_tab">Sanktionen</string>
+    <string name="sanction">Sanktion (%s)</string>
+    <string name="yellow_card">Verwarnung</string>
+    <string name="red_card">Punkt und Aufschlag für den Gegner</string>
+    <string name="red_card_expulsion">Ausschluss für den Rest des Satzes</string>
+    <string name="red_card_disqualification">Disqualifikation für das restliche Spiel</string>
+    <string name="coach_abbreviation">T.</string>
+    <string name="set_lost_incomplete">%s hat den Satz verloren, weil das Team unvollständig ist</string>
+    <string name="match_lost_incomplete">%s hat das Spiel verloren, da das Team unvollständig ist</string>
+
+    <!-- Rules activity -->
+    <string name="rules">Eigene Regeln</string>
+    <string name="general_preferences">Allgemeines</string>
+    <string name="timeout_preferences">Auszeit</string>
+    <string name="indoor_preferences">Hallenvolleyball</string>
+    <string name="beach_preferences">Beachvolleyball</string>
+    <string name="specific_leagues_preferences">Benutzerdefinierte Regeln für bestimmte Ligen</string>
+
+    <string name="pref_points_per_set">Anzahl der Punkte pro Satz</string>
+    <string name="pref_sets_per_game">Anzahl der Sätze pro Spiel</string>
+    <string name="pref_tie_break">Tie break im letzten Satz</string>
+    <string name="pref_two_points_difference">2 Punkte Unterschied, um den Satz zu gewinnen</string>
+    <string name="pref_sanctions">Sanktionen</string>
+    <string name="pref_team_timeouts">Auszeiten</string>
+    <string name="pref_team_timeouts_per_set">Anzahl der Auszeiten pro Satz</string>
+    <string name="pref_team_timeout_duration">Dauer einer Auszeit</string>
+    <string name="pref_technical_timeouts">Technische Auszeit</string>
+    <string name="pref_technical_timeout_duration">Dauer einer technischen Auszeit</string>
+    <string name="pref_game_intervals">Satzpausen</string>
+    <string name="pref_game_intervals_duration">Dauer einer Satzpause</string>
+    <string name="pref_team_substitutions_per_set">Anzahl der Mannschaftsauswechslungen pro Satz</string>
+    <string name="pref_consecutive_serves_per_player">Limit der aufeinander folgenden Aufschläge pro Spieler</string>
+    <string name="pref_change_side_every_7_points">Seitenwechsel nach jedem 7 Punkt</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Satz mit 25 Punkten</item>
+        <item>Satz mit 24 Punkten</item>
+        <item>Satz mit 23 Punkten</item>
+        <item>Satz mit 22 Punkten</item>
+        <item>Satz mit 21 Punkten</item>
+        <item>Satz mit 20 Punkten</item>
+        <item>Satz mit 19 Punkten</item>
+        <item>Satz mit 18 Punkten</item>
+        <item>Satz mit 17 Punkten</item>
+        <item>Satz mit 16 Punkten</item>
+        <item>Satz mit 15 Punkten</item>
+    </string-array>
+    <string-array name="sets_per_game_entries">
+        <item>Spiel aus 5 Sätzen</item>
+        <item>Spiel aus 3 Sätzen</item>
+        <item>Spiel aus einem Satz</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>2 Mannschaftsauszeiten pro Satz</item>
+        <item>1 Mannschaftsauszeit pro Satz</item>
+        <item>Keine Mannschaftsauszeit pro Satz</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 Sekunden</item>
+        <item>45 Sekunden</item>
+        <item>30 Sekunden</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 Minuten</item>
+        <item>2 Minuten</item>
+        <item>1 Minute</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>12 Auswechslungen pro Satz</item>
+        <item>6 Auswechslungen pro Satz</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_entries">
+        <item>Unbegrenzt</item>
+        <item>5 Aufschläge</item>
+        <item>4 Aufschläge</item>
+        <item>3 Aufschläge</item>
+    </string-array>
+
+    <string-array name="points_per_set_values">
+        <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
+        <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
+        <item>15</item>
+    </string-array>
+    <string-array name="sets_per_game_values">
+        <item>5</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="timeout_duration_values">
+        <item>60</item>
+        <item>45</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="game_interval_duration_values">
+        <item>180</item>
+        <item>120</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_values">
+        <item>12</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_values">
+        <item>9999</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+    </string-array>
+
+    <!-- Settings activity -->
+    <string name="settings">Einstellungen</string>
+    <string name="pref_stream_online">Streame das Spiel online</string>
+    <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
+    <string name="pref_number_of_shirts">Anzahl der Trikots in den Mannschaftseinstellungen</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
+
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Gespeicherte Spiele</string>
+    <string name="search_games">Spielsuche</string>
+    <string name="delete_games">Lösche alle Spiele</string>
+    <string name="delete_game">Lösche dieses Spiel</string>
+    <string name="delete_games_question">Möchtest du alle gespeicherten Spiele löschen?</string>
+    <string name="delete_game_question">Möchtest du dieses gespeicherte Spiel löschen?</string>
+    <string name="deleted_game">Spiel wurde gelöscht</string>
+    <string name="deleted_games">Alle Spiele wurden gelöscht</string>
+    <string name="players">Spieler</string>
+    <string name="report_game">Generiere einen Spielbericht</string>
+    <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
+    <string name="upload_success_message">Das Spiel wurde erfolgreich hochgeladen</string>
+    <string name="upload_error_message">Das Spiel konnte nicht hochgeladen werden.</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Gespeicherte Mannschaften</string>
+    <string name="search_teams">Mannschaftssuche</string>
+    <string name="delete_teams">Alle Mannschaften löschn</string>
+    <string name="delete_team">Diese Mannschaft löschen</string>
+    <string name="save_team">Mannschaft speichern</string>
+    <string name="delete_teams_question">Willst du alle gespeicherten Mannschaften löschen?</string>
+    <string name="delete_team_question">Willst du diese Mannschaft löschen?</string>
+    <string name="deleted_team">Mannschaft wurde gelöscht</string>
+    <string name="saved_team">Mannschaft wurde gespeichert</string>
+    <string name="deleted_teams">Alle Mannschaften wurden gelöscht</string>
+    <string name="leave_team_creation_title">Verlasse die Mannschaftszusammenstellung</string>
+    <string name="leave_team_creation_question">Dieses Spiel wird nicht gespeichert. Trotzdem fortfahren?</string>
+
+</resources>
