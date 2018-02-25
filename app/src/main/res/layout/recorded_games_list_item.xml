@@ -56,7 +56,7 @@
             android:layout_marginEnd="@dimen/small_margin_size"
             android:layout_marginRight="@dimen/small_margin_size"
             android:tint="@color/colorPrimaryText"
-            app:srcCompat="@drawable/ic_timeout"/>
+            app:srcCompat="@drawable/ic_time_based"/>
 
         <ImageView
             android:id="@+id/recorded_game_type_image"
