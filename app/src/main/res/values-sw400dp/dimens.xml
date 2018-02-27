@@ -14,18 +14,18 @@
 
     <dimen name="set_title_margin_size">10dp</dimen>
 
-    <dimen name="score_point_size">40sp</dimen>
-    <dimen name="score_set_size">20sp</dimen>
-    <dimen name="court_position_size">18sp</dimen>
+    <dimen name="score_point_size">48sp</dimen>
+    <dimen name="score_set_size">24sp</dimen>
+    <dimen name="court_position_size">24sp</dimen>
 
     <dimen name="timeout_drawable_size">12dp</dimen>
 
     <dimen name="round_button_elevation">4dp</dimen>
-    <dimen name="round_button_size">52dp</dimen>
+    <dimen name="round_button_size">58dp</dimen>
 
     <dimen name="number_text_elevation">2dp</dimen>
 
-    <dimen name="score_button_height">90dp</dimen>
+    <dimen name="score_button_height">110dp</dimen>
 
     <dimen name="game_buttons_horizontal_spacing">48dp</dimen>
 

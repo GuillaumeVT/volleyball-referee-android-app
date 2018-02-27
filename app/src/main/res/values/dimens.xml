@@ -21,7 +21,7 @@
     <dimen name="timeout_drawable_size">12dp</dimen>
 
     <dimen name="round_button_elevation">4dp</dimen>
-    <dimen name="round_button_size">58dp</dimen>
+    <dimen name="round_button_size">52dp</dimen>
 
     <dimen name="number_text_elevation">2dp</dimen>
 
