@@ -36,6 +36,9 @@ public class IndoorTeamDefinition extends TeamDefinition {
         if (isLibero(number)) {
             removeLibero(number);
         }
+        if (isCaptain(number)) {
+            mCaptain = -1;
+        }
         super.removePlayer(number);
     }
 

@@ -281,11 +281,11 @@ public class TeamSetupFragment extends Fragment {
                     if (isChecked) {
                         Log.i("VBR-TSActivity", String.format("Checked #%d player of %s team", number, mTeamType.toString()));
                         mIndoorTeamService.addPlayer(mTeamType, number);
-                        updateCaptain();
                     } else {
                         Log.i("VBR-TSActivity", String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
                         mIndoorTeamService.removePlayer(mTeamType, number);
                     }
+                    updateCaptain();
                     mLiberoAdapter.notifyDataSetChanged();
                     computeConfirmItemVisibility();
                 }
