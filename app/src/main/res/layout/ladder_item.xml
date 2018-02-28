@@ -4,6 +4,7 @@
     android:id="@+id/ladder_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/text_round_background"
     android:elevation="@dimen/number_text_elevation"
     android:gravity="center"
     android:textAppearance="@style/TextViewTheme"

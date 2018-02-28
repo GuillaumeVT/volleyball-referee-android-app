@@ -112,7 +112,11 @@ public class UiUtils {
     }
 
     public static void colorTeamText(Context context, int color, TextView text) {
-        text.setBackgroundColor(color);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setBackgroundTintList(text, ColorStateList.valueOf(color));
+        } else {
+            text.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        }
         text.setTextColor(getTextColor(context, color));
     }
 

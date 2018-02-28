@@ -195,25 +195,27 @@
 
                         <view
                             android:id="@+id/home_team_timeouts"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedListView"
+                            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/default_margin_size"
-                            android:layout_marginLeft="@dimen/default_margin_size"
-                            android:layout_marginRight="@dimen/default_margin_size"
-                            android:layout_marginStart="@dimen/default_margin_size"
-                            android:layout_weight="1"/>
+                            android:layout_marginEnd="@dimen/small_margin_size"
+                            android:layout_marginLeft="@dimen/small_margin_size"
+                            android:layout_marginRight="@dimen/small_margin_size"
+                            android:layout_marginStart="@dimen/small_margin_size"
+                            android:layout_weight="1"
+                            android:numColumns="auto_fit"/>
 
                         <view
                             android:id="@+id/guest_team_timeouts"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedListView"
+                            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/default_margin_size"
-                            android:layout_marginLeft="@dimen/default_margin_size"
-                            android:layout_marginRight="@dimen/default_margin_size"
-                            android:layout_marginStart="@dimen/default_margin_size"
-                            android:layout_weight="1"/>
+                            android:layout_marginEnd="@dimen/small_margin_size"
+                            android:layout_marginLeft="@dimen/small_margin_size"
+                            android:layout_marginRight="@dimen/small_margin_size"
+                            android:layout_marginStart="@dimen/small_margin_size"
+                            android:layout_weight="1"
+                            android:numColumns="auto_fit"/>
 
                     </LinearLayout>
 

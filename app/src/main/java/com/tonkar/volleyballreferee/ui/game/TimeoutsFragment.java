@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
@@ -51,13 +52,13 @@ public class TimeoutsFragment extends Fragment implements NamedGameFragment, Tim
         mTeamService = ServicesProvider.getInstance().getTeamService();
         mTeamService.addTeamListener(this);
 
-        ListView leftTeamTimeoutsList = view.findViewById(R.id.left_team_timeouts_list);
-        mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnLeftSide());
-        leftTeamTimeoutsList.setAdapter(mLeftTeamTimeoutsListAdapter);
+        GridView leftTeamTimeoutsGrid = view.findViewById(R.id.left_team_timeouts_list);
+        mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnLeftSide());
+        leftTeamTimeoutsGrid.setAdapter(mLeftTeamTimeoutsListAdapter);
 
-        ListView rightTeamTimeoutsList = view.findViewById(R.id.right_team_timeouts_list);
-        mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnRightSide());
-        rightTeamTimeoutsList.setAdapter(mRightTeamTimeoutsListAdapter);
+        GridView rightTeamTimeoutsGrid = view.findViewById(R.id.right_team_timeouts_list);
+        mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnRightSide());
+        rightTeamTimeoutsGrid.setAdapter(mRightTeamTimeoutsListAdapter);
 
         return view;
     }

@@ -22,7 +22,7 @@
     <string name="match_group">Démarrer un match simplifié</string>
     <string name="data_group">Données</string>
     <string name="configuration_group">Configuration</string>
-    <string name="view_live_games">Regarder les matchs en direct en ligne</string>
+    <string name="view_live_games">Suivre les matchs en direct</string>
     <string name="search_online_games">Chercher des matchs en ligne</string>
 
     <!-- Setup activities -->

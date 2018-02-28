@@ -65,12 +65,12 @@ public class SetFragment extends Fragment {
         SubstitutionsListAdapter guestTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.GUEST, setIndex);
         guestTeamSubstitutions.setAdapter(guestTeamSubstitutionsAdapter);
 
-        ListView homeTeamTimeouts = view.findViewById(R.id.home_team_timeouts);
-        TimeoutsListAdapter homeTeamTimeoutsAdapter = new TimeoutsListAdapter(inflater, gameService, gameService, TeamType.HOME, setIndex);
+        GridView homeTeamTimeouts = view.findViewById(R.id.home_team_timeouts);
+        TimeoutsListAdapter homeTeamTimeoutsAdapter = new TimeoutsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.HOME, setIndex);
         homeTeamTimeouts.setAdapter(homeTeamTimeoutsAdapter);
 
-        ListView guestTeamTimeouts = view.findViewById(R.id.guest_team_timeouts);
-        TimeoutsListAdapter guestTeamTimeoutsAdapter = new TimeoutsListAdapter(inflater, gameService, gameService, TeamType.GUEST, setIndex);
+        GridView guestTeamTimeouts = view.findViewById(R.id.guest_team_timeouts);
+        TimeoutsListAdapter guestTeamTimeoutsAdapter = new TimeoutsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.GUEST, setIndex);
         guestTeamTimeouts.setAdapter(guestTeamTimeoutsAdapter);
 
         ListView homeTeamSanctions = view.findViewById(R.id.home_team_sanctions);

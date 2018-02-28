@@ -97,9 +97,6 @@ public class WebActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_search_online_games:
                 return true;
-            case R.id.action_view_live_games:
-                mWebView.loadUrl(WebUtils.LIVE_URL);
-                return true;
             case R.id.action_share:
                 UiUtils.shareUrl(this, mWebView.getTitle() + "\n" + mWebView.getUrl());
                 return true;

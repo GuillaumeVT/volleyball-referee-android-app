@@ -300,7 +300,7 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private int getTextMargin(Context context) {
-        return (int) context.getResources().getDimension(R.dimen.tiny_margin_size);
+        return (int) context.getResources().getDimension(R.dimen.tiny_margin_size) / 2;
     }
 
     private int getIcon(TeamType teamType, LadderItem ladderItem) {

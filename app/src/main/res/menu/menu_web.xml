@@ -11,17 +11,10 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"/>
     <item
-        android:id="@+id/action_view_live_games"
-        android:icon="@drawable/ic_search_live_games_menu"
-        android:iconTint="@android:color/white"
-        android:orderInCategory="2"
-        android:title="@string/view_live_games"
-        app:showAsAction="always"/>
-    <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share_menu"
         android:iconTint="@android:color/white"
-        android:orderInCategory="3"
+        android:orderInCategory="2"
         android:title="@string/share"
         app:showAsAction="always"/>
 </menu>
