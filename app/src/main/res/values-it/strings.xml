@@ -2,10 +2,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_game">Inizia la partita di pallavolo</string>
-    <string name="beach_game">Inizia la partita di beach volley</string>
-    <string name="official_rules">Regole ufficiali</string>
-    <string name="my_rules">Regole personalizzate</string>
+    <string name="indoor_card_title">Pallavolo</string>
+    <string name="beach_card_title">Beach volley</string>
+    <string name="new_match">NUOVA PARTITA\nRegole FIVB</string>
+    <string name="new_match_my_rule">NUOVA PARTITA\nRegole personalizzate</string>
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">Autorizzazioni</string>
@@ -17,8 +17,8 @@
     <string name="ignore">Ignora</string>
     <string name="facebook">Facebook</string>
     <string name="start_time_based_game">A tempo</string>
-    <string name="start_score_based_game_official">A punti (regole ufficiali)</string>
-    <string name="start_score_based_game_custom">A punti (regole personalizzate)</string>
+    <string name="start_score_based_game_official">A punti - Regole FIVB</string>
+    <string name="start_score_based_game_custom">A punti - Regole personalizzate</string>
     <string name="match_group">Iniziare una partita in modalità semplice</string>
     <string name="data_group">Dati</string>
     <string name="configuration_group">Configurazione</string>

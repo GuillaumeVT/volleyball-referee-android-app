@@ -2,10 +2,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_game">Rozpocznij gre - siatkówka halowa</string>
-    <string name="beach_game">Rozpocznij gre - siatkówka plazowa</string>
-    <string name="official_rules">Oficjalne zasady</string>
-    <string name="my_rules">Moje zasady</string>
+    <string name="indoor_card_title">Siatkówka halowa</string>
+    <string name="beach_card_title">Siatkówka plazowa</string>
+    <string name="new_match">NOWA GRA\nZasady FIVB</string>
+    <string name="new_match_my_rule">NOWA GRA\nMoje zasady</string>
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">O uprawnieniach</string>
@@ -17,8 +17,8 @@
     <string name="ignore">Ignoruj</string>
     <string name="facebook">Facebook</string>
     <string name="start_time_based_game">Rozpocznij grę na czas</string>
-    <string name="start_score_based_game_official">Tablica wyników (oficjalne zasady)</string>
-    <string name="start_score_based_game_custom">Tablica wyników (moje zasady)</string>
+    <string name="start_score_based_game_official">Tablica wyników - Zasady FIVB</string>
+    <string name="start_score_based_game_custom">Tablica wyników - Moje zasady</string>
     <string name="match_group">Rozpocznij grę podstawową</string>
     <string name="data_group">Dane</string>
     <string name="configuration_group">Konfiguracja</string>

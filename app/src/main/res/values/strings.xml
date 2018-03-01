@@ -2,10 +2,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_game">Start an indoor volleyball match</string>
-    <string name="beach_game">Start a beach volleyball match</string>
-    <string name="official_rules">Official rules</string>
-    <string name="my_rules">My own rules</string>
+    <string name="indoor_card_title">Indoor volleyball</string>
+    <string name="beach_card_title">Beach volleyball</string>
+    <string name="new_match">NEW MATCH\nFIVB rules</string>
+    <string name="new_match_my_rule">NEW MATCH\nMy own rules</string>
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">About permissions</string>
@@ -17,8 +17,8 @@
     <string name="ignore">Ignore</string>
     <string name="facebook">Facebook</string>
     <string name="start_time_based_game">Time-based</string>
-    <string name="start_score_based_game_official">Scoreboard (official rules)</string>
-    <string name="start_score_based_game_custom">Scoreboard (my own rules)</string>
+    <string name="start_score_based_game_official">Scoreboard - FIVB rules</string>
+    <string name="start_score_based_game_custom">Scoreboard - My own rules</string>
     <string name="match_group">Start a basic match</string>
     <string name="data_group">Data</string>
     <string name="configuration_group">Configuration</string>

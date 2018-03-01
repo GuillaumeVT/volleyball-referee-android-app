@@ -2,10 +2,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_game">Começar uma partida de Voleibol de Quadra</string>
-    <string name="beach_game">Começar uma partida de Vôlei de Praia</string>
-    <string name="official_rules">Regras oficiais</string>
-    <string name="my_rules">Regras personalizadas</string>
+    <string name="indoor_card_title">Voleibol de quadra</string>
+    <string name="beach_card_title">Vôlei de praia</string>
+    <string name="new_match">NOVO JOGO\nRegras da FIVB</string>
+    <string name="new_match_my_rule">NOVO JOGO\nRegras personalizadas</string>
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">Permissões</string>
@@ -17,8 +17,8 @@
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
     <string name="start_time_based_game">Partida por tempo</string>
-    <string name="start_score_based_game_official">Placar (regras oficiais)</string>
-    <string name="start_score_based_game_custom">Placar (regras personalizadas)</string>
+    <string name="start_score_based_game_official">Placar - Regras da FIVB</string>
+    <string name="start_score_based_game_custom">Placar - Regras personalizadas</string>
     <string name="match_group">Iniciar uma partida básica</string>
     <string name="data_group">Dados</string>
     <string name="configuration_group">Configurações</string>
@@ -101,7 +101,7 @@
     <string name="general_preferences">Preferências</string>
     <string name="timeout_preferences">Tempo</string>
     <string name="indoor_preferences">Voleibol de quadra</string>
-    <string name="beach_preferences">Vôlei de Praia</string>
+    <string name="beach_preferences">Vôlei de praia</string>
     <string name="specific_leagues_preferences">Regras específicas para ligas específicas</string>
 
     <string name="pref_points_per_set">Número de pontos por set</string>

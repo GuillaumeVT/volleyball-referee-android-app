@@ -35,4 +35,6 @@
     <dimen name="sanction_half_size">16dp</dimen>
     <dimen name="sanction_max_width">64dp</dimen>
 
+    <dimen name="main_image_height">150dp</dimen>
+
 </resources>

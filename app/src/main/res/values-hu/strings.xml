@@ -3,10 +3,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_game">Teremröplabda mérkőzés kezdése</string>
-    <string name="beach_game">Strandröplabda mérkőzés kezdése</string>
-    <string name="official_rules">Hivatalos szabályok</string>
-    <string name="my_rules">Egyedi szabályok</string>
+    <string name="indoor_card_title">Teremröplabda</string>
+    <string name="beach_card_title">Strandröplabda</string>
+    <string name="new_match">ÚJ MÉRKŐZÉS\nFIVB szabályok</string>
+    <string name="new_match_my_rule">ÚJ MÉRKŐZÉS\nEgyedi szabályok</string>
     <string name="indoor_description">Teremröplabda kép</string>
     <string name="beach_description">Strandröplabda kép</string>
     <string name="permission_title">App jogosultságok</string>
@@ -18,8 +18,8 @@
     <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
     <string name="start_time_based_game">Időalapú</string>
-    <string name="start_score_based_game_official">Eredménytábla (hivatalos szabályok)</string>
-    <string name="start_score_based_game_custom">Eredménytábla (saját szabályok)</string>
+    <string name="start_score_based_game_official">Eredménytábla - FIVB szabályok</string>
+    <string name="start_score_based_game_custom">Eredménytábla - Egyedi szabályok</string>
     <string name="match_group">Mérkőzés indítása</string>
     <string name="data_group">Adatok</string>
     <string name="configuration_group">Beállítások</string>
