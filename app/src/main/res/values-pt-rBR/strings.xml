@@ -2,57 +2,57 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_card_title">Voleibol</string>
-    <string name="beach_card_title">Voleibol de praia</string>
-    <string name="new_match">NOVO JOGO\nRegras da FIVB</string>
-    <string name="new_match_my_rule">NOVO JOGO\nRegras personalizadas</string>
+    <string name="indoor_card_title">Voleibol de quadra</string>
+    <string name="beach_card_title">Vôlei de praia</string>
+    <string name="new_match">NOVA PARTIDA\nRegras da FIVB</string>
+    <string name="new_match_my_rule">NOVA PARTIDA\nRegras personalizadas</string>
     <string name="indoor_description">Indoor Volleyball image</string>
     <string name="beach_description">Beach Volleyball image</string>
     <string name="permission_title">Permissões</string>
-    <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para partilhar resultados dos jogos.</string>
-    <string name="resume_game_title">Continuar jogo</string>
-    <string name="resume_game_question">Essa aplicação encontrou um jogo a decorrer. Gostaria de continuar ou apagar esse jogo?</string>
+    <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
+    <string name="resume_game_title">Continuar partida</string>
+    <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume">Continuar</string>
-    <string name="delete">Apagar</string>
+    <string name="delete">Deletar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
     <string name="start_time_based_game">Partida por tempo</string>
     <string name="start_score_based_game_official">Placar - Regras da FIVB</string>
     <string name="start_score_based_game_custom">Placar - Regras personalizadas</string>
-    <string name="match_group">Iniciar um jogo básico</string>
+    <string name="match_group">Iniciar uma partida básica</string>
     <string name="data_group">Dados</string>
     <string name="configuration_group">Configurações</string>
-    <string name="view_live_games">Acompanhe jogos ao vivo</string>
-    <string name="search_online_games">Procurar jogos ao vivo</string>
+    <string name="view_live_games">Acompanhe partidas ao vivo</string>
+    <string name="search_online_games">Procurar partidas ao vivo</string>
 
     <!-- Setup activities -->
-    <string name="teams_setup_title">Selecionar Equipas</string>
-    <string name="home_team_tab">Equipa da casa</string>
-    <string name="home_team_hint">Nome da Equipa da casa</string>
-    <string name="guest_team_tab">Equipa visitante</string>
-    <string name="guest_team_hint">Nome da Equipa visitante</string>
+    <string name="teams_setup_title">Selecionar Equipes</string>
+    <string name="home_team_tab">Equipe da casa</string>
+    <string name="home_team_hint">Nome da Equipe da casa</string>
+    <string name="guest_team_tab">Equipe visitante</string>
+    <string name="guest_team_hint">Nome da Equipe visitante</string>
     <string name="select_players">Selecionar jogadores (incluíndo líberos)</string>
-    <string name="select_shirts_color">Selecionar cor das camisolas</string>
+    <string name="select_shirts_color">Selecionar cor das camisas</string>
     <string name="select_captain">Selecionar Capitão</string>
     <string name="select_libero">Selecionar líberos (opcional)</string>
-    <string name="select_gender">Selecionar género</string>
+    <string name="select_gender">Selecionar o naipe</string>
     <string name="confirm">Confirmar</string>
-    <string name="confirm_teams_setup_question">Confirma essa seleção?</string>
-    <string name="gender_description">Género</string>
-    <string name="match_duration_text">Escolha a duração do jogo</string>
+    <string name="confirm_teams_setup_question">Você confirma essa seleção?</string>
+    <string name="gender_description">Gênero</string>
+    <string name="match_duration_text">Escolha a duração da partida</string>
     <string name="league_name_hint">Nome da Competição (opcional)</string>
     <string name="misc_tab">Diversos</string>
-    <string name="leave_teams_setup_question">A configuração deste jogo será perdida, continuar assim mesmo?</string>
+    <string name="leave_teams_setup_question">A configuração desta partida será perdida, continuar assim mesmo?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Coroa</string>
     <string name="toss_heads">Cara</string>
-    <string name="toss_coin">Atire a moeda</string>
-    <string name="swap_first_service">Alterar primeiro serviço</string>
-    <string name="navigate_home">Voltar ao Início</string>
-    <string name="share">Partilhar</string>
-    <string name="share_exception">Falha ao partilhar jogo</string>
-    <string name="navigate_home_question">Deseja continuar o jogo atual, posteriormente?</string>
+    <string name="toss_coin">Jogue a moeda</string>
+    <string name="swap_first_service">Alterar primeiro saque</string>
+    <string name="navigate_home">Retornar ao Início</string>
+    <string name="share">Compartilhar</string>
+    <string name="share_exception">Falha ao compartilhar partida</string>
+    <string name="navigate_home_question">Deseja continuar a partida atual depois?</string>
     <string name="select_player_title">Escolha um jogador do banco</string>
     <string name="court_position_tab">Posições</string>
     <string name="ladder_tab">Pontos</string>
@@ -61,55 +61,55 @@
     <string name="set_number">%d° Set</string>
     <string name="set_duration">%d minutos</string>
     <string name="switch_sides">Troca de lados</string>
-    <string name="won_game">%s venceu o jogo</string>
+    <string name="won_game">%s venceu a partida</string>
     <string name="timeout_title">Tempo (%s)</string>
     <string name="timeout_question">Pedir tempo?</string>
     <string name="technical_timeout_title">Tempo Técnico</string>
     <string name="game_interval_title">Intervalo</string>
-    <string name="skip">Saltar</string>
+    <string name="skip">Pular</string>
     <string name="run_background">Exibir em segundo plano</string>
     <string name="switch_sides_description">Troca de lados manual</string>
-    <string name="remove_point_description">Apagar o último ponto</string>
+    <string name="remove_point_description">Deletar o último ponto</string>
     <string name="call_timeout_description">Pedir tempo</string>
     <string name="match_point">Match point</string>
     <string name="set_point">Set point</string>
-    <string name="confirm_lineup_title">Formação inicial</string>
-    <string name="confirm_lineup_question">Confirma essa formação para ambas as equipas, neste set?</string>
+    <string name="confirm_lineup_title">Escalação inicial</string>
+    <string name="confirm_lineup_question">Você confirma essa escalação para ambos as equipes neste set?</string>
     <string name="no_substitution_message">Não há substituição disponível</string>
-    <string name="confirm_set_question">Confirma esse ponto?</string>
-    <string name="start_match_description">Iniciar jogo</string>
-    <string name="stop_match_description">Terminar jogo</string>
-    <string name="confirm_start_match_question">Deseja iniciar esse jogo?</string>
-    <string name="confirm_stop_match_question">Deseja terminar essa jogo?</string>
-    <string name="stream_game">Transmitir o jogo ao vivo</string>
-    <string name="stream_online_on_message">O jogo está a ser transmitido ao vivo</string>
-    <string name="stream_online_off_message">A transmissão deste jogo ao vivo terminou</string>
+    <string name="confirm_set_question">Você confirma esse ponto?</string>
+    <string name="start_match_description">Iniciar partida</string>
+    <string name="stop_match_description">Encerrar partida</string>
+    <string name="confirm_start_match_question">Deseja iniciar essa partida?</string>
+    <string name="confirm_stop_match_question">Deseja encerrar essa partida?</string>
+    <string name="stream_game">Transmitir a partida ao vivo</string>
+    <string name="stream_online_on_message">A partida está sendo transmitida ao vivo</string>
+    <string name="stream_online_off_message">A trnasmissão desta partida ao vivo terminou</string>
     <string name="all_timeouts_called">%s não possui mais tempos no set</string>
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
-    <string name="sanctions_tab">Sanções</string>
-    <string name="sanction">Sanção (%s)</string>
+    <string name="sanctions_tab">Punições</string>
+    <string name="sanction">Punição (%s)</string>
     <string name="yellow_card">Advertência</string>
     <string name="red_card">Perda do ponto</string>
     <string name="red_card_expulsion">Expulsão do set</string>
-    <string name="red_card_disqualification">Desqualificação do jogo</string>
+    <string name="red_card_disqualification">Desqualificação da partida</string>
     <string name="coach_abbreviation">T.</string>
-    <string name="set_lost_incomplete">%s perdeu o set por não ter número mínimo de atletas</string>
-    <string name="match_lost_incomplete">%s perdeu o jogo por não ter número mínimo de atletas</string>
+    <string name="set_lost_incomplete">%s perdeu o set por não ter cota mínima de atletas</string>
+    <string name="match_lost_incomplete">%s perdeu a partida por não ter cota mínima de atletas</string>
 
     <!-- Rules activity -->
     <string name="rules">Regras personalizadas</string>
     <string name="general_preferences">Preferências</string>
     <string name="timeout_preferences">Tempo</string>
-    <string name="indoor_preferences">Voleibol</string>
-    <string name="beach_preferences">Voleibol de praia</string>
+    <string name="indoor_preferences">Voleibol de quadra</string>
+    <string name="beach_preferences">Vôlei de praia</string>
     <string name="specific_leagues_preferences">Regras específicas para ligas específicas</string>
 
     <string name="pref_points_per_set">Número de pontos por set</string>
     <string name="pref_sets_per_game">Número de sets por partida</string>
     <string name="pref_tie_break">Tie break no último set</string>
     <string name="pref_two_points_difference">São necessários 2 pontos de diferença para vencer o set</string>
-    <string name="pref_sanctions">Sanções</string>
-    <string name="pref_team_timeouts">Tempos por equipa</string>
+    <string name="pref_sanctions">Punições</string>
+    <string name="pref_team_timeouts">Tempos por equipe</string>
     <string name="pref_team_timeouts_per_set">Número de tempos por set</string>
     <string name="pref_team_timeout_duration">Duração do tempo solicitado</string>
     <string name="pref_technical_timeouts">Tempos técnicos</string>
@@ -117,7 +117,7 @@
     <string name="pref_game_intervals">Intervalo</string>
     <string name="pref_game_intervals_duration">Duração do intervalo</string>
     <string name="pref_team_substitutions_per_set">Número de substituições por set</string>
-    <string name="pref_consecutive_serves_per_player">Limite de serviços consecutivos por jogador</string>
+    <string name="pref_consecutive_serves_per_player">Limite de saques consecutivos por jogador</string>
     <string name="pref_change_side_every_7_points">Troca de lado a cada 7 pontos</string>
 
     <string-array name="points_per_set_entries">
@@ -134,9 +134,9 @@
         <item>Set de 15 pontos</item>
     </string-array>
     <string-array name="sets_per_game_entries">
-        <item>Jogo de 5 sets</item>
-        <item>Jogo de 3 sets</item>
-        <item>Jogo de 1 set</item>
+        <item>Partida de 5 sets</item>
+        <item>Partida de 3 sets</item>
+        <item>Partida de 1 set</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>2 tempos por set</item>
@@ -154,14 +154,14 @@
         <item>1 minuto</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>12 substituições por set</item>
-        <item>6 substituições por set</item>
+        <item>12 substiuições por set</item>
+        <item>6 substiuições por set</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
         <item>Ilimitado</item>
-        <item>5 serviços</item>
-        <item>4 serviços</item>
-        <item>3 serviços</item>
+        <item>5 saques</item>
+        <item>4 saques</item>
+        <item>3 saques</item>
     </string-array>
 
     <string-array name="points_per_set_values">
@@ -210,9 +210,9 @@
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
-    <string name="pref_stream_online">Transmitir os jogos ao vivo</string>
-    <string name="pref_keep_screen_on">Manter écran ligado durante os jogos</string>
-    <string name="pref_number_of_shirts">Selecione a numeração da camisola mais alta da sua equipa</string>
+    <string name="pref_stream_online">Transmitir as partidas ao vivo</string>
+    <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
+    <string name="pref_number_of_shirts">Selecione a numeração da camisa mais alta de sua equipe</string>
 
     <string-array name="number_of_shirts">
         <item>25</item>
@@ -221,32 +221,32 @@
     </string-array>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Jogos recentes</string>
-    <string name="search_games">Procurar jogos</string>
-    <string name="delete_games">Apagar todos os jogos</string>
-    <string name="delete_game">Apagar jogo</string>
-    <string name="delete_games_question">Deseja apagar todos as jogos guardados?</string>
-    <string name="delete_game_question">Deseja apagar esse jogo guardado?</string>
-    <string name="deleted_game">Jogo apagado</string>
-    <string name="deleted_games">Todos os jogos foram apagados</string>
+    <string name="recorded_games">Partidas recentes</string>
+    <string name="search_games">Procurar partidas</string>
+    <string name="delete_games">Deletar todas as partidas</string>
+    <string name="delete_game">Deletar partida</string>
+    <string name="delete_games_question">Deseja deletar todas as partidas salvas?</string>
+    <string name="delete_game_question">Deseja deletar essa partida salva?</string>
+    <string name="deleted_game">Partida deletada</string>
+    <string name="deleted_games">Todas as partidas foram deletadas</string>
     <string name="players">Jogadores</string>
-    <string name="report_game">Gerar relatório do jogo</string>
-    <string name="report_exception">Falha ao gerar ou exibir o relatório de jogo</string>
-    <string name="upload_success_message">O upload deste jogo foi concluído com sucesso</string>
-    <string name="upload_error_message">Não foi possível concluir o upload deste jogo</string>
+    <string name="report_game">Gerar relatório da partida</string>
+    <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
+    <string name="upload_success_message">O upload desta partida foi concluído com sucesso</string>
+    <string name="upload_error_message">Não foi possível concluir o upload desta partida</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Equipas guardadas</string>
-    <string name="search_teams">Procurar equipas</string>
-    <string name="delete_teams">Apagar todas as equipas</string>
-    <string name="delete_team">Apagar equipa</string>
-    <string name="save_team">Guardar equipa</string>
-    <string name="delete_teams_question">Gostaria de apagar todas as equipas guardadas?</string>
-    <string name="delete_team_question">Gostaria de apagar esta equipa guardada?</string>
-    <string name="deleted_team">Equipa apagada</string>
-    <string name="saved_team">Equipa guardada</string>
-    <string name="deleted_teams">Todas as equipas foram guardadas</string>
-    <string name="leave_team_creation_title">Sair da criação de equipas</string>
-    <string name="leave_team_creation_question">Esta equipa não foi guardada, continuar assim mesmo?</string>
+    <string name="saved_teams">Equipes salvas</string>
+    <string name="search_teams">Procurar equipes</string>
+    <string name="delete_teams">Deletar todas as equipes</string>
+    <string name="delete_team">Deletar equipe</string>
+    <string name="save_team">Salvar equipe</string>
+    <string name="delete_teams_question">Gostaria de deletar todas as equipes salvas?</string>
+    <string name="delete_team_question">Gostaria de deletar esta equipe salva?</string>
+    <string name="deleted_team">Equipe deletada</string>
+    <string name="saved_team">Equipe salva</string>
+    <string name="deleted_teams">Todas as equipes foram deletadas</string>
+    <string name="leave_team_creation_title">Sair da criação de equipes</string>
+    <string name="leave_team_creation_question">Esta equipe não foi salva, continuar assim mesmo?</string>
 
 </resources>
