@@ -55,7 +55,7 @@
     <string name="navigate_home_question">Закончить данный матч позже. Покинуть страницу?</string>
     <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
     <string name="court_position_tab">Расстановка</string>
-    <string name="points_tab">Очки</string>
+    <string name="ladder_tab">Очки</string>
     <string name="substitutions_tab">Замены</string>
     <string name="timeouts_tab">Перерывы</string>
     <string name="set_number">Партия %d</string>

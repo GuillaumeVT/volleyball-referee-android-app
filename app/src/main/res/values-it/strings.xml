@@ -55,7 +55,7 @@
     <string name="navigate_home_question">Potrai riprendere l\'attuale partita più tardi. Uscrire?</string>
     <string name="select_player_title">Scegli un giocatore dalla panchina</string>
     <string name="court_position_tab">Posizioni</string>
-    <string name="points_tab">Punti</string>
+    <string name="ladder_tab">Punti</string>
     <string name="substitutions_tab">Cambi</string>
     <string name="timeouts_tab">Tempo di riposo</string>
     <string name="set_number">Set %d</string>

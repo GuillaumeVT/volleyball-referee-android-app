@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -73,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState == null) {
                 alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.permission_title), getResources().getString(R.string.permission_message),
                         getResources().getString(android.R.string.ok));
-                alertDialogFragment.show(getFragmentManager(), "permission");
+                alertDialogFragment.show(getSupportFragmentManager(), "permission");
             }
             else {
-                alertDialogFragment = (AlertDialogFragment) getFragmentManager().findFragmentByTag("permission");
+                alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("permission");
             }
 
             if (alertDialogFragment != null) {
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_rules:
                         Log.i("VBR-MainActivity", "Rules");
@@ -289,10 +290,10 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState == null) {
                 alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_question),
                         getResources().getString(R.string.delete), getResources().getString(R.string.resume), getResources().getString(R.string.ignore));
-                alertDialogFragment.show(getFragmentManager(), "current_game");
+                alertDialogFragment.show(getSupportFragmentManager(), "current_game");
             }
             else {
-                alertDialogFragment = (AlertDialogFragment) getFragmentManager().findFragmentByTag("current_game");
+                alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("current_game");
             }
 
             if (alertDialogFragment != null) {

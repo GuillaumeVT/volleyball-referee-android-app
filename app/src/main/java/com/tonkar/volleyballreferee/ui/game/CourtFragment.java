@@ -1,12 +1,10 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
@@ -19,7 +17,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CourtFragment extends Fragment implements NamedGameFragment, TeamListener, SanctionListener {
+public abstract class CourtFragment extends Fragment implements TeamListener, SanctionListener {
 
     protected       View                      mView;
     protected       TeamService               mTeamService;
@@ -41,11 +39,6 @@ public abstract class CourtFragment extends Fragment implements NamedGameFragmen
         mSanctionService.removeSanctionListener(this);
         mLeftTeamPositions.clear();
         mRightTeamPositions.clear();
-    }
-
-    @Override
-    public String getGameFragmentTitle(Context context) {
-        return context.getResources().getString(R.string.court_position_tab);
     }
 
     protected void initView() {

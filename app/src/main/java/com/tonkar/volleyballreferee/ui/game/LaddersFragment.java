@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,7 +20,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
-public class LaddersFragment extends Fragment implements NamedGameFragment, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
+public class LaddersFragment extends Fragment implements ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private LadderListAdapter mLadderListAdapter;
     private GameService       mGameService;
@@ -34,11 +33,6 @@ public class LaddersFragment extends Fragment implements NamedGameFragment, Scor
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public String getGameFragmentTitle(Context context) {
-        return context.getResources().getString(R.string.points_tab);
     }
 
     @Override

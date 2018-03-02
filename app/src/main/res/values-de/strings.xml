@@ -55,7 +55,7 @@
     <string name="navigate_home_question">Du kannst das aktuelle Spiel später fortsetzen. Verlassen?</string>
     <string name="select_player_title">Wähle einen Spieler von der Bank aus</string>
     <string name="court_position_tab">Aufstellung</string>
-    <string name="points_tab">Punkte</string>
+    <string name="ladder_tab">Punkte</string>
     <string name="substitutions_tab">Auswechslungen</string>
     <string name="timeouts_tab">Auszeiten</string>
     <string name="set_number">Satz %d</string>

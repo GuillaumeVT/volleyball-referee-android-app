@@ -6,22 +6,20 @@
               android:orientation="horizontal"
               android:weightSum="2">
 
-    <GridView
+    <ListView
         android:id="@+id/left_team_timeouts_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/small_margin_size"
         android:layout_marginRight="@dimen/small_margin_size"
-        android:layout_weight="1"
-        android:numColumns="auto_fit"/>
+        android:layout_weight="1"/>
 
-    <GridView
+    <ListView
         android:id="@+id/right_team_timeouts_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/small_margin_size"
         android:layout_marginStart="@dimen/small_margin_size"
-        android:layout_weight="1"
-        android:numColumns="auto_fit"/>
+        android:layout_weight="1"/>
 
 </LinearLayout>

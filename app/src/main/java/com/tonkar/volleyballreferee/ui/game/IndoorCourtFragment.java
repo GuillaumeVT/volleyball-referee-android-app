@@ -126,7 +126,7 @@ public class IndoorCourtFragment extends CourtFragment {
         }
 
         if (savedInstanceState != null) {
-            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getFragmentManager().findFragmentByTag("confirm_lineup");
+            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment != null) {
                 alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
                     @Override
@@ -221,7 +221,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 @Override
                 public void onNeutralButtonClicked() {}
             });
-            alertDialogFragment.show(getActivity().getFragmentManager(), "confirm_lineup");
+            alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
         }
     }
 

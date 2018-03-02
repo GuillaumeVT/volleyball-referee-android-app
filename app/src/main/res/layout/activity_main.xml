@@ -69,7 +69,7 @@
                         android:text="@string/new_match"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/small_text_size"/>
+                        android:textSize="@dimen/default_text_size"/>
 
                     <Button
                         android:id="@+id/start_custom_indoor_game_button"
@@ -84,7 +84,7 @@
                         android:text="@string/new_match_my_rule"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/small_text_size"/>
+                        android:textSize="@dimen/default_text_size"/>
 
                 </LinearLayout>
 
@@ -147,7 +147,7 @@
                         android:text="@string/new_match"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/small_text_size"/>
+                        android:textSize="@dimen/default_text_size"/>
 
                     <Button
                         android:id="@+id/start_custom_beach_game_button"
@@ -162,7 +162,7 @@
                         android:text="@string/new_match_my_rule"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/small_text_size"/>
+                        android:textSize="@dimen/default_text_size"/>
                 </LinearLayout>
 
             </LinearLayout>

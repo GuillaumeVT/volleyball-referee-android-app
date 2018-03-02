@@ -55,7 +55,7 @@
     <string name="navigate_home_question">Możesz wznowić bieżący mecz później, kontynuowac?</string>
     <string name="select_player_title">Wybierz zawodnika z ławki</string>
     <string name="court_position_tab">Pozycje</string>
-    <string name="points_tab">Punkty</string>
+    <string name="ladder_tab">Punkty</string>
     <string name="substitutions_tab">Zmiany</string>
     <string name="timeouts_tab">Czas</string>
     <string name="set_number">Set %d</string>

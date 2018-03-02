@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,7 +16,7 @@ import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
-public class SubstitutionsFragment extends Fragment implements NamedGameFragment, TeamListener {
+public class SubstitutionsFragment extends Fragment implements TeamListener {
 
     private IndoorTeamService        mIndoorTeamService;
     private SubstitutionsListAdapter mLeftTeamSubstitutionsListAdapter;
@@ -30,11 +29,6 @@ public class SubstitutionsFragment extends Fragment implements NamedGameFragment
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public String getGameFragmentTitle(Context context) {
-        return context.getResources().getString(R.string.substitutions_tab);
     }
 
     @Override

@@ -1,16 +1,17 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -20,8 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +33,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -176,16 +176,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             mRightTeamCardsButton.setVisibility(View.INVISIBLE);
         }
 
-        final ViewPager gamePager = findViewById(R.id.game_pager);
-        final GameFragmentPagerAdapter gamePagerAdapter = new GameFragmentPagerAdapter(this, getSupportFragmentManager());
-        gamePager.setAdapter(gamePagerAdapter);
-
-        final TabLayout gameTabs = findViewById(R.id.game_tabs);
-        gameTabs.setupWithViewPager(gamePager);
-
-        if (gamePagerAdapter.getCount() == 1) {
-            gameTabs.setVisibility(View.GONE);
-        }
+        final BottomNavigationView gameNavigation = findViewById(R.id.game_nav);
+        initGameNavigation(gameNavigation, savedInstanceState);
 
         mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
         mTeamOnRightSide = mGameService.getTeamOnRightSide();
@@ -194,9 +186,6 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         if (mGameService.isMatchCompleted()) {
             disableView();
         }
-
-        Animation courtAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_from_right);
-        gamePager.startAnimation(courtAnimation);
     }
 
     @Override
@@ -597,7 +586,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         deleteToolbarCountdown();
         deleteFragmentCountdown();
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
-        timeoutFragment.show(getFragmentManager(), "timeout");
+        timeoutFragment.show(getSupportFragmentManager(), "timeout");
 
         if (mGameService.getRemainingTimeouts(teamType) == 0) {
             Toast.makeText(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
@@ -610,7 +599,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             deleteToolbarCountdown();
             deleteFragmentCountdown();
             CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.technical_timeout_title));
-            timeoutFragment.show(getFragmentManager(), "timeout");
+            timeoutFragment.show(getSupportFragmentManager(), "timeout");
         }
     }
 
@@ -620,7 +609,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             deleteToolbarCountdown();
             deleteFragmentCountdown();
             CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
-            timeoutFragment.show(getFragmentManager(), "timeout");
+            timeoutFragment.show(getSupportFragmentManager(), "timeout");
         }
     }
 
@@ -661,9 +650,9 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     }
 
     private void deleteFragmentCountdown() {
-        Fragment timeoutFragment = getFragmentManager().findFragmentByTag("timeout");
+        Fragment timeoutFragment = getSupportFragmentManager().findFragmentByTag("timeout");
         if (timeoutFragment != null) {
-            getFragmentManager().beginTransaction().remove(timeoutFragment).commit();
+            getSupportFragmentManager().beginTransaction().remove(timeoutFragment).commit();
         }
     }
 
@@ -700,6 +689,70 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             case DELAY_PENALTY:
                 Toast.makeText(this, getResources().getString(R.string.red_card), Toast.LENGTH_LONG).show();
                 break;
+        }
+    }
+
+    private void initGameNavigation(final BottomNavigationView gameNavigation, Bundle savedInstanceState) {
+        gameNavigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        final Fragment fragment;
+
+                        switch (item.getItemId()) {
+                            case R.id.court_position_tab:
+                                if (GameType.INDOOR.equals(mGameService.getGameType())) {
+                                    fragment = IndoorCourtFragment.newInstance();
+                                } else {
+                                    fragment = BeachCourtFragment.newInstance();
+                                }
+                                break;
+                            case R.id.substitutions_tab:
+                                fragment = SubstitutionsFragment.newInstance();
+                                break;
+                            case R.id.timeouts_tab:
+                                fragment = TimeoutsFragment.newInstance();
+                                break;
+                            case R.id.sanctions_tab:
+                                fragment = SanctionsFragment.newInstance();
+                                break;
+                            case R.id.ladder_tab:
+                            default:
+                                fragment = LaddersFragment.newInstance();
+                                break;
+                        }
+
+                        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.game_container, fragment).commit();
+
+                        return true;
+                    }
+                }
+        );
+
+        if (!ServicesProvider.getInstance().getGameService().getRules().areTeamTimeoutsEnabled()) {
+            gameNavigation.getMenu().removeItem(R.id.timeouts_tab);
+        }
+
+        if (!ServicesProvider.getInstance().getGameService().getRules().areSanctionsEnabled()) {
+            gameNavigation.getMenu().removeItem(R.id.sanctions_tab);
+        }
+
+        if (GameType.BEACH.equals(mGameService.getGameType())) {
+            gameNavigation.getMenu().removeItem(R.id.substitutions_tab);
+        }
+
+        if (UsageType.NORMAL.equals(mGameService.getUsageType())) {
+            if (savedInstanceState == null) {
+                gameNavigation.setSelectedItemId(R.id.court_position_tab);
+            }
+        } else {
+            gameNavigation.getMenu().removeItem(R.id.substitutions_tab);
+            gameNavigation.getMenu().removeItem(R.id.court_position_tab);
+
+            if (savedInstanceState == null) {
+                gameNavigation.setSelectedItemId(R.id.ladder_tab);
+            }
         }
     }
 }

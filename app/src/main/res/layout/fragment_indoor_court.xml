@@ -20,10 +20,10 @@
             android:id="@+id/left_team_position_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginLeft="@dimen/indoor_court_x_margin"
+            android:layout_marginStart="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -31,10 +31,10 @@
             android:id="@+id/left_team_position_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginLeft="@dimen/indoor_court_x_margin"
+            android:layout_marginStart="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -42,10 +42,10 @@
             android:id="@+id/left_team_position_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginLeft="@dimen/indoor_court_x_margin"
+            android:layout_marginStart="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
@@ -62,10 +62,10 @@
             android:id="@+id/left_team_position_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginLeft="@dimen/indoor_court_x_margin"
+            android:layout_marginStart="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -73,10 +73,10 @@
             android:id="@+id/left_team_position_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginLeft="@dimen/indoor_court_x_margin"
+            android:layout_marginStart="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -84,10 +84,10 @@
             android:id="@+id/left_team_position_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginLeft="@dimen/indoor_court_x_margin"
+            android:layout_marginStart="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
     </LinearLayout>
@@ -103,10 +103,10 @@
             android:id="@+id/right_team_position_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginEnd="@dimen/indoor_court_x_margin"
+            android:layout_marginRight="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -114,10 +114,10 @@
             android:id="@+id/right_team_position_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginEnd="@dimen/indoor_court_x_margin"
+            android:layout_marginRight="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -125,10 +125,10 @@
             android:id="@+id/right_team_position_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginEnd="@dimen/indoor_court_x_margin"
+            android:layout_marginRight="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -145,10 +145,10 @@
             android:id="@+id/right_team_position_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginEnd="@dimen/indoor_court_x_margin"
+            android:layout_marginRight="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -156,10 +156,10 @@
             android:id="@+id/right_team_position_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginEnd="@dimen/indoor_court_x_margin"
+            android:layout_marginRight="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 
@@ -167,10 +167,10 @@
             android:id="@+id/right_team_position_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/indoor_court_y_margin"
+            android:layout_marginEnd="@dimen/indoor_court_x_margin"
+            android:layout_marginRight="@dimen/indoor_court_x_margin"
+            android:layout_marginTop="@dimen/indoor_court_y_margin"
             android:textSize="@dimen/court_position_size"
             android:theme="@style/TeamButtonTheme"/>
 

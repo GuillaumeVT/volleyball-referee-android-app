@@ -1,13 +1,11 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
@@ -20,7 +18,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutService;
 
-public class TimeoutsFragment extends Fragment implements NamedGameFragment, TimeoutListener, TeamListener {
+public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamListener {
 
     private TimeoutService      mTimeoutService;
     private TeamService         mTeamService;
@@ -37,11 +35,6 @@ public class TimeoutsFragment extends Fragment implements NamedGameFragment, Tim
     }
 
     @Override
-    public String getGameFragmentTitle(Context context) {
-        return context.getResources().getString(R.string.timeouts_tab);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i("VBR-Timeouts", "Create Timeouts fragment");
         View view = inflater.inflate(R.layout.fragment_timeouts, container, false);
@@ -52,13 +45,13 @@ public class TimeoutsFragment extends Fragment implements NamedGameFragment, Tim
         mTeamService = ServicesProvider.getInstance().getTeamService();
         mTeamService.addTeamListener(this);
 
-        GridView leftTeamTimeoutsGrid = view.findViewById(R.id.left_team_timeouts_list);
+        ListView leftTeamTimeoutsList = view.findViewById(R.id.left_team_timeouts_list);
         mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnLeftSide());
-        leftTeamTimeoutsGrid.setAdapter(mLeftTeamTimeoutsListAdapter);
+        leftTeamTimeoutsList.setAdapter(mLeftTeamTimeoutsListAdapter);
 
-        GridView rightTeamTimeoutsGrid = view.findViewById(R.id.right_team_timeouts_list);
+        ListView rightTeamTimeoutsList = view.findViewById(R.id.right_team_timeouts_list);
         mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnRightSide());
-        rightTeamTimeoutsGrid.setAdapter(mRightTeamTimeoutsListAdapter);
+        rightTeamTimeoutsList.setAdapter(mRightTeamTimeoutsListAdapter);
 
         return view;
     }

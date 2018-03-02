@@ -55,7 +55,7 @@
     <string name="navigate_home_question">Il sera possible de reprendre le match en cours. Quitter?</string>
     <string name="select_player_title">Sélectionner un joueur du banc</string>
     <string name="court_position_tab">Positions</string>
-    <string name="points_tab">Points</string>
+    <string name="ladder_tab">Points</string>
     <string name="substitutions_tab">Changements</string>
     <string name="timeouts_tab">Temps morts</string>
     <string name="set_number">Set %d</string>

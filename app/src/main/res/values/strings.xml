@@ -55,7 +55,7 @@
     <string name="navigate_home_question">You may resume the current match later. Leave?</string>
     <string name="select_player_title">Select a player from the bench</string>
     <string name="court_position_tab">Positions</string>
-    <string name="points_tab">Points</string>
+    <string name="ladder_tab">Points</string>
     <string name="substitutions_tab">Substitutions</string>
     <string name="timeouts_tab">Timeouts</string>
     <string name="set_number">Set %d</string>

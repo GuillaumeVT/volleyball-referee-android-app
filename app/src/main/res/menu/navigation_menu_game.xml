@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/court_position_tab"
+        android:icon="@drawable/ic_court_position_tab"
+        android:title="@string/court_position_tab"/>
+
+    <item
+        android:id="@+id/ladder_tab"
+        android:icon="@drawable/ic_ladder_tab"
+        android:title="@string/ladder_tab"/>
+
+    <item
+        android:id="@+id/substitutions_tab"
+        android:icon="@drawable/ic_substitutions_tab"
+        android:title="@string/substitutions_tab"/>
+
+    <item
+        android:id="@+id/timeouts_tab"
+        android:icon="@drawable/ic_timeout_tab"
+        android:title="@string/timeouts_tab"/>
+
+    <item
+        android:id="@+id/sanctions_tab"
+        android:icon="@drawable/ic_sanctions_tab"
+        android:title="@string/sanctions_tab"/>
+
+</menu>

@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,7 +19,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
-public class SanctionsFragment extends Fragment implements NamedGameFragment, TeamListener, SanctionListener {
+public class SanctionsFragment extends Fragment implements TeamListener, SanctionListener {
 
     private SanctionService      mSanctionService;
     private TeamService          mTeamService;
@@ -34,11 +33,6 @@ public class SanctionsFragment extends Fragment implements NamedGameFragment, Te
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public String getGameFragmentTitle(Context context) {
-        return context.getResources().getString(R.string.sanctions_tab);
     }
 
     @Override

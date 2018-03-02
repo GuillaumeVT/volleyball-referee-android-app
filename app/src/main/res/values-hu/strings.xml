@@ -56,7 +56,7 @@
     <string name="navigate_home_question">Később folytathatod a mérkőzést. Nyugodtan kiléphetsz.</string>
     <string name="select_player_title">Válassz egy cserejátékost</string>
     <string name="court_position_tab">Állásrend</string>
-    <string name="points_tab">Pontok</string>
+    <string name="ladder_tab">Pontok</string>
     <string name="substitutions_tab">Cserék</string>
     <string name="timeouts_tab">Időkérés</string>
     <string name="set_number">Játszma %d</string>

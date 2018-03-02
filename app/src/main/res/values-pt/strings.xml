@@ -55,7 +55,7 @@
     <string name="navigate_home_question">Deseja continuar a partida atual depois?</string>
     <string name="select_player_title">Escolha um jogador do banco</string>
     <string name="court_position_tab">Posições</string>
-    <string name="points_tab">Pontos</string>
+    <string name="ladder_tab">Pontos</string>
     <string name="substitutions_tab">Substituições</string>
     <string name="timeouts_tab">Tempo</string>
     <string name="set_number">%d° Set</string>

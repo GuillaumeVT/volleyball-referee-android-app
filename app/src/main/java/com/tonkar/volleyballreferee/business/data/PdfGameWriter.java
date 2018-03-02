@@ -774,7 +774,7 @@ public class PdfGameWriter {
         PdfPTable titleTable = new PdfPTable(1);
         titleTable.setWidthPercentage(100);
 
-        PdfPCell titleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.points_tab), mDefaultFont));
+        PdfPCell titleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.ladder_tab), mDefaultFont));
         titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         titleTable.addCell(titleCell);

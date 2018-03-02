@@ -271,24 +271,29 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginLeft="@dimen/default_margin_size"
+        android:layout_marginStart="@dimen/default_margin_size"
         android:layout_weight="4"
         android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/game_tabs"
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/game_nav"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:tabTextAppearance="@style/DynamicTabText"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorPrimary"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:background="@android:color/white"
+            app:elevation="@dimen/cardview_default_elevation"
+            app:itemBackground="@drawable/navigation_menu_item"
+            app:itemIconTint="@drawable/navigation_menu_item"
+            app:itemTextColor="@drawable/navigation_menu_item"
+            app:menu="@menu/navigation_menu_game"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/game_pager"
+        <FrameLayout
+            android:id="@+id/game_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="top|center"
-            android:layout_margin="@dimen/default_margin_size"/>
+            android:layout_gravity="top|center"/>
 
     </LinearLayout>
 

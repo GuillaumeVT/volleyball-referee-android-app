@@ -35,6 +35,14 @@
     <dimen name="sanction_half_size">16dp</dimen>
     <dimen name="sanction_max_width">64dp</dimen>
 
-    <dimen name="main_image_height">150dp</dimen>
+    <dimen name="main_image_height">200dp</dimen>
+
+    <dimen name="indoor_court_x_margin">16dp</dimen>
+    <dimen name="indoor_court_y_margin">24dp</dimen>
+    <dimen name="beach_court_x_margin">48dp</dimen>
+    <dimen name="beach_court_y_margin">24dp</dimen>
+
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">12sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">16sp</dimen>
 
 </resources>
