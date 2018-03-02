@@ -25,15 +25,17 @@ Volleyball Referee is a user-friendly and complete application for refereeing in
 
 If your language is missing and you feel like helping the community, you may contact us via the support address (vbr.app.team@gmail.com) and we can work together on adding a new translation.
 
-| Languages        | Status                          |
-|------------------|---------------------------------|
-| English          | Available                       |
-| French           | Available                       |
-| Hungarian        | Available                       |
-| Italian          | Available                       |
-| Polish           | Available                       |
-| Portuguese       | Available                       |
-| Russian          | Available                       |
+| Languages             | Status                          |
+|-----------------------|---------------------------------|
+| English               | Available                       |
+| French                | Available                       |
+| German                | Available                       |
+| Hungarian             | Available                       |
+| Italian               | Available                       |
+| Polish                | Available                       |
+| Portuguese            | Available                       |
+| Portuguese (Brazil)   | Available                       |
+| Russian               | Available                       |
 
 ## Planned Features
 
