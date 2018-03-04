@@ -149,7 +149,17 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public GameService loadCurrentGame() {
-        return JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE);
+        GameService gameService = JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE);
+
+        if (gameService == null) {
+            int attempts = 0;
+            while (attempts < 5 && gameService == null) {
+                gameService = JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE);
+                attempts++;
+            }
+        }
+
+        return gameService;
     }
 
     @Override
@@ -157,6 +167,12 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         updateRecordedGame();
         if (!mGameService.isMatchCompleted()) {
             JsonIOUtils.writeCurrentGame(mContext, CURRENT_GAME_FILE, mGameService);
+
+            int attempts = 0;
+            while (attempts < 5 && JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE) == null) {
+                JsonIOUtils.writeCurrentGame(mContext, CURRENT_GAME_FILE, mGameService);
+                attempts++;
+            }
         }
     }
 

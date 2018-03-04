@@ -16,9 +16,9 @@
     <string name="delete">Apagar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
-    <string name="start_time_based_game">Partida por tempo</string>
-    <string name="start_score_based_game_official">Placar - Regras da FIVB</string>
-    <string name="start_score_based_game_custom">Placar - Regras personalizadas</string>
+    <string name="start_time_based_game">Jogo por tempo</string>
+    <string name="start_score_based_game_official">Marcador - Regras da FIVB</string>
+    <string name="start_score_based_game_custom">Marcador - Regras personalizadas</string>
     <string name="match_group">Iniciar um jogo básico</string>
     <string name="data_group">Dados</string>
     <string name="configuration_group">Configurações</string>
@@ -105,7 +105,7 @@
     <string name="specific_leagues_preferences">Regras específicas para ligas específicas</string>
 
     <string name="pref_points_per_set">Número de pontos por set</string>
-    <string name="pref_sets_per_game">Número de sets por partida</string>
+    <string name="pref_sets_per_game">Número de sets por jogo</string>
     <string name="pref_tie_break">Tie break no último set</string>
     <string name="pref_two_points_difference">São necessários 2 pontos de diferença para vencer o set</string>
     <string name="pref_sanctions">Sanções</string>

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         initNavigationMenu();
 
-        ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
+        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -309,7 +309,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onPositiveButtonClicked() {
                         Log.i("VBR-MainActivity", "Start game activity and resume current game");
-                        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
                         if (UsageType.TIME_SCOREBOARD.equals(ServicesProvider.getInstance().getScoreService().getUsageType())) {
                             final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                             startActivity(gameIntent);

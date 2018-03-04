@@ -4,12 +4,14 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.util.Log;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -21,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -74,9 +77,6 @@ public class BrazilFranceIndoorGame {
 
         composeTeamsSet5(indoorGame);
         playSet5_lastSetEnd(indoorGame);
-
-        IndoorGame loadedGame = (IndoorGame) ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
-        assertEquals(indoorGame, loadedGame);
     }
 
     @Test
@@ -96,6 +96,33 @@ public class BrazilFranceIndoorGame {
 
         composeTeamsSet4(indoorGame);
         playSet4_substitutions(indoorGame);
+    }
+
+    @Test
+    public void playGame_io() {
+        IndoorGame indoorGame = GameFactory.createIndoorGame();
+
+        defineTeams(indoorGame);
+
+        composeTeamsSet1(indoorGame);
+        playSet1_complete(indoorGame);
+
+        composeTeamsSet2(indoorGame);
+        playSet2_complete(indoorGame);
+
+        composeTeamsSet3(indoorGame);
+        playSet3_complete(indoorGame);
+
+        composeTeamsSet4(indoorGame);
+        playSet4_substitutions(indoorGame);
+
+        for (int index = 0; index < 1000; index++) {
+            Log.i("VBR-Test", "playGame_io index #" + index);
+            ServicesProvider.getInstance().getRecordedGamesService().saveCurrentGame();
+            GameService gameService = ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
+            assertNotEquals(null, indoorGame);
+            assertEquals(indoorGame, gameService);
+        }
     }
 
     private void defineTeams(IndoorGame indoorGame) {
