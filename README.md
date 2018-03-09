@@ -42,3 +42,5 @@ If your language is missing and you feel like helping the community, you may con
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
 | Instant App                       | Planned                                |
+| Referee name / pseudo             | In Progress                            |
+| Indoor 4x4                        | Planned                                |
