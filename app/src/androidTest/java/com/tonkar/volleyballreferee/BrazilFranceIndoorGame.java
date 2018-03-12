@@ -34,7 +34,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame();
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
 
         defineTeams(indoorGame);
 
@@ -59,7 +59,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_lastSetEnd() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame();
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
 
         defineTeams(indoorGame);
 
@@ -81,7 +81,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame();
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
 
         defineTeams(indoorGame);
 
@@ -100,7 +100,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame();
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
 
         defineTeams(indoorGame);
 

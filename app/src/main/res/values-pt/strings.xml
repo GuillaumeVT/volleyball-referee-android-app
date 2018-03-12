@@ -12,6 +12,7 @@
     <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para partilhar resultados dos jogos.</string>
     <string name="resume_game_title">Continuar jogo</string>
     <string name="resume_game_question">Essa aplicação encontrou um jogo a decorrer. Gostaria de continuar ou apagar esse jogo?</string>
+    <string name="resume_game_error">O jogo não pode ser retomado.</string>
     <string name="resume">Continuar</string>
     <string name="delete">Apagar</string>
     <string name="ignore">Ignorar</string>
@@ -210,6 +211,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
+    <string name="pref_referee_name">Nome de utilizador \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Transmitir os jogos ao vivo</string>
     <string name="pref_keep_screen_on">Manter écran ligado durante os jogos</string>
     <string name="pref_number_of_shirts">Selecione a numeração da camisola mais alta da sua equipa</string>

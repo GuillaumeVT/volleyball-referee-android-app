@@ -12,6 +12,7 @@
     <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
     <string name="resume_game_title">Wznów gre</string>
     <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ja wznowić czy usunąć?</string>
+    <string name="resume_game_error">Gra nie może zostać wznowiona.</string>
     <string name="resume">"Wznów "</string>
     <string name="delete">Unsun</string>
     <string name="ignore">Ignoruj</string>
@@ -210,6 +211,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Ustawienia</string>
+    <string name="pref_referee_name">Mója nazwa użytkownika \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Transmituj mecze przez stream online</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
     <string name="pref_number_of_shirts">Wybierz numer koszulki w ustawieniach drużyny</string>

@@ -83,6 +83,10 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
         if (!ServicesProvider.getInstance().areServicesAvailable()) {
             ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+
+            if (!ServicesProvider.getInstance().areServicesAvailable()) {
+                UiUtils.navigateToHome(this);
+            }
         }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -276,13 +280,13 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     private void navigateToHomeWithDialog() {
         Log.i("VBR-GameActivity", "Navigate to home");
         if (mGameService.isMatchCompleted()) {
-            navigateToHome();
+            UiUtils.navigateToHome(this, false);
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    navigateToHome();
+                    UiUtils.navigateToHome(GameActivity.this, false);
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -292,10 +296,6 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         }
-    }
-
-    private void navigateToHome() {
-        UiUtils.navigateToHome(this, false);
     }
 
     private void share() {

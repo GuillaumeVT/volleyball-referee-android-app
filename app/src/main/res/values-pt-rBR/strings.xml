@@ -12,6 +12,7 @@
     <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
+    <string name="resume_game_error">Não foi possível continuar a partida.</string>
     <string name="resume">Continuar</string>
     <string name="delete">Deletar</string>
     <string name="ignore">Ignorar</string>
@@ -210,6 +211,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
+    <string name="pref_referee_name">Meu apelido \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Transmitir as partidas ao vivo</string>
     <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
     <string name="pref_number_of_shirts">Selecione a numeração da camisa mais alta de sua equipe</string>

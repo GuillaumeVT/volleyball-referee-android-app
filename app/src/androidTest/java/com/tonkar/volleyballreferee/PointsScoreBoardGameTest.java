@@ -28,7 +28,7 @@ public class PointsScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame();
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
         indoorGame.setUsageType(UsageType.POINTS_SCOREBOARD);
 
         defineTeams(indoorGame);

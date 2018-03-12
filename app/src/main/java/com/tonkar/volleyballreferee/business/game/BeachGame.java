@@ -11,13 +11,13 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class BeachGame extends Game implements BeachTeamService {
 
-    BeachGame(final Rules rules) {
-        super(GameType.BEACH, rules);
+    BeachGame(final Rules rules, final String refereeName) {
+        super(GameType.BEACH, rules, refereeName);
     }
 
     // For GSON Deserialization
     public BeachGame() {
-        this(Rules.OFFICIAL_BEACH_RULES);
+        this(Rules.OFFICIAL_BEACH_RULES, "");
     }
 
     @Override

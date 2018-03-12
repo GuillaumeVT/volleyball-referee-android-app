@@ -36,6 +36,8 @@ public abstract class Game extends BaseGame {
     private       GenderType     mGenderType;
     @SerializedName("rules")
     private final Rules          mRules;
+    @SerializedName("referee")
+    private String               mRefereeName;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("homeTeam")
@@ -62,13 +64,14 @@ public abstract class Game extends BaseGame {
     private transient java.util.Set<TeamListener>     mTeamListeners;
     private transient java.util.Set<SanctionListener> mSanctionListeners;
 
-    protected Game(final GameType gameType, final Rules rules) {
+    protected Game(final GameType gameType, final Rules rules, final String refereeName) {
         super();
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
         mGenderType = GenderType.MIXED;
         mRules = rules;
         mGameDate = System.currentTimeMillis();
+        mRefereeName = refereeName;
         mLeagueName = "";
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
@@ -426,6 +429,16 @@ public abstract class Game extends BaseGame {
         }
 
         return teamDefinition;
+    }
+
+    @Override
+    public String getRefereeName() {
+        return mRefereeName;
+    }
+
+    @Override
+    public void setRefereeName(String name) {
+        mRefereeName = name;
     }
 
     @Override

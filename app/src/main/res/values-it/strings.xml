@@ -12,6 +12,7 @@
     <string name="permission_message">Questa applicazione richiede l\'autorizzazione al salvataggio dei risultati delle partite per la condivisione.</string>
     <string name="resume_game_title">Riprendi la partita</string>
     <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
+    <string name="resume_game_error">La partita non può essere ripresa.</string>
     <string name="resume">Riprendi</string>
     <string name="delete">Cancella</string>
     <string name="ignore">Ignora</string>
@@ -210,6 +211,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
+    <string name="pref_referee_name">Il mio pseudonimo \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Trasmettere le partite in linea</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
     <string name="pref_number_of_shirts">Numero di divise nella configurazione della squadra</string>

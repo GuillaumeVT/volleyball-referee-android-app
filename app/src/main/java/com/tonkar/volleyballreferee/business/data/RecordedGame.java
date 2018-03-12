@@ -29,6 +29,8 @@ public class RecordedGame implements RecordedGameService {
     private UsageType         mUsageType;
     @SerializedName("live")
     private boolean           mLive;
+    @SerializedName("referee")
+    private String            mRefereeName;
     @SerializedName("league")
     private String            mLeagueName;
     @SerializedName("hTeam")
@@ -53,6 +55,7 @@ public class RecordedGame implements RecordedGameService {
         mGenderType = GenderType.MIXED;
         mUsageType = UsageType.NORMAL;
         mLive = false;
+        mRefereeName = "";
         mLeagueName = "";
         mHomeTeam = new RecordedTeam();
         mGuestTeam = new RecordedTeam();
@@ -192,6 +195,16 @@ public class RecordedGame implements RecordedGameService {
 
     public void setMatchCompleted(boolean matchCompleted) {
         mLive = !matchCompleted;
+    }
+
+    @Override
+    public String getRefereeName() {
+        return mRefereeName;
+    }
+
+    @Override
+    public void setRefereeName(String name) {
+        mRefereeName = name;
     }
 
     @Override

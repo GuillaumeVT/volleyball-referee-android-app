@@ -29,6 +29,8 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private final long           mGameDate;
     @SerializedName("genderType")
     private       GenderType     mGenderType;
+    @SerializedName("referee")
+    private String               mRefereeName;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("homeTeam")
@@ -59,10 +61,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private transient java.util.Set<ScoreListener> mScoreListeners;
     private transient java.util.Set<TeamListener>  mTeamListeners;
 
-    TimeBasedGame() {
+    TimeBasedGame(final String refereeName) {
         super();
         mGameDate = System.currentTimeMillis();
         mGenderType = GenderType.MIXED;
+        mRefereeName = refereeName;
         mLeagueName = "";
         mHomeTeam = new TeamDefinition(TeamType.HOME) {};
         mGuestTeam = new TeamDefinition(TeamType.GUEST) {};
@@ -125,6 +128,16 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public void removeSanctionListener(SanctionListener listener) {}
+
+    @Override
+    public String getRefereeName() {
+        return mRefereeName;
+    }
+
+    @Override
+    public void setRefereeName(String name) {
+        mRefereeName = name;
+    }
 
     @Override
     public String getLeagueName() {

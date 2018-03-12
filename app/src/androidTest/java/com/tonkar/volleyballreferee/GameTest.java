@@ -16,7 +16,7 @@ public class GameTest {
 
     @Test
     public void point_remove() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         assertEquals(0, game.getPoints(TeamType.HOME));
@@ -26,7 +26,7 @@ public class GameTest {
 
     @Test
     public void service_swapFirst() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -36,7 +36,7 @@ public class GameTest {
 
     @Test
     public void service_keep() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -46,7 +46,7 @@ public class GameTest {
 
     @Test
     public void service_sideOut() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -56,7 +56,7 @@ public class GameTest {
 
     @Test
     public void service_keep_Reverse() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         game.addPoint(TeamType.HOME);
@@ -68,7 +68,7 @@ public class GameTest {
 
     @Test
     public void service_sideOut_Reverse() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         game.addPoint(TeamType.HOME);
@@ -80,7 +80,7 @@ public class GameTest {
 
     @Test
     public void timeout() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.getRemainingTimeouts(TeamType.HOME));

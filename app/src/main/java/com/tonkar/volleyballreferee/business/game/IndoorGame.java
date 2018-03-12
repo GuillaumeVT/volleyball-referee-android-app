@@ -21,13 +21,13 @@ import java.util.TreeSet;
 
 public class IndoorGame extends Game implements IndoorTeamService {
 
-    public IndoorGame(final Rules rules) {
-        super(GameType.INDOOR, rules);
+    public IndoorGame(final Rules rules, final String refereeName) {
+        super(GameType.INDOOR, rules, refereeName);
     }
 
     // For GSON Deserialization
     public IndoorGame() {
-        this(Rules.OFFICIAL_INDOOR_RULES);
+        this(Rules.OFFICIAL_INDOOR_RULES, "");
     }
 
     @Override

@@ -69,6 +69,10 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
 
         if (!ServicesProvider.getInstance().areServicesAvailable()) {
             ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+
+            if (!ServicesProvider.getInstance().areServicesAvailable()) {
+                UiUtils.navigateToHome(this);
+            }
         }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -203,14 +207,14 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     private void navigateToHomeWithDialog() {
         Log.i("VBR-TBGameActivity", "Navigate to home");
         if (mGameService.isMatchCompleted()) {
-            navigateToHome();
+            UiUtils.navigateToHome(this, false);
         } else {
             if (mGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
                 builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        navigateToHome();
+                        UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
                     }
                 });
                 builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -227,7 +231,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
                     public void onClick(DialogInterface dialog, int which) {
                         Log.i("VBR-TBGameActivity", "User accepts to stop");
                         mGameService.stop();
-                        navigateToHome();
+                        UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
                     }
                 });
                 builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -239,10 +243,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
                 UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
             }
         }
-    }
-
-    private void navigateToHome() {
-        UiUtils.navigateToHome(this, false);
     }
 
     private void share() {

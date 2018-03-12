@@ -95,6 +95,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mRecordedGames.addAll(JsonIOUtils.readRecordedGames(mContext, RECORDED_GAMES_FILE));
         assessAreRecordedOnline();
         for (RecordedGame recordedGame : mRecordedGames) {
+            recordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
             mRecordedLeagues.add(recordedGame.getLeagueName());
         }
     }
@@ -475,6 +476,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mRecordedGame.setGameDate(mGameService.getGameDate());
         mRecordedGame.setGenderType(mGameService.getGenderType());
         mRecordedGame.setUsageType(mGameService.getUsageType());
+        mRecordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
         mRecordedGame.setLeagueName(mGameService.getLeagueName());
 
         RecordedTeam homeTeam = mRecordedGame.getTeam(TeamType.HOME);
@@ -520,6 +522,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     private void updateRecordedGame() {
         if (mRecordedGame != null) {
+            mRecordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
             mRecordedGame.setMatchCompleted(mGameService.isMatchCompleted());
             mRecordedGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
             mRecordedGame.setSets(TeamType.GUEST, mGameService.getSets(TeamType.GUEST));

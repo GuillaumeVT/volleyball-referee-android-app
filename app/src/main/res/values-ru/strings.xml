@@ -12,6 +12,7 @@
     <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён неоконченный матч. Вы хотите продолжить или удалить этот матч?</string>
+    <string name="resume_game_error">Невозможно возобновить матч.</string>
     <string name="resume">Продолжить</string>
     <string name="delete">Удалить</string>
     <string name="ignore">Пропустить</string>
@@ -210,6 +211,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Параметры</string>
+    <string name="pref_referee_name">Мой псевдоним \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Транслировать матчи онлайн</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>

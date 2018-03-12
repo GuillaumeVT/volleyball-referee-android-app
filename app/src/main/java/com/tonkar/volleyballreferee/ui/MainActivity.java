@@ -35,6 +35,7 @@ import com.tonkar.volleyballreferee.business.data.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
     private RecordedGamesService mRecordedGamesService;
+    private GameService          mGameService;
     private DrawerLayout         mDrawerLayout;
 
     @Override
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+        mGameService = ServicesProvider.getInstance().getGameService();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
@@ -237,10 +240,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startIndoorGame(final boolean custom) {
+        final String refereeName = PrefUtils.getPrefRefereeName(this);
+
         if (custom) {
-            GameFactory.createIndoorGame(PreferenceManager.getDefaultSharedPreferences(this));
+            GameFactory.createIndoorGameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
         } else {
-            GameFactory.createIndoorGame();
+            GameFactory.createIndoorGame(refereeName);
         }
 
         Log.i("VBR-MainActivity", "Start activity to setup teams");
@@ -249,10 +254,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startBeachGame(final boolean custom) {
+        final String refereeName = PrefUtils.getPrefRefereeName(this);
+
         if (custom) {
-            GameFactory.createBeachGame(PreferenceManager.getDefaultSharedPreferences(this));
+            GameFactory.createBeachGameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
         } else {
-            GameFactory.createBeachGame();
+            GameFactory.createBeachGame(refereeName);
         }
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
@@ -261,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTimeBasedGame() {
-        GameFactory.createTimeBasedGame();
+        GameFactory.createTimeBasedGame(PrefUtils.getPrefRefereeName(this));
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
@@ -269,10 +276,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startScoreBasedGame(final boolean custom) {
+        final String refereeName = PrefUtils.getPrefRefereeName(this);
+
         if (custom) {
-            GameFactory.createPointBasedGame(PreferenceManager.getDefaultSharedPreferences(this));
+            GameFactory.createPointBasedGameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
         } else {
-            GameFactory.createPointBasedGame();
+            GameFactory.createPointBasedGame(refereeName);
         }
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
@@ -309,12 +318,18 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onPositiveButtonClicked() {
                         Log.i("VBR-MainActivity", "Start game activity and resume current game");
-                        if (UsageType.TIME_SCOREBOARD.equals(ServicesProvider.getInstance().getScoreService().getUsageType())) {
-                            final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
-                            startActivity(gameIntent);
+                        if (mGameService == null) {
+                            AlertDialogFragment errorDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_error),
+                                    getResources().getString(android.R.string.ok));
+                            errorDialogFragment.show(getSupportFragmentManager(), "permission");
                         } else {
-                            final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                            startActivity(gameIntent);
+                            if (UsageType.TIME_SCOREBOARD.equals(ServicesProvider.getInstance().getScoreService().getUsageType())) {
+                                final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
+                                startActivity(gameIntent);
+                            } else {
+                                final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                                startActivity(gameIntent);
+                            }
                         }
                     }
 

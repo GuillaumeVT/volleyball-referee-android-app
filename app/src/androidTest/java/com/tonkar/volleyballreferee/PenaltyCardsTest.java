@@ -20,7 +20,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_yellowCard() {
-        GameService game = GameFactory.createBeachGame();
+        GameService game = GameFactory.createBeachGame("VBR");
         game.initTeams();
 
         game.giveSanction(TeamType.HOME, SanctionType.YELLOW, -1);
@@ -31,7 +31,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redCard() {
-        GameService game = GameFactory.createBeachGame();
+        GameService game = GameFactory.createBeachGame("VBR");
         game.initTeams();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -51,7 +51,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redExpulsionCard() {
-        GameService game = GameFactory.createBeachGame();
+        GameService game = GameFactory.createBeachGame("VBR");
         game.initTeams();
 
         game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, -1);
@@ -65,7 +65,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redDisqualificationCard() {
-        GameService game = GameFactory.createBeachGame();
+        GameService game = GameFactory.createBeachGame("VBR");
         game.initTeams();
 
         game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, -1);
@@ -80,7 +80,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_yellowCard() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
@@ -100,7 +100,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redCard() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
@@ -137,7 +137,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redExpulsionCard() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         IndoorTeamService indoorTeamService = (IndoorTeamService) game;
 
         fillTeam(game, TeamType.HOME, 6);
@@ -184,7 +184,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redDisqualificationCard() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         IndoorTeamService indoorTeamService = (IndoorTeamService) game;
 
         fillTeam(game, TeamType.HOME, 6);

@@ -25,6 +25,14 @@ public class SavedTeam implements BaseIndoorTeamService {
     }
 
     @Override
+    public String getRefereeName() {
+        return "";
+    }
+
+    @Override
+    public void setRefereeName(String name) {}
+
+    @Override
     public String getLeagueName() {
         return "";
     }

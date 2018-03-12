@@ -29,7 +29,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        BeachGame beachGame = GameFactory.createBeachGame();
+        BeachGame beachGame = GameFactory.createBeachGame("VBR");
 
         defineTeams(beachGame);
 
@@ -42,7 +42,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_matchPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame();
+        BeachGame beachGame = GameFactory.createBeachGame("VBR");
 
         defineTeams(beachGame);
 
@@ -55,7 +55,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame();
+        BeachGame beachGame = GameFactory.createBeachGame("VBR");
 
         defineTeams(beachGame);
 

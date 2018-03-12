@@ -13,6 +13,7 @@
     <string name="permission_message">Tárhely jogosultság szükséges a mérkőzés eredmények megosztásához.</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
+    <string name="resume_game_error">A mérkőzés nem folytatható.</string>
     <string name="resume">Folytatás</string>
     <string name="delete">Törlés</string>
     <string name="ignore">Mégsem</string>
@@ -211,6 +212,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Beállítások</string>
+    <string name="pref_referee_name">\'Volleyball Referee\' nevem</string>
     <string name="pref_stream_online">Mérközések online közvetítése</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
     <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>

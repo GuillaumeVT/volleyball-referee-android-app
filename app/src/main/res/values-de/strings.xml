@@ -12,6 +12,7 @@
     <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
     <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
+    <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>
     <string name="resume">Fortsetzen</string>
     <string name="delete">Löschen</string>
     <string name="ignore">Ignorieren</string>
@@ -210,6 +211,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Einstellungen</string>
+    <string name="pref_referee_name">Mein \'Volleyball Referee\' Pseudonym</string>
     <string name="pref_stream_online">Streame das Spiel online</string>
     <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
     <string name="pref_number_of_shirts">Anzahl der Trikots in den Mannschaftseinstellungen</string>

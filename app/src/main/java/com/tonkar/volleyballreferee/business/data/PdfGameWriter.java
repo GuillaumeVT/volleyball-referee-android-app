@@ -198,15 +198,15 @@ public class PdfGameWriter {
     }
 
     private void writeRecordedGameHeader() throws DocumentException {
-        float[] dateAndLeagueWidths = {0.4f, 0.15f, 0.45f};
-        PdfPTable dateAndLeagueTable = new PdfPTable(dateAndLeagueWidths);
-        dateAndLeagueTable.setWidthPercentage(100);
-        dateAndLeagueTable.setSpacingBefore(5.f);
+        float[] infoLineWidths = {0.4f, 0.15f, 0.30f, 0.15f};
+        PdfPTable infoTable = new PdfPTable(infoLineWidths);
+        infoTable.setWidthPercentage(100);
+        infoTable.setSpacingBefore(5.f);
 
         PdfPCell leagueCell = new PdfPCell(new Phrase(mRecordedGameService.getLeagueName(), mDefaultFont));
         leagueCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         leagueCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        dateAndLeagueTable.addCell(leagueCell);
+        infoTable.addCell(leagueCell);
 
         DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
         formatter.setTimeZone(TimeZone.getDefault());
@@ -214,13 +214,22 @@ public class PdfGameWriter {
         PdfPCell dateCell = new PdfPCell(new Phrase(formatter.format(new Date(mRecordedGameService.getGameDate())), mDefaultFont));
         dateCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         dateCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        dateAndLeagueTable.addCell(dateCell);
+        infoTable.addCell(dateCell);
+
+        final String referee = mRecordedGameService.getRefereeName();
+        PdfPCell refereeCell = new PdfPCell(new Phrase(referee, mDefaultFont));
+        refereeCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        refereeCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        if (referee.isEmpty()) {
+            refereeCell.setBorder(Rectangle.NO_BORDER);
+        }
+        infoTable.addCell(refereeCell);
 
         PdfPCell emptyCell = new PdfPCell();
         emptyCell.setBorder(Rectangle.NO_BORDER);
-        dateAndLeagueTable.addCell(emptyCell);
+        infoTable.addCell(emptyCell);
 
-        mDocument.add(dateAndLeagueTable);
+        mDocument.add(infoTable);
 
         float[] columnWidths = {0.4f, 0.05f, 0.05f, 0.05f, 0.05f, 0.05f, 0.05f, 0.3f};
         PdfPTable table = new PdfPTable(columnWidths);

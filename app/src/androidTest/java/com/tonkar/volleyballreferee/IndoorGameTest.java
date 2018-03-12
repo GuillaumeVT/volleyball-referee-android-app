@@ -16,7 +16,7 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -32,7 +32,7 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -57,7 +57,7 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -84,7 +84,7 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createIndoorGame();
+        GameService game = GameFactory.createIndoorGame("VBR");
         game.initTeams();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {

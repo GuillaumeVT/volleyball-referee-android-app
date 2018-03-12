@@ -86,7 +86,7 @@ public class RuleConsecutiveServesTest {
 
     private IndoorGame createGame(int consecutiveServes) {
         IndoorGame game = new IndoorGame(new Rules(5, 25, true, true, true, true, 2, 30,
-                true, 60, true, 180, 6, false, consecutiveServes));
+                true, 60, true, 180, 6, false, consecutiveServes), "VBR");
 
         for (int index = 1; index <= 6; index++) {
             game.addPlayer(TeamType.HOME, index);

@@ -25,7 +25,7 @@ public class TimeScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        TimeBasedGame game = GameFactory.createTimeBasedGame();
+        TimeBasedGame game = GameFactory.createTimeBasedGame("VBR");
 
         defineTeams(game);
 
