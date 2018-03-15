@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.business.game;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -67,8 +68,8 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         mGenderType = GenderType.MIXED;
         mRefereeName = refereeName;
         mLeagueName = "";
-        mHomeTeam = new TeamDefinition(TeamType.HOME) {};
-        mGuestTeam = new TeamDefinition(TeamType.GUEST) {};
+        mHomeTeam = new EmptyTeamDefinition(TeamType.HOME);
+        mGuestTeam = new EmptyTeamDefinition(TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
         mTeamOnRightSide = TeamType.GUEST;
 
@@ -83,6 +84,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         mIsStopped = false;
 
         initTransientFields();
+    }
+
+    // For GSON Deserialization
+    public TimeBasedGame() {
+        this("");
     }
 
     @Override
