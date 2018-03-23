@@ -38,6 +38,8 @@ public interface BaseTeamService {
 
     void setGenderType(TeamType teamType, GenderType genderType);
 
+    int getExpectedNumberOfPlayersOnCourt();
+
     void initTeams();
 
 }

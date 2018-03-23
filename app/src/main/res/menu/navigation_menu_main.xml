@@ -6,6 +6,11 @@
         android:title="@string/match_group">
         <menu>
             <item
+                android:id="@+id/action_start_indoor_4x4_game"
+                android:icon="@drawable/ic_4x4"
+                android:title="@string/start_indoor_4x4_game"/>
+
+            <item
                 android:id="@+id/action_start_time_based_game"
                 android:icon="@drawable/ic_time_based"
                 android:title="@string/start_time_based_game"/>

@@ -36,8 +36,8 @@ import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
@@ -156,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(browserIntent);
                         }
                         break;
+                    case R.id.action_start_indoor_4x4_game:
+                        Log.i("VBR-MainActivity", "Start a 4x4 indoor game");
+                        startIndoor4x4Game();
+                        break;
                     case R.id.action_start_time_based_game:
                         Log.i("VBR-MainActivity", "Start a time-based game");
                         startTimeBasedGame();
@@ -267,6 +271,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void startIndoor4x4Game() {
+        GameFactory.createIndoor4x4Game(PrefUtils.getPrefRefereeName(this));
+
+        Log.i("VBR-MainActivity", "Start activity to setup teams");
+        final Intent intent = new Intent(this, TeamsSetupActivity.class);
+        startActivity(intent);
+    }
+
     private void startTimeBasedGame() {
         GameFactory.createTimeBasedGame(PrefUtils.getPrefRefereeName(this));
 
@@ -323,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
                                     getResources().getString(android.R.string.ok));
                             errorDialogFragment.show(getSupportFragmentManager(), "permission");
                         } else {
-                            if (UsageType.TIME_SCOREBOARD.equals(ServicesProvider.getInstance().getScoreService().getUsageType())) {
+                            if (GameType.TIME.equals(ServicesProvider.getInstance().getScoreService().getGameType())) {
                                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                                 startActivity(gameIntent);
                             } else {

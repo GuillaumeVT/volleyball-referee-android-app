@@ -42,9 +42,9 @@ import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.io.ByteArrayOutputStream;
@@ -171,7 +171,24 @@ public class UiUtils {
 
                 String summary = gameService.getGameSummary();
                 if (online) {
-                    String url = GameType.INDOOR.equals(gameService.getGameType()) ? WebUtils.VIEW_INDOOR_URL : WebUtils.VIEW_BEACH_URL;
+                    final String url;
+
+                    switch(gameService.getGameType()) {
+                        case INDOOR_4X4:
+                            url = WebUtils.VIEW_INDOOR_4X4_URL;
+                            break;
+                        case BEACH:
+                            url = WebUtils.VIEW_BEACH_URL;
+                            break;
+                        case TIME:
+                            url = WebUtils.VIEW_TIME_BASED_URL;
+                            break;
+                        case INDOOR:
+                        default:
+                            url = WebUtils.VIEW_INDOOR_URL;
+                            break;
+                    }
+
                     summary = summary + "\n" + String.format(Locale.getDefault(), url, gameService.getGameDate());
                 }
 
@@ -270,6 +287,33 @@ public class UiUtils {
             });
             timeoutPlayer.start();
         }
+    }
+
+    public static String getPositionTitle(Context context, PositionType positionType) {
+        String title = "";
+
+        switch (positionType) {
+            case POSITION_1:
+                title = context.getResources().getString(R.string.position_1_title);
+                break;
+            case POSITION_2:
+                title = context.getResources().getString(R.string.position_2_title);
+                break;
+            case POSITION_3:
+                title = context.getResources().getString(R.string.position_3_title);
+                break;
+            case POSITION_4:
+                title = context.getResources().getString(R.string.position_4_title);
+                break;
+            case POSITION_5:
+                title = context.getResources().getString(R.string.position_5_title);
+                break;
+            case POSITION_6:
+                title = context.getResources().getString(R.string.position_6_title);
+                break;
+        }
+
+        return title;
     }
 
 }

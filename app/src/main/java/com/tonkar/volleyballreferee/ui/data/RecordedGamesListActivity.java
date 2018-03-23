@@ -60,7 +60,7 @@ public class RecordedGamesListActivity extends AppCompatActivity {
 
                 final Intent intent;
 
-                if (GameType.INDOOR.equals(recordedGameService.getGameType()) && UsageType.NORMAL.equals(recordedGameService.getUsageType())) {
+                if ((GameType.INDOOR.equals(recordedGameService.getGameType()) || GameType.INDOOR_4X4.equals(recordedGameService.getGameType())) && UsageType.NORMAL.equals(recordedGameService.getUsageType())) {
                     intent = new Intent(RecordedGamesListActivity.this, RecordedIndoorGameActivity.class);
                 } else {
                     intent = new Intent(RecordedGamesListActivity.this, RecordedBeachGameActivity.class);

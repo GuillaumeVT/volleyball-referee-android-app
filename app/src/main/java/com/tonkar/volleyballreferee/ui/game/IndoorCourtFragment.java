@@ -23,8 +23,8 @@ import java.util.Set;
 
 public class IndoorCourtFragment extends CourtFragment {
 
-    private IndoorTeamService mIndoorTeamService;
-    private LayoutInflater    mLayoutInflater;
+    protected IndoorTeamService mIndoorTeamService;
+    protected LayoutInflater    mLayoutInflater;
 
     public IndoorCourtFragment() {
         super();
@@ -63,6 +63,17 @@ public class IndoorCourtFragment extends CourtFragment {
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
+        initLeftTeamListeners();
+        initRightTeamListeners();
+
+        if (savedInstanceState != null) {
+            restoreStartingLineupDialog();
+        }
+
+        return mView;
+    }
+
+    protected void initLeftTeamListeners() {
         for (Map.Entry<PositionType, Button> entry : mLeftTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
@@ -93,7 +104,9 @@ public class IndoorCourtFragment extends CourtFragment {
                 }
             });
         }
+    }
 
+    protected void initRightTeamListeners() {
         for (Map.Entry<PositionType, Button> entry : mRightTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
@@ -124,28 +137,6 @@ public class IndoorCourtFragment extends CourtFragment {
                 }
             });
         }
-
-        if (savedInstanceState != null) {
-            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
-            if (alertDialogFragment != null) {
-                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                    @Override
-                    public void onNegativeButtonClicked() {
-                    }
-
-                    @Override
-                    public void onPositiveButtonClicked() {
-                        mIndoorTeamService.confirmStartingLineup();
-                    }
-
-                    @Override
-                    public void onNeutralButtonClicked() {
-                    }
-                });
-            }
-        }
-
-        return mView;
     }
 
     @Override
@@ -191,7 +182,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
         for (Integer number : players) {
             final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
-            Button button = teamPositions.get(positionType);
+            final Button button = teamPositions.get(positionType);
             button.setText(String.valueOf(number));
             UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
         }
@@ -204,7 +195,8 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void confirmStartingLineup() {
         if (!mIndoorTeamService.isStartingLineupConfirmed()
-                && mIndoorTeamService.getPlayersOnCourt(TeamType.HOME).size() == 6 && mIndoorTeamService.getPlayersOnCourt(TeamType.GUEST).size() == 6) {
+                && mIndoorTeamService.getPlayersOnCourt(TeamType.HOME).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
+                && mIndoorTeamService.getPlayersOnCourt(TeamType.GUEST).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()) {
             AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
                     getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
             alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
@@ -225,8 +217,28 @@ public class IndoorCourtFragment extends CourtFragment {
         }
     }
 
-    private void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
-        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getResources().getString(R.string.select_player_title),
+    protected void restoreStartingLineupDialog() {
+        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
+        if (alertDialogFragment != null) {
+            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                @Override
+                public void onNegativeButtonClicked() {
+                }
+
+                @Override
+                public void onPositiveButtonClicked() {
+                    mIndoorTeamService.confirmStartingLineup();
+                }
+
+                @Override
+                public void onNeutralButtonClicked() {
+                }
+            });
+        }
+    }
+
+    protected void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
+        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getResources().getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(getActivity(), positionType) + ")",
                 mIndoorTeamService, mSanctionService, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
@@ -312,4 +324,5 @@ public class IndoorCourtFragment extends CourtFragment {
 
         return teamPositions;
     }
+
 }

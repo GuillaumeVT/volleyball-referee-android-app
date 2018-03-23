@@ -98,4 +98,9 @@ public class BeachGame extends Game implements BeachTeamService {
             forceFinishMatch(teamType.other());
         }
     }
+
+    @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        return 2;
+    }
 }

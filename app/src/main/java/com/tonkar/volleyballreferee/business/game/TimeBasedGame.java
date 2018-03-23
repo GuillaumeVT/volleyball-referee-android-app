@@ -219,6 +219,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        return 0;
+    }
+
+    @Override
     public void initTeams() {
         GenderType homeGender = getGenderType(TeamType.HOME);
         GenderType guestGender = getGenderType(TeamType.GUEST);
@@ -255,7 +260,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public GameType getGameType() {
-        return GameType.INDOOR;
+        return GameType.TIME;
     }
 
     @Override
@@ -407,7 +412,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public UsageType getUsageType() {
-        return UsageType.TIME_SCOREBOARD;
+        return UsageType.POINTS_SCOREBOARD;
     }
 
     @Override

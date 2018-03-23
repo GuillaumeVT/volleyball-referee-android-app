@@ -26,7 +26,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -101,10 +100,19 @@ public class PdfGameWriter {
                 document.open();
                 PdfGameWriter pdfGameWriter = new PdfGameWriter(context, recordedGameService, document);
                 pdfGameWriter.init();
-                if (GameType.INDOOR.equals(recordedGameService.getGameType())) {
-                    pdfGameWriter.writeRecordedIndoorGame();
-                } else {
-                    pdfGameWriter.writeRecordedBeachGame();
+                switch (recordedGameService.getGameType()) {
+                    case INDOOR:
+                        pdfGameWriter.writeRecordedIndoorGame();
+                        break;
+                    case BEACH:
+                        pdfGameWriter.writeRecordedBeachGame();
+                        break;
+                    case INDOOR_4X4:
+                        pdfGameWriter.writeRecordedIndoor4x4Game();
+                        break;
+                    case TIME:
+                        pdfGameWriter.writeRecordedTimeGame();
+                        break;
                 }
                 document.close();
             } catch (IOException | DocumentException e) {
@@ -462,17 +470,17 @@ public class PdfGameWriter {
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100);
 
-        PdfPCell pos4TitleCell = new PdfPCell(new Phrase("IV", mDefaultFont));
+        PdfPCell pos4TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_4_title), mDefaultFont));
         pos4TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pos4TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(pos4TitleCell);
 
-        PdfPCell pos3TitleCell = new PdfPCell(new Phrase("III", mDefaultFont));
+        PdfPCell pos3TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_3_title), mDefaultFont));
         pos3TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pos3TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(pos3TitleCell);
 
-        PdfPCell pos2TitleCell = new PdfPCell(new Phrase("II", mDefaultFont));
+        PdfPCell pos2TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_2_title), mDefaultFont));
         pos2TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pos2TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(pos2TitleCell);
@@ -486,17 +494,17 @@ public class PdfGameWriter {
         PdfPCell pos2Cell = createPlayerCell(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false);
         table.addCell(pos2Cell);
 
-        PdfPCell pos5TitleCell = new PdfPCell(new Phrase("V", mDefaultFont));
+        PdfPCell pos5TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_5_title), mDefaultFont));
         pos5TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pos5TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(pos5TitleCell);
 
-        PdfPCell pos6TitleCell = new PdfPCell(new Phrase("VI", mDefaultFont));
+        PdfPCell pos6TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_6_title), mDefaultFont));
         pos6TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pos6TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(pos6TitleCell);
 
-        PdfPCell pos1TitleCell = new PdfPCell(new Phrase("I", mDefaultFont));
+        PdfPCell pos1TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_1_title), mDefaultFont));
         pos1TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pos1TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         table.addCell(pos1TitleCell);
@@ -1006,5 +1014,112 @@ public class PdfGameWriter {
         table.addCell(gScore1Cell);
 
         mDocument.add(table);
+    }
+
+    private void writeRecordedIndoor4x4Game() throws DocumentException {
+        writeRecordedGameHeader();
+        writeRecordedIndoorTeams();
+
+        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+            computeNewPage(setIndex);
+
+            writeRecordedIndoorSetHeader(setIndex);
+            writeRecordedStartingLineup4x4(setIndex);
+            writeRecordedSubstitutions(setIndex);
+            writeRecordedTimeouts(setIndex);
+            writeRecordedSanctions(setIndex);
+            writeRecordedLadder(setIndex);
+        }
+    }
+
+    private void writeRecordedStartingLineup4x4(int setIndex) throws DocumentException {
+        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+            float[] columnWidths = {0.15f, 0.15f, 0.7f};
+            PdfPTable table = new PdfPTable(columnWidths);
+            table.setWidthPercentage(100);
+
+            PdfPCell titleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.confirm_lineup_title), mDefaultFont));
+            titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            titleCell.setColspan(2);
+            table.addCell(titleCell);
+
+            PdfPCell ladderCell = new PdfPCell();
+            ladderCell.setRowspan(2);
+            ladderCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(ladderCell);
+
+            PdfPCell homeTeamTable = new PdfPCell(createLineupTable4x4(TeamType.HOME, setIndex));
+            homeTeamTable.setBorder(Rectangle.NO_BORDER);
+            table.addCell(homeTeamTable);
+
+            PdfPCell guestTeamTable = new PdfPCell(createLineupTable4x4(TeamType.GUEST, setIndex));
+            guestTeamTable.setBorder(Rectangle.NO_BORDER);
+            table.addCell(guestTeamTable);
+
+            mDocument.add(table);
+        }
+    }
+
+    private PdfPTable createLineupTable4x4(TeamType teamType, int setIndex) {
+        PdfPTable table = new PdfPTable(3);
+        table.setWidthPercentage(100);
+
+        PdfPCell pos4TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_4_title), mDefaultFont));
+        pos4TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pos4TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.addCell(pos4TitleCell);
+
+        PdfPCell pos3TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_3_title), mDefaultFont));
+        pos3TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pos3TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.addCell(pos3TitleCell);
+
+        PdfPCell pos2TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_2_title), mDefaultFont));
+        pos2TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pos2TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.addCell(pos2TitleCell);
+
+        PdfPCell pos4Cell = createPlayerCell(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_4, setIndex), false);
+        table.addCell(pos4Cell);
+
+        PdfPCell pos3Cell = createPlayerCell(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false);
+        table.addCell(pos3Cell);
+
+        PdfPCell pos2Cell = createPlayerCell(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false);
+        table.addCell(pos2Cell);
+
+        PdfPCell emptyTitleCell1 = new PdfPCell(new Phrase(" "));
+        table.addCell(emptyTitleCell1);
+
+        PdfPCell pos1TitleCell = new PdfPCell(new Phrase(mContext.getResources().getString(R.string.position_1_title), mDefaultFont));
+        pos1TitleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pos1TitleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        table.addCell(pos1TitleCell);
+
+        PdfPCell emptyTitleCell2 = new PdfPCell(new Phrase(" "));
+        table.addCell(emptyTitleCell2);
+
+        PdfPCell emptyCell1 = new PdfPCell(new Phrase(" "));
+        table.addCell(emptyCell1);
+
+        PdfPCell pos1Cell = createPlayerCell(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false);
+        table.addCell(pos1Cell);
+
+        PdfPCell emptyCell2 = new PdfPCell(new Phrase(" "));
+        table.addCell(emptyCell2);
+
+        return table;
+    }
+
+    private void writeRecordedTimeGame() throws DocumentException {
+        writeRecordedGameHeader();
+
+        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+            computeNewPage(setIndex);
+
+            writeRecordedIndoorSetHeader(setIndex);
+            writeRecordedLadder(setIndex);
+        }
     }
 }

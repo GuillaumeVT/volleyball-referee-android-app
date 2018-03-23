@@ -1,17 +1,17 @@
 package com.tonkar.volleyballreferee.business.game;
 
-import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
+import com.tonkar.volleyballreferee.business.team.Indoor4x4TeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
-import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,15 +19,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
-public class IndoorGame extends Game implements IndoorTeamService {
+public class Indoor4x4Game extends Game implements IndoorTeamService {
 
-    public IndoorGame(final Rules rules, final String refereeName) {
-        super(GameType.INDOOR, rules, refereeName);
+    public Indoor4x4Game(final Rules rules, final String refereeName) {
+        super(GameType.INDOOR_4X4, rules, refereeName);
     }
 
     // For GSON Deserialization
-    public IndoorGame() {
-        this(Rules.OFFICIAL_INDOOR_RULES, "");
+    public Indoor4x4Game() {
+        this(Rules.OFFICIAL_INDOOR_4X4_RULES, "");
     }
 
     @Override
@@ -37,23 +37,29 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart) {
-        return new IndoorSet(rules, isTieBreakSet ? 15 : rules.getPointsPerSet(), servingTeamAtStart);
+        return new Indoor4x4Set(rules, isTieBreakSet ? 15 : rules.getPointsPerSet(), servingTeamAtStart);
     }
 
     private IndoorTeamDefinition getIndoorTeamDefinition(TeamType teamType) {
         return (IndoorTeamDefinition) getTeamDefinition(teamType);
     }
 
-    private IndoorTeamComposition getIndoorTeamComposition(TeamType teamType) {
-        return (IndoorTeamComposition) currentSet().getTeamComposition(teamType);
+    private Indoor4x4TeamComposition getIndoorTeamComposition(TeamType teamType) {
+        return (Indoor4x4TeamComposition) currentSet().getTeamComposition(teamType);
     }
 
     @Override
     public void addPoint(final TeamType teamType) {
+        final TeamType oldServingTeam = currentSet().getServingTeam();
+
         super.addPoint(teamType);
 
         if (!currentSet().isSetCompleted()) {
-            checkPosition1(teamType);
+            // Record the last server so we can prevent him from coming back on position 1 for serving
+            final TeamType newServingTeam = currentSet().getServingTeam();
+            if (!oldServingTeam.equals(newServingTeam)) {
+                getIndoorTeamComposition(oldServingTeam).updateLastServer();
+            }
 
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
@@ -70,21 +76,12 @@ public class IndoorGame extends Game implements IndoorTeamService {
                     && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
                 notifyTechnicalTimeoutReached();
             }
-
-            // Specific custom rule
-            if (samePlayerServedNConsecutiveTimes(teamType, getPoints(teamType), getPointsLadder())) {
-                rotateToNextPositions(teamType);
-            }
         }
     }
 
     @Override
     public void removeLastPoint() {
-        TeamType oldServingTeam = getServingTeam();
         super.removeLastPoint();
-
-        TeamType newServingTeam = getServingTeam();
-        checkPosition1(newServingTeam);
 
         final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
@@ -92,36 +89,18 @@ public class IndoorGame extends Game implements IndoorTeamService {
         if (isTieBreakSet() && leadingScore == 7) {
             swapTeams(ActionOriginType.APPLICATION);
         }
-
-        // Specific custom rule
-        if (oldServingTeam.equals(newServingTeam) && samePlayerHadServedNConsecutiveTimes(oldServingTeam, getPoints(oldServingTeam), getPointsLadder())) {
-            rotateToPreviousPositions(oldServingTeam);
-        }
-    }
-
-    private void checkPosition1(final TeamType scoringTeam) {
-        int number = getIndoorTeamComposition(scoringTeam).checkPosition1Offence();
-        if (number > 0)  {
-            substitutePlayer(scoringTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
-        }
-
-        TeamType defendingTeam = scoringTeam.other();
-        number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
-        if (number > 0)  {
-            substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
-        }
     }
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST))) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), isServing(teamType))) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
 
     @Override
     public java.util.Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
-        return getIndoorTeamComposition(teamType).getPossibleSubstitutions(positionType);
+        return getIndoorTeamComposition(teamType).getPossibleSubstitutions(positionType, isServing(teamType));
     }
 
     @Override
@@ -142,7 +121,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
         Set set = getSet(setIndex);
 
         if (set != null) {
-            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
             number = indoorTeamComposition.getActingCaptain();
         }
 
@@ -178,8 +157,6 @@ public class IndoorGame extends Game implements IndoorTeamService {
             int possibleReplacement = iterator.next();
             if (excludedNumbers.contains(possibleReplacement)) {
                 iterator.remove();
-            } else if (!isLibero(teamType, excludedNumber) && isLibero(teamType, possibleReplacement)) {
-                iterator.remove();
             }
         }
 
@@ -198,7 +175,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
         Set set = getSet(setIndex);
 
         if (set != null) {
-            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
             players = indoorTeamComposition.getPlayersInStartingLineup();
         }
 
@@ -212,7 +189,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
         Set set = getSet(setIndex);
 
         if (set != null) {
-            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
             positionType = indoorTeamComposition.getPlayerPositionInStartingLineup(number);
         }
 
@@ -226,7 +203,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
         Set set = getSet(setIndex);
 
         if (set != null) {
-            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
             number = indoorTeamComposition.getPlayerAtPositionInStartingLineup(positionType);
         }
 
@@ -239,28 +216,22 @@ public class IndoorGame extends Game implements IndoorTeamService {
     }
 
     @Override
-    public void setLiberoColor(TeamType teamType, int color) {
-        getIndoorTeamDefinition(teamType).setLiberoColor(color);
-    }
+    public void setLiberoColor(TeamType teamType, int color) {}
 
     @Override
-    public void addLibero(TeamType teamType, int number) {
-        getIndoorTeamDefinition(teamType).addLibero(number);
-    }
+    public void addLibero(TeamType teamType, int number) {}
 
     @Override
-    public void removeLibero(TeamType teamType, int number) {
-        getIndoorTeamDefinition(teamType).removeLibero(number);
-    }
+    public void removeLibero(TeamType teamType, int number) {}
 
     @Override
     public boolean isLibero(TeamType teamType, int number) {
-        return getIndoorTeamDefinition(teamType).isLibero(number);
+        return false;
     }
 
     @Override
     public boolean canAddLibero(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).canAddLibero();
+        return false;
     }
 
     @Override
@@ -280,7 +251,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
         Set set = getSet(setIndex);
 
         if (set != null) {
-            IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
+            Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
             substitutions = indoorTeamComposition.getSubstitutions();
         }
 
@@ -330,13 +301,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
             // check that the team has enough players to continue the match
             java.util.Set<Integer> players = getIndoorTeamDefinition(teamType).getPlayers();
 
-            // first remove the liberos
-
-            for (int libero : getIndoorTeamDefinition(teamType).getLiberos()) {
-                players.remove(libero);
-            }
-
-            // then remove the disqualified players
+            // Remove the disqualified players
 
             for (Sanction sanction : getGivenSanctions(teamType)) {
                 if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getSanctionType())) {
@@ -351,61 +316,12 @@ public class IndoorGame extends Game implements IndoorTeamService {
         }
     }
 
-    /* *******************************
-     * Specific custom rules section *
-     * *******************************/
-
-    public boolean samePlayerServedNConsecutiveTimes(TeamType teamType, int teamPoints, List<TeamType> pointsLadder) {
-        boolean result = false;
-
-        int limit = getRules().getCustomConsecutiveServesPerPlayer();
-        if (limit <= teamPoints) {
-            int consecutiveServes = getConsecutiveServes(teamType, pointsLadder);
-
-            if (consecutiveServes > 0 && consecutiveServes % limit == 0) {
-                result = true;
-            }
-        }
-
-        return result;
-    }
-
-    public boolean samePlayerHadServedNConsecutiveTimes(TeamType teamType, int teamPoints, List<TeamType> pointsLadder) {
-        List<TeamType> tempPointsLadder = new ArrayList<>(pointsLadder);
-        tempPointsLadder.add(teamType);
-        int tempTeamPoints = teamPoints + 1;
-        return samePlayerServedNConsecutiveTimes(teamType, tempTeamPoints, tempPointsLadder);
-    }
-
-    private int getConsecutiveServes(TeamType teamType, List<TeamType> pointsLadder) {
-        int consecutiveServes;
-        int ladderIndex = pointsLadder.size() - 1;
-
-        if (pointsLadder.isEmpty()) {
-            consecutiveServes = 0;
-        } else if (teamType.equals(pointsLadder.get(ladderIndex))) {
-            List<TeamType> consecutivePoints = new ArrayList<>();
-            while (ladderIndex >= 0 && teamType.equals(pointsLadder.get(ladderIndex))) {
-                consecutivePoints.add(teamType);
-                ladderIndex--;
-            }
-            consecutiveServes = consecutivePoints.size();
-
-            // Side-out doesn't count as a serve
-            if (ladderIndex >= 0 && !teamType.equals(pointsLadder.get(ladderIndex))) {
-                consecutiveServes--;
-            } else if (ladderIndex < 0 && !currentSet().getServingTeamAtStart().equals(teamType)) {
-                consecutiveServes--;
-            }
-        } else {
-            consecutiveServes = 0;
-        }
-
-        return consecutiveServes;
-    }
-
     @Override
     public int getExpectedNumberOfPlayersOnCourt() {
-        return 6;
+        return 4;
+    }
+
+    private boolean isServing(TeamType teamType) {
+        return teamType.equals(currentSet().getServingTeam());
     }
 }

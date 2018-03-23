@@ -72,7 +72,24 @@ public class RecordedGame implements RecordedGameService {
         String summary = String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
 
         if (mIsRecordedOnline) {
-            String url = GameType.INDOOR.equals(mGameType) ? WebUtils.VIEW_INDOOR_URL : WebUtils.VIEW_BEACH_URL;
+            final String url;
+
+            switch(mGameType) {
+                case INDOOR_4X4:
+                    url = WebUtils.VIEW_INDOOR_4X4_URL;
+                    break;
+                case BEACH:
+                    url = WebUtils.VIEW_BEACH_URL;
+                    break;
+                case TIME:
+                    url = WebUtils.VIEW_TIME_BASED_URL;
+                    break;
+                case INDOOR:
+                default:
+                    url = WebUtils.VIEW_INDOOR_URL;
+                    break;
+            }
+
             summary = summary + "\n" + String.format(Locale.getDefault(), url, mGameDate);
         }
 
@@ -291,6 +308,11 @@ public class RecordedGame implements RecordedGameService {
     @Override
     public void setGenderType(TeamType teamType, GenderType genderType) {
         getTeam(teamType).setGenderType(genderType);
+    }
+
+    @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        return 0;
     }
 
     @Override
@@ -514,6 +536,7 @@ public class RecordedGame implements RecordedGameService {
                     && (this.getGenderType().equals(other.getGenderType()))
                     && (this.getUsageType().equals(other.getUsageType()))
                     && (this.isMatchCompleted() == other.isMatchCompleted())
+                    && (this.getRefereeName().equals(other.getRefereeName()))
                     && (this.getLeagueName().equals(other.getLeagueName()))
                     && this.getTeam(TeamType.HOME).equals(other.getTeam(TeamType.HOME))
                     && this.getTeam(TeamType.GUEST).equals(other.getTeam(TeamType.GUEST))

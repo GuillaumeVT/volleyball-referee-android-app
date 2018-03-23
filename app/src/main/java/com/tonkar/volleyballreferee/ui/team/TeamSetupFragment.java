@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -123,8 +124,10 @@ public class TeamSetupFragment extends Fragment {
                     updateGender(mIndoorTeamService.getGenderType(mTeamType));
                     mPlayerAdapter.notifyDataSetChanged();
                     captainUpdated(mTeamType, mIndoorTeamService.getCaptain(mTeamType));
-                    liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
-                    mLiberoAdapter.notifyDataSetChanged();
+                    if (manageLiberos()) {
+                        liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
+                        mLiberoAdapter.notifyDataSetChanged();
+                    }
                     mScrollView.post(new Runnable() {
                         public void run() {
                             mScrollView.fullScroll(ScrollView.FOCUS_UP);
@@ -179,21 +182,28 @@ public class TeamSetupFragment extends Fragment {
             }
         });
 
-        mLiberoAdapter = new LiberoAdapter(getActivity(), mIndoorTeamService.getLiberoColor(mTeamType));
-        liberoNumbersGrid.setAdapter(mLiberoAdapter);
+        if (manageLiberos()) {
+            mLiberoAdapter = new LiberoAdapter(getActivity(), mIndoorTeamService.getLiberoColor(mTeamType));
+            liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
-        if (mIndoorTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            liberoColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
-        } else {
-            liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
-        }
-        mLiberoColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mLiberoColorButton);
-                selectLiberoColor();
+            if (mIndoorTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
+                liberoColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
+            } else {
+                liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
             }
-        });
+            mLiberoColorButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UiUtils.animate(getContext(), mLiberoColorButton);
+                    selectLiberoColor();
+                }
+            });
+        } else {
+            liberoNumbersGrid.setVisibility(View.GONE);
+            mLiberoColorButton.setVisibility(View.GONE);
+            final TextView liberoNumbersTitle =  view.findViewById(R.id.team_libero_numbers_title);
+            liberoNumbersTitle.setVisibility(View.GONE);
+        }
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
         updateGender(mIndoorTeamService.getGenderType(mTeamType));
@@ -286,7 +296,9 @@ public class TeamSetupFragment extends Fragment {
                         mIndoorTeamService.removePlayer(mTeamType, number);
                     }
                     updateCaptain();
-                    mLiberoAdapter.notifyDataSetChanged();
+                    if (manageLiberos()) {
+                        mLiberoAdapter.notifyDataSetChanged();
+                    }
                     computeConfirmItemVisibility();
                 }
             });
@@ -444,4 +456,7 @@ public class TeamSetupFragment extends Fragment {
         }
     }
 
+    private boolean manageLiberos() {
+        return mIndoorTeamService.getExpectedNumberOfPlayersOnCourt() == 6;
+    }
 }

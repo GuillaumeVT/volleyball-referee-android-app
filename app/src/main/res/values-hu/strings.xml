@@ -18,10 +18,11 @@
     <string name="delete">Törlés</string>
     <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
+    <string name="start_indoor_4x4_game">Teremröplabda 4x4</string>
     <string name="start_time_based_game">Időalapú</string>
     <string name="start_score_based_game_official">Eredménytábla - FIVB szabályok</string>
     <string name="start_score_based_game_custom">Eredménytábla - Egyedi szabályok</string>
-    <string name="match_group">Mérkőzés indítása</string>
+    <string name="match_group">Új mérkőzés (egyéb típusok)</string>
     <string name="data_group">Adatok</string>
     <string name="configuration_group">Beállítások</string>
     <string name="view_live_games">Élő mérközések megtekintése online</string>
@@ -97,6 +98,12 @@
     <string name="coach_abbreviation">E.</string>
     <string name="set_lost_incomplete">%s elveszítette a játszmát, mert nem teljes a csapat</string>
     <string name="match_lost_incomplete">%s elveszítette a mérkőzést, mert nem teljes a csapat</string>
+    <string name="position_1_title">I</string>
+    <string name="position_2_title">II</string>
+    <string name="position_3_title">III</string>
+    <string name="position_4_title">IV</string>
+    <string name="position_5_title">V</string>
+    <string name="position_6_title">VI</string>
 
     <!-- Rules activity -->
     <string name="rules">Egyedi szabályok</string>

@@ -17,7 +17,6 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -130,8 +129,8 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
                 break;
         }
 
-        viewHolder.gameTypeImage.setVisibility(GameType.INDOOR.equals(recordedGameService.getGameType()) ? View.GONE : View.VISIBLE);
-        viewHolder.usageTypeImage.setVisibility(UsageType.TIME_SCOREBOARD.equals(recordedGameService.getUsageType()) ? View.VISIBLE : View.GONE);
+        viewHolder.gameTypeImage.setVisibility(GameType.BEACH.equals(recordedGameService.getGameType()) ? View.VISIBLE : View.GONE);
+        viewHolder.usageTypeImage.setVisibility(GameType.TIME.equals(recordedGameService.getGameType()) ? View.VISIBLE : View.GONE);
 
         if (PrefUtils.isPrefOnlineRecordingEnabled(mContext)) {
             viewHolder.statusImage.setVisibility(View.VISIBLE);

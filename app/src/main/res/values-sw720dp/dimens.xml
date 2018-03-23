@@ -41,6 +41,7 @@
     <dimen name="indoor_court_y_margin">24dp</dimen>
     <dimen name="beach_court_x_margin">48dp</dimen>
     <dimen name="beach_court_y_margin">24dp</dimen>
+    <dimen name="indoor_4v4_court_x_margin">16dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">12sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">16sp</dimen>

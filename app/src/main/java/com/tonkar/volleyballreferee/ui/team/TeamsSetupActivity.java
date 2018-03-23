@@ -87,8 +87,8 @@ public class TeamsSetupActivity extends AppCompatActivity {
 
     public void computeConfirmItemVisibility() {
         if (mConfirmItem != null) {
-            if (mIndoorTeamService.getTeamName(TeamType.HOME).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.HOME) < 6
-                    || mIndoorTeamService.getTeamName(TeamType.GUEST).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.GUEST) < 6
+            if (mIndoorTeamService.getTeamName(TeamType.HOME).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.HOME) < mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
+                    || mIndoorTeamService.getTeamName(TeamType.GUEST).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.GUEST) < mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
                     || mIndoorTeamService.getCaptain(TeamType.HOME) < 1 || mIndoorTeamService.getCaptain(TeamType.GUEST) < 1) {
                 Log.i("VBR-TSActivity", "Confirm button is invisible");
                 mConfirmItem.setVisible(false);

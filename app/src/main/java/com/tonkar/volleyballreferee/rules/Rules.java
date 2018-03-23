@@ -65,10 +65,12 @@ public class Rules {
         mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
     }
 
-    public static final Rules OFFICIAL_INDOOR_RULES = new Rules(5, 25, true, true, true, true, 2, 30,
+    public static final Rules OFFICIAL_INDOOR_RULES     = new Rules(5, 25, true, true, true, true, 2, 30,
             true, 60, true, 180, 6, false, 9999);
-    public static final Rules OFFICIAL_BEACH_RULES  = new Rules(3, 21, true, true, true, true, 1, 30,
+    public static final Rules OFFICIAL_BEACH_RULES      = new Rules(3, 21, true, true, true, true, 1, 30,
             true, 30, true, 60, 0, true, 9999);
+    public static final Rules OFFICIAL_INDOOR_4X4_RULES = new Rules(5, 25, true, true, true, true, 2, 30,
+            true, 60, true, 180, 4, false, 9999);
 
     public static Rules createRulesFromPref(final SharedPreferences sharedPreferences, final Rules defaultRules) {
         int setsPerGame = getInt(sharedPreferences, "pref_sets_per_game", defaultRules.getSetsPerGame());

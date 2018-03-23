@@ -66,37 +66,28 @@ public class LineupAdapter extends BaseAdapter {
         }
 
         PositionType positionType = viewIndexToPosition(index);
-        int number = mIndoorTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
-        viewHolder.positionText.setText(String.valueOf(number));
-        viewHolder.positionText.setWidth(measureTextWidth());
 
-        UiUtils.styleBaseIndoorTeamText(mContext, mIndoorTeamService, mTeamType, number, viewHolder.positionText);
-
-        switch (positionType) {
-            case POSITION_1:
-                viewHolder.positionTitle.setText("I");
-                break;
-            case POSITION_2:
-                viewHolder.positionTitle.setText("II");
-                break;
-            case POSITION_3:
-                viewHolder.positionTitle.setText("III");
-                break;
-            case POSITION_4:
-                viewHolder.positionTitle.setText("IV");
-                break;
-            case POSITION_5:
-                viewHolder.positionTitle.setText("V");
-                break;
-            case POSITION_6:
-                viewHolder.positionTitle.setText("VI");
-                break;
+        if (isVisible(positionType)) {
+            int number = mIndoorTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
+            viewHolder.positionText.setWidth(measureTextWidth());
+            viewHolder.positionText.setText(String.valueOf(number));
+            UiUtils.styleBaseIndoorTeamText(mContext, mIndoorTeamService, mTeamType, number, viewHolder.positionText);
+            viewHolder.positionTitle.setText(UiUtils.getPositionTitle(mContext, positionType));
+            viewHolder.positionText.setVisibility(View.VISIBLE);
+            viewHolder.positionTitle.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.positionText.setVisibility(View.INVISIBLE);
+            viewHolder.positionTitle.setVisibility(View.INVISIBLE);
         }
 
         return positionView;
     }
 
-    private PositionType viewIndexToPosition(int index) {
+    protected boolean isVisible(PositionType positionType) {
+        return true;
+    }
+
+    protected PositionType viewIndexToPosition(int index) {
         PositionType positionType = null;
 
         switch (index) {

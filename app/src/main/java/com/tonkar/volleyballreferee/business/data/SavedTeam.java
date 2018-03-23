@@ -106,6 +106,11 @@ public class SavedTeam implements BaseIndoorTeamService {
     }
 
     @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        return 6;
+    }
+
+    @Override
     public void initTeams() {}
 
     @Override

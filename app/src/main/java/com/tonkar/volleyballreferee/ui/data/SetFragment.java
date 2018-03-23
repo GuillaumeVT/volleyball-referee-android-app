@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.SanctionsListAdapter;
@@ -47,13 +48,23 @@ public class SetFragment extends Fragment {
 
         if (gameService.getPlayersInStartingLineup(TeamType.HOME, setIndex).size() > 0) {
             GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
-            LineupAdapter homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
+            final LineupAdapter homeTeamLineupAdapter;
+            if (GameType.INDOOR.equals(gameService.getGameType())) {
+                homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
+            } else {
+                homeTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
+            }
             homeTeamLineup.setAdapter(homeTeamLineupAdapter);
         }
 
         if (gameService.getPlayersInStartingLineup(TeamType.GUEST, setIndex).size() > 0) {
             GridView guestTeamLineup = view.findViewById(R.id.guest_team_lineup);
-            LineupAdapter guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
+            final LineupAdapter guestTeamLineupAdapter;
+            if (GameType.INDOOR.equals(gameService.getGameType())) {
+                guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
+            } else {
+                guestTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
+            }
             guestTeamLineup.setAdapter(guestTeamLineupAdapter);
         }
 

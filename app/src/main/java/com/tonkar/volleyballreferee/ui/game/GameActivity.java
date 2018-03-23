@@ -701,10 +701,17 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
                         switch (item.getItemId()) {
                             case R.id.court_position_tab:
-                                if (GameType.INDOOR.equals(mGameService.getGameType())) {
-                                    fragment = IndoorCourtFragment.newInstance();
-                                } else {
-                                    fragment = BeachCourtFragment.newInstance();
+                                switch (mGameService.getGameType()) {
+                                    case INDOOR_4X4:
+                                        fragment = Indoor4x4CourtFragment.newInstance();
+                                        break;
+                                    case BEACH:
+                                        fragment = BeachCourtFragment.newInstance();
+                                        break;
+                                    case INDOOR:
+                                    default:
+                                        fragment = IndoorCourtFragment.newInstance();
+                                        break;
                                 }
                                 break;
                             case R.id.substitutions_tab:

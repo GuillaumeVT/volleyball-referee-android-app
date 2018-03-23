@@ -57,7 +57,7 @@ public abstract class SanctionSelectionDialog {
 
         mSanctionGrid = sanctionsView.findViewById(R.id.sanction_grid);
 
-        if (GameType.INDOOR.equals(mGameType)) {
+        if (GameType.INDOOR.equals(mGameType) || GameType.INDOOR_4X4.equals(mGameType)) {
             mPlayerAdapter = new IndoorPlayerAdapter(context, gameService, teamType);
             mSanctionGrid.setAdapter(mPlayerAdapter);
         }
@@ -84,7 +84,7 @@ public abstract class SanctionSelectionDialog {
     }
 
     private void computePlayersVisibility() {
-        if (GameType.INDOOR.equals(mGameType)) {
+        if (GameType.INDOOR.equals(mGameType) || GameType.INDOOR_4X4.equals(mGameType)) {
             if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
                 mSanctionGrid.setVisibility(View.GONE);
             } else {
@@ -96,7 +96,7 @@ public abstract class SanctionSelectionDialog {
     }
 
     private void computeOkAvailability() {
-        if (GameType.INDOOR.equals(mGameType)) {
+        if (GameType.INDOOR.equals(mGameType) || GameType.INDOOR_4X4.equals(mGameType)) {
             if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
                 mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
             } else if (mPlayerAdapter.getSelectedPlayer() >= 0) {

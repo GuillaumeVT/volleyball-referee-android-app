@@ -17,10 +17,11 @@
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
+    <string name="start_indoor_4x4_game">Salle 4x4</string>
     <string name="start_time_based_game">En temps</string>
     <string name="start_score_based_game_official">Panneau de score - Règles FIVB</string>
     <string name="start_score_based_game_custom">Panneau de score - Mes règles</string>
-    <string name="match_group">Démarrer un match simplifié</string>
+    <string name="match_group">Nouveau match (autres types)</string>
     <string name="data_group">Données</string>
     <string name="configuration_group">Configuration</string>
     <string name="view_live_games">Suivre les matchs en direct</string>
@@ -96,6 +97,12 @@
     <string name="coach_abbreviation">C.</string>
     <string name="set_lost_incomplete">%s perd le set car l\'équipe est incomplète</string>
     <string name="match_lost_incomplete">%s perd le match car l\'équipe est incomplète</string>
+    <string name="position_1_title">I</string>
+    <string name="position_2_title">II</string>
+    <string name="position_3_title">III</string>
+    <string name="position_4_title">IV</string>
+    <string name="position_5_title">V</string>
+    <string name="position_6_title">VI</string>
 
     <!-- Rules activity -->
     <string name="rules">Mes règles</string>

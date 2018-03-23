@@ -64,4 +64,12 @@ public class GameFactory {
         return game;
     }
 
+    public static Indoor4x4Game createIndoor4x4Game(final String refereeName) {
+        Log.i("VBR-Core", "Create indoor 4x4 game with official rules");
+        Rules.OFFICIAL_INDOOR_4X4_RULES.printRules();
+        Indoor4x4Game game = new Indoor4x4Game(Rules.OFFICIAL_INDOOR_4X4_RULES, refereeName);
+        ServicesProvider.getInstance().initGameService(game);
+        return game;
+    }
+
 }

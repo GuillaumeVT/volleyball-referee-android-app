@@ -14,6 +14,7 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -28,7 +29,6 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 
 import java.io.File;
 import java.io.IOException;
@@ -562,7 +562,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                     set.getCalledTimeouts(TeamType.GUEST).add(to);
                 }
 
-                if (UsageType.TIME_SCOREBOARD.equals(mRecordedGame.getUsageType()) && mGameService instanceof TimeBasedGameService) {
+                if (GameType.TIME.equals(mRecordedGame.getGameType()) && mGameService instanceof TimeBasedGameService) {
                     TimeBasedGameService timeBasedGameService = (TimeBasedGameService) mGameService;
                     set.setRemainingTime(timeBasedGameService.getRemainingTime(setIndex));
                 }
