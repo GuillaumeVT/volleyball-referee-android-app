@@ -72,4 +72,13 @@ public class GameFactory {
         return game;
     }
 
+    public static Indoor4x4Game createIndoor4x4GameUserRules(final SharedPreferences sharedPreferences, final String refereeName) {
+        Log.i("VBR-Core", "Create indoor 4x4 game with user rules");
+        Rules rules = Rules.createRulesFromPref(sharedPreferences, Rules.OFFICIAL_INDOOR_4X4_RULES);
+        rules.printRules();
+        Indoor4x4Game game = new Indoor4x4Game(rules, refereeName);
+        ServicesProvider.getInstance().initGameService(game);
+        return game;
+    }
+
 }

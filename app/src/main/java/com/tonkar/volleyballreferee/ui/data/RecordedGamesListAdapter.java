@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -34,7 +33,6 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         TextView  scoreText;
         ImageView genderTypeImage;
         ImageView gameTypeImage;
-        ImageView usageTypeImage;
         ImageView statusImage;
         TextView  leagueText;
     }
@@ -86,7 +84,6 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
             viewHolder.scoreText = gameView.findViewById(R.id.recorded_game_score);
             viewHolder.genderTypeImage = gameView.findViewById(R.id.recorded_game_gender_image);
             viewHolder.gameTypeImage = gameView.findViewById(R.id.recorded_game_type_image);
-            viewHolder.usageTypeImage = gameView.findViewById(R.id.recorded_game_usage_image);
             viewHolder.statusImage = gameView.findViewById(R.id.recorded_game_status_image);
             viewHolder.leagueText = gameView.findViewById(R.id.recorded_game_league);
             gameView.setTag(viewHolder);
@@ -129,8 +126,25 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
                 break;
         }
 
-        viewHolder.gameTypeImage.setVisibility(GameType.BEACH.equals(recordedGameService.getGameType()) ? View.VISIBLE : View.GONE);
-        viewHolder.usageTypeImage.setVisibility(GameType.TIME.equals(recordedGameService.getGameType()) ? View.VISIBLE : View.GONE);
+        switch (recordedGameService.getGameType()) {
+            case INDOOR_4X4:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
+                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                break;
+            case BEACH:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
+                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                break;
+            case TIME:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_time_based);
+                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+                break;
+            case INDOOR:
+            default:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_6x6);
+                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                break;
+        }
 
         if (PrefUtils.isPrefOnlineRecordingEnabled(mContext)) {
             viewHolder.statusImage.setVisibility(View.VISIBLE);

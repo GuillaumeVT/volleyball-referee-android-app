@@ -17,11 +17,12 @@
     <string name="delete">Unsun</string>
     <string name="ignore">Ignoruj</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game">Siatkówka halowa 4x4</string>
+    <string name="start_indoor_4x4_game_official">Siatkówka 4x4</string>
+    <string name="start_indoor_4x4_game_custom">Siatkówka 4x4 - Moje zasady</string>
     <string name="start_time_based_game">Rozpocznij grę na czas</string>
     <string name="start_score_based_game_official">Tablica wyników - Zasady FIVB</string>
     <string name="start_score_based_game_custom">Tablica wyników - Moje zasady</string>
-    <string name="match_group">Nowa gra (inne typy)</string>
+    <string name="match_group">Nowa gra - Inne typy</string>
     <string name="data_group">Dane</string>
     <string name="configuration_group">Konfiguracja</string>
     <string name="view_live_games">Oglądaj mecze na żywo w Internecie</string>

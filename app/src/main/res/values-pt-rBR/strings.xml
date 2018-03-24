@@ -17,11 +17,12 @@
     <string name="delete">Deletar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game">Voleibol de quadra 4x4</string>
+    <string name="start_indoor_4x4_game_official">Voleibol 4x4</string>
+    <string name="start_indoor_4x4_game_custom">Voleibol 4x4 - Regras personalizadas</string>
     <string name="start_time_based_game">Partida por tempo</string>
     <string name="start_score_based_game_official">Placar - Regras da FIVB</string>
     <string name="start_score_based_game_custom">Placar - Regras personalizadas</string>
-    <string name="match_group">Nova partida (outros tipos)</string>
+    <string name="match_group">Nova partida - Outros tipos</string>
     <string name="data_group">Dados</string>
     <string name="configuration_group">Configurações</string>
     <string name="view_live_games">Acompanhe partidas ao vivo</string>

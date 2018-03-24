@@ -156,9 +156,13 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(browserIntent);
                         }
                         break;
-                    case R.id.action_start_indoor_4x4_game:
+                    case R.id.action_start_indoor_4x4_game_official:
                         Log.i("VBR-MainActivity", "Start a 4x4 indoor game");
-                        startIndoor4x4Game();
+                        startIndoor4x4Game(false);
+                        break;
+                    case R.id.action_start_indoor_4x4_game_custom:
+                        Log.i("VBR-MainActivity", "Start a custom 4x4 indoor game");
+                        startIndoor4x4Game(true);
                         break;
                     case R.id.action_start_time_based_game:
                         Log.i("VBR-MainActivity", "Start a time-based game");
@@ -271,8 +275,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void startIndoor4x4Game() {
-        GameFactory.createIndoor4x4Game(PrefUtils.getPrefRefereeName(this));
+    private void startIndoor4x4Game(final boolean custom) {
+        final String refereeName = PrefUtils.getPrefRefereeName(this);
+
+        if (custom) {
+            GameFactory.createIndoor4x4GameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
+        } else {
+            GameFactory.createIndoor4x4Game(refereeName);
+        }
 
         Log.i("VBR-MainActivity", "Start activity to setup teams");
         final Intent intent = new Intent(this, TeamsSetupActivity.class);

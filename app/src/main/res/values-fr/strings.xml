@@ -17,11 +17,12 @@
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game">Salle 4x4</string>
+    <string name="start_indoor_4x4_game_official">Salle 4x4</string>
+    <string name="start_indoor_4x4_game_custom">Salle 4x4 - Mes règles</string>
     <string name="start_time_based_game">En temps</string>
     <string name="start_score_based_game_official">Panneau de score - Règles FIVB</string>
     <string name="start_score_based_game_custom">Panneau de score - Mes règles</string>
-    <string name="match_group">Nouveau match (autres types)</string>
+    <string name="match_group">Nouveau match - Autres types</string>
     <string name="data_group">Données</string>
     <string name="configuration_group">Configuration</string>
     <string name="view_live_games">Suivre les matchs en direct</string>

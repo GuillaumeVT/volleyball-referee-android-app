@@ -17,11 +17,12 @@
     <string name="delete">Cancella</string>
     <string name="ignore">Ignora</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game">Pallavolo 4x4</string>
+    <string name="start_indoor_4x4_game_official">Pallavolo 4x4</string>
+    <string name="start_indoor_4x4_game_custom">Pallavolo 4x4 - Regole personalizzate</string>
     <string name="start_time_based_game">A tempo</string>
     <string name="start_score_based_game_official">A punti - Regole FIVB</string>
     <string name="start_score_based_game_custom">A punti - Regole personalizzate</string>
-    <string name="match_group">Nuova Partita (altri tipi)</string>
+    <string name="match_group">Nuova Partita - Altri tipi</string>
     <string name="data_group">Dati</string>
     <string name="configuration_group">Configurazione</string>
     <string name="view_live_games">Guardare le partite in diretta in linea</string>

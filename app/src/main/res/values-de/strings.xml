@@ -17,11 +17,12 @@
     <string name="delete">Löschen</string>
     <string name="ignore">Ignorieren</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game">Hallenvolleyball 4x4</string>
+    <string name="start_indoor_4x4_game_official">Hallenvolleyball 4x4</string>
+    <string name="start_indoor_4x4_game_custom">Hallenvolleyball 4x4 - Eigene Regeln</string>
     <string name="start_time_based_game">Zeitbasiert</string>
     <string name="start_score_based_game_official">Anzeigetafel - FIVB Regeln</string>
     <string name="start_score_based_game_custom">Anzeigetafel - Eigene Regeln</string>
-    <string name="match_group">Neues Spiel (andere Arten)</string>
+    <string name="match_group">Neues Spiel - Andere Arten</string>
     <string name="data_group">Daten</string>
     <string name="configuration_group">Konfiguration</string>
     <string name="view_live_games">Live-Spiele online ansehen</string>

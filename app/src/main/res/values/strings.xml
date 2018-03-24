@@ -17,11 +17,12 @@
     <string name="delete">Delete</string>
     <string name="ignore">Ignore</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game">Indoor volleyball 4x4</string>
+    <string name="start_indoor_4x4_game_official">Volleyball 4x4</string>
+    <string name="start_indoor_4x4_game_custom">Volleyball 4x4 - My own rules</string>
     <string name="start_time_based_game">Time-based</string>
     <string name="start_score_based_game_official">Scoreboard - FIVB rules</string>
     <string name="start_score_based_game_custom">Scoreboard - My own rules</string>
-    <string name="match_group">New match (other types)</string>
+    <string name="match_group">New match - Other types</string>
     <string name="data_group">Data</string>
     <string name="configuration_group">Configuration</string>
     <string name="view_live_games">View live matches online</string>
