@@ -58,7 +58,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
             // In indoor volley, the teams change sides after the 8th during the tie break
-            if (isTieBreakSet() && leadingScore == 8 && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
+            if (isTieBreakSet() && leadingScore == 8 && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST) && teamType.equals(currentSet().getLeadingTeam())) {
                 swapTeams(ActionOriginType.APPLICATION);
             }
 
@@ -80,7 +80,8 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     public void removeLastPoint() {
-        TeamType oldServingTeam = getServingTeam();
+        final TeamType oldServingTeam = getServingTeam();
+        final int oldLeadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
         super.removeLastPoint();
 
         TeamType newServingTeam = getServingTeam();
@@ -89,7 +90,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
         final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
         // In indoor volley, the teams change sides after the 8th during the tie break
-        if (isTieBreakSet() && leadingScore == 7) {
+        if (isTieBreakSet() && leadingScore == 7 && oldLeadingScore == 8) {
             swapTeams(ActionOriginType.APPLICATION);
         }
 
