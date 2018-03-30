@@ -57,8 +57,10 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
         if (!currentSet().isSetCompleted()) {
             // Record the last server so we can prevent him from coming back on position 1 for serving
             final TeamType newServingTeam = currentSet().getServingTeam();
-            if (!oldServingTeam.equals(newServingTeam)) {
-                getIndoorTeamComposition(oldServingTeam).updateLastServer();
+            if (oldServingTeam.equals(newServingTeam)) {
+                getIndoorTeamComposition(oldServingTeam).forbidPosition2ToCurrentServer();
+            } else {
+                getIndoorTeamComposition(oldServingTeam).allowPosition1();
             }
 
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
@@ -94,14 +96,14 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), isServing(teamType))) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST))) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
 
     @Override
     public java.util.Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
-        return getIndoorTeamComposition(teamType).getPossibleSubstitutions(positionType, isServing(teamType));
+        return getIndoorTeamComposition(teamType).getPossibleSubstitutions(positionType);
     }
 
     @Override

@@ -117,7 +117,7 @@ public class Indoor4x4GameTest {
     }
 
     @Test
-    public void substitutePlayer_Pos1Server() {
+    public void substitutePlayer_Pos1Server_defense() {
         Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR");
 
         for (int index = 1; index <= 8; index++) {
@@ -152,5 +152,32 @@ public class Indoor4x4GameTest {
 
         game.addPoint(TeamType.GUEST);
         assertEquals(true, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
+    }
+
+    @Test
+    public void substitutePlayer_Pos1Server_attack() {
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR");
+
+        for (int index = 1; index <= 8; index++) {
+            game.addPlayer(TeamType.HOME, index);
+            game.addPlayer(TeamType.GUEST, index);
+        }
+
+        game.initTeams();
+
+        for (int index = 1; index <= 4; index++) {
+            game.substitutePlayer(TeamType.HOME, index, PositionType.fromInt(index), ActionOriginType.USER);
+            game.substitutePlayer(TeamType.GUEST, index, PositionType.fromInt(index), ActionOriginType.USER);
+        }
+
+        game.confirmStartingLineup();
+
+        game.addPoint(TeamType.HOME);
+        assertEquals(1, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));
+
+        game.substitutePlayer(TeamType.HOME, 5, PositionType.POSITION_1, ActionOriginType.USER);
+        assertEquals(5, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));
+        assertEquals(true, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
+        assertEquals(false, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
     }
 }

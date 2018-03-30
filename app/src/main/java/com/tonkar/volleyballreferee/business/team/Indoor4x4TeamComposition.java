@@ -7,6 +7,7 @@ import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,10 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     private final List<Substitution>    mFullSubstitutions;
     @SerializedName("actingCaptain")
     private       int                   mActingCaptain;
-    @SerializedName("lastServer")
-    private       int                   mLastServer;
+    @SerializedName("forbiddenSub1")
+    private final Set<Integer>          mForbiddenSub1;
+    @SerializedName("forbiddenSub2")
+    private final Set<Integer>          mForbiddenSub2;
 
     public Indoor4x4TeamComposition(final TeamDefinition teamDefinition, int maxSubstitutionsPerSet) {
         super(teamDefinition);
@@ -39,7 +42,8 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         mSubstitutions = new LinkedHashMap<>();
         mFullSubstitutions = new ArrayList<>();
         mActingCaptain = -1;
-        mLastServer = -1;
+        mForbiddenSub1 = new HashSet<>();
+        mForbiddenSub2 = new HashSet<>();
     }
 
     // For GSON Deserialization
@@ -56,10 +60,10 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         return (IndoorTeamDefinition) getTeamDefinition();
     }
 
-    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints, boolean isServing) {
+    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
         boolean result = false;
 
-        if (isPossibleSubstitution(number, positionType, isServing)) {
+        if (isPossibleSubstitution(number, positionType)) {
             result = super.substitutePlayer(number, positionType, homeTeamPoints, guestTeamPoints);
         }
 
@@ -111,7 +115,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         return mSubstitutions.size() < mMaxSubstitutionsPerSet;
     }
 
-    public Set<Integer> getPossibleSubstitutions(PositionType positionType, boolean isServing) {
+    public Set<Integer> getPossibleSubstitutions(PositionType positionType) {
         Set<Integer> availablePlayers = new TreeSet<>();
 
         // Once the starting line-up is confirmed, the rules must apply
@@ -121,9 +125,21 @@ public class Indoor4x4TeamComposition extends TeamComposition {
                 // Substitutions are free
                 availablePlayers.addAll(getPlayersOnBench());
 
-                // The last server cannot come back on position 1 for serving
-                if (mLastServer > 0 && availablePlayers.contains(mLastServer) && ((isServing && PositionType.POSITION_1.equals(positionType)) || (!isServing && PositionType.POSITION_2.equals(positionType)))) {
-                    availablePlayers.remove(mLastServer);
+                // A player who just served cannot serve again on the next rotation
+                if (PositionType.POSITION_1.equals(positionType)) {
+                    for (int player : mForbiddenSub1) {
+                        if (availablePlayers.contains(player)) {
+                            availablePlayers.remove(player);
+                        }
+                    }
+                }
+                // A player who just served cannot serve again on the next rotation
+                if (PositionType.POSITION_2.equals(positionType)) {
+                    for (int player : mForbiddenSub2) {
+                        if (availablePlayers.contains(player)) {
+                            availablePlayers.remove(player);
+                        }
+                    }
                 }
             }
         } else {
@@ -135,7 +151,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         return availablePlayers;
     }
 
-    private boolean isPossibleSubstitution(int number, PositionType positionType, boolean isServing) {
+    private boolean isPossibleSubstitution(int number, PositionType positionType) {
         boolean result;
 
         if (PositionType.POSITION_5.equals(positionType) || PositionType.POSITION_6.equals(positionType)) {
@@ -143,7 +159,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         } else if (PositionType.BENCH.equals(positionType) && !isStartingLineupConfirmed()) {
             result = true;
         } else {
-            result = getPossibleSubstitutions(positionType, isServing).contains(number);
+            result = getPossibleSubstitutions(positionType).contains(number);
         }
 
         return result;
@@ -215,8 +231,23 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         return players;
     }
 
-    public void updateLastServer() {
-        mLastServer = getPlayerAtPosition(PositionType.POSITION_1);
+    public void allowPosition1() {
+        mForbiddenSub1.clear();
+    }
+
+    public void forbidPosition2ToCurrentServer() {
+        mForbiddenSub2.add(getPlayerAtPosition(PositionType.POSITION_1));
+    }
+
+    @Override
+    public void rotateToNextPositions() {
+        super.rotateToNextPositions();
+
+        if (mStartingLineupConfirmed) {
+            mForbiddenSub1.addAll(mForbiddenSub2);
+            mForbiddenSub2.clear();
+            forbidPosition2ToCurrentServer();
+        }
     }
 
     @Override
