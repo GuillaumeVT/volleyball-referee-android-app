@@ -197,28 +197,22 @@ public class IndoorCourtFragment extends CourtFragment {
         if (!mIndoorTeamService.isStartingLineupConfirmed()
                 && mIndoorTeamService.getPlayersOnCourt(TeamType.HOME).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
                 && mIndoorTeamService.getPlayersOnCourt(TeamType.GUEST).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()) {
-            AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
-                    getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
-            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                @Override
-                public void onNegativeButtonClicked() {}
-
-                @Override
-                public void onPositiveButtonClicked() {
-                    mIndoorTeamService.confirmStartingLineup();
-                    checkCaptain(TeamType.HOME, -1);
-                    checkCaptain(TeamType.GUEST, -1);
-                }
-
-                @Override
-                public void onNeutralButtonClicked() {}
-            });
-            alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
+            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
+            if (alertDialogFragment == null) {
+                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
+                        getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
+                alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
+            }
+            setStartingLineupDialogListener(alertDialogFragment);
         }
     }
 
     protected void restoreStartingLineupDialog() {
         AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
+        setStartingLineupDialogListener(alertDialogFragment);
+    }
+
+    private void setStartingLineupDialogListener(final AlertDialogFragment alertDialogFragment) {
         if (alertDialogFragment != null) {
             alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
                 @Override
@@ -228,6 +222,8 @@ public class IndoorCourtFragment extends CourtFragment {
                 @Override
                 public void onPositiveButtonClicked() {
                     mIndoorTeamService.confirmStartingLineup();
+                    checkCaptain(TeamType.HOME, -1);
+                    checkCaptain(TeamType.GUEST, -1);
                 }
 
                 @Override

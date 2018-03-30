@@ -341,9 +341,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onPositiveButtonClicked() {
                         Log.i("VBR-MainActivity", "Start game activity and resume current game");
                         if (mGameService == null) {
-                            AlertDialogFragment errorDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_error),
-                                    getResources().getString(android.R.string.ok));
-                            errorDialogFragment.show(getSupportFragmentManager(), "permission");
+                            Toast.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
                         } else {
                             if (GameType.TIME.equals(ServicesProvider.getInstance().getScoreService().getGameType())) {
                                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);

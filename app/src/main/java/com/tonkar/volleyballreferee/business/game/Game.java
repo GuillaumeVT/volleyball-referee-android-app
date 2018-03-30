@@ -334,10 +334,16 @@ public abstract class Game extends BaseGame {
         } else {
             mSets.add(createSet(mRules, isTieBreakSet(), mServingTeamAtStart));
             initTeams();
-            // Both teams change sides between sets
-            swapTeams(ActionOriginType.APPLICATION);
-            // The service goes to the other team
-            swapServiceAtStart();
+            if (isTieBreakSet()) {
+                // Before the tie break the toss has to be done
+                swapTeams(ActionOriginType.USER);
+                swapTeams(ActionOriginType.USER);
+            } else {
+                // Both teams change sides between sets
+                swapTeams(ActionOriginType.APPLICATION);
+                // The service goes to the other team
+                swapServiceAtStart();
+            }
 
             if (mRules.areGameIntervalsEnabled()) {
                 notifyGameIntervalReached();
