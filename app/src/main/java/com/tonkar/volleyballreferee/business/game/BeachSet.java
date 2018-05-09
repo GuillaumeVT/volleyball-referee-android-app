@@ -8,13 +8,13 @@ import com.tonkar.volleyballreferee.rules.Rules;
 
 public class BeachSet extends Set {
 
-    public BeachSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
-        super(rules, pointsToWinSet, servingTeamAtStart);
+    public BeachSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
+        super(rules, pointsToWinSet, servingTeamAtStart, homeTeamDefinition, guestTeamDefinition);
     }
 
     // For GSON Deserialization
     public BeachSet() {
-        this(Rules.OFFICIAL_BEACH_RULES, 0, TeamType.HOME);
+        super(Rules.OFFICIAL_BEACH_RULES, 0, TeamType.HOME);
     }
 
     @Override

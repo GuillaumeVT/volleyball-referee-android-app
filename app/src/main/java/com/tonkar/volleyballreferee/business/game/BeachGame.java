@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.business.game;
 
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -11,13 +12,13 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class BeachGame extends Game implements BeachTeamService {
 
-    BeachGame(final Rules rules, final String refereeName) {
-        super(GameType.BEACH, rules, refereeName);
+    BeachGame(final String refereeName, final UserId userId) {
+        super(GameType.BEACH, refereeName, userId);
     }
 
     // For GSON Deserialization
     public BeachGame() {
-        this(Rules.OFFICIAL_BEACH_RULES, "");
+        this("", UserId.VBR_USER_ID);
     }
 
     @Override
@@ -26,8 +27,8 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart) {
-        return new BeachSet(rules, isTieBreakSet ? 15 : rules.getPointsPerSet(), servingTeamAtStart);
+    protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
+        return new BeachSet(rules, isTieBreakSet ? rules.getPointsInTieBreak() : rules.getPointsPerSet(), servingTeamAtStart, homeTeamDefinition, guestTeamDefinition);
     }
 
     @Override
@@ -36,10 +37,10 @@ public class BeachGame extends Game implements BeachTeamService {
 
         if (!currentSet().isSetCompleted()) {
             // In beach volley, the teams change sides every 7 points, or every 5 points during the tie break
-            int period = isTieBreakSet() ? 5 : 7;
+            int period = isTieBreakSet() ? getRules().getChangeSidesPeriodTieBreak() : getRules().getChangeSidesPeriod();
             int combinedScores = currentSet().getPoints(TeamType.HOME) + currentSet().getPoints(TeamType.GUEST);
 
-            if (getRules().isChangeSidesEvery7Points() && combinedScores > 0 && (combinedScores % period) == 0) {
+            if (getRules().isChangeSidesBeach() && combinedScores > 0 && (combinedScores % period) == 0) {
                 swapTeams(ActionOriginType.APPLICATION);
             }
 
@@ -55,10 +56,10 @@ public class BeachGame extends Game implements BeachTeamService {
         super.removeLastPoint();
 
         // In beach volley, the teams change sides every 7 points, or every 5 points during the tie break
-        int period = isTieBreakSet() ? 5 : 7;
+        int period = isTieBreakSet() ? getRules().getChangeSidesPeriodTieBreak() : getRules().getChangeSidesPeriod();
         int combinedScores = currentSet().getPoints(TeamType.HOME) + currentSet().getPoints(TeamType.GUEST);
 
-        if (getRules().isChangeSidesEvery7Points() && combinedScores > 0 && (combinedScores % period) == (period - 1)) {
+        if (getRules().isChangeSidesBeach() && combinedScores > 0 && (combinedScores % period) == (period - 1)) {
             swapTeams(ActionOriginType.APPLICATION);
         }
     }

@@ -5,6 +5,8 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -26,18 +28,24 @@ import java.util.Locale;
 
 public abstract class Game extends BaseGame {
 
+    @SerializedName("userId")
+    private final UserId         mUserId;
     @SerializedName("usageType")
     private       UsageType      mUsageType;
     @SerializedName("gameType")
     private final GameType       mGameType;
     @SerializedName("gameDate")
-    private final long           mGameDate;
+    private       long           mGameDate;
+    @SerializedName("gameSchedule")
+    private       long           mGameSchedule;
     @SerializedName("genderType")
     private       GenderType     mGenderType;
     @SerializedName("rules")
-    private final Rules          mRules;
+    private       Rules          mRules;
+    @SerializedName("gameStatus")
+    private       GameStatus     mGameStatus;
     @SerializedName("referee")
-    private String               mRefereeName;
+    private       String         mRefereeName;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("homeTeam")
@@ -64,13 +72,13 @@ public abstract class Game extends BaseGame {
     private transient java.util.Set<TeamListener>     mTeamListeners;
     private transient java.util.Set<SanctionListener> mSanctionListeners;
 
-    protected Game(final GameType gameType, final Rules rules, final String refereeName) {
+    protected Game(final GameType gameType, final String refereeName, final UserId userId) {
         super();
+        mUserId = userId;
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
         mGenderType = GenderType.MIXED;
-        mRules = rules;
-        mGameDate = System.currentTimeMillis();
+        mGameStatus = GameStatus.SCHEDULED;
         mRefereeName = refereeName;
         mLeagueName = "";
         mHomeTeam = createTeamDefinition(TeamType.HOME);
@@ -82,14 +90,13 @@ public abstract class Game extends BaseGame {
         mGuestTeamSanctions = new ArrayList<>();
 
         mServingTeamAtStart = TeamType.HOME;
-        mSets.add(createSet(mRules, false, mServingTeamAtStart));
 
         initTransientFields();
     }
 
     protected abstract TeamDefinition createTeamDefinition(TeamType teamType);
 
-    protected abstract Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart);
+    protected abstract Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition);
 
     @Override
     public void addScoreListener(final ScoreListener listener) {
@@ -213,7 +220,12 @@ public abstract class Game extends BaseGame {
         }
     }
 
-    // Score
+    // General
+
+    @Override
+    public UserId getUserId() {
+        return mUserId;
+    }
 
     @Override
     public Rules getRules() {
@@ -231,6 +243,18 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public long getGameSchedule() {
+        return mGameSchedule;
+    }
+
+    @Override
+    public GameStatus getMatchStatus() {
+        return mGameStatus;
+    }
+
+    // Score
+
+    @Override
     public String getGameSummary() {
         StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName()));
 
@@ -243,6 +267,28 @@ public abstract class Game extends BaseGame {
 
         return builder.toString();
     }
+
+    @Override
+    public void startMatch(Rules rules, long gameDate, long gameSchedule) {
+        mRules = rules;
+        mGameDate = gameDate;
+        mGameSchedule = gameSchedule;
+
+        mRules.printRules();
+
+        GenderType homeGender = getGenderType(TeamType.HOME);
+        GenderType guestGender = getGenderType(TeamType.GUEST);
+
+        if (homeGender.equals(guestGender)) {
+            mGenderType = homeGender;
+        } else {
+            mGenderType = GenderType.MIXED;
+        }
+
+        mSets.add(createSet(mRules, false, mServingTeamAtStart, mHomeTeam, mGuestTeam));
+        mGameStatus = GameStatus.LIVE;
+    }
+
 
     @Override
     public boolean isMatchCompleted() {
@@ -329,11 +375,11 @@ public abstract class Game extends BaseGame {
         notifySetCompleted();
 
         if (isMatchCompleted()) {
+            mGameStatus = GameStatus.COMPLETED;
             final TeamType winner = getSets(TeamType.HOME) > getSets(TeamType.GUEST) ? TeamType.HOME : TeamType.GUEST;
             notifyMatchCompleted(winner);
         } else {
-            mSets.add(createSet(mRules, isTieBreakSet(), mServingTeamAtStart));
-            initTeams();
+            mSets.add(createSet(mRules, isTieBreakSet(), mServingTeamAtStart, mHomeTeam, mGuestTeam));
             if (isTieBreakSet()) {
                 // Before the tie break the toss has to be done
                 swapTeams(ActionOriginType.USER);
@@ -517,22 +563,6 @@ public abstract class Game extends BaseGame {
     @Override
     public void setGenderType(TeamType teamType, GenderType genderType) {
         getTeamDefinition(teamType).setGenderType(genderType);
-    }
-
-    @Override
-    public void initTeams() {
-        if (!currentSet().areTeamsCreated()) {
-            GenderType homeGender = getGenderType(TeamType.HOME);
-            GenderType guestGender = getGenderType(TeamType.GUEST);
-
-            if (homeGender.equals(guestGender)) {
-                mGenderType = homeGender;
-            } else {
-                mGenderType = GenderType.MIXED;
-            }
-
-            currentSet().createTeams(mRules, mHomeTeam, mGuestTeam);
-        }
     }
 
     @Override

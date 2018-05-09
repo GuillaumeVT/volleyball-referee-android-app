@@ -63,7 +63,7 @@
     <string name="timeouts_tab">Timeouts</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d min</string>
-    <string name="switch_sides">Switch sides</string>
+    <string name="switch_sides">Switch court</string>
     <string name="won_game">%s won the match</string>
     <string name="timeout_title">Timeout (%s)</string>
     <string name="timeout_question">Call a timeout?</string>
@@ -106,7 +106,8 @@
     <string name="position_6_title">VI</string>
 
     <!-- Rules activity -->
-    <string name="rules">My own rules</string>
+    <string name="saved_rules">Saved rules</string>
+    <string name="rules_name_hint">Rules name</string>
     <string name="general_preferences">General</string>
     <string name="timeout_preferences">Timeout</string>
     <string name="indoor_preferences">Indoor volleyball</string>
@@ -171,6 +172,7 @@
         <item>5 serves</item>
         <item>4 serves</item>
         <item>3 serves</item>
+        <item>2 serves</item>
     </string-array>
 
     <string-array name="points_per_set_values">
@@ -215,6 +217,7 @@
         <item>5</item>
         <item>4</item>
         <item>3</item>
+        <item>2</item>
     </string-array>
 
     <!-- Settings activity -->

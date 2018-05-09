@@ -11,10 +11,12 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -30,7 +32,7 @@ public class Indoor4x4CompleteGame {
 
     @Test
     public void playGame_complete() {
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game("VBR");
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
 
         defineTeams(indoor4x4Game);
 
@@ -65,7 +67,7 @@ public class Indoor4x4CompleteGame {
         indoor4x4Game.setCaptain(TeamType.HOME, 1);
         indoor4x4Game.setCaptain(TeamType.GUEST, 2);
 
-        indoor4x4Game.initTeams();
+        indoor4x4Game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

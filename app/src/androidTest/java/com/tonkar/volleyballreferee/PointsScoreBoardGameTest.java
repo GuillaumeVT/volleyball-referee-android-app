@@ -8,10 +8,12 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
+import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -28,7 +30,7 @@ public class PointsScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
         indoorGame.setUsageType(UsageType.POINTS_SCOREBOARD);
 
         defineTeams(indoorGame);
@@ -52,7 +54,7 @@ public class PointsScoreBoardGameTest {
         indoorGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt4));
         indoorGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt9));
 
-        indoorGame.initTeams();
+        indoorGame.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

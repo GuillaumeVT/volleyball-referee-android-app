@@ -12,10 +12,12 @@ import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -34,7 +36,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(indoorGame);
 
@@ -59,7 +61,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_lastSetEnd() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(indoorGame);
 
@@ -81,7 +83,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(indoorGame);
 
@@ -100,7 +102,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR");
+        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(indoorGame);
 
@@ -176,7 +178,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.setCaptain(TeamType.HOME, 1);
         indoorGame.setCaptain(TeamType.GUEST, 6);
 
-        indoorGame.initTeams();
+        indoorGame.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

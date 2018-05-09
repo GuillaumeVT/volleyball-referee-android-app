@@ -1,7 +1,9 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -10,6 +12,7 @@ import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +22,20 @@ import java.util.TreeSet;
 
 public class RecordedGame implements RecordedGameService {
 
+    @SerializedName("userId")
+    private UserId            mUserId;
     @SerializedName("kind")
     private GameType          mGameType;
     @SerializedName("date")
     private long              mGameDate;
+    @SerializedName("schedule")
+    private long              mGameSchedule;
     @SerializedName("gender")
     private GenderType        mGenderType;
     @SerializedName("usage")
     private UsageType         mUsageType;
-    @SerializedName("live")
-    private boolean           mLive;
+    @SerializedName("status")
+    private GameStatus        mGameStatus;
     @SerializedName("referee")
     private String            mRefereeName;
     @SerializedName("league")
@@ -47,14 +54,18 @@ public class RecordedGame implements RecordedGameService {
     private List<Sanction>    mHomeSanctions;
     @SerializedName("gCards")
     private List<Sanction>    mGuestSanctions;
+    @SerializedName("rules")
+    private Rules             mRules;
     private transient boolean mIsRecordedOnline;
 
     public RecordedGame() {
+        mUserId = UserId.VBR_USER_ID;
         mGameType = GameType.INDOOR;
         mGameDate = 0L;
+        mGameSchedule = 0L;
         mGenderType = GenderType.MIXED;
         mUsageType = UsageType.NORMAL;
-        mLive = false;
+        mGameStatus = GameStatus.COMPLETED;
         mRefereeName = "";
         mLeagueName = "";
         mHomeTeam = new RecordedTeam();
@@ -64,6 +75,7 @@ public class RecordedGame implements RecordedGameService {
         mSets = new ArrayList<>();
         mHomeSanctions = new ArrayList<>();
         mGuestSanctions = new ArrayList<>();
+        mRules = Rules.OFFICIAL_INDOOR_RULES;
         mIsRecordedOnline = false;
     }
 
@@ -117,6 +129,15 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public UserId getUserId() {
+        return mUserId;
+    }
+
+    public void setUserId(UserId userId) {
+        mUserId = userId;
+    }
+
+    @Override
     public GameType getGameType() {
         return mGameType;
     }
@@ -132,6 +153,15 @@ public class RecordedGame implements RecordedGameService {
 
     public void setGameDate(long gameDate) {
         mGameDate = gameDate;
+    }
+
+    @Override
+    public long getGameSchedule() {
+        return mGameSchedule;
+    }
+
+    public void setGameSchedule(long gameSchedule) {
+        mGameSchedule = gameSchedule;
     }
 
     @Override
@@ -196,8 +226,17 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public GameStatus getMatchStatus() {
+        return mGameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        mGameStatus = gameStatus;
+    }
+
+    @Override
     public boolean isMatchCompleted() {
-        return !mLive;
+        return GameStatus.COMPLETED.equals(mGameStatus);
     }
 
     @Override
@@ -210,8 +249,13 @@ public class RecordedGame implements RecordedGameService {
         mUsageType = usageType;
     }
 
-    public void setMatchCompleted(boolean matchCompleted) {
-        mLive = !matchCompleted;
+    @Override
+    public Rules getRules() {
+        return mRules;
+    }
+
+    public void setRules(Rules rules) {
+        mRules = rules;
     }
 
     @Override
@@ -429,9 +473,6 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
-    public void initTeams() {}
-
-    @Override
     public int getRemainingTimeouts(TeamType teamType) {
         return mSets.get(currentSetIndex()).getTimeouts(teamType);
     }
@@ -531,7 +572,9 @@ public class RecordedGame implements RecordedGameService {
             result = true;
         } else if (obj instanceof RecordedGame) {
             RecordedGame other = (RecordedGame) obj;
-            result = (this.getGameDate() == other.getGameDate())
+            result = this.getUserId().equals(other.getUserId())
+                    && (this.getGameDate() == other.getGameDate())
+                    && (this.getGameSchedule() == other.getGameSchedule())
                     && this.getGameType().equals(other.getGameType())
                     && (this.getGenderType().equals(other.getGenderType()))
                     && (this.getUsageType().equals(other.getUsageType()))
@@ -544,7 +587,8 @@ public class RecordedGame implements RecordedGameService {
                     && (this.getSets(TeamType.GUEST) == other.getSets(TeamType.GUEST))
                     && this.getSets().equals(other.getSets())
                     && this.getGivenSanctions(TeamType.HOME).equals(other.getGivenSanctions(TeamType.HOME))
-                    && this.getGivenSanctions(TeamType.GUEST).equals(other.getGivenSanctions(TeamType.GUEST));
+                    && this.getGivenSanctions(TeamType.GUEST).equals(other.getGivenSanctions(TeamType.GUEST))
+                    && this.getRules().equals(other.getRules());
         }
 
         return result;

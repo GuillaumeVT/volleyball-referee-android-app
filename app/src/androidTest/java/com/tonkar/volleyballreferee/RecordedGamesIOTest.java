@@ -75,6 +75,7 @@ public class RecordedGamesIOTest {
     }
 
     private RecordedGame someRecordedGame1() {
+        // TODO all new fields
         RecordedGame recordedGame = new RecordedGame();
         recordedGame.setGameType(GameType.INDOOR);
         recordedGame.setGameDate(123456L);
@@ -165,6 +166,7 @@ public class RecordedGamesIOTest {
     }
 
     private RecordedGame someRecordedGame2() {
+        // TODO all new fields
         RecordedGame recordedGame = new RecordedGame();
         recordedGame.setGameType(GameType.BEACH);
         recordedGame.setGameDate(646516L);

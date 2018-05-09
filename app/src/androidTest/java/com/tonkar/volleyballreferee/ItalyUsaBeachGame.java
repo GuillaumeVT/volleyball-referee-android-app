@@ -9,9 +9,11 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -29,7 +31,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        BeachGame beachGame = GameFactory.createBeachGame("VBR");
+        BeachGame beachGame = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(beachGame);
 
@@ -42,7 +44,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_matchPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame("VBR");
+        BeachGame beachGame = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(beachGame);
 
@@ -55,7 +57,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame("VBR");
+        BeachGame beachGame = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(beachGame);
 
@@ -69,7 +71,7 @@ public class ItalyUsaBeachGame {
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
         beachGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));
         beachGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt1));
-        beachGame.initTeams();
+        beachGame.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

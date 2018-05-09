@@ -5,10 +5,12 @@ import android.support.test.runner.AndroidJUnit4;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +22,8 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_yellowCard() {
-        GameService game = GameFactory.createBeachGame("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         game.giveSanction(TeamType.HOME, SanctionType.YELLOW, -1);
 
@@ -31,8 +33,8 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redCard() {
-        GameService game = GameFactory.createBeachGame("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         assertEquals(0, game.getPoints(TeamType.HOME));
@@ -51,8 +53,8 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redExpulsionCard() {
-        GameService game = GameFactory.createBeachGame("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, -1);
 
@@ -65,8 +67,8 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redDisqualificationCard() {
-        GameService game = GameFactory.createBeachGame("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, -1);
 
@@ -80,12 +82,12 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_yellowCard() {
-        GameService game = GameFactory.createIndoorGame("VBR");
+        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
 
-        game.initTeams();
+        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         fillCourt((IndoorTeamService) game);
 
@@ -100,12 +102,12 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redCard() {
-        GameService game = GameFactory.createIndoorGame("VBR");
+        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
 
-        game.initTeams();
+        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         fillCourt((IndoorTeamService) game);
 
@@ -137,14 +139,14 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redExpulsionCard() {
-        GameService game = GameFactory.createIndoorGame("VBR");
+        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
         IndoorTeamService indoorTeamService = (IndoorTeamService) game;
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 8);
         indoorTeamService.addLibero(TeamType.GUEST, 7);
 
-        game.initTeams();
+        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         fillCourt(indoorTeamService);
 
@@ -184,14 +186,14 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redDisqualificationCard() {
-        GameService game = GameFactory.createIndoorGame("VBR");
+        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
         IndoorTeamService indoorTeamService = (IndoorTeamService) game;
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 8);
         indoorTeamService.addLibero(TeamType.GUEST, 7);
 
-        game.initTeams();
+        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         fillCourt(indoorTeamService);
 

@@ -8,9 +8,11 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.TimeBasedGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -25,7 +27,7 @@ public class TimeScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        TimeBasedGame game = GameFactory.createTimeBasedGame("VBR");
+        TimeBasedGame game = GameFactory.createTimeBasedGame("VBR", UserId.VBR_USER_ID);
 
         defineTeams(game);
 
@@ -53,7 +55,7 @@ public class TimeScoreBoardGameTest {
         game.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt5));
         game.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt11));
 
-        game.initTeams();
+        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

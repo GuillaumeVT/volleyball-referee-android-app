@@ -6,8 +6,10 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +21,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -35,8 +37,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -60,8 +62,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -87,8 +89,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR");
-        game.initTeams();
+        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -118,14 +120,14 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_defense() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR");
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);
             game.addPlayer(TeamType.GUEST, index);
         }
 
-        game.initTeams();
+        game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         for (int index = 1; index <= 4; index++) {
             game.substitutePlayer(TeamType.HOME, index, PositionType.fromInt(index), ActionOriginType.USER);
@@ -156,14 +158,14 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_attack() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR");
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);
             game.addPlayer(TeamType.GUEST, index);
         }
 
-        game.initTeams();
+        game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
 
         for (int index = 1; index <= 4; index++) {
             game.substitutePlayer(TeamType.HOME, index, PositionType.fromInt(index), ActionOriginType.USER);

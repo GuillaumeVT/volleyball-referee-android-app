@@ -43,10 +43,19 @@ public abstract class Set {
     @SerializedName("guestTeamCalledTimeouts")
     private final List<Timeout>   mGuestTeamCalledTimeouts;
 
-    public Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
+    protected Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
+        this(rules, pointsToWinSet, servingTeamAtStart, null, null);
+    }
+
+    protected Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
         mClassType = getClass().getName();
         mPointsToWinSet = pointsToWinSet;
         m2PointsDifference = rules.is2PointsDifference();
+
+        if (homeTeamDefinition != null && guestTeamDefinition != null) {
+            mHomeTeamComposition = createTeamComposition(rules, homeTeamDefinition);
+            mGuestTeamComposition = createTeamComposition(rules, guestTeamDefinition);
+        }
 
         mHomeTeamPoints = 0;
         mGuestTeamPoints = 0;
@@ -65,15 +74,6 @@ public abstract class Set {
     }
 
     protected abstract TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition);
-
-    void createTeams(Rules rules, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
-        mHomeTeamComposition = createTeamComposition(rules, homeTeamDefinition);
-        mGuestTeamComposition = createTeamComposition(rules, guestTeamDefinition);
-    }
-
-    boolean areTeamsCreated() {
-        return mHomeTeamComposition != null && mGuestTeamComposition != null;
-    }
 
     String getSetSummary() {
         return mHomeTeamPoints + "-" + mGuestTeamPoints;

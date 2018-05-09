@@ -4,48 +4,67 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 
 public class Rules {
 
-    @SerializedName("pref_sets_per_game")
+    @SerializedName("userId")
+    private final UserId  mUserId;
+    @SerializedName("name")
+    private final String  mName;
+    @SerializedName("date")
+    private final long    mDate;
+    @SerializedName("setsPerGame")
     private final int     mSetsPerGame;
-    @SerializedName("pref_points_per_set")
+    @SerializedName("pointsPerSet")
     private final int     mPointsPerSet;
-    @SerializedName("pref_tie_break")
+    @SerializedName("tieBreakInLastSet")
     private final boolean mTieBreakInLastSet;
-    @SerializedName("pref_two_points_difference")
+    @SerializedName("pointsInTieBreak")
+    private final int     mPointsInTieBreak;
+    @SerializedName("twoPointsDifference")
     private final boolean m2PointsDifference;
-    @SerializedName("pref_sanctions")
+    @SerializedName("sanctions")
     private final boolean mSanctionsEnabled;
-    @SerializedName("pref_team_timeouts")
+    @SerializedName("teamTimeouts")
     private final boolean mTeamTimeoutsEnabled;
-    @SerializedName("pref_team_timeouts_per_set")
+    @SerializedName("teamTimeoutsPerSet")
     private final int     mTeamTimeoutsPerSet;
-    @SerializedName("pref_team_timeout_duration")
+    @SerializedName("teamTimeoutDuration")
     private final int     mTeamTimeoutDuration;
-    @SerializedName("pref_technical_timeouts")
+    @SerializedName("technicalTimeouts")
     private final boolean mTechnicalTimeoutsEnabled;
-    @SerializedName("pref_technical_timeout_duration")
+    @SerializedName("technicalTimeoutDuration")
     private final int     mTechnicalTimeoutDuration;
-    @SerializedName("pref_game_intervals")
+    @SerializedName("gameIntervals")
     private final boolean mGameIntervalsEnabled;
-    @SerializedName("pref_game_intervals_duration")
+    @SerializedName("gameIntervalDuration")
     private final int     mGameIntervalDuration;
-    @SerializedName("pref_team_substitutions_per_set")
+    @SerializedName("teamSubstitutionsPerSet")
     private final int     mTeamSubstitutionsPerSet;
-    @SerializedName("pref_change_side_every_7_points")
-    private final boolean mChangeSidesEvery7Points;
-    @SerializedName("pref_consecutive_serves_per_player")
+    @SerializedName("changeSidesBeach")
+    private final boolean mChangeSidesBeach;
+    @SerializedName("changeSidesPeriod")
+    private final int     mChangeSidesPeriod;
+    @SerializedName("changeSidesPeriodTieBreak")
+    private final int     mChangeSidesPeriodTieBreak;
+    @SerializedName("customConsecutiveServesPerPlayer")
     private final int     mCustomConsecutiveServesPerPlayer;
 
-    public Rules(final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet, final boolean twoPointsDifference, final boolean sanctionsEnabled,
+    public Rules(final UserId userId, final String name, final long date,
+                 final int setsPerGame, final int pointsPerSet, final boolean tieBreakInLastSet, final int pointsInTieBreak, final boolean twoPointsDifference, final boolean sanctionsEnabled,
                  final boolean teamTimeoutsEnabled, final int teamTimeoutsPerSet, final int teamTimeoutDuration,
                  final boolean technicalTimeoutsEnabled, final int technicalTimeoutDuration,
                  final boolean gameIntervalsEnabled, final int gameIntervalDuration,
-                 final int teamSubstitutionsPerSet, final boolean changeSidesEvery7Points, final int customConsecutiveServesPerPlayer) {
+                 final int teamSubstitutionsPerSet, final boolean changeSidesBeach, final int changeSidesPeriod, final int changeSidesPeriodTieBreak, final int customConsecutiveServesPerPlayer) {
+        mUserId = userId;
+        mName = name;
+        mDate = date;
+
         mSetsPerGame = setsPerGame;
         mPointsPerSet = pointsPerSet;
         mTieBreakInLastSet = tieBreakInLastSet;
+        mPointsInTieBreak = pointsInTieBreak;
         m2PointsDifference = twoPointsDifference;
         mSanctionsEnabled = sanctionsEnabled;
 
@@ -60,47 +79,36 @@ public class Rules {
         mGameIntervalDuration = gameIntervalDuration;
 
         mTeamSubstitutionsPerSet = teamSubstitutionsPerSet;
-        mChangeSidesEvery7Points = changeSidesEvery7Points;
+        mChangeSidesBeach = changeSidesBeach;
+        mChangeSidesPeriod = changeSidesPeriod;
+        mChangeSidesPeriodTieBreak = changeSidesPeriodTieBreak;
 
         mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
     }
 
-    public static final Rules OFFICIAL_INDOOR_RULES     = new Rules(5, 25, true, true, true, true, 2, 30,
-            true, 60, true, 180, 6, false, 9999);
-    public static final Rules OFFICIAL_BEACH_RULES      = new Rules(3, 21, true, true, true, true, 1, 30,
-            true, 30, true, 60, 0, true, 9999);
-    public static final Rules OFFICIAL_INDOOR_4X4_RULES = new Rules(5, 25, true, true, true, true, 2, 30,
-            true, 60, true, 180, 4, false, 9999);
+    public static final Rules OFFICIAL_INDOOR_RULES    = new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
+            5, 25, true, 15, true, true, true, 2, 30,
+            true, 60, true, 180,
+            6, false, 0, 0, 9999);
+    public static final Rules OFFICIAL_BEACH_RULES     = new Rules(UserId.VBR_USER_ID, "FIVB beach rules", 0L,
+            3, 21, true, 15, true, true, true, 1, 30,
+            true, 30, true, 60,
+            0, true, 7, 5, 9999);
+    public static final Rules DEFAULT_INDOOR_4X4_RULES = new Rules(UserId.VBR_USER_ID, "Default 4x4 rules", 0L,
+            5, 25, true, 15, true, true, true, 2, 30,
+            true, 60, true, 180,
+            4, false, 0, 0, 9999);
 
-    public static Rules createRulesFromPref(final SharedPreferences sharedPreferences, final Rules defaultRules) {
-        int setsPerGame = getInt(sharedPreferences, "pref_sets_per_game", defaultRules.getSetsPerGame());
-        int pointsPerSet = getInt(sharedPreferences,"pref_points_per_set", defaultRules.getPointsPerSet());
-        boolean tieBreakInLastSet = sharedPreferences.getBoolean("pref_tie_break", defaultRules.isTieBreakInLastSet());
-        boolean twoPointsDifference = sharedPreferences.getBoolean("pref_two_points_difference", defaultRules.is2PointsDifference());
-        boolean sanctionsEnabled = sharedPreferences.getBoolean("pref_sanctions", defaultRules.areSanctionsEnabled());
-
-        boolean teamTimeoutsEnabled = sharedPreferences.getBoolean("pref_team_timeouts", defaultRules.areTeamTimeoutsEnabled());
-        int teamTimeoutsPerSet = getInt(sharedPreferences,"pref_team_timeouts_per_set", defaultRules.getTeamTimeoutsPerSet());
-        int teamTimeoutDuration = getInt(sharedPreferences,"pref_team_timeout_duration", defaultRules.getTeamTimeoutDuration());
-
-        boolean technicalTimeoutsEnabled = sharedPreferences.getBoolean("pref_technical_timeouts", defaultRules.areTechnicalTimeoutsEnabled());
-        int technicalTimeoutDuration = getInt(sharedPreferences,"pref_technical_timeout_duration", defaultRules.getTechnicalTimeoutDuration());
-
-        boolean gameIntervalsEnabled = sharedPreferences.getBoolean("pref_game_intervals", defaultRules.areGameIntervalsEnabled());
-        int gameIntervalDuration = getInt(sharedPreferences,"pref_game_intervals_duration", defaultRules.getGameIntervalDuration());
-
-        int teamSubstitutionsPerSet = getInt(sharedPreferences,"pref_team_substitutions_per_set", defaultRules.getTeamSubstitutionsPerSet());
-
-        boolean changeSidesEvery7Points = sharedPreferences.getBoolean("pref_change_side_every_7_points", defaultRules.isChangeSidesEvery7Points());
-
-        int customConsecutiveServesPerPlayer = getInt(sharedPreferences,"pref_consecutive_serves_per_player", defaultRules.getCustomConsecutiveServesPerPlayer());
-
-        return new Rules(setsPerGame, pointsPerSet, tieBreakInLastSet, twoPointsDifference, sanctionsEnabled, teamTimeoutsEnabled, teamTimeoutsPerSet, teamTimeoutDuration,
-                technicalTimeoutsEnabled, technicalTimeoutDuration, gameIntervalsEnabled, gameIntervalDuration, teamSubstitutionsPerSet, changeSidesEvery7Points, customConsecutiveServesPerPlayer);
+    public UserId getUserId() {
+        return mUserId;
     }
 
-    private static int getInt(final SharedPreferences sharedPreferences, final String key, final int defaultValue) {
-        return Integer.parseInt(sharedPreferences.getString(key, String.valueOf(defaultValue)));
+    public String getName() {
+        return mName;
+    }
+
+    public long getDate() {
+        return mDate;
     }
 
     public int getSetsPerGame() {
@@ -113,6 +121,10 @@ public class Rules {
 
     public boolean isTieBreakInLastSet() {
         return mTieBreakInLastSet;
+    }
+
+    public int getPointsInTieBreak() {
+        return mPointsInTieBreak;
     }
 
     public boolean is2PointsDifference() {
@@ -155,28 +167,41 @@ public class Rules {
         return mTeamSubstitutionsPerSet;
     }
 
-    public boolean isChangeSidesEvery7Points() { return mChangeSidesEvery7Points; }
+    public boolean isChangeSidesBeach() {
+        return mChangeSidesBeach;
+    }
+
+    public int getChangeSidesPeriod() {
+        return mChangeSidesPeriod;
+    }
+
+    public int getChangeSidesPeriodTieBreak() {
+        return mChangeSidesPeriodTieBreak;
+    }
 
     public int getCustomConsecutiveServesPerPlayer() {
         return mCustomConsecutiveServesPerPlayer;
     }
 
     public void printRules() {
-        Log.i("VBR-Rules", String.format("pref_sets_per_game: %d", mSetsPerGame));
-        Log.i("VBR-Rules", String.format("pref_points_per_set: %d", mPointsPerSet));
-        Log.i("VBR-Rules", String.format("pref_tie_break: %b", mTieBreakInLastSet));
-        Log.i("VBR-Rules", String.format("pref_two_points_difference: %b", m2PointsDifference));
-        Log.i("VBR-Rules", String.format("pref_sanctions: %b", mSanctionsEnabled));
-        Log.i("VBR-Rules", String.format("pref_team_timeouts: %b", mTeamTimeoutsEnabled));
-        Log.i("VBR-Rules", String.format("pref_team_timeouts_per_set: %d", mTeamTimeoutsPerSet));
-        Log.i("VBR-Rules", String.format("pref_team_timeout_duration: %d", mTeamTimeoutDuration));
-        Log.i("VBR-Rules", String.format("pref_technical_timeouts: %b", mTechnicalTimeoutsEnabled));
-        Log.i("VBR-Rules", String.format("pref_technical_timeout_duration: %d", mTechnicalTimeoutDuration));
-        Log.i("VBR-Rules", String.format("pref_game_intervals: %b", mGameIntervalsEnabled));
-        Log.i("VBR-Rules", String.format("pref_game_intervals_duration: %d", mGameIntervalDuration));
-        Log.i("VBR-Rules", String.format("pref_team_substitutions_per_set: %d", mTeamSubstitutionsPerSet));
-        Log.i("VBR-Rules", String.format("pref_change_side_every_7_points: %b", mChangeSidesEvery7Points));
-        Log.i("VBR-Rules", String.format("pref_consecutive_serves_per_player: %d", mCustomConsecutiveServesPerPlayer));
+        Log.i("VBR-Rules", String.format("setsPerGame: %d", mSetsPerGame));
+        Log.i("VBR-Rules", String.format("pointsPerSet: %d", mPointsPerSet));
+        Log.i("VBR-Rules", String.format("tieBreakInLastSet: %b", mTieBreakInLastSet));
+        Log.i("VBR-Rules", String.format("pointsInTieBreak: %d", mPointsInTieBreak));
+        Log.i("VBR-Rules", String.format("twoPointsDifference: %b", m2PointsDifference));
+        Log.i("VBR-Rules", String.format("sanctions: %b", mSanctionsEnabled));
+        Log.i("VBR-Rules", String.format("teamTimeouts: %b", mTeamTimeoutsEnabled));
+        Log.i("VBR-Rules", String.format("teamTimeoutsPerSet: %d", mTeamTimeoutsPerSet));
+        Log.i("VBR-Rules", String.format("teamTimeoutDuration: %d", mTeamTimeoutDuration));
+        Log.i("VBR-Rules", String.format("technicalTimeouts: %b", mTechnicalTimeoutsEnabled));
+        Log.i("VBR-Rules", String.format("technicalTimeoutDuration: %d", mTechnicalTimeoutDuration));
+        Log.i("VBR-Rules", String.format("gameIntervals: %b", mGameIntervalsEnabled));
+        Log.i("VBR-Rules", String.format("gameIntervalDuration: %d", mGameIntervalDuration));
+        Log.i("VBR-Rules", String.format("teamSubstitutionsPerSet: %d", mTeamSubstitutionsPerSet));
+        Log.i("VBR-Rules", String.format("changeSidesBeach: %b", mChangeSidesBeach));
+        Log.i("VBR-Rules", String.format("changeSidesPeriod: %d", mChangeSidesPeriod));
+        Log.i("VBR-Rules", String.format("changeSidesPeriodTieBreak: %d", mChangeSidesPeriodTieBreak));
+        Log.i("VBR-Rules", String.format("customConsecutiveServesPerPlayer: %d", mCustomConsecutiveServesPerPlayer));
     }
 
     @Override
@@ -187,9 +212,13 @@ public class Rules {
             result = true;
         } else if (obj instanceof Rules) {
             Rules other = (Rules) obj;
-            result = (this.getSetsPerGame() == other.getSetsPerGame())
+            result = this.getUserId().equals(other.getUserId())
+                    && this.getName().equals(other.getName())
+                    && (this.getDate() == other.getDate())
+                    && (this.getSetsPerGame() == other.getSetsPerGame())
                     && (this.getPointsPerSet() == other.getPointsPerSet())
                     && (this.isTieBreakInLastSet() == other.isTieBreakInLastSet())
+                    && (this.getPointsInTieBreak() == other.getPointsInTieBreak())
                     && (this.is2PointsDifference() == other.is2PointsDifference())
                     && (this.areSanctionsEnabled() == other.areSanctionsEnabled())
                     && (this.areTeamTimeoutsEnabled() == other.areTeamTimeoutsEnabled())
@@ -200,7 +229,9 @@ public class Rules {
                     && (this.areGameIntervalsEnabled() == other.areGameIntervalsEnabled())
                     && (this.getGameIntervalDuration() == other.getGameIntervalDuration())
                     && (this.getTeamSubstitutionsPerSet() == other.getTeamSubstitutionsPerSet())
-                    && (this.isChangeSidesEvery7Points() == other.isChangeSidesEvery7Points())
+                    && (this.isChangeSidesBeach() == other.isChangeSidesBeach())
+                    && (this.getChangeSidesPeriod() == other.getChangeSidesPeriod())
+                    && (this.getChangeSidesPeriodTieBreak() == other.getChangeSidesPeriodTieBreak())
                     && (this.getCustomConsecutiveServesPerPlayer() == other.getCustomConsecutiveServesPerPlayer());
         }
 

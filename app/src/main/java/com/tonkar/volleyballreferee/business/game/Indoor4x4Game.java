@@ -5,6 +5,7 @@ import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
@@ -21,13 +22,13 @@ import java.util.TreeSet;
 
 public class Indoor4x4Game extends Game implements IndoorTeamService {
 
-    public Indoor4x4Game(final Rules rules, final String refereeName) {
-        super(GameType.INDOOR_4X4, rules, refereeName);
+    public Indoor4x4Game(final String refereeName, final UserId userId) {
+        super(GameType.INDOOR_4X4, refereeName, userId);
     }
 
     // For GSON Deserialization
     public Indoor4x4Game() {
-        this(Rules.OFFICIAL_INDOOR_4X4_RULES, "");
+        this("", UserId.VBR_USER_ID);
     }
 
     @Override
@@ -36,8 +37,8 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     }
 
     @Override
-    protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart) {
-        return new Indoor4x4Set(rules, isTieBreakSet ? 15 : rules.getPointsPerSet(), servingTeamAtStart);
+    protected Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
+        return new Indoor4x4Set(rules, isTieBreakSet ? rules.getPointsInTieBreak() : rules.getPointsPerSet(), servingTeamAtStart, homeTeamDefinition, guestTeamDefinition);
     }
 
     private IndoorTeamDefinition getIndoorTeamDefinition(TeamType teamType) {

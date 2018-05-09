@@ -9,8 +9,6 @@ public interface ScoreService extends BaseScoreService {
 
     void removeScoreListener(ScoreListener listener);
 
-    Rules getRules();
-
     boolean isMatchPoint();
 
     boolean isSetPoint();

@@ -8,13 +8,13 @@ import com.tonkar.volleyballreferee.rules.Rules;
 
 public class Indoor4x4Set extends Set {
 
-    public Indoor4x4Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
-        super(rules, pointsToWinSet, servingTeamAtStart);
+    public Indoor4x4Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
+        super(rules, pointsToWinSet, servingTeamAtStart, homeTeamDefinition, guestTeamDefinition);
     }
 
     // For GSON Deserialization
     public Indoor4x4Set() {
-        this(Rules.OFFICIAL_INDOOR_4X4_RULES, 0, TeamType.HOME);
+        super(Rules.DEFAULT_INDOOR_4X4_RULES, 0, TeamType.HOME);
     }
 
     @Override

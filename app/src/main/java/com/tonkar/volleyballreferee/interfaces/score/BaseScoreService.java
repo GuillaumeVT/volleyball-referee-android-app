@@ -1,16 +1,10 @@
 package com.tonkar.volleyballreferee.interfaces.score;
 
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.List;
 
 public interface BaseScoreService {
-
-    GameType getGameType();
-
-    long getGameDate();
 
     String getGameSummary();
 
@@ -31,10 +25,4 @@ public interface BaseScoreService {
     TeamType getServingTeam();
 
     TeamType getServingTeam(int setIndex);
-
-    boolean isMatchCompleted();
-
-    UsageType getUsageType();
-
-    void setUsageType(UsageType usageType);
 }

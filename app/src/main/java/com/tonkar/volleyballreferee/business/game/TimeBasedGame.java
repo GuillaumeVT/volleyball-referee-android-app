@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -21,17 +23,27 @@ import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
+    @SerializedName("userId")
+    private final UserId         mUserId;
     @SerializedName("gameDate")
-    private final long           mGameDate;
+    private       long           mGameDate;
+    @SerializedName("gameSchedule")
+    private       long           mGameSchedule;
     @SerializedName("genderType")
     private       GenderType     mGenderType;
+    @SerializedName("gameStatus")
+    private       GameStatus     mGameStatus;
     @SerializedName("referee")
-    private String               mRefereeName;
+    private       String         mRefereeName;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("homeTeam")
@@ -62,10 +74,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private transient java.util.Set<ScoreListener> mScoreListeners;
     private transient java.util.Set<TeamListener>  mTeamListeners;
 
-    TimeBasedGame(final String refereeName) {
+    TimeBasedGame(final String refereeName, final UserId userId) {
         super();
-        mGameDate = System.currentTimeMillis();
+        mUserId = userId;
         mGenderType = GenderType.MIXED;
+        mGameStatus = GameStatus.SCHEDULED;
         mRefereeName = refereeName;
         mLeagueName = "";
         mHomeTeam = new EmptyTeamDefinition(TeamType.HOME);
@@ -88,7 +101,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     // For GSON Deserialization
     public TimeBasedGame() {
-        this("");
+        this("", UserId.VBR_USER_ID);
     }
 
     @Override
@@ -224,18 +237,6 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public void initTeams() {
-        GenderType homeGender = getGenderType(TeamType.HOME);
-        GenderType guestGender = getGenderType(TeamType.GUEST);
-
-        if (homeGender.equals(guestGender)) {
-            mGenderType = homeGender;
-        } else {
-            mGenderType = GenderType.MIXED;
-        }
-    }
-
-    @Override
     public void callTimeout(TeamType teamType) {}
 
     @Override
@@ -259,6 +260,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public UserId getUserId() {
+        return mUserId;
+    }
+
+    @Override
     public GameType getGameType() {
         return GameType.TIME;
     }
@@ -266,6 +272,16 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public long getGameDate() {
         return mGameDate;
+    }
+
+    @Override
+    public long getGameSchedule() {
+        return mGameSchedule;
+    }
+
+    @Override
+    public GameStatus getMatchStatus() {
+        return mGameStatus;
     }
 
     @Override
@@ -579,6 +595,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     public void start() {
         mStartTime = System.currentTimeMillis();
         mEndTime = mStartTime + mDuration;
+        mGameStatus = GameStatus.LIVE;
     }
 
     @Override
@@ -586,6 +603,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         if (isMatchRunning()) {
             mIsStopped = true;
             final TeamType winner = getPoints(TeamType.HOME) > getPoints(TeamType.GUEST) ? TeamType.HOME : TeamType.GUEST;
+            mGameStatus = GameStatus.COMPLETED;
             notifyMatchCompleted(winner);
         }
     }
@@ -636,5 +654,20 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public boolean areNotificationsEnabled() {
         return true;
+    }
+
+    @Override
+    public void startMatch(Rules rules, long gameDate, long gameSchedule) {
+        mGameDate = gameDate;
+        mGameSchedule = gameSchedule;
+
+        GenderType homeGender = getGenderType(TeamType.HOME);
+        GenderType guestGender = getGenderType(TeamType.GUEST);
+
+        if (homeGender.equals(guestGender)) {
+            mGenderType = homeGender;
+        } else {
+            mGenderType = GenderType.MIXED;
+        }
     }
 }

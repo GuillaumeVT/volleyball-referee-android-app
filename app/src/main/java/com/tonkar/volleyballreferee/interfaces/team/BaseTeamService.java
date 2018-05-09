@@ -40,6 +40,4 @@ public interface BaseTeamService {
 
     int getExpectedNumberOfPlayersOnCourt();
 
-    void initTeams();
-
 }

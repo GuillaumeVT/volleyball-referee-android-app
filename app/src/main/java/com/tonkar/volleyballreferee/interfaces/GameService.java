@@ -5,7 +5,7 @@ import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutService;
 
-public interface GameService extends ScoreService, TeamService, TimeoutService, SanctionService {
+public interface GameService extends GeneralService, ScoreService, TeamService, TimeoutService, SanctionService {
 
     boolean areNotificationsEnabled();
 
