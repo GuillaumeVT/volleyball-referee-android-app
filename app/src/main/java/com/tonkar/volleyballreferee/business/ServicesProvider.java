@@ -6,6 +6,7 @@ import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GeneralService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
@@ -33,6 +34,10 @@ public class ServicesProvider {
     }
 
     public GameService getGameService() { return mCurrentGame; }
+
+    public GeneralService getGeneralService() {
+        return mCurrentGame;
+    }
 
     public ScoreService getScoreService() {
         return mCurrentGame;

@@ -128,6 +128,10 @@ public class BrazilFranceIndoorGame {
     }
 
     private void defineTeams(IndoorGame indoorGame) {
+        indoorGame.setRules(Rules.DEFAULT_UNIVERSAL_RULES);
+        indoorGame.setGameDate(System.currentTimeMillis());
+        indoorGame.setGameSchedule(System.currentTimeMillis());
+
         indoorGame.setGenderType(GenderType.GENTS);
 
         indoorGame.setLeagueName("FIVB Volleyball World League 2017");
@@ -178,7 +182,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.setCaptain(TeamType.HOME, 1);
         indoorGame.setCaptain(TeamType.GUEST, 6);
 
-        indoorGame.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        indoorGame.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

@@ -19,7 +19,7 @@ public class IndoorGameTest {
     @Test
     public void winSet_normal() {
         GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -35,7 +35,7 @@ public class IndoorGameTest {
     @Test
     public void winSet_2PointsGap() {
         GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -60,7 +60,7 @@ public class IndoorGameTest {
     @Test
     public void winGame_normal() {
         GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -87,7 +87,7 @@ public class IndoorGameTest {
     @Test
     public void winGame_tieBreak() {
         GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -113,5 +113,12 @@ public class IndoorGameTest {
         assertEquals(2, game.getSets(TeamType.HOME));
         assertEquals(3, game.getSets(TeamType.GUEST));
         assertEquals(5, game.getNumberOfSets());
+    }
+
+    private void startMatch(GameService game) {
+        game.setRules(Rules.OFFICIAL_INDOOR_RULES);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
     }
 }

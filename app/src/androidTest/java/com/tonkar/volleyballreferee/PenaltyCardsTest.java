@@ -23,7 +23,7 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_yellowCard() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchBeach(game);
 
         game.giveSanction(TeamType.HOME, SanctionType.YELLOW, -1);
 
@@ -34,7 +34,7 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_redCard() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchBeach(game);
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         assertEquals(0, game.getPoints(TeamType.HOME));
@@ -54,7 +54,7 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_redExpulsionCard() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchBeach(game);
 
         game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, -1);
 
@@ -68,7 +68,7 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_redDisqualificationCard() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchBeach(game);
 
         game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, -1);
 
@@ -87,7 +87,7 @@ public class PenaltyCardsTest {
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
 
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchIndoor(game);
 
         fillCourt((IndoorTeamService) game);
 
@@ -107,7 +107,7 @@ public class PenaltyCardsTest {
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
 
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchIndoor(game);
 
         fillCourt((IndoorTeamService) game);
 
@@ -146,7 +146,7 @@ public class PenaltyCardsTest {
         fillTeam(game, TeamType.GUEST, 8);
         indoorTeamService.addLibero(TeamType.GUEST, 7);
 
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchIndoor(game);
 
         fillCourt(indoorTeamService);
 
@@ -193,7 +193,7 @@ public class PenaltyCardsTest {
         fillTeam(game, TeamType.GUEST, 8);
         indoorTeamService.addLibero(TeamType.GUEST, 7);
 
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatchIndoor(game);
 
         fillCourt(indoorTeamService);
 
@@ -234,5 +234,19 @@ public class PenaltyCardsTest {
             indoorTeamService.substitutePlayer(TeamType.HOME, number, PositionType.fromInt(number), ActionOriginType.USER);
             indoorTeamService.substitutePlayer(TeamType.GUEST, number, PositionType.fromInt(number), ActionOriginType.USER);
         }
+    }
+
+    private void startMatchIndoor(GameService game) {
+        game.setRules(Rules.OFFICIAL_INDOOR_RULES);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
+    }
+
+    private void startMatchBeach(GameService game) {
+        game.setRules(Rules.OFFICIAL_BEACH_RULES);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
     }
 }

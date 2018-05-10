@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.GeneralService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -23,6 +24,7 @@ import com.tonkar.volleyballreferee.ui.game.GameActivity;
 public class TeamsSetupActivity extends AppCompatActivity {
 
     private BaseIndoorTeamService mIndoorTeamService;
+    private GeneralService        mGeneralService;
     private MenuItem              mConfirmItem;
 
     @Override
@@ -37,6 +39,7 @@ public class TeamsSetupActivity extends AppCompatActivity {
         }
 
         mIndoorTeamService = (BaseIndoorTeamService) ServicesProvider.getInstance().getTeamService();
+        mGeneralService = ServicesProvider.getInstance().getGeneralService();
 
         setTitle("");
 
@@ -106,7 +109,7 @@ public class TeamsSetupActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.teams_setup_title)).setMessage(getResources().getString(R.string.confirm_teams_setup_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                mIndoorTeamService.initTeams();
+                mGeneralService.startMatch();
                 saveTeams();
                 Log.i("VBR-TSActivity", "Start game activity");
                 final Intent gameIntent = new Intent(TeamsSetupActivity.this, GameActivity.class);

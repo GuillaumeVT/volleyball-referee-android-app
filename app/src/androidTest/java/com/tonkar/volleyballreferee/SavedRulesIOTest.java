@@ -113,4 +113,10 @@ public class SavedRulesIOTest {
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
     }
+
+    @Test
+    public void clear() {
+        ServicesProvider.getInstance().restoreSavedRulesService(mActivityRule.getActivity());
+        ServicesProvider.getInstance().getSavedRulesService().deleteAllSavedRules();
+    }
 }

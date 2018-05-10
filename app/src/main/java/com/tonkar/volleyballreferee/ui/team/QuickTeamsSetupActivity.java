@@ -24,11 +24,10 @@ import android.widget.TextView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GeneralService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -38,12 +37,12 @@ import java.util.ArrayList;
 
 public class QuickTeamsSetupActivity extends AppCompatActivity {
 
-    private TeamService  mTeamService;
-    private ScoreService mScoreService;
-    private MenuItem     mConfirmItem;
-    private ImageButton  mGenderButton;
-    private Button       mHomeTeamColorButton;
-    private Button       mGuestTeamColorButton;
+    private TeamService    mTeamService;
+    private GeneralService mGeneralService;
+    private MenuItem       mConfirmItem;
+    private ImageButton    mGenderButton;
+    private Button         mHomeTeamColorButton;
+    private Button         mGuestTeamColorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         }
 
         mTeamService = ServicesProvider.getInstance().getTeamService();
-        mScoreService = ServicesProvider.getInstance().getScoreService();
+        mGeneralService = ServicesProvider.getInstance().getGeneralService();
 
         setTitle("");
 
@@ -149,7 +148,7 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
         NumberPicker matchDurationPicker = findViewById(R.id.match_duration_picker);
         TextView matchDurationText = findViewById(R.id.match_duration_text);
 
-        if (GameType.TIME.equals(mScoreService.getGameType())) {
+        if (GameType.TIME.equals(mGeneralService.getGameType())) {
             final TimeBasedGameService timeBasedGameService = (TimeBasedGameService) ServicesProvider.getInstance().getGameService();
             matchDurationPicker.setWrapSelectorWheel(false);
             matchDurationPicker.setMinValue(10);
@@ -275,9 +274,9 @@ public class QuickTeamsSetupActivity extends AppCompatActivity {
 
     public void confirmTeams() {
         Log.i("VBR-QTSActivity", "Validate teams");
-        mTeamService.initTeams();
+        mGeneralService.startMatch();
 
-        if (GameType.TIME.equals(mScoreService.getGameType())) {
+        if (GameType.TIME.equals(mGeneralService.getGameType())) {
             Log.i("VBR-QTSActivity", "Start time-based game activity");
             final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

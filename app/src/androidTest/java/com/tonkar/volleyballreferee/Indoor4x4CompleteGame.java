@@ -50,6 +50,10 @@ public class Indoor4x4CompleteGame {
     }
 
     private void defineTeams(Indoor4x4Game indoor4x4Game) {
+        indoor4x4Game.setRules(Rules.DEFAULT_INDOOR_4X4_RULES);
+        indoor4x4Game.setGameDate(System.currentTimeMillis());
+        indoor4x4Game.setGameSchedule(System.currentTimeMillis());
+
         indoor4x4Game.setGenderType(GenderType.GENTS);
 
         indoor4x4Game.setLeagueName("4x4");
@@ -67,7 +71,7 @@ public class Indoor4x4CompleteGame {
         indoor4x4Game.setCaptain(TeamType.HOME, 1);
         indoor4x4Game.setCaptain(TeamType.GUEST, 2);
 
-        indoor4x4Game.startMatch(Rules.DEFAULT_INDOOR_4X4_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        indoor4x4Game.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

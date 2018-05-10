@@ -38,6 +38,7 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
@@ -156,26 +157,6 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(browserIntent);
                         }
                         break;
-                    case R.id.action_start_indoor_4x4_game_official:
-                        Log.i("VBR-MainActivity", "Start a 4x4 indoor game");
-                        startIndoor4x4Game(false);
-                        break;
-                    case R.id.action_start_indoor_4x4_game_custom:
-                        Log.i("VBR-MainActivity", "Start a custom 4x4 indoor game");
-                        startIndoor4x4Game(true);
-                        break;
-                    case R.id.action_start_time_based_game:
-                        Log.i("VBR-MainActivity", "Start a time-based game");
-                        startTimeBasedGame();
-                        break;
-                    case R.id.action_start_score_based_game_official:
-                        Log.i("VBR-MainActivity", "Start an official score-based game");
-                        startScoreBasedGame(false);
-                        break;
-                    case R.id.action_start_score_based_game_custom:
-                        Log.i("VBR-MainActivity", "Start a custom score-based game");
-                        startScoreBasedGame(true);
-                        break;
                 }
                 mDrawerLayout.closeDrawers();
                 return true;
@@ -227,84 +208,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void startOfficialIndoorGame(View view) {
-        Log.i("VBR-MainActivity", "Start an official indoor game");
-        startIndoorGame(false);
-    }
-
-    public void startCustomIndoorGame(View view) {
-        Log.i("VBR-MainActivity", "Start a custom indoor game");
-        startIndoorGame(true);
-    }
-
-    public void startOfficialBeachGame(View view) {
-        Log.i("VBR-MainActivity", "Start an official beach game");
-        startBeachGame(false);
-    }
-
-    public void startCustomBeachGame(View view) {
-        Log.i("VBR-MainActivity", "Start a custom beach game");
-        startBeachGame(true);
-    }
-
-    private void startIndoorGame(final boolean custom) {
+    public void startIndoorGame(View view) {
+        Log.i("VBR-MainActivity", "Start an indoor game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-
-        if (custom) {
-            GameFactory.createIndoorGameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
-        } else {
-            GameFactory.createIndoorGame(refereeName);
-        }
+        // TODO get user id via service?
+        GameFactory.createIndoorGame(refereeName, UserId.VBR_USER_ID);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams");
         final Intent intent = new Intent(this, TeamsSetupActivity.class);
         startActivity(intent);
     }
 
-    private void startBeachGame(final boolean custom) {
+    public void startBeachGame(View view) {
+        Log.i("VBR-MainActivity", "Start a beach game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-
-        if (custom) {
-            GameFactory.createBeachGameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
-        } else {
-            GameFactory.createBeachGame(refereeName);
-        }
+        // TODO get user id via service?
+        GameFactory.createBeachGame(refereeName, UserId.VBR_USER_ID);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
         startActivity(intent);
     }
 
-    private void startIndoor4x4Game(final boolean custom) {
+    public void startIndoor4x4Game(View view) {
+        Log.i("VBR-MainActivity", "Start a 4x4 indoor game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-
-        if (custom) {
-            GameFactory.createIndoor4x4GameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
-        } else {
-            GameFactory.createIndoor4x4Game(refereeName);
-        }
+        // TODO get user id via service?
+        GameFactory.createIndoor4x4Game(refereeName, UserId.VBR_USER_ID);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams");
         final Intent intent = new Intent(this, TeamsSetupActivity.class);
         startActivity(intent);
     }
 
-    private void startTimeBasedGame() {
-        GameFactory.createTimeBasedGame(PrefUtils.getPrefRefereeName(this));
+    public void startTimeBasedGame(View view) {
+        Log.i("VBR-MainActivity", "Start a time-based game");
+        // TODO get user id via service?
+        GameFactory.createTimeBasedGame(PrefUtils.getPrefRefereeName(this), UserId.VBR_USER_ID);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
         startActivity(intent);
     }
 
-    private void startScoreBasedGame(final boolean custom) {
+    public void startScoreBasedGame(View view) {
+        Log.i("VBR-MainActivity", "Start a score-based game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-
-        if (custom) {
-            GameFactory.createPointBasedGameUserRules(PreferenceManager.getDefaultSharedPreferences(this), refereeName);
-        } else {
-            GameFactory.createPointBasedGame(refereeName);
-        }
+        // TODO get user id via service?
+        GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
@@ -343,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
                         if (mGameService == null) {
                             Toast.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
                         } else {
-                            if (GameType.TIME.equals(ServicesProvider.getInstance().getScoreService().getGameType())) {
+                            if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
                                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                                 startActivity(gameIntent);
                             } else {

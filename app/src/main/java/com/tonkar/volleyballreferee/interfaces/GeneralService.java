@@ -1,9 +1,14 @@
 package com.tonkar.volleyballreferee.interfaces;
 
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 public interface GeneralService extends BaseGeneralService {
 
-    void startMatch(Rules rules, long gameDate, long gameSchedule);
+    void setRules(Rules rules);
+
+    void setGameDate(long gameDate);
+
+    void setGameSchedule(long gameSchedule);
+
+    void startMatch();
 }

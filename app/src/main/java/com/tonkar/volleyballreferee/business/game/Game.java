@@ -138,6 +138,101 @@ public abstract class Game extends BaseGame {
         mSanctionListeners.remove(listener);
     }
 
+    // General
+
+    @Override
+    public UserId getUserId() {
+        return mUserId;
+    }
+
+    @Override
+    public Rules getRules() {
+        return mRules;
+    }
+
+    @Override
+    public GameType getGameType() {
+        return mGameType;
+    }
+
+    @Override
+    public long getGameDate() {
+        return mGameDate;
+    }
+
+    @Override
+    public long getGameSchedule() {
+        return mGameSchedule;
+    }
+
+    @Override
+    public GameStatus getMatchStatus() {
+        return mGameStatus;
+    }
+
+    @Override
+    public String getGameSummary() {
+        StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName()));
+
+        for (Set set : mSets) {
+            builder.append(set.getSetSummary());
+            if (mSets.indexOf(set) != mSets.size() - 1) {
+                builder.append("\t\t");
+            }
+        }
+
+        return builder.toString();
+    }
+
+    @Override
+    public void setRules(Rules rules) {
+        mRules = rules;
+        mRules.printRules();
+    }
+
+    @Override
+    public void setGameDate(long gameDate) {
+        mGameDate = gameDate;
+    }
+
+    @Override
+    public void setGameSchedule(long gameSchedule) {
+        mGameSchedule = gameSchedule;
+    }
+
+    @Override
+    public void startMatch() {
+        GenderType homeGender = getGenderType(TeamType.HOME);
+        GenderType guestGender = getGenderType(TeamType.GUEST);
+
+        if (homeGender.equals(guestGender)) {
+            mGenderType = homeGender;
+        } else {
+            mGenderType = GenderType.MIXED;
+        }
+
+        mSets.add(createSet(mRules, false, mServingTeamAtStart, mHomeTeam, mGuestTeam));
+        mGameStatus = GameStatus.LIVE;
+    }
+
+    @Override
+    public boolean isMatchCompleted() {
+        final int homeTeamSetCount = getSets(TeamType.HOME);
+        final int guestTeamSetCount = getSets(TeamType.GUEST);
+
+        // Match is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
+        return (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame())
+                || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
+    }
+
+    private void notifyMatchCompleted(final TeamType winner) {
+        Log.i("VBR-Score", String.format("Match is completed and %s team won", winner.toString()));
+
+        for (final ScoreListener listener : mScoreListeners) {
+            listener.onMatchCompleted(winner);
+        }
+    }
+
     // Points
 
     @Override
@@ -220,93 +315,7 @@ public abstract class Game extends BaseGame {
         }
     }
 
-    // General
-
-    @Override
-    public UserId getUserId() {
-        return mUserId;
-    }
-
-    @Override
-    public Rules getRules() {
-        return mRules;
-    }
-
-    @Override
-    public GameType getGameType() {
-        return mGameType;
-    }
-
-    @Override
-    public long getGameDate() {
-        return mGameDate;
-    }
-
-    @Override
-    public long getGameSchedule() {
-        return mGameSchedule;
-    }
-
-    @Override
-    public GameStatus getMatchStatus() {
-        return mGameStatus;
-    }
-
     // Score
-
-    @Override
-    public String getGameSummary() {
-        StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName()));
-
-        for (Set set : mSets) {
-            builder.append(set.getSetSummary());
-            if (mSets.indexOf(set) != mSets.size() - 1) {
-                builder.append("\t\t");
-            }
-        }
-
-        return builder.toString();
-    }
-
-    @Override
-    public void startMatch(Rules rules, long gameDate, long gameSchedule) {
-        mRules = rules;
-        mGameDate = gameDate;
-        mGameSchedule = gameSchedule;
-
-        mRules.printRules();
-
-        GenderType homeGender = getGenderType(TeamType.HOME);
-        GenderType guestGender = getGenderType(TeamType.GUEST);
-
-        if (homeGender.equals(guestGender)) {
-            mGenderType = homeGender;
-        } else {
-            mGenderType = GenderType.MIXED;
-        }
-
-        mSets.add(createSet(mRules, false, mServingTeamAtStart, mHomeTeam, mGuestTeam));
-        mGameStatus = GameStatus.LIVE;
-    }
-
-
-    @Override
-    public boolean isMatchCompleted() {
-        final int homeTeamSetCount = getSets(TeamType.HOME);
-        final int guestTeamSetCount = getSets(TeamType.GUEST);
-
-        // Match is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
-        return (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame())
-                || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
-    }
-
-    private void notifyMatchCompleted(final TeamType winner) {
-        Log.i("VBR-Score", String.format("Match is completed and %s team won", winner.toString()));
-
-        for (final ScoreListener listener : mScoreListeners) {
-            listener.onMatchCompleted(winner);
-        }
-    }
 
     @Override
     public boolean isMatchPoint() {

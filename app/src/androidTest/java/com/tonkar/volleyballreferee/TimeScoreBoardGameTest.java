@@ -55,7 +55,10 @@ public class TimeScoreBoardGameTest {
         game.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt5));
         game.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt11));
 
-        game.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        game.setRules(Rules.OFFICIAL_INDOOR_RULES);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

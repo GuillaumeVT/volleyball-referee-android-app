@@ -19,7 +19,7 @@ public class BeachGameTest {
     @Test
     public void winSet_normal() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -35,7 +35,7 @@ public class BeachGameTest {
     @Test
     public void winSet_2PointsGap() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -60,7 +60,7 @@ public class BeachGameTest {
     @Test
     public void winGame_normal() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -79,7 +79,7 @@ public class BeachGameTest {
     @Test
     public void winGame_tieBreak() {
         GameService game = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
-        game.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        startMatch(game);
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -97,5 +97,12 @@ public class BeachGameTest {
         assertEquals(1, game.getSets(TeamType.HOME));
         assertEquals(2, game.getSets(TeamType.GUEST));
         assertEquals(3, game.getNumberOfSets());
+    }
+
+    private void startMatch(GameService game) {
+        game.setRules(Rules.OFFICIAL_BEACH_RULES);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
     }
 }

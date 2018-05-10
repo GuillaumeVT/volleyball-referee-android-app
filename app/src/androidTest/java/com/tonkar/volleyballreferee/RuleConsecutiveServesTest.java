@@ -98,7 +98,10 @@ public class RuleConsecutiveServesTest {
                 true,2, 30,true, 60, true, 180,
                 6,false, 0, 0, consecutiveServes);
 
-        game.startMatch(rules, System.currentTimeMillis(), System.currentTimeMillis());
+        game.setRules(rules);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
 
         for (int index = 1; index <= 6; index++) {
             game.substitutePlayer(TeamType.HOME, index, PositionType.fromInt(index), ActionOriginType.USER);

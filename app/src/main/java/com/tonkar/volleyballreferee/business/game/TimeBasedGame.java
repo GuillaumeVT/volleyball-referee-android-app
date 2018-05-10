@@ -657,10 +657,20 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public void startMatch(Rules rules, long gameDate, long gameSchedule) {
-        mGameDate = gameDate;
-        mGameSchedule = gameSchedule;
+    public void setRules(Rules rules) {}
 
+    @Override
+    public void setGameDate(long gameDate) {
+        mGameDate = gameDate;
+    }
+
+    @Override
+    public void setGameSchedule(long gameSchedule) {
+        mGameSchedule = gameSchedule;
+    }
+
+    @Override
+    public void startMatch() {
         GenderType homeGender = getGenderType(TeamType.HOME);
         GenderType guestGender = getGenderType(TeamType.GUEST);
 

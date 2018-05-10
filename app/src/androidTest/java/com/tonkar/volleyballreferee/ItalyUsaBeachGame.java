@@ -65,13 +65,16 @@ public class ItalyUsaBeachGame {
     }
 
     private void defineTeams(BeachGame beachGame) {
+        beachGame.setRules(Rules.OFFICIAL_BEACH_RULES);
+        beachGame.setGameDate(System.currentTimeMillis());
+        beachGame.setGameSchedule(System.currentTimeMillis());
         beachGame.setGenderType(GenderType.GENTS);
         beachGame.setLeagueName("FIVB Beach Volleyball World Championship 2017");
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
         beachGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));
         beachGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt1));
-        beachGame.startMatch(Rules.OFFICIAL_BEACH_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        beachGame.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }

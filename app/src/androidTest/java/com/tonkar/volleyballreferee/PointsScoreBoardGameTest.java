@@ -30,31 +30,34 @@ public class PointsScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        indoorGame.setUsageType(UsageType.POINTS_SCOREBOARD);
+        IndoorGame game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
+        game.setUsageType(UsageType.POINTS_SCOREBOARD);
 
-        defineTeams(indoorGame);
-        playSet(indoorGame);
-        playSet(indoorGame);
+        defineTeams(game);
+        playSet(game);
+        playSet(game);
 
         IndoorGame loadedGame = (IndoorGame) ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
-        assertEquals(indoorGame, loadedGame);
+        assertEquals(game, loadedGame);
 
-        playSet(indoorGame);
+        playSet(game);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(indoorGame.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(game.getGameDate());
         PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
-    private void defineTeams(IndoorGame indoorGame) {
-        indoorGame.setGenderType(GenderType.LADIES);
+    private void defineTeams(IndoorGame game) {
+        game.setGenderType(GenderType.LADIES);
 
-        indoorGame.setTeamName(TeamType.HOME, "Team A");
-        indoorGame.setTeamName(TeamType.GUEST, "Team B");
-        indoorGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt4));
-        indoorGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt9));
+        game.setTeamName(TeamType.HOME, "Team A");
+        game.setTeamName(TeamType.GUEST, "Team B");
+        game.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt4));
+        game.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt9));
 
-        indoorGame.startMatch(Rules.OFFICIAL_INDOOR_RULES, System.currentTimeMillis(), System.currentTimeMillis());
+        game.setRules(Rules.OFFICIAL_INDOOR_RULES);
+        game.setGameDate(System.currentTimeMillis());
+        game.setGameSchedule(System.currentTimeMillis());
+        game.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
     }
