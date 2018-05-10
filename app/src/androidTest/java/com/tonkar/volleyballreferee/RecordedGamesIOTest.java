@@ -8,13 +8,16 @@ import com.tonkar.volleyballreferee.business.data.RecordedGame;
 import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.data.RecordedSet;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,12 +78,16 @@ public class RecordedGamesIOTest {
     }
 
     private RecordedGame someRecordedGame1() {
-        // TODO all new fields
         RecordedGame recordedGame = new RecordedGame();
+        recordedGame.setUserId(UserId.VBR_USER_ID);
         recordedGame.setGameType(GameType.INDOOR);
         recordedGame.setGameDate(123456L);
+        recordedGame.setGameSchedule(65432L);
         recordedGame.setGenderType(GenderType.LADIES);
-        recordedGame.setMatchCompleted(false);
+        recordedGame.setRules(Rules.OFFICIAL_INDOOR_RULES);
+        recordedGame.setLeagueName("VBR League");
+        recordedGame.setRefereeName("VBR");
+        recordedGame.setGameStatus(GameStatus.LIVE);
         recordedGame.setSets(TeamType.HOME, 0);
         recordedGame.setSets(TeamType.GUEST, 2);
 
@@ -91,6 +98,9 @@ public class RecordedGamesIOTest {
         Collections.addAll(team1.getPlayers(), 1, 3, 5, 7, 9, 11, 13);
         Collections.addAll(team1.getLiberos(), 2);
         team1.setCaptain(11);
+        team1.setUserId(UserId.VBR_USER_ID);
+        team1.setGameType(GameType.INDOOR);
+        team1.setDate(4869434L);
 
         RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
         team2.setName("Team 2");
@@ -98,6 +108,9 @@ public class RecordedGamesIOTest {
         team2.setLiberoColor(Color.parseColor("#000000"));
         Collections.addAll(team2.getPlayers(), 2, 4, 6, 8, 10, 12, 14, 16, 18);
         team2.setCaptain(2);
+        team2.setUserId(UserId.VBR_USER_ID);
+        team2.setGameType(GameType.INDOOR);
+        team2.setDate(58594L);
 
         RecordedSet set1 = new RecordedSet();
         recordedGame.getSets().add(set1);
@@ -166,12 +179,16 @@ public class RecordedGamesIOTest {
     }
 
     private RecordedGame someRecordedGame2() {
-        // TODO all new fields
         RecordedGame recordedGame = new RecordedGame();
+        recordedGame.setUserId(UserId.VBR_USER_ID);
         recordedGame.setGameType(GameType.BEACH);
         recordedGame.setGameDate(646516L);
+        recordedGame.setGameSchedule(764578L);
         recordedGame.setGenderType(GenderType.GENTS);
-        recordedGame.setMatchCompleted(false);
+        recordedGame.setGameStatus(GameStatus.SCHEDULED);
+        recordedGame.setRules(Rules.OFFICIAL_BEACH_RULES);
+        recordedGame.setLeagueName("VBR Beach League");
+        recordedGame.setRefereeName("VBR");
         recordedGame.setSets(TeamType.HOME, 1);
         recordedGame.setSets(TeamType.GUEST, 0);
 
@@ -179,11 +196,17 @@ public class RecordedGamesIOTest {
         team1.setName("Player A / Player B");
         team1.setColor(Color.parseColor("#1234ab"));
         Collections.addAll(team1.getPlayers(), 1, 2);
+        team1.setUserId(UserId.VBR_USER_ID);
+        team1.setGameType(GameType.BEACH);
+        team1.setDate(660339L);
 
         RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
         team2.setName("Player C / Player D");
         team2.setColor(Color.parseColor("#efa1c3"));
         Collections.addAll(team2.getPlayers(), 1, 2);
+        team2.setUserId(UserId.VBR_USER_ID);
+        team2.setGameType(GameType.BEACH);
+        team2.setDate(686558L);
 
         RecordedSet set1 = new RecordedSet();
         recordedGame.getSets().add(set1);

@@ -25,6 +25,7 @@ import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -42,16 +43,12 @@ import java.util.List;
 
 public class JsonIOUtils {
 
-    private static final Type CURRENT_GAME_TYPE         = new TypeToken<BaseGame>() {
-    }.getType();
-    private static final Type RECORDED_GAME_LIST_TYPE   = new TypeToken<List<RecordedGame>>() {
-    }.getType();
-    private static final Type RECORDED_GAME_TYPE        = new TypeToken<RecordedGame>() {
-    }.getType();
-    private static final Type RECORDED_SET_TYPE         = new TypeToken<RecordedSet>() {
-    }.getType();
-    private static final Type TEAM_DEFINITION_LIST_TYPE = new TypeToken<List<IndoorTeamDefinition>>() {
-    }.getType();
+    private static final Type CURRENT_GAME_TYPE         = new TypeToken<BaseGame>() {}.getType();
+    private static final Type RECORDED_GAME_LIST_TYPE   = new TypeToken<List<RecordedGame>>() {}.getType();
+    private static final Type RECORDED_GAME_TYPE        = new TypeToken<RecordedGame>() {}.getType();
+    private static final Type RECORDED_SET_TYPE         = new TypeToken<RecordedSet>() {}.getType();
+    private static final Type TEAM_DEFINITION_LIST_TYPE = new TypeToken<List<IndoorTeamDefinition>>() {}.getType();
+    private static final Type RULES_LIST_TYPE           = new TypeToken<List<Rules>>() {}.getType();
 
     private static final Gson sGson = new GsonBuilder()
             .registerTypeAdapter(BaseGame.class, new InheritanceDeserializer<BaseGame>())
@@ -243,6 +240,53 @@ public class JsonIOUtils {
     public static void writeTeamDefinitionsStream(OutputStream outputStream, List<IndoorTeamDefinition> teamDefinitions) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         sGson.toJson(teamDefinitions, TEAM_DEFINITION_LIST_TYPE, writer);
+        writer.close();
+    }
+
+    // Read saved rules
+
+    static List<Rules> readSavedRules(Context context, String fileName) {
+        Log.i("VBR-SavedRules", String.format("Read saved rules from %s", fileName));
+        List<Rules> rules = new ArrayList<>();
+
+        try {
+            FileInputStream inputStream = context.openFileInput(fileName);
+            rules = readRulesStream(inputStream);
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.i("VBR-SavedRules", String.format("%s saved rules file does not yet exist", fileName));
+        } catch (JsonParseException | IOException e) {
+            Log.e("VBR-SavedRules", "Exception while reading rules", e);
+        }
+
+        return rules;
+    }
+
+    public static List<Rules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
+        JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+        try {
+            return sGson.fromJson(reader, RULES_LIST_TYPE);
+        } finally {
+            reader.close();
+        }
+    }
+
+    // Write saved rules
+
+    static void writeSavedRules(Context context, String fileName, List<Rules> savedRules) {
+        Log.i("VBR-SavedRules", String.format("Write saved rules into %s", fileName));
+        try {
+            FileOutputStream outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            writeRulesStream(outputStream, savedRules);
+            outputStream.close();
+        } catch (JsonParseException | IOException e) {
+            Log.e("VBR-SavedRules", "Exception while writing rules", e);
+        }
+    }
+
+    public static void writeRulesStream(OutputStream outputStream, List<Rules> rules) throws JsonParseException, IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        sGson.toJson(rules, RULES_LIST_TYPE, writer);
         writer.close();
     }
 

@@ -75,7 +75,7 @@ public class RecordedGame implements RecordedGameService {
         mSets = new ArrayList<>();
         mHomeSanctions = new ArrayList<>();
         mGuestSanctions = new ArrayList<>();
-        mRules = Rules.OFFICIAL_INDOOR_RULES;
+        mRules = Rules.DEFAULT_UNIVERSAL_RULES;
         mIsRecordedOnline = false;
     }
 

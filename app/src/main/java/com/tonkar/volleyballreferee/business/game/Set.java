@@ -50,7 +50,7 @@ public abstract class Set {
     protected Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
         mClassType = getClass().getName();
         mPointsToWinSet = pointsToWinSet;
-        m2PointsDifference = rules.is2PointsDifference();
+        m2PointsDifference = rules.isTwoPointsDifference();
 
         if (homeTeamDefinition != null && guestTeamDefinition != null) {
             mHomeTeamComposition = createTeamComposition(rules, homeTeamDefinition);

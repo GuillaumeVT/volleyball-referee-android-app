@@ -37,6 +37,7 @@ public class RecordedTeam {
         mUserId = UserId.VBR_USER_ID;
         mGameType = GameType.INDOOR;
         mName = "";
+        mDate = 0L;
         mColor = "#ffffff"; // white
         mLiberoColor = "#ffffff"; // white
         mPlayers = new TreeSet<>();
@@ -131,6 +132,7 @@ public class RecordedTeam {
                     && (this.getLiberoColor() == other.getLiberoColor())
                     && this.getName().equals(other.getName())
                     && this.getGenderType().equals(other.getGenderType())
+                    && this.getGameType().equals(other.getGameType())
                     && this.getPlayers().equals(other.getPlayers())
                     && this.getLiberos().equals(other.getLiberos())
                     && (this.getCaptain() == other.getCaptain());

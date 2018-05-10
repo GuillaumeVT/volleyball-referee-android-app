@@ -3,8 +3,10 @@ package com.tonkar.volleyballreferee.business;
 import android.content.Context;
 
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
@@ -18,6 +20,7 @@ public class ServicesProvider {
     private        GameService      mCurrentGame;
     private        RecordedGames    mRecordedGames;
     private        SavedTeams       mSavedTeams;
+    private        SavedRules       mSavedRules;
 
     private ServicesProvider() {}
 
@@ -55,6 +58,10 @@ public class ServicesProvider {
         return mSavedTeams;
     }
 
+    public SavedRulesService getSavedRulesService() {
+        return mSavedRules;
+    }
+
     private boolean isGameServiceAvailable() {
         return mCurrentGame != null;
     }
@@ -65,6 +72,10 @@ public class ServicesProvider {
 
     private boolean isSavedTeamsServiceAvailable() {
         return mSavedTeams != null;
+    }
+
+    private boolean isSavedRulesServiceAvailable() {
+        return mSavedRules != null;
     }
 
     public boolean areServicesAvailable() {
@@ -103,6 +114,13 @@ public class ServicesProvider {
         if (!isSavedTeamsServiceAvailable()) {
             mSavedTeams = new SavedTeams(context);
             mSavedTeams.loadSavedTeams();
+        }
+    }
+
+    public void restoreSavedRulesService(Context context) {
+        if (!isSavedRulesServiceAvailable()) {
+            mSavedRules = new SavedRules(context);
+            mSavedRules.loadSavedRules();
         }
     }
 }

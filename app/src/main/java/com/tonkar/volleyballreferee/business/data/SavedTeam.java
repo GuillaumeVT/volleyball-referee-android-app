@@ -111,9 +111,6 @@ public class SavedTeam implements BaseIndoorTeamService {
     }
 
     @Override
-    public void initTeams() {}
-
-    @Override
     public int getLiberoColor(TeamType teamType) {
         return mIndoorTeamDefinition.getLiberoColor();
     }
