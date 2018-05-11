@@ -8,168 +8,121 @@
     android:layout_height="match_parent"
     tools:context="com.tonkar.volleyballreferee.ui.MainActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top|center"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.CardView
-            style="@style/CardView.Light"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorBackgroundCardview">
+            android:gravity="top|center"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                style="@style/CardView.Light"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/indoor_game_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/main_image_height"
-                    android:contentDescription="@string/indoor_description"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/indoor"/>
-
-                <TextView
-                    android:id="@+id/indoor_game_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_margin_size"
-                    android:layout_marginLeft="@dimen/default_margin_size"
-                    android:layout_marginRight="@dimen/default_margin_size"
-                    android:layout_marginStart="@dimen/default_margin_size"
-                    android:layout_marginTop="@dimen/default_margin_size"
-                    android:text="@string/indoor_card_title"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_size"
+                app:cardBackgroundColor="@color/colorBackgroundCardview">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin_size"
-                    android:gravity="top|end"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <Button
-                        android:id="@+id/start_official_indoor_game_button"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginLeft="@dimen/small_margin_size"
-                        android:layout_marginRight="@dimen/small_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:drawablePadding="@dimen/small_margin_size"
-                        android:onClick="startOfficialIndoorGame"
-                        android:text="@string/new_match"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/default_text_size"/>
+                    <ImageView
+                        android:id="@+id/indoor_game_image"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/indoor_description"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/indoor" />
 
-                    <Button
-                        android:id="@+id/start_custom_indoor_game_button"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginLeft="@dimen/small_margin_size"
-                        android:layout_marginRight="@dimen/small_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:onClick="startCustomIndoorGame"
-                        android:text="@string/new_match_my_rule"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:layout_weight="1"
+                        android:gravity="top|center"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/start_score_based_game_button"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="startScoreBasedGame"
+                            android:text="@string/new_score_based_game"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size" />
+
+                        <Button
+                            android:id="@+id/start_indoor_4x4_game_button"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="startIndoor4x4Game"
+                            android:text="@string/new_volleyball_4x4_game"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size" />
+
+                        <Button
+                            android:id="@+id/start_indoor_6x6_game_button"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="startIndoorGame"
+                            android:text="@string/new_volleyball_6x6_game"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            style="@style/CardView.Light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorBackgroundCardview">
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                style="@style/CardView.Light"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/beach_game_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/main_image_height"
-                    android:contentDescription="@string/beach_description"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/beach"/>
-
-                <TextView
-                    android:id="@+id/beach_game_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/default_margin_size"
-                    android:layout_marginLeft="@dimen/default_margin_size"
-                    android:layout_marginRight="@dimen/default_margin_size"
-                    android:layout_marginStart="@dimen/default_margin_size"
-                    android:layout_marginTop="@dimen/default_margin_size"
-                    android:text="@string/beach_card_title"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_size"
+                app:cardBackgroundColor="@color/colorBackgroundCardview">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin_size"
-                    android:gravity="top|end"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/beach_game_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/main_image_height"
+                        android:contentDescription="@string/beach_description"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/beach" />
 
                     <Button
-                        android:id="@+id/start_official_beach_game_button"
+                        android:id="@+id/start_beach_game_button"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginLeft="@dimen/small_margin_size"
-                        android:layout_marginRight="@dimen/small_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:drawablePadding="@dimen/small_margin_size"
-                        android:onClick="startOfficialBeachGame"
-                        android:text="@string/new_match"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="startBeachGame"
+                        android:text="@string/new_beach_volleyball_game"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textSize="@dimen/default_text_size" />
 
-                    <Button
-                        android:id="@+id/start_custom_beach_game_button"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginLeft="@dimen/small_margin_size"
-                        android:layout_marginRight="@dimen/small_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:onClick="startCustomBeachGame"
-                        android:text="@string/new_match_my_rule"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/default_text_size"/>
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
@@ -179,7 +132,8 @@
         app:itemIconTint="@color/colorAccent"
         app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:itemTextColor="@color/colorPrimaryText"
-        app:menu="@menu/navigation_menu_main"/>
+        app:menu="@menu/navigation_menu_main">
+    </android.support.design.widget.NavigationView>
 
 
 </android.support.v4.widget.DrawerLayout>

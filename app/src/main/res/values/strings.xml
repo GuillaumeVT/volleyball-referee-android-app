@@ -2,6 +2,11 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
+    <string name="new_volleyball_6x6_game">Volleyball 6x6\nNEW MATCH</string>
+    <string name="new_volleyball_4x4_game">Volleyball 4x4\nNEW MATCH</string>
+    <string name="new_beach_volleyball_game">Beach Volleyball\nNEW MATCH</string>
+    <string name="new_score_based_game">Scoreboard\nNEW MATCH</string>
+    <string name="new_time_based_game">Time-based\nNEW MATCH</string>
     <string name="indoor_card_title">Indoor volleyball</string>
     <string name="beach_card_title">Beach volleyball</string>
     <string name="new_match">NEW MATCH\nFIVB rules</string>
