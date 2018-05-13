@@ -22,4 +22,12 @@ public interface BaseGeneralService {
     void setUsageType(UsageType usageType);
 
     Rules getRules();
+
+    String getRefereeName();
+
+    void setRefereeName(String name);
+
+    String getLeagueName();
+
+    void setLeagueName(String name);
 }

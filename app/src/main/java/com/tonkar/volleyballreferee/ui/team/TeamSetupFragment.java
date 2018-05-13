@@ -34,6 +34,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamsListAdapter;
+import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -435,22 +436,22 @@ public class TeamSetupFragment extends Fragment {
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);
-                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 mGenderButton.setImageResource(R.drawable.ic_ladies);
-                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 mGenderButton.setImageResource(R.drawable.ic_gents);
-                mGenderButton.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorGents), PorterDuff.Mode.SRC_IN));
                 break;
         }
     }
 
     private void computeConfirmItemVisibility() {
-        if (getActivity() instanceof TeamsSetupActivity) {
-            ((TeamsSetupActivity) getActivity()).computeConfirmItemVisibility();
+        if (getActivity() instanceof GameSetupActivity) {
+            ((GameSetupActivity) getActivity()).computeConfirmItemVisibility();
         } else if (getActivity() instanceof SavedTeamActivity) {
             ((SavedTeamActivity) getActivity()).computeSaveItemVisibility();
         }

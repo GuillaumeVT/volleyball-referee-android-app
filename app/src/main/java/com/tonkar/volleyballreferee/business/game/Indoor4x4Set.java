@@ -14,7 +14,7 @@ public class Indoor4x4Set extends Set {
 
     // For GSON Deserialization
     public Indoor4x4Set() {
-        super(Rules.DEFAULT_INDOOR_4X4_RULES, 0, TeamType.HOME);
+        super(Rules.defaultIndoor4x4Rules(), 0, TeamType.HOME);
     }
 
     @Override

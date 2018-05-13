@@ -50,10 +50,9 @@ public class SavedRules implements SavedRulesService {
 
     @Override
     public void createRules() {
-        mSavedRules = Rules.DEFAULT_UNIVERSAL_RULES;
+        mSavedRules = Rules.defaultUniversalRules();
         mSavedRules.setName("");
         mSavedRules.setDate(System.currentTimeMillis());
-        // TODO
         mSavedRules.setUserId(UserId.VBR_USER_ID);
     }
 
@@ -90,5 +89,19 @@ public class SavedRules implements SavedRulesService {
     public void deleteAllSavedRules() {
         mSavedRulesList.clear();
         JsonIOUtils.writeSavedRules(mContext, SAVED_RULES_FILE, mSavedRulesList);
+    }
+
+    @Override
+    public void createAndSaveRulesFrom(Rules rules) {
+        if (rules.getName().length() > 0
+                && getSavedRules(rules.getName()) == null
+                && !rules.getName().equals(Rules.officialBeachRules().getName())
+                && !rules.getName().equals(Rules.officialIndoorRules().getName())
+                && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())
+                && !rules.getName().equals(Rules.defaultUniversalRules().getName())) {
+            createRules();
+            getCurrentRules().setAll(rules);
+            saveCurrentRules();
+        }
     }
 }

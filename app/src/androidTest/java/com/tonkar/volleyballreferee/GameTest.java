@@ -18,8 +18,8 @@ public class GameTest {
 
     @Test
     public void point_remove() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         assertEquals(0, game.getPoints(TeamType.HOME));
         game.removeLastPoint();
@@ -28,8 +28,8 @@ public class GameTest {
 
     @Test
     public void service_swapFirst() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         game.swapServiceAtStart();
@@ -38,8 +38,8 @@ public class GameTest {
 
     @Test
     public void service_keep() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         game.addPoint(TeamType.HOME);
@@ -48,8 +48,8 @@ public class GameTest {
 
     @Test
     public void service_sideOut() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         game.addPoint(TeamType.GUEST);
@@ -58,8 +58,8 @@ public class GameTest {
 
     @Test
     public void service_keep_Reverse() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.HOME);
@@ -70,8 +70,8 @@ public class GameTest {
 
     @Test
     public void service_sideOut_Reverse() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.GUEST);
@@ -82,20 +82,13 @@ public class GameTest {
 
     @Test
     public void timeout() {
-        GameService game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.getRemainingTimeouts(TeamType.HOME));
         game.callTimeout(TeamType.HOME);
         assertEquals(game.getRules().getTeamTimeoutsPerSet() - 1, game.getRemainingTimeouts(TeamType.HOME));
         assertEquals(1, game.getCalledTimeouts(TeamType.HOME).size());
-    }
-
-    private void startMatch(GameService game) {
-        game.setRules(Rules.OFFICIAL_INDOOR_RULES);
-        game.setGameDate(System.currentTimeMillis());
-        game.setGameSchedule(System.currentTimeMillis());
-        game.startMatch();
     }
 
 }

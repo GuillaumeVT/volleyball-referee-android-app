@@ -4,14 +4,6 @@ import java.util.Set;
 
 public interface BaseTeamService {
 
-    String getRefereeName();
-
-    void setRefereeName(String name);
-
-    String getLeagueName();
-
-    void setLeagueName(String name);
-
     String getTeamName(TeamType teamType);
 
     int getTeamColor(TeamType teamType);

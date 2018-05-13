@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,13 +18,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,13 +42,14 @@ import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
+import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
-import com.tonkar.volleyballreferee.ui.rules.RulesActivity;
-import com.tonkar.volleyballreferee.ui.team.QuickTeamsSetupActivity;
-import com.tonkar.volleyballreferee.ui.team.TeamsSetupActivity;
+import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
+import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.web.WebActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,9 +68,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        PreferenceManager.setDefaultValues(this, R.xml.rules, false);
 
         initNavigationMenu();
+
+        Button indoor6x6Button = findViewById(R.id.start_indoor_6x6_game_button);
+        colorButtonDrawable(indoor6x6Button, android.R.color.white);
+
+        Button indoor4x4Button = findViewById(R.id.start_indoor_4x4_game_button);
+        colorButtonDrawable(indoor4x4Button, android.R.color.white);
+
+        Button scoreBasedButton = findViewById(R.id.start_score_based_game_button);
+        colorButtonDrawable(scoreBasedButton, android.R.color.white);
+
+        Button beachButton = findViewById(R.id.start_beach_game_button);
+        colorButtonDrawable(beachButton, android.R.color.white);
+
+        Button timeBasedButton = findViewById(R.id.start_time_based_game_button);
+        colorButtonDrawable(timeBasedButton, android.R.color.white);
+
+        Button scheduledListButton = findViewById(R.id.start_scheduled_list_game_button);
+        colorButtonDrawable(scheduledListButton, android.R.color.white);
+
+        Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
+        colorButtonDrawable(scheduledCodeButton, android.R.color.white);
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
@@ -114,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_rules:
-                        Log.i("VBR-MainActivity", "Rules");
-                        Intent intent = new Intent(MainActivity.this, RulesActivity.class);
+                    case R.id.action_saved_rules:
+                        Log.i("VBR-MainActivity", "Saved Rules");
+                        Intent intent = new Intent(MainActivity.this, SavedRulesListActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_settings:
@@ -211,55 +235,67 @@ public class MainActivity extends AppCompatActivity {
     public void startIndoorGame(View view) {
         Log.i("VBR-MainActivity", "Start an indoor game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-        // TODO get user id via service?
-        GameFactory.createIndoorGame(refereeName, UserId.VBR_USER_ID);
+        final UserId userId = PrefUtils.getUserId(this);
+        GameFactory.createIndoorGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules(), refereeName, userId);
 
-        Log.i("VBR-MainActivity", "Start activity to setup teams");
-        final Intent intent = new Intent(this, TeamsSetupActivity.class);
+        Log.i("VBR-MainActivity", "Start activity to setup game");
+        final Intent intent = new Intent(this, GameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startBeachGame(View view) {
         Log.i("VBR-MainActivity", "Start a beach game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-        // TODO get user id via service?
-        GameFactory.createBeachGame(refereeName, UserId.VBR_USER_ID);
+        final UserId userId = PrefUtils.getUserId(this);
+        GameFactory.createBeachGame(System.currentTimeMillis(), 0L, Rules.officialBeachRules(), refereeName, userId);
 
-        Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
-        final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
+        Log.i("VBR-MainActivity", "Start activity to setup game quickly");
+        final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startIndoor4x4Game(View view) {
         Log.i("VBR-MainActivity", "Start a 4x4 indoor game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-        // TODO get user id via service?
-        GameFactory.createIndoor4x4Game(refereeName, UserId.VBR_USER_ID);
+        final UserId userId = PrefUtils.getUserId(this);
+        GameFactory.createIndoor4x4Game(System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules(), refereeName, userId);
 
-        Log.i("VBR-MainActivity", "Start activity to setup teams");
-        final Intent intent = new Intent(this, TeamsSetupActivity.class);
+        Log.i("VBR-MainActivity", "Start activity to setup game");
+        final Intent intent = new Intent(this, GameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startTimeBasedGame(View view) {
         Log.i("VBR-MainActivity", "Start a time-based game");
-        // TODO get user id via service?
-        GameFactory.createTimeBasedGame(PrefUtils.getPrefRefereeName(this), UserId.VBR_USER_ID);
+        final String refereeName = PrefUtils.getPrefRefereeName(this);
+        final UserId userId = PrefUtils.getUserId(this);
+        GameFactory.createTimeBasedGame(System.currentTimeMillis(), 0L, refereeName, userId);
 
-        Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
-        final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
+        Log.i("VBR-MainActivity", "Start activity to setup game quickly");
+        final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startScoreBasedGame(View view) {
         Log.i("VBR-MainActivity", "Start a score-based game");
         final String refereeName = PrefUtils.getPrefRefereeName(this);
-        // TODO get user id via service?
-        GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
+        final UserId userId = PrefUtils.getUserId(this);
+        GameFactory.createPointBasedGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules(), refereeName, userId);
+
+        Log.i("VBR-MainActivity", "Start activity to setup game quickly");
+        final Intent intent = new Intent(this, QuickGameSetupActivity.class);
+        startActivity(intent);
+    }
+
+    public void startScheduledGame(View view) {
+        Log.i("VBR-MainActivity", "Start a scheduled game");
+        final String refereeName = PrefUtils.getPrefRefereeName(this);
+
+        /*GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
 
         Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
         final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     private void resumeCurrentGameWithDialog(Bundle savedInstanceState) {
@@ -373,6 +409,14 @@ public class MainActivity extends AppCompatActivity {
                     }
             );
             WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
+        }
+    }
+
+    private void colorButtonDrawable(Button button, int colorId) {
+        for (Drawable drawable : button.getCompoundDrawables()) {
+            if (drawable != null) {
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, colorId), PorterDuff.Mode.SRC_IN));
+            }
         }
     }
 }

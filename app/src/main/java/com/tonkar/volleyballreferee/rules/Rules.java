@@ -41,21 +41,26 @@ public class Rules {
     private int     mGameIntervalDuration;
     @SerializedName("teamSubstitutionsPerSet")
     private int     mTeamSubstitutionsPerSet;
-    @SerializedName("changeSidesBeach")
-    private boolean mChangeSidesBeach;
-    @SerializedName("changeSidesPeriod")
-    private int     mChangeSidesPeriod;
-    @SerializedName("changeSidesPeriodTieBreak")
-    private int     mChangeSidesPeriodTieBreak;
+    @SerializedName("beachCourtSwitches")
+    private boolean mBeachCourtSwitchesEnabled;
+    @SerializedName("beachCourtSwitchFreq")
+    private int     mBeachCourtSwitchFrequency;
+    @SerializedName("beachCourtSwitchFreqTieBreak")
+    private int     mBeachCourtSwitchFrequencyTieBreak;
     @SerializedName("customConsecutiveServesPerPlayer")
     private int     mCustomConsecutiveServesPerPlayer;
+
+    // For GSON Deserialization
+    public Rules() {
+        setAll(defaultUniversalRules());
+    }
 
     public Rules(UserId userId, String name, long date,
                  int setsPerGame, int pointsPerSet, boolean tieBreakInLastSet, int pointsInTieBreak, boolean twoPointsDifference, boolean sanctionsEnabled,
                  boolean teamTimeoutsEnabled, int teamTimeoutsPerSet, int teamTimeoutDuration,
                  boolean technicalTimeoutsEnabled, int technicalTimeoutDuration,
                  boolean gameIntervalsEnabled, int gameIntervalDuration,
-                 int teamSubstitutionsPerSet, boolean changeSidesBeach, int changeSidesPeriod, int changeSidesPeriodTieBreak, int customConsecutiveServesPerPlayer) {
+                 int teamSubstitutionsPerSet, boolean beachCourtSwitchesEnabled, int beachCourtSwitchFrequency, int beachCourtSwitchFrequencyTieBreak, int customConsecutiveServesPerPlayer) {
         mUserId = userId;
         mName = name;
         mDate = date;
@@ -78,29 +83,38 @@ public class Rules {
         mGameIntervalDuration = gameIntervalDuration;
 
         mTeamSubstitutionsPerSet = teamSubstitutionsPerSet;
-        mChangeSidesBeach = changeSidesBeach;
-        mChangeSidesPeriod = changeSidesPeriod;
-        mChangeSidesPeriodTieBreak = changeSidesPeriodTieBreak;
+        mBeachCourtSwitchesEnabled = beachCourtSwitchesEnabled;
+        mBeachCourtSwitchFrequency = beachCourtSwitchFrequency;
+        mBeachCourtSwitchFrequencyTieBreak = beachCourtSwitchFrequencyTieBreak;
 
         mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
     }
 
-    public static final Rules DEFAULT_UNIVERSAL_RULES  = new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
-            5, 25, true, 15, true, true, true, 2, 30,
-            true, 60, true, 180,
-            6, true, 7, 5, 9999);
-    public static final Rules OFFICIAL_INDOOR_RULES    = new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
-            5, 25, true, 15, true, true, true, 2, 30,
-            true, 60, true, 180,
-            6, false, 0, 0, 9999);
-    public static final Rules OFFICIAL_BEACH_RULES     = new Rules(UserId.VBR_USER_ID, "FIVB beach rules", 0L,
-            3, 21, true, 15, true, true, true, 1, 30,
-            true, 30, true, 60,
-            0, true, 7, 5, 9999);
-    public static final Rules DEFAULT_INDOOR_4X4_RULES = new Rules(UserId.VBR_USER_ID, "Default 4x4 rules", 0L,
-            5, 25, true, 15, true, true, true, 2, 30,
-            true, 60, true, 180,
-            4, false, 0, 0, 9999);
+    // TODO convert to functions
+    public static Rules defaultUniversalRules() {
+        return new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
+                5, 25, true, 15, true, true, true, 2, 30,
+                true, 60, true, 180,
+                6, true, 7, 5, 9999);
+    }
+    public static Rules officialIndoorRules() {
+        return new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
+                5, 25, true, 15, true, true, true, 2, 30,
+                true, 60, true, 180,
+                6, false, 7, 5, 9999);
+    }
+    public static Rules officialBeachRules() {
+        return new Rules(UserId.VBR_USER_ID, "FIVB beach rules", 0L,
+                3, 21, true, 15, true, true, true, 1, 30,
+                true, 30, true, 60,
+                6, true, 7, 5, 9999);
+    }
+    public static Rules defaultIndoor4x4Rules() {
+        return new Rules(UserId.VBR_USER_ID, "Default 4x4 rules", 0L,
+                5, 25, true, 15, true, true, true, 2, 30,
+                true, 60, true, 180,
+                4, false, 7, 5, 9999);
+    }
 
     public UserId getUserId() {
         return mUserId;
@@ -170,16 +184,16 @@ public class Rules {
         return mTeamSubstitutionsPerSet;
     }
 
-    public boolean isChangeSidesBeach() {
-        return mChangeSidesBeach;
+    public boolean areBeachCourtSwitchesEnabled() {
+        return mBeachCourtSwitchesEnabled;
     }
 
-    public int getChangeSidesPeriod() {
-        return mChangeSidesPeriod;
+    public int getBeachCourtSwitchFrequency() {
+        return mBeachCourtSwitchFrequency;
     }
 
-    public int getChangeSidesPeriodTieBreak() {
-        return mChangeSidesPeriodTieBreak;
+    public int getBeachCourtSwitchFrequencyTieBreak() {
+        return mBeachCourtSwitchFrequencyTieBreak;
     }
 
     public int getCustomConsecutiveServesPerPlayer() {
@@ -254,20 +268,50 @@ public class Rules {
         mTeamSubstitutionsPerSet = teamSubstitutionsPerSet;
     }
 
-    public void setChangeSidesBeach(boolean changeSidesBeach) {
-        mChangeSidesBeach = changeSidesBeach;
+    public void setBeachCourtSwitchesEnabled(boolean beachCourtSwitchesEnabled) {
+        mBeachCourtSwitchesEnabled = beachCourtSwitchesEnabled;
     }
 
-    public void setChangeSidesPeriod(int changeSidesPeriod) {
-        mChangeSidesPeriod = changeSidesPeriod;
+    public void setBeachCourtSwitchFrequency(int beachCourtSwitchFrequency) {
+        mBeachCourtSwitchFrequency = beachCourtSwitchFrequency;
     }
 
-    public void setChangeSidesPeriodTieBreak(int changeSidesPeriodTieBreak) {
-        mChangeSidesPeriodTieBreak = changeSidesPeriodTieBreak;
+    public void setBeachCourtSwitchFrequencyTieBreak(int beachCourtSwitchFrequencyTieBreak) {
+        mBeachCourtSwitchFrequencyTieBreak = beachCourtSwitchFrequencyTieBreak;
     }
 
     public void setCustomConsecutiveServesPerPlayer(int customConsecutiveServesPerPlayer) {
         mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
+    }
+
+    public void setAll(Rules rules) {
+        mUserId = rules.getUserId();
+        mName = rules.getName();
+        mDate = rules.getDate();
+
+        mSetsPerGame = rules.getSetsPerGame();
+        mPointsPerSet = rules.getPointsPerSet();
+        mTieBreakInLastSet = rules.isTieBreakInLastSet();
+        mPointsInTieBreak = rules.getPointsInTieBreak();
+        mTwoPointsDifference = rules.isTwoPointsDifference();
+        mSanctionsEnabled = rules.areSanctionsEnabled();
+
+        mTeamTimeoutsEnabled = rules.areTeamTimeoutsEnabled();
+        mTeamTimeoutsPerSet = rules.getTeamTimeoutsPerSet();
+        mTeamTimeoutDuration = rules.getTeamTimeoutDuration();
+
+        mTechnicalTimeoutsEnabled = rules.areTechnicalTimeoutsEnabled();
+        mTechnicalTimeoutDuration = rules.getTechnicalTimeoutDuration();
+
+        mGameIntervalsEnabled = rules.areGameIntervalsEnabled();
+        mGameIntervalDuration = rules.getGameIntervalDuration();
+
+        mTeamSubstitutionsPerSet = rules.getTeamSubstitutionsPerSet();
+        mBeachCourtSwitchesEnabled = rules.areBeachCourtSwitchesEnabled();
+        mBeachCourtSwitchFrequency = rules.getBeachCourtSwitchFrequency();
+        mBeachCourtSwitchFrequencyTieBreak = rules.getBeachCourtSwitchFrequencyTieBreak();
+
+        mCustomConsecutiveServesPerPlayer = rules.getCustomConsecutiveServesPerPlayer();
     }
 
     public void printRules() {
@@ -285,9 +329,9 @@ public class Rules {
         Log.i("VBR-Rules", String.format("gameIntervals: %b", mGameIntervalsEnabled));
         Log.i("VBR-Rules", String.format("gameIntervalDuration: %d", mGameIntervalDuration));
         Log.i("VBR-Rules", String.format("teamSubstitutionsPerSet: %d", mTeamSubstitutionsPerSet));
-        Log.i("VBR-Rules", String.format("changeSidesBeach: %b", mChangeSidesBeach));
-        Log.i("VBR-Rules", String.format("changeSidesPeriod: %d", mChangeSidesPeriod));
-        Log.i("VBR-Rules", String.format("changeSidesPeriodTieBreak: %d", mChangeSidesPeriodTieBreak));
+        Log.i("VBR-Rules", String.format("beachCourtSwitches: %b", mBeachCourtSwitchesEnabled));
+        Log.i("VBR-Rules", String.format("beachCourtSwitchFreq: %d", mBeachCourtSwitchFrequency));
+        Log.i("VBR-Rules", String.format("beachCourtSwitchFreqTieBreak: %d", mBeachCourtSwitchFrequencyTieBreak));
         Log.i("VBR-Rules", String.format("customConsecutiveServesPerPlayer: %d", mCustomConsecutiveServesPerPlayer));
     }
 
@@ -316,9 +360,9 @@ public class Rules {
                     && (this.areGameIntervalsEnabled() == other.areGameIntervalsEnabled())
                     && (this.getGameIntervalDuration() == other.getGameIntervalDuration())
                     && (this.getTeamSubstitutionsPerSet() == other.getTeamSubstitutionsPerSet())
-                    && (this.isChangeSidesBeach() == other.isChangeSidesBeach())
-                    && (this.getChangeSidesPeriod() == other.getChangeSidesPeriod())
-                    && (this.getChangeSidesPeriodTieBreak() == other.getChangeSidesPeriodTieBreak())
+                    && (this.areBeachCourtSwitchesEnabled() == other.areBeachCourtSwitchesEnabled())
+                    && (this.getBeachCourtSwitchFrequency() == other.getBeachCourtSwitchFrequency())
+                    && (this.getBeachCourtSwitchFrequencyTieBreak() == other.getBeachCourtSwitchFrequencyTieBreak())
                     && (this.getCustomConsecutiveServesPerPlayer() == other.getCustomConsecutiveServesPerPlayer());
         }
 

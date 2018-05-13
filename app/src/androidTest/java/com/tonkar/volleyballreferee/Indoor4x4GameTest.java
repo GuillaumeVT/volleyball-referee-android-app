@@ -21,8 +21,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -37,8 +37,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             assertEquals(index, game.getPoints(TeamType.HOME));
@@ -62,8 +62,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -89,8 +89,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
-        startMatch(game);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
             game.addPoint(TeamType.HOME);
@@ -120,14 +120,14 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_defense() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);
             game.addPlayer(TeamType.GUEST, index);
         }
 
-        startMatch(game);
+        game.startMatch();
 
         for (int index = 1; index <= 4; index++) {
             game.substitutePlayer(TeamType.HOME, index, PositionType.fromInt(index), ActionOriginType.USER);
@@ -158,14 +158,14 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_attack() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);
             game.addPlayer(TeamType.GUEST, index);
         }
 
-        startMatch(game);
+        game.startMatch();
 
         for (int index = 1; index <= 4; index++) {
             game.substitutePlayer(TeamType.HOME, index, PositionType.fromInt(index), ActionOriginType.USER);
@@ -183,10 +183,4 @@ public class Indoor4x4GameTest {
         assertEquals(false, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
     }
 
-    private void startMatch(GameService game) {
-        game.setRules(Rules.DEFAULT_INDOOR_4X4_RULES);
-        game.setGameDate(System.currentTimeMillis());
-        game.setGameSchedule(System.currentTimeMillis());
-        game.startMatch();
-    }
 }

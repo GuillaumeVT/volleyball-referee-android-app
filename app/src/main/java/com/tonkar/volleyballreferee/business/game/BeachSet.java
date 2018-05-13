@@ -14,7 +14,7 @@ public class BeachSet extends Set {
 
     // For GSON Deserialization
     public BeachSet() {
-        super(Rules.OFFICIAL_BEACH_RULES, 0, TeamType.HOME);
+        super(Rules.officialBeachRules(), 0, TeamType.HOME);
     }
 
     @Override

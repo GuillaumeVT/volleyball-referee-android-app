@@ -5,11 +5,11 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -31,7 +31,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        BeachGame beachGame = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(beachGame);
 
@@ -44,7 +44,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_matchPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(beachGame);
 
@@ -57,7 +57,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame("VBR", UserId.VBR_USER_ID);
+        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(beachGame);
 
@@ -65,9 +65,6 @@ public class ItalyUsaBeachGame {
     }
 
     private void defineTeams(BeachGame beachGame) {
-        beachGame.setRules(Rules.OFFICIAL_BEACH_RULES);
-        beachGame.setGameDate(System.currentTimeMillis());
-        beachGame.setGameSchedule(System.currentTimeMillis());
         beachGame.setGenderType(GenderType.GENTS);
         beachGame.setLeagueName("FIVB Beach Volleyball World Championship 2017");
         beachGame.setTeamName(TeamType.HOME, "USA");

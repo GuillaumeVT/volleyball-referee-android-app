@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_team_tab"
+        android:icon="@drawable/ic_court_position_tab"
+        android:title="@string/home_team_tab"/>
+
+    <item
+        android:id="@+id/guest_team_tab"
+        android:icon="@drawable/ic_court_position_tab"
+        android:title="@string/guest_team_tab"/>
+
+    <item
+        android:id="@+id/rules_tab"
+        android:icon="@drawable/ic_rules_tab"
+        android:title="@string/rules_tab"/>
+
+    <item
+        android:id="@+id/misc_tab"
+        android:icon="@drawable/ic_misc_tab"
+        android:title="@string/misc_tab"/>
+
+</menu>

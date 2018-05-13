@@ -35,13 +35,13 @@ public abstract class Game extends BaseGame {
     @SerializedName("gameType")
     private final GameType       mGameType;
     @SerializedName("gameDate")
-    private       long           mGameDate;
+    private final long           mGameDate;
     @SerializedName("gameSchedule")
     private       long           mGameSchedule;
     @SerializedName("genderType")
     private       GenderType     mGenderType;
     @SerializedName("rules")
-    private       Rules          mRules;
+    private final Rules          mRules;
     @SerializedName("gameStatus")
     private       GameStatus     mGameStatus;
     @SerializedName("referee")
@@ -72,11 +72,14 @@ public abstract class Game extends BaseGame {
     private transient java.util.Set<TeamListener>     mTeamListeners;
     private transient java.util.Set<SanctionListener> mSanctionListeners;
 
-    protected Game(final GameType gameType, final String refereeName, final UserId userId) {
+    protected Game(final GameType gameType, final long gameDate, final long gameSchedule, final Rules rules, final String refereeName, final UserId userId) {
         super();
         mUserId = userId;
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
+        mGameDate = gameDate;
+        mGameSchedule = gameSchedule;
+        mRules = rules;
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mRefereeName = refereeName;
@@ -96,7 +99,7 @@ public abstract class Game extends BaseGame {
 
     protected abstract TeamDefinition createTeamDefinition(TeamType teamType);
 
-    protected abstract Set createSet(Rules rules, boolean isTieBreakSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition);
+    protected abstract Set createSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart);
 
     @Override
     public void addScoreListener(final ScoreListener listener) {
@@ -185,23 +188,8 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public void setRules(Rules rules) {
-        mRules = rules;
-        mRules.printRules();
-    }
-
-    @Override
-    public void setGameDate(long gameDate) {
-        mGameDate = gameDate;
-    }
-
-    @Override
-    public void setGameSchedule(long gameSchedule) {
-        mGameSchedule = gameSchedule;
-    }
-
-    @Override
     public void startMatch() {
+        mRules.printRules();
         GenderType homeGender = getGenderType(TeamType.HOME);
         GenderType guestGender = getGenderType(TeamType.GUEST);
 
@@ -211,7 +199,11 @@ public abstract class Game extends BaseGame {
             mGenderType = GenderType.MIXED;
         }
 
-        mSets.add(createSet(mRules, false, mServingTeamAtStart, mHomeTeam, mGuestTeam));
+        if (mGameSchedule == 0L) {
+            mGameSchedule = System.currentTimeMillis();
+        }
+
+        mSets.add(createSet(mRules, mRules.getPointsPerSet(), mServingTeamAtStart));
         mGameStatus = GameStatus.LIVE;
     }
 
@@ -388,7 +380,7 @@ public abstract class Game extends BaseGame {
             final TeamType winner = getSets(TeamType.HOME) > getSets(TeamType.GUEST) ? TeamType.HOME : TeamType.GUEST;
             notifyMatchCompleted(winner);
         } else {
-            mSets.add(createSet(mRules, isTieBreakSet(), mServingTeamAtStart, mHomeTeam, mGuestTeam));
+            mSets.add(createSet(mRules, isTieBreakSet() ? mRules.getPointsInTieBreak() : mRules.getPointsPerSet(), mServingTeamAtStart));
             if (isTieBreakSet()) {
                 // Before the tie break the toss has to be done
                 swapTeams(ActionOriginType.USER);

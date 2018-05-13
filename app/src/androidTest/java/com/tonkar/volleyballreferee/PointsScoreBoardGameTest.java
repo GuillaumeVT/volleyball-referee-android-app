@@ -4,11 +4,11 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -30,7 +30,7 @@ public class PointsScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        IndoorGame game = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
+        IndoorGame game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
         game.setUsageType(UsageType.POINTS_SCOREBOARD);
 
         defineTeams(game);
@@ -54,9 +54,6 @@ public class PointsScoreBoardGameTest {
         game.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt4));
         game.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt9));
 
-        game.setRules(Rules.OFFICIAL_INDOOR_RULES);
-        game.setGameDate(System.currentTimeMillis());
-        game.setGameSchedule(System.currentTimeMillis());
         game.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();

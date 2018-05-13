@@ -26,4 +26,5 @@ public interface SavedRulesService {
 
     void deleteAllSavedRules();
 
+    void createAndSaveRulesFrom(Rules rules);
 }

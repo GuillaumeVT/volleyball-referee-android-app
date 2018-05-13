@@ -3,12 +3,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_card_title">Teremröplabda</string>
-    <string name="beach_card_title">Strandröplabda</string>
-    <string name="new_match">ÚJ MÉRKŐZÉS\nFIVB szabályok</string>
-    <string name="new_match_my_rule">ÚJ MÉRKŐZÉS\nEgyedi szabályok</string>
-    <string name="indoor_description">Teremröplabda kép</string>
-    <string name="beach_description">Strandröplabda kép</string>
+    <string name="new_volleyball_game">Teremröplabda</string>
+    <string name="new_beach_volleyball_game">Strandröplabda</string>
+    <string name="new_score_based_game">Eredménytábla</string>
+    <string name="new_time_based_game">Időalapú</string>
     <string name="permission_title">App jogosultságok</string>
     <string name="permission_message">Tárhely jogosultság szükséges a mérkőzés eredmények megosztásához.</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
@@ -18,19 +16,12 @@
     <string name="delete">Törlés</string>
     <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game_official">Teremröplabda 4x4</string>
-    <string name="start_indoor_4x4_game_custom">Teremröplabda 4x4 - Egyedi szabályok</string>
-    <string name="start_time_based_game">Időalapú</string>
-    <string name="start_score_based_game_official">Eredménytábla - FIVB szabályok</string>
-    <string name="start_score_based_game_custom">Eredménytábla - Egyedi szabályok</string>
-    <string name="match_group">Új mérkőzés - Egyéb típusok</string>
-    <string name="data_group">Adatok</string>
     <string name="configuration_group">Beállítások</string>
     <string name="view_live_games">Élő mérközések megtekintése online</string>
     <string name="search_online_games">Online mérkőzések keresése</string>
 
     <!-- Setup activities -->
-    <string name="teams_setup_title">Csapatok beállítása</string>
+    <string name="game_setup_title">Csapatok beállítása</string>
     <string name="home_team_tab">Hazai csapat</string>
     <string name="home_team_hint">Hazai csapat neve</string>
     <string name="guest_team_tab">Vendég csapat</string>
@@ -41,12 +32,12 @@
     <string name="select_libero">Jelöld ki a liberókat (nem kötelező)</string>
     <string name="select_gender">Válaszd ki a csapat nemét</string>
     <string name="confirm">Jóváhagyás</string>
-    <string name="confirm_teams_setup_question">Jóváhagyod a csapatok összeállítását?</string>
+    <string name="confirm_game_setup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="gender_description">Nem</string>
     <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
     <string name="league_name_hint">Bajnokság / torna neve (opcionális)</string>
     <string name="misc_tab">Egyéb</string>
-    <string name="leave_teams_setup_question">A mérközés beállításai el fognak veszni. Biztosan kilépsz?</string>
+    <string name="leave_game_setup_question">A mérközés beállításai el fognak veszni. Biztosan kilépsz?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Írás</string>
@@ -107,74 +98,33 @@
     <string name="position_6_title">VI</string>
 
     <!-- Rules activity -->
-    <string name="rules">Egyedi szabályok</string>
-    <string name="general_preferences">Általános</string>
-    <string name="timeout_preferences">Időkérés</string>
-    <string name="indoor_preferences">Teremröplabda</string>
-    <string name="beach_preferences">Strandröplabda</string>
-    <string name="specific_leagues_preferences">Egyedi szabályok</string>
+    <string name="general_rules">Általános</string>
+    <string name="timeout_rules">Időkérés</string>
+    <string name="indoor_rules">Teremröplabda</string>
+    <string name="beach_rules">Strandröplabda</string>
+    <string name="specific_leagues_rules">Egyedi szabályok</string>
 
-    <string name="pref_points_per_set">Játszmánkénti pontok</string>
-    <string name="pref_sets_per_game">Játszmák száma</string>
-    <string name="pref_tie_break">Rövidített döntő játszma</string>
-    <string name="pref_two_points_difference">Két pontos különbséggel lehet nyerni</string>
-    <string name="pref_sanctions">Szankciók</string>
-    <string name="pref_team_timeouts">Csapat időkérések</string>
-    <string name="pref_team_timeouts_per_set">Csapat időkérések száma játszmánként</string>
-    <string name="pref_team_timeout_duration">Csapat időkérés hossza</string>
-    <string name="pref_technical_timeouts">Technikai idők</string>
-    <string name="pref_technical_timeout_duration">Technikai idő hossza</string>
-    <string name="pref_game_intervals">Játszmák közötti szünetek</string>
-    <string name="pref_game_intervals_duration">Szünet hossza</string>
-    <string name="pref_team_substitutions_per_set">Játszmánkénti cserék száma</string>
-    <string name="pref_consecutive_serves_per_player">Egymás utáni nyitások maximális száma</string>
-    <string name="pref_change_side_every_7_points">Térfélcsere minden 7. pont után</string>
-
-    <string-array name="points_per_set_entries">
-        <item>25 pontos játszmák</item>
-        <item>24 pontos játszmák</item>
-        <item>23 pontos játszmák</item>
-        <item>22 pontos játszmák</item>
-        <item>21 pontos játszmák</item>
-        <item>20 pontos játszmák</item>
-        <item>19 pontos játszmák</item>
-        <item>18 pontos játszmák</item>
-        <item>17 pontos játszmák</item>
-        <item>16 pontos játszmák</item>
-        <item>15 pontos játszmák</item>
-    </string-array>
-    <string-array name="sets_per_game_entries">
-        <item>5 játszmás mérkőzések</item>
-        <item>3 játszmás mérkőzések</item>
-        <item>1 játszmás mérkőzések</item>
-    </string-array>
-    <string-array name="team_timeouts_per_set_entries">
-        <item>2 időkérés játszmánként</item>
-        <item>1 időkérés játszmánként</item>
-        <item>0 időkérés játszmánként</item>
-    </string-array>
-    <string-array name="timeout_duration_entries">
-        <item>60 másodperc</item>
-        <item>45 másodperc</item>
-        <item>30 másodperc</item>
-    </string-array>
-    <string-array name="game_interval_duration_entries">
-        <item>3 perc</item>
-        <item>2 perc</item>
-        <item>1 perc</item>
-    </string-array>
-    <string-array name="team_substitutions_per_set_entries">
-        <item>12 csere játszmánként</item>
-        <item>6 csere játszmánként</item>
-    </string-array>
-    <string-array name="consecutive_serves_per_player_entries">
-        <item>Korlátlan</item>
-        <item>5 nyitás</item>
-        <item>4 nyitás</item>
-        <item>3 nyitás</item>
-    </string-array>
+    <string name="rules_points_per_set">Játszmánkénti pontok</string>
+    <string name="rules_sets_per_game">Játszmák száma</string>
+    <string name="rules_tie_break">Rövidített döntő játszma</string>
+    <string name="rules_two_points_difference">Két pontos különbséggel lehet nyerni</string>
+    <string name="rules_sanctions">Szankciók</string>
+    <string name="rules_team_timeouts">Csapat időkérések</string>
+    <string name="rules_team_timeouts_per_set">Csapat időkérések száma játszmánként</string>
+    <string name="rules_team_timeout_duration">Csapat időkérés hossza</string>
+    <string name="rules_technical_timeouts">Technikai idők</string>
+    <string name="rules_technical_timeout_duration">Technikai idő hossza</string>
+    <string name="rules_game_intervals">Játszmák közötti szünetek</string>
+    <string name="rules_game_intervals_duration">Szünet hossza</string>
+    <string name="rules_team_substitutions_per_set">Játszmánkénti cserék száma</string>
+    <string name="rules_consecutive_serves_per_player">Egymás utáni nyitások maximális száma</string>
 
     <string-array name="points_per_set_values">
+        <item>30</item>
+        <item>29</item>
+        <item>28</item>
+        <item>27</item>
+        <item>26</item>
         <item>25</item>
         <item>24</item>
         <item>23</item>
@@ -186,6 +136,11 @@
         <item>17</item>
         <item>16</item>
         <item>15</item>
+        <item>14</item>
+        <item>13</item>
+        <item>12</item>
+        <item>11</item>
+        <item>10</item>
     </string-array>
     <string-array name="sets_per_game_values">
         <item>5</item>
@@ -210,12 +165,24 @@
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
         <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="court_switch_frequency_values">
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_values">
         <item>9999</item>
         <item>5</item>
         <item>4</item>
         <item>3</item>
+        <item>2</item>
     </string-array>
 
     <!-- Settings activity -->

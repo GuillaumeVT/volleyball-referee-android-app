@@ -17,7 +17,7 @@ public class BeachSetTest {
 
     @Test
     public void point_add() {
-        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 8, TeamType.GUEST, null, null);
+        BeachSet set = new BeachSet(Rules.officialBeachRules(), 8, TeamType.GUEST, null, null);
         assertEquals(true, set.getPointsLadder().isEmpty());
         assertEquals(1, set.addPoint(TeamType.HOME));
         assertEquals(TeamType.HOME, set.getPointsLadder().get(0));
@@ -31,7 +31,7 @@ public class BeachSetTest {
 
     @Test
     public void point_remove() {
-        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 12, TeamType.HOME, null, null);
+        BeachSet set = new BeachSet(Rules.officialBeachRules(), 12, TeamType.HOME, null, null);
         set.addPoint(TeamType.HOME);
         set.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, set.removeLastPoint());
@@ -43,7 +43,7 @@ public class BeachSetTest {
 
     @Test
     public void team_leading() {
-        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 5, TeamType.HOME, null, null);
+        BeachSet set = new BeachSet(Rules.officialBeachRules(), 5, TeamType.HOME, null, null);
 
         set.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, set.getLeadingTeam());
@@ -55,7 +55,7 @@ public class BeachSetTest {
 
     @Test
     public void team_serving() {
-        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 7, TeamType.GUEST, null, null);
+        BeachSet set = new BeachSet(Rules.officialBeachRules(), 7, TeamType.GUEST, null, null);
         assertEquals(TeamType.GUEST, set.getServingTeam());
 
         set.addPoint(TeamType.GUEST);
@@ -67,7 +67,7 @@ public class BeachSetTest {
 
     @Test
     public void winSet_normal() {
-        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 4, TeamType.HOME, null, null);
+        BeachSet set = new BeachSet(Rules.officialBeachRules(), 4, TeamType.HOME, null, null);
 
         for (int index = 0; index < 4; index++) {
             assertEquals(false, set.isSetCompleted());
@@ -79,7 +79,7 @@ public class BeachSetTest {
 
     @Test
     public void winSet_2PointsGap() {
-        BeachSet set = new BeachSet(Rules.OFFICIAL_BEACH_RULES, 3, TeamType.HOME, null, null);
+        BeachSet set = new BeachSet(Rules.officialBeachRules(), 3, TeamType.HOME, null, null);
 
         for (int index = 0; index < 2; index++) {
             assertEquals(false, set.isSetCompleted());

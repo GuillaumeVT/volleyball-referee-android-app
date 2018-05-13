@@ -35,7 +35,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @SerializedName("userId")
     private final UserId         mUserId;
     @SerializedName("gameDate")
-    private       long           mGameDate;
+    private final long           mGameDate;
     @SerializedName("gameSchedule")
     private       long           mGameSchedule;
     @SerializedName("genderType")
@@ -74,9 +74,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private transient java.util.Set<ScoreListener> mScoreListeners;
     private transient java.util.Set<TeamListener>  mTeamListeners;
 
-    TimeBasedGame(final String refereeName, final UserId userId) {
+    TimeBasedGame(final long gameDate, final long gameSchedule, final String refereeName, final UserId userId) {
         super();
         mUserId = userId;
+        mGameDate = gameDate;
+        mGameSchedule = gameSchedule;
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mRefereeName = refereeName;
@@ -101,7 +103,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     // For GSON Deserialization
     public TimeBasedGame() {
-        this("", UserId.VBR_USER_ID);
+        this(0L, 0L, "", UserId.VBR_USER_ID);
     }
 
     @Override
@@ -657,19 +659,6 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public void setRules(Rules rules) {}
-
-    @Override
-    public void setGameDate(long gameDate) {
-        mGameDate = gameDate;
-    }
-
-    @Override
-    public void setGameSchedule(long gameSchedule) {
-        mGameSchedule = gameSchedule;
-    }
-
-    @Override
     public void startMatch() {
         GenderType homeGender = getGenderType(TeamType.HOME);
         GenderType guestGender = getGenderType(TeamType.GUEST);
@@ -678,6 +667,10 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
             mGenderType = homeGender;
         } else {
             mGenderType = GenderType.MIXED;
+        }
+
+        if (mGameSchedule == 0L) {
+            mGameSchedule = System.currentTimeMillis();
         }
     }
 }

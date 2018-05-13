@@ -2,17 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/data_group"
-        android:title="@string/data_group">
+        android:id="@+id/local_data_group"
+        android:title="@string/local_data_group">
         <menu>
             <item
                 android:id="@+id/action_recorded_games"
                 android:icon="@drawable/ic_recorded_games_menu"
                 android:title="@string/recorded_games"/>
             <item
+                android:id="@+id/action_saved_rules"
+                android:icon="@drawable/ic_rules_menu"
+                android:title="@string/saved_rules_list"/>
+            <item
                 android:id="@+id/action_saved_teams"
                 android:icon="@drawable/ic_saved_teams_menu"
                 android:title="@string/saved_teams"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/online_data_group"
+        android:title="@string/online_data_group">
+        <menu>
             <item
                 android:id="@+id/action_view_live_games"
                 android:icon="@drawable/ic_search_live_games_menu"
@@ -21,6 +32,10 @@
                 android:id="@+id/action_search_online_games"
                 android:icon="@drawable/ic_search_online_games_menu"
                 android:title="@string/search_online_games"/>
+            <item
+                android:id="@+id/action_view_online_account"
+                android:icon="@drawable/ic_account"
+                android:title="@string/view_online_account"/>
         </menu>
     </item>
 
@@ -28,10 +43,6 @@
         android:id="@+id/configuration_group"
         android:title="@string/configuration_group">
         <menu>
-            <item
-                android:id="@+id/action_rules"
-                android:icon="@drawable/ic_rules_menu"
-                android:title="@string/rules"/>
             <item
                 android:id="@+id/action_settings"
                 android:icon="@drawable/ic_settings_menu"

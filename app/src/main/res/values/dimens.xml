@@ -29,7 +29,7 @@
 
     <dimen name="game_buttons_horizontal_spacing">48dp</dimen>
 
-    <dimen tools:override="true" name="design_navigation_icon_padding">8dp</dimen>
+    <dimen name="design_navigation_icon_padding" tools:override="true">8dp</dimen>
 
     <dimen name="sanction_size">24dp</dimen>
     <dimen name="sanction_half_size">12dp</dimen>
@@ -45,5 +45,6 @@
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

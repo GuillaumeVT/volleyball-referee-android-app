@@ -66,4 +66,14 @@
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
+    <style name="MainActivityButton" parent="Widget.AppCompat.Button.Colored" />
+
+    <style name="MainActivityButton.Primary">
+        <item name="colorButtonNormal">@drawable/button_color</item>
+        <item name="colorAccent">@drawable/button_color</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+    </style>
+
 </resources>

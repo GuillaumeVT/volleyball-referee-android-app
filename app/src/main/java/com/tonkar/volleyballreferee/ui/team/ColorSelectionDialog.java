@@ -19,7 +19,7 @@ public abstract class ColorSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    ColorSelectionDialog(LayoutInflater layoutInflater, Context context, String title) {
+    protected ColorSelectionDialog(LayoutInflater layoutInflater, Context context, String title) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(4);
         gridView.setGravity(Gravity.CENTER);

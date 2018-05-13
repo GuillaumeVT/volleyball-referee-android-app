@@ -6,13 +6,13 @@ import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -36,7 +36,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(indoorGame);
 
@@ -61,7 +61,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_lastSetEnd() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(indoorGame);
 
@@ -83,7 +83,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(indoorGame);
 
@@ -102,7 +102,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame("VBR", UserId.VBR_USER_ID);
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(indoorGame);
 
@@ -128,10 +128,6 @@ public class BrazilFranceIndoorGame {
     }
 
     private void defineTeams(IndoorGame indoorGame) {
-        indoorGame.setRules(Rules.DEFAULT_UNIVERSAL_RULES);
-        indoorGame.setGameDate(System.currentTimeMillis());
-        indoorGame.setGameSchedule(System.currentTimeMillis());
-
         indoorGame.setGenderType(GenderType.GENTS);
 
         indoorGame.setLeagueName("FIVB Volleyball World League 2017");

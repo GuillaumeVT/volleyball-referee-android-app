@@ -2,12 +2,12 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_card_title">Volley-ball en salle</string>
-    <string name="beach_card_title">Beach volley-ball</string>
-    <string name="new_match">NOUVEAU MATCH\nRègles FIVB</string>
-    <string name="new_match_my_rule">NOUVEAU MATCH\nMes règles</string>
-    <string name="indoor_description">Image volley-ball en salle</string>
-    <string name="beach_description">Image beach volley-ball</string>
+    <string name="new_volleyball_game">Volley-ball</string>
+    <string name="new_beach_volleyball_game">Beach Volley-ball</string>
+    <string name="new_score_based_game">Panneau de score</string>
+    <string name="new_time_based_game">En temps</string>
+    <string name="new_scheduled_games">Mes matchs programmés</string>
+    <string name="new_scheduled_game">Avec code</string>
     <string name="permission_title">À propos des autorisations</string>
     <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Reprendre le match</string>
@@ -17,19 +17,19 @@
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game_official">Salle 4x4</string>
-    <string name="start_indoor_4x4_game_custom">Salle 4x4 - Mes règles</string>
-    <string name="start_time_based_game">En temps</string>
-    <string name="start_score_based_game_official">Panneau de score - Règles FIVB</string>
-    <string name="start_score_based_game_custom">Panneau de score - Mes règles</string>
-    <string name="match_group">Nouveau match - Autres types</string>
-    <string name="data_group">Données</string>
+    <string name="local_data_group">Données locales</string>
+    <string name="online_data_group">Données en ligne</string>
     <string name="configuration_group">Configuration</string>
     <string name="view_live_games">Suivre les matchs en direct</string>
     <string name="search_online_games">Chercher des matchs en ligne</string>
+    <string name="view_online_account">Mon compte</string>
+    <string name="scheduled_game_question">Voulez-vous éditer le match avant de le démarrer?</string>
+    <string name="game_code_hint">Code du match</string>
+    <string name="invalid_game_code">Code du match invalide</string>
+    <string name="download_error_message">Le match n\'a pas pu être téléchargé depuis le serveur</string>
 
     <!-- Setup activities -->
-    <string name="teams_setup_title">Configuration des équipes</string>
+    <string name="game_setup_title">Configuration des équipes</string>
     <string name="home_team_tab">Équipe à domicile</string>
     <string name="home_team_hint">Nom de l\'équipe à domicile</string>
     <string name="guest_team_tab">Équipe à l\'extérieur</string>
@@ -40,12 +40,14 @@
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="select_gender">Sélectionner le genre</string>
     <string name="confirm">Confirmer</string>
-    <string name="confirm_teams_setup_question">Confirmez-vous cette composition?</string>
+    <string name="confirm_game_setup_question">Confirmez-vous cette composition?</string>
     <string name="gender_description">Genre</string>
     <string name="match_duration_text">Sélectionner la durée du match</string>
     <string name="league_name_hint">Nom de la ligue / du tournoi (optionnel)</string>
     <string name="misc_tab">Divers</string>
-    <string name="leave_teams_setup_question">Cette configuration de match sera perdue. Quitter?</string>
+    <string name="rules_tab">Règles</string>
+    <string name="teams_tab">Équipes</string>
+    <string name="leave_game_setup_question">Cette configuration de match sera perdue. Quitter?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Pile</string>
@@ -105,118 +107,6 @@
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
 
-    <!-- Rules activity -->
-    <string name="rules">Mes règles</string>
-    <string name="general_preferences">Générales</string>
-    <string name="timeout_preferences">Temps morts</string>
-    <string name="indoor_preferences">Volley-ball en salle</string>
-    <string name="beach_preferences">Beach volley-ball</string>
-    <string name="specific_leagues_preferences">Règles personnalisées pour certaines ligues</string>
-
-    <string name="pref_points_per_set">Nombre de points par set</string>
-    <string name="pref_sets_per_game">Nombre de sets par match</string>
-    <string name="pref_tie_break">Tie break dans le dernier set</string>
-    <string name="pref_two_points_difference">2 points d\'écart pour gagner un set</string>
-    <string name="pref_sanctions">Sanctions</string>
-    <string name="pref_team_timeouts">Temps morts d\'équipe</string>
-    <string name="pref_team_timeouts_per_set">Nombre de temps morts d\'équipe par set</string>
-    <string name="pref_team_timeout_duration">Durée d\'un temps mort d\'équipe</string>
-    <string name="pref_technical_timeouts">Temps morts techniques</string>
-    <string name="pref_technical_timeout_duration">Durée d\'un temps mort technique</string>
-    <string name="pref_game_intervals">Pauses entre les sets</string>
-    <string name="pref_game_intervals_duration">Durée de la pause entre les sets</string>
-    <string name="pref_team_substitutions_per_set">Nombre de changements d\'équipe par set</string>
-    <string name="pref_consecutive_serves_per_player">Limite de services consécutifs par joueur</string>
-    <string name="pref_change_side_every_7_points">Changement de côté tous les 7 points</string>
-
-    <string-array name="points_per_set_entries">
-        <item>Set de 25 points</item>
-        <item>Set de 24 points</item>
-        <item>Set de 23 points</item>
-        <item>Set de 22 points</item>
-        <item>Set de 21 points</item>
-        <item>Set de 20 points</item>
-        <item>Set de 19 points</item>
-        <item>Set de 18 points</item>
-        <item>Set de 17 points</item>
-        <item>Set de 16 points</item>
-        <item>Set de 15 points</item>
-    </string-array>
-    <string-array name="sets_per_game_entries">
-        <item>Match en 5 sets</item>
-        <item>Match en 3 sets</item>
-        <item>Match en 1 set</item>
-    </string-array>
-    <string-array name="team_timeouts_per_set_entries">
-        <item>2 temps morts d\'équipe par set</item>
-        <item>1 temps mort d\'équipe par set</item>
-        <item>Aucun temps mort d\'équipe par set</item>
-    </string-array>
-    <string-array name="timeout_duration_entries">
-        <item>60 secondes</item>
-        <item>45 secondes</item>
-        <item>30 secondes</item>
-    </string-array>
-    <string-array name="game_interval_duration_entries">
-        <item>3 minutes</item>
-        <item>2 minutes</item>
-        <item>1 minute</item>
-    </string-array>
-    <string-array name="team_substitutions_per_set_entries">
-        <item>12 changements par set</item>
-        <item>6 changements par set</item>
-    </string-array>
-    <string-array name="consecutive_serves_per_player_entries">
-        <item>Illimités</item>
-        <item>5 services</item>
-        <item>4 services</item>
-        <item>3 services</item>
-    </string-array>
-
-    <string-array name="points_per_set_values">
-        <item>25</item>
-        <item>24</item>
-        <item>23</item>
-        <item>22</item>
-        <item>21</item>
-        <item>20</item>
-        <item>19</item>
-        <item>18</item>
-        <item>17</item>
-        <item>16</item>
-        <item>15</item>
-    </string-array>
-    <string-array name="sets_per_game_values">
-        <item>5</item>
-        <item>3</item>
-        <item>1</item>
-    </string-array>
-    <string-array name="team_timeouts_per_set_values">
-        <item>2</item>
-        <item>1</item>
-        <item>0</item>
-    </string-array>
-    <string-array name="timeout_duration_values">
-        <item>60</item>
-        <item>45</item>
-        <item>30</item>
-    </string-array>
-    <string-array name="game_interval_duration_values">
-        <item>180</item>
-        <item>120</item>
-        <item>60</item>
-    </string-array>
-    <string-array name="team_substitutions_per_set_values">
-        <item>12</item>
-        <item>6</item>
-    </string-array>
-    <string-array name="consecutive_serves_per_player_values">
-        <item>9999</item>
-        <item>5</item>
-        <item>4</item>
-        <item>3</item>
-    </string-array>
-
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
     <string name="pref_referee_name">Mon pseudo \'Volleyball Referee\'</string>
@@ -258,5 +148,176 @@
     <string name="deleted_teams">Toutes les équipes ont été supprimées</string>
     <string name="leave_team_creation_title">Quitter la création d\'équipe</string>
     <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée. Quitter?</string>
+
+    <!-- Rules activity -->
+    <string name="saved_rules_list">Règles enregistrées</string>
+    <string name="delete_all_rules">Supprimer toutes les règles</string>
+    <string name="delete_rules">Supprimer les règles</string>
+    <string name="save_rules">Enregistrer les règles</string>
+    <string name="search_rules">Rechercher des règles</string>
+    <string name="delete_all_rules_question">Voulez-vous supprimer toutes les règles enregistrées?</string>
+    <string name="delete_rules_question">Voulez-vous supprimer ces règles enregistrées?</string>
+    <string name="deleted_rules">Les règles ont été supprimées</string>
+    <string name="saved_rules">Les règles ont été enregistrées</string>
+    <string name="deleted_all_rules">Toutes les règles ont été supprimées</string>
+    <string name="leave_rules_creation_title">Quitter la création de règles</string>
+    <string name="leave_rules_creation_question">Ces règles ne seront pas enregistrées. Quitter?</string>
+    <string name="rules_name_hint">Nom des règles</string>
+    <string name="general_rules">Générales</string>
+    <string name="timeout_rules">Temps morts</string>
+    <string name="indoor_rules">Volley-ball en salle</string>
+    <string name="beach_rules">Beach volley-ball</string>
+    <string name="specific_leagues_rules">Règles personnalisées pour certaines ligues</string>
+
+    <string name="rules_points_per_set">Nombre de points par set</string>
+    <string name="rules_sets_per_game">Nombre de sets par match</string>
+    <string name="rules_tie_break">Tie break dans le dernier set</string>
+    <string name="rules_points_in_tie_break">Nombre de points dans le tie break</string>
+    <string name="rules_two_points_difference">2 points d\'écart pour gagner un set</string>
+    <string name="rules_sanctions">Sanctions</string>
+    <string name="rules_team_timeouts">Temps morts d\'équipe</string>
+    <string name="rules_team_timeouts_per_set">Nombre de temps morts d\'équipe par set</string>
+    <string name="rules_team_timeout_duration">Durée d\'un temps mort d\'équipe</string>
+    <string name="rules_technical_timeouts">Temps morts techniques</string>
+    <string name="rules_technical_timeout_duration">Durée d\'un temps mort technique</string>
+    <string name="rules_game_intervals">Pauses entre les sets</string>
+    <string name="rules_game_intervals_duration">Durée de la pause entre les sets</string>
+    <string name="rules_team_substitutions_per_set">Nombre de changements d\'équipe par set</string>
+    <string name="rules_consecutive_serves_per_player">Limite de services consécutifs par joueur</string>
+    <string name="rules_court_switches">Changements de côtés</string>
+    <string name="rules_court_switch_frequency">Fréquence des changements de côté dans un set normal</string>
+    <string name="rules_court_switch_frequency_tie_break">Fréquence des changements de côté dans le tie break</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Set de 30 points</item>
+        <item>Set de 29 points</item>
+        <item>Set de 28 points</item>
+        <item>Set de 27 points</item>
+        <item>Set de 26 points</item>
+        <item>Set de 25 points</item>
+        <item>Set de 24 points</item>
+        <item>Set de 23 points</item>
+        <item>Set de 22 points</item>
+        <item>Set de 21 points</item>
+        <item>Set de 20 points</item>
+        <item>Set de 19 points</item>
+        <item>Set de 18 points</item>
+        <item>Set de 17 points</item>
+        <item>Set de 16 points</item>
+        <item>Set de 15 points</item>
+        <item>Set de 14 points</item>
+        <item>Set de 13 points</item>
+        <item>Set de 12 points</item>
+        <item>Set de 11 points</item>
+        <item>Set de 10 points</item>
+    </string-array>
+    <string-array name="sets_per_game_entries">
+        <item>Match en 5 sets</item>
+        <item>Match en 3 sets</item>
+        <item>Match en 1 set</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>2 temps morts d\'équipe par set</item>
+        <item>1 temps mort d\'équipe par set</item>
+        <item>Aucun temps mort d\'équipe par set</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 secondes</item>
+        <item>45 secondes</item>
+        <item>30 secondes</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 minutes</item>
+        <item>2 minutes</item>
+        <item>1 minute</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>12 changements par set</item>
+        <item>6 changements par set</item>
+        <item>5 changements par set</item>
+        <item>4 changements par set</item>
+        <item>3 changements par set</item>
+    </string-array>
+    <string-array name="court_switch_frequency_entries">
+        <item>Changement de côté tous les 10 points</item>
+        <item>Changement de côté tous les 9 points</item>
+        <item>Changement de côté tous les 8 points</item>
+        <item>Changement de côté tous les 7 points</item>
+        <item>Changement de côté tous les 6 points</item>
+        <item>Changement de côté tous les 5 points</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_entries">
+        <item>Illimités</item>
+        <item>5 services</item>
+        <item>4 services</item>
+        <item>3 services</item>
+        <item>2 services</item>
+    </string-array>
+
+    <string-array name="points_per_set_values">
+        <item>30</item>
+        <item>29</item>
+        <item>28</item>
+        <item>27</item>
+        <item>26</item>
+        <item>25</item>
+        <item>24</item>
+        <item>23</item>
+        <item>22</item>
+        <item>21</item>
+        <item>20</item>
+        <item>19</item>
+        <item>18</item>
+        <item>17</item>
+        <item>16</item>
+        <item>15</item>
+        <item>14</item>
+        <item>13</item>
+        <item>12</item>
+        <item>11</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="sets_per_game_values">
+        <item>5</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="timeout_duration_values">
+        <item>60</item>
+        <item>45</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="game_interval_duration_values">
+        <item>180</item>
+        <item>120</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_values">
+        <item>12</item>
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="court_switch_frequency_values">
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_values">
+        <item>9999</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+    </string-array>
 
 </resources>

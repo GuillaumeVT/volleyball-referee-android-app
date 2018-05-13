@@ -55,9 +55,9 @@ public class SavedRulesIOTest {
         rules.setGameIntervalsEnabled(true);
         rules.setGameIntervalDuration(532);
         rules.setTeamSubstitutionsPerSet(0);
-        rules.setChangeSidesBeach(false);
-        rules.setChangeSidesPeriod(6);
-        rules.setChangeSidesPeriodTieBreak(1);
+        rules.setBeachCourtSwitchesEnabled(false);
+        rules.setBeachCourtSwitchFrequency(6);
+        rules.setBeachCourtSwitchFrequencyTieBreak(1);
         rules.setCustomConsecutiveServesPerPlayer(77);
 
         ServicesProvider.getInstance().getSavedRulesService().saveCurrentRules();
@@ -82,9 +82,9 @@ public class SavedRulesIOTest {
         rules.setGameIntervalsEnabled(false);
         rules.setGameIntervalDuration(90);
         rules.setTeamSubstitutionsPerSet(2);
-        rules.setChangeSidesBeach(true);
-        rules.setChangeSidesPeriod(8);
-        rules.setChangeSidesPeriodTieBreak(9);
+        rules.setBeachCourtSwitchesEnabled(true);
+        rules.setBeachCourtSwitchFrequency(8);
+        rules.setBeachCourtSwitchFrequencyTieBreak(9);
         rules.setCustomConsecutiveServesPerPlayer(10);
 
         ServicesProvider.getInstance().getSavedRulesService().saveCurrentRules();

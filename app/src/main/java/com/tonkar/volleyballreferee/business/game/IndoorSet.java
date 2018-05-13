@@ -14,7 +14,7 @@ public class IndoorSet extends Set {
 
     // For GSON Deserialization
     public IndoorSet() {
-        super(Rules.OFFICIAL_INDOOR_RULES, 0, TeamType.HOME);
+        super(Rules.officialIndoorRules(), 0, TeamType.HOME);
     }
 
     @Override

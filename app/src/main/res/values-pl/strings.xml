@@ -2,12 +2,10 @@
     <string name="app_name">Volleyball Referee</string>
 
     <!-- Main activity -->
-    <string name="indoor_card_title">Siatkówka halowa</string>
-    <string name="beach_card_title">Siatkówka plazowa</string>
-    <string name="new_match">NOWA GRA\nZasady FIVB</string>
-    <string name="new_match_my_rule">NOWA GRA\nMoje zasady</string>
-    <string name="indoor_description">Indoor Volleyball image</string>
-    <string name="beach_description">Beach Volleyball image</string>
+    <string name="new_volleyball_game">Siatkówka halowa</string>
+    <string name="new_beach_volleyball_game">Siatkówka plazowa</string>
+    <string name="new_score_based_game">Tablica wyników</string>
+    <string name="new_time_based_game">Rozpocznij grę na czas</string>
     <string name="permission_title">O uprawnieniach</string>
     <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
     <string name="resume_game_title">Wznów gre</string>
@@ -17,19 +15,12 @@
     <string name="delete">Unsun</string>
     <string name="ignore">Ignoruj</string>
     <string name="facebook">Facebook</string>
-    <string name="start_indoor_4x4_game_official">Siatkówka 4x4</string>
-    <string name="start_indoor_4x4_game_custom">Siatkówka 4x4 - Moje zasady</string>
-    <string name="start_time_based_game">Rozpocznij grę na czas</string>
-    <string name="start_score_based_game_official">Tablica wyników - Zasady FIVB</string>
-    <string name="start_score_based_game_custom">Tablica wyników - Moje zasady</string>
-    <string name="match_group">Nowa gra - Inne typy</string>
-    <string name="data_group">Dane</string>
     <string name="configuration_group">Konfiguracja</string>
     <string name="view_live_games">Oglądaj mecze na żywo w Internecie</string>
     <string name="search_online_games">Wyszukaj mecze online</string>
 
     <!-- Setup activities -->
-    <string name="teams_setup_title">Skonfiguruj zespoły</string>
+    <string name="game_setup_title">Skonfiguruj zespoły</string>
     <string name="home_team_tab">Drużyna gospodarzy</string>
     <string name="home_team_hint">Nazwa druzyny gospodarzy</string>
     <string name="guest_team_tab">Drużyna gosci</string>
@@ -40,12 +31,12 @@
     <string name="select_libero">Wybierz libero (opcjonalnie)</string>
     <string name="select_gender">Wybierz płeć</string>
     <string name="confirm">Potwierdz</string>
-    <string name="confirm_teams_setup_question">Czy potwierdzasz te ustawienia?</string>
+    <string name="confirm_game_setup_question">Czy potwierdzasz te ustawienia?</string>
     <string name="gender_description">Płeć</string>
     <string name="match_duration_text">Wybierz czas trwania meczu</string>
     <string name="league_name_hint">Liga / turniej (opcjonalnie)</string>
     <string name="misc_tab">Różne</string>
-    <string name="leave_teams_setup_question">Ustawienia meczowe zostaną utracone. Wyjść mimo to?</string>
+    <string name="leave_game_setup_question">Ustawienia meczowe zostaną utracone. Wyjść mimo to?</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Reszka</string>
@@ -106,28 +97,26 @@
     <string name="position_6_title">VI</string>
 
     <!-- Rules activity -->
-    <string name="rules">Moje zasady</string>
-    <string name="general_preferences">Ogólne</string>
-    <string name="timeout_preferences">Czas</string>
-    <string name="indoor_preferences">Siatkówka halowa</string>
-    <string name="beach_preferences">Siatkówka plazowa</string>
-    <string name="specific_leagues_preferences">Zasady niestandardowe dla konkretnych lig</string>
+    <string name="general_rules">Ogólne</string>
+    <string name="timeout_rules">Czas</string>
+    <string name="indoor_rules">Siatkówka halowa</string>
+    <string name="beach_rules">Siatkówka plazowa</string>
+    <string name="specific_leagues_rules">Zasady niestandardowe dla konkretnych lig</string>
 
-    <string name="pref_points_per_set">Ilosc punktów na set</string>
-    <string name="pref_sets_per_game">Ilosc punktów na mecz</string>
-    <string name="pref_tie_break">Tie Break w ostatnim secie</string>
-    <string name="pref_two_points_difference">Gra na przewagi (potrzebne 2 punkty przewagi aby wygrać set)</string>
-    <string name="pref_sanctions">Sankcje</string>
-    <string name="pref_team_timeouts">Przerwa na zadanie</string>
-    <string name="pref_team_timeouts_per_set">Ilosc przerw na set</string>
-    <string name="pref_team_timeout_duration">Czas trwania przerwy na zadanie</string>
-    <string name="pref_technical_timeouts">Przerwa Techniczna</string>
-    <string name="pref_technical_timeout_duration">Czas trwania przerwy technicznej</string>
-    <string name="pref_game_intervals">Przerwa miedzy setami</string>
-    <string name="pref_game_intervals_duration">Czas trwania przerwy miedzy setami</string>
-    <string name="pref_team_substitutions_per_set">Ilosc zmian na set</string>
-    <string name="pref_consecutive_serves_per_player">Limit ilosci zagrywek na gracza</string>
-    <string name="pref_change_side_every_7_points">Zmien strony co 7 punktów</string>
+    <string name="rules_points_per_set">Ilosc punktów na set</string>
+    <string name="rules_sets_per_game">Ilosc punktów na mecz</string>
+    <string name="rules_tie_break">Tie Break w ostatnim secie</string>
+    <string name="rules_two_points_difference">Gra na przewagi (potrzebne 2 punkty przewagi aby wygrać set)</string>
+    <string name="rules_sanctions">Sankcje</string>
+    <string name="rules_team_timeouts">Przerwa na zadanie</string>
+    <string name="rules_team_timeouts_per_set">Ilosc przerw na set</string>
+    <string name="rules_team_timeout_duration">Czas trwania przerwy na zadanie</string>
+    <string name="rules_technical_timeouts">Przerwa Techniczna</string>
+    <string name="rules_technical_timeout_duration">Czas trwania przerwy technicznej</string>
+    <string name="rules_game_intervals">Przerwa miedzy setami</string>
+    <string name="rules_game_intervals_duration">Czas trwania przerwy miedzy setami</string>
+    <string name="rules_team_substitutions_per_set">Ilosc zmian na set</string>
+    <string name="rules_consecutive_serves_per_player">Limit ilosci zagrywek na gracza</string>
 
     <string-array name="points_per_set_entries">
         <item>Set do 25 punktów</item>
@@ -174,6 +163,11 @@
     </string-array>
 
     <string-array name="points_per_set_values">
+        <item>30</item>
+        <item>29</item>
+        <item>28</item>
+        <item>27</item>
+        <item>26</item>
         <item>25</item>
         <item>24</item>
         <item>23</item>
@@ -185,6 +179,11 @@
         <item>17</item>
         <item>16</item>
         <item>15</item>
+        <item>14</item>
+        <item>13</item>
+        <item>12</item>
+        <item>11</item>
+        <item>10</item>
     </string-array>
     <string-array name="sets_per_game_values">
         <item>5</item>
@@ -209,12 +208,24 @@
     <string-array name="team_substitutions_per_set_values">
         <item>12</item>
         <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="court_switch_frequency_values">
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_values">
         <item>9999</item>
         <item>5</item>
         <item>4</item>
         <item>3</item>
+        <item>2</item>
     </string-array>
 
     <!-- Settings activity -->

@@ -13,7 +13,6 @@ import android.widget.AutoCompleteTextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 
 import java.util.ArrayList;
 
@@ -38,8 +37,6 @@ public class MiscSetupFragment extends Fragment {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
         }
 
-        final BaseTeamService teamService = ServicesProvider.getInstance().getTeamService();
-
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues()));
@@ -52,7 +49,7 @@ public class MiscSetupFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-QTSActivity", "Update league name");
-                teamService.setLeagueName(s.toString());
+                ServicesProvider.getInstance().getGeneralService().setLeagueName(s.toString());
             }
 
             @Override
@@ -60,7 +57,7 @@ public class MiscSetupFragment extends Fragment {
             }
         });
 
-        leagueNameInput.setText(teamService.getLeagueName());
+        leagueNameInput.setText(ServicesProvider.getInstance().getGeneralService().getLeagueName());
 
         return view;
     }

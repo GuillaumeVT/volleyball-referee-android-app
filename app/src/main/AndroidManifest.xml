@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.tonkar.volleyballreferee">
+    package="com.tonkar.volleyballreferee">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <supports-screens
-        android:smallScreens="false"
-        android:normalScreens="true"
         android:largeScreens="true"
-        android:xlargeScreens="true"/>
+        android:normalScreens="true"
+        android:smallScreens="false"
+        android:xlargeScreens="true" />
 
     <application
         android:allowBackup="true"
@@ -21,45 +21,47 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.rules.RulesActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Preferences"/>
-        <activity
             android:name=".ui.SettingsActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Preferences"/>
+            android:theme="@style/AppTheme.Preferences" />
         <activity
-            android:name=".ui.team.QuickTeamsSetupActivity"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:name=".ui.setup.QuickGameSetupActivity"
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.team.TeamsSetupActivity"
-            android:parentActivityName=".ui.MainActivity"/>
-        <activity android:name=".ui.game.GameActivity"/>
-        <activity android:name=".ui.game.TimeBasedGameActivity"/>
+            android:name=".ui.setup.GameSetupActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity android:name=".ui.game.GameActivity" />
+        <activity android:name=".ui.game.TimeBasedGameActivity" />
         <activity
             android:name=".ui.data.RecordedGamesListActivity"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.data.RecordedIndoorGameActivity"
-            android:parentActivityName=".ui.data.RecordedGamesListActivity"/>
+            android:parentActivityName=".ui.data.RecordedGamesListActivity" />
         <activity
             android:name=".ui.data.RecordedBeachGameActivity"
-            android:parentActivityName=".ui.data.RecordedGamesListActivity"/>
+            android:parentActivityName=".ui.data.RecordedGamesListActivity" />
         <activity
             android:name=".ui.data.SavedTeamsListActivity"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.data.SavedTeamActivity"
-            android:parentActivityName=".ui.data.SavedTeamsListActivity"/>
+            android:parentActivityName=".ui.data.SavedTeamsListActivity" />
+        <activity
+            android:name=".ui.data.SavedRulesListActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.data.SavedRulesActivity"
+            android:parentActivityName=".ui.data.SavedRulesListActivity" />
         <activity
             android:name=".ui.web.WebActivity"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -68,7 +70,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
     </application>

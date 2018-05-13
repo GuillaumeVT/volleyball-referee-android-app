@@ -86,21 +86,18 @@ public class RuleConsecutiveServesTest {
     }
 
     private IndoorGame createGame(int consecutiveServes) {
-        IndoorGame game = new IndoorGame("VBR", UserId.VBR_USER_ID);
+        Rules rules = new Rules(UserId.VBR_USER_ID, "My rules", System.currentTimeMillis(),
+                5, 25, true, 15, true, true,
+                true,2, 30,true, 60, true, 180,
+                6,false, 0, 0, consecutiveServes);
+
+        IndoorGame game = new IndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), rules, "VBR", UserId.VBR_USER_ID);
 
         for (int index = 1; index <= 6; index++) {
             game.addPlayer(TeamType.HOME, index);
             game.addPlayer(TeamType.GUEST, index);
         }
 
-        Rules rules = new Rules(UserId.VBR_USER_ID, "My rules", System.currentTimeMillis(),
-                5, 25, true, 15, true, true,
-                true,2, 30,true, 60, true, 180,
-                6,false, 0, 0, consecutiveServes);
-
-        game.setRules(rules);
-        game.setGameDate(System.currentTimeMillis());
-        game.setGameSchedule(System.currentTimeMillis());
         game.startMatch();
 
         for (int index = 1; index <= 6; index++) {

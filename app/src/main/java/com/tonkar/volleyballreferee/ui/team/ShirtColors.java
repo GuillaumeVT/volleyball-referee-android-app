@@ -7,7 +7,7 @@ import com.tonkar.volleyballreferee.R;
 
 import java.util.Random;
 
-class ShirtColors {
+public class ShirtColors {
 
     private static final int[] SHIRT_COLOR_IDS = {
             R.color.colorShirt1, R.color.colorShirt2, R.color.colorShirt3, R.color.colorShirt4,
@@ -21,7 +21,7 @@ class ShirtColors {
 
     private static final Random RANDOM = new Random();
 
-    static int getRandomShirtColor(Context context) {
+    public static int getRandomShirtColor(Context context) {
         int colorId = SHIRT_COLOR_IDS[RANDOM.nextInt(SHIRT_COLOR_IDS.length - 1)];
         return ContextCompat.getColor(context, colorId);
     }

@@ -75,7 +75,7 @@ public class RecordedGame implements RecordedGameService {
         mSets = new ArrayList<>();
         mHomeSanctions = new ArrayList<>();
         mGuestSanctions = new ArrayList<>();
-        mRules = Rules.DEFAULT_UNIVERSAL_RULES;
+        mRules = Rules.defaultUniversalRules();
         mIsRecordedOnline = false;
     }
 
@@ -84,25 +84,7 @@ public class RecordedGame implements RecordedGameService {
         String summary = String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
 
         if (mIsRecordedOnline) {
-            final String url;
-
-            switch(mGameType) {
-                case INDOOR_4X4:
-                    url = WebUtils.VIEW_INDOOR_4X4_URL;
-                    break;
-                case BEACH:
-                    url = WebUtils.VIEW_BEACH_URL;
-                    break;
-                case TIME:
-                    url = WebUtils.VIEW_TIME_BASED_URL;
-                    break;
-                case INDOOR:
-                default:
-                    url = WebUtils.VIEW_INDOOR_URL;
-                    break;
-            }
-
-            summary = summary + "\n" + String.format(Locale.getDefault(), url, mGameDate);
+            summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, mGameDate);
         }
 
         return summary;

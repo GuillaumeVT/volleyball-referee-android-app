@@ -80,13 +80,13 @@ public class SavedTeamsListAdapter extends ArrayAdapter<BaseIndoorTeamService> {
             if (drawable != null) {
                 switch (teamService.getGenderType()) {
                     case MIXED:
-                        drawable.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                         break;
                     case LADIES:
-                        drawable.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
                         break;
                     case GENTS:
-                        drawable.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
                         break;
                 }
             }

@@ -102,6 +102,7 @@ public class ServicesProvider {
     public void restoreGameServiceForSetup(Context context) {
         restoreRecordedGamesService(context);
         restoreSavedTeamsService(context);
+        restoreSavedRulesService(context);
         if (mRecordedGames.hasSetupGame()) {
             initGameService(mRecordedGames.loadSetupGame());
         }
@@ -113,6 +114,7 @@ public class ServicesProvider {
             mRecordedGames.loadRecordedGames();
         }
         restoreSavedTeamsService(context);
+        restoreSavedRulesService(context);
     }
 
     public void restoreSavedTeamsService(Context context) {

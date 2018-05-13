@@ -171,25 +171,7 @@ public class UiUtils {
 
                 String summary = gameService.getGameSummary();
                 if (online) {
-                    final String url;
-
-                    switch(gameService.getGameType()) {
-                        case INDOOR_4X4:
-                            url = WebUtils.VIEW_INDOOR_4X4_URL;
-                            break;
-                        case BEACH:
-                            url = WebUtils.VIEW_BEACH_URL;
-                            break;
-                        case TIME:
-                            url = WebUtils.VIEW_TIME_BASED_URL;
-                            break;
-                        case INDOOR:
-                        default:
-                            url = WebUtils.VIEW_INDOOR_URL;
-                            break;
-                    }
-
-                    summary = summary + "\n" + String.format(Locale.getDefault(), url, gameService.getGameDate());
+                    summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, gameService.getGameDate());
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);

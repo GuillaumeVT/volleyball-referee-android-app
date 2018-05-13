@@ -5,13 +5,13 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -32,7 +32,7 @@ public class Indoor4x4CompleteGame {
 
     @Test
     public void playGame_complete() {
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game("VBR", UserId.VBR_USER_ID);
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
 
         defineTeams(indoor4x4Game);
 
@@ -50,10 +50,6 @@ public class Indoor4x4CompleteGame {
     }
 
     private void defineTeams(Indoor4x4Game indoor4x4Game) {
-        indoor4x4Game.setRules(Rules.DEFAULT_INDOOR_4X4_RULES);
-        indoor4x4Game.setGameDate(System.currentTimeMillis());
-        indoor4x4Game.setGameSchedule(System.currentTimeMillis());
-
         indoor4x4Game.setGenderType(GenderType.GENTS);
 
         indoor4x4Game.setLeagueName("4x4");

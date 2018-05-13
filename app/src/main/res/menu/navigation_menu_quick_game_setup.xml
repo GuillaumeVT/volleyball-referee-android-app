@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/teams_tab"
+        android:icon="@drawable/ic_court_position_tab"
+        android:title="@string/teams_tab"/>
+
+    <item
+        android:id="@+id/rules_tab"
+        android:icon="@drawable/ic_rules_tab"
+        android:title="@string/rules_tab"/>
+
+</menu>

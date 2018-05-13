@@ -114,35 +114,35 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         switch (recordedGameService.getGenderType()) {
             case MIXED:
                 viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
-                viewHolder.genderTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 viewHolder.genderTypeImage.setImageResource(R.drawable.ic_ladies);
-                viewHolder.genderTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 viewHolder.genderTypeImage.setImageResource(R.drawable.ic_gents);
-                viewHolder.genderTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (recordedGameService.getGameType()) {
             case INDOOR_4X4:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
-                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorBeach), PorterDuff.Mode.SRC_IN));
                 break;
             case TIME:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_time_based);
-                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                viewHolder.gameTypeImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
@@ -150,10 +150,10 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
             viewHolder.statusImage.setVisibility(View.VISIBLE);
             if (recordedGameService.isRecordedOnline()) {
                 viewHolder.statusImage.setImageResource(R.drawable.ic_record_ok);
-                viewHolder.statusImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark), PorterDuff.Mode.SRC_IN));
+                viewHolder.statusImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark), PorterDuff.Mode.SRC_IN));
             } else {
                 viewHolder.statusImage.setImageResource(R.drawable.ic_record_off);
-                viewHolder.statusImage.getDrawable().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
+                viewHolder.statusImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
             }
         } else {
             viewHolder.statusImage.setVisibility(View.GONE);
