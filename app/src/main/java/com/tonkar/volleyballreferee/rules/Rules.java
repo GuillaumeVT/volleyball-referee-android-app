@@ -90,7 +90,6 @@ public class Rules {
         mCustomConsecutiveServesPerPlayer = customConsecutiveServesPerPlayer;
     }
 
-    // TODO convert to functions
     public static Rules defaultUniversalRules() {
         return new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
