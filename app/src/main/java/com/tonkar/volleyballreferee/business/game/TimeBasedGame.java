@@ -8,7 +8,6 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -32,8 +31,6 @@ import java.util.TreeSet;
 
 public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
-    @SerializedName("userId")
-    private final UserId         mUserId;
     @SerializedName("gameDate")
     private final long           mGameDate;
     @SerializedName("gameSchedule")
@@ -42,8 +39,6 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private       GenderType     mGenderType;
     @SerializedName("gameStatus")
     private       GameStatus     mGameStatus;
-    @SerializedName("referee")
-    private       String         mRefereeName;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("homeTeam")
@@ -74,14 +69,12 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private transient java.util.Set<ScoreListener> mScoreListeners;
     private transient java.util.Set<TeamListener>  mTeamListeners;
 
-    TimeBasedGame(final long gameDate, final long gameSchedule, final String refereeName, final UserId userId) {
+    TimeBasedGame(final long gameDate, final long gameSchedule) {
         super();
-        mUserId = userId;
         mGameDate = gameDate;
         mGameSchedule = gameSchedule;
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
-        mRefereeName = refereeName;
         mLeagueName = "";
         mHomeTeam = new EmptyTeamDefinition(TeamType.HOME);
         mGuestTeam = new EmptyTeamDefinition(TeamType.GUEST);
@@ -103,7 +96,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     // For GSON Deserialization
     public TimeBasedGame() {
-        this(0L, 0L, "", UserId.VBR_USER_ID);
+        this(0L, 0L);
     }
 
     @Override
@@ -149,16 +142,6 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public void removeSanctionListener(SanctionListener listener) {}
-
-    @Override
-    public String getRefereeName() {
-        return mRefereeName;
-    }
-
-    @Override
-    public void setRefereeName(String name) {
-        mRefereeName = name;
-    }
 
     @Override
     public String getLeagueName() {
@@ -259,11 +242,6 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public List<Timeout> getCalledTimeouts(TeamType teamType, int setIndex) {
         return new ArrayList<>();
-    }
-
-    @Override
-    public UserId getUserId() {
-        return mUserId;
     }
 
     @Override
@@ -438,7 +416,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public Rules getRules() {
-        return null;
+        return Rules.defaultUniversalRules();
     }
 
     @Override

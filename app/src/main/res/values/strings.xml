@@ -6,8 +6,8 @@
     <string name="new_beach_volleyball_game">Beach Volleyball</string>
     <string name="new_score_based_game">Scoreboard</string>
     <string name="new_time_based_game">Time-based</string>
-    <string name="new_scheduled_games">From My Schedule</string>
-    <string name="new_scheduled_game">From Code</string>
+    <string name="new_scheduled_games">From my schedule</string>
+    <string name="new_scheduled_game">From code</string>
     <string name="permission_title">About permissions</string>
     <string name="permission_message">This application needs the storage permissions in order to share the match results.</string>
     <string name="resume_game_title">Resume match</string>
@@ -27,6 +27,16 @@
     <string name="game_code_hint">Game code</string>
     <string name="invalid_game_code">Invalid game code</string>
     <string name="download_error_message">The match could not be downloaded</string>
+
+    <!-- User activity -->
+    <string name="user_sign_in_why_title">Why should I sign in?</string>
+    <string name="user_sign_in_why_message">If you stream your games onlines, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user.\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. These scheduled games can then be refereed on your App on someone else\'s App by providing a unique code to the referee.</string>
+    <string name="user_sign_in_privacy_title">Is it safe?</string>
+    <string name="user_sign_in_privacy_message">When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
+    <string name="facebook_app_id">2086514551632301</string>
+    <string name="user_signed_in">Signed in with %s</string>
+    <string name="user_signed_out">Signed out</string>
+    <string name="user_sign_in_error">Error while signing in with %s</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Setup game</string>

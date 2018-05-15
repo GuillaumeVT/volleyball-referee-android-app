@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
@@ -36,7 +35,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
 
@@ -61,7 +60,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_lastSetEnd() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
 
@@ -83,7 +82,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
 
@@ -102,7 +101,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        IndoorGame indoorGame = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
 

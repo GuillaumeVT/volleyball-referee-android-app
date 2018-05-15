@@ -79,10 +79,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         if (mConfirmItem != null) {
             TeamService teamService = ServicesProvider.getInstance().getTeamService();
             Rules rules = ServicesProvider.getInstance().getGeneralService().getRules();
-            final boolean hasRules = (rules != null);
 
             if (teamService.getTeamName(TeamType.HOME).isEmpty() || teamService.getTeamName(TeamType.GUEST).isEmpty()
-                    || (hasRules && rules.getName().length() == 0) || (hasRules && ServicesProvider.getInstance().getSavedRulesService().getSavedRules(rules.getName()) != null)) {
+                    || rules.getName().length() == 0 || ServicesProvider.getInstance().getSavedRulesService().getSavedRules(rules.getName()) != null) {
                 Log.i("VBR-QGSActivity", "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {
@@ -120,8 +119,6 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
-        final boolean hasNoRules = (ServicesProvider.getInstance().getGeneralService().getRules() == null);
-
         gameSetupNavigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -133,7 +130,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                                 fragment = QuickGameSetupFragment.newInstance();
                                 break;
                             case R.id.rules_tab:
-                                if (hasNoRules) {
+                                if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
                                     fragment = null;
                                 } else {
                                     fragment = RulesSetupFragment.newInstance();
@@ -156,7 +153,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameSetupNavigation.setSelectedItemId(R.id.teams_tab);
         }
 
-        if (hasNoRules) {
+        if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
             gameSetupNavigation.setVisibility(View.GONE);
         }
     }

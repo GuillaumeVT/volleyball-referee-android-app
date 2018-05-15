@@ -103,7 +103,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorDisabledText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_tie_break"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorDisabledText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_two_points_difference"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorDisabledText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_sanctions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorPrimaryText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_team_timeouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -273,7 +273,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorDisabledText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_technical_timeouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -318,7 +318,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorDisabledText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_game_intervals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -427,7 +427,7 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorPrimaryText"/>
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/rules_court_switches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

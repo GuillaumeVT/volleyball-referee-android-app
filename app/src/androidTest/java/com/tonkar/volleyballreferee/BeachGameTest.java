@@ -4,7 +4,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
@@ -18,7 +17,7 @@ public class BeachGameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -34,7 +33,7 @@ public class BeachGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -59,7 +58,7 @@ public class BeachGameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -78,7 +77,7 @@ public class BeachGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {

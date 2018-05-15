@@ -91,7 +91,7 @@ public class RuleConsecutiveServesTest {
                 true,2, 30,true, 60, true, 180,
                 6,false, 0, 0, consecutiveServes);
 
-        IndoorGame game = new IndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), rules, "VBR", UserId.VBR_USER_ID);
+        IndoorGame game = new IndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), rules);
 
         for (int index = 1; index <= 6; index++) {
             game.addPlayer(TeamType.HOME, index);

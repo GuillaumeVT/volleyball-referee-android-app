@@ -110,7 +110,6 @@ public class RecordedGame implements RecordedGameService {
         return mSets;
     }
 
-    @Override
     public UserId getUserId() {
         return mUserId;
     }
@@ -240,12 +239,10 @@ public class RecordedGame implements RecordedGameService {
         mRules = rules;
     }
 
-    @Override
     public String getRefereeName() {
         return mRefereeName;
     }
 
-    @Override
     public void setRefereeName(String name) {
         mRefereeName = name;
     }

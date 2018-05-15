@@ -6,7 +6,6 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -21,7 +20,7 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -37,7 +36,7 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -62,7 +61,7 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -89,7 +88,7 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -120,7 +119,7 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_defense() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);
@@ -158,7 +157,7 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_attack() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", UserId.VBR_USER_ID);
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);

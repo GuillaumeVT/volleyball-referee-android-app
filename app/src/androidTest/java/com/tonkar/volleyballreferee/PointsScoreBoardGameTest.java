@@ -4,7 +4,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
@@ -30,7 +29,7 @@ public class PointsScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        IndoorGame game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        IndoorGame game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.setUsageType(UsageType.POINTS_SCOREBOARD);
 
         defineTeams(game);

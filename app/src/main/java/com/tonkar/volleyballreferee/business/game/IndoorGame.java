@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.business.game;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
@@ -22,13 +21,13 @@ import java.util.TreeSet;
 
 public class IndoorGame extends Game implements IndoorTeamService {
 
-    public IndoorGame(final long gameDate, final long gameSchedule, final Rules rules, final String refereeName, final UserId userId) {
-        super(GameType.INDOOR, gameDate, gameSchedule, rules, refereeName, userId);
+    public IndoorGame(final long gameDate, final long gameSchedule, final Rules rules) {
+        super(GameType.INDOOR, gameDate, gameSchedule, rules);
     }
 
     // For GSON Deserialization
     public IndoorGame() {
-        this(0L, 0L, Rules.defaultUniversalRules(), "", UserId.VBR_USER_ID);
+        this(0L, 0L, Rules.defaultUniversalRules());
     }
 
     @Override

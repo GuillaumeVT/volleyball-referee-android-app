@@ -16,6 +16,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -97,6 +98,9 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         assessAreRecordedOnline();
         for (RecordedGame recordedGame : mRecordedGames) {
             recordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
+            if (recordedGame.getGameSchedule() == 0L) {
+                recordedGame.setGameSchedule(recordedGame.getGameDate());
+            }
             mRecordedLeagues.add(recordedGame.getLeagueName());
         }
     }
@@ -472,8 +476,10 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     }
 
     private void createRecordedGame() {
+        UserId userId = PrefUtils.getUserId(mContext);
+
         mRecordedGame = new RecordedGame();
-        mRecordedGame.setUserId(mGameService.getUserId());
+        mRecordedGame.setUserId(userId);
         mRecordedGame.setGameType(mGameService.getGameType());
         mRecordedGame.setGameDate(mGameService.getGameDate());
         mRecordedGame.setGameSchedule(mGameService.getGameSchedule());
@@ -486,14 +492,14 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
         homeTeam.setColor(mGameService.getTeamColor(TeamType.HOME));
         homeTeam.setGenderType(mGameService.getGenderType(TeamType.HOME));
-        homeTeam.setUserId(mRecordedGame.getUserId());
+        homeTeam.setUserId(userId);
         homeTeam.setGameType(mRecordedGame.getGameType());
 
         RecordedTeam guestTeam = mRecordedGame.getTeam(TeamType.GUEST);
         guestTeam.setName(mGameService.getTeamName(TeamType.GUEST));
         guestTeam.setColor(mGameService.getTeamColor(TeamType.GUEST));
         guestTeam.setGenderType(mGameService.getGenderType(TeamType.GUEST));
-        guestTeam.setUserId(mRecordedGame.getUserId());
+        guestTeam.setUserId(userId);
         guestTeam.setGameType(mRecordedGame.getGameType());
 
         if (mGameService instanceof IndoorTeamService) {
@@ -525,6 +531,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         }
 
         mRecordedGame.setRules(mGameService.getRules());
+        mRecordedGame.getRules().setUserId(userId);
 
         updateRecordedGame();
     }

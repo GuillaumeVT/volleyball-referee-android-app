@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -32,7 +31,7 @@ public class Indoor4x4CompleteGame {
 
     @Test
     public void playGame_complete() {
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
         defineTeams(indoor4x4Game);
 

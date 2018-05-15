@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -28,8 +27,6 @@ import java.util.Locale;
 
 public abstract class Game extends BaseGame {
 
-    @SerializedName("userId")
-    private final UserId         mUserId;
     @SerializedName("usageType")
     private       UsageType      mUsageType;
     @SerializedName("gameType")
@@ -44,8 +41,6 @@ public abstract class Game extends BaseGame {
     private final Rules          mRules;
     @SerializedName("gameStatus")
     private       GameStatus     mGameStatus;
-    @SerializedName("referee")
-    private       String         mRefereeName;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("homeTeam")
@@ -72,9 +67,8 @@ public abstract class Game extends BaseGame {
     private transient java.util.Set<TeamListener>     mTeamListeners;
     private transient java.util.Set<SanctionListener> mSanctionListeners;
 
-    protected Game(final GameType gameType, final long gameDate, final long gameSchedule, final Rules rules, final String refereeName, final UserId userId) {
+    protected Game(final GameType gameType, final long gameDate, final long gameSchedule, final Rules rules) {
         super();
-        mUserId = userId;
         mUsageType = UsageType.NORMAL;
         mGameType = gameType;
         mGameDate = gameDate;
@@ -82,7 +76,6 @@ public abstract class Game extends BaseGame {
         mRules = rules;
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
-        mRefereeName = refereeName;
         mLeagueName = "";
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
@@ -142,11 +135,6 @@ public abstract class Game extends BaseGame {
     }
 
     // General
-
-    @Override
-    public UserId getUserId() {
-        return mUserId;
-    }
 
     @Override
     public Rules getRules() {
@@ -482,16 +470,6 @@ public abstract class Game extends BaseGame {
         }
 
         return teamDefinition;
-    }
-
-    @Override
-    public String getRefereeName() {
-        return mRefereeName;
-    }
-
-    @Override
-    public void setRefereeName(String name) {
-        mRefereeName = name;
     }
 
     @Override

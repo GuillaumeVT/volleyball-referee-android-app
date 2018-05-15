@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -31,7 +30,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
 
@@ -44,7 +43,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_matchPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
 
@@ -57,7 +56,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
 

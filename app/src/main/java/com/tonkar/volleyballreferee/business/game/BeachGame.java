@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.business.game;
 
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -12,13 +11,13 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class BeachGame extends Game implements BeachTeamService {
 
-    BeachGame(final long gameDate, final long gameSchedule, final Rules rules, final String refereeName, final UserId userId) {
-        super(GameType.BEACH, gameDate, gameSchedule, rules, refereeName, userId);
+    BeachGame(final long gameDate, final long gameSchedule, final Rules rules) {
+        super(GameType.BEACH, gameDate, gameSchedule, rules);
     }
 
     // For GSON Deserialization
     public BeachGame() {
-        this(0L, 0L, Rules.defaultUniversalRules(), "", UserId.VBR_USER_ID);
+        this(0L, 0L, Rules.defaultUniversalRules());
     }
 
     @Override

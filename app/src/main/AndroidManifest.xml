@@ -62,6 +62,9 @@
         <activity
             android:name=".ui.web.WebActivity"
             android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.user.UserSignInActivity"
+            android:parentActivityName=".ui.MainActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -73,6 +76,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

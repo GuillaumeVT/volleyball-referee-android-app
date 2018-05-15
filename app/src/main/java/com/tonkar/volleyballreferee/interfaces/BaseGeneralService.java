@@ -1,11 +1,8 @@
 package com.tonkar.volleyballreferee.interfaces;
 
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 public interface BaseGeneralService {
-
-    UserId getUserId();
 
     GameType getGameType();
 
@@ -22,10 +19,6 @@ public interface BaseGeneralService {
     void setUsageType(UsageType usageType);
 
     Rules getRules();
-
-    String getRefereeName();
-
-    void setRefereeName(String name);
 
     String getLeagueName();
 

@@ -4,7 +4,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.TimeBasedGame;
@@ -26,7 +25,7 @@ public class TimeBasedGameTest {
 
     @Test
     public void playGame_complete() {
-        TimeBasedGame game = GameFactory.createTimeBasedGame(System.currentTimeMillis(), System.currentTimeMillis(), "VBR", PrefUtils.getUserId(mActivityRule.getActivity()));
+        TimeBasedGame game = GameFactory.createTimeBasedGame(System.currentTimeMillis(), System.currentTimeMillis());
 
         defineTeams(game);
 

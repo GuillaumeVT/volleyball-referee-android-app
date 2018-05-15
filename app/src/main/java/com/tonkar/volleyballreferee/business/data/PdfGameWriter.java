@@ -26,6 +26,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -224,7 +225,7 @@ public class PdfGameWriter {
         dateCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         infoTable.addCell(dateCell);
 
-        final String referee = mRecordedGameService.getRefereeName();
+        final String referee = PrefUtils.getPrefRefereeName(mContext);
         PdfPCell refereeCell = new PdfPCell(new Phrase(referee, mDefaultFont));
         refereeCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         refereeCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
