@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.business.data;
 import android.content.Context;
 
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.ArrayList;
@@ -53,7 +52,6 @@ public class SavedRules implements SavedRulesService {
         mSavedRules = Rules.defaultUniversalRules();
         mSavedRules.setName("");
         mSavedRules.setDate(System.currentTimeMillis());
-        mSavedRules.setUserId(UserId.VBR_USER_ID);
     }
 
     @Override

@@ -476,7 +476,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     }
 
     private void createRecordedGame() {
-        UserId userId = PrefUtils.getUserId(mContext);
+        String userId = PrefUtils.getUserId(mContext);
 
         mRecordedGame = new RecordedGame();
         mRecordedGame.setUserId(userId);

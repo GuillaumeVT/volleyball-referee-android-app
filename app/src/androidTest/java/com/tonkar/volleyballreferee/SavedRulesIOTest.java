@@ -39,7 +39,7 @@ public class SavedRulesIOTest {
         Rules rules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
 
         rules.setName("Test Rules 1");
-        rules.setUserId(new UserId("66bgghvgh55", "google"));
+        rules.setUserId(UserId.userIdOf("66bgghvgh55", UserId.Provider.GOOGLE));
         rules.setDate(34567654L);
         rules.setSetsPerGame(15);
         rules.setPointsPerSet(22);
@@ -66,7 +66,7 @@ public class SavedRulesIOTest {
         rules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
 
         rules.setName("Test Rules 2");
-        rules.setUserId(new UserId("byg765bvg66v", "facebook"));
+        rules.setUserId(UserId.userIdOf("byg765bvg66v", UserId.Provider.FACEBOOK));
         rules.setDate(494030L);
         rules.setSetsPerGame(1);
         rules.setPointsPerSet(99);

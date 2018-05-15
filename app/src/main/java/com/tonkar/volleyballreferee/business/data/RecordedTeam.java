@@ -13,7 +13,7 @@ import java.util.TreeSet;
 public class RecordedTeam {
 
     @SerializedName("userId")
-    private UserId       mUserId;
+    private String       mUserId;
     @SerializedName("kind")
     private GameType     mGameType;
     @SerializedName("name")
@@ -46,11 +46,11 @@ public class RecordedTeam {
         mGenderType = GenderType.MIXED;
     }
 
-    public UserId getUserId() {
+    public String getUserId() {
         return mUserId;
     }
 
-    public void setUserId(UserId userId) {
+    public void setUserId(String userId) {
         mUserId = userId;
     }
 

@@ -65,6 +65,9 @@
         <activity
             android:name=".ui.user.UserSignInActivity"
             android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.user.UserActivity"
+            android:parentActivityName=".ui.MainActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

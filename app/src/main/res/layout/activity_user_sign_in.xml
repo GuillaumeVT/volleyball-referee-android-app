@@ -110,14 +110,14 @@
                     android:id="@+id/google_sign_in_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:paddingBottom="@dimen/default_margin_size"
-                    android:paddingLeft="@dimen/default_margin_size"
-                    android:paddingStart="@dimen/default_margin_size"
-                    android:paddingRight="@dimen/default_margin_size"
                     android:paddingEnd="@dimen/default_margin_size"
+                    android:paddingLeft="@dimen/default_margin_size"
+                    android:paddingRight="@dimen/default_margin_size"
+                    android:paddingStart="@dimen/default_margin_size"
                     android:paddingTop="@dimen/default_margin_size"
-                    android:textSize="@dimen/default_text_size"
-                    android:layout_weight="1" />
+                    android:textSize="@dimen/default_text_size" />
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/facebook_sign_in_button"

@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,10 +18,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 
 public class UserSignInActivity extends AppCompatActivity {
 
@@ -36,7 +35,7 @@ public class UserSignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_sign_in);
 
-        Log.i("VBR-UserSignInActivity", "Create user activity");
+        Log.i("VBR-UserSignInActivity", "Create user sign in activity");
 
         setTitle("");
 
@@ -59,7 +58,7 @@ public class UserSignInActivity extends AppCompatActivity {
         facebookSignInButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                PrefUtils.signIn(UserSignInActivity.this, loginResult.getAccessToken().getUserId(), "facebook");
+                PrefUtils.signIn(UserSignInActivity.this, UserId.userIdOf(loginResult.getAccessToken().getUserId(), UserId.Provider.FACEBOOK));
                 Toast.makeText(UserSignInActivity.this, String.format(getResources().getString(R.string.user_signed_in), "facebook"), Toast.LENGTH_LONG).show();
                 // TODO navigate user activity
             }
@@ -95,7 +94,7 @@ public class UserSignInActivity extends AppCompatActivity {
     private void onGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            PrefUtils.signIn(this, account.getId(), "google");
+            PrefUtils.signIn(this, UserId.userIdOf(account.getId(), UserId.Provider.GOOGLE));
             Toast.makeText(this, String.format(getResources().getString(R.string.user_signed_in), "google"), Toast.LENGTH_LONG).show();
             // TODO navigate user activity
         } catch (ApiException e) {
@@ -104,14 +103,4 @@ public class UserSignInActivity extends AppCompatActivity {
         }
     }
 
-    private void googleSignOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                PrefUtils.signOut(UserSignInActivity.this);
-                Toast.makeText(UserSignInActivity.this, getResources().getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
-                // TODO navigate home
-            }
-        });
-    }
 }

@@ -8,7 +8,7 @@ import com.tonkar.volleyballreferee.interfaces.data.UserId;
 public class Rules {
 
     @SerializedName("userId")
-    private UserId  mUserId;
+    private String  mUserId;
     @SerializedName("name")
     private String  mName;
     @SerializedName("date")
@@ -55,7 +55,7 @@ public class Rules {
         setAll(defaultUniversalRules());
     }
 
-    public Rules(UserId userId, String name, long date,
+    public Rules(String userId, String name, long date,
                  int setsPerGame, int pointsPerSet, boolean tieBreakInLastSet, int pointsInTieBreak, boolean twoPointsDifference, boolean sanctionsEnabled,
                  boolean teamTimeoutsEnabled, int teamTimeoutsPerSet, int teamTimeoutDuration,
                  boolean technicalTimeoutsEnabled, int technicalTimeoutDuration,
@@ -115,7 +115,7 @@ public class Rules {
                 4, false, 7, 5, 9999);
     }
 
-    public UserId getUserId() {
+    public String getUserId() {
         return mUserId;
     }
 
@@ -199,7 +199,7 @@ public class Rules {
         return mCustomConsecutiveServesPerPlayer;
     }
 
-    public void setUserId(UserId userId) {
+    public void setUserId(String userId) {
         mUserId = userId;
     }
 

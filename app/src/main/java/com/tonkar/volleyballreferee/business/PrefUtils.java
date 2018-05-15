@@ -11,8 +11,7 @@ public class PrefUtils {
     public static final  String PREF_STREAM_ONLINE  = "pref_stream_online";
     public static final  String PREF_REFEREE_NAME   = "pref_referee_name";
     private static final String PREF_USER_SIGNED_IN = "pref_user_signed_in";
-    private static final String PREF_USER_SOCIAL_ID = "pref_user_social_id";
-    private static final String PREF_USER_PROVIDER  = "pref_user_provider";
+    private static final String PREF_USER_USER_ID   = "pref_user_id";
 
     public static boolean isPrefOnlineRecordingEnabled(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -28,14 +27,14 @@ public class PrefUtils {
         return sharedPreferences.getString(PREF_REFEREE_NAME, "");
     }
 
-    public static void signIn(Context context, String socialId, String provider) {
+    public static void signIn(Context context, String userId) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_USER_SOCIAL_ID, socialId).putString(PREF_USER_PROVIDER, provider).putBoolean(PREF_USER_SIGNED_IN, true).apply();
+        sharedPreferences.edit().putString(PREF_USER_USER_ID, userId).putBoolean(PREF_USER_SIGNED_IN, true).apply();
     }
 
     public static void signOut(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_USER_SOCIAL_ID).remove(PREF_USER_PROVIDER).putBoolean(PREF_USER_SIGNED_IN, false).apply();
+        sharedPreferences.edit().remove(PREF_USER_USER_ID).putBoolean(PREF_USER_SIGNED_IN, false).apply();
     }
 
     public static boolean isSignedIn(Context context) {
@@ -43,11 +42,11 @@ public class PrefUtils {
         return sharedPreferences.getBoolean(PREF_USER_SIGNED_IN, false);
     }
 
-    public static UserId getUserId(Context context) {
-        final UserId userId;
+    public static String getUserId(Context context) {
+        final String userId;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (sharedPreferences.getBoolean(PREF_USER_SIGNED_IN, false)) {
-            userId = new UserId(sharedPreferences.getString(PREF_USER_SOCIAL_ID, UserId.VBR_USER_ID.getSocialId()), sharedPreferences.getString(PREF_USER_PROVIDER, UserId.VBR_USER_ID.getProvider()));
+            userId = sharedPreferences.getString(PREF_USER_USER_ID, UserId.VBR_USER_ID);
         } else {
             userId = UserId.VBR_USER_ID;
         }

@@ -49,6 +49,7 @@ import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.web.WebActivity;
 
@@ -231,8 +232,14 @@ public class MainActivity extends AppCompatActivity {
                 showMessage();
                 return true;
             case R.id.action_account:
-                Log.i("VBR-UserSignInActivity", "User account");
-                final Intent intent = new Intent(this, UserSignInActivity.class);
+                final Intent intent;
+                if (PrefUtils.isSignedIn(this)) {
+                    Log.i("VBR-UserActivity", "User account");
+                    intent = new Intent(this, UserActivity.class);
+                } else {
+                    Log.i("VBR-UserSignInActivity", "User sign in");
+                    intent = new Intent(this, UserSignInActivity.class);
+                }
                 startActivity(intent);
                 return true;
             default:

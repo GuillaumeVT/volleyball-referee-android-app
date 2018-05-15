@@ -1,47 +1,34 @@
 package com.tonkar.volleyballreferee.interfaces.data;
 
-import com.google.gson.annotations.SerializedName;
-
 public class UserId {
 
-    @SerializedName("socialId")
-    private String mSocialId;
-    @SerializedName("provider")
-    private String mProvider;
+    public enum Provider {
+        GOOGLE, FACEBOOK;
 
-    public UserId() {}
-
-    public UserId(String socialId, String provider) {
-        mSocialId = socialId;
-        mProvider = provider;
-    }
-
-    public String getSocialId() {
-        return mSocialId;
-    }
-
-    public String getProvider() {
-        return mProvider;
-    }
-
-    public static UserId VBR_USER_ID = new UserId("01022018", "VBR");
-
-    @Override
-    public String toString() {
-        return mSocialId + '@' + mProvider;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj == this) {
-            result = true;
-        } else if (obj instanceof UserId) {
-            UserId other = (UserId) obj;
-            result = this.getSocialId().equals(other.getSocialId()) && this.getProvider().equals(other.getProvider());
+        @Override
+        public String toString() {
+            switch (this) {
+                case GOOGLE:
+                    return "google";
+                case FACEBOOK:
+                    return "facebook";
+                default:
+                    return "";
+            }
         }
+    };
 
-        return result;
+    public static String VBR_USER_ID = "01022018@vbr";
+
+    public static String userIdOf(String socialId, Provider provider) {
+        return socialId + '@' + provider.toString();
+    }
+
+    public static boolean isGoogle(String userId) {
+        return userId.contains(Provider.GOOGLE.toString());
+    }
+
+    public static boolean isFacebook(String userId) {
+        return userId.contains(Provider.FACEBOOK.toString());
     }
 }

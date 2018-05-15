@@ -23,7 +23,7 @@ import java.util.TreeSet;
 public class RecordedGame implements RecordedGameService {
 
     @SerializedName("userId")
-    private UserId            mUserId;
+    private String            mUserId;
     @SerializedName("kind")
     private GameType          mGameType;
     @SerializedName("date")
@@ -110,11 +110,11 @@ public class RecordedGame implements RecordedGameService {
         return mSets;
     }
 
-    public UserId getUserId() {
+    public String getUserId() {
         return mUserId;
     }
 
-    public void setUserId(UserId userId) {
+    public void setUserId(String userId) {
         mUserId = userId;
     }
 
