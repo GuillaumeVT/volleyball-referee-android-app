@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.business.data;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -17,14 +16,14 @@ public class JsonStringRequest extends StringRequest {
     }
 
     @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
+    public Map<String, String> getHeaders() {
         Map<String, String> params = new HashMap<>();
         params.put("Content-Type", "application/json");
         return params;
     }
 
     @Override
-    public byte[] getBody() throws AuthFailureError {
+    public byte[] getBody() {
         return mBytes;
     }
 }

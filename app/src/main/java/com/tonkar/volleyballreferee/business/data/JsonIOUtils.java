@@ -145,6 +145,19 @@ public class JsonIOUtils {
         }
     }
 
+    static RecordedGame readRecordedGame(String json) {
+        Log.i("VBR-Data", "Read recorded game");
+        RecordedGame recordedGame = null;
+
+        try {
+            recordedGame = sGson.fromJson(json, RECORDED_GAME_TYPE);
+        } catch (JsonParseException e) {
+            Log.e("VBR-Data", "Exception while reading game", e);
+        }
+
+        return recordedGame;
+    }
+
     // Write recorded games
 
     static void writeRecordedGames(Context context, String fileName, List<RecordedGame> recordedGames) {

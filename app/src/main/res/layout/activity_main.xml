@@ -180,8 +180,8 @@
                             android:layout_margin="@dimen/small_margin_size"
                             android:drawableLeft="@drawable/ic_scheduled_code"
                             android:drawablePadding="@dimen/small_margin_size"
-                            android:onClick="startScheduledGame"
-                            android:text="@string/new_scheduled_game" />
+                            android:onClick="startScheduledGameFromCode"
+                            android:text="@string/new_scheduled_game_from_code" />
 
                         <Button
                             android:id="@+id/start_scheduled_list_game_button"
@@ -191,7 +191,7 @@
                             android:layout_margin="@dimen/small_margin_size"
                             android:drawableLeft="@drawable/ic_scheduled_list"
                             android:drawablePadding="@dimen/small_margin_size"
-                            android:onClick="startScheduledGame"
+                            android:onClick="goToScheduledGames"
                             android:text="@string/new_scheduled_games" />
 
                     </LinearLayout>

@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.business.data;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -54,7 +53,7 @@ public class BooleanRequest extends Request<Boolean> {
     }
 
     @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
+    public Map<String, String> getHeaders() {
         Map<String, String> params = new HashMap<>();
         params.put("Content-Type", "application/json");
         return params;

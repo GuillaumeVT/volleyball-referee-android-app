@@ -7,7 +7,7 @@
     <string name="new_score_based_game">Panneau de score</string>
     <string name="new_time_based_game">En temps</string>
     <string name="new_scheduled_games">Mes matchs programmés</string>
-    <string name="new_scheduled_game">Avec code</string>
+    <string name="new_scheduled_game_from_code">Avec code</string>
     <string name="permission_title">À propos des autorisations</string>
     <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Reprendre le match</string>

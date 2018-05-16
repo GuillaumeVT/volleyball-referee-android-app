@@ -40,6 +40,8 @@ import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
@@ -53,7 +55,9 @@ import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.web.WebActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity implements AsyncGameRequestListener {
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
@@ -169,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("VBR-MainActivity", "Search online games");
                         intent = new Intent(MainActivity.this, WebActivity.class);
                         intent.putExtra("url", WebUtils.SEARCH_URL);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_view_online_account:
+                        Log.i("VBR-MainActivity", "View online account");
+                        intent = new Intent(MainActivity.this, WebActivity.class);
+                        intent.putExtra("url", WebUtils.USER_URL);
                         startActivity(intent);
                         break;
                     case R.id.action_facebook:
@@ -292,8 +302,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startScheduledGame(View view) {
-        Log.i("VBR-MainActivity", "Start a scheduled game");
+    public void startScheduledGameFromCode(View view) {
+        Log.i("VBR-MainActivity", "Start a scheduled game from code");
+
+        CodeInputDialogFragment dialogFragment = (CodeInputDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code");
+
+        if (dialogFragment == null) {
+            dialogFragment = CodeInputDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code),
+                    getResources().getString(android.R.string.cancel), getResources().getString(android.R.string.ok));
+            dialogFragment.show(getSupportFragmentManager(), "game_code");
+        }
+
+        dialogFragment.setAlertDialogListener(new CodeInputDialogFragment.AlertDialogListener() {
+            @Override
+            public void onNegativeButtonClicked() {}
+
+            @Override
+            public void onPositiveButtonClicked(int code) {
+                Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
+                WebUtils.getGameFromCode(MainActivity.this, code, MainActivity.this);
+            }
+        });
+    }
+
+    public void goToScheduledGames(View view) {
+        Log.i("VBR-MainActivity", "Go to scheduled games");
 
         /*GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
 
@@ -313,8 +346,7 @@ public class MainActivity extends AppCompatActivity {
                 alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_question),
                         getResources().getString(R.string.delete), getResources().getString(R.string.resume), getResources().getString(R.string.ignore));
                 alertDialogFragment.show(getSupportFragmentManager(), "current_game");
-            }
-            else {
+            } else {
                 alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("current_game");
             }
 
@@ -408,9 +440,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {}
-                    }
+                @Override
+                public void onErrorResponse(VolleyError error) {}
+            }
             );
             WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
         }
@@ -422,5 +454,25 @@ public class MainActivity extends AppCompatActivity {
                 drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, colorId), PorterDuff.Mode.SRC_IN));
             }
         }
+    }
+
+    @Override
+    public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {
+        if (recordedGameService != null) {
+            GameService gameService = GameFactory.createGame(recordedGameService);
+            gameService.startMatch();
+            // TODO dialog to go to setup and start later
+            Log.i("VBR-MainActivity", "Start game activity after receiving code");
+            final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(gameIntent);
+        }
+    }
+
+    @Override
+    public void onRecordedGameNotReceivedFromCode() {
+        // TODO
     }
 }

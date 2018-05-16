@@ -7,7 +7,7 @@
     <string name="new_score_based_game">Scoreboard</string>
     <string name="new_time_based_game">Time-based</string>
     <string name="new_scheduled_games">From my schedule</string>
-    <string name="new_scheduled_game">From code</string>
+    <string name="new_scheduled_game_from_code">From code</string>
     <string name="permission_title">About permissions</string>
     <string name="permission_message">This application needs the storage permissions in order to share the match results.</string>
     <string name="resume_game_title">Resume match</string>
