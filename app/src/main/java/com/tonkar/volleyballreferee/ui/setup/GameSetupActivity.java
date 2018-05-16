@@ -94,7 +94,7 @@ public class GameSetupActivity extends AppCompatActivity {
             if (indoorTeamService.getTeamName(TeamType.HOME).isEmpty() || indoorTeamService.getNumberOfPlayers(TeamType.HOME) < indoorTeamService.getExpectedNumberOfPlayersOnCourt()
                     || indoorTeamService.getTeamName(TeamType.GUEST).isEmpty() || indoorTeamService.getNumberOfPlayers(TeamType.GUEST) < indoorTeamService.getExpectedNumberOfPlayersOnCourt()
                     || indoorTeamService.getCaptain(TeamType.HOME) < 1 || indoorTeamService.getCaptain(TeamType.GUEST) < 1
-                    || rules.getName().length() == 0 || ServicesProvider.getInstance().getSavedRulesService().getSavedRules(rules.getName()) != null) {
+                    || rules.getName().length() == 0) {
                 Log.i("VBR-GSActivity", "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {

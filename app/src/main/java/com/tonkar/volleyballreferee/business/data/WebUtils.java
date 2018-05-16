@@ -56,13 +56,13 @@ public class WebUtils {
                     public void onResponse(String response) {
                         if (response == null) {
                             Log.e("VBR-WebUtils", "The response was null when getting a game from code");
-                            listener.onRecordedGameNotReceivedFromCode();
+                            listener.onTechnicalError();
                         } else {
                             RecordedGame recordedGame = JsonIOUtils.readRecordedGame(response);
 
                             if (recordedGame == null) {
                                 Log.e("VBR-WebUtils", "Failed to deserialize a game from code or to notify the listener");
-                                listener.onRecordedGameNotReceivedFromCode();
+                                listener.onTechnicalError();
                             } else {
                                 if (listener != null) {
                                     listener.onRecordedGameReceivedFromCode(recordedGame);
@@ -71,12 +71,12 @@ public class WebUtils {
                         }
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("VBR-WebUtils", "Error while getting a game from code");
-                listener.onRecordedGameNotReceivedFromCode();
-            }
-        }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("VBR-WebUtils", "Error while getting a game from code");
+                        listener.onInvalidCode();
+                    }
+                }
         );
         getInstance().getRequestQueue(context).add(stringRequest);
     }

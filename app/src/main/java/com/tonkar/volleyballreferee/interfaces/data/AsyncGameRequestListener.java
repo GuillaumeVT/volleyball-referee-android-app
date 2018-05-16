@@ -4,6 +4,8 @@ public interface AsyncGameRequestListener {
 
     void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService);
 
-    void onRecordedGameNotReceivedFromCode();
+    void onTechnicalError();
+
+    void onInvalidCode();
 
 }

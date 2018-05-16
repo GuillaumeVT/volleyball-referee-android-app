@@ -78,8 +78,8 @@
 
     <style name="SignOutButtonTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@android:color/white</item>
-        <item name="colorButtonNormal">@color/colorPrimaryText</item>
-        <item name="colorAccent">@color/colorPrimaryText</item>
+        <item name="colorButtonNormal">@color/colorDisabledText</item>
+        <item name="colorAccent">@color/colorDisabledText</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>

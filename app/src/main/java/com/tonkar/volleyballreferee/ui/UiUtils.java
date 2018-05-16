@@ -46,6 +46,7 @@ import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.user.UserActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -242,6 +243,14 @@ public class UiUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("show_resume_game", showResumeGameDialog);
+        activity.startActivity(intent);
+    }
+
+    public static void navigateToUser(Activity activity) {
+        Intent intent = new Intent(activity, UserActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
 

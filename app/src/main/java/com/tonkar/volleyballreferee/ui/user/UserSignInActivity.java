@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 
 public class UserSignInActivity extends AppCompatActivity {
 
@@ -60,7 +61,7 @@ public class UserSignInActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 PrefUtils.signIn(UserSignInActivity.this, UserId.userIdOf(loginResult.getAccessToken().getUserId(), UserId.Provider.FACEBOOK));
                 Toast.makeText(UserSignInActivity.this, String.format(getResources().getString(R.string.user_signed_in), "facebook"), Toast.LENGTH_LONG).show();
-                // TODO navigate user activity
+                UiUtils.navigateToUser(UserSignInActivity.this);
             }
 
             @Override
@@ -96,7 +97,7 @@ public class UserSignInActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             PrefUtils.signIn(this, UserId.userIdOf(account.getId(), UserId.Provider.GOOGLE));
             Toast.makeText(this, String.format(getResources().getString(R.string.user_signed_in), "google"), Toast.LENGTH_LONG).show();
-            // TODO navigate user activity
+            UiUtils.navigateToUser(this);
         } catch (ApiException e) {
             Log.e("VBR-UserSignInActivity", "Error during google sign in", e);
             Toast.makeText(this, String.format(getResources().getString(R.string.user_sign_in_error), "google"), Toast.LENGTH_LONG).show();

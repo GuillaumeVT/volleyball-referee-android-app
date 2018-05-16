@@ -42,7 +42,6 @@ import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
@@ -61,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
-    private RecordedGamesService mRecordedGamesService;
-    private GameService          mGameService;
-    private DrawerLayout         mDrawerLayout;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +90,13 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
         Button scheduledListButton = findViewById(R.id.start_scheduled_list_game_button);
         colorButtonDrawable(scheduledListButton, android.R.color.white);
+        scheduledListButton.setVisibility(PrefUtils.isPrefOnlineRecordingEnabled(this) && PrefUtils.isSignedIn(this) ? View.VISIBLE : View.GONE);
 
         Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
         colorButtonDrawable(scheduledCodeButton, android.R.color.white);
+        scheduledCodeButton.setVisibility(PrefUtils.isPrefOnlineRecordingEnabled(this) ? View.VISIBLE : View.GONE);
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
-        mGameService = ServicesProvider.getInstance().getGameService();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
@@ -121,18 +118,21 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                     }
 
                     @Override
-                    public void onPositiveButtonClicked() {
-                    }
+                    public void onPositiveButtonClicked() {}
 
                     @Override
-                    public void onNeutralButtonClicked() {
-                    }
+                    public void onNeutralButtonClicked() {}
                 });
             }
         }
 
-        if (mRecordedGamesService.hasCurrentGame()) {
+        if (ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame()) {
             resumeCurrentGameWithDialog(savedInstanceState);
+        }
+
+        if (savedInstanceState != null) {
+            restoreScheduledGameFromCodeDialog();
+            restoreEditScheduledGameFromCodeDialog();
         }
     }
 
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         inflater.inflate(R.menu.menu_main, menu);
 
         MenuItem importantMessageItem = menu.findItem(R.id.action_important_message);
-        importantMessageItem.setVisible(mRecordedGamesService.hasCurrentGame());
+        importantMessageItem.setVisible(ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame());
 
         final MenuItem messageItem = menu.findItem(R.id.action_message);
         initMessageMenuVisibility(messageItem);
@@ -313,16 +313,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
             dialogFragment.show(getSupportFragmentManager(), "game_code");
         }
 
-        dialogFragment.setAlertDialogListener(new CodeInputDialogFragment.AlertDialogListener() {
-            @Override
-            public void onNegativeButtonClicked() {}
-
-            @Override
-            public void onPositiveButtonClicked(int code) {
-                Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                WebUtils.getGameFromCode(MainActivity.this, code, MainActivity.this);
-            }
-        });
+        setScheduledGameFromCodeListener(dialogFragment);
     }
 
     public void goToScheduledGames(View view) {
@@ -339,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true);
         getIntent().removeExtra("show_resume_game");
 
-        if (mRecordedGamesService.hasCurrentGame() && showResumeGameDialog) {
+        if (ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame() && showResumeGameDialog) {
             AlertDialogFragment alertDialogFragment;
 
             if (savedInstanceState == null) {
@@ -355,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                     @Override
                     public void onNegativeButtonClicked() {
                         Log.i("VBR-MainActivity", "Delete current game");
-                        mRecordedGamesService.deleteCurrentGame();
+                        ServicesProvider.getInstance().getRecordedGamesService().deleteCurrentGame();
                         Toast.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
                         invalidateOptionsMenu();
                     }
@@ -363,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                     @Override
                     public void onPositiveButtonClicked() {
                         Log.i("VBR-MainActivity", "Start game activity and resume current game");
-                        if (mGameService == null) {
+                        if (ServicesProvider.getInstance().getGameService() == null) {
                             Toast.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
                         } else {
                             if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
@@ -456,23 +447,97 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         }
     }
 
-    @Override
-    public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {
-        if (recordedGameService != null) {
-            GameService gameService = GameFactory.createGame(recordedGameService);
-            gameService.startMatch();
-            // TODO dialog to go to setup and start later
-            Log.i("VBR-MainActivity", "Start game activity after receiving code");
-            final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(gameIntent);
+    private void restoreScheduledGameFromCodeDialog() {
+        CodeInputDialogFragment dialogFragment = (CodeInputDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code");
+        setScheduledGameFromCodeListener(dialogFragment);
+    }
+
+    private void setScheduledGameFromCodeListener(CodeInputDialogFragment dialogFragment) {
+        if (dialogFragment != null) {
+            dialogFragment.setAlertDialogListener(new CodeInputDialogFragment.AlertDialogListener() {
+                @Override
+                public void onNegativeButtonClicked() {}
+
+                @Override
+                public void onPositiveButtonClicked(int code) {
+                    Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
+                    WebUtils.getGameFromCode(MainActivity.this, code, MainActivity.this);
+                }
+            });
         }
     }
 
     @Override
-    public void onRecordedGameNotReceivedFromCode() {
-        // TODO
+    public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {
+        if (recordedGameService != null) {
+            final GameService gameService = GameFactory.createGame(recordedGameService);
+            Log.i("VBR-MainActivity", "Start game activity after receiving code");
+
+            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
+
+            if (alertDialogFragment == null) {
+                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code), getResources().getString(R.string.scheduled_game_question),
+                        getResources().getString(R.string.no), getResources().getString(R.string.yes));
+                alertDialogFragment.show(getSupportFragmentManager(), "game_code_edit");
+            }
+
+            setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
+        }
+    }
+
+    @Override
+    public void onTechnicalError() {
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
+    }
+
+    public void onInvalidCode() {
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
+    }
+
+    private void restoreEditScheduledGameFromCodeDialog() {
+        GameService gameService = ServicesProvider.getInstance().getGameService();
+        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
+
+        if ((ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame() || gameService == null) && alertDialogFragment != null) {
+            alertDialogFragment.dismiss();
+        } else {
+            setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
+        }
+    }
+
+    private void setEditScheduledGameFromCodeListener(AlertDialogFragment alertDialogFragment, final GameService gameService) {
+        if (alertDialogFragment != null) {
+            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                @Override
+                public void onNegativeButtonClicked() {
+                    Log.i("VBR-MainActivity", "Start game from code immediately");
+                    gameService.startMatch();
+                    final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(gameIntent);
+                }
+
+                @Override
+                public void onPositiveButtonClicked() {
+                    Log.i("VBR-MainActivity", "Edit game from code before starting");
+                    gameService.startMatch();
+                    final Intent gameIntent;
+                    if (gameService.getGameType().equals(GameType.BEACH)) {
+                        gameIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);
+                    } else {
+                        gameIntent = new Intent(MainActivity.this, GameSetupActivity.class);
+                    }
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(gameIntent);
+                }
+
+                @Override
+                public void onNeutralButtonClicked() {}
+            });
+        }
     }
 }

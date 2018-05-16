@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/code_input"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:ems="10"
-    android:hint="@string/game_code_hint"
-    android:inputType="number"
-    android:padding="@dimen/big_margin_size"
-    android:textColor="@color/colorPrimary"
-    android:textSize="@dimen/default_text_size" />
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/code_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:ems="10"
+        android:hint="@string/game_code_hint"
+        android:inputType="number"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size" />
+
+</LinearLayout>

@@ -81,7 +81,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             Rules rules = ServicesProvider.getInstance().getGeneralService().getRules();
 
             if (teamService.getTeamName(TeamType.HOME).isEmpty() || teamService.getTeamName(TeamType.GUEST).isEmpty()
-                    || rules.getName().length() == 0 || ServicesProvider.getInstance().getSavedRulesService().getSavedRules(rules.getName()) != null) {
+                    || rules.getName().length() == 0) {
                 Log.i("VBR-QGSActivity", "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {

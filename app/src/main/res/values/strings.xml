@@ -13,6 +13,8 @@
     <string name="resume_game_title">Resume match</string>
     <string name="resume_game_question">The application found a match in progress. Do you wish to resume it or to delete it?</string>
     <string name="resume_game_error">The match could not be resumed.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="resume">Resume</string>
     <string name="delete">Delete</string>
     <string name="ignore">Ignore</string>
