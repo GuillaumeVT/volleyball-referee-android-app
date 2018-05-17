@@ -38,9 +38,9 @@
     <string name="user_signed_in">Connecté avec %s</string>
     <string name="user_signed_out">Déconnecté</string>
     <string name="user_sign_in_error">Erreur lors de la connexion à %s</string>
-    <string name="sign_out">Me déconnecter</string>
     <string name="user_scheduled_games_title">Mes matchs programmés</string>
     <string name="user_scheduled_games_message">Parcourez, séléctionnez et arbitrez vos matchs programmés sur https://www.volleyball-referee.com/user.</string>
+    <string name="sign_out">Me déconnecter</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configuration du match</string>

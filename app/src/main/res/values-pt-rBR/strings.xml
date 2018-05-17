@@ -6,18 +6,30 @@
     <string name="new_beach_volleyball_game">Vôlei de praia</string>
     <string name="new_score_based_game">Placar</string>
     <string name="new_time_based_game">Partida por tempo</string>
+    <string name="new_scheduled_game_from_code">Utilizar código</string>
     <string name="permission_title">Permissões</string>
     <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
     <string name="resume">Continuar</string>
     <string name="delete">Deletar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
+    <string name="local_data_group">Partidas Locais</string>
+    <string name="online_data_group">Partidas Online</string>
     <string name="configuration_group">Configurações</string>
     <string name="view_live_games">Acompanhe partidas ao vivo</string>
     <string name="search_online_games">Procurar partidas ao vivo</string>
+    <string name="view_online_account">Minha Conta</string>
+    <string name="scheduled_game_question">Você deseja editar o jogo antes de iniciá-lo?</string>
+    <string name="game_code_hint">Código de partida</string>
+    <string name="invalid_game_code">Código de partida Inválido</string>
+    <string name="download_error_message">Não foi possível fazer donwload desta partida</string>
+
+    <string name="sign_out">Sair</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Selecionar Equipes</string>
@@ -36,6 +48,8 @@
     <string name="match_duration_text">Escolha a duração da partida</string>
     <string name="league_name_hint">Nome da Competição (opcional)</string>
     <string name="misc_tab">Diversos</string>
+    <string name="rules_tab">Regras</string>
+    <string name="teams_tab">Equipes</string>
     <string name="leave_game_setup_question">A configuração desta partida será perdida, continuar assim mesmo?</string>
 
     <!-- Game activity -->
@@ -96,7 +110,62 @@
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
 
+    <!-- Settings activity -->
+    <string name="settings">Configurações</string>
+    <string name="pref_referee_name">Meu apelido \'Volleyball Referee\'</string>
+    <string name="pref_stream_online">Transmitir as partidas ao vivo</string>
+    <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
+    <string name="pref_number_of_shirts">Selecione a numeração da camisa mais alta de sua equipe</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
+
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Partidas recentes</string>
+    <string name="search_games">Procurar partidas</string>
+    <string name="delete_games">Deletar todas as partidas</string>
+    <string name="delete_game">Deletar partida</string>
+    <string name="delete_games_question">Deseja deletar todas as partidas salvas?</string>
+    <string name="delete_game_question">Deseja deletar essa partida salva?</string>
+    <string name="deleted_game">Partida deletada</string>
+    <string name="deleted_games">Todas as partidas foram deletadas</string>
+    <string name="players">Jogadores</string>
+    <string name="report_game">Gerar relatório da partida</string>
+    <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
+    <string name="upload_success_message">O upload desta partida foi concluído com sucesso</string>
+    <string name="upload_error_message">Não foi possível concluir o upload desta partida</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Equipes salvas</string>
+    <string name="search_teams">Procurar equipes</string>
+    <string name="delete_teams">Deletar todas as equipes</string>
+    <string name="delete_team">Deletar equipe</string>
+    <string name="save_team">Salvar equipe</string>
+    <string name="delete_teams_question">Gostaria de deletar todas as equipes salvas?</string>
+    <string name="delete_team_question">Gostaria de deletar esta equipe salva?</string>
+    <string name="deleted_team">Equipe deletada</string>
+    <string name="saved_team">Equipe salva</string>
+    <string name="deleted_teams">Todas as equipes foram deletadas</string>
+    <string name="leave_team_creation_title">Sair da criação de equipes</string>
+    <string name="leave_team_creation_question">Esta equipe não foi salva, continuar assim mesmo?</string>
+
     <!-- Rules activity -->
+    <string name="saved_rules_list">Regras salvas</string>
+    <string name="delete_all_rules">Deletar todas as regras</string>
+    <string name="delete_rules">Deletar regras</string>
+    <string name="save_rules">Salvar regras</string>
+    <string name="search_rules">Buscar regras</string>
+    <string name="delete_all_rules_question">Você deseja deletar todas as regras salvas?</string>
+    <string name="delete_rules_question">Você deseja salvar essas regras salvas?</string>
+    <string name="deleted_rules">As regras foram deletadas</string>
+    <string name="saved_rules">As regras foram salvas</string>
+    <string name="deleted_all_rules">Todas as regras foram deletadas</string>
+    <string name="leave_rules_creation_title">Saindo da criação de regras</string>
+    <string name="leave_rules_creation_question">Essas regras não serão salvas. Sair assim mesmo?</string>
+    <string name="rules_name_hint">Definir regras como</string>
     <string name="general_rules">Preferências</string>
     <string name="timeout_rules">Tempo</string>
     <string name="indoor_rules">Voleibol de quadra</string>
@@ -106,6 +175,7 @@
     <string name="rules_points_per_set">Número de pontos por set</string>
     <string name="rules_sets_per_game">Número de sets por partida</string>
     <string name="rules_tie_break">Tie break no último set</string>
+    <string name="rules_points_in_tie_break">Número de pontos no tie break</string>
     <string name="rules_two_points_difference">São necessários 2 pontos de diferença para vencer o set</string>
     <string name="rules_sanctions">Punições</string>
     <string name="rules_team_timeouts">Tempos por equipe</string>
@@ -117,8 +187,16 @@
     <string name="rules_game_intervals_duration">Duração do intervalo</string>
     <string name="rules_team_substitutions_per_set">Número de substituições por set</string>
     <string name="rules_consecutive_serves_per_player">Limite de saques consecutivos por jogador</string>
+    <string name="rules_court_switches">Trocas de quadras</string>
+    <string name="rules_court_switch_frequency">Frequência da troca de quadra em um set normal</string>
+    <string name="rules_court_switch_frequency_tie_break">Frequência da troca de quadra no tie break</string>
 
     <string-array name="points_per_set_entries">
+        <item>Set de 30 pontos</item>
+        <item>Set de 29 pontos</item>
+        <item>Set de 28 pontos</item>
+        <item>Set de 27 pontos</item>
+        <item>Set de 26 pontos</item>
         <item>Set de 25 pontos</item>
         <item>Set de 24 pontos</item>
         <item>Set de 23 pontos</item>
@@ -130,6 +208,11 @@
         <item>Set de 17 pontos</item>
         <item>Set de 16 pontos</item>
         <item>Set de 15 pontos</item>
+        <item>Set de 14 pontos</item>
+        <item>Set de 13 pontos</item>
+        <item>Set de 12 pontos</item>
+        <item>Set de 11 pontos</item>
+        <item>Set de 10 pontos</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Partida de 5 sets</item>
@@ -154,12 +237,24 @@
     <string-array name="team_substitutions_per_set_entries">
         <item>12 substiuições por set</item>
         <item>6 substiuições por set</item>
+        <item>5 substiuições por set</item>
+        <item>4 substiuições por set</item>
+        <item>3 substiuições por set</item>
+    </string-array>
+    <string-array name="court_switch_frequency_entries">
+        <item>Trocar de quadra a cada 10 pontos</item>
+        <item>Trocar de quadra a cada 9 pontos</item>
+        <item>Trocar de quadra a cada 8 pontos</item>
+        <item>Trocar de quadra a cada 7 pontos</item>
+        <item>Trocar de quadra a cada 6 pontos</item>
+        <item>Trocar de quadra a cada 5 pontos</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
         <item>Ilimitado</item>
         <item>5 saques</item>
         <item>4 saques</item>
         <item>3 saques</item>
+        <item>2 saques</item>
     </string-array>
 
     <string-array name="points_per_set_values">
@@ -227,47 +322,5 @@
         <item>3</item>
         <item>2</item>
     </string-array>
-
-    <!-- Settings activity -->
-    <string name="settings">Configurações</string>
-    <string name="pref_referee_name">Meu apelido \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Transmitir as partidas ao vivo</string>
-    <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
-    <string name="pref_number_of_shirts">Selecione a numeração da camisa mais alta de sua equipe</string>
-
-    <string-array name="number_of_shirts">
-        <item>25</item>
-        <item>50</item>
-        <item>99</item>
-    </string-array>
-
-    <!-- Recorded games activity -->
-    <string name="recorded_games">Partidas recentes</string>
-    <string name="search_games">Procurar partidas</string>
-    <string name="delete_games">Deletar todas as partidas</string>
-    <string name="delete_game">Deletar partida</string>
-    <string name="delete_games_question">Deseja deletar todas as partidas salvas?</string>
-    <string name="delete_game_question">Deseja deletar essa partida salva?</string>
-    <string name="deleted_game">Partida deletada</string>
-    <string name="deleted_games">Todas as partidas foram deletadas</string>
-    <string name="players">Jogadores</string>
-    <string name="report_game">Gerar relatório da partida</string>
-    <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
-    <string name="upload_success_message">O upload desta partida foi concluído com sucesso</string>
-    <string name="upload_error_message">Não foi possível concluir o upload desta partida</string>
-
-    <!-- Saved teams activity -->
-    <string name="saved_teams">Equipes salvas</string>
-    <string name="search_teams">Procurar equipes</string>
-    <string name="delete_teams">Deletar todas as equipes</string>
-    <string name="delete_team">Deletar equipe</string>
-    <string name="save_team">Salvar equipe</string>
-    <string name="delete_teams_question">Gostaria de deletar todas as equipes salvas?</string>
-    <string name="delete_team_question">Gostaria de deletar esta equipe salva?</string>
-    <string name="deleted_team">Equipe deletada</string>
-    <string name="saved_team">Equipe salva</string>
-    <string name="deleted_teams">Todas as equipes foram deletadas</string>
-    <string name="leave_team_creation_title">Sair da criação de equipes</string>
-    <string name="leave_team_creation_question">Esta equipe não foi salva, continuar assim mesmo?</string>
 
 </resources>

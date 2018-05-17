@@ -38,9 +38,9 @@
     <string name="user_signed_in">Signed in with %s</string>
     <string name="user_signed_out">Signed out</string>
     <string name="user_sign_in_error">Error while signing in with %s</string>
-    <string name="sign_out">Sair</string>
     <string name="user_scheduled_games_title">My scheduled games</string>
     <string name="user_scheduled_games_message">Browse, select and referee your games scheduled on https://www.volleyball-referee.com/user.</string>
+    <string name="sign_out">Sair</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Selecionar Equipas</string>
