@@ -206,7 +206,7 @@
                                 android:drawableLeft="@drawable/ic_scheduled_list"
                                 android:drawablePadding="@dimen/small_margin_size"
                                 android:onClick="goToScheduledGames"
-                                android:text="@string/new_scheduled_games" />
+                                android:text="@string/user_scheduled_games_title" />
 
                         </LinearLayout>
 

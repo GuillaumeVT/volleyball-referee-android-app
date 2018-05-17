@@ -36,7 +36,19 @@ public class UserActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    public void goToScheduledGames(View view) {
+        Log.i("VBR-UserActivity", "Go to scheduled games");
+
+        /*GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
+
+        Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
+        final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
+        startActivity(intent);*/
+    }
+
     public void signOut(View view) {
+        Log.i("VBR-UserActivity", "Sign out");
+
         String userId = PrefUtils.getUserId(this);
 
         if (UserId.isGoogle(userId)) {

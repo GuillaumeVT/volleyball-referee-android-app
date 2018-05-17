@@ -6,13 +6,14 @@
     <string name="new_beach_volleyball_game">Beach Volley-ball</string>
     <string name="new_score_based_game">Panneau de score</string>
     <string name="new_time_based_game">En temps</string>
-    <string name="new_scheduled_games">Mes matchs programmés</string>
     <string name="new_scheduled_game_from_code">Avec code</string>
     <string name="permission_title">À propos des autorisations</string>
     <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Reprendre le match</string>
     <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le reprendre ou le supprimer?</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
     <string name="resume">Reprendre</string>
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
@@ -28,8 +29,21 @@
     <string name="invalid_game_code">Code du match invalide</string>
     <string name="download_error_message">Le match n\'a pas pu être téléchargé depuis le serveur</string>
 
+    <!-- User activity -->
+    <string name="user_sign_in_why_title">Pourquoi devrais-je me connecter?</string>
+    <string name="user_sign_in_why_message">Si vous diffusez vos matchs en ligne, ceci pourrait vous intéresser.\n\nEn vous connectant, vous aurez le contrôle complet de vos matchs sur https://www.volleyball-referee.com/user.\n\nDepuis cette page, vous pourrez également créer et gérer vos règles, équipes, matchs et même vos tournois. Les matchs programmés peuvent ensuite être arbitrés sur votre appli ou sur celle d\'un autre arbitre en lui fournissant le code unique de ce match.</string>
+    <string name="user_sign_in_privacy_title">Est-ce sûr?</string>
+    <string name="user_sign_in_privacy_message">Oui. Lorsque vous vous connectez, la seule information que nous récupérons est l\'identifiant de votre profil, dont nous nous servons pour vous identifier.</string>
+    <string name="facebook_app_id">2086514551632301</string>
+    <string name="user_signed_in">Connecté avec %s</string>
+    <string name="user_signed_out">Déconnecté</string>
+    <string name="user_sign_in_error">Erreur lors de la connexion à %s</string>
+    <string name="sign_out">Se déconnecter</string>
+    <string name="user_scheduled_games_title">Mes matchs programmés</string>
+    <string name="user_scheduled_games_message">Parcourez, séléctionnez et arbitrez vos matchs programmés sur https://www.volleyball-referee.com/user.</string>
+
     <!-- Setup activities -->
-    <string name="game_setup_title">Configuration des équipes</string>
+    <string name="game_setup_title">Configuration du match</string>
     <string name="home_team_tab">Équipe à domicile</string>
     <string name="home_team_hint">Nom de l\'équipe à domicile</string>
     <string name="guest_team_tab">Équipe à l\'extérieur</string>
@@ -40,7 +54,7 @@
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="select_gender">Sélectionner le genre</string>
     <string name="confirm">Confirmer</string>
-    <string name="confirm_game_setup_question">Confirmez-vous cette composition?</string>
+    <string name="confirm_game_setup_question">Confirmez-vous cette configuration?</string>
     <string name="gender_description">Genre</string>
     <string name="match_duration_text">Sélectionner la durée du match</string>
     <string name="league_name_hint">Nom de la ligue / du tournoi (optionnel)</string>
