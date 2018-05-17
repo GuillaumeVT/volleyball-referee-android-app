@@ -7,18 +7,30 @@
     <string name="new_beach_volleyball_game">Strandröplabda</string>
     <string name="new_score_based_game">Eredménytábla</string>
     <string name="new_time_based_game">Időalapú</string>
+    <string name="new_scheduled_game_from_code">Mérkőzés kód alapján</string>
     <string name="permission_title">App jogosultságok</string>
     <string name="permission_message">Tárhely jogosultság szükséges a mérkőzés eredmények megosztásához.</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
     <string name="resume_game_error">A mérkőzés nem folytatható.</string>
+    <string name="yes">Igen</string>
+    <string name="no">Nem</string>
     <string name="resume">Folytatás</string>
     <string name="delete">Törlés</string>
     <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
+    <string name="local_data_group">Offline funkciók</string>
+    <string name="online_data_group">Online adatok</string>
     <string name="configuration_group">Beállítások</string>
     <string name="view_live_games">Élő mérközések megtekintése online</string>
     <string name="search_online_games">Online mérkőzések keresése</string>
+    <string name="view_online_account">Fiókom</string>
+    <string name="scheduled_game_question">Akarod módosítani a mérkőzés beállításait mielőtt elindítod?</string>
+    <string name="game_code_hint">Mérkőzés kód</string>
+    <string name="invalid_game_code">Helytelen mérkőzés kód</string>
+    <string name="download_error_message">A mérkőzést nem sikerült letölteni</string>
+
+    <string name="sign_out">Kijelentkezés</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Csapatok beállítása</string>
@@ -37,6 +49,8 @@
     <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
     <string name="league_name_hint">Bajnokság / torna neve (opcionális)</string>
     <string name="misc_tab">Egyéb</string>
+    <string name="rules_tab">Szabályok</string>
+    <string name="teams_tab">Csapatok</string>
     <string name="leave_game_setup_question">A mérközés beállításai el fognak veszni. Biztosan kilépsz?</string>
 
     <!-- Game activity -->
@@ -97,7 +111,62 @@
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
 
+    <!-- Settings activity -->
+    <string name="settings">Beállítások</string>
+    <string name="pref_referee_name">\'Volleyball Referee\' nevem</string>
+    <string name="pref_stream_online">Mérközések online közvetítése</string>
+    <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
+    <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
+
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Korábbi mérkőzések</string>
+    <string name="search_games">Keresés</string>
+    <string name="delete_games">Összes mérkőzés törlése</string>
+    <string name="delete_game">Mérkőzés törlése</string>
+    <string name="delete_games_question">Biztosan törlöd az összes rögzített mérkőzést?</string>
+    <string name="delete_game_question">Biztosan törlöd a mérkőzést?</string>
+    <string name="deleted_game">Mérkőzés törölve</string>
+    <string name="deleted_games">Minden mérkőzés törölve</string>
+    <string name="players">Játékosok</string>
+    <string name="report_game">Jegyzőkönyv generálása</string>
+    <string name="report_exception">Nem sikerült a jegyzőkönyv generálása</string>
+    <string name="upload_success_message">A mérközés feltöltése sikeres volt</string>
+    <string name="upload_error_message">A mérközést nem sikerült feltölteni</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Mentett csapatok</string>
+    <string name="search_teams">Csapat keresése</string>
+    <string name="delete_teams">Összes csapat törlése</string>
+    <string name="delete_team">Csapat törlése</string>
+    <string name="save_team">Csapat mentése</string>
+    <string name="delete_teams_question">Biztosan törlöd az összes csapatot?</string>
+    <string name="delete_team_question">Biztosan törlöd a csapatot?</string>
+    <string name="deleted_team">Csapat törölve</string>
+    <string name="saved_team">Csapat elmentve</string>
+    <string name="deleted_teams">Összes csapat törölve</string>
+    <string name="leave_team_creation_title">Csapat létrehozás elhagyása</string>
+    <string name="leave_team_creation_question">A csapat nem lesz elmentve. Biztosan kilépsz?</string>
+
     <!-- Rules activity -->
+    <string name="saved_rules_list">Mentett szabályok</string>
+    <string name="delete_all_rules">Minden szabály törlése</string>
+    <string name="delete_rules">Szabályok törlése</string>
+    <string name="save_rules">Szabályok mentése</string>
+    <string name="search_rules">Szabályok keresése</string>
+    <string name="delete_all_rules_question">Biztosan törölni akarsz minden szabályt?</string>
+    <string name="delete_rules_question">Biztosan törölni akarod a szabályokat?</string>
+    <string name="deleted_rules">Szabályok törölve</string>
+    <string name="saved_rules">Szabályok elmentve</string>
+    <string name="deleted_all_rules">Minden szabály törölve</string>
+    <string name="leave_rules_creation_title">Szabály készítő elhagyása</string>
+    <string name="leave_rules_creation_question">A szabályok nem lesznek mentve. Biztosan kilépsz?</string>
+    <string name="rules_name_hint">Szabály neve</string>
     <string name="general_rules">Általános</string>
     <string name="timeout_rules">Időkérés</string>
     <string name="indoor_rules">Teremröplabda</string>
@@ -107,6 +176,7 @@
     <string name="rules_points_per_set">Játszmánkénti pontok</string>
     <string name="rules_sets_per_game">Játszmák száma</string>
     <string name="rules_tie_break">Rövidített döntő játszma</string>
+    <string name="rules_points_in_tie_break">Pontok száma döntő játszmában</string>
     <string name="rules_two_points_difference">Két pontos különbséggel lehet nyerni</string>
     <string name="rules_sanctions">Szankciók</string>
     <string name="rules_team_timeouts">Csapat időkérések</string>
@@ -118,6 +188,75 @@
     <string name="rules_game_intervals_duration">Szünet hossza</string>
     <string name="rules_team_substitutions_per_set">Játszmánkénti cserék száma</string>
     <string name="rules_consecutive_serves_per_player">Egymás utáni nyitások maximális száma</string>
+    <string name="rules_court_switches">Térfélcserék</string>
+    <string name="rules_court_switch_frequency">Térfélcsere gyakorisága normál játszmában</string>
+    <string name="rules_court_switch_frequency_tie_break">Térfélcsere gyakorisága döntő játszmában</string>
+
+    <string-array name="points_per_set_entries">
+        <item>30 pontos játszmák</item>
+        <item>29 pontos játszmák</item>
+        <item>28 pontos játszmák</item>
+        <item>27 pontos játszmák</item>
+        <item>26 pontos játszmák</item>
+        <item>25 pontos játszmák</item>
+        <item>24 pontos játszmák</item>
+        <item>23 pontos játszmák</item>
+        <item>22 pontos játszmák</item>
+        <item>21 pontos játszmák</item>
+        <item>20 pontos játszmák</item>
+        <item>19 pontos játszmák</item>
+        <item>18 pontos játszmák</item>
+        <item>17 pontos játszmák</item>
+        <item>16 pontos játszmák</item>
+        <item>15 pontos játszmák</item>
+        <item>14 pontos játszmák</item>
+        <item>13 pontos játszmák</item>
+        <item>12 pontos játszmák</item>
+        <item>11 pontos játszmák</item>
+        <item>10 pontos játszmák</item>
+    </string-array>
+    <string-array name="sets_per_game_entries">
+        <item>5 játszmás mérkőzések</item>
+        <item>3 játszmás mérkőzések</item>
+        <item>1 játszmás mérkőzések</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>2 időkérés játszmánként</item>
+        <item>1 időkérés játszmánként</item>
+        <item>0 időkérés játszmánként</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 másodperc</item>
+        <item>45 másodperc</item>
+        <item>30 másodperc</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 perc</item>
+        <item>2 perc</item>
+        <item>1 perc</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>12 csere játszmánként</item>
+        <item>6 csere játszmánként</item>
+        <item>5 csere játszmánként</item>
+        <item>4 csere játszmánként</item>
+        <item>3 csere játszmánként</item>
+    </string-array>
+    <string-array name="court_switch_frequency_entries">
+        <item>Térfélcsere 10 pontonként</item>
+        <item>Térfélcsere 9 pontonként</item>
+        <item>Térfélcsere 8 pontonként</item>
+        <item>Térfélcsere 7 pontonként</item>
+        <item>Térfélcsere 6 pontonként</item>
+        <item>Térfélcsere 5 pontonként</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_entries">
+        <item>Korlátlan</item>
+        <item>5 nyitás</item>
+        <item>4 nyitás</item>
+        <item>3 nyitás</item>
+        <item>2 nyitás</item>
+    </string-array>
 
     <string-array name="points_per_set_values">
         <item>30</item>
@@ -185,45 +324,4 @@
         <item>2</item>
     </string-array>
 
-    <!-- Settings activity -->
-    <string name="settings">Beállítások</string>
-    <string name="pref_referee_name">\'Volleyball Referee\' nevem</string>
-    <string name="pref_stream_online">Mérközések online közvetítése</string>
-    <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
-    <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>
-
-    <string-array name="number_of_shirts">
-        <item>25</item>
-        <item>50</item>
-        <item>99</item>
-    </string-array>
-
-    <!-- Recorded games activity -->
-    <string name="recorded_games">Korábbi mérkőzések</string>
-    <string name="search_games">Keresés</string>
-    <string name="delete_games">Összes mérkőzés törlése</string>
-    <string name="delete_game">Mérkőzés törlése</string>
-    <string name="delete_games_question">Biztosan törlöd az összes rögzített mérkőzést?</string>
-    <string name="delete_game_question">Biztosan törlöd a mérkőzést?</string>
-    <string name="deleted_game">Mérkőzés törölve</string>
-    <string name="deleted_games">Minden mérkőzés törölve</string>
-    <string name="players">Játékosok</string>
-    <string name="report_game">Jegyzőkönyv generálása</string>
-    <string name="report_exception">Nem sikerült a jegyzőkönyv generálása</string>
-    <string name="upload_success_message">A mérközés feltöltése sikeres volt</string>
-    <string name="upload_error_message">A mérközést nem sikerült feltölteni</string>
-
-    <!-- Saved teams activity -->
-    <string name="saved_teams">Mentett csapatok</string>
-    <string name="search_teams">Csapat keresése</string>
-    <string name="delete_teams">Összes csapat törlése</string>
-    <string name="delete_team">Csapat törlése</string>
-    <string name="save_team">Csapat mentése</string>
-    <string name="delete_teams_question">Biztosan törlöd az összes csapatot?</string>
-    <string name="delete_team_question">Biztosan törlöd a csapatot?</string>
-    <string name="deleted_team">Csapat törölve</string>
-    <string name="saved_team">Csapat elmentve</string>
-    <string name="deleted_teams">Összes csapat törölve</string>
-    <string name="leave_team_creation_title">Csapat létrehozás elhagyása</string>
-    <string name="leave_team_creation_question">A csapat nem lesz elmentve. Biztosan kilépsz?</string>
 </resources>

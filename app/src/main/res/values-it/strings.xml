@@ -12,6 +12,8 @@
     <string name="resume_game_title">Riprendi la partita</string>
     <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
     <string name="resume_game_error">La partita non può essere ripresa.</string>
+    <string name="yes">Si</string>
+    <string name="no">Non</string>
     <string name="resume">Riprendi</string>
     <string name="delete">Cancella</string>
     <string name="ignore">Ignora</string>
