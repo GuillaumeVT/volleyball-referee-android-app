@@ -30,6 +30,17 @@
     <string name="invalid_game_code">Helytelen mérkőzés kód</string>
     <string name="download_error_message">A mérkőzést nem sikerült letölteni</string>
 
+    <!-- User activity -->
+    <string name="user_sign_in_why_title">Miért jelentkezzek be?</string>
+    <string name="user_sign_in_why_message">Jelentkezz be, ha mérkőzéseidet online is szoktad streamelni.\n\nMérkőzéseidhez hozzáférsz a https://www.volleyball-referee.com/user oldalon.\n\nEzen az oldalon kezelheted az egyedi játékszabályaidat, csapataidat, mérkőzéseidet és versenyeidet. Az online létrehozott és beidőzített mérkőzéseid közvetíthetőek a mobil appból más által is, ha adsz nekik egyedi kódot.</string>
+    <string name="user_sign_in_privacy_title">Biztonságos?</string>
+    <string name="user_sign_in_privacy_message">Igen. Bejelentkezéskor csak az online profilod egyedi azonosítóját vizsgáljuk meg azonosítás céljából.</string>
+    <string name="facebook_app_id">2086514551632301</string>
+    <string name="user_signed_in">Belépve ezzel: %s</string>
+    <string name="user_signed_out">Kilépve</string>
+    <string name="user_sign_in_error">Hiba történt belépés közben (%s)</string>
+    <string name="user_scheduled_games_title">Időzített mérkőzéseim</string>
+    <string name="user_scheduled_games_message">A https://www.volleyball-referee.com/user oldalon megtalálod az időzített mérkőzéseid. Keress közöttük és indíts közvetítést.</string>
     <string name="sign_out">Kijelentkezés</string>
 
     <!-- Setup activities -->

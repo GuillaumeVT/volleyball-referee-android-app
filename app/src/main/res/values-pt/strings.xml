@@ -30,16 +30,16 @@
     <string name="download_error_message">O jogo não pode ser descarregado</string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Why should I sign in?</string>
-    <string name="user_sign_in_why_message">If you stream your games online, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user.\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. The scheduled games can then be refereed on your App on someone else\'s App by providing the game unique code to the referee.</string>
-    <string name="user_sign_in_privacy_title">Is it safe?</string>
-    <string name="user_sign_in_privacy_message">Yes. When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
+    <string name="user_sign_in_why_title">Porque devo registar-me?</string>
+    <string name="user_sign_in_why_message">Se transmite os seus jogos ao vivo, deverá  registar-se.\n\nAo registar-se, ganha controlo total dos seus jogos em https://www.volleyball-referee.com/user.\n\A partir desta página, poderá criar e gerir as suas próprias regras, equipas, jogos e até torneios. Os jogos agendados podem ser arbitrados na sua App ou na App de outra pessoa, providenciando o código único do jogo ao árbitro.</string>
+    <string name="user_sign_in_privacy_title">É seguro?</string>
+    <string name="user_sign_in_privacy_message">Sim. Quando se regista, a única informação que nós importamos do seu perfil é o identificador social único que usamos para o identificar.</string>
     <string name="facebook_app_id">2086514551632301</string>
-    <string name="user_signed_in">Signed in with %s</string>
-    <string name="user_signed_out">Signed out</string>
-    <string name="user_sign_in_error">Error while signing in with %s</string>
-    <string name="user_scheduled_games_title">My scheduled games</string>
-    <string name="user_scheduled_games_message">Browse, select and referee your games scheduled on https://www.volleyball-referee.com/user.</string>
+    <string name="user_signed_in">Registado como %s</string>
+    <string name="user_signed_out">Saiu do registo</string>
+    <string name="user_sign_in_error">Erro ao registar como %s</string>
+    <string name="user_scheduled_games_title">Os meus jogos agendados</string>
+    <string name="user_scheduled_games_message">Procure, selecione e arbitre os seus jogos agendados em https://www.volleyball-referee.com/user.</string>
     <string name="sign_out">Sair</string>
 
     <!-- Setup activities -->
