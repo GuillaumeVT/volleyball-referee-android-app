@@ -1,9 +1,11 @@
 package com.tonkar.volleyballreferee.ui.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,14 +38,21 @@ public class UserActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                UiUtils.navigateToHome(this, false);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void goToScheduledGames(View view) {
-        Log.i("VBR-UserActivity", "Go to scheduled games");
-
-        /*GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
-
-        Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
-        final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
-        startActivity(intent);*/
+        Log.i("VBR-MainActivity", "Go to scheduled games");
+        final Intent intent = new Intent(this, ScheduledGamesListActivity.class);
+        startActivity(intent);
     }
 
     public void signOut(View view) {

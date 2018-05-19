@@ -101,7 +101,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
     private void updateGame(ViewHolder viewHolder, RecordedGameService recordedGameService) {
         viewHolder.summaryText.setText(String.format(Locale.getDefault(),"%s\t\t%d - %d\t\t%s",
                 recordedGameService.getTeamName(TeamType.HOME), recordedGameService.getSets(TeamType.HOME), recordedGameService.getSets(TeamType.GUEST), recordedGameService.getTeamName(TeamType.GUEST)));
-        viewHolder.dateText.setText(mFormatter.format(new Date(recordedGameService.getGameDate())));
+        viewHolder.dateText.setText(mFormatter.format(new Date(recordedGameService.getGameSchedule())));
 
         StringBuilder builder = new StringBuilder();
         for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {

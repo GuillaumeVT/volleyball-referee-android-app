@@ -68,6 +68,9 @@
         <activity
             android:name=".ui.user.UserActivity"
             android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.user.ScheduledGamesListActivity"
+            android:parentActivityName=".ui.user.UserActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

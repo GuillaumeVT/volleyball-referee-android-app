@@ -16,7 +16,6 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -34,6 +33,7 @@ import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -306,7 +306,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 recordedGameService.setRecordedOnline(false);
-                                Log.e("VBR-Data", "Exception while uploading game", error);
+                                Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
                                 if (notify) {
                                     Toast.makeText(mContext, mContext.getResources().getString(R.string.upload_error_message), Toast.LENGTH_LONG).show();
                                 }
@@ -342,8 +342,8 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("VBR-Data", "Exception while uploading set", error);
-                                if (error.networkResponse != null && 404 == error.networkResponse.statusCode) {
+                                Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
+                                if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                                     uploadCurrentGameOnline();
                                 }
                             }
@@ -370,7 +370,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.e("VBR-Data", "Exception while deleting game", error);
+                                    Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                                 }
                             }
                     );
@@ -391,7 +391,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.e("VBR-Data", "Exception while deleting game", error);
+                                    Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                                 }
                             }
                     );
@@ -539,7 +539,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     private void updateRecordedGame() {
         if (mRecordedGame != null) {
             mRecordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
-            mRecordedGame.setGameStatus(mGameService.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
+            mRecordedGame.setMatchStatus(mGameService.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
             mRecordedGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
             mRecordedGame.setSets(TeamType.GUEST, mGameService.getSets(TeamType.GUEST));
 

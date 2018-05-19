@@ -43,12 +43,13 @@ import java.util.List;
 
 public class JsonIOUtils {
 
-    private static final Type CURRENT_GAME_TYPE         = new TypeToken<BaseGame>() {}.getType();
-    private static final Type RECORDED_GAME_LIST_TYPE   = new TypeToken<List<RecordedGame>>() {}.getType();
-    private static final Type RECORDED_GAME_TYPE        = new TypeToken<RecordedGame>() {}.getType();
-    private static final Type RECORDED_SET_TYPE         = new TypeToken<RecordedSet>() {}.getType();
-    private static final Type TEAM_DEFINITION_LIST_TYPE = new TypeToken<List<IndoorTeamDefinition>>() {}.getType();
-    private static final Type RULES_LIST_TYPE           = new TypeToken<List<Rules>>() {}.getType();
+    private static final Type CURRENT_GAME_TYPE          = new TypeToken<BaseGame>() {}.getType();
+    private static final Type RECORDED_GAME_LIST_TYPE    = new TypeToken<List<RecordedGame>>() {}.getType();
+    private static final Type RECORDED_GAME_TYPE         = new TypeToken<RecordedGame>() {}.getType();
+    private static final Type RECORDED_SET_TYPE          = new TypeToken<RecordedSet>() {}.getType();
+    private static final Type TEAM_DEFINITION_LIST_TYPE  = new TypeToken<List<IndoorTeamDefinition>>() {}.getType();
+    private static final Type RULES_LIST_TYPE            = new TypeToken<List<Rules>>() {}.getType();
+    private static final Type GAME_DESCRIPTION_LIST_TYPE = new TypeToken<List<GameDescription>>() {}.getType();
 
     private static final Gson sGson = new GsonBuilder()
             .registerTypeAdapter(BaseGame.class, new InheritanceDeserializer<BaseGame>())
@@ -301,6 +302,21 @@ public class JsonIOUtils {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         sGson.toJson(rules, RULES_LIST_TYPE, writer);
         writer.close();
+    }
+
+    // Read game descriptions
+
+    public static List<GameDescription> readGameDescriptionList(String json) {
+        Log.i("VBR-Data", "Read game description list");
+        List<GameDescription> gameDescriptionList = new ArrayList<>();
+
+        try {
+            gameDescriptionList = sGson.fromJson(json, GAME_DESCRIPTION_LIST_TYPE);
+        } catch (JsonParseException e) {
+            Log.e("VBR-Data", "Exception while reading game description list", e);
+        }
+
+        return gameDescriptionList;
     }
 
     public static class TeamTypeSerializer implements JsonSerializer<TeamType> {

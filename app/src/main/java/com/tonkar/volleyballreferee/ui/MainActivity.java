@@ -35,6 +35,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.BooleanRequest;
+import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -50,10 +51,12 @@ import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.user.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.web.WebActivity;
 
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements AsyncGameRequestListener {
@@ -318,12 +321,8 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
     public void goToScheduledGames(View view) {
         Log.i("VBR-MainActivity", "Go to scheduled games");
-
-        /*GameFactory.createPointBasedGame(refereeName, UserId.VBR_USER_ID);
-
-        Log.i("VBR-MainActivity", "Start activity to setup teams quickly");
-        final Intent intent = new Intent(this, QuickTeamsSetupActivity.class);
-        startActivity(intent);*/
+        final Intent intent = new Intent(this, ScheduledGamesListActivity.class);
+        startActivity(intent);
     }
 
     private void resumeCurrentGameWithDialog(Bundle savedInstanceState) {
@@ -461,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                 @Override
                 public void onPositiveButtonClicked(int code) {
                     Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                    WebUtils.getGameFromCode(MainActivity.this, code, MainActivity.this);
+                    WebUtils.getInstance().getGameFromCode(MainActivity.this, code, MainActivity.this);
                 }
             });
         }
@@ -486,12 +485,24 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
     }
 
     @Override
-    public void onTechnicalError() {
+    public void onUserGameReceived(RecordedGameService recordedGameService) {}
+
+    @Override
+    public void onUserGameListReceived(List<GameDescription> gameDescriptionList) {}
+
+    @Override
+    public void onNotFound() {
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onInternalError() {
         Toast.makeText(MainActivity.this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
     }
 
-    public void onInvalidCode() {
-        Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
+    @Override
+    public void onError() {
+        onInternalError();
     }
 
     private void restoreEditScheduledGameFromCodeDialog() {

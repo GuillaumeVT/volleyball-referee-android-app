@@ -211,7 +211,7 @@ public class RecordedGame implements RecordedGameService {
         return mGameStatus;
     }
 
-    public void setGameStatus(GameStatus gameStatus) {
+    public void setMatchStatus(GameStatus gameStatus) {
         mGameStatus = gameStatus;
     }
 

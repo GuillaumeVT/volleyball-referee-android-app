@@ -19,6 +19,7 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
@@ -69,6 +70,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_confirm:
                 confirmSetup();
+                return true;
+            case android.R.id.home:
+                UiUtils.navigateToHome(this, false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

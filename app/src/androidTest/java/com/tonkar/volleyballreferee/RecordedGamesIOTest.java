@@ -87,7 +87,7 @@ public class RecordedGamesIOTest {
         recordedGame.setRules(Rules.officialIndoorRules());
         recordedGame.setLeagueName("VBR League");
         recordedGame.setRefereeName("VBR");
-        recordedGame.setGameStatus(GameStatus.LIVE);
+        recordedGame.setMatchStatus(GameStatus.LIVE);
         recordedGame.setSets(TeamType.HOME, 0);
         recordedGame.setSets(TeamType.GUEST, 2);
 
@@ -185,7 +185,7 @@ public class RecordedGamesIOTest {
         recordedGame.setGameDate(646516L);
         recordedGame.setGameSchedule(764578L);
         recordedGame.setGenderType(GenderType.GENTS);
-        recordedGame.setGameStatus(GameStatus.SCHEDULED);
+        recordedGame.setMatchStatus(GameStatus.SCHEDULED);
         recordedGame.setRules(Rules.officialBeachRules());
         recordedGame.setLeagueName("VBR Beach League");
         recordedGame.setRefereeName("VBR");
