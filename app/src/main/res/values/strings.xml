@@ -31,7 +31,7 @@
 
     <!-- User activity -->
     <string name="user_sign_in_why_title">Why should I sign in?</string>
-    <string name="user_sign_in_why_message">If you stream your games online, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user.\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. The scheduled games can then be refereed on your App on someone else\'s App by providing the game unique code to the referee.</string>
+    <string name="user_sign_in_why_message">If you stream your games online, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user.\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. The scheduled games can then be refereed on your App or on someone else\'s App by providing the game unique code to the referee.</string>
     <string name="user_sign_in_privacy_title">Is it safe?</string>
     <string name="user_sign_in_privacy_message">Yes. When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
     <string name="facebook_app_id">2086514551632301</string>

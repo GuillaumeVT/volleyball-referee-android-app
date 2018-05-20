@@ -18,32 +18,32 @@
     <string name="delete">Verwijder</string>
     <string name="ignore">Negeren</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Local data</string>
-    <string name="online_data_group">Online data</string>
+    <string name="local_data_group">Lokale gegevens</string>
+    <string name="online_data_group">Online gegevens</string>
     <string name="configuration_group">Configuratie</string>
     <string name="view_live_games">Bekijk live wedstrijden online</string>
     <string name="search_online_games">Zoek wedstrijden online</string>
-    <string name="view_online_account">My account</string>
+    <string name="view_online_account">Mijn account</string>
     <string name="scheduled_game_question">Wilt u de ploegen bewerken voordat u de wedstrijd start?</string>
     <string name="game_code_hint">Wedstrijd code</string>
-    <string name="invalid_game_code">Invalid game code</string>
-    <string name="download_error_message">The match could not be downloaded</string>
+    <string name="invalid_game_code">Ongeldig wedstrijdnummer</string>
+    <string name="download_error_message">De wedstrijd kan niet worden gedownload</string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Why should I sign in?</string>
-    <string name="user_sign_in_why_message">If you stream your games online, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user.\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. The scheduled games can then be refereed on your App on someone else\'s App by providing the game unique code to the referee.</string>
-    <string name="user_sign_in_privacy_title">Is it safe?</string>
-    <string name="user_sign_in_privacy_message">Yes. When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
+    <string name="user_sign_in_why_title">Waarom zou ik me aanmelden?</string>
+    <string name="user_sign_in_why_message">Als je je wedstrijden online streamt, ben je mogelijk  geïnteresseerd om in te loggen.\n\nAls je inlogt, krijg je volledige controle over je wedstrijden op https://www.volleyball-referee.com/user.\n\nOp deze pagina, kan je je eigen regels, ploegen, wedstrijden en zelfs toernooien maken en beheren. De geplande wedstrijden kunnen vervolgens worden geleidt op uw app of op de app van iemand anders door de unieke wedstrijdcode aan de scheidsrechter te verstrekken.</string>
+    <string name="user_sign_in_privacy_title">Is het veilig?</string>
+    <string name="user_sign_in_privacy_message">Ja. Wanneer je aanmeldt, is de enige informatie die we uit uw profiel ophalen uw unieke sociale id die we gebruiken om u te identificeren.</string>
     <string name="facebook_app_id">2086514551632301</string>
-    <string name="user_signed_in">Signed in with %s</string>
-    <string name="user_signed_out">Signed out</string>
-    <string name="user_sign_in_error">Error while signing in with %s</string>
+    <string name="user_signed_in">Aangemeld met %s</string>
+    <string name="user_signed_out">Afgemeld</string>
+    <string name="user_sign_in_error">Fout tijdens aanmelden met %s</string>
     <string name="user_scheduled_games_title">Mijn geplande wedstrijden</string>
-    <string name="user_scheduled_games_message">Browse, select and referee your games scheduled on https://www.volleyball-referee.com/user.</string>
-    <string name="sign_out">Sign out</string>
+    <string name="user_scheduled_games_message">Blader, selecteer en leidt je geplande wedstrijden op https://www.volleyball-referee.com/user.</string>
+    <string name="sign_out">Afmelden</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Setup game</string>
+    <string name="game_setup_title">Wedstrijd instellen</string>
     <string name="home_team_tab">Thuisploeg</string>
     <string name="home_team_hint">Naam thuisploeg</string>
     <string name="guest_team_tab">Uitploeg</string>
@@ -59,8 +59,8 @@
     <string name="match_duration_text">Selecteer de wedstrijdduur</string>
     <string name="league_name_hint">Naam competitie / toernooi (optioneel)</string>
     <string name="misc_tab">Div.</string>
-    <string name="rules_tab">Rules</string>
-    <string name="teams_tab">Teams</string>
+    <string name="rules_tab">Regels</string>
+    <string name="teams_tab">Ploegen</string>
     <string name="leave_game_setup_question">Deze wedstrijdinstelling zal verloren gaan. Toch weggaan?</string>
 
     <!-- Game activity -->
