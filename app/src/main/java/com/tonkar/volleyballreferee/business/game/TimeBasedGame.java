@@ -8,6 +8,7 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -222,6 +223,9 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public void restoreTeams(RecordedGameService recordedGameService) {}
+
+    @Override
     public void callTimeout(TeamType teamType) {}
 
     @Override
@@ -343,6 +347,16 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public TeamType getServingTeam(int setIndex) {
         return getServingTeam();
+    }
+
+    @Override
+    public TeamType getFirstServingTeam() {
+        return mServingTeamAtStart;
+    }
+
+    @Override
+    public TeamType getFirstServingTeam(int setIndex) {
+        return mServingTeamAtStart;
     }
 
     @Override
@@ -635,6 +649,9 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     public boolean areNotificationsEnabled() {
         return true;
     }
+
+    @Override
+    public void restoreGame(RecordedGameService recordedGameService) {}
 
     @Override
     public void startMatch() {

@@ -24,6 +24,8 @@ public class RecordedSet {
     private final List<TeamType>       mPointsLadder;
     @SerializedName("serving")
     private       TeamType             mServingTeam;
+    @SerializedName("firstServing")
+    private       TeamType             mFirstServingTeam;
     @SerializedName("hCurrentPlayers")
     private final List<RecordedPlayer> mHomeTeamCurrentPlayers;
     @SerializedName("gCurrentPlayers")
@@ -55,6 +57,7 @@ public class RecordedSet {
         mGuestTeamTimeouts = 0;
         mPointsLadder = new ArrayList<>();
         mServingTeam = TeamType.HOME;
+        mFirstServingTeam = TeamType.HOME;
         mHomeTeamCurrentPlayers = new ArrayList<>();
         mGuestTeamCurrentPlayers = new ArrayList<>();
         mHomeTeamStartingPlayers = new ArrayList<>();
@@ -129,6 +132,14 @@ public class RecordedSet {
         mServingTeam = servingTeam;
     }
 
+    TeamType getFirstServingTeam() {
+        return mFirstServingTeam;
+    }
+
+    public void setFirstServingTeam(TeamType firstServingTeam) {
+        mFirstServingTeam = firstServingTeam;
+    }
+
     public List<RecordedPlayer> getCurrentPlayers(TeamType teamType) {
         List<RecordedPlayer> players;
 
@@ -165,7 +176,7 @@ public class RecordedSet {
         return substitutions;
     }
 
-    int getActingCaptain(TeamType teamType) {
+    public int getActingCaptain(TeamType teamType) {
         int number;
 
         if (TeamType.HOME.equals(teamType)) {
@@ -220,6 +231,7 @@ public class RecordedSet {
                     && (this.getTimeouts(TeamType.GUEST) == other.getTimeouts(TeamType.GUEST))
                     && this.getPointsLadder().equals(other.getPointsLadder())
                     && this.getServingTeam().equals(other.getServingTeam())
+                    && this.getFirstServingTeam().equals(other.getFirstServingTeam())
                     && this.getCurrentPlayers(TeamType.HOME).equals(other.getCurrentPlayers(TeamType.HOME))
                     && this.getCurrentPlayers(TeamType.GUEST).equals(other.getCurrentPlayers(TeamType.GUEST))
                     && this.getStartingPlayers(TeamType.HOME).equals(other.getStartingPlayers(TeamType.HOME))

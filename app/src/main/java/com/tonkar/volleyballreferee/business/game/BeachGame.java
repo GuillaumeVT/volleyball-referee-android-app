@@ -2,12 +2,18 @@ package com.tonkar.volleyballreferee.business.game;
 
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+
+import java.util.List;
 
 public class BeachGame extends Game implements BeachTeamService {
 
@@ -102,5 +108,45 @@ public class BeachGame extends Game implements BeachTeamService {
     @Override
     public int getExpectedNumberOfPlayersOnCourt() {
         return 2;
+    }
+
+    @Override
+    public void restoreGame(RecordedGameService recordedGameService) {
+        if (GameStatus.LIVE.equals(recordedGameService.getMatchStatus())) {
+            startMatch();
+
+            for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
+                List<TeamType> pointsLadder = recordedGameService.getPointsLadder(setIndex);
+
+                getSet(setIndex).setServingTeamAtStart(recordedGameService.getFirstServingTeam(setIndex));
+
+                for (TeamType scoringTeam : pointsLadder) {
+                    int homePoints = getPoints(TeamType.HOME, setIndex);
+                    int guestPoints = getPoints(TeamType.GUEST, setIndex);
+
+                    List<Timeout> homeTimeouts = recordedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (Timeout timeout : homeTimeouts) {
+                        callTimeout(TeamType.HOME);
+                    }
+
+                    List<Timeout> guestTimeouts = recordedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (Timeout timeout : guestTimeouts) {
+                        callTimeout(TeamType.GUEST);
+                    }
+
+                    List<Sanction> homeSanctions = recordedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (Sanction sanction : homeSanctions) {
+                        giveSanction(TeamType.HOME, sanction.getSanctionType(), sanction.getPlayer());
+                    }
+
+                    List<Sanction> guestSanctions = recordedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (Sanction sanction : guestSanctions) {
+                        giveSanction(TeamType.GUEST, sanction.getSanctionType(), sanction.getPlayer());
+                    }
+
+                    addPoint(scoringTeam);
+                }
+            }
+        }
     }
 }

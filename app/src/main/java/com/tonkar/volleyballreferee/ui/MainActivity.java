@@ -472,15 +472,29 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
             final GameService gameService = GameFactory.createGame(recordedGameService);
             Log.i("VBR-MainActivity", "Start game activity after receiving code");
 
-            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
+            switch (recordedGameService.getMatchStatus()) {
+                case SCHEDULED:
+                    AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
 
-            if (alertDialogFragment == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code), getResources().getString(R.string.scheduled_game_question),
-                        getResources().getString(R.string.no), getResources().getString(R.string.yes));
-                alertDialogFragment.show(getSupportFragmentManager(), "game_code_edit");
+                    if (alertDialogFragment == null) {
+                        alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code), getResources().getString(R.string.scheduled_game_question),
+                                getResources().getString(R.string.no), getResources().getString(R.string.yes));
+                        alertDialogFragment.show(getSupportFragmentManager(), "game_code_edit");
+                    }
+
+                    setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
+                    break;
+                case LIVE:
+                    gameService.restoreGame(recordedGameService);
+                    final Intent gameIntent = new Intent(this, GameActivity.class);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(gameIntent);
+                    break;
+                default:
+                    break;
             }
-
-            setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
         }
     }
 

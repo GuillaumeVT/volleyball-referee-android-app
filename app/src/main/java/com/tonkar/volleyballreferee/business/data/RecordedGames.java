@@ -551,6 +551,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                 set.setDuration(mGameService.getSetDuration(setIndex));
                 set.getPointsLadder().addAll(mGameService.getPointsLadder(setIndex));
                 set.setServingTeam(mGameService.getServingTeam(setIndex));
+                set.setFirstServingTeam(mGameService.getFirstServingTeam(setIndex));
 
                 set.setPoints(TeamType.HOME, mGameService.getPoints(TeamType.HOME, setIndex));
                 set.setTimeouts(TeamType.HOME, mGameService.getRemainingTimeouts(TeamType.HOME, setIndex));

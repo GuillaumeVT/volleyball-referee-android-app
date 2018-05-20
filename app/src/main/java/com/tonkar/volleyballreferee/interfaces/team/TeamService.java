@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.interfaces.team;
 
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 
 import java.util.Set;
 
@@ -27,5 +28,7 @@ public interface TeamService extends BaseTeamService {
     TeamType getTeamOnLeftSide();
 
     TeamType getTeamOnRightSide();
+
+    void restoreTeams(RecordedGameService recordedGameService);
 
 }

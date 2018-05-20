@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -434,6 +435,16 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public TeamType getFirstServingTeam() {
+        return currentSet().getServingTeamAtStart();
+    }
+
+    @Override
+    public TeamType getFirstServingTeam(int setIndex) {
+        return getSet(setIndex).getServingTeamAtStart();
+    }
+
+    @Override
     public void swapServiceAtStart() {
         if (getPointsLadder().isEmpty()) {
             switch (mServingTeamAtStart) {
@@ -852,6 +863,25 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public void restoreTeams(RecordedGameService recordedGameService) {
+        setTeamName(TeamType.HOME, recordedGameService.getTeamName(TeamType.HOME));
+        setTeamColor(TeamType.HOME, recordedGameService.getTeamColor(TeamType.HOME));
+        setGenderType(TeamType.HOME, recordedGameService.getGenderType(TeamType.HOME));
+
+        for (int number : recordedGameService.getPlayers(TeamType.HOME))  {
+            addPlayer(TeamType.HOME, number);
+        }
+
+        setTeamName(TeamType.GUEST, recordedGameService.getTeamName(TeamType.GUEST));
+        setTeamColor(TeamType.GUEST, recordedGameService.getTeamColor(TeamType.GUEST));
+        setGenderType(TeamType.GUEST, recordedGameService.getGenderType(TeamType.GUEST));
+
+        for (int number : recordedGameService.getPlayers(TeamType.GUEST))  {
+            addPlayer(TeamType.GUEST, number);
+        }
+    }
+
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
 
@@ -880,4 +910,5 @@ public abstract class Game extends BaseGame {
 
         return result;
     }
+
 }

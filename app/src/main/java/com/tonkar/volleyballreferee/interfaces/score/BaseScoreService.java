@@ -25,4 +25,8 @@ public interface BaseScoreService {
     TeamType getServingTeam();
 
     TeamType getServingTeam(int setIndex);
+
+    TeamType getFirstServingTeam();
+
+    TeamType getFirstServingTeam(int setIndex);
 }

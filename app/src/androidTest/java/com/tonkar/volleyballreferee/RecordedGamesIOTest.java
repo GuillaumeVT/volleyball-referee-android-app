@@ -121,6 +121,7 @@ public class RecordedGamesIOTest {
         set1.setTimeouts(TeamType.GUEST, 0);
         Collections.addAll(set1.getPointsLadder(), TeamType.HOME, TeamType.GUEST, TeamType.GUEST, TeamType.HOME, TeamType.HOME);
         set1.setServingTeam(TeamType.HOME);
+        set1.setFirstServingTeam(TeamType.GUEST);
         for (int index = 1; index <= 6; index++) {
             RecordedPlayer player = new RecordedPlayer();
             player.setNumber(index);
@@ -158,6 +159,7 @@ public class RecordedGamesIOTest {
         set2.setTimeouts(TeamType.GUEST, 1);
         Collections.addAll(set2.getPointsLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.GUEST);
         set2.setServingTeam(TeamType.GUEST);
+        set2.setFirstServingTeam(TeamType.HOME);
         for (int index = 1; index <= 6; index++) {
             RecordedPlayer player = new RecordedPlayer();
             player.setNumber(index);
@@ -217,6 +219,7 @@ public class RecordedGamesIOTest {
         set1.setTimeouts(TeamType.GUEST, 1);
         Collections.addAll(set1.getPointsLadder(), TeamType.GUEST, TeamType.GUEST);
         set1.setServingTeam(TeamType.GUEST);
+        set1.setFirstServingTeam(TeamType.GUEST);
         for (int index = 1; index <= 2; index++) {
             RecordedPlayer player = new RecordedPlayer();
             player.setNumber(index);
@@ -239,6 +242,7 @@ public class RecordedGamesIOTest {
         set2.setTimeouts(TeamType.GUEST, 0);
         Collections.addAll(set2.getPointsLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.HOME);
         set2.setServingTeam(TeamType.HOME);
+        set2.setFirstServingTeam(TeamType.HOME);
         for (int index = 1; index <= 2; index++) {
             RecordedPlayer player = new RecordedPlayer();
             player.setNumber(index);

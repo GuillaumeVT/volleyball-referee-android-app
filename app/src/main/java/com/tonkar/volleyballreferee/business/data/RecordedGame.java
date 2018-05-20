@@ -207,6 +207,16 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public TeamType getFirstServingTeam() {
+        return getFirstServingTeam(currentSetIndex());
+    }
+
+    @Override
+    public TeamType getFirstServingTeam(int setIndex) {
+        return mSets.get(setIndex).getFirstServingTeam();
+    }
+
+    @Override
     public GameStatus getMatchStatus() {
         return mGameStatus;
     }
@@ -490,6 +500,11 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public int getActingCaptain(TeamType teamType, int setIndex) {
+        return mSets.get(setIndex).getActingCaptain(teamType);
+    }
+
+    @Override
     public boolean isRecordedOnline() {
         return mIsRecordedOnline;
     }
@@ -541,6 +556,45 @@ public class RecordedGame implements RecordedGameService {
     @Override
     public boolean hasSanctions(TeamType teamType, int number) {
         return getSanctions(teamType, number).size() > 0;
+    }
+
+    @Override
+    public List<Timeout> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
+        List<Timeout> timeouts = new ArrayList<>();
+
+        for (Timeout timeout : getCalledTimeouts(teamType, setIndex)) {
+            if (timeout.getHomeTeamPoints() == hPoints && timeout.getGuestTeamPoints() == gPoints) {
+                timeouts.add(timeout);
+            }
+        }
+
+        return timeouts;
+    }
+
+    @Override
+    public List<Substitution> getSubstitutionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
+        List<Substitution> substitutions = new ArrayList<>();
+
+        for (Substitution substitution : getSubstitutions(teamType, setIndex)) {
+            if (substitution.getHomeTeamPoints() == hPoints && substitution.getGuestTeamPoints() == gPoints) {
+                substitutions.add(substitution);
+            }
+        }
+
+        return substitutions;
+    }
+
+    @Override
+    public List<Sanction> getSanctionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
+        List<Sanction> sanctions = new ArrayList<>();
+
+        for (Sanction sanction : getGivenSanctions(teamType, setIndex)) {
+            if (sanction.getHomeTeamPoints() == hPoints && sanction.getGuestTeamPoints() == gPoints) {
+                sanctions.add(sanction);
+            }
+        }
+
+        return sanctions;
     }
 
     @Override
