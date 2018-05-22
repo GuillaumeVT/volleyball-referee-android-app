@@ -27,6 +27,8 @@ public class GameDescription {
     private String     mRefereeName;
     @SerializedName("league")
     private String     mLeagueName;
+    @SerializedName("division")
+    private String     mDivisionName;
     @SerializedName("hName")
     private String     mHomeTeamName;
     @SerializedName("gName")
@@ -48,6 +50,7 @@ public class GameDescription {
         mGameStatus = GameStatus.COMPLETED;
         mRefereeName = "";
         mLeagueName = "";
+        mDivisionName = "";
         mHomeTeamName = "";
         mGuestTeamName = "";
         mHomeTeamSets = 0;
@@ -59,112 +62,60 @@ public class GameDescription {
         return mUserId;
     }
 
-    public void setUserId(String userId) {
-        mUserId = userId;
-    }
-
     public GameType getGameType() {
         return mGameType;
-    }
-
-    public void setGameType(GameType gameType) {
-        mGameType = gameType;
     }
 
     public long getGameDate() {
         return mGameDate;
     }
 
-    public void setGameDate(long gameDate) {
-        mGameDate = gameDate;
-    }
-
     public long getGameSchedule() {
         return mGameSchedule;
-    }
-
-    public void setGameSchedule(long gameSchedule) {
-        mGameSchedule = gameSchedule;
     }
 
     public GenderType getGenderType() {
         return mGenderType;
     }
 
-    public void setGenderType(GenderType genderType) {
-        mGenderType = genderType;
-    }
-
     public UsageType getUsageType() {
         return mUsageType;
-    }
-
-    public void setUsageType(UsageType usageType) {
-        mUsageType = usageType;
     }
 
     public GameStatus getMatchStatus() {
         return mGameStatus;
     }
 
-    public void setMatchStatus(GameStatus gameStatus) {
-        mGameStatus = gameStatus;
-    }
-
     public String getRefereeName() {
         return mRefereeName;
-    }
-
-    public void setRefereeName(String name) {
-        mRefereeName = name;
     }
 
     public String getLeagueName() {
         return mLeagueName;
     }
 
-    public void setLeagueName(String name) {
-        mLeagueName = name;
+    public String getDivisionName() {
+        return mDivisionName;
     }
 
     public String getHomeTeamName() {
         return mHomeTeamName;
     }
 
-    public void setHomeTeamName(String homeTeamName) {
-        mHomeTeamName = homeTeamName;
-    }
-
     public String getGuestTeamName() {
         return mGuestTeamName;
-    }
-
-    public void setGuestTeamName(String guestTeamName) {
-        mGuestTeamName = guestTeamName;
     }
 
     public int geHomeTeamSets() {
         return mHomeTeamSets;
     }
 
-    public void setHomeTeamSets(int homeTeamSets) {
-        mHomeTeamSets = homeTeamSets;
-    }
-
     public int getGuestTeamSets() {
         return mGuestTeamSets;
-    }
-
-    public void setGuestTeamSets(int guestTeamSets) {
-        mGuestTeamSets = guestTeamSets;
     }
 
     public String getRulesName() {
         return mRulesName;
     }
 
-    public void setRulesName(String rulesName) {
-        mRulesName = rulesName;
-    }
-    
 }

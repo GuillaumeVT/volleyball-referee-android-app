@@ -210,17 +210,16 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
                 @Override
                 public void onPositiveButtonClicked() {
                     Log.i("VBR-SRGamesActivity", "Edit scheduled game before starting");
-                    gameService.startMatch();
-                    final Intent gameIntent;
+                    final Intent setupIntent;
                     if (gameService.getGameType().equals(GameType.BEACH)) {
-                        gameIntent = new Intent(ScheduledGamesListActivity.this, QuickGameSetupActivity.class);
+                        setupIntent = new Intent(ScheduledGamesListActivity.this, QuickGameSetupActivity.class);
                     } else {
-                        gameIntent = new Intent(ScheduledGamesListActivity.this, GameSetupActivity.class);
+                        setupIntent = new Intent(ScheduledGamesListActivity.this, GameSetupActivity.class);
                     }
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(setupIntent);
                 }
 
                 @Override

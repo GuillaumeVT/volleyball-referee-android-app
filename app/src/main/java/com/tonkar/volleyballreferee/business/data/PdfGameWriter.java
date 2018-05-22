@@ -212,7 +212,13 @@ public class PdfGameWriter {
         infoTable.setWidthPercentage(100);
         infoTable.setSpacingBefore(5.f);
 
-        PdfPCell leagueCell = new PdfPCell(new Phrase(mRecordedGameService.getLeagueName(), mDefaultFont));
+        String league = mRecordedGameService.getLeagueName();
+        String division = mRecordedGameService.getDivisionName();
+        if (!league.isEmpty() && !division.isEmpty()) {
+            league = league + " / " + division;
+        }
+
+        PdfPCell leagueCell = new PdfPCell(new Phrase(league, mDefaultFont));
         leagueCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         leagueCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         infoTable.addCell(leagueCell);

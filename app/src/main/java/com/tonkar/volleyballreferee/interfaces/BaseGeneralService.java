@@ -23,4 +23,8 @@ public interface BaseGeneralService {
     String getLeagueName();
 
     void setLeagueName(String name);
+
+    String getDivisionName();
+
+    void setDivisionName(String name);
 }

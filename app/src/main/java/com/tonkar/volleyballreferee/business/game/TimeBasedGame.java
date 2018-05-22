@@ -42,6 +42,8 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private       GameStatus     mGameStatus;
     @SerializedName("leagueName")
     private       String         mLeagueName;
+    @SerializedName("divisionName")
+    private       String         mDivisionName;
     @SerializedName("homeTeam")
     private final TeamDefinition mHomeTeam;
     @SerializedName("guestTeam")
@@ -77,6 +79,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mLeagueName = "";
+        mDivisionName = "";
         mHomeTeam = new EmptyTeamDefinition(TeamType.HOME);
         mGuestTeam = new EmptyTeamDefinition(TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
@@ -152,6 +155,16 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public void setLeagueName(String name) {
         mLeagueName = name;
+    }
+
+    @Override
+    public String getDivisionName() {
+        return mDivisionName;
+    }
+
+    @Override
+    public void setDivisionName(String name) {
+        mDivisionName = name;
     }
 
     @Override

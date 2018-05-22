@@ -44,6 +44,8 @@ public abstract class Game extends BaseGame {
     private       GameStatus     mGameStatus;
     @SerializedName("leagueName")
     private       String         mLeagueName;
+    @SerializedName("divisionName")
+    private       String         mDivisionName;
     @SerializedName("homeTeam")
     private final TeamDefinition mHomeTeam;
     @SerializedName("guestTeam")
@@ -78,6 +80,7 @@ public abstract class Game extends BaseGame {
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mLeagueName = "";
+        mDivisionName = "";
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
@@ -494,6 +497,16 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public String getDivisionName() {
+        return mDivisionName;
+    }
+
+    @Override
+    public void setDivisionName(String name) {
+        mDivisionName = name;
+    }
+
+    @Override
     public String getTeamName(TeamType teamType) {
         return getTeamDefinition(teamType).getName();
     }
@@ -896,6 +909,7 @@ public abstract class Game extends BaseGame {
                     && (this.getGenderType().equals(other.getGenderType()))
                     && (this.getRules().equals(other.getRules()))
                     && (this.getLeagueName().equals(other.getLeagueName()))
+                    && (this.getDivisionName().equals(other.getDivisionName()))
                     && (this.getTeamDefinition(TeamType.HOME).equals(other.getTeamDefinition(TeamType.HOME)))
                     && (this.getTeamDefinition(TeamType.GUEST).equals(other.getTeamDefinition(TeamType.GUEST)))
                     && (this.getTeamOnLeftSide().equals(other.getTeamOnLeftSide()))

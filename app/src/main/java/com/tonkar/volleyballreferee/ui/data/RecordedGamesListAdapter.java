@@ -159,7 +159,11 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
             viewHolder.statusImage.setVisibility(View.GONE);
         }
 
-        viewHolder.leagueText.setText(recordedGameService.getLeagueName());
+        if (recordedGameService.getLeagueName().isEmpty() || recordedGameService.getDivisionName().isEmpty()) {
+            viewHolder.leagueText.setText(recordedGameService.getLeagueName());
+        } else {
+            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , recordedGameService.getLeagueName(), recordedGameService.getDivisionName()));
+        }
         viewHolder.leagueText.setVisibility(recordedGameService.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
     }
 

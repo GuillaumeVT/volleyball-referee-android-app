@@ -146,7 +146,11 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
                 break;
         }
 
-        viewHolder.leagueText.setText(gameDescription.getLeagueName());
+        if (gameDescription.getLeagueName().isEmpty() || gameDescription.getDivisionName().isEmpty()) {
+            viewHolder.leagueText.setText(gameDescription.getLeagueName());
+        } else {
+            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , gameDescription.getLeagueName(), gameDescription.getDivisionName()));
+        }
         viewHolder.leagueText.setVisibility(gameDescription.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
     }
 

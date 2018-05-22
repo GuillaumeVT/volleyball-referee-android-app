@@ -86,6 +86,7 @@ public class RecordedGamesIOTest {
         recordedGame.setGenderType(GenderType.LADIES);
         recordedGame.setRules(Rules.officialIndoorRules());
         recordedGame.setLeagueName("VBR League");
+        recordedGame.setDivisionName("VBR Division");
         recordedGame.setRefereeName("VBR");
         recordedGame.setMatchStatus(GameStatus.LIVE);
         recordedGame.setSets(TeamType.HOME, 0);
@@ -190,6 +191,7 @@ public class RecordedGamesIOTest {
         recordedGame.setMatchStatus(GameStatus.SCHEDULED);
         recordedGame.setRules(Rules.officialBeachRules());
         recordedGame.setLeagueName("VBR Beach League");
+        recordedGame.setDivisionName("VBR Beach Division");
         recordedGame.setRefereeName("VBR");
         recordedGame.setSets(TeamType.HOME, 1);
         recordedGame.setSets(TeamType.GUEST, 0);

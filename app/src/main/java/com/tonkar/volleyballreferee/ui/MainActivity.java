@@ -547,17 +547,16 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                 @Override
                 public void onPositiveButtonClicked() {
                     Log.i("VBR-MainActivity", "Edit game from code before starting");
-                    gameService.startMatch();
-                    final Intent gameIntent;
+                    final Intent setupIntent;
                     if (gameService.getGameType().equals(GameType.BEACH)) {
-                        gameIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);
+                        setupIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);
                     } else {
-                        gameIntent = new Intent(MainActivity.this, GameSetupActivity.class);
+                        setupIntent = new Intent(MainActivity.this, GameSetupActivity.class);
                     }
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(setupIntent);
                 }
 
                 @Override

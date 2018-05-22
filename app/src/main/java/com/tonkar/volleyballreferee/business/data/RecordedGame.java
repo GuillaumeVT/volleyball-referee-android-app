@@ -40,6 +40,8 @@ public class RecordedGame implements RecordedGameService {
     private String            mRefereeName;
     @SerializedName("league")
     private String            mLeagueName;
+    @SerializedName("division")
+    private String            mDivisionName;
     @SerializedName("hTeam")
     private RecordedTeam      mHomeTeam;
     @SerializedName("gTeam")
@@ -68,6 +70,7 @@ public class RecordedGame implements RecordedGameService {
         mGameStatus = GameStatus.COMPLETED;
         mRefereeName = "";
         mLeagueName = "";
+        mDivisionName = "";
         mHomeTeam = new RecordedTeam();
         mGuestTeam = new RecordedTeam();
         mHomeSets = 0;
@@ -265,6 +268,16 @@ public class RecordedGame implements RecordedGameService {
     @Override
     public void setLeagueName(String name) {
         mLeagueName = name;
+    }
+
+    @Override
+    public String getDivisionName() {
+        return mDivisionName;
+    }
+
+    @Override
+    public void setDivisionName(String name) {
+        mDivisionName = name;
     }
 
     @Override
@@ -614,6 +627,7 @@ public class RecordedGame implements RecordedGameService {
                     && (this.isMatchCompleted() == other.isMatchCompleted())
                     && (this.getRefereeName().equals(other.getRefereeName()))
                     && (this.getLeagueName().equals(other.getLeagueName()))
+                    && (this.getDivisionName().equals(other.getDivisionName()))
                     && this.getTeam(TeamType.HOME).equals(other.getTeam(TeamType.HOME))
                     && this.getTeam(TeamType.GUEST).equals(other.getTeam(TeamType.GUEST))
                     && (this.getSets(TeamType.HOME) == other.getSets(TeamType.HOME))

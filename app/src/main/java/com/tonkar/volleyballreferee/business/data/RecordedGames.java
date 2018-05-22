@@ -487,6 +487,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         mRecordedGame.setUsageType(mGameService.getUsageType());
         mRecordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
         mRecordedGame.setLeagueName(mGameService.getLeagueName());
+        mRecordedGame.setDivisionName(mGameService.getDivisionName());
 
         RecordedTeam homeTeam = mRecordedGame.getTeam(TeamType.HOME);
         homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
