@@ -27,6 +27,7 @@ If your language is missing and you feel like helping the community, you may con
 
 | Languages             | Status                          |
 |-----------------------|---------------------------------|
+| Dutch                 | Available                       |
 | English               | Available                       |
 | French                | Available                       |
 | German                | Available                       |
@@ -35,6 +36,7 @@ If your language is missing and you feel like helping the community, you may con
 | Polish                | Available                       |
 | Portuguese            | Available                       |
 | Portuguese (Brazil)   | Available                       |
+| Spanish               | Available                       |
 | Russian               | Available                       |
 
 ## Planned Features
