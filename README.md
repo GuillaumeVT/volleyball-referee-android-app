@@ -43,5 +43,4 @@ If your language is missing and you feel like helping the community, you may con
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| Instant App                       | Planned                                |
-| Indoor 4x4                        | In Progress                            |
+| iphone App                        | Planned                                |
