@@ -87,7 +87,7 @@ public class PdfGameWriter {
             try {
                 DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy", Locale.getDefault());
                 formatter.setTimeZone(TimeZone.getDefault());
-                String date = formatter.format(new Date(recordedGameService.getGameDate()));
+                String date = formatter.format(new Date(recordedGameService.getGameSchedule()));
 
                 String homeTeam = recordedGameService.getTeamName(TeamType.HOME);
                 String guestTeam = recordedGameService.getTeamName(TeamType.GUEST);

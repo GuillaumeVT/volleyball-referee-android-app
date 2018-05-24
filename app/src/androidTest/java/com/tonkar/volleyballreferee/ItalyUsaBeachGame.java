@@ -66,6 +66,7 @@ public class ItalyUsaBeachGame {
     private void defineTeams(BeachGame beachGame) {
         beachGame.setGenderType(GenderType.GENTS);
         beachGame.setLeagueName("FIVB Beach Volleyball World Championship 2017");
+        beachGame.setDivisionName("Final");
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
         beachGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));

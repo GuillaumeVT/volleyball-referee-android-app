@@ -47,6 +47,7 @@ public class TimeBasedGameTest {
         game.setGenderType(GenderType.MIXED);
 
         game.setLeagueName("Tournament X");
+        game.setDivisionName("Pool 4");
 
         game.setTeamName(TeamType.HOME, "Team 1");
         game.setTeamName(TeamType.GUEST, "Team 2");

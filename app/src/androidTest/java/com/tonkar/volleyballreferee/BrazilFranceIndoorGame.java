@@ -130,6 +130,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.setGenderType(GenderType.GENTS);
 
         indoorGame.setLeagueName("FIVB Volleyball World League 2017");
+        indoorGame.setDivisionName("Final");
 
         indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
         indoorGame.setTeamName(TeamType.GUEST, "FRANCE");

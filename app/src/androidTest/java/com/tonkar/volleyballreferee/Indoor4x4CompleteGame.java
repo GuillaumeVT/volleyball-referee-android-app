@@ -52,6 +52,7 @@ public class Indoor4x4CompleteGame {
         indoor4x4Game.setGenderType(GenderType.GENTS);
 
         indoor4x4Game.setLeagueName("4x4");
+        indoor4x4Game.setDivisionName("Division 1");
 
         indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");
         indoor4x4Game.setTeamName(TeamType.GUEST, "Guest Team");
