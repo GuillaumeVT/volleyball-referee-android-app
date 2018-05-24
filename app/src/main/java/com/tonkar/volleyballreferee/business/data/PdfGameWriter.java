@@ -223,10 +223,10 @@ public class PdfGameWriter {
         leagueCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         infoTable.addCell(leagueCell);
 
-        DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         formatter.setTimeZone(TimeZone.getDefault());
 
-        PdfPCell dateCell = new PdfPCell(new Phrase(formatter.format(new Date(mRecordedGameService.getGameDate())), mDefaultFont));
+        PdfPCell dateCell = new PdfPCell(new Phrase(formatter.format(new Date(mRecordedGameService.getGameSchedule())), mDefaultFont));
         dateCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         dateCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         infoTable.addCell(dateCell);
