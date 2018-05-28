@@ -6,21 +6,44 @@
     <string name="new_beach_volleyball_game">Beachvolleyball</string>
     <string name="new_score_based_game">Anzeigetafel</string>
     <string name="new_time_based_game">Zeitbasiert</string>
+    <string name="new_scheduled_game_from_code">Mit Code</string>
     <string name="permission_title">Berechtigungen</string>
     <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
     <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
     <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
     <string name="resume">Fortsetzen</string>
     <string name="delete">Löschen</string>
     <string name="ignore">Ignorieren</string>
     <string name="facebook">Facebook</string>
+    <string name="local_data_group">Lokal Daten</string>
+    <string name="online_data_group">Online Daten</string>
     <string name="configuration_group">Konfiguration</string>
     <string name="view_live_games">Live-Spiele online ansehen</string>
     <string name="search_online_games">Spiele online suchen</string>
+    <string name="view_online_account">Mein Konto</string>
+    <string name="scheduled_game_question">Möchten Sie das Spiel vor dem Start bearbeiten?</string>
+    <string name="game_code_hint">Spielcode</string>
+    <string name="invalid_game_code">Ungültiger Spielcode</string>
+    <string name="download_error_message">Das Spiel konnte nicht heruntergeladen werden</string>
+
+    <!-- User activity -->
+    <string name="user_sign_in_why_title">Warum sollte ich mich anmelden?</string>
+    <string name="user_sign_in_why_message">Wenn Sie Ihre Spiele online streamen, sind Sie möglicherweise daran interessiert, sich anzumelden.\n\nMit Ihrer Anmeldung erhalten Sie unter https://www.volleyball-referee.com/user die volle Kontrolle über Ihre Spiele.\n\nAuf dieser Seite können Sie eigene Regeln, Mannschaften, Spiele und sogar Turniere erstellen und verwalten. Die geplanten Spiele können dann in Ihrer App oder in einer anderen App gespielt werden, indem Sie dem Schiedsrichter den Code des Spiels geben.</string>
+    <string name="user_sign_in_privacy_title">Ist es sicher?</string>
+    <string name="user_sign_in_privacy_message">Ja. Wenn Sie sich anmelden, verwenden wir nur Ihre eindeutige soziale Kennung, mit der wir Sie identifizieren.</string>
+    <string name="facebook_app_id">2086514551632301</string>
+    <string name="user_signed_in">Angemeldet mit %s</string>
+    <string name="user_signed_out">Abgemeldet</string>
+    <string name="user_sign_in_error">Fehler bei der Anmeldung mit %s</string>
+    <string name="user_scheduled_games_title">Meine geplanten Spielen</string>
+    <string name="user_scheduled_games_message">Stöbere, plane und wähle Ihre geplanten Spiele unter https://www.volleyball-referee.com/user.</string>
+    <string name="sign_out">Abmelden</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Mannschaftseinstellungen</string>
+    <string name="game_setup_title">Spieleinstellungen</string>
     <string name="home_team_tab">Heimmannschaft</string>
     <string name="home_team_hint">Name Heimmannschaft</string>
     <string name="guest_team_tab">Gastmannschaft</string>
@@ -31,10 +54,12 @@
     <string name="select_libero">Liberos auswählen (optional)</string>
     <string name="select_gender">Geschlecht auswählen</string>
     <string name="confirm">Bestätigen</string>
-    <string name="confirm_game_setup_question">Stimmst du diesen Einstellungen zu?</string>
+    <string name="confirm_game_setup_question">Stimmen Sie diesen Spieleinstellungen zu?</string>
     <string name="gender_description">Geschlecht</string>
     <string name="match_duration_text">Spieldauer auswählen</string>
     <string name="league_name_hint">Liga-/ Wettbewerbsbezeichnung (optional)</string>
+    <string name="rules_tab">Regeln</string>
+    <string name="teams_tab">Mannschaften</string>
     <string name="misc_tab">Sonstiges</string>
     <string name="leave_game_setup_question">Diese Spieleinstellungen gehen verloren. Trotzdem fortfahren?</string>
 
@@ -68,13 +93,13 @@
     <string name="match_point">Matchball</string>
     <string name="set_point">Satzball</string>
     <string name="confirm_lineup_title">Startaufstellung</string>
-    <string name="confirm_lineup_question">Bestätigst du die Startaufstellung für beide Mannschaften in diesem Satz?</string>
+    <string name="confirm_lineup_question">Bestätigen Sie die Startaufstellung für beide Mannschaften in diesem Satz?</string>
     <string name="no_substitution_message">Kein Ersatz  möglich</string>
-    <string name="confirm_set_question">Bestätigst du diesen Punkt?</string>
+    <string name="confirm_set_question">Bestätigen Sie diesen Punkt?</string>
     <string name="start_match_description">Starte das Spiel</string>
     <string name="stop_match_description">Beende das Spiel</string>
-    <string name="confirm_start_match_question">Willst du dieses Spiel starten?</string>
-    <string name="confirm_stop_match_question">Willst du dieses Spiel beenden?</string>
+    <string name="confirm_start_match_question">Wollen Sie dieses Spiel starten?</string>
+    <string name="confirm_stop_match_question">Wollen Sie dieses Spiel beenden?</string>
     <string name="stream_game">Streame das Spiel online</string>
     <string name="stream_online_on_message">Das Spiel wird online gestreamt</string>
     <string name="stream_online_off_message">Das Spiel wird nicht mehr online gestreamt</string>
@@ -96,7 +121,62 @@
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
 
+    <!-- Settings activity -->
+    <string name="settings">Einstellungen</string>
+    <string name="pref_referee_name">Mein \'Volleyball Referee\' Pseudonym</string>
+    <string name="pref_stream_online">Streame das Spiel online</string>
+    <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
+    <string name="pref_number_of_shirts">Anzahl der Trikots in den Mannschaftseinstellungen</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
+
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Gespeicherte Spiele</string>
+    <string name="search_games">Spielsuche</string>
+    <string name="delete_games">Lösche alle Spiele</string>
+    <string name="delete_game">Lösche dieses Spiel</string>
+    <string name="delete_games_question">Möchten Sie alle gespeicherten Spiele löschen?</string>
+    <string name="delete_game_question">Möchten Sie dieses gespeicherte Spiel löschen?</string>
+    <string name="deleted_game">Spiel wurde gelöscht</string>
+    <string name="deleted_games">Alle Spiele wurden gelöscht</string>
+    <string name="players">Spieler</string>
+    <string name="report_game">Generiere einen Spielbericht</string>
+    <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
+    <string name="upload_success_message">Das Spiel wurde erfolgreich hochgeladen</string>
+    <string name="upload_error_message">Das Spiel konnte nicht hochgeladen werden.</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Gespeicherte Mannschaften</string>
+    <string name="search_teams">Mannschaftssuche</string>
+    <string name="delete_teams">Alle Mannschaften löschen</string>
+    <string name="delete_team">Diese Mannschaft löschen</string>
+    <string name="save_team">Mannschaft speichern</string>
+    <string name="delete_teams_question">Wollen Sie alle gespeicherten Mannschaften löschen?</string>
+    <string name="delete_team_question">Wollen Sie diese Mannschaft löschen?</string>
+    <string name="deleted_team">Mannschaft wurde gelöscht</string>
+    <string name="saved_team">Mannschaft wurde gespeichert</string>
+    <string name="deleted_teams">Alle Mannschaften wurden gelöscht</string>
+    <string name="leave_team_creation_title">Verlasse die Mannschaftszusammenstellung</string>
+    <string name="leave_team_creation_question">Diese Mannschaft wird nicht gespeichert. Trotzdem fortfahren?</string>
+
     <!-- Rules activity -->
+    <string name="saved_rules_list">Gespeicherte Regeln</string>
+    <string name="delete_all_rules">Alle Regeln löschen</string>
+    <string name="delete_rules">Diese Regeln löschen</string>
+    <string name="save_rules">Regeln speichern</string>
+    <string name="search_rules">Regeln Suche</string>
+    <string name="delete_all_rules_question">Wollen Sie alle gespeicherten Regeln löschen?</string>
+    <string name="delete_rules_question">Wollen Sie diese Regeln löschen?</string>
+    <string name="deleted_rules">Regeln wurde gelöscht</string>
+    <string name="saved_rules">Regeln wurde gespeichert</string>
+    <string name="deleted_all_rules">Alle Regeln wurden gelöscht</string>
+    <string name="leave_rules_creation_title">Verlasse die Regeln Zusammenstellung</string>
+    <string name="leave_rules_creation_question">Diese Regeln wird nicht gespeichert. Trotzdem fortfahren?</string>
+    <string name="rules_name_hint">Name der Regeln</string>
     <string name="general_rules">Allgemeines</string>
     <string name="timeout_rules">Auszeit</string>
     <string name="indoor_rules">Hallenvolleyball</string>
@@ -106,6 +186,7 @@
     <string name="rules_points_per_set">Anzahl der Punkte pro Satz</string>
     <string name="rules_sets_per_game">Anzahl der Sätze pro Spiel</string>
     <string name="rules_tie_break">Tie break im letzten Satz</string>
+    <string name="rules_points_in_tie_break">Anzahl der Punkte im Tie break</string>
     <string name="rules_two_points_difference">2 Punkte Unterschied, um den Satz zu gewinnen</string>
     <string name="rules_sanctions">Sanktionen</string>
     <string name="rules_team_timeouts">Auszeiten</string>
@@ -117,8 +198,16 @@
     <string name="rules_game_intervals_duration">Dauer einer Satzpause</string>
     <string name="rules_team_substitutions_per_set">Anzahl der Mannschaftsauswechslungen pro Satz</string>
     <string name="rules_consecutive_serves_per_player">Limit der aufeinander folgenden Aufschläge pro Spieler</string>
+    <string name="rules_court_switches">Seitenwechsel</string>
+    <string name="rules_court_switch_frequency">Frequenz des Seitenwechsel im normalen Satz</string>
+    <string name="rules_court_switch_frequency_tie_break">Frequenz des Seitenwechsel im Tie break</string>
 
     <string-array name="points_per_set_entries">
+        <item>Satz mit 30 Punkten</item>
+        <item>Satz mit 29 Punkten</item>
+        <item>Satz mit 28 Punkten</item>
+        <item>Satz mit 27 Punkten</item>
+        <item>Satz mit 26 Punkten</item>
         <item>Satz mit 25 Punkten</item>
         <item>Satz mit 24 Punkten</item>
         <item>Satz mit 23 Punkten</item>
@@ -130,6 +219,11 @@
         <item>Satz mit 17 Punkten</item>
         <item>Satz mit 16 Punkten</item>
         <item>Satz mit 15 Punkten</item>
+        <item>Satz mit 14 Punkten</item>
+        <item>Satz mit 13 Punkten</item>
+        <item>Satz mit 12 Punkten</item>
+        <item>Satz mit 11 Punkten</item>
+        <item>Satz mit 10 Punkten</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Spiel aus 5 Sätzen</item>
@@ -154,12 +248,24 @@
     <string-array name="team_substitutions_per_set_entries">
         <item>12 Auswechslungen pro Satz</item>
         <item>6 Auswechslungen pro Satz</item>
+        <item>5 Auswechslungen pro Satz</item>
+        <item>4 Auswechslungen pro Satz</item>
+        <item>3 Auswechslungen pro Satz</item>
+    </string-array>
+    <string-array name="court_switch_frequency_entries">
+        <item>Wechsel alle 10 Punkte</item>
+        <item>Wechsel alle 9 Punkte</item>
+        <item>Wechsel alle 8 Punkte</item>
+        <item>Wechsel alle 7 Punkte</item>
+        <item>Wechsel alle 6 Punkte</item>
+        <item>Wechsel alle 5 Punkte</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
         <item>Unbegrenzt</item>
         <item>5 Aufschläge</item>
         <item>4 Aufschläge</item>
         <item>3 Aufschläge</item>
+        <item>2 Aufschläge</item>
     </string-array>
 
     <string-array name="points_per_set_values">
@@ -227,47 +333,5 @@
         <item>3</item>
         <item>2</item>
     </string-array>
-
-    <!-- Settings activity -->
-    <string name="settings">Einstellungen</string>
-    <string name="pref_referee_name">Mein \'Volleyball Referee\' Pseudonym</string>
-    <string name="pref_stream_online">Streame das Spiel online</string>
-    <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
-    <string name="pref_number_of_shirts">Anzahl der Trikots in den Mannschaftseinstellungen</string>
-
-    <string-array name="number_of_shirts">
-        <item>25</item>
-        <item>50</item>
-        <item>99</item>
-    </string-array>
-
-    <!-- Recorded games activity -->
-    <string name="recorded_games">Gespeicherte Spiele</string>
-    <string name="search_games">Spielsuche</string>
-    <string name="delete_games">Lösche alle Spiele</string>
-    <string name="delete_game">Lösche dieses Spiel</string>
-    <string name="delete_games_question">Möchtest du alle gespeicherten Spiele löschen?</string>
-    <string name="delete_game_question">Möchtest du dieses gespeicherte Spiel löschen?</string>
-    <string name="deleted_game">Spiel wurde gelöscht</string>
-    <string name="deleted_games">Alle Spiele wurden gelöscht</string>
-    <string name="players">Spieler</string>
-    <string name="report_game">Generiere einen Spielbericht</string>
-    <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
-    <string name="upload_success_message">Das Spiel wurde erfolgreich hochgeladen</string>
-    <string name="upload_error_message">Das Spiel konnte nicht hochgeladen werden.</string>
-
-    <!-- Saved teams activity -->
-    <string name="saved_teams">Gespeicherte Mannschaften</string>
-    <string name="search_teams">Mannschaftssuche</string>
-    <string name="delete_teams">Alle Mannschaften löschn</string>
-    <string name="delete_team">Diese Mannschaft löschen</string>
-    <string name="save_team">Mannschaft speichern</string>
-    <string name="delete_teams_question">Willst du alle gespeicherten Mannschaften löschen?</string>
-    <string name="delete_team_question">Willst du diese Mannschaft löschen?</string>
-    <string name="deleted_team">Mannschaft wurde gelöscht</string>
-    <string name="saved_team">Mannschaft wurde gespeichert</string>
-    <string name="deleted_teams">Alle Mannschaften wurden gelöscht</string>
-    <string name="leave_team_creation_title">Verlasse die Mannschaftszusammenstellung</string>
-    <string name="leave_team_creation_question">Dieses Spiel wird nicht gespeichert. Trotzdem fortfahren?</string>
 
 </resources>

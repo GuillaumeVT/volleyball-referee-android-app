@@ -6,21 +6,44 @@
     <string name="new_beach_volleyball_game">Пляжный волейбол</string>
     <string name="new_score_based_game">Счётное табло</string>
     <string name="new_time_based_game">Ограничение по времени</string>
+    <string name="new_scheduled_game_from_code">Ввести код</string>
     <string name="permission_title">Разрешения</string>
     <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён неоконченный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume_game_error">Невозможно возобновить матч.</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="resume">Продолжить</string>
     <string name="delete">Удалить</string>
     <string name="ignore">Пропустить</string>
     <string name="facebook">Facebook</string>
+    <string name="local_data_group">Данные в приложении</string>
+    <string name="online_data_group">Данные на сайте</string>
     <string name="configuration_group">Настройки</string>
     <string name="view_live_games">Смотреть прямые трансляции матчей онлайн</string>
     <string name="search_online_games">Искать матчи онлайн</string>
+    <string name="view_online_account">Мой аккаунт</string>
+    <string name="scheduled_game_question">Редактировать составы команд и правила перед началом матча?</string>
+    <string name="game_code_hint">Код матча</string>
+    <string name="invalid_game_code">Неверный код матча</string>
+    <string name="download_error_message">Невозможно загрузить матч с сервера</string>
+
+    <!-- User activity -->
+    <string name="user_sign_in_why_title">Почему лучше подключаться через аккаунт?</string>
+    <string name="user_sign_in_why_message">Эта функция может быть для вас интересна, если вы транслируете матчи онлайн.\n\nПодключаясь через ваш аккаунт, вы можете контролировать ваши матчи на сайте https://www.volleyball-referee.com/user.\n\nНа вашей персональной странице вы можете управлять вашими правилами, командами и матчами. Вы также можете создавать отдельные турниры. Запланированные матчи могут быть использованы либо вашим приложением, либо приложением любого другого судьи. Для этого достаточно просто передать уникальный код этих матчей.</string>
+    <string name="user_sign_in_privacy_title">Уверены?</string>
+    <string name="user_sign_in_privacy_message">Да. Для подключения единственной информацией, которую сохраняет приложение, является уникальный код-идентификатор вашего профиля. Он необходим для вашей идентификации.</string>
+    <string name="facebook_app_id">2086514551632301</string>
+    <string name="user_signed_in">Подключение с %s</string>
+    <string name="user_signed_out">Отключён</string>
+    <string name="user_sign_in_error">Ошибка соединения с %s</string>
+    <string name="user_scheduled_games_title">Мои запланированные матчи</string>
+    <string name="user_scheduled_games_message">Выбирайте из списка и судите ваши запланированные матчи на сайте https://www.volleyball-referee.com/user.</string>
+    <string name="sign_out">Выход</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Настройка команд</string>
+    <string name="game_setup_title">Настройка матча</string>
     <string name="home_team_tab">Хозяева</string>
     <string name="home_team_hint">Имя принимающей команды</string>
     <string name="guest_team_tab">Гости</string>
@@ -31,11 +54,13 @@
     <string name="select_libero">Выберите либеро (факультативно)</string>
     <string name="select_gender">Выберите категорию (пол)</string>
     <string name="confirm">Подтвердить</string>
-    <string name="confirm_game_setup_question">Подтвердить составы команд?</string>
+    <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>
     <string name="match_duration_text">Выберите длительность матча</string>
     <string name="league_name_hint">Название лиги / турнира (факультативно)</string>
     <string name="misc_tab">Разное</string>
+    <string name="rules_tab">Правила</string>
+    <string name="teams_tab">Команды</string>
     <string name="leave_game_setup_question">Настройки данного матча будут потеряны. Покинуть страницу?</string>
 
     <!-- Game activity -->
@@ -54,7 +79,7 @@
     <string name="timeouts_tab">Перерывы</string>
     <string name="set_number">Партия %d</string>
     <string name="set_duration">%d мин.</string>
-    <string name="switch_sides">Смена сторон площадки</string>
+    <string name="switch_sides">Смена сторон</string>
     <string name="won_game">Команда \"%s\" выиграла матч</string>
     <string name="timeout_title">Перерыв (\"%s\")</string>
     <string name="timeout_question">Запросить перерыв?</string>
@@ -62,7 +87,7 @@
     <string name="game_interval_title">Перерыв между партиями</string>
     <string name="skip">Пропустить</string>
     <string name="run_background">Отправить на задний план</string>
-    <string name="switch_sides_description">Поменять стороны площадки вручную</string>
+    <string name="switch_sides_description">Поменять стороны вручную</string>
     <string name="remove_point_description">Отменить последнее очко</string>
     <string name="call_timeout_description">Вызвать перерыв</string>
     <string name="match_point">Матчбол</string>
@@ -96,7 +121,62 @@
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
 
+    <!-- Settings activity -->
+    <string name="settings">Параметры</string>
+    <string name="pref_referee_name">Мой псевдоним \'Volleyball Referee\'</string>
+    <string name="pref_stream_online">Транслировать матчи онлайн</string>
+    <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
+    <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
+
+    <string-array name="number_of_shirts">
+        <item>25</item>
+        <item>50</item>
+        <item>99</item>
+    </string-array>
+
+    <!-- Recorded games activity -->
+    <string name="recorded_games">Сохранённые матчи</string>
+    <string name="search_games">Поиск матча</string>
+    <string name="delete_games">Удалить все матчи</string>
+    <string name="delete_game">Удалить данный матч</string>
+    <string name="delete_games_question">Удалить все сохранённые матчи?</string>
+    <string name="delete_game_question">Удалить данный матч?</string>
+    <string name="deleted_game">Матч успешно удалён</string>
+    <string name="deleted_games">Все матчи успешно удалены</string>
+    <string name="players">Игроки</string>
+    <string name="report_game">Создать отчёт по матчу</string>
+    <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
+    <string name="upload_success_message">Матч успешно загружен на сервер</string>
+    <string name="upload_error_message">Не удалось загрузить матч на сервер</string>
+
+    <!-- Saved teams activity -->
+    <string name="saved_teams">Сохранённые команды</string>
+    <string name="search_teams">Поиск команды</string>
+    <string name="delete_teams">Удалить все команды</string>
+    <string name="delete_team">Удалить данную команду</string>
+    <string name="save_team">Сохранить команду</string>
+    <string name="delete_teams_question">Удалить все сохранённые команды?</string>
+    <string name="delete_team_question">Удалить эту команду?</string>
+    <string name="deleted_team">Команда успешно удалена</string>
+    <string name="saved_team">Команда сохранена</string>
+    <string name="deleted_teams">/Все команды успешно удалены</string>
+    <string name="leave_team_creation_title">Покинуть создание команды</string>
+    <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
+
     <!-- Rules activity -->
+    <string name="saved_rules_list">Сохранённые правила</string>
+    <string name="delete_all_rules">Удалить все правила</string>
+    <string name="delete_rules">Удалить правила</string>
+    <string name="save_rules">Сохранить правила</string>
+    <string name="search_rules">Искать правила</string>
+    <string name="delete_all_rules_question">Удалить все сохранённые правила?</string>
+    <string name="delete_rules_question">Удалить эти сохранённые правила?</string>
+    <string name="deleted_rules">Правила были успешно удалены</string>
+    <string name="saved_rules">Правила были сохранены</string>
+    <string name="deleted_all_rules">Все правила были успешно удалены</string>
+    <string name="leave_rules_creation_title">Покинуть создание правил</string>
+    <string name="leave_rules_creation_question">Эти правила не будут сохранены. Покинуть страницу?</string>
+    <string name="rules_name_hint">Название правил</string>
     <string name="general_rules">Общие</string>
     <string name="timeout_rules">Перерывы</string>
     <string name="indoor_rules">Классический волейбол</string>
@@ -106,6 +186,7 @@
     <string name="rules_points_per_set">Количество очков в партии</string>
     <string name="rules_sets_per_game">Количество партий в матче</string>
     <string name="rules_tie_break">Решающая партия в конце матча</string>
+    <string name="rules_points_in_tie_break">Количество очков в тай-брейке</string>
     <string name="rules_two_points_difference">Разница в счёте в 2 очка для победы в партии</string>
     <string name="rules_sanctions">Санкции</string>
     <string name="rules_team_timeouts">Командные перерывы</string>
@@ -117,8 +198,16 @@
     <string name="rules_game_intervals_duration">Длительность перерывов между партиями</string>
     <string name="rules_team_substitutions_per_set">Количество замен в партии</string>
     <string name="rules_consecutive_serves_per_player">Максимальное число последовательных подач одним игроком</string>
+    <string name="rules_court_switches">Смена сторон</string>
+    <string name="rules_court_switch_frequency">Частота смены сторон в обычной партии</string>
+    <string name="rules_court_switch_frequency_tie_break">Частота смены сторон в тай-брейке</string>
 
     <string-array name="points_per_set_entries">
+        <item>Партия из 30 очков</item>
+        <item>Партия из 29 очков</item>
+        <item>Партия из 28 очков</item>
+        <item>Партия из 27 очков</item>
+        <item>Партия из 26 очков</item>
         <item>Партия из 25 очков</item>
         <item>Партия из 24 очков</item>
         <item>Партия из 23 очков</item>
@@ -130,6 +219,11 @@
         <item>Партия из 17 очков</item>
         <item>Партия из 16 очков</item>
         <item>Партия из 15 очков</item>
+        <item>Партия из 14 очков</item>
+        <item>Партия из 13 очков</item>
+        <item>Партия из 12 очков</item>
+        <item>Партия из 11 очков</item>
+        <item>Партия из 10 очков</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Матч из 5 партий</item>
@@ -154,12 +248,24 @@
     <string-array name="team_substitutions_per_set_entries">
         <item>12 замен в партии</item>
         <item>6 замен в партии</item>
+        <item>5 замен в партии</item>
+        <item>4 замен в партии</item>
+        <item>3 замен в партии</item>
+    </string-array>
+    <string-array name="court_switch_frequency_entries">
+        <item>Смена сторон каждые 10 очков</item>
+        <item>Смена сторон каждые 9 очков</item>
+        <item>Смена сторон каждые 8 очков</item>
+        <item>Смена сторон каждые 7 очков</item>
+        <item>Смена сторон каждые 6 очков</item>
+        <item>Смена сторон каждые 5 очков</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
         <item>Не ограничено</item>
         <item>5 подач</item>
         <item>4 подачи</item>
         <item>3 подачи</item>
+        <item>2 подачи</item>
     </string-array>
 
     <string-array name="points_per_set_values">
@@ -227,47 +333,5 @@
         <item>3</item>
         <item>2</item>
     </string-array>
-
-    <!-- Settings activity -->
-    <string name="settings">Параметры</string>
-    <string name="pref_referee_name">Мой псевдоним \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Транслировать матчи онлайн</string>
-    <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
-    <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
-
-    <string-array name="number_of_shirts">
-        <item>25</item>
-        <item>50</item>
-        <item>99</item>
-    </string-array>
-
-    <!-- Recorded games activity -->
-    <string name="recorded_games">Сохранённые матчи</string>
-    <string name="search_games">Поиск матча</string>
-    <string name="delete_games">Удалить все матчи</string>
-    <string name="delete_game">Удалить данный матч</string>
-    <string name="delete_games_question">Удалить все сохранённые матчи?</string>
-    <string name="delete_game_question">Удалить данный матч?</string>
-    <string name="deleted_game">Матч успешно удалён</string>
-    <string name="deleted_games">Все матчи успешно удалены</string>
-    <string name="players">Игроки</string>
-    <string name="report_game">Создать отчёт по матчу</string>
-    <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
-    <string name="upload_success_message">Матч успешно загружен на сервер</string>
-    <string name="upload_error_message">Не удалось загрузить матч на сервер</string>
-
-    <!-- Saved teams activity -->
-    <string name="saved_teams">Сохранённые команды</string>
-    <string name="search_teams">Поиск команды</string>
-    <string name="delete_teams">Удалить все команды</string>
-    <string name="delete_team">Удалить данную команду</string>
-    <string name="save_team">Сохранить команду</string>
-    <string name="delete_teams_question">Удалить все сохранённые команды?</string>
-    <string name="delete_team_question">Удалить эту команду?</string>
-    <string name="deleted_team">Команда успешно удалена</string>
-    <string name="saved_team">Команда сохранена</string>
-    <string name="deleted_teams">/Все команды успешно удалены</string>
-    <string name="leave_team_creation_title">Покинуть создание команды</string>
-    <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
 
 </resources>

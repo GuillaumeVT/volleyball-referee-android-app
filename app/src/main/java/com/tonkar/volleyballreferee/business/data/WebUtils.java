@@ -18,11 +18,10 @@ import java.util.Map;
 
 public class WebUtils {
 
-    public static String BASE_URL                 = "http://192.168.56.101:8080";
-    //public static String BASE_URL                 = "https://www.volleyball-referee.com";
+    public static String BASE_URL                 = "https://www.volleyball-referee.com";
     public static String SEARCH_URL               = BASE_URL + "/search";
     public static String LIVE_URL                 = BASE_URL + "/search/live";
-    public static String VIEW_URL                 = BASE_URL + "/view/%d";
+    public static String VIEW_URL                 = BASE_URL + "/game/%d";
     public static String USER_URL                 = BASE_URL + "/user";
     public static String GAME_API_URL             = BASE_URL + "/api/manage/game/%d";
     public static String SET_API_URL              = GAME_API_URL + "/set/%d";

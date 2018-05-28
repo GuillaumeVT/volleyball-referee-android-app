@@ -63,7 +63,9 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
-                WebUtils.getInstance().getUserGame(ScheduledGamesListActivity.this, PrefUtils.getUserId(ScheduledGamesListActivity.this), gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                if (!GameType.TIME.equals(gameDescription.getGameType())) {
+                    WebUtils.getInstance().getUserGame(ScheduledGamesListActivity.this, PrefUtils.getUserId(ScheduledGamesListActivity.this), gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                }
             }
         });
 
