@@ -73,9 +73,13 @@ public class WebUtils {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("VBR-WebUtils", String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
-                        if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            listener.onNotFound();
+                        if (error.networkResponse != null) {
+                            Log.e("VBR-WebUtils", String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
+                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                listener.onNotFound();
+                            } else {
+                                listener.onError();
+                            }
                         } else {
                             listener.onError();
                         }
@@ -109,9 +113,13 @@ public class WebUtils {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("VBR-WebUtils", String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
-                        if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            listener.onNotFound();
+                        if (error.networkResponse != null) {
+                            Log.e("VBR-WebUtils", String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
+                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                listener.onNotFound();
+                            } else {
+                                listener.onError();
+                            }
                         } else {
                             listener.onError();
                         }
@@ -144,7 +152,9 @@ public class WebUtils {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("VBR-WebUtils", String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
+                        if (error.networkResponse != null) {
+                            Log.e("VBR-WebUtils", String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
+                        }
                         listener.onError();
                     }
                 }

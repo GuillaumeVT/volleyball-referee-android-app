@@ -315,7 +315,9 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 recordedGameService.setRecordedOnline(false);
-                                Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
+                                if (error.networkResponse != null) {
+                                    Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
+                                }
                                 if (notify) {
                                     Toast.makeText(mContext, mContext.getResources().getString(R.string.upload_error_message), Toast.LENGTH_LONG).show();
                                 }
@@ -351,9 +353,11 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
-                                if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                    uploadCurrentGameOnline();
+                                if (error.networkResponse != null) {
+                                    Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
+                                    if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                        uploadCurrentGameOnline();
+                                    }
                                 }
                             }
                         }
@@ -379,7 +383,9 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                                    if (error.networkResponse != null) {
+                                        Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                                    }
                                 }
                             }
                     );
@@ -400,7 +406,9 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                                    if (error.networkResponse != null) {
+                                        Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                                    }
                                 }
                             }
                     );
