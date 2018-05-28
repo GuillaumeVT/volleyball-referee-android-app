@@ -16,6 +16,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -267,7 +268,15 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     public void uploadRecordedGameOnline(long gameDate) {
         RecordedGameService recordedGameService = getRecordedGameService(gameDate);
         if (recordedGameService != null) {
-            uploadRecordedGameOnline(recordedGameService, true, true);
+            RecordedGame recordedGame = (RecordedGame) recordedGameService;
+            if (recordedGame.getUserId().equals(UserId.VBR_USER_ID)) {
+                String userId = PrefUtils.getUserId(mContext);
+                recordedGame.setUserId(userId);
+                recordedGame.getTeam(TeamType.HOME).setUserId(userId);
+                recordedGame.getTeam(TeamType.GUEST).setUserId(userId);
+                recordedGame.getRules().setUserId(userId);
+                uploadRecordedGameOnline(recordedGame, true, true);
+            }
         }
     }
 
