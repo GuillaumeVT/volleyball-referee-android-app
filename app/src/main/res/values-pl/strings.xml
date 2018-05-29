@@ -34,7 +34,6 @@
     <string name="user_sign_in_why_message">Jeśli streamujesz swoje mecze przez Internet, być może zechcesz się zalogować.\n\nPo zalogowaniu się, uzyskasz pełną kontrolę nad swoimi rozgrywkami na stronie https://www.volleyball-referee.com/user.\n\nNa tej stronie możesz tworzyć własne reguły, drużyny, mecze, a nawet turnieje i zarządzać nimi. Zaplanowane mecze można następnie sędziować w aplikacji innej osoby, podając unikalny kod gry sędziom.</string>
     <string name="user_sign_in_privacy_title">Czy to jest bezpieczne?</string>
     <string name="user_sign_in_privacy_message">Tak. Gdy się logujesz, jedyną informacją, którą pobieramy z Twojego profilu, jest Twój unikalny identyfikator społecznościowy, którego używamy do Twojej indentyfikacji.</string>
-    <string name="facebook_app_id">2086514551632301</string>
     <string name="user_signed_in">Zalogowano jako %s</string>
     <string name="user_signed_out">	Wylogowano</string>
     <string name="user_sign_in_error">Wystąpił błąd podczas logowania jako % s</string>

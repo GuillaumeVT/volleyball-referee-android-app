@@ -34,7 +34,6 @@
     <string name="user_sign_in_why_message">Wenn Sie Ihre Spiele online streamen, sind Sie möglicherweise daran interessiert, sich anzumelden.\n\nMit Ihrer Anmeldung erhalten Sie unter https://www.volleyball-referee.com/user die volle Kontrolle über Ihre Spiele.\n\nAuf dieser Seite können Sie eigene Regeln, Mannschaften, Spiele und sogar Turniere erstellen und verwalten. Die geplanten Spiele können dann in Ihrer App oder in einer anderen App gespielt werden, indem Sie dem Schiedsrichter den Code des Spiels geben.</string>
     <string name="user_sign_in_privacy_title">Ist es sicher?</string>
     <string name="user_sign_in_privacy_message">Ja. Wenn Sie sich anmelden, verwenden wir nur Ihre eindeutige soziale Kennung, mit der wir Sie identifizieren.</string>
-    <string name="facebook_app_id">2086514551632301</string>
     <string name="user_signed_in">Angemeldet mit %s</string>
     <string name="user_signed_out">Abgemeldet</string>
     <string name="user_sign_in_error">Fehler bei der Anmeldung mit %s</string>

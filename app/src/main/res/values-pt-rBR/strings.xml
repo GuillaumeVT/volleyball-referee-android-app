@@ -34,7 +34,6 @@
     <string name="user_sign_in_why_message">Se você transmite partidas online, é interesante que você se registre.\n\nSe registrando, você poderá controlar completamente seus jogos através do site https://www.volleyball-referee.com/user.\n\nDesta página, você pode criar e administrar suas próprias regras, equipes, jogos e até competições. Os jogos agendados estarão então no seu App ou no de qualquer pessoa, através de um código único para cada partida.</string>
     <string name="user_sign_in_privacy_title">Isso é seguro?</string>
     <string name="user_sign_in_privacy_message">Sim. Quando você se registra, a única informação que buscamos do seu perfil é sua identidade social única que usaremos para identificar você.</string>
-    <string name="facebook_app_id">2086514551632301</string>
     <string name="user_signed_in">Logado como %s</string>
     <string name="user_signed_out">Você saiu</string>
     <string name="user_sign_in_error">Erro tentando logar como %s</string>

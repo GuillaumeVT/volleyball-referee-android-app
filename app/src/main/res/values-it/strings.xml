@@ -34,7 +34,6 @@
     <string name="user_sign_in_why_message">Se pubblicate le partite in linea, questo vi riguarda.\n\nConnettendosi avrete il controllo completo delle vostre partite su: https://www.volleyball-referee.com/user.\n\nDa questa pagina potrete creare e modificare le vostre regole, squadre, partite e anche i vostri tornei. Le partite programmate potranno poi essere arbitrate via la vostra applicazione oppure quella di un altro arbitro fornendogli il codice unico della partita.</string>
     <string name="user_sign_in_privacy_title">Sicuro?</string>
     <string name="user_sign_in_privacy_message">Si. Al momento della connessione la sola informazione che sarà recuperata é il nome del vostro profilo che servira per l\'identificazione.</string>
-    <string name="facebook_app_id">2086514551632301</string>
     <string name="user_signed_in">Connesso via %s</string>
     <string name="user_signed_out">Disconnesso</string>
     <string name="user_sign_in_error">Errore durante la connessione a %s</string>

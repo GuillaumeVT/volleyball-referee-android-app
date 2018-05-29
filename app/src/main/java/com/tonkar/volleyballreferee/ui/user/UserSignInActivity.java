@@ -42,7 +42,7 @@ public class UserSignInActivity extends AppCompatActivity {
         setTitle("");
 
         // Google
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestId().build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.server_client_id)).requestId().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         SignInButton googleSignInButton = findViewById(R.id.google_sign_in_button);
