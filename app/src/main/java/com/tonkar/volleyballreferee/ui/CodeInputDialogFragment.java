@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.tonkar.volleyballreferee.R;
@@ -45,7 +46,17 @@ public class CodeInputDialogFragment extends DialogFragment {
             builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     EditText editText = ((AlertDialog) dialog).findViewById(R.id.code_input);
-                    mAlertDialogListener.onPositiveButtonClicked(Integer.valueOf(editText.getText().toString()));
+                    String codeStr = editText.getText().toString();
+
+                    int code = -1;
+
+                    try {
+                        code = Integer.valueOf(codeStr);
+                    } catch (NumberFormatException e) {
+                        Log.e("VBR-Code", String.format("Error while reading the code %s", codeStr), e);
+                    }
+
+                    mAlertDialogListener.onPositiveButtonClicked(code);
                 }
             });
         }

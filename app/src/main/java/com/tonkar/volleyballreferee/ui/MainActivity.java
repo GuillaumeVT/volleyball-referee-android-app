@@ -459,8 +459,12 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
                 @Override
                 public void onPositiveButtonClicked(int code) {
-                    Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                    WebUtils.getInstance().getGameFromCode(MainActivity.this, code, MainActivity.this);
+                    if (code > 9999999) {
+                        Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
+                        WebUtils.getInstance().getGameFromCode(MainActivity.this, code, MainActivity.this);
+                    } else {
+                        Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
