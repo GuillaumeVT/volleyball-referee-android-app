@@ -33,7 +33,7 @@ public class MiscSetupFragment extends Fragment {
         Log.i("VBR-TSActivity", "Create misc setup fragment");
         View view = inflater.inflate(R.layout.fragment_misc_setup, container, false);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
         }
 

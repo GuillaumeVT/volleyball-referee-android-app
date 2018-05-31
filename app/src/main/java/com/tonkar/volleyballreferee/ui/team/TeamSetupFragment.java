@@ -74,18 +74,20 @@ public class TeamSetupFragment extends Fragment {
         mLayoutInflater = inflater;
         View view = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
-            ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
-        }
-
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
         final boolean isGameContext = getArguments().getBoolean("is_game");
 
         if (isGameContext) {
+            if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
+                ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
+            }
             mIndoorTeamService = (BaseIndoorTeamService) ServicesProvider.getInstance().getTeamService();
         } else {
+            if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
+                ServicesProvider.getInstance().restoreSavedTeamsService(getActivity().getApplicationContext());
+            }
             mIndoorTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
         }
 

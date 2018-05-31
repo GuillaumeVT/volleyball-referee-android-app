@@ -81,12 +81,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         Log.i("VBR-GameActivity", "Create game activity");
         setContentView(R.layout.activity_game);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
             ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-
-            if (!ServicesProvider.getInstance().areServicesAvailable()) {
-                UiUtils.navigateToHome(this);
-            }
         }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -105,6 +101,10 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
 
         mGameService = ServicesProvider.getInstance().getGameService();
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+
+        if (mGameService == null || mRecordedGamesService == null) {
+            UiUtils.navigateToHome(this);
+        }
 
         mGameService.addScoreListener(this);
         mGameService.addTimeoutListener(this);
@@ -415,7 +415,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
-            Toast.makeText(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.showNotification(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)));
         }
     }
 
@@ -473,7 +473,12 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         UiUtils.animateBounce(this, mRightTeamCardsButton);
 
         if (mGameService.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
+            if (GameType.BEACH.equals(mGameService.getGameType())) {
+                UiUtils.showNotification(this, getResources().getString(R.string.switch_sides));
+                UiUtils.playNotificationSound(this);
+            } else {
+                Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -589,7 +594,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         timeoutFragment.show(getSupportFragmentManager(), "timeout");
 
         if (mGameService.getRemainingTimeouts(teamType) == 0) {
-            Toast.makeText(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.showNotification(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)));
         }
     }
 

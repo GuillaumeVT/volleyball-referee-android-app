@@ -51,7 +51,7 @@ public class QuickGameSetupFragment extends Fragment {
         Log.i("VBR-QGSActivity", "Create game setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_game_setup, container, false);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
         }
 

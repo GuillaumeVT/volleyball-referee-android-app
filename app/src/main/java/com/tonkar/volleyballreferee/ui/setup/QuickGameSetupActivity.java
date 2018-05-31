@@ -36,7 +36,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         Log.i("VBR-QGSActivity", "Create quick game setup activity");
         setContentView(R.layout.activity_quick_game_setup);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
         }
 

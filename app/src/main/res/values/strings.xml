@@ -126,6 +126,7 @@
     <string name="pref_referee_name">My \'Volleyball Referee\' alias</string>
     <string name="pref_stream_online">Stream the matches online</string>
     <string name="pref_keep_screen_on">Keep the screen on during games</string>
+    <string name="pref_interactive_notification">Use interactive notifications</string>
     <string name="pref_number_of_shirts">Number of shirts in team definition</string>
 
     <string-array name="number_of_shirts">

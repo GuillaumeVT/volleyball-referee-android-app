@@ -16,6 +16,11 @@
         android:key="pref_keep_screen_on"
         android:title="@string/pref_keep_screen_on"/>
 
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="pref_interactive_notification"
+        android:title="@string/pref_interactive_notification"/>
+
     <android.support.v7.preference.ListPreference
         android:defaultValue="25"
         android:key="pref_number_of_shirts"

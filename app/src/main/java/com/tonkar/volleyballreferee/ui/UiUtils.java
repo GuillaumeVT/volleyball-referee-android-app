@@ -4,7 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -23,8 +25,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -226,13 +230,6 @@ public class UiUtils {
         context.startActivity(Intent.createChooser(intent, context.getResources().getText(R.string.share)));
     }
 
-    public static void setAlertDialogMessageSize(AlertDialog alertDialog, Resources resources) {
-        TextView textView = alertDialog.findViewById(android.R.id.message);
-        if (textView != null) {
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.default_text_size));
-        }
-    }
-
     public static void navigateToHome(Activity activity) {
         navigateToHome(activity, true);
     }
@@ -307,4 +304,35 @@ public class UiUtils {
         return title;
     }
 
+    public static void showNotification(Context context, String message) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean interactiveNotification = sharedPreferences.getBoolean("pref_interactive_notification", false);
+
+        if (interactiveNotification) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
+            builder.setMessage(message);
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {}
+            });
+            AlertDialog alertDialog = builder.show();
+            centerAlertDialogMessage(alertDialog);
+            setAlertDialogMessageSize(alertDialog, context.getResources());
+        } else {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void setAlertDialogMessageSize(AlertDialog alertDialog, Resources resources) {
+        TextView textView = alertDialog.findViewById(android.R.id.message);
+        if (textView != null) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.default_text_size));
+        }
+    }
+
+    private static void centerAlertDialogMessage(AlertDialog alertDialog) {
+        TextView textView = alertDialog.findViewById(android.R.id.message);
+        if (textView != null) {
+            textView.setGravity(Gravity.CENTER);
+        }
+    }
 }

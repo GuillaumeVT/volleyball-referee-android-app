@@ -38,7 +38,7 @@ public class GameSetupActivity extends AppCompatActivity {
         Log.i("VBR-GSActivity", "Create game setup activity");
         setContentView(R.layout.activity_game_setup);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
         }
 

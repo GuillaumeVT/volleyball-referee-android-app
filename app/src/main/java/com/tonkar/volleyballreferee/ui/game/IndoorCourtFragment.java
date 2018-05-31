@@ -164,7 +164,7 @@ public class IndoorCourtFragment extends CourtFragment {
             confirmStartingLineup();
 
             if (!mIndoorTeamService.hasRemainingSubstitutions(teamType) && !mIndoorTeamService.isLibero(teamType, number)) {
-                Toast.makeText(getActivity(), String.format(getResources().getString(R.string.all_substitutions_used), mIndoorTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+                UiUtils.showNotification(getContext(), String.format(getResources().getString(R.string.all_substitutions_used), mIndoorTeamService.getTeamName(teamType)));
             }
         }
     }

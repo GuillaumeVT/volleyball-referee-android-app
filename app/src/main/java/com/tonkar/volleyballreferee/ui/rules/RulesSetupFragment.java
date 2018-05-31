@@ -80,15 +80,17 @@ public class RulesSetupFragment extends Fragment {
         Log.i("VBR-RSActivity", "Create rules setup fragment");
         View view = inflater.inflate(R.layout.fragment_rules_setup, container, false);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
-            ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
-        }
-
         final boolean isGameContext = getArguments().getBoolean("is_game");
 
         if (isGameContext) {
+            if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
+                ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
+            }
             mRules = ServicesProvider.getInstance().getGeneralService().getRules();
         } else {
+            if (ServicesProvider.getInstance().isSavedRulesServiceUnavailable()) {
+                ServicesProvider.getInstance().restoreSavedRulesService(getActivity().getApplicationContext());
+            }
             mRules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
         }
 

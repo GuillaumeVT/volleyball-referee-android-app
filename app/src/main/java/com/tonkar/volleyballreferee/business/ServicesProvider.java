@@ -67,24 +67,27 @@ public class ServicesProvider {
         return mSavedRules;
     }
 
-    private boolean isGameServiceAvailable() {
-        return mCurrentGame != null;
+    public boolean isGameServiceUnavailable() {
+        return mCurrentGame == null || isRecordedGamesServiceUnavailable();
     }
 
-    private boolean isRecordedGamesServiceAvailable() {
-        return mRecordedGames != null;
+    public boolean areSetupServicesUnavailable() {
+        return mCurrentGame == null
+                || isRecordedGamesServiceUnavailable()
+                || isSavedTeamsServiceUnavailable()
+                || isSavedRulesServiceUnavailable();
     }
 
-    private boolean isSavedTeamsServiceAvailable() {
-        return mSavedTeams != null;
+    private boolean isRecordedGamesServiceUnavailable() {
+        return mRecordedGames == null;
     }
 
-    private boolean isSavedRulesServiceAvailable() {
-        return mSavedRules != null;
+    public boolean isSavedTeamsServiceUnavailable() {
+        return mSavedTeams == null;
     }
 
-    public boolean areServicesAvailable() {
-        return isGameServiceAvailable() && isRecordedGamesServiceAvailable() && isSavedTeamsServiceAvailable();
+    public boolean isSavedRulesServiceUnavailable() {
+        return mSavedRules == null;
     }
 
     public void initGameService(GameService gameService) {
@@ -93,7 +96,6 @@ public class ServicesProvider {
 
     public void restoreGameService(Context context) {
         restoreRecordedGamesService(context);
-        restoreSavedTeamsService(context);
         if (mRecordedGames.hasCurrentGame()) {
             initGameService(mRecordedGames.loadCurrentGame());
         }
@@ -109,23 +111,21 @@ public class ServicesProvider {
     }
 
     public void restoreRecordedGamesService(Context context) {
-        if (!isRecordedGamesServiceAvailable()) {
+        if (isRecordedGamesServiceUnavailable()) {
             mRecordedGames = new RecordedGames(context);
             mRecordedGames.loadRecordedGames();
         }
-        restoreSavedTeamsService(context);
-        restoreSavedRulesService(context);
     }
 
     public void restoreSavedTeamsService(Context context) {
-        if (!isSavedTeamsServiceAvailable()) {
+        if (isSavedTeamsServiceUnavailable()) {
             mSavedTeams = new SavedTeams(context);
             mSavedTeams.loadSavedTeams();
         }
     }
 
     public void restoreSavedRulesService(Context context) {
-        if (!isSavedRulesServiceAvailable()) {
+        if (isSavedRulesServiceUnavailable()) {
             mSavedRules = new SavedRules(context);
             mSavedRules.loadSavedRules();
         }

@@ -67,12 +67,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         Log.i("VBR-TBGameActivity", "Create time-based game activity");
         setContentView(R.layout.activity_time_based_game);
 
-        if (!ServicesProvider.getInstance().areServicesAvailable()) {
+        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
             ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-
-            if (!ServicesProvider.getInstance().areServicesAvailable()) {
-                UiUtils.navigateToHome(this);
-            }
         }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -85,6 +81,10 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
 
         mGameService = (TimeBasedGameService) ServicesProvider.getInstance().getGameService();
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+
+        if (mGameService == null || mRecordedGamesService == null) {
+            UiUtils.navigateToHome(this);
+        }
 
         mGameService.addScoreListener(this);
         mGameService.addTeamListener(this);
