@@ -31,14 +31,14 @@
 
     <!-- User activity -->
     <string name="user_sign_in_why_title">¿Por qué debería registarme?</string>
-    <string name="user_sign_in_why_message">Si emites tus partidos online, te interesa registarte.\n\nDe esta forma, tendrás control total de tus partidos en https://www.volleyball-referee.com/user.\n\nDesde esta página podrás crear y administrar tus reglas, equipos, partidos e incluso torneos. Los partidos programados pueden ser arbitrados con la App, dándole el código del partido al árbitro.</string>
+    <string name="user_sign_in_why_message">Si emites tus partidos online, te interesa registarte.\n\nDe esta forma, tendrás control total de tus partidos en https://www.volleyball-referee.com/user\n\nDesde esta página podrás crear y administrar tus reglas, equipos, partidos e incluso torneos. Los partidos programados pueden ser arbitrados con la App, dándole el código del partido al árbitro.</string>
     <string name="user_sign_in_privacy_title">¿Es seguro?</string>
     <string name="user_sign_in_privacy_message">Sí. Cuando te registras, la única información que recabamos de tu perfil es un número único, que usamos para identificarte.</string>
     <string name="user_signed_in">Registrado como %s</string>
     <string name="user_signed_out">Sesión terminada</string>
     <string name="user_sign_in_error">Error al iniciar sesión como %s</string>
     <string name="user_scheduled_games_title">Mis partidos planificados</string>
-    <string name="user_scheduled_games_message">Navega, selecciona y arbitra tus partidos planificados en https://www.volleyball-referee.com/user.</string>
+    <string name="user_scheduled_games_message">Navega, selecciona y arbitra tus partidos planificados en https://www.volleyball-referee.com/user</string>
     <string name="sign_out">Salir</string>
 
     <!-- Setup activities -->
@@ -125,6 +125,7 @@
     <string name="pref_referee_name">Mi alias para \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Emitir partidos online</string>
     <string name="pref_keep_screen_on">No apagar la pantalla durante los partidos</string>
+    <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
     <string name="pref_number_of_shirts">Dorsales en la creación del equipo</string>
 
     <string-array name="number_of_shirts">

@@ -31,14 +31,14 @@
 
     <!-- User activity -->
     <string name="user_sign_in_why_title">Porque devo registar-me?</string>
-    <string name="user_sign_in_why_message">Se transmite os seus jogos ao vivo, deverá  registar-se.\n\nAo registar-se, ganha controlo total dos seus jogos em https://www.volleyball-referee.com/user.\n\A partir desta página, poderá criar e gerir as suas próprias regras, equipas, jogos e até torneios. Os jogos agendados podem ser arbitrados na sua App ou na App de outra pessoa, providenciando o código único do jogo ao árbitro.</string>
+    <string name="user_sign_in_why_message">Se transmite os seus jogos ao vivo, deverá  registar-se.\n\nAo registar-se, ganha controlo total dos seus jogos em https://www.volleyball-referee.com/user\n\A partir desta página, poderá criar e gerir as suas próprias regras, equipas, jogos e até torneios. Os jogos agendados podem ser arbitrados na sua App ou na App de outra pessoa, providenciando o código único do jogo ao árbitro.</string>
     <string name="user_sign_in_privacy_title">É seguro?</string>
     <string name="user_sign_in_privacy_message">Sim. Quando se regista, a única informação que nós importamos do seu perfil é o identificador social único que usamos para o identificar.</string>
     <string name="user_signed_in">Registado como %s</string>
     <string name="user_signed_out">Saiu do registo</string>
     <string name="user_sign_in_error">Erro ao registar como %s</string>
     <string name="user_scheduled_games_title">Os meus jogos agendados</string>
-    <string name="user_scheduled_games_message">Procure, selecione e arbitre os seus jogos agendados em https://www.volleyball-referee.com/user.</string>
+    <string name="user_scheduled_games_message">Procure, selecione e arbitre os seus jogos agendados em https://www.volleyball-referee.com/user</string>
     <string name="sign_out">Sair</string>
 
     <!-- Setup activities -->
@@ -125,6 +125,7 @@
     <string name="pref_referee_name">Nome de utilizador \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Transmitir os jogos ao vivo</string>
     <string name="pref_keep_screen_on">Manter écran ligado durante os jogos</string>
+    <string name="pref_interactive_notification">Usar notificações interativas</string>
     <string name="pref_number_of_shirts">Selecione a numeração da camisola mais alta da sua equipa</string>
 
     <string-array name="number_of_shirts">

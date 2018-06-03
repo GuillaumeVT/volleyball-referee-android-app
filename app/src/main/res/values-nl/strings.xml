@@ -31,14 +31,14 @@
 
     <!-- User activity -->
     <string name="user_sign_in_why_title">Waarom zou ik me aanmelden?</string>
-    <string name="user_sign_in_why_message">Als je je wedstrijden online streamt, ben je mogelijk  geïnteresseerd om in te loggen.\n\nAls je inlogt, krijg je volledige controle over je wedstrijden op https://www.volleyball-referee.com/user.\n\nOp deze pagina, kan je je eigen regels, ploegen, wedstrijden en zelfs toernooien maken en beheren. De geplande wedstrijden kunnen vervolgens worden geleidt op uw app of op de app van iemand anders door de unieke wedstrijdcode aan de scheidsrechter te verstrekken.</string>
+    <string name="user_sign_in_why_message">Als je je wedstrijden online streamt, ben je mogelijk  geïnteresseerd om in te loggen.\n\nAls je inlogt, krijg je volledige controle over je wedstrijden op https://www.volleyball-referee.com/user\n\nOp deze pagina, kan je je eigen regels, ploegen, wedstrijden en zelfs toernooien maken en beheren. De geplande wedstrijden kunnen vervolgens worden geleidt op uw app of op de app van iemand anders door de unieke wedstrijdcode aan de scheidsrechter te verstrekken.</string>
     <string name="user_sign_in_privacy_title">Is het veilig?</string>
     <string name="user_sign_in_privacy_message">Ja. Wanneer je aanmeldt, is de enige informatie die we uit uw profiel ophalen uw unieke sociale id die we gebruiken om u te identificeren.</string>
     <string name="user_signed_in">Aangemeld met %s</string>
     <string name="user_signed_out">Afgemeld</string>
     <string name="user_sign_in_error">Fout tijdens aanmelden met %s</string>
     <string name="user_scheduled_games_title">Mijn geplande wedstrijden</string>
-    <string name="user_scheduled_games_message">Blader, selecteer en leidt je geplande wedstrijden op https://www.volleyball-referee.com/user.</string>
+    <string name="user_scheduled_games_message">Blader, selecteer en leidt je geplande wedstrijden op https://www.volleyball-referee.com/user</string>
     <string name="sign_out">Afmelden</string>
 
     <!-- Setup activities -->
@@ -125,6 +125,7 @@
     <string name="pref_referee_name">Mijn \'Volleyball Referee\' alias</string>
     <string name="pref_stream_online">Stream de wedstrijden online</string>
     <string name="pref_keep_screen_on">Houd het scherm aan tijdens wedstrijden</string>
+    <string name="pref_interactive_notification">Gebruik interactieve meldingen</string>
     <string name="pref_number_of_shirts">Aantal shirts in ploegdefinitie</string>
 
     <string-array name="number_of_shirts">

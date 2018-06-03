@@ -31,14 +31,14 @@
 
     <!-- User activity -->
     <string name="user_sign_in_why_title">Dlaczego powinienem się zalogować?</string>
-    <string name="user_sign_in_why_message">Jeśli streamujesz swoje mecze przez Internet, być może zechcesz się zalogować.\n\nPo zalogowaniu się, uzyskasz pełną kontrolę nad swoimi rozgrywkami na stronie https://www.volleyball-referee.com/user.\n\nNa tej stronie możesz tworzyć własne reguły, drużyny, mecze, a nawet turnieje i zarządzać nimi. Zaplanowane mecze można następnie sędziować w aplikacji innej osoby, podając unikalny kod gry sędziom.</string>
+    <string name="user_sign_in_why_message">Jeśli streamujesz swoje mecze przez Internet, być może zechcesz się zalogować.\n\nPo zalogowaniu się, uzyskasz pełną kontrolę nad swoimi rozgrywkami na stronie https://www.volleyball-referee.com/user\n\nNa tej stronie możesz tworzyć własne reguły, drużyny, mecze, a nawet turnieje i zarządzać nimi. Zaplanowane mecze można następnie sędziować w aplikacji innej osoby, podając unikalny kod gry sędziom.</string>
     <string name="user_sign_in_privacy_title">Czy to jest bezpieczne?</string>
     <string name="user_sign_in_privacy_message">Tak. Gdy się logujesz, jedyną informacją, którą pobieramy z Twojego profilu, jest Twój unikalny identyfikator społecznościowy, którego używamy do Twojej indentyfikacji.</string>
     <string name="user_signed_in">Zalogowano jako %s</string>
     <string name="user_signed_out">	Wylogowano</string>
     <string name="user_sign_in_error">Wystąpił błąd podczas logowania jako % s</string>
     <string name="user_scheduled_games_title">Moje zaplanowane mecze</string>
-    <string name="user_scheduled_games_message">Przeglądaj, wybieraj i sędziuj swoje mecze zaplanowane na https://www.volleyball-referee.com/user.</string>
+    <string name="user_scheduled_games_message">Przeglądaj, wybieraj i sędziuj swoje mecze zaplanowane na https://www.volleyball-referee.com/user</string>
     <string name="sign_out">Wyloguj</string>
 
     <!-- Setup activities -->
@@ -230,9 +230,9 @@
         <item>Mecz 1 setowy</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
-        <item>2 przerwy na rzadanie na set</item>
-        <item>1 przerwa na rzadanie na set</item>
-        <item>Brak przerw na rzadanie w secie</item>
+        <item>2 przerwy na zadanie na set</item>
+        <item>1 przerwa na zadanie na set</item>
+        <item>Brak przerw na zadanie w secie</item>
     </string-array>
     <string-array name="timeout_duration_entries">
         <item>60 sekund</item>

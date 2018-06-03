@@ -38,7 +38,7 @@
     <string name="user_signed_out">Abgemeldet</string>
     <string name="user_sign_in_error">Fehler bei der Anmeldung mit %s</string>
     <string name="user_scheduled_games_title">Meine geplanten Spielen</string>
-    <string name="user_scheduled_games_message">Stöbere, plane und wähle Ihre geplanten Spiele unter https://www.volleyball-referee.com/user.</string>
+    <string name="user_scheduled_games_message">Stöbere, plane und wähle Ihre geplanten Spiele unter https://www.volleyball-referee.com/user</string>
     <string name="sign_out">Abmelden</string>
 
     <!-- Setup activities -->
@@ -125,6 +125,7 @@
     <string name="pref_referee_name">Mein \'Volleyball Referee\' Pseudonym</string>
     <string name="pref_stream_online">Streame das Spiel online</string>
     <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
+    <string name="pref_interactive_notification">Verwenden Sie interaktive Benachrichtigungen</string>
     <string name="pref_number_of_shirts">Anzahl der Trikots in den Mannschaftseinstellungen</string>
 
     <string-array name="number_of_shirts">

@@ -13,9 +13,13 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "SERVER_ADDRESS", "\"http://192.168.56.101:8080\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SERVER_ADDRESS", "\"https://www.volleyball-referee.com\""
         }
     }
 }
