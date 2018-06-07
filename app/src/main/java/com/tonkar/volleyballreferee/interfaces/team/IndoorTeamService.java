@@ -4,7 +4,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 
 import java.util.Set;
 
-public interface IndoorTeamService extends TeamService, BaseIndoorTeamService {
+public interface IndoorTeamService extends TeamService, BaseTeamService {
 
     Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType);
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:padding="@dimen/small_margin_size">
+
+    <TextView
+        android:id="@+id/saved_team_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:textAppearance="@style/TextViewTheme"
+        android:textSize="@dimen/default_text_size"/>
+
+    <ImageView
+        android:id="@+id/saved_team_type_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/small_margin_size"
+        android:layout_marginRight="@dimen/small_margin_size"
+        android:tint="@color/colorBeach"
+        app:srcCompat="@drawable/ic_sun" />
+
+    <ImageView
+        android:id="@+id/saved_team_gender_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_ladies" />
+
+</LinearLayout>

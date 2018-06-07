@@ -507,6 +507,11 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public GameType getTeamsKind() {
+        return mGameType;
+    }
+
+    @Override
     public String getTeamName(TeamType teamType) {
         return getTeamDefinition(teamType).getName();
     }

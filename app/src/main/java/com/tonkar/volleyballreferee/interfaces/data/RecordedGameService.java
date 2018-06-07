@@ -8,12 +8,12 @@ import com.tonkar.volleyballreferee.interfaces.BaseTimeService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.BaseTimeoutService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 
 import java.util.List;
 
-public interface RecordedGameService extends BaseGeneralService, BaseScoreService, BaseIndoorTeamService, BaseTimeoutService, BaseSanctionService, BaseTimeService, WebGameService {
+public interface RecordedGameService extends BaseGeneralService, BaseScoreService, BaseTeamService, BaseTimeoutService, BaseSanctionService, BaseTimeService, WebGameService {
 
     boolean matchesFilter(String text);
 

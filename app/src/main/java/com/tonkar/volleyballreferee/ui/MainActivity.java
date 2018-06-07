@@ -54,7 +54,6 @@ import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.user.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
-import com.tonkar.volleyballreferee.ui.web.WebActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -100,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         scheduledCodeButton.setVisibility(PrefUtils.isPrefOnlineRecordingEnabled(this) ? View.VISIBLE : View.GONE);
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+        if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
+            ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
@@ -168,20 +170,17 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                         break;
                     case R.id.action_view_live_games:
                         Log.i("VBR-MainActivity", "Live games");
-                        intent = new Intent(MainActivity.this, WebActivity.class);
-                        intent.putExtra("url", WebUtils.LIVE_URL);
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
                         startActivity(intent);
                         break;
                     case R.id.action_search_online_games:
                         Log.i("VBR-MainActivity", "Search online games");
-                        intent = new Intent(MainActivity.this, WebActivity.class);
-                        intent.putExtra("url", WebUtils.SEARCH_URL);
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
                         startActivity(intent);
                         break;
                     case R.id.action_view_online_account:
                         Log.i("VBR-MainActivity", "View online account");
-                        intent = new Intent(MainActivity.this, WebActivity.class);
-                        intent.putExtra("url", WebUtils.USER_URL);
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.USER_URL));
                         startActivity(intent);
                         break;
                     case R.id.action_facebook:
@@ -461,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                 public void onPositiveButtonClicked(int code) {
                     if (code > 9999999) {
                         Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                        WebUtils.getInstance().getGameFromCode(MainActivity.this, code, MainActivity.this);
+                        ServicesProvider.getInstance().getRecordedGamesService().getGameFromCode(code, MainActivity.this);
                     } else {
                         Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
                     }

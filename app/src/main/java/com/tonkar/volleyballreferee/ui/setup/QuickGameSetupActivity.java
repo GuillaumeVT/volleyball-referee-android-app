@@ -17,6 +17,8 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
+import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -72,6 +74,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                 confirmSetup();
                 return true;
             case android.R.id.home:
+                if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
+                    ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
+                }
                 UiUtils.navigateToHome(this, false);
                 return true;
             default:
@@ -107,6 +112,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
         } else {
+            if (GameType.BEACH.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+                saveTeams();
+            }
             saveRules();
             Log.i("VBR-QGSActivity", "Start game activity");
             final Intent gameIntent = new Intent(this, GameActivity.class);
@@ -115,6 +123,14 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
         }
+    }
+
+    private void saveTeams() {
+        SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
+        BaseTeamService teamService = ServicesProvider.getInstance().getTeamService();
+        GameType gameType = teamService.getTeamsKind();
+        savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.HOME);
+        savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.GUEST);
     }
 
     private void saveRules() {

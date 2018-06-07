@@ -3,14 +3,14 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.Context;
 import android.view.LayoutInflater;
 
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class Lineup4x4Adapter extends LineupAdapter {
 
-    Lineup4x4Adapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int setIndex) {
-        super(layoutInflater, context, indoorTeamService, teamType, setIndex);
+    Lineup4x4Adapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType, int setIndex) {
+        super(layoutInflater, context, teamService, teamType, setIndex);
     }
 
     @Override

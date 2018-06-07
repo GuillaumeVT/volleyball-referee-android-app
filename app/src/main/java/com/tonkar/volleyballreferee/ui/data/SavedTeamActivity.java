@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.data;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,31 +15,53 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.team.QuickTeamSetupFragment;
 import com.tonkar.volleyballreferee.ui.team.TeamSetupFragment;
 
 public class SavedTeamActivity extends AppCompatActivity {
 
-    private SavedTeamsService     mSavedTeamsService;
-    private BaseIndoorTeamService mIndoorTeamService;
-    private MenuItem              mSaveItem;
+    private SavedTeamsService mSavedTeamsService;
+    private BaseTeamService   mTeamService;
+    private MenuItem          mSaveItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_team);
 
+        String gameTypeStr = getIntent().getStringExtra("kind");
+        GameType gameType = GameType.valueOf(gameTypeStr);
+
+        boolean editable = getIntent().getBooleanExtra("editable", true);
+
+        Fragment fragment = null;
+
+        switch (gameType) {
+            case INDOOR:
+            case INDOOR_4X4:
+                fragment = TeamSetupFragment.newInstance(TeamType.HOME, false, editable);
+                break;
+            case BEACH:
+                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME, editable);
+                break;
+            case TIME:
+            default:
+                break;
+        }
+
         ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
         mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
-        mIndoorTeamService = mSavedTeamsService.getCurrentTeam();
+        mTeamService = mSavedTeamsService.getCurrentTeam();
 
         setTitle("");
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, TeamSetupFragment.newInstance(TeamType.HOME, false));
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
 
@@ -90,7 +113,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                mSavedTeamsService.deleteSavedTeam(mIndoorTeamService.getTeamName(null), mIndoorTeamService.getGenderType());
+                mSavedTeamsService.deleteSavedTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGenderType());
                 Toast.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
@@ -125,9 +148,9 @@ public class SavedTeamActivity extends AppCompatActivity {
 
     public void computeSaveItemVisibility() {
         if (mSaveItem != null) {
-            if (mIndoorTeamService.getTeamName(TeamType.HOME).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.HOME) < mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
-                    || mIndoorTeamService.getTeamName(TeamType.GUEST).isEmpty() || mIndoorTeamService.getNumberOfPlayers(TeamType.GUEST) < mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
-                    || mIndoorTeamService.getCaptain(TeamType.HOME) < 1 || mIndoorTeamService.getCaptain(TeamType.GUEST) < 1) {
+            if (mTeamService.getTeamName(null).isEmpty()
+                    || mTeamService.getNumberOfPlayers(null) < mTeamService.getExpectedNumberOfPlayersOnCourt()
+                    || mTeamService.getCaptain(null) < 1) {
                 Log.i("VBR-SavedTeamActivity", "Save button is invisible");
                 mSaveItem.setVisible(false);
             } else {

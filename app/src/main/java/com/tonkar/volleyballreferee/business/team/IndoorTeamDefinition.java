@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.Set;
@@ -18,8 +19,8 @@ public class IndoorTeamDefinition extends TeamDefinition {
     @SerializedName("captain")
     private       int          mCaptain;
 
-    public IndoorTeamDefinition(final TeamType teamType) {
-        super(teamType);
+    public IndoorTeamDefinition(final GameType gameType, final TeamType teamType) {
+        super(gameType, teamType);
 
         mLiberoColor = DEFAULT_COLOR;
         mLiberos = new TreeSet<>();
@@ -28,7 +29,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
 
     // For GSON Deserialization
     public IndoorTeamDefinition() {
-        this(TeamType.HOME);
+        this(GameType.INDOOR, TeamType.HOME);
     }
 
     @Override
@@ -42,18 +43,22 @@ public class IndoorTeamDefinition extends TeamDefinition {
         super.removePlayer(number);
     }
 
+    @Override
     public int getLiberoColor() {
         return Color.parseColor(mLiberoColor);
     }
 
+    @Override
     public void setLiberoColor(int color) {
         mLiberoColor = colorIntToHtml(color);
     }
 
+    @Override
     public boolean isLibero(int number) {
         return mLiberos.contains(number);
     }
 
+    @Override
     public boolean canAddLibero() {
         int numberOfPlayers = getNumberOfPlayers();
         int numberOfLiberos = mLiberos.size();
@@ -70,6 +75,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
         return can;
     }
 
+    @Override
     public void addLibero(final int number) {
         if (canAddLibero() && hasPlayer(number)) {
             Log.i("VBR-Team", String.format("Add player #%d as libero of %s team", number, getTeamType().toString()));
@@ -77,6 +83,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
         }
     }
 
+    @Override
     public void removeLibero(final int number) {
         if (hasPlayer(number) && isLibero(number)) {
             Log.i("VBR-Team", String.format("Remove player #%d as libero from %s team", number, getTeamType().toString()));
@@ -84,10 +91,12 @@ public class IndoorTeamDefinition extends TeamDefinition {
         }
     }
 
+    @Override
     public Set<Integer> getLiberos() {
         return new TreeSet<>(mLiberos);
     }
 
+    @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
             Log.i("VBR-Team", String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
@@ -95,14 +104,17 @@ public class IndoorTeamDefinition extends TeamDefinition {
         }
     }
 
+    @Override
     public int getCaptain() {
         return mCaptain;
     }
 
+    @Override
     public boolean isCaptain(int number) {
         return number == mCaptain;
     }
 
+    @Override
     public Set<Integer> getPossibleCaptains() {
         Set<Integer> possibleCaptains = new TreeSet<>();
 

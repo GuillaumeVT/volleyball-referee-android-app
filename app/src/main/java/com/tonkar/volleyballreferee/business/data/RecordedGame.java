@@ -281,6 +281,11 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public GameType getTeamsKind() {
+        return mGameType;
+    }
+
+    @Override
     public String getTeamName(TeamType teamType) {
         return getTeam(teamType).getName();
     }

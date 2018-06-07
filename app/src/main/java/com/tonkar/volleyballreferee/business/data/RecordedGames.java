@@ -9,13 +9,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
+import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.game.BaseGame;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
@@ -32,13 +35,24 @@ import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -93,10 +107,10 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public void loadRecordedGames() {
-        mRecordedGames.clear();
-        mRecordedLeagues.clear();
-        mRecordedGames.addAll(JsonIOUtils.readRecordedGames(mContext, RECORDED_GAMES_FILE));
+        readRecordedGames();
         assessAreRecordedOnline();
+
+        mRecordedLeagues.clear();
         for (RecordedGame recordedGame : mRecordedGames) {
             recordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
             if (recordedGame.getGameSchedule() == 0L) {
@@ -108,9 +122,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public List<RecordedGameService> getRecordedGameServiceList() {
-        List<RecordedGameService> list = new ArrayList<>();
-        list.addAll(mRecordedGames);
-        return list;
+        return new ArrayList<RecordedGameService>(mRecordedGames);
     }
 
     @Override
@@ -139,13 +151,13 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                 iterator.remove();
             }
         }
-        JsonIOUtils.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
+        writeRecordedGames();
     }
 
     @Override
     public void deleteAllRecordedGames() {
         mRecordedGames.clear();
-        JsonIOUtils.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
+        writeRecordedGames();
     }
 
     @Override
@@ -156,12 +168,12 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public GameService loadCurrentGame() {
-        GameService gameService = JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE);
+        GameService gameService = readCurrentGame(CURRENT_GAME_FILE);
 
         if (gameService == null) {
             int attempts = 0;
             while (attempts < 5 && gameService == null) {
-                gameService = JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE);
+                gameService = readCurrentGame(CURRENT_GAME_FILE);
                 attempts++;
             }
         }
@@ -173,11 +185,11 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     public synchronized void saveCurrentGame() {
         updateRecordedGame();
         if (!mGameService.isMatchCompleted()) {
-            JsonIOUtils.writeCurrentGame(mContext, CURRENT_GAME_FILE, mGameService);
+            writeCurrentGame(CURRENT_GAME_FILE, mGameService);
 
             int attempts = 0;
-            while (attempts < 5 && JsonIOUtils.readCurrentGame(mContext, CURRENT_GAME_FILE) == null) {
-                JsonIOUtils.writeCurrentGame(mContext, CURRENT_GAME_FILE, mGameService);
+            while (attempts < 5 && readCurrentGame(CURRENT_GAME_FILE) == null) {
+                writeCurrentGame(CURRENT_GAME_FILE, mGameService);
                 attempts++;
             }
         }
@@ -199,12 +211,12 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
 
     @Override
     public GameService loadSetupGame() {
-        return JsonIOUtils.readCurrentGame(mContext, SETUP_GAME_FILE);
+        return readCurrentGame(SETUP_GAME_FILE);
     }
 
     @Override
     public void saveSetupGame(GameService gameService) {
-        JsonIOUtils.writeCurrentGame(mContext, SETUP_GAME_FILE, gameService);
+        writeCurrentGame(SETUP_GAME_FILE, gameService);
     }
 
     @Override
@@ -242,7 +254,8 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             public void onResponse(Boolean response) {
                                 recordedGame.setRecordedOnline(response);
                             }
-                        }, new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 recordedGame.setRecordedOnline(false);
@@ -291,7 +304,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         if (onlineRecordingEnabled && recordedGameService != null) {
             RecordedGame recordedGame = (RecordedGame) recordedGameService;
             try {
-                final byte[] bytes = JsonIOUtils.recordedGameToByteArray(recordedGame);
+                final byte[] bytes = recordedGameToByteArray(recordedGame);
 
                 String url = String.format(Locale.getDefault(), WebUtils.GAME_API_URL, recordedGameService.getGameDate());
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
@@ -311,7 +324,8 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                                     }
                                 }
                             }
-                        }, new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 recordedGameService.setRecordedOnline(false);
@@ -343,14 +357,15 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
             RecordedSet recordedSet = mRecordedGame.getSets().get(setIndex);
 
             try {
-                final byte[] bytes = JsonIOUtils.recordedSetToByteArray(recordedSet);
+                final byte[] bytes = recordedSetToByteArray(recordedSet);
 
                 String url = String.format(Locale.getDefault(), WebUtils.SET_API_URL, mRecordedGame.getGameDate(), setIndex);
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {}
-                        }, new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 if (error.networkResponse != null) {
@@ -380,7 +395,8 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {}
-                            }, new Response.ErrorListener() {
+                            },
+                            new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     if (error.networkResponse != null) {
@@ -403,7 +419,8 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                                         mRecordedGame.setRecordedOnline(false);
                                     }
                                 }
-                            }, new Response.ErrorListener() {
+                            },
+                            new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     if (error.networkResponse != null) {
@@ -423,7 +440,7 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         if (mRecordedGame != null) {
             mRecordedGames.add(mRecordedGame);
         }
-        JsonIOUtils.writeRecordedGames(mContext, RECORDED_GAMES_FILE, mRecordedGames);
+        writeRecordedGames();
         uploadCurrentGameOnline();
         deleteCurrentGame();
     }
@@ -650,5 +667,264 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
                 mRecordedGame.getGivenSanctions(TeamType.GUEST).add(sanct);
             }
         }
+    }
+
+    // Read current game
+
+    private GameService readCurrentGame(String fileName) {
+        Log.i("VBR-Data", String.format("Read current game from %s", fileName));
+        BaseGame game = null;
+
+        try {
+            FileInputStream inputStream = mContext.openFileInput(fileName);
+            JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+            try {
+                game = JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.CURRENT_GAME_TYPE);
+            } finally {
+                reader.close();
+            }
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.i("VBR-Data", String.format("%s current game file does not yet exist", fileName));
+        } catch (JsonParseException | IOException e) {
+            Log.e("VBR-Data", "Exception while reading current game", e);
+        }
+
+        return game;
+    }
+
+    // Write current game
+
+    private void writeCurrentGame(String fileName, GameService gameService) {
+        Log.i("VBR-Data", String.format("Write current game into %s", fileName));
+        try {
+            FileOutputStream outputStream = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
+            OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+            JsonIOUtils.GSON.toJson(gameService, JsonIOUtils.CURRENT_GAME_TYPE, writer);
+            writer.close();
+            outputStream.close();
+        } catch (JsonParseException | IOException e) {
+            Log.e("VBR-Data", "Exception while writing current game", e);
+        }
+    }
+
+    // Read recorded games
+
+    private void readRecordedGames() {
+        Log.i("VBR-Data", String.format("Read recorded games from %s", RECORDED_GAMES_FILE));
+
+        try {
+            FileInputStream inputStream = mContext.openFileInput(RECORDED_GAMES_FILE);
+            mRecordedGames.clear();
+            mRecordedGames.addAll(readRecordedGamesStream(inputStream));
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.i("VBR-Data", String.format("%s recorded games file does not yet exist", RECORDED_GAMES_FILE));
+        } catch (JsonParseException | IOException e) {
+            Log.e("VBR-Data", "Exception while reading games", e);
+        }
+    }
+
+    public static List<RecordedGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
+        JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+        try {
+            return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_GAME_LIST_TYPE);
+        } finally {
+            reader.close();
+        }
+    }
+
+    public static RecordedGame byteArrayToRecordedGame(byte[] bytes) throws IOException, JsonParseException {
+        JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(bytes)));
+        try {
+            return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_GAME_TYPE);
+        } finally {
+            reader.close();
+        }
+    }
+
+    private RecordedGame readRecordedGame(String json) {
+        Log.i("VBR-Data", "Read recorded game");
+        RecordedGame recordedGame = null;
+
+        try {
+            recordedGame = JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_GAME_TYPE);
+        } catch (JsonParseException e) {
+            Log.e("VBR-Data", "Exception while reading game", e);
+        }
+
+        return recordedGame;
+    }
+
+    // Write recorded games
+
+    private void writeRecordedGames() {
+        Log.i("VBR-Data", String.format("Write recorded games into %s", RECORDED_GAMES_FILE));
+        try {
+            FileOutputStream outputStream = mContext.openFileOutput(RECORDED_GAMES_FILE, Context.MODE_PRIVATE);
+            writeRecordedGamesStream(outputStream, mRecordedGames);
+            outputStream.close();
+        } catch (JsonParseException | IOException e) {
+            Log.e("VBR-Data", "Exception while writing games", e);
+        }
+    }
+
+    public static void writeRecordedGamesStream(OutputStream outputStream, List<RecordedGame> recordedGames) throws JsonParseException, IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        JsonIOUtils.GSON.toJson(recordedGames, JsonIOUtils.RECORDED_GAME_LIST_TYPE, writer);
+        writer.close();
+    }
+
+    public static byte[] recordedGameToByteArray(RecordedGame recordedGame) throws JsonParseException, IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        JsonIOUtils.GSON.toJson(recordedGame, JsonIOUtils.RECORDED_GAME_TYPE, writer);
+        writer.close();
+
+        outputStream.close();
+
+        return outputStream.toByteArray();
+    }
+
+    private byte[] recordedSetToByteArray(RecordedSet recordedSet) throws JsonParseException, IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        JsonIOUtils.GSON.toJson(recordedSet, JsonIOUtils.RECORDED_SET_TYPE, writer);
+        writer.close();
+
+        outputStream.close();
+
+        return outputStream.toByteArray();
+    }
+
+    @Override
+    public void getGameFromCode(final int code, final AsyncGameRequestListener listener) {
+        String url = String.format(Locale.getDefault(), WebUtils.GAME_CODE_URL, code);
+
+        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        RecordedGame recordedGame = readRecordedGame(response);
+
+                        if (recordedGame == null) {
+                            Log.e("VBR-Data", "Failed to deserialize a game from code or to notify the listener");
+                            listener.onInternalError();
+                        } else {
+                            listener.onRecordedGameReceivedFromCode(recordedGame);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
+                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                listener.onNotFound();
+                            } else {
+                                listener.onError();
+                            }
+                        } else {
+                            listener.onError();
+                        }
+                    }
+                }
+        );
+        WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+    }
+
+    @Override
+    public void getUserGame(final String userId, final long id, final AsyncGameRequestListener listener) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("id", String.valueOf(id));
+        String parameters = JsonStringRequest.getParameters(params);
+
+        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_GAME_URL + parameters, new byte[0],
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        RecordedGame recordedGame = readRecordedGame(response);
+
+                        if (recordedGame == null) {
+                            Log.e("VBR-Data", "Failed to deserialize a user game or to notify the listener");
+                            listener.onInternalError();
+                        } else {
+                            if (listener != null) {
+                                listener.onUserGameReceived(recordedGame);
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
+                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                listener.onNotFound();
+                            } else {
+                                listener.onError();
+                            }
+                        } else {
+                            listener.onError();
+                        }
+                    }
+                }
+        );
+        WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+    }
+
+    @Override
+    public void getUserScheduledGames(final String userId, final AsyncGameRequestListener listener) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", userId);
+        String parameters = JsonStringRequest.getParameters(params);
+
+        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_SCHEDULED_GAMES_URL + parameters, new byte[0],
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        List<GameDescription> gameDescriptionList = readGameDescriptionList(response);
+
+                        if (gameDescriptionList == null) {
+                            Log.e("VBR-Data", "Failed to deserialize a user scheduled game list or to notify the listener");
+                            listener.onInternalError();
+                        } else {
+                            if (listener != null) {
+                                listener.onUserGameListReceived(gameDescriptionList);
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("VBR-Data", String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
+                        }
+                        listener.onError();
+                    }
+                }
+        );
+        WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+    }
+
+    // Read game descriptions
+
+    private List<GameDescription> readGameDescriptionList(String json) {
+        Log.i("VBR-Data", "Read game description list");
+        List<GameDescription> gameDescriptionList = new ArrayList<>();
+
+        try {
+            gameDescriptionList = JsonIOUtils.GSON.fromJson(json, JsonIOUtils.GAME_DESCRIPTION_LIST_TYPE);
+        } catch (JsonParseException e) {
+            Log.e("VBR-Data", "Exception while reading game description list", e);
+        }
+
+        return gameDescriptionList;
     }
 }

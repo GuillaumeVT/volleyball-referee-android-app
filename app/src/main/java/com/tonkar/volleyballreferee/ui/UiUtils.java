@@ -43,7 +43,6 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
@@ -76,32 +75,27 @@ public class UiUtils {
         }
     }
 
-    public static void styleBaseIndoorTeamButton(Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int number, Button button) {
+    public static void styleBaseIndoorTeamButton(Context context, BaseTeamService teamService, TeamType teamType, int number, Button button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        if (indoorTeamService.isLibero(teamType, number)) {
-            colorTeamButton(context, indoorTeamService.getLiberoColor(teamType), button);
+        if (teamService.isLibero(teamType, number)) {
+            colorTeamButton(context, teamService.getLiberoColor(teamType), button);
         } else {
-            colorTeamButton(context, indoorTeamService.getTeamColor(teamType), button);
-            if (indoorTeamService.isCaptain(teamType, number)) {
+            colorTeamButton(context, teamService.getTeamColor(teamType), button);
+            if (teamService.isCaptain(teamType, number)) {
                 button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
         }
     }
 
-    public static void styleBaseTeamText(Context context, BaseTeamService teamService, TeamType teamType, TextView text) {
-        colorTeamText(context, teamService.getTeamColor(teamType), text);
-        text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
-    }
-
-    public static void styleBaseIndoorTeamText(Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int number, TextView text) {
+    public static void styleBaseIndoorTeamText(Context context, BaseTeamService teamService, TeamType teamType, int number, TextView text) {
         text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        if (indoorTeamService.isLibero(teamType, number)) {
-            colorTeamText(context, indoorTeamService.getLiberoColor(teamType), text);
+        if (teamService.isLibero(teamType, number)) {
+            colorTeamText(context, teamService.getLiberoColor(teamType), text);
         } else {
-            colorTeamText(context, indoorTeamService.getTeamColor(teamType), text);
-            if (indoorTeamService.isCaptain(teamType, number)) {
+            colorTeamText(context, teamService.getTeamColor(teamType), text);
+            if (teamService.isCaptain(teamType, number)) {
                 text.setPaintFlags(text.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
         }

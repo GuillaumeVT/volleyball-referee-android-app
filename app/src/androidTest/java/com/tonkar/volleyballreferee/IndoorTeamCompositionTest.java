@@ -4,6 +4,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.team.IndoorTeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -19,7 +20,7 @@ public class IndoorTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(TeamType.HOME), 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(GameType.INDOOR, TeamType.HOME), 6);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -30,7 +31,7 @@ public class IndoorTeamCompositionTest {
 
     @Test
     public void createPlayers() {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(TeamType.HOME);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, TeamType.HOME);
         int playerCount = 7;
 
         for (int index = 1; index <= playerCount; index++) {
@@ -73,7 +74,7 @@ public class IndoorTeamCompositionTest {
     }
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(TeamType.GUEST);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);

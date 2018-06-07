@@ -18,7 +18,6 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
-import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -45,6 +44,8 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
         setTitle(getResources().getString(R.string.user_scheduled_games_title));
 
+        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -64,7 +65,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
                 if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                    WebUtils.getInstance().getUserGame(ScheduledGamesListActivity.this, PrefUtils.getUserId(ScheduledGamesListActivity.this), gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                    ServicesProvider.getInstance().getRecordedGamesService().getUserGame(PrefUtils.getUserId(ScheduledGamesListActivity.this), gameDescription.getGameDate(), ScheduledGamesListActivity.this);
                 }
             }
         });
@@ -121,7 +122,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
     private void updateScheduledGamesList() {
         mSyncLayout.setRefreshing(true);
-        WebUtils.getInstance().getUserScheduledGames(this, PrefUtils.getUserId(this), this);
+        ServicesProvider.getInstance().getRecordedGamesService().getUserScheduledGames(PrefUtils.getUserId(this), this);
     }
 
     @Override

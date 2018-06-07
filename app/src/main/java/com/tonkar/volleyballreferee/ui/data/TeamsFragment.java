@@ -10,7 +10,7 @@ import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class TeamsFragment extends Fragment {
@@ -31,14 +31,14 @@ public class TeamsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 
         long gameDate = getArguments().getLong("game_date");
-        BaseIndoorTeamService indoorTeamService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(gameDate);
+        BaseTeamService teamService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(gameDate);
 
         GridView homeTeamPlayersList = view.findViewById(R.id.home_team_players_list);
-        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), indoorTeamService, TeamType.HOME);
+        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), teamService, TeamType.HOME);
         homeTeamPlayersList.setAdapter(homeTeamPlayersListAdapter);
 
         GridView guestTeamPlayersList = view.findViewById(R.id.guest_team_players_list);
-        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), indoorTeamService, TeamType.GUEST);
+        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), teamService, TeamType.GUEST);
         guestTeamPlayersList.setAdapter(guestTeamPlayersListAdapter);
 
         return view;

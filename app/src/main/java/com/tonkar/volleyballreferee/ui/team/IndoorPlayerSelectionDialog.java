@@ -14,7 +14,7 @@ import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -26,17 +26,17 @@ public abstract class IndoorPlayerSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, TeamType teamType, Set<Integer> players) {
-        this(layoutInflater, context, title, indoorTeamService, null, teamType, players);
+    IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseTeamService teamService, TeamType teamType, Set<Integer> players) {
+        this(layoutInflater, context, title, teamService, null, teamType, players);
     }
 
-    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseIndoorTeamService indoorTeamService, SanctionService sanctionService, TeamType teamType, Set<Integer> players) {
+    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, BaseTeamService teamService, SanctionService sanctionService, TeamType teamType, Set<Integer> players) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, indoorTeamService, sanctionService, teamType, players) {
+        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, teamService, sanctionService, teamType, players) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 IndoorPlayerSelectionDialog.this.onPlayerSelected(selectedNumber);
@@ -67,17 +67,17 @@ public abstract class IndoorPlayerSelectionDialog {
 
     private abstract class IndoorPlayerSelectionAdapter extends BaseAdapter {
 
-        private final LayoutInflater        mLayoutInflater;
-        private final Context               mContext;
-        private final BaseIndoorTeamService mIndoorTeamService;
-        private final SanctionService       mSanctionService;
-        private final TeamType              mTeamType;
-        private final List<Integer>         mPlayers;
+        private final LayoutInflater  mLayoutInflater;
+        private final Context         mContext;
+        private final BaseTeamService mTeamService;
+        private final SanctionService mSanctionService;
+        private final TeamType        mTeamType;
+        private final List<Integer>   mPlayers;
 
-        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, SanctionService sanctionService, TeamType teamType, Set<Integer> players) {
+        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, SanctionService sanctionService, TeamType teamType, Set<Integer> players) {
             mLayoutInflater = layoutInflater;
             mContext = context;
-            mIndoorTeamService = indoorTeamService;
+            mTeamService = teamService;
             mSanctionService = sanctionService;
             mTeamType = teamType;
             mPlayers = new ArrayList<>(players);
@@ -110,7 +110,7 @@ public abstract class IndoorPlayerSelectionDialog {
             }
 
             button.setText(String.valueOf(number));
-            UiUtils.styleBaseIndoorTeamButton(mContext, mIndoorTeamService, mTeamType, number, button);
+            UiUtils.styleBaseIndoorTeamButton(mContext, mTeamService, mTeamType, number, button);
 
             if (isExpulsedOrDisqualified(number)) {
                 button.setEnabled(false);

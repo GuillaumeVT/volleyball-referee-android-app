@@ -12,7 +12,6 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.sanction.BaseSanctionService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -144,11 +143,7 @@ public class SanctionsListAdapter extends BaseAdapter {
                 viewHolder.playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
             }
 
-            if (mTeamService instanceof IndoorTeamService) {
-                UiUtils.styleBaseIndoorTeamText(mContext, (IndoorTeamService) mTeamService, mTeamType, sanction.getPlayer(), viewHolder.playerText);
-            } else {
-                UiUtils.styleBaseTeamText(mContext, mTeamService, mTeamType, viewHolder.playerText);
-            }
+            UiUtils.styleBaseIndoorTeamText(mContext, mTeamService, mTeamType, sanction.getPlayer(), viewHolder.playerText);
         }
 
         return sanctionView;

@@ -14,7 +14,6 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.sanction.BaseSanctionService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.score.BaseScoreService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -170,17 +169,13 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addSubstitutions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        if (mBaseTeamService instanceof BaseIndoorTeamService) {
-            BaseIndoorTeamService baseIndoorTeamService = (BaseIndoorTeamService) mBaseTeamService;
+        for (Substitution substitution : mBaseTeamService.getSubstitutions(teamType, setIndex)) {
+            int homePoints = substitution.getHomeTeamPoints();
+            int guestPoints = substitution.getGuestTeamPoints();
 
-            for (Substitution substitution : baseIndoorTeamService.getSubstitutions(teamType, setIndex)) {
-                int homePoints = substitution.getHomeTeamPoints();
-                int guestPoints = substitution.getGuestTeamPoints();
-
-                for (LadderItem ladderItem : ladderItems) {
-                    if (ladderItem.getHomePoints() == homePoints && ladderItem.getGuestPoints() == guestPoints) {
-                        ladderItem.addSubstitution(teamType, substitution);
-                    }
+            for (LadderItem ladderItem : ladderItems) {
+                if (ladderItem.getHomePoints() == homePoints && ladderItem.getGuestPoints() == guestPoints) {
+                    ladderItem.addSubstitution(teamType, substitution);
                 }
             }
         }

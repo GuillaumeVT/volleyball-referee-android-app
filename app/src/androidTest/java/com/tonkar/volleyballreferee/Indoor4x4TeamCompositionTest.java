@@ -4,6 +4,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.team.Indoor4x4TeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -19,7 +20,7 @@ public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(TeamType.HOME), 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(GameType.INDOOR_4X4, TeamType.HOME), 4);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -30,7 +31,7 @@ public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void createPlayers() {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(TeamType.HOME);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, TeamType.HOME);
         int playerCount = 7;
 
         for (int index = 1; index <= playerCount; index++) {
@@ -48,7 +49,7 @@ public class Indoor4x4TeamCompositionTest {
     }
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(TeamType.GUEST);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);

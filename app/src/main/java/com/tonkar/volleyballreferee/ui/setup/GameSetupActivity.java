@@ -16,8 +16,10 @@ import android.view.MenuItem;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -131,9 +133,10 @@ public class GameSetupActivity extends AppCompatActivity {
 
     private void saveTeams() {
         SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
-        IndoorTeamService indoorTeamService = (IndoorTeamService) ServicesProvider.getInstance().getTeamService();
-        savedTeamsService.createAndSaveTeamFrom(indoorTeamService, TeamType.HOME);
-        savedTeamsService.createAndSaveTeamFrom(indoorTeamService, TeamType.GUEST);
+        BaseTeamService teamService = ServicesProvider.getInstance().getTeamService();
+        GameType gameType = teamService.getTeamsKind();
+        savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.HOME);
+        savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.GUEST);
     }
 
     private void saveRules() {
@@ -148,6 +151,9 @@ public class GameSetupActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
+                    ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
+                }
                 UiUtils.navigateToHome(GameSetupActivity.this, false);
             }
         });

@@ -1,5 +1,7 @@
 package com.tonkar.volleyballreferee.business.game;
 
+import android.graphics.Color;
+
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
@@ -7,12 +9,16 @@ import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class BeachGame extends Game implements BeachTeamService {
@@ -107,7 +113,84 @@ public class BeachGame extends Game implements BeachTeamService {
 
     @Override
     public int getExpectedNumberOfPlayersOnCourt() {
-        return 2;
+        return getTeamDefinition(TeamType.HOME).getExpectedNumberOfPlayersOnCourt();
+    }
+
+    @Override
+    public int getLiberoColor(TeamType teamType) {
+        return Color.parseColor(TeamDefinition.DEFAULT_COLOR);
+    }
+
+    @Override
+    public void setLiberoColor(TeamType teamType, int color) {}
+
+    @Override
+    public void addLibero(TeamType teamType, int number) {}
+
+    @Override
+    public void removeLibero(TeamType teamType, int number) {}
+
+    @Override
+    public boolean isLibero(TeamType teamType, int number) {
+        return false;
+    }
+
+    @Override
+    public boolean canAddLibero(TeamType teamType) {
+        return false;
+    }
+
+    @Override
+    public java.util.Set<Integer> getLiberos(TeamType teamType) {
+        return new HashSet<>();
+    }
+
+    @Override
+    public List<Substitution> getSubstitutions(TeamType teamType) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean isStartingLineupConfirmed() {
+        return true;
+    }
+
+    @Override
+    public java.util.Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
+        return new HashSet<>();
+    }
+
+    @Override
+    public PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex) {
+        return null;
+    }
+
+    @Override
+    public int getPlayerAtPositionInStartingLineup(TeamType teamType, PositionType positionType, int setIndex) {
+        return 0;
+    }
+
+    @Override
+    public void setCaptain(TeamType teamType, int number) {}
+
+    @Override
+    public int getCaptain(TeamType teamType) {
+        return 1;
+    }
+
+    @Override
+    public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
+        return new HashSet<>();
+    }
+
+    @Override
+    public boolean isCaptain(TeamType teamType, int number) {
+        return false;
     }
 
     @Override

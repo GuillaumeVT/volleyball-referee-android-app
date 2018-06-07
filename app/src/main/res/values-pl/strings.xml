@@ -125,6 +125,7 @@
     <string name="pref_referee_name">Mója nazwa użytkownika \'Volleyball Referee\'</string>
     <string name="pref_stream_online">Transmituj mecze przez stream online</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
+    <string name="pref_interactive_notification">Użyj powiadomień interaktywnych</string>
     <string name="pref_number_of_shirts">Wybierz numer koszulki w ustawieniach drużyny</string>
 
     <string-array name="number_of_shirts">

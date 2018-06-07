@@ -27,43 +27,45 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
-import com.tonkar.volleyballreferee.ui.data.SavedTeamsListAdapter;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.setup.TeamsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamSetupFragment extends Fragment {
 
-    private LayoutInflater        mLayoutInflater;
-    private TeamType              mTeamType;
-    private BaseIndoorTeamService mIndoorTeamService;
-    private Button                mTeamColorButton;
-    private PlayerAdapter         mPlayerAdapter;
-    private Button                mLiberoColorButton;
-    private Button                mCaptainButton;
-    private LiberoAdapter         mLiberoAdapter;
-    private ImageButton           mGenderButton;
-    private ScrollView            mScrollView;
+    private LayoutInflater  mLayoutInflater;
+    private TeamType        mTeamType;
+    private BaseTeamService mTeamService;
+    private Button          mTeamColorButton;
+    private PlayerAdapter   mPlayerAdapter;
+    private Button          mLiberoColorButton;
+    private Button          mCaptainButton;
+    private LiberoAdapter   mLiberoAdapter;
+    private ImageButton     mGenderButton;
+    private ScrollView      mScrollView;
 
     public TeamSetupFragment() {
     }
 
     public static TeamSetupFragment newInstance(TeamType teamType) {
-        return newInstance(teamType, true);
+        return newInstance(teamType, true, true);
     }
 
-    public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext) {
+    public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext, boolean editable) {
         TeamSetupFragment fragment = new TeamSetupFragment();
         Bundle args = new Bundle();
         args.putString(TeamType.class.getName(), teamType.toString());
         args.putBoolean("is_game", isGameContext);
+        args.putBoolean("editable", editable);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,18 +79,20 @@ public class TeamSetupFragment extends Fragment {
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
+        final boolean editable = getArguments().getBoolean("editable");
+
         final boolean isGameContext = getArguments().getBoolean("is_game");
 
         if (isGameContext) {
             if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
                 ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
             }
-            mIndoorTeamService = (BaseIndoorTeamService) ServicesProvider.getInstance().getTeamService();
+            mTeamService = ServicesProvider.getInstance().getTeamService();
         } else {
             if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
                 ServicesProvider.getInstance().restoreSavedTeamsService(getActivity().getApplicationContext());
             }
-            mIndoorTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
+            mTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
         }
 
         mScrollView = view.findViewById(R.id.team_setup_scroll);
@@ -109,26 +113,27 @@ public class TeamSetupFragment extends Fragment {
                 break;
         }
 
-        final String teamName = mIndoorTeamService.getTeamName(mTeamType);
+        final String teamName = mTeamService.getTeamName(mTeamType);
 
         teamNameInput.setText(teamName);
+        teamNameInput.setEnabled(editable);
 
         if (isGameContext) {
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new SavedTeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamServiceList()));
+            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamList(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    BaseIndoorTeamService indoorTeamService = (BaseIndoorTeamService) teamNameInput.getAdapter().getItem(index);
-                    teamNameInput.setText(indoorTeamService.getTeamName(mTeamType));
-                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(indoorTeamService, mIndoorTeamService, mTeamType);
+                    RecordedTeam team = (RecordedTeam) teamNameInput.getAdapter().getItem(index);
+                    teamNameInput.setText(team.getName());
+                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(team, mTeamService, mTeamType);
 
-                    teamColorSelected(mIndoorTeamService.getTeamColor(mTeamType));
-                    updateGender(mIndoorTeamService.getGenderType(mTeamType));
+                    teamColorSelected(mTeamService.getTeamColor(mTeamType));
+                    updateGender(mTeamService.getGenderType(mTeamType));
                     mPlayerAdapter.notifyDataSetChanged();
-                    captainUpdated(mTeamType, mIndoorTeamService.getCaptain(mTeamType));
+                    captainUpdated(mTeamType, mTeamService.getCaptain(mTeamType));
                     if (manageLiberos()) {
-                        liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
+                        liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
                         mLiberoAdapter.notifyDataSetChanged();
                     }
                     mScrollView.post(new Runnable() {
@@ -152,7 +157,7 @@ public class TeamSetupFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("VBR-TSActivity", String.format("Update %s team name", mTeamType.toString()));
-                mIndoorTeamService.setTeamName(mTeamType, s.toString());
+                mTeamService.setTeamName(mTeamType, s.toString());
                 computeConfirmItemVisibility();
             }
 
@@ -160,13 +165,13 @@ public class TeamSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        mPlayerAdapter = new PlayerAdapter(getActivity(), mIndoorTeamService.getTeamColor(mTeamType));
+        mPlayerAdapter = new PlayerAdapter(getActivity(), mTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);
 
-        if (mIndoorTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
+        if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
             teamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
         } else {
-            teamColorSelected(mIndoorTeamService.getTeamColor(mTeamType));
+            teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
         mTeamColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,13 +191,13 @@ public class TeamSetupFragment extends Fragment {
         });
 
         if (manageLiberos()) {
-            mLiberoAdapter = new LiberoAdapter(getActivity(), mIndoorTeamService.getLiberoColor(mTeamType));
+            mLiberoAdapter = new LiberoAdapter(getActivity(), mTeamService.getLiberoColor(mTeamType));
             liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
-            if (mIndoorTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
+            if (mTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
                 liberoColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
             } else {
-                liberoColorSelected(mIndoorTeamService.getLiberoColor(mTeamType));
+                liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
             }
             mLiberoColorButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -209,12 +214,13 @@ public class TeamSetupFragment extends Fragment {
         }
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
-        updateGender(mIndoorTeamService.getGenderType(mTeamType));
+        mGenderButton.setEnabled(editable);
+        updateGender(mTeamService.getGenderType(mTeamType));
         mGenderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UiUtils.animate(getContext(), mGenderButton);
-                GenderType genderType = mIndoorTeamService.getGenderType(mTeamType).next();
+                GenderType genderType = mTeamService.getGenderType(mTeamType).next();
                 updateGender(genderType);
             }
         });
@@ -238,7 +244,7 @@ public class TeamSetupFragment extends Fragment {
     private void teamColorSelected(int color) {
         Log.i("VBR-TSActivity", String.format("Update %s team color", mTeamType.toString()));
         UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
-        mIndoorTeamService.setTeamColor(mTeamType, color);
+        mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
         updateCaptain();
     }
@@ -283,7 +289,7 @@ public class TeamSetupFragment extends Fragment {
             }
 
             button.setText(String.valueOf(playerShirtNumber));
-            button.setChecked(mIndoorTeamService.hasPlayer(mTeamType, playerShirtNumber));
+            button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 
             button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
@@ -293,10 +299,10 @@ public class TeamSetupFragment extends Fragment {
                     final int number = Integer.parseInt(button.getText().toString());
                     if (isChecked) {
                         Log.i("VBR-TSActivity", String.format("Checked #%d player of %s team", number, mTeamType.toString()));
-                        mIndoorTeamService.addPlayer(mTeamType, number);
+                        mTeamService.addPlayer(mTeamType, number);
                     } else {
                         Log.i("VBR-TSActivity", String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
-                        mIndoorTeamService.removePlayer(mTeamType, number);
+                        mTeamService.removePlayer(mTeamType, number);
                     }
                     updateCaptain();
                     if (manageLiberos()) {
@@ -329,14 +335,14 @@ public class TeamSetupFragment extends Fragment {
     private void liberoColorSelected(int color) {
         Log.i("VBR-TSActivity", String.format("Update %s team libero color", mTeamType.toString()));
         UiUtils.colorTeamButton(getActivity(), color, mLiberoColorButton);
-        mIndoorTeamService.setLiberoColor(mTeamType, color);
+        mTeamService.setLiberoColor(mTeamType, color);
         mLiberoAdapter.setColor(color);
     }
 
     private void updateCaptain() {
-        int captain = mIndoorTeamService.getCaptain(mTeamType);
-        if ((captain < 1 || mIndoorTeamService.isLibero(mTeamType, captain)) && !mIndoorTeamService.getPossibleCaptains(mTeamType).isEmpty()) {
-            captain = mIndoorTeamService.getPossibleCaptains(mTeamType).iterator().next();
+        int captain = mTeamService.getCaptain(mTeamType);
+        if ((captain < 1 || mTeamService.isLibero(mTeamType, captain)) && !mTeamService.getPossibleCaptains(mTeamType).isEmpty()) {
+            captain = mTeamService.getPossibleCaptains(mTeamType).iterator().next();
         }
 
         captainUpdated(mTeamType, captain);
@@ -344,15 +350,15 @@ public class TeamSetupFragment extends Fragment {
 
     private void captainUpdated(TeamType teamType, int number) {
         Log.i("VBR-TSActivity", String.format("Update %s team captain", mTeamType.toString()));
-        mIndoorTeamService.setCaptain(teamType, number);
+        mTeamService.setCaptain(teamType, number);
         mCaptainButton.setText(String.valueOf(number));
-        UiUtils.styleBaseIndoorTeamButton(getContext(), mIndoorTeamService, mTeamType, number, mCaptainButton);
+        UiUtils.styleBaseIndoorTeamButton(getContext(), mTeamService, mTeamType, number, mCaptainButton);
     }
 
     private void selectCaptain() {
         Log.i("VBR-TSActivity", String.format("Select %s team captain", mTeamType.toString()));
-        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_captain), mIndoorTeamService,
-                mTeamType, mIndoorTeamService.getPossibleCaptains(mTeamType)) {
+        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_captain), mTeamService,
+                mTeamType, mTeamService.getPossibleCaptains(mTeamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 captainUpdated(mTeamType, selectedNumber);
@@ -373,7 +379,7 @@ public class TeamSetupFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return mIndoorTeamService.getPlayers(mTeamType).size();
+            return mTeamService.getPlayers(mTeamType).size();
         }
 
         @Override
@@ -388,7 +394,7 @@ public class TeamSetupFragment extends Fragment {
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
-            final List<Integer> players = new ArrayList<>(mIndoorTeamService.getPlayers(mTeamType));
+            final List<Integer> players = new ArrayList<>(mTeamService.getPlayers(mTeamType));
             final int playerShirtNumber = players.get(position);
             final PlayerToggleButton button;
 
@@ -399,7 +405,7 @@ public class TeamSetupFragment extends Fragment {
             }
 
             button.setText(String.valueOf(playerShirtNumber));
-            button.setChecked(mIndoorTeamService.isLibero(mTeamType, playerShirtNumber));
+            button.setChecked(mTeamService.isLibero(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 
             button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
@@ -408,16 +414,16 @@ public class TeamSetupFragment extends Fragment {
                     UiUtils.animate(mContext, button);
                     final int number = Integer.parseInt(button.getText().toString());
                     if (isChecked) {
-                        if (mIndoorTeamService.canAddLibero(mTeamType)) {
+                        if (mTeamService.canAddLibero(mTeamType)) {
                             Log.i("VBR-TSActivity", String.format("Checked #%d player of %s team as libero", number, mTeamType.toString()));
-                            mIndoorTeamService.addLibero(mTeamType, number);
+                            mTeamService.addLibero(mTeamType, number);
                             updateCaptain();
                         } else {
                             button.setChecked(false);
                         }
                     } else {
                         Log.i("VBR-TSActivity", String.format("Unchecked #%d player of %s team as libero", number, mTeamType.toString()));
-                        mIndoorTeamService.removeLibero(mTeamType, number);
+                        mTeamService.removeLibero(mTeamType, number);
                         updateCaptain();
                     }
                 }
@@ -434,7 +440,7 @@ public class TeamSetupFragment extends Fragment {
 
     private void updateGender(GenderType genderType) {
         Context context = getContext();
-        mIndoorTeamService.setGenderType(mTeamType, genderType);
+        mTeamService.setGenderType(mTeamType, genderType);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);
@@ -460,6 +466,6 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private boolean manageLiberos() {
-        return mIndoorTeamService.getExpectedNumberOfPlayersOnCourt() == 6;
+        return mTeamService.getExpectedNumberOfPlayersOnCourt() == 6;
     }
 }

@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -16,7 +17,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -27,6 +30,10 @@ public class SavedRulesListActivity extends AppCompatActivity {
 
     private SavedRulesService     mSavedRulesService;
     private SavedRulesListAdapter mSavedRulesListAdapter;
+    private boolean               mIsFabOpen;
+    private FloatingActionButton  mAddIndoorRulesButton;
+    private FloatingActionButton  mAddIndoor4x4RulesButton;
+    private FloatingActionButton  mAddBeachRulesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +62,53 @@ public class SavedRulesListActivity extends AppCompatActivity {
                 Log.i("VBR-RulesListActivity", String.format("Start activity to edit saved rules %s", rules.getName()));
 
                 final Intent intent = new Intent(SavedRulesListActivity.this, SavedRulesActivity.class);
+                boolean editable = !PrefUtils.isSignedIn(SavedRulesListActivity.this);
+                intent.putExtra("editable", editable);
                 startActivity(intent);
+            }
+        });
+
+        mIsFabOpen = false;
+        mAddIndoorRulesButton = findViewById(R.id.add_indoor_tules_button);
+        mAddIndoor4x4RulesButton = findViewById(R.id.add_indoor_4x4_rules_button);
+        mAddBeachRulesButton = findViewById(R.id.add_beach_rules_button);
+        FloatingActionButton addRulesButton = findViewById(R.id.add_rules_button);
+        addRulesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mIsFabOpen){
+                    closeFABMenu();
+                }else{
+                    showFABMenu();
+                }
             }
         });
     }
 
-    public void addRules(View view) {
-        mSavedRulesService.createRules();
-        Log.i("VBR-RulesListActivity", "Start activity to create new rules");
+    public void addIndoorRules(View view) {
+        mSavedRulesService.createRules(GameType.INDOOR);
+        Log.i("VBR-RulesListActivity", "Start activity to create new indoor rules");
 
         final Intent intent = new Intent(this, SavedRulesActivity.class);
+        intent.putExtra("editable", true);
+        startActivity(intent);
+    }
+
+    public void addIndoor4x4Rules(View view) {
+        mSavedRulesService.createRules(GameType.INDOOR_4X4);
+        Log.i("VBR-RulesListActivity", "Start activity to create new indoor 4x4 rules");
+
+        final Intent intent = new Intent(this, SavedRulesActivity.class);
+        intent.putExtra("editable", true);
+        startActivity(intent);
+    }
+
+    public void addBeachRules(View view) {
+        mSavedRulesService.createRules(GameType.BEACH);
+        Log.i("VBR-RulesListActivity", "Start activity to create new beach rules");
+
+        final Intent intent = new Intent(this, SavedRulesActivity.class);
+        intent.putExtra("editable", true);
         startActivity(intent);
     }
 
@@ -132,4 +176,26 @@ public class SavedRulesListActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
+    private void showFABMenu(){
+        mIsFabOpen = true;
+        mAddIndoorRulesButton.animate().translationY(-getResources().getDimension(R.dimen.standard_180));
+        mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
+        mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.standard_60));
+    }
+
+    private void closeFABMenu(){
+        mIsFabOpen = false;
+        mAddIndoorRulesButton.animate().translationY(0);
+        mAddIndoor4x4RulesButton.animate().translationY(0);
+        mAddBeachRulesButton.animate().translationY(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mIsFabOpen){
+            closeFABMenu();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

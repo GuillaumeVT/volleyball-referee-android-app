@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -18,18 +18,18 @@ import java.util.List;
 
 public class PlayersListAdapter extends BaseAdapter {
 
-    private final LayoutInflater        mLayoutInflater;
-    private final Context               mContext;
-    private final BaseIndoorTeamService mIndoorTeamService;
-    private final TeamType              mTeamType;
-    private final List<Integer>         mPlayers;
+    private final LayoutInflater  mLayoutInflater;
+    private final Context         mContext;
+    private final BaseTeamService mTeamService;
+    private final TeamType        mTeamType;
+    private final List<Integer>   mPlayers;
 
-    PlayersListAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType) {
+    PlayersListAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType) {
         mLayoutInflater = layoutInflater;
         mContext = context;
-        mIndoorTeamService = indoorTeamService;
+        mTeamService = teamService;
         mTeamType = teamType;
-        mPlayers = new ArrayList<>(mIndoorTeamService.getPlayers(mTeamType));
+        mPlayers = new ArrayList<>(mTeamService.getPlayers(mTeamType));
     }
 
     @Override
@@ -60,13 +60,13 @@ public class PlayersListAdapter extends BaseAdapter {
         int number = mPlayers.get(index);
         playerButton.setText(String.valueOf(number));
 
-        if (mIndoorTeamService.isLibero(mTeamType, number)) {
-            UiUtils.colorTeamButton(mContext, mIndoorTeamService.getLiberoColor(mTeamType), playerButton);
+        if (mTeamService.isLibero(mTeamType, number)) {
+            UiUtils.colorTeamButton(mContext, mTeamService.getLiberoColor(mTeamType), playerButton);
         } else {
-            UiUtils.colorTeamButton(mContext, mIndoorTeamService.getTeamColor(mTeamType), playerButton);
+            UiUtils.colorTeamButton(mContext, mTeamService.getTeamColor(mTeamType), playerButton);
         }
 
-        if (mIndoorTeamService.isCaptain(mTeamType, number)) {
+        if (mTeamService.isCaptain(mTeamType, number)) {
             playerButton.setPaintFlags(playerButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         } else {
             playerButton.setPaintFlags(playerButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));

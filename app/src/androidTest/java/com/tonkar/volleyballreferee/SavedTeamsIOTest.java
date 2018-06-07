@@ -5,10 +5,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
-import com.tonkar.volleyballreferee.business.data.SavedTeam;
-import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
@@ -39,8 +39,8 @@ public class SavedTeamsIOTest {
     public void save() {
         ServicesProvider.getInstance().restoreSavedTeamsService(mActivityRule.getActivity());
 
-        ServicesProvider.getInstance().getSavedTeamsService().createTeam();
-        BaseIndoorTeamService service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
+        ServicesProvider.getInstance().getSavedTeamsService().createTeam(GameType.INDOOR);
+        BaseTeamService service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "BRAZIL");
         service.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt10));
@@ -69,7 +69,7 @@ public class SavedTeamsIOTest {
 
         ServicesProvider.getInstance().getSavedTeamsService().saveCurrentTeam();
 
-        ServicesProvider.getInstance().getSavedTeamsService().createTeam();
+        ServicesProvider.getInstance().getSavedTeamsService().createTeam(GameType.INDOOR);
         service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "FRANCE");
@@ -104,29 +104,19 @@ public class SavedTeamsIOTest {
     public void writeThenRead() {
         ServicesProvider.getInstance().restoreSavedTeamsService(mActivityRule.getActivity());
 
-        List<SavedTeam> expectedList = new ArrayList<>();
-        expectedList.add((SavedTeam) ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamService("BRAZIL", GenderType.GENTS));
-        expectedList.add((SavedTeam) ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamService("FRANCE", GenderType.GENTS));
-        List<SavedTeam> actualList = new ArrayList<>();
-
-        List<IndoorTeamDefinition> expectedDefinitionList = new ArrayList<>();
-        for (SavedTeam savedTeam : expectedList) {
-            expectedDefinitionList.add(savedTeam.getIndoorTeamDefinition());
-        }
-        List<IndoorTeamDefinition> actualDefinitionList = new ArrayList<>();
+        List<RecordedTeam> expectedList = new ArrayList<>();
+        expectedList.add(ServicesProvider.getInstance().getSavedTeamsService().getSavedTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
+        expectedList.add(ServicesProvider.getInstance().getSavedTeamsService().getSavedTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
+        List<RecordedTeam> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonIOUtils.writeTeamDefinitionsStream(outputStream, expectedDefinitionList);
+            SavedTeams.writeTeamsStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualDefinitionList = JsonIOUtils.readTeamDefinitionsStream(inputStream);
+            actualList = SavedTeams.readTeamsStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        for (IndoorTeamDefinition teamDefinition : actualDefinitionList) {
-            actualList.add(new SavedTeam(teamDefinition));
         }
 
         assertEquals(expectedList, actualList);

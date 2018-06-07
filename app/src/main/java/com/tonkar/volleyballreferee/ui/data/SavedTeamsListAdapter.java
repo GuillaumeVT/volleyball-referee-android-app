@@ -3,47 +3,53 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class SavedTeamsListAdapter extends ArrayAdapter<BaseIndoorTeamService> {
+public class SavedTeamsListAdapter extends ArrayAdapter<RecordedTeam> {
 
-    private final LayoutInflater              mLayoutInflater;
-    private final List<BaseIndoorTeamService> mSavedTeamsServiceList;
-    private final List<BaseIndoorTeamService> mFilteredSavedTeamsServiceList;
-    private final NameFilter                  mNameFilter;
+    static class ViewHolder {
+        TextView  nameText;
+        ImageView genderTypeImage;
+        ImageView gameTypeImage;
+    }
 
-    public SavedTeamsListAdapter(Context context, LayoutInflater layoutInflater, List<BaseIndoorTeamService> savedTeamsServiceList) {
-        super(context, R.layout.autocomplete_list_item, savedTeamsServiceList);
+    private final LayoutInflater     mLayoutInflater;
+    private final List<RecordedTeam> mSavedTeamsList;
+    private final List<RecordedTeam> mFilteredSavedTeamsList;
+    private final NameFilter         mNameFilter;
+
+    public SavedTeamsListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedTeam> savedTeamsList) {
+        super(context, R.layout.saved_teams_list_item, savedTeamsList);
         mLayoutInflater = layoutInflater;
-        mSavedTeamsServiceList = savedTeamsServiceList;
-        mFilteredSavedTeamsServiceList = new ArrayList<>();
-        mFilteredSavedTeamsServiceList.addAll(mSavedTeamsServiceList);
+        mSavedTeamsList = savedTeamsList;
+        mFilteredSavedTeamsList = new ArrayList<>();
+        mFilteredSavedTeamsList.addAll(mSavedTeamsList);
         mNameFilter = new NameFilter();
     }
 
     @Override
     public int getCount() {
-        return mFilteredSavedTeamsServiceList.size();
+        return mFilteredSavedTeamsList.size();
     }
 
     @Override
-    public BaseIndoorTeamService getItem(int index) {
-        return mFilteredSavedTeamsServiceList.get(index);
+    public RecordedTeam getItem(int index) {
+        return mFilteredSavedTeamsList.get(index);
     }
 
     @Override
@@ -53,46 +59,60 @@ public class SavedTeamsListAdapter extends ArrayAdapter<BaseIndoorTeamService> {
 
     @Override
     public View getView(int index, View view, ViewGroup viewGroup) {
-        TextView teamTextView;
+        View savedTeamView = view;
+        ViewHolder viewHolder;
 
-        if (view == null) {
-            teamTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, null);
-        } else {
-            teamTextView = (TextView) view;
+        if (savedTeamView == null) {
+            savedTeamView = mLayoutInflater.inflate(R.layout.saved_teams_list_item, null);
+            viewHolder = new ViewHolder();
+            viewHolder.nameText = savedTeamView.findViewById(R.id.saved_team_name);
+            viewHolder.genderTypeImage = savedTeamView.findViewById(R.id.saved_team_gender_image);
+            viewHolder.gameTypeImage = savedTeamView.findViewById(R.id.saved_team_type_image);
+            savedTeamView.setTag(viewHolder);
+        }
+        else {
+            viewHolder = (ViewHolder) savedTeamView.getTag();
         }
 
-        BaseIndoorTeamService teamService = mFilteredSavedTeamsServiceList.get(index);
-        teamTextView.setText(teamService.getTeamName(null));
+        RecordedTeam team = mFilteredSavedTeamsList.get(index);
+        viewHolder.nameText.setText(team.getName());
 
-        switch (teamService.getGenderType()) {
+        switch (team.getGenderType()) {
             case MIXED:
-                teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_mixed, 0);
+                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
+                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
-                teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_ladies, 0);
+                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_ladies);
+                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
-                teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_gents, 0);
+                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_gents);
+                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
-        for (Drawable drawable : teamTextView.getCompoundDrawables()) {
-            if (drawable != null) {
-                switch (teamService.getGenderType()) {
-                    case MIXED:
-                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
-                        break;
-                    case LADIES:
-                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
-                        break;
-                    case GENTS:
-                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
-                        break;
-                }
-            }
+        switch (team.getGameType()) {
+            case INDOOR_4X4:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                break;
+            case BEACH:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                break;
+            case TIME:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_time_based);
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+                break;
+            case INDOOR:
+            default:
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_6x6);
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                break;
         }
 
-        return teamTextView;
+        return savedTeamView;
     }
 
     @Override
@@ -107,16 +127,16 @@ public class SavedTeamsListAdapter extends ArrayAdapter<BaseIndoorTeamService> {
             FilterResults results = new FilterResults();
 
             if (prefix == null || prefix.length() == 0) {
-                results.values = mSavedTeamsServiceList;
-                results.count = mSavedTeamsServiceList.size();
+                results.values = mSavedTeamsList;
+                results.count = mSavedTeamsList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<BaseIndoorTeamService> matchValues = new ArrayList<>();
+                List<RecordedTeam> matchValues = new ArrayList<>();
 
-                for (BaseIndoorTeamService teamService : mSavedTeamsServiceList) {
-                    if (lowerCaseText.isEmpty() || teamService.getTeamName(null).toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
-                        matchValues.add(teamService);
+                for (RecordedTeam team : mSavedTeamsList) {
+                    if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
+                        matchValues.add(team);
                     }
                 }
 
@@ -129,11 +149,11 @@ public class SavedTeamsListAdapter extends ArrayAdapter<BaseIndoorTeamService> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mFilteredSavedTeamsServiceList.clear();
+            mFilteredSavedTeamsList.clear();
 
             if (results.values != null) {
-                mFilteredSavedTeamsServiceList.clear();
-                mFilteredSavedTeamsServiceList.addAll((Collection<? extends BaseIndoorTeamService>) results.values);
+                mFilteredSavedTeamsList.clear();
+                mFilteredSavedTeamsList.addAll((Collection<? extends RecordedTeam>) results.values);
             }
 
             if (results.count > 0) {

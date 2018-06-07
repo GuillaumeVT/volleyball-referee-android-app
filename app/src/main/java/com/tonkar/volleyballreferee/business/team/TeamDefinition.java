@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -16,6 +17,8 @@ public abstract class TeamDefinition {
 
     @SerializedName("classType")
     private       String       mClassType;
+    @SerializedName("kind")
+    private final GameType     mGameType;
     @SerializedName("name")
     private       String       mName;
     @SerializedName("team")
@@ -27,13 +30,18 @@ public abstract class TeamDefinition {
     @SerializedName("gender")
     private       GenderType   mGenderType;
 
-    public TeamDefinition(final TeamType teamType) {
+    public TeamDefinition(final GameType gameType, final TeamType teamType) {
         mClassType = getClass().getName();
+        mGameType = gameType;
         mName = "";
         mTeamType = teamType;
         mColor = DEFAULT_COLOR;
         mPlayers = new TreeSet<>();
         mGenderType = GenderType.MIXED;
+    }
+
+    public GameType getGameType() {
+        return mGameType;
     }
 
     public String getName() {
@@ -86,6 +94,50 @@ public abstract class TeamDefinition {
     public void setGenderType(GenderType genderType) {
         mGenderType = genderType;
     }
+
+    public int getExpectedNumberOfPlayersOnCourt() {
+        int number;
+
+        switch (mGameType) {
+            case INDOOR:
+                number = 6;
+                break;
+            case INDOOR_4X4:
+                number = 4;
+                break;
+            case BEACH:
+                number = 2;
+                break;
+            case TIME:
+            default:
+                number = 0;
+                break;
+        }
+
+        return number;
+    }
+
+    public abstract int getLiberoColor();
+
+    public abstract void setLiberoColor(int color);
+
+    public abstract boolean isLibero(int number);
+
+    public abstract boolean canAddLibero();
+
+    public abstract void addLibero(final int number);
+
+    public abstract void removeLibero(final int number);
+
+    public abstract Set<Integer> getLiberos();
+
+    public abstract void setCaptain(int number);
+
+    public abstract int getCaptain();
+
+    public abstract boolean isCaptain(int number);
+
+    public abstract Set<Integer> getPossibleCaptains();
 
     String colorIntToHtml(int color) {
         return String.format("#%06X", (0xFFFFFF & color)).toLowerCase();

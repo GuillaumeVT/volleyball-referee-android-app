@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -20,16 +20,16 @@ public class LineupAdapter extends BaseAdapter {
         TextView positionText;
     }
 
-    private final LayoutInflater        mLayoutInflater;
-    private final Context               mContext;
-    private final BaseIndoorTeamService mIndoorTeamService;
-    private final TeamType              mTeamType;
-    private final int                   mSetIndex;
+    private final LayoutInflater  mLayoutInflater;
+    private final Context         mContext;
+    private final BaseTeamService mTeamService;
+    private final TeamType        mTeamType;
+    private final int             mSetIndex;
 
-    LineupAdapter(LayoutInflater layoutInflater, Context context, BaseIndoorTeamService indoorTeamService, TeamType teamType, int setIndex) {
+    LineupAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType, int setIndex) {
         mLayoutInflater = layoutInflater;
         mContext = context;
-        mIndoorTeamService = indoorTeamService;
+        mTeamService = teamService;
         mTeamType = teamType;
         mSetIndex = setIndex;
     }
@@ -68,10 +68,10 @@ public class LineupAdapter extends BaseAdapter {
         PositionType positionType = viewIndexToPosition(index);
 
         if (isVisible(positionType)) {
-            int number = mIndoorTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
+            int number = mTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
             viewHolder.positionText.setWidth(measureTextWidth());
             viewHolder.positionText.setText(String.valueOf(number));
-            UiUtils.styleBaseIndoorTeamText(mContext, mIndoorTeamService, mTeamType, number, viewHolder.positionText);
+            UiUtils.styleBaseIndoorTeamText(mContext, mTeamService, mTeamType, number, viewHolder.positionText);
             viewHolder.positionTitle.setText(UiUtils.getPositionTitle(mContext, positionType));
             viewHolder.positionText.setVisibility(View.VISIBLE);
             viewHolder.positionTitle.setVisibility(View.VISIBLE);

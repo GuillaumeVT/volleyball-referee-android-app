@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -141,8 +140,8 @@ public class LadderEventsDialog {
             playerInText.setText(String.valueOf(substitution.getPlayerIn()));
             playerOutText.setText(String.valueOf(substitution.getPlayerOut()));
 
-            UiUtils.styleBaseTeamText(mContext, mBaseTeamService, mTeamType, playerInText);
-            UiUtils.styleBaseTeamText(mContext, mBaseTeamService, mTeamType, playerOutText);
+            UiUtils.styleBaseIndoorTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerIn(), playerInText);
+            UiUtils.styleBaseIndoorTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerOut(), playerOutText);
 
             return substitutionView;
         }
@@ -218,11 +217,7 @@ public class LadderEventsDialog {
                     playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
                 }
 
-                if (mBaseTeamService instanceof BaseIndoorTeamService) {
-                    UiUtils.styleBaseIndoorTeamText(mContext, (BaseIndoorTeamService) mBaseTeamService, mTeamType, sanction.getPlayer(), playerText);
-                } else {
-                    UiUtils.styleBaseTeamText(mContext, mBaseTeamService, mTeamType, playerText);
-                }
+                UiUtils.styleBaseIndoorTeamText(mContext, mBaseTeamService, mTeamType, sanction.getPlayer(), playerText);
             }
 
             return sanctionView;

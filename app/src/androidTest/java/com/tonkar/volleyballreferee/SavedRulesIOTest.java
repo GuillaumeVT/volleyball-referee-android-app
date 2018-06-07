@@ -4,7 +4,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
@@ -102,9 +102,9 @@ public class SavedRulesIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonIOUtils.writeRulesStream(outputStream, expectedList);
+            SavedRules.writeRulesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonIOUtils.readRulesStream(inputStream);
+            actualList = SavedRules.readRulesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();

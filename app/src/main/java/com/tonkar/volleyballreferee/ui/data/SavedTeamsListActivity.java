@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.data;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,8 +17,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
+import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -27,6 +30,10 @@ public class SavedTeamsListActivity extends AppCompatActivity {
 
     private SavedTeamsService     mSavedTeamsService;
     private SavedTeamsListAdapter mSavedTeamsListAdapter;
+    private boolean               mIsFabOpen;
+    private FloatingActionButton  mAdd6x6TeamButton;
+    private FloatingActionButton  mAdd4x4TeamButton;
+    private FloatingActionButton  mAddBeachTeamButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,30 +48,66 @@ public class SavedTeamsListActivity extends AppCompatActivity {
 
         mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
 
-        List<BaseIndoorTeamService> savedTeamsServiceList = mSavedTeamsService.getSavedTeamServiceList();
+        List<RecordedTeam> teams = mSavedTeamsService.getSavedTeamList();
 
         final ListView savedTeamsList = findViewById(R.id.saved_teams_list);
-        mSavedTeamsListAdapter = new SavedTeamsListAdapter(this, getLayoutInflater(), savedTeamsServiceList);
+        mSavedTeamsListAdapter = new SavedTeamsListAdapter(this, getLayoutInflater(), teams);
         savedTeamsList.setAdapter(mSavedTeamsListAdapter);
 
         savedTeamsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BaseIndoorTeamService indoorTeamService = mSavedTeamsListAdapter.getItem(i);
-                mSavedTeamsService.editTeam(indoorTeamService.getTeamName(null), indoorTeamService.getGenderType());
-                Log.i("VBR-TeamsListActivity", String.format("Start activity to edit saved team %s", indoorTeamService.getTeamName(null)));
+                RecordedTeam team = mSavedTeamsListAdapter.getItem(i);
+                mSavedTeamsService.editTeam(team.getGameType(), team.getName(), team.getGenderType());
+                Log.i("VBR-TeamsListActivity", String.format("Start activity to edit saved team %s", team.getName()));
 
                 final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
+                intent.putExtra("kind", team.getGameType().toString());
+                boolean editable = !PrefUtils.isSignedIn(SavedTeamsListActivity.this);
+                intent.putExtra("editable", editable);
                 startActivity(intent);
+            }
+        });
+
+        mIsFabOpen = false;
+        mAdd6x6TeamButton = findViewById(R.id.add_6x6_team_button);
+        mAdd4x4TeamButton = findViewById(R.id.add_4x4_team_button);
+        mAddBeachTeamButton = findViewById(R.id.add_beach_team_button);
+        FloatingActionButton addTeamButton = findViewById(R.id.add_team_button);
+        addTeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mIsFabOpen){
+                    closeFABMenu();
+                }else{
+                    showFABMenu();
+                }
             }
         });
     }
 
-    public void addTeam(View view) {
-        mSavedTeamsService.createTeam();
+    public void addIndoorTeam(View view) {
+        GameType gameType = GameType.INDOOR;
+        addTeam(gameType);
+    }
+
+    public void addIndoor4x4Team(View view) {
+        GameType gameType = GameType.INDOOR_4X4;
+        addTeam(gameType);
+    }
+
+    public void addBeachTeam(View view) {
+        GameType gameType = GameType.BEACH;
+        addTeam(gameType);
+    }
+
+    private void addTeam(GameType gameType) {
+        mSavedTeamsService.createTeam(gameType);
         Log.i("VBR-TeamsListActivity", "Start activity to create new team");
 
         final Intent intent = new Intent(this, SavedTeamActivity.class);
+        intent.putExtra("kind", gameType.toString());
+        intent.putExtra("editable", true);
         startActivity(intent);
     }
 
@@ -74,15 +117,14 @@ public class SavedTeamsListActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_saved_teams, menu);
 
         MenuItem deleteAllTeamsItem = menu.findItem(R.id.action_delete_teams);
-        deleteAllTeamsItem.setVisible(mSavedTeamsService.getSavedTeamServiceList().size() > 0);
+        deleteAllTeamsItem.setVisible(mSavedTeamsService.getSavedTeamList().size() > 0);
 
         MenuItem searchTeamsItem = menu.findItem(R.id.action_search_teams);
         SearchView searchTeamsView = (SearchView) searchTeamsItem.getActionView();
 
         searchTeamsView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            }
+            public void onFocusChange(View v, boolean hasFocus) {}
         });
 
         searchTeamsView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -130,5 +172,28 @@ public class SavedTeamsListActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+    }
+
+    private void showFABMenu(){
+        mIsFabOpen = true;
+        mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.standard_180));
+        mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
+        mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.standard_60));
+    }
+
+    private void closeFABMenu(){
+        mIsFabOpen = false;
+        mAdd6x6TeamButton.animate().translationY(0);
+        mAdd4x4TeamButton.animate().translationY(0);
+        mAddBeachTeamButton.animate().translationY(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mIsFabOpen){
+            closeFABMenu();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

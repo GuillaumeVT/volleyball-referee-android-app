@@ -64,13 +64,14 @@ public class RulesSetupFragment extends Fragment {
     }
 
     public static RulesSetupFragment newInstance() {
-        return newInstance(true);
+        return newInstance(true, true);
     }
 
-    public static RulesSetupFragment newInstance(boolean isGameContext) {
+    public static RulesSetupFragment newInstance(boolean isGameContext, boolean editable) {
         RulesSetupFragment fragment = new RulesSetupFragment();
         Bundle args = new Bundle();
         args.putBoolean("is_game", isGameContext);
+        args.putBoolean("editable", editable);
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,6 +82,7 @@ public class RulesSetupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rules_setup, container, false);
 
         final boolean isGameContext = getArguments().getBoolean("is_game");
+        final boolean editable = getArguments().getBoolean("editable");
 
         if (isGameContext) {
             if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
@@ -97,6 +99,7 @@ public class RulesSetupFragment extends Fragment {
         mScrollView = view.findViewById(R.id.rules_setup_scroll);
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
+        mRulesNameInput.setEnabled(editable);
 
         mSetsPerGameSpinner = view.findViewById(R.id.rules_sets_per_game);
         mSetsPerGameAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.sets_per_game_entries), getResources().getStringArray(R.array.sets_per_game_values));

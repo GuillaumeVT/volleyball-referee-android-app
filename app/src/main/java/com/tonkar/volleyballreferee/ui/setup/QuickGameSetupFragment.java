@@ -12,16 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
@@ -35,9 +36,10 @@ import java.util.List;
 
 public class QuickGameSetupFragment extends Fragment {
 
-    private ImageButton mGenderButton;
-    private Button      mHomeTeamColorButton;
-    private Button      mGuestTeamColorButton;
+    private ImageButton      mGenderButton;
+    private Button           mHomeTeamColorButton;
+    private Button           mGuestTeamColorButton;
+    private TeamsListAdapter mTeamsListAdapter;
 
     public QuickGameSetupFragment() {
     }
@@ -61,7 +63,7 @@ public class QuickGameSetupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 UiUtils.animate(getContext(), mGenderButton);
-                GenderType genderType = ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.HOME).next();
+                GenderType genderType = ServicesProvider.getInstance().getTeamService().getGenderType().next();
                 updateGender(genderType);
             }
         });
@@ -87,11 +89,10 @@ public class QuickGameSetupFragment extends Fragment {
             }
         });
 
-        final EditText homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
+        final AutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -101,15 +102,13 @@ public class QuickGameSetupFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
-        final EditText guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
+        final AutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -119,10 +118,8 @@ public class QuickGameSetupFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
-
 
         mHomeTeamColorButton = view.findViewById(R.id.home_team_color_button);
         mHomeTeamColorButton.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +178,43 @@ public class QuickGameSetupFragment extends Fragment {
         } else {
             matchDurationPicker.setVisibility(View.GONE);
             matchDurationText.setVisibility(View.GONE);
+        }
+
+        if (GameType.BEACH.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamList(GameType.BEACH));
+
+            homeTeamNameInput.setAdapter(mTeamsListAdapter);
+            homeTeamNameInput.setThreshold(2);
+            homeTeamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
+                    RecordedTeam team = mTeamsListAdapter.getItem(index);
+                    homeTeamNameInput.setText(team.getName());
+                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.HOME);
+
+                    teamColorSelected(TeamType.HOME, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.HOME));
+                    updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.HOME));
+                    computeConfirmItemVisibility();
+                }
+            });
+
+            guestTeamNameInput.setAdapter(mTeamsListAdapter);
+            guestTeamNameInput.setThreshold(2);
+            guestTeamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
+                    RecordedTeam team = mTeamsListAdapter.getItem(index);
+                    guestTeamNameInput.setText(team.getName());
+                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.GUEST);
+
+                    teamColorSelected(TeamType.GUEST, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.GUEST));
+                    updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.GUEST));
+                    computeConfirmItemVisibility();
+                }
+            });
+
+            guestTeamNameInput.setAdapter(mTeamsListAdapter);
+            guestTeamNameInput.setThreshold(2);
         }
 
         return view;

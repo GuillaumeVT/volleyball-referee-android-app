@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.team.BaseIndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -197,15 +196,15 @@ public abstract class SanctionSelectionDialog {
 
     private class IndoorPlayerAdapter extends BaseAdapter {
 
-        private final Context               mContext;
-        private final BaseIndoorTeamService mTeamService;
-        private final TeamType              mTeamType;
-        private final List<Integer>         mPlayers;
-        private       int                   mSelectedPlayer;
+        private final Context         mContext;
+        private final BaseTeamService mTeamService;
+        private final TeamType        mTeamType;
+        private final List<Integer>   mPlayers;
+        private       int             mSelectedPlayer;
 
         private IndoorPlayerAdapter(Context context, BaseTeamService teamService, TeamType teamType) {
             mContext = context;
-            mTeamService = (BaseIndoorTeamService) teamService;
+            mTeamService = teamService;
             mTeamType = teamType;
             mPlayers = new ArrayList<>(mTeamService.getPlayers(mTeamType));
             mSelectedPlayer = -1;

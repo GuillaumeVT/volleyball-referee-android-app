@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/home_team_name_input_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:orientation="horizontal"
                 android:weightSum="4">
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/guest_team_name_input_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

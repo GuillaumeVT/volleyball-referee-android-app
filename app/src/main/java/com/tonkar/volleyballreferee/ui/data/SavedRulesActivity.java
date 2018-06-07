@@ -35,10 +35,12 @@ public class SavedRulesActivity extends AppCompatActivity {
         mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService();
         mRules = mSavedRulesService.getCurrentRules();
 
+        boolean editable = getIntent().getBooleanExtra("editable", true);
+
         setTitle("");
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false));
+        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, editable));
         fragmentTransaction.commit();
     }
 

@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces.data;
 
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface SavedRulesService {
     Rules getSavedRules(String rulesName);
 
     void createRules();
+
+    void createRules(GameType gameType);
 
     void editRules(String rulesName);
 

@@ -62,7 +62,7 @@ public class RecordedTeam {
         mGameType = gameType;
     }
 
-    String getName() {
+    public String getName() {
         return mName;
     }
 
@@ -82,12 +82,20 @@ public class RecordedTeam {
         return Color.parseColor(mColor);
     }
 
+    String getColorStr() {
+        return mColor;
+    }
+
     public void setColor(int color) {
         mColor = colorIntToHtml(color);
     }
 
     int getLiberoColor() {
         return Color.parseColor(mLiberoColor);
+    }
+
+    String getLiberoColorStr() {
+        return mLiberoColor;
     }
 
     public void setLiberoColor(int liberoColor) {
@@ -143,5 +151,23 @@ public class RecordedTeam {
 
     private String colorIntToHtml(int color) {
         return String.format("#%06X", (0xFFFFFF & color)).toLowerCase();
+    }
+
+    public void setAll(RecordedTeam team) {
+        mUserId = team.getUserId();
+        mDate = team.getDate();
+        mGameType = team.getGameType();
+        mName = team.getName();
+        mColor = team.getColorStr();
+        mLiberoColor = team.getLiberoColorStr();
+        mGenderType = team.getGenderType();
+
+        mPlayers.clear();
+        mLiberos.clear();
+
+        mPlayers.addAll(team.getPlayers());
+        mLiberos.addAll(team.getLiberos());
+
+        mCaptain = team.getCaptain();
     }
 }

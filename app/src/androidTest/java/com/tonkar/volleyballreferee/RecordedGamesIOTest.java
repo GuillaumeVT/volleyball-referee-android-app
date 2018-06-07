@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee;
 import android.graphics.Color;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.RecordedGame;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.data.RecordedSet;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
@@ -44,9 +44,9 @@ public class RecordedGamesIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            JsonIOUtils.writeRecordedGamesStream(outputStream, expectedList);
+            RecordedGames.writeRecordedGamesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = JsonIOUtils.readRecordedGamesStream(inputStream);
+            actualList = RecordedGames.readRecordedGamesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,8 +60,8 @@ public class RecordedGamesIOTest {
     public void writeThenRead_one() {
         RecordedGame recordedGame1 = someRecordedGame1();
         try {
-            byte[] bytes1 = JsonIOUtils.recordedGameToByteArray(recordedGame1);
-            RecordedGame readGame1 = JsonIOUtils.byteArrayToRecordedGame(bytes1);
+            byte[] bytes1 = RecordedGames.recordedGameToByteArray(recordedGame1);
+            RecordedGame readGame1 = RecordedGames.byteArrayToRecordedGame(bytes1);
             assertEquals(recordedGame1, readGame1);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,8 +69,8 @@ public class RecordedGamesIOTest {
 
         RecordedGame recordedGame2 = someRecordedGame2();
         try {
-            byte[] bytes2 = JsonIOUtils.recordedGameToByteArray(recordedGame2);
-            RecordedGame readGame2 = JsonIOUtils.byteArrayToRecordedGame(bytes2);
+            byte[] bytes2 = RecordedGames.recordedGameToByteArray(recordedGame2);
+            RecordedGame readGame2 = RecordedGames.byteArrayToRecordedGame(bytes2);
             assertEquals(recordedGame2, readGame2);
         } catch (IOException e) {
             e.printStackTrace();

@@ -35,7 +35,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     protected TeamDefinition createTeamDefinition(TeamType teamType) {
-        return new IndoorTeamDefinition(teamType);
+        return new IndoorTeamDefinition(GameType.INDOOR, teamType);
     }
 
     @Override
@@ -410,7 +410,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     public int getExpectedNumberOfPlayersOnCourt() {
-        return 6;
+        return getTeamDefinition(TeamType.HOME).getExpectedNumberOfPlayersOnCourt();
     }
 
     @Override
