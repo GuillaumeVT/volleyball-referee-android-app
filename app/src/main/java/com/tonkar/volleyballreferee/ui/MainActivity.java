@@ -102,6 +102,16 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
             ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
         }
+        if (ServicesProvider.getInstance().isSavedRulesServiceUnavailable()) {
+            ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
+        } else {
+            ServicesProvider.getInstance().getSavedRulesService().loadSavedRules();
+        }
+        if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
+            ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
+        } else {
+            ServicesProvider.getInstance().getSavedTeamsService().loadSavedTeams();
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;

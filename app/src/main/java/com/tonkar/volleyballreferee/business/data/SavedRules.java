@@ -24,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -114,14 +113,11 @@ public class SavedRules implements SavedRulesService {
 
     @Override
     public void deleteSavedRules(String rulesName) {
-        for (Iterator<Rules> iterator = mSavedRulesList.iterator(); iterator.hasNext();) {
-            Rules savedRules = iterator.next();
-            if (savedRules.getName().equals(rulesName)) {
-                iterator.remove();
-                deleteRulesOnline(savedRules);
-            }
+        if (mSavedRules != null && mSavedRules.getName().equals(rulesName)) {
+            deleteRulesOnline(mSavedRules);
+            writeSavedRules();
+            mSavedRules = null;
         }
-        writeSavedRules();
     }
 
     @Override

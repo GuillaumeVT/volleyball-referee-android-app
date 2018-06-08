@@ -30,7 +30,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -138,16 +137,13 @@ public class SavedTeams implements SavedTeamsService {
 
     @Override
     public void deleteSavedTeam(GameType gameType, String teamName, GenderType genderType) {
-        for (Iterator<RecordedTeam> iterator = mSavedTeams.iterator(); iterator.hasNext();) {
-            RecordedTeam savedTeam = iterator.next();
-            if (savedTeam.getGameType().equals(gameType)
-                    && savedTeam.getName().equals(teamName)
-                    && savedTeam.getGenderType().equals(genderType)) {
-                iterator.remove();
-                deleteTeamOnline(savedTeam);
-            }
+        if (mWrappedTeam != null && mWrappedTeam.getTeamsKind().equals(gameType)
+                && mWrappedTeam.getTeamName(null).equals(teamName)
+                && mWrappedTeam.getGenderType().equals(genderType)) {
+            deleteTeamOnline(gameType, teamName, genderType);
+            writeSavedTeams();
+            mWrappedTeam = null;
         }
-        writeSavedTeams();
     }
 
     @Override
@@ -295,7 +291,7 @@ public class SavedTeams implements SavedTeamsService {
             boolean foundRemoteVersion = false;
 
             for (RecordedTeam remoteTeam : remoteTeamList) {
-                if (localTeam.getName().equals(remoteTeam.getName()) && localTeam.getGenderType().equals(remoteTeam.getGenderType())) {
+                if (localTeam.getName().equals(remoteTeam.getName()) && localTeam.getGenderType().equals(remoteTeam.getGenderType()) && localTeam.getGameType().equals(remoteTeam.getGameType())) {
                     foundRemoteVersion = true;
 
                     if (localTeam.getDate() < remoteTeam.getDate()) {
@@ -315,7 +311,7 @@ public class SavedTeams implements SavedTeamsService {
             boolean foundLocalVersion = false;
 
             for (RecordedTeam localTeam : mSavedTeams) {
-                if (localTeam.getName().equals(remoteTeam.getName()) && localTeam.getGenderType().equals(remoteTeam.getGenderType())) {
+                if (localTeam.getName().equals(remoteTeam.getName()) && localTeam.getGenderType().equals(remoteTeam.getGenderType()) && localTeam.getGameType().equals(remoteTeam.getGameType())) {
                     foundLocalVersion = true;
                 }
             }
@@ -363,8 +359,7 @@ public class SavedTeams implements SavedTeamsService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_URL, bytes,
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {
-                        }
+                        public void onResponse(String response) {}
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -397,12 +392,13 @@ public class SavedTeams implements SavedTeamsService {
         }
     }
 
-    private void deleteTeamOnline(RecordedTeam team) {
+    private void deleteTeamOnline(GameType gameType, String teamName, GenderType genderType) {
         if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
-            params.put("name", team.getName());
-            params.put("gender", team.getGenderType().toString());
+            params.put("name", teamName);
+            params.put("gender", genderType.toString());
+            params.put("kind", gameType.toString());
             String parameters = JsonStringRequest.getParameters(params);
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_URL + parameters, new byte[0],

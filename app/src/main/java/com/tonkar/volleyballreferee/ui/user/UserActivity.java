@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -36,6 +37,17 @@ public class UserActivity extends AppCompatActivity {
         // Google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestId().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        if (ServicesProvider.getInstance().isSavedRulesServiceUnavailable()) {
+            ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
+        } else {
+            ServicesProvider.getInstance().getSavedRulesService().loadSavedRules();
+        }
+        if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
+            ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
+        } else {
+            ServicesProvider.getInstance().getSavedTeamsService().loadSavedTeams();
+        }
     }
 
     @Override
