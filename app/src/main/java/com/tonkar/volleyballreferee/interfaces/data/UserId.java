@@ -16,7 +16,7 @@ public class UserId {
                     return "";
             }
         }
-    };
+    }
 
     public static String VBR_USER_ID = "01022018@vbr";
 

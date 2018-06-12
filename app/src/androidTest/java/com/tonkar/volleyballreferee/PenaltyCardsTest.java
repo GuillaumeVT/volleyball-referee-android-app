@@ -39,13 +39,13 @@ public class PenaltyCardsTest {
         assertEquals(0, game.getPoints(TeamType.HOME));
         assertEquals(0, game.getPoints(TeamType.GUEST));
 
-        game.giveSanction(TeamType.HOME, SanctionType.RED, -1);
+        game.giveSanction(TeamType.HOME, SanctionType.RED, 1);
 
         assertEquals(TeamType.GUEST, game.getServingTeam());
         assertEquals(0, game.getPoints(TeamType.HOME));
         assertEquals(1, game.getPoints(TeamType.GUEST));
 
-        assertEquals(true, game.hasSanctions(TeamType.HOME, -1));
+        assertEquals(true, game.hasSanctions(TeamType.HOME, 1));
         assertEquals(false, game.hasSanctions(TeamType.HOME, 5));
         assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
     }
@@ -55,12 +55,12 @@ public class PenaltyCardsTest {
         GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
-        game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, -1);
+        game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 2);
 
         assertEquals(1, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
 
-        assertEquals(true, game.hasSanctions(TeamType.GUEST, -1));
+        assertEquals(true, game.hasSanctions(TeamType.GUEST, 2));
         assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
     }
 
@@ -69,13 +69,13 @@ public class PenaltyCardsTest {
         GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
-        game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, -1);
+        game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, 1);
 
         assertEquals(0, game.getSets(TeamType.HOME));
         assertEquals(2, game.getSets(TeamType.GUEST));
         assertEquals(true, game.isMatchCompleted());
 
-        assertEquals(true, game.hasSanctions(TeamType.HOME, -1));
+        assertEquals(true, game.hasSanctions(TeamType.HOME, 1));
         assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
     }
 

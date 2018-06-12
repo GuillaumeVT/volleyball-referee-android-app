@@ -63,8 +63,7 @@ public class CodeInputDialogFragment extends DialogFragment {
 
         setCancelable(false);
 
-        final AlertDialog alertDialog = builder.create();
-        return alertDialog;
+        return builder.create();
     }
 
     public void setAlertDialogListener(AlertDialogListener alertDialogListener) {

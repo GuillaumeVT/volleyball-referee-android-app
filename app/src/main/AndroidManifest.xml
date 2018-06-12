@@ -60,9 +60,6 @@
             android:name=".ui.data.SavedRulesActivity"
             android:parentActivityName=".ui.data.SavedRulesListActivity" />
         <activity
-            android:name=".ui.web.WebActivity"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity
             android:name=".ui.user.UserSignInActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity

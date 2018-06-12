@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.UiUtils;
@@ -27,15 +26,12 @@ import java.util.List;
 
 public abstract class SanctionSelectionDialog {
 
-    private AlertDialog         mAlertDialog;
-    private GameType            mGameType;
-    private GridView            mSanctionGrid;
-    private IndoorPlayerAdapter mPlayerAdapter;
-    private SanctionType        mSelectedSanctionType;
+    private AlertDialog   mAlertDialog;
+    private GridView      mSanctionGrid;
+    private PlayerAdapter mPlayerAdapter;
+    private SanctionType  mSelectedSanctionType;
 
     SanctionSelectionDialog(LayoutInflater layoutInflater, final Context context, String title, final GameService gameService, final TeamType teamType) {
-        mGameType = gameService.getGameType();
-
         View sanctionsView = layoutInflater.inflate(R.layout.sanction_selection_dialog, null);
 
         final Spinner sanctionSpinner = sanctionsView.findViewById(R.id.sanction_spinner);
@@ -56,10 +52,8 @@ public abstract class SanctionSelectionDialog {
 
         mSanctionGrid = sanctionsView.findViewById(R.id.sanction_grid);
 
-        if (GameType.INDOOR.equals(mGameType) || GameType.INDOOR_4X4.equals(mGameType)) {
-            mPlayerAdapter = new IndoorPlayerAdapter(context, gameService, teamType);
-            mSanctionGrid.setAdapter(mPlayerAdapter);
-        }
+        mPlayerAdapter = new PlayerAdapter(context, gameService, teamType);
+        mSanctionGrid.setAdapter(mPlayerAdapter);
 
         mSelectedSanctionType = sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition());
         computePlayersVisibility();
@@ -68,7 +62,7 @@ public abstract class SanctionSelectionDialog {
         builder.setTitle(title).setView(sanctionsView);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                if (GameType.BEACH.equals(mGameType) || SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
+                if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
                     onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), -1);
                 } else {
                     onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), mPlayerAdapter.getSelectedPlayer());
@@ -83,28 +77,20 @@ public abstract class SanctionSelectionDialog {
     }
 
     private void computePlayersVisibility() {
-        if (GameType.INDOOR.equals(mGameType) || GameType.INDOOR_4X4.equals(mGameType)) {
-            if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
-                mSanctionGrid.setVisibility(View.GONE);
-            } else {
-                mSanctionGrid.setVisibility(View.VISIBLE);
-            }
-        } else {
+        if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
             mSanctionGrid.setVisibility(View.GONE);
+        } else {
+            mSanctionGrid.setVisibility(View.VISIBLE);
         }
     }
 
     private void computeOkAvailability() {
-        if (GameType.INDOOR.equals(mGameType) || GameType.INDOOR_4X4.equals(mGameType)) {
-            if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
-                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-            } else if (mPlayerAdapter.getSelectedPlayer() >= 0) {
-                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-            } else {
-                mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-            }
-        } else {
+        if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
             mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+        } else if (mPlayerAdapter.getSelectedPlayer() >= 0) {
+            mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+        } else {
+            mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
         }
     }
 
@@ -194,7 +180,7 @@ public abstract class SanctionSelectionDialog {
         }
     }
 
-    private class IndoorPlayerAdapter extends BaseAdapter {
+    private class PlayerAdapter extends BaseAdapter {
 
         private final Context         mContext;
         private final BaseTeamService mTeamService;
@@ -202,7 +188,7 @@ public abstract class SanctionSelectionDialog {
         private final List<Integer>   mPlayers;
         private       int             mSelectedPlayer;
 
-        private IndoorPlayerAdapter(Context context, BaseTeamService teamService, TeamType teamType) {
+        private PlayerAdapter(Context context, BaseTeamService teamService, TeamType teamType) {
             mContext = context;
             mTeamService = teamService;
             mTeamType = teamType;

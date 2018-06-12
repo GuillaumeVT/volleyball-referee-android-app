@@ -36,7 +36,7 @@
     <string name="user_sign_in_privacy_message">Tak. Gdy się logujesz, jedyną informacją, którą pobieramy z Twojego profilu, jest Twój unikalny identyfikator społecznościowy, którego używamy do Twojej indentyfikacji.</string>
     <string name="user_signed_in">Zalogowano jako %s</string>
     <string name="user_signed_out">	Wylogowano</string>
-    <string name="user_sign_in_error">Wystąpił błąd podczas logowania jako % s</string>
+    <string name="user_sign_in_error">Wystąpił błąd podczas logowania jako %s</string>
     <string name="user_scheduled_games_title">Moje zaplanowane mecze</string>
     <string name="user_scheduled_games_message">Przeglądaj, wybieraj i sędziuj swoje mecze zaplanowane na https://www.volleyball-referee.com/user</string>
     <string name="sign_out">Wyloguj</string>

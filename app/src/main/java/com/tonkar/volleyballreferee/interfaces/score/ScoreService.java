@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces.score;
 
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.rules.Rules;
 
 public interface ScoreService extends BaseScoreService {
 

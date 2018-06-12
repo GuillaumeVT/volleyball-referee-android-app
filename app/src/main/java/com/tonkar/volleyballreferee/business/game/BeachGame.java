@@ -102,10 +102,10 @@ public class BeachGame extends Game implements BeachTeamService {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (SanctionType.RED_EXPULSION.equals(sanctionType)) {
+        if (number > 0 && SanctionType.RED_EXPULSION.equals(sanctionType)) {
             // The team is excluded for this set, the other team wins
             forceFinishSet(teamType.other());
-        } else if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
+        } else if (number > 0 && SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
             // The team is excluded for this match, the other team wins
             forceFinishMatch(teamType.other());
         }
