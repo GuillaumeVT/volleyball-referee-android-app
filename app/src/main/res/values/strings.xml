@@ -58,6 +58,7 @@
     <string name="gender_description">Gender</string>
     <string name="match_duration_text">Select the match duration</string>
     <string name="league_name_hint">League / tournament name (optional)</string>
+    <string name="division_name_hint">Division / pool name (optional)</string>
     <string name="misc_tab">Misc.</string>
     <string name="rules_tab">Rules</string>
     <string name="teams_tab">Teams</string>

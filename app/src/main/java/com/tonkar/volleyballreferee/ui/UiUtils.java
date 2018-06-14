@@ -75,7 +75,7 @@ public class UiUtils {
         }
     }
 
-    public static void styleBaseIndoorTeamButton(Context context, BaseTeamService teamService, TeamType teamType, int number, Button button) {
+    public static void styleTeamButton(Context context, BaseTeamService teamService, TeamType teamType, int number, Button button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (teamService.isLibero(teamType, number)) {
@@ -88,7 +88,7 @@ public class UiUtils {
         }
     }
 
-    public static void styleBaseIndoorTeamText(Context context, BaseTeamService teamService, TeamType teamType, int number, TextView text) {
+    public static void styleTeamText(Context context, BaseTeamService teamService, TeamType teamType, int number, TextView text) {
         text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (teamService.isLibero(teamType, number)) {

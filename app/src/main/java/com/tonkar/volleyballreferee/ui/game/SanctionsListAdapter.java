@@ -143,7 +143,7 @@ public class SanctionsListAdapter extends BaseAdapter {
                 viewHolder.playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
             }
 
-            UiUtils.styleBaseIndoorTeamText(mContext, mTeamService, mTeamType, sanction.getPlayer(), viewHolder.playerText);
+            UiUtils.styleTeamText(mContext, mTeamService, mTeamType, sanction.getPlayer(), viewHolder.playerText);
         }
 
         return sanctionView;

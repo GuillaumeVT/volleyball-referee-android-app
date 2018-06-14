@@ -104,8 +104,8 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         viewHolder.playerInText.setText(String.valueOf(substitution.getPlayerIn()));
         viewHolder.playerOutText.setText(String.valueOf(substitution.getPlayerOut()));
 
-        UiUtils.styleBaseIndoorTeamText(mContext, mTeamService, mTeamType, substitution.getPlayerIn(), viewHolder.playerInText);
-        UiUtils.styleBaseIndoorTeamText(mContext, mTeamService, mTeamType, substitution.getPlayerOut(), viewHolder.playerOutText);
+        UiUtils.styleTeamText(mContext, mTeamService, mTeamType, substitution.getPlayerIn(), viewHolder.playerInText);
+        UiUtils.styleTeamText(mContext, mTeamService, mTeamType, substitution.getPlayerOut(), viewHolder.playerOutText);
 
         return substitutionView;
     }

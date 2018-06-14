@@ -349,10 +349,10 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void captainUpdated(TeamType teamType, int number) {
-        Log.i("VBR-TSActivity", String.format("Update %s team captain", mTeamType.toString()));
+        Log.i("VBR-TSActivity", String.format("Update %s team captain", teamType.toString()));
         mTeamService.setCaptain(teamType, number);
         mCaptainButton.setText(String.valueOf(number));
-        UiUtils.styleBaseIndoorTeamButton(getContext(), mTeamService, mTeamType, number, mCaptainButton);
+        UiUtils.styleTeamButton(getContext(), mTeamService, teamType, number, mCaptainButton);
     }
 
     private void selectCaptain() {

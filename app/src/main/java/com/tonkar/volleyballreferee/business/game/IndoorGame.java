@@ -43,10 +43,6 @@ public class IndoorGame extends Game implements IndoorTeamService {
         return new IndoorSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME), getTeamDefinition(TeamType.GUEST));
     }
 
-    private IndoorTeamDefinition getIndoorTeamDefinition(TeamType teamType) {
-        return (IndoorTeamDefinition) getTeamDefinition(teamType);
-    }
-
     private IndoorTeamComposition getIndoorTeamComposition(TeamType teamType) {
         return (IndoorTeamComposition) currentSet().getTeamComposition(teamType);
     }
@@ -239,37 +235,37 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     public int getLiberoColor(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getLiberoColor();
+        return getTeamDefinition(teamType).getLiberoColor();
     }
 
     @Override
     public void setLiberoColor(TeamType teamType, int color) {
-        getIndoorTeamDefinition(teamType).setLiberoColor(color);
+        getTeamDefinition(teamType).setLiberoColor(color);
     }
 
     @Override
     public void addLibero(TeamType teamType, int number) {
-        getIndoorTeamDefinition(teamType).addLibero(number);
+        getTeamDefinition(teamType).addLibero(number);
     }
 
     @Override
     public void removeLibero(TeamType teamType, int number) {
-        getIndoorTeamDefinition(teamType).removeLibero(number);
+        getTeamDefinition(teamType).removeLibero(number);
     }
 
     @Override
     public boolean isLibero(TeamType teamType, int number) {
-        return getIndoorTeamDefinition(teamType).isLibero(number);
+        return getTeamDefinition(teamType).isLibero(number);
     }
 
     @Override
     public boolean canAddLibero(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).canAddLibero();
+        return getTeamDefinition(teamType).canAddLibero();
     }
 
     @Override
     public java.util.Set<Integer> getLiberos(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getLiberos();
+        return getTeamDefinition(teamType).getLiberos();
     }
 
     @Override
@@ -293,22 +289,22 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     @Override
     public void setCaptain(TeamType teamType, int number) {
-        getIndoorTeamDefinition(teamType).setCaptain(number);
+        getTeamDefinition(teamType).setCaptain(number);
     }
 
     @Override
     public int getCaptain(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getCaptain();
+        return getTeamDefinition(teamType).getCaptain();
     }
 
     @Override
     public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getPossibleCaptains();
+        return getTeamDefinition(teamType).getPossibleCaptains();
     }
 
     @Override
     public boolean isCaptain(TeamType teamType, int number) {
-        return getIndoorTeamDefinition(teamType).isCaptain(number);
+        return getTeamDefinition(teamType).isCaptain(number);
     }
 
     @Override
@@ -332,11 +328,11 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
         if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType) && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
-            java.util.Set<Integer> players = getIndoorTeamDefinition(teamType).getPlayers();
+            java.util.Set<Integer> players = getTeamDefinition(teamType).getPlayers();
 
             // first remove the liberos
 
-            for (int libero : getIndoorTeamDefinition(teamType).getLiberos()) {
+            for (int libero : getTeamDefinition(teamType).getLiberos()) {
                 players.remove(libero);
             }
 

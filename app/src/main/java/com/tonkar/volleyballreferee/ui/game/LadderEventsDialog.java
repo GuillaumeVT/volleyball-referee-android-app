@@ -140,8 +140,8 @@ public class LadderEventsDialog {
             playerInText.setText(String.valueOf(substitution.getPlayerIn()));
             playerOutText.setText(String.valueOf(substitution.getPlayerOut()));
 
-            UiUtils.styleBaseIndoorTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerIn(), playerInText);
-            UiUtils.styleBaseIndoorTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerOut(), playerOutText);
+            UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerIn(), playerInText);
+            UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerOut(), playerOutText);
 
             return substitutionView;
         }
@@ -217,7 +217,7 @@ public class LadderEventsDialog {
                     playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
                 }
 
-                UiUtils.styleBaseIndoorTeamText(mContext, mBaseTeamService, mTeamType, sanction.getPlayer(), playerText);
+                UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, sanction.getPlayer(), playerText);
             }
 
             return sanctionView;

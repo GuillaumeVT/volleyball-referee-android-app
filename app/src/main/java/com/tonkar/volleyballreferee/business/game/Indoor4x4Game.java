@@ -43,10 +43,6 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
         return new Indoor4x4Set(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME), getTeamDefinition(TeamType.GUEST));
     }
 
-    private IndoorTeamDefinition getIndoorTeamDefinition(TeamType teamType) {
-        return (IndoorTeamDefinition) getTeamDefinition(teamType);
-    }
-
     private Indoor4x4TeamComposition getIndoorTeamComposition(TeamType teamType) {
         return (Indoor4x4TeamComposition) currentSet().getTeamComposition(teamType);
     }
@@ -218,7 +214,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
     @Override
     public int getLiberoColor(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getLiberoColor();
+        return getTeamDefinition(teamType).getLiberoColor();
     }
 
     @Override
@@ -242,7 +238,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
     @Override
     public java.util.Set<Integer> getLiberos(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getLiberos();
+        return getTeamDefinition(teamType).getLiberos();
     }
 
     @Override
@@ -266,22 +262,22 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
     @Override
     public void setCaptain(TeamType teamType, int number) {
-        getIndoorTeamDefinition(teamType).setCaptain(number);
+        getTeamDefinition(teamType).setCaptain(number);
     }
 
     @Override
     public int getCaptain(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getCaptain();
+        return getTeamDefinition(teamType).getCaptain();
     }
 
     @Override
     public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
-        return getIndoorTeamDefinition(teamType).getPossibleCaptains();
+        return getTeamDefinition(teamType).getPossibleCaptains();
     }
 
     @Override
     public boolean isCaptain(TeamType teamType, int number) {
-        return getIndoorTeamDefinition(teamType).isCaptain(number);
+        return getTeamDefinition(teamType).isCaptain(number);
     }
 
     @Override
@@ -305,7 +301,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
         if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType) && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
-            java.util.Set<Integer> players = getIndoorTeamDefinition(teamType).getPlayers();
+            java.util.Set<Integer> players = getTeamDefinition(teamType).getPlayers();
 
             // Remove the disqualified players
 

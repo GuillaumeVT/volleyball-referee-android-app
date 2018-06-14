@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.ui.team;
+package com.tonkar.volleyballreferee.ui.setup;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,21 +43,39 @@ public class MiscSetupFragment extends Fragment {
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-QTSActivity", "Update league name");
+                Log.i("VBR-MSActivity", "Update league name");
                 ServicesProvider.getInstance().getGeneralService().setLeagueName(s.toString());
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         leagueNameInput.setText(ServicesProvider.getInstance().getGeneralService().getLeagueName());
+
+        final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        divisionNameInput.setThreshold(2);
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
+        divisionNameInput.setAdapter(divisionNameAdapter);
+        divisionNameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("VBR-MSActivity", "Update division name");
+                ServicesProvider.getInstance().getGeneralService().setDivisionName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        divisionNameInput.setText(ServicesProvider.getInstance().getGeneralService().getDivisionName());
 
         return view;
     }

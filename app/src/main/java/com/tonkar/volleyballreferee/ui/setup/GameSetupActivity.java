@@ -26,7 +26,6 @@ import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
-import com.tonkar.volleyballreferee.ui.team.MiscSetupFragment;
 import com.tonkar.volleyballreferee.ui.team.TeamSetupFragment;
 
 public class GameSetupActivity extends AppCompatActivity {

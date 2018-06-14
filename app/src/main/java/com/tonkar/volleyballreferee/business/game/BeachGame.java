@@ -176,21 +176,23 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    public void setCaptain(TeamType teamType, int number) {}
+    public void setCaptain(TeamType teamType, int number) {
+        getTeamDefinition(teamType).setCaptain(number);
+    }
 
     @Override
     public int getCaptain(TeamType teamType) {
-        return 1;
+        return getTeamDefinition(teamType).getCaptain();
     }
 
     @Override
     public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
-        return new HashSet<>();
+        return getTeamDefinition(teamType).getPossibleCaptains();
     }
 
     @Override
     public boolean isCaptain(TeamType teamType, int number) {
-        return false;
+        return getTeamDefinition(teamType).isCaptain(number);
     }
 
     @Override

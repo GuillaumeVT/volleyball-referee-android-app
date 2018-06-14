@@ -63,12 +63,14 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     private       RecordedGame       mRecordedGame;
     private final List<RecordedGame> mRecordedGames;
     private final Set<String>        mRecordedLeagues;
+    private final Set<String>        mRecordedDivisions;
     private       boolean            mOnlineRecordingEnabled;
 
     public RecordedGames(Context context) {
         mContext = context;
         mRecordedGames = new ArrayList<>();
         mRecordedLeagues = new TreeSet<>();
+        mRecordedDivisions = new TreeSet<>();
         mOnlineRecordingEnabled = true;
     }
 
@@ -111,12 +113,18 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         assessAreRecordedOnline();
 
         mRecordedLeagues.clear();
+        mRecordedDivisions.clear();
         for (RecordedGame recordedGame : mRecordedGames) {
             recordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
             if (recordedGame.getGameSchedule() == 0L) {
                 recordedGame.setGameSchedule(recordedGame.getGameDate());
             }
-            mRecordedLeagues.add(recordedGame.getLeagueName());
+            if (!recordedGame.getLeagueName().isEmpty()) {
+                mRecordedLeagues.add(recordedGame.getLeagueName());
+            }
+            if (!recordedGame.getDivisionName().isEmpty()) {
+                mRecordedDivisions.add(recordedGame.getDivisionName());
+            }
         }
     }
 
@@ -141,6 +149,11 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
     @Override
     public Set<String> getRecordedLeagues() {
         return mRecordedLeagues;
+    }
+
+    @Override
+    public Set<String> getRecordedDivisions() {
+        return mRecordedDivisions;
     }
 
     @Override
@@ -537,33 +550,26 @@ public class RecordedGames implements RecordedGamesService, ScoreListener, TeamL
         guestTeam.setUserId(userId);
         guestTeam.setGameType(mRecordedGame.getGameType());
 
-        if (mGameService instanceof IndoorTeamService) {
-            IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
+        homeTeam.setLiberoColor(mGameService.getLiberoColor(TeamType.HOME));
+        guestTeam.setLiberoColor(mGameService.getLiberoColor(TeamType.GUEST));
 
-            homeTeam.setLiberoColor(indoorTeamService.getLiberoColor(TeamType.HOME));
-            guestTeam.setLiberoColor(indoorTeamService.getLiberoColor(TeamType.GUEST));
-
-            for (int number : mGameService.getPlayers(TeamType.HOME)) {
-                if (indoorTeamService.isLibero(TeamType.HOME, number)) {
-                    homeTeam.getLiberos().add(number);
-                } else {
-                    homeTeam.getPlayers().add(number);
-                }
+        for (int number : mGameService.getPlayers(TeamType.HOME)) {
+            if (mGameService.isLibero(TeamType.HOME, number)) {
+                homeTeam.getLiberos().add(number);
+            } else {
+                homeTeam.getPlayers().add(number);
             }
-            for (int number : mGameService.getPlayers(TeamType.GUEST)) {
-                if (indoorTeamService.isLibero(TeamType.GUEST, number)) {
-                    guestTeam.getLiberos().add(number);
-                } else {
-                    guestTeam.getPlayers().add(number);
-                }
-            }
-
-            homeTeam.setCaptain(indoorTeamService.getCaptain(TeamType.HOME));
-            guestTeam.setCaptain(indoorTeamService.getCaptain(TeamType.GUEST));
-        } else {
-            homeTeam.getPlayers().addAll(mGameService.getPlayers(TeamType.HOME));
-            guestTeam.getPlayers().addAll(mGameService.getPlayers(TeamType.GUEST));
         }
+        for (int number : mGameService.getPlayers(TeamType.GUEST)) {
+            if (mGameService.isLibero(TeamType.GUEST, number)) {
+                guestTeam.getLiberos().add(number);
+            } else {
+                guestTeam.getPlayers().add(number);
+            }
+        }
+
+        homeTeam.setCaptain(mGameService.getCaptain(TeamType.HOME));
+        guestTeam.setCaptain(mGameService.getCaptain(TeamType.GUEST));
 
         mRecordedGame.setRules(mGameService.getRules());
         mRecordedGame.getRules().setUserId(userId);

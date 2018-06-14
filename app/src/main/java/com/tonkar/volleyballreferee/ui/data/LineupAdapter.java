@@ -71,7 +71,7 @@ public class LineupAdapter extends BaseAdapter {
             int number = mTeamService.getPlayerAtPositionInStartingLineup(mTeamType, positionType, mSetIndex);
             viewHolder.positionText.setWidth(measureTextWidth());
             viewHolder.positionText.setText(String.valueOf(number));
-            UiUtils.styleBaseIndoorTeamText(mContext, mTeamService, mTeamType, number, viewHolder.positionText);
+            UiUtils.styleTeamText(mContext, mTeamService, mTeamType, number, viewHolder.positionText);
             viewHolder.positionTitle.setText(UiUtils.getPositionTitle(mContext, positionType));
             viewHolder.positionText.setVisibility(View.VISIBLE);
             viewHolder.positionTitle.setVisibility(View.VISIBLE);

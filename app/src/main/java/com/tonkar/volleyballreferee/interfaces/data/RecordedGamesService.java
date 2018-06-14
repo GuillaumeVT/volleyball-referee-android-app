@@ -25,6 +25,8 @@ public interface RecordedGamesService extends WebGamesService {
 
     Set<String> getRecordedLeagues();
 
+    Set<String> getRecordedDivisions();
+
     void deleteRecordedGame(long gameDate);
 
     void deleteAllRecordedGames();

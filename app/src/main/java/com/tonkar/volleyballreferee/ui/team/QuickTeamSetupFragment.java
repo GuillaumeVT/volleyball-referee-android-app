@@ -31,6 +31,7 @@ public class QuickTeamSetupFragment extends Fragment {
     private TeamType        mTeamType;
     private BaseTeamService mTeamService;
     private Button          mTeamColorButton;
+    private Button          mCaptainButton;
     private ImageButton     mGenderButton;
 
     public QuickTeamSetupFragment() {
@@ -92,6 +93,16 @@ public class QuickTeamSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
+        mCaptainButton = view.findViewById(R.id.team_captain_number_button);
+        updateCaptain();
+        mCaptainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UiUtils.animate(getContext(), mCaptainButton);
+                switchCaptain();
+            }
+        });
+
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
             teamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
         } else {
@@ -137,6 +148,36 @@ public class QuickTeamSetupFragment extends Fragment {
         Log.i("VBR-QTSActivity", String.format("Update %s team color", mTeamType.toString()));
         UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
         mTeamService.setTeamColor(mTeamType, color);
+        updateCaptain();
+    }
+
+    private void updateCaptain() {
+        int captain = mTeamService.getCaptain(mTeamType);
+        captainUpdated(captain);
+    }
+
+    private void captainUpdated(int number) {
+        Log.i("VBR-QTSActivity", String.format("Update %s team captain", mTeamType.toString()));
+        mTeamService.setCaptain(mTeamType, number);
+        mCaptainButton.setText(String.valueOf(number));
+        UiUtils.styleTeamButton(getContext(), mTeamService, mTeamType, number, mCaptainButton);
+    }
+
+    private void switchCaptain() {
+        int captain = mTeamService.getCaptain(mTeamType);
+
+        switch (captain) {
+            case 1:
+                captain = 2;
+                break;
+            case 2:
+                captain = 1;
+                break;
+            default:
+                break;
+        }
+
+        captainUpdated(captain);
     }
 
     private void updateGender(GenderType genderType) {
