@@ -44,13 +44,13 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             pdfMenu.setVisible(false);
         }
 
-        MenuItem recordMenu = menu.findItem(R.id.action_record_game);
+        MenuItem recordMenu = menu.findItem(R.id.action_index_game);
 
-        if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
-            if (mRecordedGamesService.isGameRecordedOnline(mGameDate)) {
-                recordMenu.setIcon(R.drawable.ic_record_ok_menu);
+        if (PrefUtils.isSyncOn(this)) {
+            if (mRecordedGamesService.isGameIndexed(mGameDate)) {
+                recordMenu.setIcon(R.drawable.ic_public);
             } else {
-                recordMenu.setIcon(R.drawable.ic_record_on_menu);
+                recordMenu.setIcon(R.drawable.ic_private);
             }
         } else {
             recordMenu.setVisible(false);
@@ -62,8 +62,8 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_record_game:
-                uploadGame();
+            case R.id.action_index_game:
+                toggleGameIndexed();
                 return true;
             case R.id.action_generate_pdf:
                 generatePdf();
@@ -79,10 +79,10 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadGame() {
-        Log.i("VBR-RGameActivity", "Upload game");
-        if (!mRecordedGamesService.isGameRecordedOnline(mGameDate)) {
-            mRecordedGamesService.uploadRecordedGameOnline(mGameDate);
+    private void toggleGameIndexed() {
+        Log.i("VBR-RGameActivity", "Toggle game indexed");
+        if (PrefUtils.isSyncOn(this)) {
+            mRecordedGamesService.toggleGameIndexed(mGameDate);
             invalidateOptionsMenu();
         }
     }

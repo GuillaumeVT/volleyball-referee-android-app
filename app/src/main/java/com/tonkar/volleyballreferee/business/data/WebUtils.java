@@ -20,6 +20,7 @@ public class WebUtils {
     public static String GAME_CODE_URL            = BASE_URL + "/api/view/game/code/%d";
     public static String USER_GAME_URL            = BASE_URL + "/api/user/game";
     public static String USER_SCHEDULED_GAMES_URL = USER_GAME_URL + "/available";
+    public static String USER_COMPLETED_GAMES_URL = USER_GAME_URL + "/completed";
     public static String USER_RULES_URL           = BASE_URL + "/api/user/rules";
     public static String USER_TEAM_URL            = BASE_URL + "/api/user/team";
 

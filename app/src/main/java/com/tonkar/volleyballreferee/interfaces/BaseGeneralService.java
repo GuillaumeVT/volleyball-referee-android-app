@@ -27,4 +27,8 @@ public interface BaseGeneralService {
     String getDivisionName();
 
     void setDivisionName(String name);
+
+    boolean isIndexed();
+
+    void setIndexed(boolean indexed);
 }

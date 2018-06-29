@@ -44,6 +44,7 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
@@ -92,26 +93,18 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
         Button scheduledListButton = findViewById(R.id.start_scheduled_list_game_button);
         colorButtonDrawable(scheduledListButton, android.R.color.white);
-        scheduledListButton.setVisibility(PrefUtils.isPrefOnlineRecordingEnabled(this) && PrefUtils.isSignedIn(this) ? View.VISIBLE : View.GONE);
 
         Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
         colorButtonDrawable(scheduledCodeButton, android.R.color.white);
-        scheduledCodeButton.setVisibility(PrefUtils.isPrefOnlineRecordingEnabled(this) ? View.VISIBLE : View.GONE);
+        scheduledCodeButton.setVisibility(PrefUtils.isPrefDataSyncEnabled(this) ? View.VISIBLE : View.GONE);
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
         if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
             ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
         }
-        if (ServicesProvider.getInstance().isSavedRulesServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-        } else {
-            ServicesProvider.getInstance().getSavedRulesService().loadSavedRules();
-        }
-        if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
-        } else {
-            ServicesProvider.getInstance().getSavedTeamsService().loadSavedTeams();
-        }
+
+        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
+        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
@@ -228,9 +221,6 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         final MenuItem messageItem = menu.findItem(R.id.action_message);
         initMessageMenuVisibility(messageItem);
 
-        final MenuItem userItem = menu.findItem(R.id.action_account);
-        userItem.setVisible(PrefUtils.isPrefOnlineRecordingEnabled(this));
-
         return true;
     }
 
@@ -255,12 +245,17 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                 return true;
             case R.id.action_account:
                 final Intent intent;
-                if (PrefUtils.isSignedIn(this)) {
-                    Log.i("VBR-UserActivity", "User account");
-                    intent = new Intent(this, UserActivity.class);
+                if (PrefUtils.isWebPremiumPurchased(this)) {
+                    if (PrefUtils.isSignedIn(this)) {
+                        Log.i("VBR-MainActivity", "User account");
+                        intent = new Intent(this, UserActivity.class);
+                    } else {
+                        Log.i("VBR-MainActivity", "User sign in");
+                        intent = new Intent(this, UserSignInActivity.class);
+                    }
                 } else {
-                    Log.i("VBR-UserSignInActivity", "User sign in");
-                    intent = new Intent(this, UserSignInActivity.class);
+                    Log.i("VBR-UserActivity", "Purchase");
+                    intent = new Intent(this, PurchasesListActivity.class);
                 }
                 startActivity(intent);
                 return true;
@@ -329,8 +324,27 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
     }
 
     public void goToScheduledGames(View view) {
-        Log.i("VBR-MainActivity", "Go to scheduled games");
-        final Intent intent = new Intent(this, ScheduledGamesListActivity.class);
+        final Intent intent;
+
+        if (PrefUtils.isWebPremiumPurchased(this)) {
+            if (PrefUtils.isSignedIn(this)) {
+                Log.i("VBR-MainActivity", "Scheduled games");
+                intent = new Intent(this, ScheduledGamesListActivity.class);
+            } else {
+                Log.i("VBR-MainActivity", "User sign in");
+                intent = new Intent(this, UserSignInActivity.class);
+            }
+        } else {
+            Log.i("VBR-MainActivity", "Purchases");
+            intent = new Intent(this, PurchasesListActivity.class);
+        }
+
+        startActivity(intent);
+    }
+
+    public void goToPurchases(View view) {
+        Log.i("VBR-MainActivity", "Purchases");
+        final Intent intent = new Intent(this, PurchasesListActivity.class);
         startActivity(intent);
     }
 
@@ -399,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
     private void initMessageMenuVisibility(final MenuItem messageItem) {
         messageItem.setVisible(false);
 
-        if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+        if (PrefUtils.isPrefDataSyncEnabled(this)) {
             String url = WebUtils.HAS_MESSAGE_URL;
             BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
                     new Response.Listener<Boolean>() {
@@ -419,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
     }
 
     private void showMessage() {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
+        if (PrefUtils.isPrefDataSyncEnabled(this)) {
             String url = WebUtils.MESSAGE_URL;
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
                     new Response.Listener<String>() {

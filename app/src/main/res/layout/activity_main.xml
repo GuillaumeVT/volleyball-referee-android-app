@@ -195,6 +195,17 @@
                             android:onClick="goToScheduledGames"
                             android:text="@string/user_scheduled_games_title" />
 
+                        <Button
+                            android:id="@+id/start_purchase_button"
+                            style="@style/MainActivityButton.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_margin_size"
+                            android:drawableLeft="@drawable/ic_purchase"
+                            android:drawablePadding="@dimen/small_margin_size"
+                            android:onClick="goToPurchases"
+                            android:text="@string/purchase" />
+
                     </LinearLayout>
 
                 </LinearLayout>

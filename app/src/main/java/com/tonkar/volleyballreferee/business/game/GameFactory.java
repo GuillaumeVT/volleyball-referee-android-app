@@ -53,6 +53,7 @@ public class GameFactory {
             case INDOOR:
                 IndoorGame indoorGame = createIndoorGame(recordedGameService.getGameDate(), recordedGameService.getGameSchedule(), recordedGameService.getRules());
                 indoorGame.setUsageType(recordedGameService.getUsageType());
+                indoorGame.setIndexed(recordedGameService.isIndexed());
                 indoorGame.setLeagueName(recordedGameService.getLeagueName());
                 indoorGame.setDivisionName(recordedGameService.getDivisionName());
                 indoorGame.restoreTeams(recordedGameService);
@@ -60,6 +61,7 @@ public class GameFactory {
                 break;
             case BEACH:
                 BeachGame beachGame = createBeachGame(recordedGameService.getGameDate(), recordedGameService.getGameSchedule(), recordedGameService.getRules());
+                beachGame.setIndexed(recordedGameService.isIndexed());
                 beachGame.setLeagueName(recordedGameService.getLeagueName());
                 beachGame.setDivisionName(recordedGameService.getDivisionName());
                 beachGame.restoreTeams(recordedGameService);
@@ -68,6 +70,7 @@ public class GameFactory {
             case INDOOR_4X4:
                 Indoor4x4Game indoor4x4Game = createIndoor4x4Game(recordedGameService.getGameDate(), recordedGameService.getGameSchedule(), recordedGameService.getRules());
                 indoor4x4Game.setUsageType(recordedGameService.getUsageType());
+                indoor4x4Game.setIndexed(recordedGameService.isIndexed());
                 indoor4x4Game.setLeagueName(recordedGameService.getLeagueName());
                 indoor4x4Game.setDivisionName(recordedGameService.getDivisionName());
                 indoor4x4Game.restoreTeams(recordedGameService);

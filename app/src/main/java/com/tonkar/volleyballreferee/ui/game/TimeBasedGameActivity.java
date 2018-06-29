@@ -26,6 +26,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
@@ -39,7 +40,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-public class TimeBasedGameActivity extends AppCompatActivity implements ScoreListener, TeamListener {
+public class TimeBasedGameActivity extends AppCompatActivity implements GeneralListener, ScoreListener, TeamListener {
+
+    private static final String TAG = "VBR-TBGameActivity";
 
     private TimeBasedGameService mGameService;
     private RecordedGamesService mRecordedGamesService;
@@ -64,7 +67,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-TBGameActivity", "Create time-based game activity");
+        Log.i(TAG, "Create time-based game activity");
         setContentView(R.layout.activity_time_based_game);
 
         if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
@@ -86,6 +89,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
             UiUtils.navigateToHome(this);
         }
 
+        mGameService.addGeneralListener(this);
         mGameService.addScoreListener(this);
         mGameService.addTeamListener(this);
         mRecordedGamesService.connectGameRecorder();
@@ -135,6 +139,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
             mCountDownTimer.cancel();
             mCountDownTimer = null;
         }
+        mGameService.removeGeneralListener(this);
         mGameService.removeScoreListener(this);
         mGameService.removeTeamListener(this);
         mRecordedGamesService.disconnectGameRecorder(isFinishing());
@@ -152,22 +157,21 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game, menu);
 
-        MenuItem recordMenu = menu.findItem(R.id.action_record_game);
-
         if (mGameService.isMatchCompleted()) {
             MenuItem tossCoinMenu = menu.findItem(R.id.action_toss_coin);
             tossCoinMenu.setVisible(false);
-            recordMenu.setVisible(false);
-        } else {
-            if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
-                if (mRecordedGamesService.isOnlineRecordingEnabled()) {
-                    recordMenu.setIcon(R.drawable.ic_record_on_menu);
-                } else {
-                    recordMenu.setIcon(R.drawable.ic_record_off_menu);
-                }
+        }
+
+        MenuItem indexMenu = menu.findItem(R.id.action_index_game);
+
+        if (PrefUtils.isSyncOn(this)) {
+            if (mGameService.isIndexed()) {
+                indexMenu.setIcon(R.drawable.ic_public);
             } else {
-                recordMenu.setVisible(false);
+                indexMenu.setIcon(R.drawable.ic_private);
             }
+        } else {
+            indexMenu.setVisible(false);
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -190,8 +194,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
             case R.id.action_share:
                 share();
                 return true;
-            case R.id.action_record_game:
-                toggleOnlineRecording();
+            case R.id.action_index_game:
+                toggleIndexed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -199,13 +203,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     private void tossACoin() {
-        Log.i("VBR-TBGameActivity", "Toss a coin");
+        Log.i(TAG, "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
         Toast.makeText(this, tossResult, Toast.LENGTH_LONG).show();
     }
 
     private void navigateToHomeWithDialog() {
-        Log.i("VBR-TBGameActivity", "Navigate to home");
+        Log.i(TAG, "Navigate to home");
         if (mGameService.isMatchCompleted()) {
             UiUtils.navigateToHome(this, false);
         } else {
@@ -229,14 +233,14 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
                 builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.i("VBR-TBGameActivity", "User accepts to stop");
+                        Log.i(TAG, "User accepts to stop");
                         mGameService.stop();
                         UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
                     }
                 });
                 builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.i("VBR-TBGameActivity", "User refuses to stop");
+                        Log.i(TAG, "User refuses to stop");
                     }
                 });
                 AlertDialog alertDialog = builder.show();
@@ -246,40 +250,34 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     private void share() {
-        Log.i("VBR-TBGameActivity", "Share game");
+        Log.i(TAG, "Share game");
         if (mGameService.isMatchCompleted()) {
             UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
         } else {
-            UiUtils.shareGame(this, getWindow(), mGameService, mRecordedGamesService.isOnlineRecordingEnabled());
+            UiUtils.shareGame(this, getWindow(), mGameService);
         }
     }
 
-    private void toggleOnlineRecording() {
-        Log.i("VBR-GameActivity", "Toggle online recording");
-        mRecordedGamesService.toggleOnlineRecording();
-        if (mRecordedGamesService.isOnlineRecordingEnabled()) {
-            Toast.makeText(this, getResources().getString(R.string.stream_online_on_message), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, getResources().getString(R.string.stream_online_off_message), Toast.LENGTH_LONG).show();
-        }
-        invalidateOptionsMenu();
+    private void toggleIndexed() {
+        Log.i(TAG, "Toggle indexed");
+        mGameService.setIndexed(!mGameService.isIndexed());
     }
 
     // UI Callbacks
 
     public void swapTeams(View view) {
-        Log.i("VBR-TBGameActivity", "Swap teams");
+        Log.i(TAG, "Swap teams");
         UiUtils.animate(this, mSwapTeamsButton);
         mGameService.swapTeams(ActionOriginType.USER);
     }
 
     public void swapFirstService(View view) {
-        Log.i("VBR-TBGameActivity", "Swap first service");
+        Log.i(TAG, "Swap first service");
         mGameService.swapServiceAtStart();
     }
 
     public void removeLastPoint(View view) {
-        Log.i("VBR-TBGameActivity", "Remove last point");
+        Log.i(TAG, "Remove last point");
         UiUtils.animate(this, mScoreRemoveButton);
         if (mGameService.isMatchRunning()) {
             mGameService.removeLastPoint();
@@ -287,7 +285,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     public void increaseLeftScore(View view) {
-        Log.i("VBR-TBGameActivity", "Increase left score");
+        Log.i(TAG, "Increase left score");
         UiUtils.animate(this, mLeftTeamScoreButton);
         if (mGameService.isMatchRunning()) {
             mGameService.addPoint(mTeamOnLeftSide);
@@ -295,7 +293,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     public void increaseRightScore(View view) {
-        Log.i("VBR-TBGameActivity", "Increase right score");
+        Log.i(TAG, "Increase right score");
         UiUtils.animate(this, mRightTeamScoreButton);
         if (mGameService.isMatchRunning()) {
             mGameService.addPoint(mTeamOnRightSide);
@@ -303,7 +301,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     public void startMatch(View view) {
-        Log.i("VBR-TBGameActivity", "Start match");
+        Log.i(TAG, "Start match");
         UiUtils.animate(this, mStartMatchButton);
         if (!mGameService.isMatchStarted() && mGameService.getRemainingTime() > 0L) {
             startGameWithDialog();
@@ -311,7 +309,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
     }
 
     public void stopMatch(View view) {
-        Log.i("VBR-TBGameActivity", "Stop match");
+        Log.i(TAG, "Stop match");
         UiUtils.animate(this, mStopMatchButton);
         if (mGameService.isMatchRunning()) {
             stopGameWithDialog();
@@ -323,7 +321,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         builder.setTitle(R.string.start_match_description).setMessage(getResources().getString(R.string.confirm_start_match_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-TBGameActivity", "User accepts to start");
+                Log.i(TAG, "User accepts to start");
                 mGameService.start();
                 computeStartStopVisibility();
                 runMatch();
@@ -331,7 +329,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-TBGameActivity", "User refuses to start");
+                Log.i(TAG, "User refuses to start");
             }
         });
         AlertDialog alertDialog = builder.show();
@@ -343,7 +341,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-TBGameActivity", "User accepts to stop");
+                Log.i(TAG, "User accepts to stop");
                 mGameService.stop();
                 mCountDownTimer.cancel();
                 disableView();
@@ -353,7 +351,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-TBGameActivity", "User refuses to stop");
+                Log.i(TAG, "User refuses to stop");
             }
         });
         AlertDialog alertDialog = builder.show();
@@ -465,6 +463,16 @@ public class TimeBasedGameActivity extends AppCompatActivity implements ScoreLis
         };
 
         mCountDownTimer.start();
+    }
+
+    @Override
+    public void onMatchIndexed(boolean indexed) {
+        if (indexed) {
+            Toast.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
+        }
+        invalidateOptionsMenu();
     }
 
 }

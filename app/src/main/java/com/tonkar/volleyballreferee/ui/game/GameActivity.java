@@ -34,6 +34,7 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -48,7 +49,7 @@ import com.tonkar.volleyballreferee.ui.UiUtils;
 import java.util.Locale;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener, SanctionListener {
+public class GameActivity extends AppCompatActivity implements GeneralListener, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private GameService          mGameService;
     private RecordedGamesService mRecordedGamesService;
@@ -106,6 +107,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             UiUtils.navigateToHome(this);
         }
 
+        mGameService.addGeneralListener(this);
         mGameService.addScoreListener(this);
         mGameService.addTimeoutListener(this);
         mGameService.addTeamListener(this);
@@ -195,6 +197,7 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mGameService.removeGeneralListener(this);
         mGameService.removeScoreListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeTeamListener(this);
@@ -225,22 +228,21 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game, menu);
 
-        MenuItem recordMenu = menu.findItem(R.id.action_record_game);
-
         if (mGameService.isMatchCompleted()) {
             MenuItem tossCoinMenu = menu.findItem(R.id.action_toss_coin);
             tossCoinMenu.setVisible(false);
-            recordMenu.setVisible(false);
-        } else {
-            if (PrefUtils.isPrefOnlineRecordingEnabled(this)) {
-                if (mRecordedGamesService.isOnlineRecordingEnabled()) {
-                    recordMenu.setIcon(R.drawable.ic_record_on_menu);
-                } else {
-                    recordMenu.setIcon(R.drawable.ic_record_off_menu);
-                }
+        }
+
+        MenuItem indexMenu = menu.findItem(R.id.action_index_game);
+
+        if (PrefUtils.isSyncOn(this)) {
+            if (mGameService.isIndexed()) {
+                indexMenu.setIcon(R.drawable.ic_public);
             } else {
-                recordMenu.setVisible(false);
+                indexMenu.setIcon(R.drawable.ic_private);
             }
+        } else {
+            indexMenu.setVisible(false);
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -263,8 +265,8 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
             case R.id.action_share:
                 share();
                 return true;
-            case R.id.action_record_game:
-                toggleOnlineRecording();
+            case R.id.action_index_game:
+                toggleIndexed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -303,19 +305,13 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
         if (mGameService.isMatchCompleted()) {
             UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
         } else {
-            UiUtils.shareGame(this, getWindow(), mGameService, mRecordedGamesService.isOnlineRecordingEnabled());
+            UiUtils.shareGame(this, getWindow(), mGameService);
         }
     }
 
-    private void toggleOnlineRecording() {
-        Log.i("VBR-GameActivity", "Toggle online recording");
-        mRecordedGamesService.toggleOnlineRecording();
-        if (mRecordedGamesService.isOnlineRecordingEnabled()) {
-            Toast.makeText(this, getResources().getString(R.string.stream_online_on_message), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, getResources().getString(R.string.stream_online_off_message), Toast.LENGTH_LONG).show();
-        }
-        invalidateOptionsMenu();
+    private void toggleIndexed() {
+        Log.i("VBR-GameActivity", "Toggle indexed");
+        mGameService.setIndexed(!mGameService.isIndexed());
     }
 
     // UI Callbacks
@@ -766,5 +762,15 @@ public class GameActivity extends AppCompatActivity implements ScoreListener, Ti
                 gameNavigation.setSelectedItemId(R.id.ladder_tab);
             }
         }
+    }
+
+    @Override
+    public void onMatchIndexed(boolean indexed) {
+        if (indexed) {
+            Toast.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
+        }
+        invalidateOptionsMenu();
     }
 }

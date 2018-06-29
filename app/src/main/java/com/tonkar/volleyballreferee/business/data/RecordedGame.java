@@ -36,6 +36,8 @@ public class RecordedGame implements RecordedGameService {
     private UsageType         mUsageType;
     @SerializedName("status")
     private GameStatus        mGameStatus;
+    @SerializedName("indexed")
+    private boolean           mIndexed;
     @SerializedName("referee")
     private String            mRefereeName;
     @SerializedName("league")
@@ -58,7 +60,6 @@ public class RecordedGame implements RecordedGameService {
     private List<Sanction>    mGuestSanctions;
     @SerializedName("rules")
     private Rules             mRules;
-    private transient boolean mIsRecordedOnline;
 
     public RecordedGame() {
         mUserId = UserId.VBR_USER_ID;
@@ -68,6 +69,7 @@ public class RecordedGame implements RecordedGameService {
         mGenderType = GenderType.MIXED;
         mUsageType = UsageType.NORMAL;
         mGameStatus = GameStatus.COMPLETED;
+        mIndexed = true;
         mRefereeName = "";
         mLeagueName = "";
         mDivisionName = "";
@@ -79,18 +81,11 @@ public class RecordedGame implements RecordedGameService {
         mHomeSanctions = new ArrayList<>();
         mGuestSanctions = new ArrayList<>();
         mRules = Rules.defaultUniversalRules();
-        mIsRecordedOnline = false;
     }
 
     @Override
     public String getGameSummary() {
-        String summary = String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
-
-        if (mIsRecordedOnline) {
-            summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, mGameDate);
-        }
-
-        return summary;
+        return String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName());
     }
 
     int currentSetIndex() {
@@ -523,16 +518,6 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
-    public boolean isRecordedOnline() {
-        return mIsRecordedOnline;
-    }
-
-    @Override
-    public void setRecordedOnline(boolean recordedOnline) {
-        mIsRecordedOnline = recordedOnline;
-    }
-
-    @Override
     public List<Sanction> getGivenSanctions(TeamType teamType) {
         List<Sanction> sanctions;
 
@@ -616,6 +601,16 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
+    public boolean isIndexed() {
+        return mIndexed;
+    }
+
+    @Override
+    public void setIndexed(boolean indexed) {
+        mIndexed = indexed;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
 
@@ -630,6 +625,7 @@ public class RecordedGame implements RecordedGameService {
                     && (this.getGenderType().equals(other.getGenderType()))
                     && (this.getUsageType().equals(other.getUsageType()))
                     && (this.isMatchCompleted() == other.isMatchCompleted())
+                    && (this.isIndexed() == other.isIndexed())
                     && (this.getRefereeName().equals(other.getRefereeName()))
                     && (this.getLeagueName().equals(other.getLeagueName()))
                     && (this.getDivisionName().equals(other.getDivisionName()))

@@ -36,6 +36,8 @@ import java.util.Map;
 
 public class SavedTeams implements SavedTeamsService {
 
+    private static final String TAG = "VBR-SavedTeams";
+    
     private final Context            mContext;
     private final List<RecordedTeam> mSavedTeams;
     private       WrappedTeam        mWrappedTeam;
@@ -234,7 +236,7 @@ public class SavedTeams implements SavedTeamsService {
     // Read saved teams
 
     private void readSavedTeams() {
-        Log.i("VBR-SavedTeams", String.format("Read saved teams from %s", SAVED_TEAMS_FILE));
+        Log.i(TAG, String.format("Read saved teams from %s", SAVED_TEAMS_FILE));
 
         try {
             FileInputStream inputStream = mContext.openFileInput(SAVED_TEAMS_FILE);
@@ -242,9 +244,9 @@ public class SavedTeams implements SavedTeamsService {
             mSavedTeams.addAll(readTeamsStream(inputStream));
             inputStream.close();
         } catch (FileNotFoundException e) {
-            Log.i("VBR-SavedTeams", String.format("%s saved teams file does not yet exist", SAVED_TEAMS_FILE));
+            Log.i(TAG, String.format("%s saved teams file does not yet exist", SAVED_TEAMS_FILE));
         } catch (JsonParseException | IOException e) {
-            Log.e("VBR-SavedTeams", "Exception while reading teams", e);
+            Log.e(TAG, "Exception while reading teams", e);
         }
     }
 
@@ -264,13 +266,13 @@ public class SavedTeams implements SavedTeamsService {
     // Write saved teams
 
     private void writeSavedTeams() {
-        Log.i("VBR-SavedTeams", String.format("Write saved teams into %s", SAVED_TEAMS_FILE));
+        Log.i(TAG, String.format("Write saved teams into %s", SAVED_TEAMS_FILE));
         try {
             FileOutputStream outputStream = mContext.openFileOutput(SAVED_TEAMS_FILE, Context.MODE_PRIVATE);
             writeTeamsStream(outputStream, mSavedTeams);
             outputStream.close();
         } catch (JsonParseException | IOException e) {
-            Log.e("VBR-SavedTeams", "Exception while writing teams", e);
+            Log.e(TAG, "Exception while writing teams", e);
         }
     }
 
@@ -325,7 +327,7 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     private void syncTeamsOnline() {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
@@ -342,7 +344,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e("VBR-SavedTeams", String.format(Locale.getDefault(), "Error %d while updating teams", error.networkResponse.statusCode));
+                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -352,7 +354,7 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     private void pushTeamOnline(RecordedTeam team) {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             team.setUserId(PrefUtils.getUserId(mContext));
             final byte[] bytes = writeTeam(team).getBytes();
 
@@ -374,7 +376,7 @@ public class SavedTeams implements SavedTeamsService {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 if (error.networkResponse != null) {
-                                                    Log.e("VBR-SavedTeams", String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
+                                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
                                                 }
                                             }
                                         }
@@ -382,7 +384,7 @@ public class SavedTeams implements SavedTeamsService {
                                 WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
                             } else {
                                 if (error.networkResponse != null) {
-                                    Log.e("VBR-SavedTeams", String.format(Locale.getDefault(), "Error %d while updating team", error.networkResponse.statusCode));
+                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
                                 }
                             }
                         }
@@ -393,7 +395,7 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     private void deleteTeamOnline(GameType gameType, String teamName, GenderType genderType) {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
             params.put("name", teamName);
@@ -410,7 +412,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e("VBR-SavedTeams", String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
+                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -420,7 +422,7 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     private void deleteAllTeamsOnline() {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
@@ -434,7 +436,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e("VBR-SavedTeams", String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
+                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
                             }
                         }
                     }

@@ -49,13 +49,13 @@
             android:textSize="@dimen/small_text_size" />
 
         <ImageView
-            android:id="@+id/recorded_game_status_image"
+            android:id="@+id/recorded_game_indexed_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/small_margin_size"
             android:layout_marginRight="@dimen/small_margin_size"
-            app:srcCompat="@drawable/ic_record_off" />
+            app:srcCompat="@drawable/ic_public" />
 
         <ImageView
             android:id="@+id/recorded_game_type_image"

@@ -9,6 +9,7 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
@@ -42,6 +43,8 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private       GenderType     mGenderType;
     @SerializedName("gameStatus")
     private       GameStatus     mGameStatus;
+    @SerializedName("indexed")
+    private       boolean        mIndexed;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("divisionName")
@@ -71,8 +74,9 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @SerializedName("servingTeamAtStart")
     private       TeamType       mServingTeamAtStart;
 
-    private transient java.util.Set<ScoreListener> mScoreListeners;
-    private transient java.util.Set<TeamListener>  mTeamListeners;
+    private transient java.util.Set<GeneralListener> mGeneralListeners;
+    private transient java.util.Set<ScoreListener>   mScoreListeners;
+    private transient java.util.Set<TeamListener>    mTeamListeners;
 
     TimeBasedGame(final long gameDate, final long gameSchedule) {
         super();
@@ -80,6 +84,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         mGameSchedule = gameSchedule;
         mGenderType = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
+        mIndexed = true;
         mLeagueName = "";
         mDivisionName = "";
         mHomeTeam = new EmptyTeamDefinition(TeamType.HOME);
@@ -103,6 +108,16 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     // For GSON Deserialization
     public TimeBasedGame() {
         this(0L, 0L);
+    }
+
+    @Override
+    public void addGeneralListener(GeneralListener listener) {
+        mGeneralListeners.add(listener);
+    }
+
+    @Override
+    public void removeGeneralListener(GeneralListener listener) {
+        mGeneralListeners.remove(listener);
     }
 
     @Override
@@ -167,6 +182,20 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public void setDivisionName(String name) {
         mDivisionName = name;
+    }
+
+    @Override
+    public boolean isIndexed() {
+        return mIndexed;
+    }
+
+    @Override
+    public void setIndexed(boolean indexed) {
+        mIndexed = indexed;
+
+        for (GeneralListener listener : mGeneralListeners) {
+            listener.onMatchIndexed(indexed);
+        }
     }
 
     @Override
@@ -650,6 +679,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     private void initTransientFields() {
+        mGeneralListeners = new HashSet<>();
         mScoreListeners = new HashSet<>();
         mTeamListeners = new HashSet<>();
     }

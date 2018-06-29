@@ -23,6 +23,8 @@ public class GameDescription {
     private UsageType  mUsageType;
     @SerializedName("status")
     private GameStatus mGameStatus;
+    @SerializedName("indexed")
+    private boolean    mIndexed;
     @SerializedName("referee")
     private String     mRefereeName;
     @SerializedName("league")
@@ -48,6 +50,7 @@ public class GameDescription {
         mGenderType = GenderType.MIXED;
         mUsageType = UsageType.NORMAL;
         mGameStatus = GameStatus.COMPLETED;
+        mIndexed = true;
         mRefereeName = "";
         mLeagueName = "";
         mDivisionName = "";
@@ -84,6 +87,10 @@ public class GameDescription {
 
     public GameStatus getMatchStatus() {
         return mGameStatus;
+    }
+
+    public boolean isIndexed() {
+        return mIndexed;
     }
 
     public String getRefereeName() {

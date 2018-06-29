@@ -13,7 +13,7 @@ import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 
 import java.util.List;
 
-public interface RecordedGameService extends BaseGeneralService, BaseScoreService, BaseTeamService, BaseTimeoutService, BaseSanctionService, BaseTimeService, WebGameService {
+public interface RecordedGameService extends BaseGeneralService, BaseScoreService, BaseTeamService, BaseTimeoutService, BaseSanctionService, BaseTimeService {
 
     boolean matchesFilter(String text);
 

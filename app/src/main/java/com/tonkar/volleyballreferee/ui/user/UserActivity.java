@@ -38,16 +38,8 @@ public class UserActivity extends AppCompatActivity {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestId().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        if (ServicesProvider.getInstance().isSavedRulesServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-        } else {
-            ServicesProvider.getInstance().getSavedRulesService().loadSavedRules();
-        }
-        if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
-        } else {
-            ServicesProvider.getInstance().getSavedTeamsService().loadSavedTeams();
-        }
+        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
+        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
     }
 
     @Override

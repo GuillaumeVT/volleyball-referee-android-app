@@ -8,8 +8,8 @@
 
     <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="true"
-        android:key="pref_stream_online"
-        android:title="@string/pref_stream_online"/>
+        android:key="pref_sync_data"
+        android:title="@string/pref_sync_data"/>
 
     <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="false"

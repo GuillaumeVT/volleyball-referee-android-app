@@ -30,6 +30,8 @@ import java.util.Map;
 
 public class SavedRules implements SavedRulesService {
 
+    private static final String TAG = "VBR-SavedRules";
+    
     private final Context     mContext;
     private final List<Rules> mSavedRulesList;
     private       Rules       mSavedRules;
@@ -144,7 +146,7 @@ public class SavedRules implements SavedRulesService {
     // Read saved rules
 
     private void readSavedRules() {
-        Log.i("VBR-SavedRules", String.format("Read saved rules from %s", SAVED_RULES_FILE));
+        Log.i(TAG, String.format("Read saved rules from %s", SAVED_RULES_FILE));
 
         try {
             FileInputStream inputStream = mContext.openFileInput(SAVED_RULES_FILE);
@@ -152,9 +154,9 @@ public class SavedRules implements SavedRulesService {
             mSavedRulesList.addAll(readRulesStream(inputStream));
             inputStream.close();
         } catch (FileNotFoundException e) {
-            Log.i("VBR-SavedRules", String.format("%s saved rules file does not yet exist", SAVED_RULES_FILE));
+            Log.i(TAG, String.format("%s saved rules file does not yet exist", SAVED_RULES_FILE));
         } catch (JsonParseException | IOException e) {
-            Log.e("VBR-SavedRules", "Exception while reading rules", e);
+            Log.e(TAG, "Exception while reading rules", e);
         }
     }
 
@@ -174,13 +176,13 @@ public class SavedRules implements SavedRulesService {
     // Write saved rules
 
     private void writeSavedRules() {
-        Log.i("VBR-SavedRules", String.format("Write saved rules into %s", SAVED_RULES_FILE));
+        Log.i(TAG, String.format("Write saved rules into %s", SAVED_RULES_FILE));
         try {
             FileOutputStream outputStream = mContext.openFileOutput(SAVED_RULES_FILE, Context.MODE_PRIVATE);
             writeRulesStream(outputStream, mSavedRulesList);
             outputStream.close();
         } catch (JsonParseException | IOException e) {
-            Log.e("VBR-SavedRules", "Exception while writing rules", e);
+            Log.e(TAG, "Exception while writing rules", e);
         }
     }
 
@@ -235,7 +237,7 @@ public class SavedRules implements SavedRulesService {
     }
 
     private void syncRulesOnline() {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
@@ -252,7 +254,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e("VBR-SavedRules", String.format(Locale.getDefault(), "Error %d while updating rules", error.networkResponse.statusCode));
+                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -262,7 +264,7 @@ public class SavedRules implements SavedRulesService {
     }
 
     private void pushRulesOnline(Rules rules) {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             rules.setUserId(PrefUtils.getUserId(mContext));
             final byte[] bytes = writeRules(rules).getBytes();
 
@@ -285,7 +287,7 @@ public class SavedRules implements SavedRulesService {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 if (error.networkResponse != null) {
-                                                    Log.e("VBR-SavedRules", String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
+                                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
                                                 }
                                             }
                                         }
@@ -293,7 +295,7 @@ public class SavedRules implements SavedRulesService {
                                 WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
                             } else {
                                 if (error.networkResponse != null) {
-                                    Log.e("VBR-SavedRules", String.format(Locale.getDefault(), "Error %d while updating rules", error.networkResponse.statusCode));
+                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
                                 }
                             }
                         }
@@ -304,7 +306,7 @@ public class SavedRules implements SavedRulesService {
     }
 
     private void deleteRulesOnline(Rules rules) {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
             params.put("name", rules.getName());
@@ -319,7 +321,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e("VBR-SavedRules", String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
+                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -329,7 +331,7 @@ public class SavedRules implements SavedRulesService {
     }
 
     private void deleteAllRulesOnline() {
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext) && PrefUtils.isSignedIn(mContext)) {
+        if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
@@ -343,7 +345,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e("VBR-SavedRules", String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
+                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
                             }
                         }
                     }

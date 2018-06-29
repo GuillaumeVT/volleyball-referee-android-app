@@ -2,15 +2,9 @@ package com.tonkar.volleyballreferee.interfaces.data;
 
 public interface WebGamesService {
 
-    void assessAreRecordedOnline();
+    boolean isGameIndexed(long gameDate);
 
-    boolean isOnlineRecordingEnabled();
-
-    void toggleOnlineRecording();
-
-    boolean isGameRecordedOnline(long gameDate);
-
-    void uploadRecordedGameOnline(long gameDate);
+    void toggleGameIndexed(long gameDate);
 
     void getGameFromCode(int code, AsyncGameRequestListener listener);
 

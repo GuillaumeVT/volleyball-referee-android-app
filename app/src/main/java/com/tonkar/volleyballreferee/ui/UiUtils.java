@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -142,7 +143,7 @@ public class UiUtils {
         button.getDrawable().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
     }
 
-    public static void shareGame(Context context, Window window, GameService gameService, boolean online) {
+    public static void shareGame(Context context, Window window, GameService gameService) {
         Log.i("VBR-Share", "Share screen");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             View rootView = window.getDecorView().findViewById(android.R.id.content);
@@ -169,7 +170,7 @@ public class UiUtils {
                 intent.setType("image/*");
 
                 String summary = gameService.getGameSummary();
-                if (online) {
+                if (PrefUtils.isPrefDataSyncEnabled(context)) {
                     summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, gameService.getGameDate());
                 }
 
@@ -199,7 +200,13 @@ public class UiUtils {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getResources().getString(R.string.app_name), file.getName()));
-                intent.putExtra(Intent.EXTRA_TEXT, recordedGameService.getGameSummary());
+
+                String summary = recordedGameService.getGameSummary();
+                if (PrefUtils.isPrefDataSyncEnabled(context)) {
+                    summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, recordedGameService.getGameDate());
+                }
+
+                intent.putExtra(Intent.EXTRA_TEXT, summary);
                 intent.setType("application/pdf");
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

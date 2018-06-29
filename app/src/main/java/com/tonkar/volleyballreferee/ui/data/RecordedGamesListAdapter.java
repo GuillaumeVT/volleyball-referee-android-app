@@ -33,20 +33,19 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         TextView  scoreText;
         ImageView genderTypeImage;
         ImageView gameTypeImage;
-        ImageView statusImage;
+        ImageView indexedImage;
         TextView  leagueText;
     }
 
-    private final Context                   mContext;
     private final LayoutInflater            mLayoutInflater;
     private final List<RecordedGameService> mRecordedGameServiceList;
     private final List<RecordedGameService> mFilteredRecordedGameServiceList;
     private final DateFormat                mFormatter;
     private final NamesFilter               mNamesFilter;
+    private final boolean                   mIsSyncOn;
 
     RecordedGamesListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedGameService> recordedGameServiceList) {
         super(context, R.layout.recorded_games_list_item, recordedGameServiceList);
-        mContext = context;
         mLayoutInflater = layoutInflater;
         mRecordedGameServiceList = recordedGameServiceList;
         mFilteredRecordedGameServiceList = new ArrayList<>();
@@ -54,6 +53,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         mFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
         mNamesFilter = new NamesFilter();
+        mIsSyncOn = PrefUtils.isSyncOn(context);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
             viewHolder.scoreText = gameView.findViewById(R.id.recorded_game_score);
             viewHolder.genderTypeImage = gameView.findViewById(R.id.recorded_game_gender_image);
             viewHolder.gameTypeImage = gameView.findViewById(R.id.recorded_game_type_image);
-            viewHolder.statusImage = gameView.findViewById(R.id.recorded_game_status_image);
+            viewHolder.indexedImage = gameView.findViewById(R.id.recorded_game_indexed_image);
             viewHolder.leagueText = gameView.findViewById(R.id.recorded_game_league);
             gameView.setTag(viewHolder);
         }
@@ -146,18 +146,15 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
                 break;
         }
 
-        if (PrefUtils.isPrefOnlineRecordingEnabled(mContext)) {
-            viewHolder.statusImage.setVisibility(View.VISIBLE);
-            if (recordedGameService.isRecordedOnline()) {
-                viewHolder.statusImage.setImageResource(R.drawable.ic_record_ok);
-                viewHolder.statusImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark), PorterDuff.Mode.SRC_IN));
-            } else {
-                viewHolder.statusImage.setImageResource(R.drawable.ic_record_off);
-                viewHolder.statusImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
-            }
+        if (recordedGameService.isIndexed()) {
+            viewHolder.indexedImage.setImageResource(R.drawable.ic_public);
+            viewHolder.indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark), PorterDuff.Mode.SRC_IN));
         } else {
-            viewHolder.statusImage.setVisibility(View.GONE);
+            viewHolder.indexedImage.setImageResource(R.drawable.ic_private);
+            viewHolder.indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
         }
+
+        viewHolder.indexedImage.setVisibility(mIsSyncOn ? View.VISIBLE : View.GONE);
 
         if (recordedGameService.getLeagueName().isEmpty() || recordedGameService.getDivisionName().isEmpty()) {
             viewHolder.leagueText.setText(recordedGameService.getLeagueName());

@@ -13,7 +13,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private SharedPreferences.OnSharedPreferenceChangeListener mStreamOnlineListener;
+    private SharedPreferences.OnSharedPreferenceChangeListener mPreferencesListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,25 +31,33 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mStreamOnlineListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        mPreferencesListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                if(key.equals(PrefUtils.PREF_STREAM_ONLINE)) {
-                    ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
-                    ServicesProvider.getInstance().getRecordedGamesService().assessAreRecordedOnline();
+                switch (key) {
+                    case PrefUtils.PREF_SYNC_DATA:
+                        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
+                        ServicesProvider.getInstance().getSavedTeamsService().loadSavedTeams();
+                        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
+                        ServicesProvider.getInstance().getSavedRulesService().loadSavedRules();
+                        ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
+                        ServicesProvider.getInstance().getRecordedGamesService().loadRecordedGames();
+                        break;
+                    default:
+                        break;
                 }
             }
         };
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(mStreamOnlineListener);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(mPreferencesListener);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mStreamOnlineListener != null) {
+        if (mPreferencesListener != null) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            sharedPreferences.unregisterOnSharedPreferenceChangeListener(mStreamOnlineListener);
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(mPreferencesListener);
         }
     }
 }
