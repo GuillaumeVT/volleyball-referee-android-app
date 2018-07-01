@@ -31,6 +31,7 @@
 
     <!-- Purchase activity -->
     <string name="purchase">Purchase</string>
+    <string name="already_purchased">Already purchased</string>
     <string name="purchase_web_premium_title">Add more web to your App</string>
     <string name="purchase_web_premium_summary">
         \n\u2022 Keep your games, teams and rules synchronized between your devices.

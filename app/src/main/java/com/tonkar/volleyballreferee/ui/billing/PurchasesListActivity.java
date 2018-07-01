@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.billing.BillingManager;
 
 public class PurchasesListActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class PurchasesListActivity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.purchase));
 
         final ListView purchasesList = findViewById(R.id.purchases_list);
-        final PurchasesListAdapter purchasesListAdapter = new PurchasesListAdapter(this, getLayoutInflater());
+        final PurchasesListAdapter purchasesListAdapter = new PurchasesListAdapter(this, getLayoutInflater(), new BillingManager(this));
         purchasesList.setAdapter(purchasesListAdapter);
     }
 }
