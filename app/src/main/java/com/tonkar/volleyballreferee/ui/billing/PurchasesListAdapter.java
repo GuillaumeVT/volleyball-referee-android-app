@@ -22,14 +22,12 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         Button    purchaseButton;
     }
 
-    private final Context          mContext;
     private final LayoutInflater   mLayoutInflater;
     private final List<SkuDetails> mPurchasesList;
     private final BillingService   mBillingService;
 
     PurchasesListAdapter(Context context, LayoutInflater layoutInflater, BillingService billingService) {
         super(context, R.layout.purchases_list_item);
-        mContext = context;
         mLayoutInflater = layoutInflater;
         mBillingService = billingService;
         mPurchasesList = mBillingService.getSkuDetailsList();
@@ -73,7 +71,7 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         return purchaseView;
     }
 
-    private void updatePurchase(ViewHolder viewHolder, SkuDetails skuDetails) {
+    private void updatePurchase(ViewHolder viewHolder, final SkuDetails skuDetails) {
         viewHolder.purchaseTitle.setText(skuDetails.getTitle());
         viewHolder.purchaseSummary.setText(skuDetails.getDescription());
 
@@ -87,9 +85,15 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
             viewHolder.purchaseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO start purchase
+                    mBillingService.launchPurchase(skuDetails.getSku());
                 }
             });
         }
+    }
+
+    public void updatePurchasesList() {
+        mPurchasesList.clear();
+        mPurchasesList.addAll(mBillingService.getSkuDetailsList());
+        notifyDataSetChanged();
     }
 }

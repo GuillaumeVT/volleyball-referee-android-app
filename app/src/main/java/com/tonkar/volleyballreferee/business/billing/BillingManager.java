@@ -1,44 +1,50 @@
 package com.tonkar.volleyballreferee.business.billing;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BillingManager implements BillingService, PurchasesUpdatedListener {
 
     private static final String TAG = "VBR-Billing";
 
-    private Context              mContext;
-    private BillingClient        mBillingClient;
-    private boolean              mIsServiceConnected;
-    private List<SkuDetails>     mSkuDetailsList;
-    private Map<String, Boolean> mPurchasedSkus;
+    private       Activity             mActivity;
+    private       BillingClient        mBillingClient;
+    private       boolean              mIsServiceConnected;
+    private final List<SkuDetails>     mSkuDetailsList;
+    private final Map<String, Boolean> mPurchasedSkus;
+    private final Set<BillingListener> mBillingListeners;
 
-    public BillingManager(Context context) {
-        mContext = context;
+    public BillingManager(Activity activity) {
+        mActivity = activity;
         mIsServiceConnected = false;
         mSkuDetailsList = new ArrayList<>();
         mPurchasedSkus = new HashMap<>();
+        mBillingListeners = new HashSet<>();
 
         mPurchasedSkus.put(WEB_PREMIUM, false);
 
-        mBillingClient = BillingClient.newBuilder(mContext).setListener(this).build();
+        mBillingClient = BillingClient.newBuilder(mActivity).setListener(this).build();
 
         startServiceConnection(new Runnable() {
             @Override
@@ -59,6 +65,10 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
             Log.w(TAG, "Purchase canceled by user");
         } else {
             Log.w(TAG, String.format("Unknown purchase response code code %d", responseCode));
+        }
+
+        for (BillingListener listener : mBillingListeners) {
+            listener.onPurchasesUpdated();
         }
     }
 
@@ -122,8 +132,18 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     private void handlePurchase(Purchase purchase) {
         if (purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
             mPurchasedSkus.put(WEB_PREMIUM, true);
-            PrefUtils.purchaseWebPremium(mContext, true);
+            PrefUtils.purchaseWebPremium(mActivity, true);
         }
+    }
+
+    @Override
+    public void addBillingListener(BillingListener listener) {
+        mBillingListeners.add(listener);
+    }
+
+    @Override
+    public void removeBillingListener(BillingListener listener) {
+        mBillingListeners.remove(listener);
     }
 
     @Override
@@ -134,6 +154,12 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     @Override
     public boolean isPurchased(String sku) {
         return mPurchasedSkus.get(sku);
+    }
+
+    @Override
+    public void launchPurchase(String sku) {
+        BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSku(sku).setType(BillingClient.SkuType.INAPP).build();
+        mBillingClient.launchBillingFlow(mActivity, flowParams);
     }
 
 }

@@ -10,7 +10,13 @@ public interface BillingService {
 
     String[] IN_APP_SKUS = { WEB_PREMIUM };
 
+    void addBillingListener(BillingListener listener);
+
+    void removeBillingListener(BillingListener listener);
+
     List<SkuDetails> getSkuDetailsList();
 
     boolean isPurchased(String sku);
+
+    void launchPurchase(String sku);
 }

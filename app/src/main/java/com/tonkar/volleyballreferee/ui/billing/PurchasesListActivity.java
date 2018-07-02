@@ -7,10 +7,15 @@ import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.billing.BillingManager;
+import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
+import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 
-public class PurchasesListActivity extends AppCompatActivity {
+public class PurchasesListActivity extends AppCompatActivity implements BillingListener {
 
     private static final String TAG = "VBR-BuyActivity";
+
+    private BillingService       mBillingService;
+    private PurchasesListAdapter mPurchasesListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +26,23 @@ public class PurchasesListActivity extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.purchase));
 
+        mBillingService = new BillingManager(this);
+
         final ListView purchasesList = findViewById(R.id.purchases_list);
-        final PurchasesListAdapter purchasesListAdapter = new PurchasesListAdapter(this, getLayoutInflater(), new BillingManager(this));
-        purchasesList.setAdapter(purchasesListAdapter);
+        mPurchasesListAdapter = new PurchasesListAdapter(this, getLayoutInflater(), mBillingService);
+        purchasesList.setAdapter(mPurchasesListAdapter);
+
+        mBillingService.addBillingListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBillingService.removeBillingListener(this);
+    }
+
+    @Override
+    public void onPurchasesUpdated() {
+        mPurchasesListAdapter.updatePurchasesList();
     }
 }
