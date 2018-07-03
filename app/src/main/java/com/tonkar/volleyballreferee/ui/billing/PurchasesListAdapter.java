@@ -73,7 +73,14 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
 
     private void updatePurchase(ViewHolder viewHolder, final SkuDetails skuDetails) {
         viewHolder.purchaseTitle.setText(skuDetails.getTitle());
-        viewHolder.purchaseSummary.setText(skuDetails.getDescription());
+        switch (skuDetails.getSku()) {
+            case BillingService.WEB_PREMIUM:
+                viewHolder.purchaseSummary.setText(R.string.purchase_web_premium_summary);
+                break;
+            default:
+                viewHolder.purchaseSummary.setText("");
+                break;
+        }
 
         if (mBillingService.isPurchased(skuDetails.getSku())) {
             viewHolder.purchaseButton.setText(R.string.already_purchased);

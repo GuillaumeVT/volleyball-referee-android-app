@@ -113,6 +113,10 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
                             mSkuDetailsList.clear();
                             mSkuDetailsList.addAll(skuDetailsList);
                         }
+
+                        for (BillingListener listener : mBillingListeners) {
+                            listener.onPurchasesUpdated();
+                        }
                     }
                 });
     }
