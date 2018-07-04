@@ -224,6 +224,7 @@
         <item>Set a 12 punti</item>
         <item>Set a 11 punti</item>
         <item>Set a 10 punti</item>
+        <item>Set a 9 punti</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Partita in 5 set</item>
@@ -290,6 +291,7 @@
         <item>12</item>
         <item>11</item>
         <item>10</item>
+        <item>9</item>
     </string-array>
     <string-array name="sets_per_game_values">
         <item>5</item>

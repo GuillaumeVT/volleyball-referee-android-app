@@ -224,6 +224,7 @@
         <item>Set van 12 punten</item>
         <item>Set van 11 punten</item>
         <item>Set van 10 punten</item>
+        <item>Set van 9 punten</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Wedstrijd van 5 sets</item>
@@ -290,6 +291,7 @@
         <item>12</item>
         <item>11</item>
         <item>10</item>
+        <item>9</item>
     </string-array>
     <string-array name="sets_per_game_values">
         <item>5</item>

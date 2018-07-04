@@ -224,6 +224,7 @@
         <item>Партия из 12 очков</item>
         <item>Партия из 11 очков</item>
         <item>Партия из 10 очков</item>
+        <item>Партия из 9 очков</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Матч из 5 партий</item>
@@ -290,6 +291,7 @@
         <item>12</item>
         <item>11</item>
         <item>10</item>
+        <item>9</item>
     </string-array>
     <string-array name="sets_per_game_values">
         <item>5</item>

@@ -1012,7 +1012,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         if (remoteGames.isEmpty()) {
             writeRecordedGames();
             collectLeaguesAndDivisions();
-            listener.onSynchronizationSucceeded();
+            if (listener != null) {
+                listener.onSynchronizationSucceeded();
+            }
         } else {
             GameDescription remoteGame = remoteGames.poll();
             getUserGame(PrefUtils.getUserId(mContext), remoteGame.getGameDate(), new AsyncGameRequestListener() {
@@ -1030,17 +1032,23 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
                 @Override
                 public void onNotFound() {
-                    listener.onSynchronizationFailed();
+                    if (listener != null) {
+                        listener.onSynchronizationFailed();
+                    }
                 }
 
                 @Override
                 public void onInternalError() {
-                    listener.onSynchronizationFailed();
+                    if (listener != null) {
+                        listener.onSynchronizationFailed();
+                    }
                 }
 
                 @Override
                 public void onError() {
-                    listener.onSynchronizationFailed();
+                    if (listener != null) {
+                        listener.onSynchronizationFailed();
+                    }
                 }
             });
         }

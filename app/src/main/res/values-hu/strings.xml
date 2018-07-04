@@ -225,6 +225,7 @@
         <item>12 pontos játszmák</item>
         <item>11 pontos játszmák</item>
         <item>10 pontos játszmák</item>
+        <item>9 pontos játszmák</item>
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>5 játszmás mérkőzések</item>
@@ -291,6 +292,7 @@
         <item>12</item>
         <item>11</item>
         <item>10</item>
+        <item>9</item>
     </string-array>
     <string-array name="sets_per_game_values">
         <item>5</item>
