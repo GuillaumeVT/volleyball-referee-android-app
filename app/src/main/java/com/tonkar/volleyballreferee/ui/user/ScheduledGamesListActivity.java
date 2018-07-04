@@ -112,7 +112,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         switch (item.getItemId()) {
             case R.id.action_search_games:
                 return true;
-            case R.id.action_sync_games:
+            case R.id.action_sync:
                 updateScheduledGamesList();
                 return true;
             default:

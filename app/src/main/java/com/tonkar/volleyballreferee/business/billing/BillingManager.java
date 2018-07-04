@@ -93,7 +93,8 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
         });
     }
 
-    private void executeServiceRequest(Runnable runnable) {
+    @Override
+    public void executeServiceRequest(Runnable runnable) {
         if (mIsServiceConnected) {
             runnable.run();
         } else {
@@ -158,6 +159,17 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     @Override
     public boolean isPurchased(String sku) {
         return mPurchasedSkus.get(sku);
+    }
+
+    @Override
+    public boolean isAllPurchased() {
+        boolean allPurchased = true;
+
+        for (String sku : IN_APP_SKUS) {
+            allPurchased = allPurchased && mPurchasedSkus.get(sku);
+        }
+
+        return allPurchased;
     }
 
     @Override

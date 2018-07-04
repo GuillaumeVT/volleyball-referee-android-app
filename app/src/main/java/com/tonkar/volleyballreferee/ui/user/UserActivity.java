@@ -38,8 +38,7 @@ public class UserActivity extends AppCompatActivity {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestId().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
+        ServicesProvider.getInstance().restoreAllServicesAndSync(getApplicationContext());
     }
 
     @Override

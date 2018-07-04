@@ -12,10 +12,10 @@
         app:showAsAction="always|collapseActionView"/>
 
     <item
-        android:id="@+id/action_sync_games"
+        android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_menu"
         android:iconTint="@android:color/white"
         android:orderInCategory="2"
-        android:title="@string/user_scheduled_games_title"
+        android:title="@string/synchronize"
         app:showAsAction="always"/>
 </menu>

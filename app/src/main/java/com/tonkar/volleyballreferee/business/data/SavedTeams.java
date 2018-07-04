@@ -14,6 +14,7 @@ import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
@@ -326,7 +327,13 @@ public class SavedTeams implements SavedTeamsService {
         writeSavedTeams();
     }
 
-    private void syncTeamsOnline() {
+    @Override
+    public void syncTeamsOnline() {
+        syncTeamsOnline(null);
+    }
+
+    @Override
+    public void syncTeamsOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
@@ -338,6 +345,9 @@ public class SavedTeams implements SavedTeamsService {
                         public void onResponse(String response) {
                             List<RecordedTeam> teamList = readTeams(response);
                             syncTeams(teamList);
+                            if (listener != null){
+                                listener.onSynchronizationSucceeded();
+                            }
                         }
                     },
                     new Response.ErrorListener() {
@@ -346,10 +356,17 @@ public class SavedTeams implements SavedTeamsService {
                             if (error.networkResponse != null) {
                                 Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
                             }
+                            if (listener != null){
+                                listener.onSynchronizationFailed();
+                            }
                         }
                     }
             );
             WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        } else {
+            if (listener != null){
+                listener.onSynchronizationFailed();
+            }
         }
     }
 

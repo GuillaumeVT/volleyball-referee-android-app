@@ -130,4 +130,22 @@ public class ServicesProvider {
             mSavedRules.loadSavedRules();
         }
     }
+
+    public void restoreAllServicesAndSync(Context context) {
+        if (isSavedRulesServiceUnavailable()) {
+            restoreSavedRulesService(context);
+        } else {
+            getSavedRulesService().syncRulesOnline();
+        }
+        if (isSavedTeamsServiceUnavailable()) {
+            restoreSavedTeamsService(context);
+        } else {
+            getSavedTeamsService().syncTeamsOnline();
+        }
+        if (isRecordedGamesServiceUnavailable()) {
+            restoreRecordedGamesService(context);
+        } else {
+            getRecordedGamesService().syncGamesOnline();
+        }
+    }
 }

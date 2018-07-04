@@ -148,6 +148,9 @@
         <item>99</item>
     </string-array>
 
+    <string name="synchronize">Synchronize</string>
+    <string name="sync_failed_message">Data synchronization failed</string>
+
     <!-- Recorded games activity -->
     <string name="recorded_games">Recorded games</string>
     <string name="search_games">Search games</string>

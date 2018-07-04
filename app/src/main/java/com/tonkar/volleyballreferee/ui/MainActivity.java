@@ -4,9 +4,6 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -34,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.billing.BillingManager;
 import com.tonkar.volleyballreferee.business.data.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
@@ -41,6 +39,8 @@ import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
+import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -74,29 +74,26 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        final BillingService billingService = new BillingManager(this);
+
         initNavigationMenu();
 
-        Button indoor6x6Button = findViewById(R.id.start_indoor_6x6_game_button);
-        colorButtonDrawable(indoor6x6Button, android.R.color.white);
-
-        Button indoor4x4Button = findViewById(R.id.start_indoor_4x4_game_button);
-        colorButtonDrawable(indoor4x4Button, android.R.color.white);
-
-        Button scoreBasedButton = findViewById(R.id.start_score_based_game_button);
-        colorButtonDrawable(scoreBasedButton, android.R.color.white);
-
-        Button beachButton = findViewById(R.id.start_beach_game_button);
-        colorButtonDrawable(beachButton, android.R.color.white);
-
-        Button timeBasedButton = findViewById(R.id.start_time_based_game_button);
-        colorButtonDrawable(timeBasedButton, android.R.color.white);
-
-        Button scheduledListButton = findViewById(R.id.start_scheduled_list_game_button);
-        colorButtonDrawable(scheduledListButton, android.R.color.white);
-
         Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
-        colorButtonDrawable(scheduledCodeButton, android.R.color.white);
         scheduledCodeButton.setVisibility(PrefUtils.isPrefDataSyncEnabled(this) ? View.VISIBLE : View.GONE);
+
+        final Button purchaseButton = findViewById(R.id.start_purchase_button);
+        billingService.addBillingListener(new BillingListener() {
+            @Override
+            public void onPurchasesUpdated() {
+                purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE);
+            }
+        });
+        billingService.executeServiceRequest(new Runnable() {
+            @Override
+            public void run() {
+                purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE);
+            }
+        });
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
         if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
@@ -458,14 +455,6 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
             }
             );
             WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
-        }
-    }
-
-    private void colorButtonDrawable(Button button, int colorId) {
-        for (Drawable drawable : button.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, colorId), PorterDuff.Mode.SRC_IN));
-            }
         }
     }
 

@@ -56,6 +56,14 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         mIsSyncOn = PrefUtils.isSyncOn(context);
     }
 
+    public void updateRecordedGamesList(List<RecordedGameService> recordedGameServiceList) {
+        mRecordedGameServiceList.clear();
+        mFilteredRecordedGameServiceList.clear();
+        mRecordedGameServiceList.addAll(recordedGameServiceList);
+        mFilteredRecordedGameServiceList.addAll(recordedGameServiceList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mFilteredRecordedGameServiceList.size();

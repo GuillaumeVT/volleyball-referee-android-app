@@ -37,4 +37,8 @@ public interface SavedTeamsService {
     void copyTeam(RecordedTeam source, BaseTeamService dest, TeamType teamType);
 
     void copyTeam(BaseTeamService source, RecordedTeam dest, TeamType teamType);
+
+    void syncTeamsOnline();
+
+    void syncTeamsOnline(DataSynchronizationListener listener);
 }

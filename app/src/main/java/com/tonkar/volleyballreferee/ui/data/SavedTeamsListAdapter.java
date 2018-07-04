@@ -33,13 +33,21 @@ public class SavedTeamsListAdapter extends ArrayAdapter<RecordedTeam> {
     private final List<RecordedTeam> mFilteredSavedTeamsList;
     private final NameFilter         mNameFilter;
 
-    public SavedTeamsListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedTeam> savedTeamsList) {
+    SavedTeamsListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedTeam> savedTeamsList) {
         super(context, R.layout.saved_teams_list_item, savedTeamsList);
         mLayoutInflater = layoutInflater;
         mSavedTeamsList = savedTeamsList;
         mFilteredSavedTeamsList = new ArrayList<>();
         mFilteredSavedTeamsList.addAll(mSavedTeamsList);
         mNameFilter = new NameFilter();
+    }
+
+    public void updateSavedTeamsList(List<RecordedTeam> savedTeamsList) {
+        mSavedTeamsList.clear();
+        mFilteredSavedTeamsList.clear();
+        mSavedTeamsList.addAll(savedTeamsList);
+        mFilteredSavedTeamsList.addAll(savedTeamsList);
+        notifyDataSetChanged();
     }
 
     @Override

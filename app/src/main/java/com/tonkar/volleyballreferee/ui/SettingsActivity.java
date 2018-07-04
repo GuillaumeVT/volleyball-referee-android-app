@@ -35,12 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 switch (key) {
                     case PrefUtils.PREF_SYNC_DATA:
-                        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
-                        ServicesProvider.getInstance().getSavedTeamsService().loadSavedTeams();
-                        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-                        ServicesProvider.getInstance().getSavedRulesService().loadSavedRules();
-                        ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
-                        ServicesProvider.getInstance().getRecordedGamesService().loadRecordedGames();
+                        ServicesProvider.getInstance().restoreAllServicesAndSync(getApplicationContext());
                         break;
                     default:
                         break;

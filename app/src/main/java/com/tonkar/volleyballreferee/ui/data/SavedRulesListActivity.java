@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -20,16 +21,18 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import java.util.List;
 
-public class SavedRulesListActivity extends AppCompatActivity {
+public class SavedRulesListActivity extends AppCompatActivity implements DataSynchronizationListener {
 
     private SavedRulesService     mSavedRulesService;
     private SavedRulesListAdapter mSavedRulesListAdapter;
+    private SwipeRefreshLayout    mSyncLayout;
     private boolean               mIsFabOpen;
     private FloatingActionButton  mAddIndoorRulesButton;
     private FloatingActionButton  mAddIndoor4x4RulesButton;
@@ -45,6 +48,16 @@ public class SavedRulesListActivity extends AppCompatActivity {
         ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
 
         setTitle(getResources().getString(R.string.saved_rules_list));
+
+        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        updateSavedRulesList();
+                    }
+                }
+        );
 
         mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService();
 
@@ -142,6 +155,9 @@ public class SavedRulesListActivity extends AppCompatActivity {
             }
         });
 
+        MenuItem syncItem = menu.findItem(R.id.action_sync);
+        syncItem.setVisible(PrefUtils.isSyncOn(this));
+
         return true;
     }
 
@@ -149,6 +165,9 @@ public class SavedRulesListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search_rules:
+                return true;
+            case R.id.action_sync:
+                updateSavedRulesList();
                 return true;
             case R.id.action_delete_rules:
                 deleteAllRules();
@@ -197,5 +216,22 @@ public class SavedRulesListActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void updateSavedRulesList() {
+        mSyncLayout.setRefreshing(true);
+        mSavedRulesService.syncRulesOnline(this);
+    }
+
+    @Override
+    public void onSynchronizationSucceeded() {
+        mSavedRulesListAdapter.updateSavedRulesList(mSavedRulesService.getSavedRules());
+        mSyncLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onSynchronizationFailed() {
+        Toast.makeText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        mSyncLayout.setRefreshing(false);
     }
 }

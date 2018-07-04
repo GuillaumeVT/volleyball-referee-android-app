@@ -5,7 +5,7 @@ import com.tonkar.volleyballreferee.interfaces.GameService;
 import java.util.List;
 import java.util.Set;
 
-public interface RecordedGamesService extends WebGamesService {
+public interface RecordedGamesService {
 
     String RECORDED_GAMES_FILE = "device_games_history.json";
 
@@ -47,4 +47,17 @@ public interface RecordedGamesService extends WebGamesService {
 
     void deleteSetupGame();
 
+    void syncGamesOnline();
+
+    void syncGamesOnline(DataSynchronizationListener listener);
+
+    boolean isGameIndexed(long gameDate);
+
+    void toggleGameIndexed(long gameDate);
+
+    void getGameFromCode(int code, AsyncGameRequestListener listener);
+
+    void getUserGame(final String userId, final long id, final AsyncGameRequestListener listener);
+
+    void getUserScheduledGames(final String userId, final AsyncGameRequestListener listener);
 }

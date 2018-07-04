@@ -30,4 +30,8 @@ public interface SavedRulesService {
     void deleteAllSavedRules();
 
     void createAndSaveRulesFrom(Rules rules);
+
+    void syncRulesOnline();
+
+    void syncRulesOnline(DataSynchronizationListener listener);
 }

@@ -14,9 +14,13 @@ public interface BillingService {
 
     void removeBillingListener(BillingListener listener);
 
+    void executeServiceRequest(Runnable runnable);
+
     List<SkuDetails> getSkuDetailsList();
 
     boolean isPurchased(String sku);
+
+    boolean isAllPurchased();
 
     void launchPurchase(String sku);
 }

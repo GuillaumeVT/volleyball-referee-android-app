@@ -23,13 +23,21 @@ public class SavedRulesListAdapter extends ArrayAdapter<Rules> {
     private final List<Rules>    mFilteredSavedRulesServiceList;
     private final NameFilter     mNameFilter;
 
-    public SavedRulesListAdapter(Context context, LayoutInflater layoutInflater, List<Rules> savedRulesServiceList) {
-        super(context, R.layout.autocomplete_list_item, savedRulesServiceList);
+    public SavedRulesListAdapter(Context context, LayoutInflater layoutInflater, List<Rules> savedRulesList) {
+        super(context, R.layout.autocomplete_list_item, savedRulesList);
         mLayoutInflater = layoutInflater;
-        mSavedRulesServiceList = savedRulesServiceList;
+        mSavedRulesServiceList = savedRulesList;
         mFilteredSavedRulesServiceList = new ArrayList<>();
         mFilteredSavedRulesServiceList.addAll(mSavedRulesServiceList);
         mNameFilter = new NameFilter();
+    }
+
+    public void updateSavedRulesList(List<Rules> savedRulesList) {
+        mSavedRulesServiceList.clear();
+        mFilteredSavedRulesServiceList.clear();
+        mSavedRulesServiceList.addAll(savedRulesList);
+        mFilteredSavedRulesServiceList.addAll(savedRulesList);
+        notifyDataSetChanged();
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
+import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -933,7 +934,13 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         }
     }
 
-    private void syncGamesOnline() {
+    @Override
+    public void syncGamesOnline() {
+        syncGamesOnline(null);
+    }
+
+    @Override
+    public void syncGamesOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
@@ -944,7 +951,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                         @Override
                         public void onResponse(String response) {
                             List<GameDescription> gameList = readGameDescriptionList(response);
-                            syncGames(gameList);
+                            syncGames(gameList, listener);
                         }
                     },
                     new Response.ErrorListener() {
@@ -953,14 +960,21 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                             if (error.networkResponse != null) {
                                 Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising games", error.networkResponse.statusCode));
                             }
+                            if (listener != null){
+                                listener.onSynchronizationFailed();
+                            }
                         }
                     }
             );
             WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        } else {
+            if (listener != null){
+                listener.onSynchronizationFailed();
+            }
         }
     }
 
-    private void syncGames(List<GameDescription> remoteGameList) {
+    private void syncGames(List<GameDescription> remoteGameList, DataSynchronizationListener listener) {
         for (RecordedGame localGame : mRecordedGames) {
             boolean foundRemoteVersion = false;
 
@@ -991,20 +1005,21 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             }
         }
 
-        downloadUserGamesRecursive(missingRemoteGames);
+        downloadUserGamesRecursive(missingRemoteGames, listener);
     }
 
-    private void downloadUserGamesRecursive(final Queue<GameDescription> remoteGames) {
+    private void downloadUserGamesRecursive(final Queue<GameDescription> remoteGames, final DataSynchronizationListener listener) {
         if (remoteGames.isEmpty()) {
             writeRecordedGames();
             collectLeaguesAndDivisions();
+            listener.onSynchronizationSucceeded();
         } else {
             GameDescription remoteGame = remoteGames.poll();
             getUserGame(PrefUtils.getUserId(mContext), remoteGame.getGameDate(), new AsyncGameRequestListener() {
                 @Override
                 public void onUserGameReceived(RecordedGameService recordedGameService) {
                     mRecordedGames.add((RecordedGame) recordedGameService);
-                    downloadUserGamesRecursive(remoteGames);
+                    downloadUserGamesRecursive(remoteGames, listener);
                 }
 
                 @Override
@@ -1014,13 +1029,19 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 public void onUserGameListReceived(List<GameDescription> gameDescriptionList) {}
 
                 @Override
-                public void onNotFound() {}
+                public void onNotFound() {
+                    listener.onSynchronizationFailed();
+                }
 
                 @Override
-                public void onInternalError() {}
+                public void onInternalError() {
+                    listener.onSynchronizationFailed();
+                }
 
                 @Override
-                public void onError() {}
+                public void onError() {
+                    listener.onSynchronizationFailed();
+                }
             });
         }
     }

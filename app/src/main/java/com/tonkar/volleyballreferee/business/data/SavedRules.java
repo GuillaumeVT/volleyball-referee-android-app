@@ -10,6 +10,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 
@@ -236,7 +237,13 @@ public class SavedRules implements SavedRulesService {
         writeSavedRules();
     }
 
-    private void syncRulesOnline() {
+    @Override
+    public void syncRulesOnline() {
+        syncRulesOnline(null);
+    }
+
+    @Override
+    public void syncRulesOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("userId", PrefUtils.getUserId(mContext));
@@ -248,6 +255,9 @@ public class SavedRules implements SavedRulesService {
                         public void onResponse(String response) {
                             List<Rules> rulesList = readRules(response);
                             syncRules(rulesList);
+                            if (listener != null){
+                                listener.onSynchronizationSucceeded();
+                            }
                         }
                     },
                     new Response.ErrorListener() {
@@ -256,10 +266,17 @@ public class SavedRules implements SavedRulesService {
                             if (error.networkResponse != null) {
                                 Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
                             }
+                            if (listener != null){
+                                listener.onSynchronizationFailed();
+                            }
                         }
                     }
             );
             WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        } else {
+            if (listener != null){
+                listener.onSynchronizationFailed();
+            }
         }
     }
 
