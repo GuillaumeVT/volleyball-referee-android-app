@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Ongeldig wedstrijdnummer</string>
     <string name="download_error_message">De wedstrijd kan niet worden gedownload</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Aankoop</string>
+    <string name="already_purchased">Al gekocht</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Hou je wedstrijden, ploegen en regels gesynchroniseerd tussen uw apparaten.
+        \n\u2022 Geniet van de onbeperkte opslag voor je gegevens en betere streamingkwaliteit voor je live wedstrijden.
+        \n\u2022 Plan je wedstrijden die later gespeeld worden.
+        \n\u2022 Heb je per ongeluk je wedstrijd verwijderd? Herstel je wedstrijden van de server back-up.
+        \n\u2022 Profiteer automatisch van de toekomstige nieuwe webfuncties.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Waarom zou ik me aanmelden?</string>
     <string name="user_sign_in_why_message">Als je je wedstrijden online streamt, ben je mogelijk  geïnteresseerd om in te loggen.\n\nAls je inlogt, krijg je volledige controle over je wedstrijden op https://www.volleyball-referee.com/user\n\nOp deze pagina, kan je je eigen regels, ploegen, wedstrijden en zelfs toernooien maken en beheren. De geplande wedstrijden kunnen vervolgens worden geleidt op uw app of op de app van iemand anders door de unieke wedstrijdcode aan de scheidsrechter te verstrekken.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Geslacht</string>
     <string name="match_duration_text">Selecteer de wedstrijdduur</string>
     <string name="league_name_hint">Naam competitie / toernooi (optioneel)</string>
+    <string name="division_name_hint">Divisie / poule naam (optioneel)</string>
     <string name="misc_tab">Div.</string>
     <string name="rules_tab">Regels</string>
     <string name="teams_tab">Ploegen</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Stop de wedstrijd</string>
     <string name="confirm_start_match_question">Wil je de wedstrijd starten?</string>
     <string name="confirm_stop_match_question">Wil je de wedstrijd stoppen?</string>
-    <string name="stream_game">Stream de wedstrijd online</string>
-    <string name="stream_online_on_message">De wedstrijd wordt online gestreamd</string>
-    <string name="stream_online_off_message">De wedstrijd wordt niet langer online gestreamd</string>
+    <string name="index_game">Wissel tussen publieke/privé wedstrijd</string>
+    <string name="public_game_message">De wedstrijd is nu publiek</string>
+    <string name="private_game_message">De wedstrijd is nu privé</string>
     <string name="all_timeouts_called">%s heeft geen beschikbare time-out meer</string>
     <string name="all_substitutions_used">%s heeft geen vervaningen meer</string>
     <string name="sanctions_tab">Sancties</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Instellingen</string>
     <string name="pref_referee_name">Mijn \'Volleyball Referee\' alias</string>
-    <string name="pref_stream_online">Stream de wedstrijden online</string>
+    <string name="pref_sync_data">Synchroniseer de gegevens online</string>
     <string name="pref_keep_screen_on">Houd het scherm aan tijdens wedstrijden</string>
     <string name="pref_interactive_notification">Gebruik interactieve meldingen</string>
     <string name="pref_number_of_shirts">Aantal shirts in ploegdefinitie</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Synchroniseer</string>
+    <string name="sync_failed_message">Gegevenssynchronisatie mislukt</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Opgenomen wedstrijden</string>
@@ -146,8 +161,6 @@
     <string name="players">Spelers</string>
     <string name="report_game">Genereer een wedstrijdrapport</string>
     <string name="report_exception">Kan het wedstrijdrapport niet genereren of weergeven</string>
-    <string name="upload_success_message">De wedstrijd is succesvol geüpload</string>
-    <string name="upload_error_message">De wedstrijd kan niet worden geüpload</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Opgeslagen ploegen</string>

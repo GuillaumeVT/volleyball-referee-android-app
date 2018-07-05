@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Code du match invalide</string>
     <string name="download_error_message">Le match n\'a pas pu être téléchargé depuis le serveur</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Acheter</string>
+    <string name="already_purchased">Déjà possédé</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Gardez vos matchs, équipes et règles synchronisés entre vos appareils.
+        \n\u2022 Profitez du stockage illimité pour vos données et d\'un streaming de meilleure qualité pour vos matchs en direct.
+        \n\u2022 Planifiez vos matchs pour les jouers plus tard.
+        \n\u2022 Vous avez effacé un match par erreur? Reprenez vos matchs depuis la sauvegarde du serveur.
+        \n\u2022 Bénéficiez automatiquement des futures fonctionnalités web de l\'appli.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Pourquoi devrais-je me connecter?</string>
     <string name="user_sign_in_why_message">Si vous diffusez vos matchs en ligne, se connecter pourrait vous intéresser.\n\nEn vous connectant, vous aurez le contrôle complet de vos matchs sur https://www.volleyball-referee.com/user\n\nDepuis cette page, vous pourrez également créer et gérer vos règles, équipes, matchs et même vos tournois. Les matchs programmés peuvent ensuite être arbitrés sur votre appli ou sur celle d\'un autre arbitre en lui fournissant le code unique de ce match.</string>
@@ -100,9 +111,9 @@
     <string name="stop_match_description">Arrêter le match</string>
     <string name="confirm_start_match_question">Voulez-vous démarrer le match?</string>
     <string name="confirm_stop_match_question">Voulez-vous arrêter le match?</string>
-    <string name="stream_game">Diffuser le match en ligne</string>
-    <string name="stream_online_on_message">Le match est diffusé en ligne</string>
-    <string name="stream_online_off_message">Le match n\'est plus diffusé en ligne</string>
+    <string name="index_game">Basculer entre match publique / privé</string>
+    <string name="public_game_message">Le match est publique</string>
+    <string name="private_game_message">Le match est privé</string>
     <string name="all_timeouts_called">%s n\'a plus de temps mort disponible</string>
     <string name="all_substitutions_used">%s n\'a plus de changement disponible</string>
     <string name="sanctions_tab">Sanctions</string>
@@ -124,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
     <string name="pref_referee_name">Mon pseudo \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Diffuser les matchs en ligne</string>
+    <string name="pref_sync_data">Synchroniser les données en ligne</string>
     <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
     <string name="pref_interactive_notification">Utiliser les notifications interactives</string>
     <string name="pref_number_of_shirts">Nombre de maillots dans la définition d\'équipe</string>
@@ -134,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Synchroniser</string>
+    <string name="sync_failed_message">Échec de la synchronisation</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Matchs enregistrés</string>
@@ -147,8 +161,6 @@
     <string name="players">Joueurs</string>
     <string name="report_game">Générer un rapport pour le match</string>
     <string name="report_exception">Échec de la génération ou de l\'affichage du rapport</string>
-    <string name="upload_success_message">Le match a été téléchargé vers le serveur</string>
-    <string name="upload_error_message">Le match n\'a pas pu être téléchargé vers le serveur</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Équipes enregistrées</string>

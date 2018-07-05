@@ -112,7 +112,6 @@
     <string name="stop_match_description">Stop the match</string>
     <string name="confirm_start_match_question">Do you want to start the match?</string>
     <string name="confirm_stop_match_question">Do you want to stop the match?</string>
-    <string name="stream_game">Stream the match online</string>
     <string name="index_game">Toggle public / private match</string>
     <string name="public_game_message">The match is now public</string>
     <string name="private_game_message">The match is now private</string>

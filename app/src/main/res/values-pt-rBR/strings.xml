@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Código de partida Inválido</string>
     <string name="download_error_message">Não foi possível fazer donwload desta partida</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Adquirir</string>
+    <string name="already_purchased">Já adquirido</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Mantenha suas partidas, equipes e regras sincronizadas entre seus aparelhos.
+        \n\u2022 Desfrute de armazenamento ilimitado para seus dados e a melhor qualidade de transmissão para suas partidas Ao Vivo.
+        \n\u2022 Agende suas partidas para datas futuras.
+        \n\u2022 Apagou sua partida sem querer? Recupere-as através do bakcup que fica no servidor.
+        \n\u2022 Seja beneficiado automaticamente com os novos recursos web.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Por que devo me registrar?</string>
     <string name="user_sign_in_why_message">Se você transmite partidas online, é interesante que você se registre.\n\nSe registrando, você poderá controlar completamente seus jogos através do site https://www.volleyball-referee.com/user\n\nDesta página, você pode criar e administrar suas próprias regras, equipes, jogos e até competições. Os jogos agendados estarão então no seu App ou no de qualquer pessoa, através de um código único para cada partida.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Gênero</string>
     <string name="match_duration_text">Escolha a duração da partida</string>
     <string name="league_name_hint">Nome da Competição (opcional)</string>
+    <string name="division_name_hint">Nome do Grupo / Divisão (opcional)</string>
     <string name="misc_tab">Diversos</string>
     <string name="rules_tab">Regras</string>
     <string name="teams_tab">Equipes</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Encerrar partida</string>
     <string name="confirm_start_match_question">Deseja iniciar essa partida?</string>
     <string name="confirm_stop_match_question">Deseja encerrar essa partida?</string>
-    <string name="stream_game">Transmitir a partida ao vivo</string>
-    <string name="stream_online_on_message">A partida está sendo transmitida ao vivo</string>
-    <string name="stream_online_off_message">A trnasmissão desta partida ao vivo terminou</string>
+    <string name="index_game">Alternar partida pública / partida privada</string>
+    <string name="public_game_message">A partida agora é pública</string>
+    <string name="private_game_message">A partida agora é privada</string>
     <string name="all_timeouts_called">%s não possui mais tempos no set</string>
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
     <string name="sanctions_tab">Punições</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
     <string name="pref_referee_name">Meu apelido \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Transmitir as partidas ao vivo</string>
+    <string name="pref_sync_data">Sincronizar dados online</string>
     <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
     <string name="pref_interactive_notification">Exibir notificações interativas</string>
     <string name="pref_number_of_shirts">Selecione a numeração da camisa mais alta de sua equipe</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Sincronizar</string>
+    <string name="sync_failed_message">Houve falha na sincronização dos dados</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Partidas recentes</string>
@@ -146,8 +161,6 @@
     <string name="players">Jogadores</string>
     <string name="report_game">Gerar relatório da partida</string>
     <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
-    <string name="upload_success_message">O upload desta partida foi concluído com sucesso</string>
-    <string name="upload_error_message">Não foi possível concluir o upload desta partida</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Equipes salvas</string>
