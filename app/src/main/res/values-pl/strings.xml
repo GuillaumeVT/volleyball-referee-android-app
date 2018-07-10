@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Nieprawidłowy kod gry	</string>
     <string name="download_error_message">Nie można pobrać meczu</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Zakup</string>
+    <string name="already_purchased">Już zakupione</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Zachowaj synchronizację meczy, drużyn i zasad między swoimi urządzeniami.
+        \n\u2022 Ciesz się nieograniczoną ilością miejsca na dane i lepszą jakością transmisji na żywo.
+        \n\u2022 Zaplanuj swoje mecze do rozegrania później.
+        \n\u2022 Usunąłeś mecz przez pomyłkę? Wznów swoje mecze, korzystając z kopii zapasowej serwera.
+        \n\u2022 Automatycznie korzystaj z przyszłych nowych funkcji sieciowych.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Dlaczego powinienem się zalogować?</string>
     <string name="user_sign_in_why_message">Jeśli streamujesz swoje mecze przez Internet, być może zechcesz się zalogować.\n\nPo zalogowaniu się, uzyskasz pełną kontrolę nad swoimi rozgrywkami na stronie https://www.volleyball-referee.com/user\n\nNa tej stronie możesz tworzyć własne reguły, drużyny, mecze, a nawet turnieje i zarządzać nimi. Zaplanowane mecze można następnie sędziować w aplikacji innej osoby, podając unikalny kod gry sędziom.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Płeć</string>
     <string name="match_duration_text">Wybierz czas trwania meczu</string>
     <string name="league_name_hint">Liga / turniej (opcjonalnie)</string>
+    <string name="division_name_hint">Nazwa dywizji / grupy (opcjonalnie)</string>
     <string name="rules_tab">Zasasdy</string>
     <string name="teams_tab">Zespoły</string>
     <string name="misc_tab">Różne</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Zatrzymaj mecz</string>
     <string name="confirm_start_match_question">Czy chcesz rozpocząć mecz?</string>
     <string name="confirm_stop_match_question">Czy chcesz zatrzymać mecz?</string>
-    <string name="stream_game">Transmituj mecz przez stream online</string>
-    <string name="stream_online_on_message">Mecz jest transmitowany online</string>
-    <string name="stream_online_off_message">Transmisja online dobiegła końca</string>
+    <string name="index_game">Przełącz grę na ogólnodostępną / prywatną</string>
+    <string name="public_game_message">Mecz jest teraz ogólnodostępny</string>
+    <string name="private_game_message">Mecz jest teraz prywatny</string>
     <string name="all_timeouts_called">%s brak dostępnych przerw na żądanie</string>
     <string name="all_substitutions_used">%s brak dostępnych zmian</string>
     <string name="sanctions_tab">Sankcje</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Ustawienia</string>
     <string name="pref_referee_name">Mója nazwa użytkownika \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Transmituj mecze przez stream online</string>
+    <string name="pref_sync_data">Zsynchronizuj dane online</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
     <string name="pref_interactive_notification">Użyj powiadomień interaktywnych</string>
     <string name="pref_number_of_shirts">Wybierz numer koszulki w ustawieniach drużyny</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Zsynchronizuj</string>
+    <string name="sync_failed_message">Synchronizacja danych nie powiodła się</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Najnowsze mecze</string>
@@ -146,8 +161,6 @@
     <string name="players">Gracze</string>
     <string name="report_game">Wygeneruj raport meczowy</string>
     <string name="report_exception">Nie udało się wygenerować ani wyświetlić raportu meczowego</string>
-    <string name="upload_success_message">Mecz został pomyślnie przesłany</string>
-    <string name="upload_error_message">Nie można przesłać meczu</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Zapisane zespoły</string>

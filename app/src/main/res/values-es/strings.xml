@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Código de partido inválido</string>
     <string name="download_error_message">No se ha podido descargar el partido</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Comprar</string>
+    <string name="already_purchased">Comprado</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Mantén tus partidos, equipos y reglas sincronizados entre diferentes dispositivos.
+        \n\u2022 Disfruta de almacenamiento ilimitado para tus datos y mejor calidad de vídeo para tus partidos en directo.
+        \n\u2022 Planifica tus partidos para que se jueguen más tarde.
+        \n\u2022 ¿Has borrado un partido por error? Reanuda tus partidos desde la copia del servidor.
+        \n\u2022 Obtén automáticamente las funcionalidades de la futura web.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">¿Por qué debería registarme?</string>
     <string name="user_sign_in_why_message">Si emites tus partidos online, te interesa registarte.\n\nDe esta forma, tendrás control total de tus partidos en https://www.volleyball-referee.com/user\n\nDesde esta página podrás crear y administrar tus reglas, equipos, partidos e incluso torneos. Los partidos programados pueden ser arbitrados con la App, dándole el código del partido al árbitro.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Género</string>
     <string name="match_duration_text">Elige la duración del partido</string>
     <string name="league_name_hint">Nombre de la liga / torneo (opcional)</string>
+    <string name="division_name_hint">Nombre de división/grupo (opcional)</string>
     <string name="misc_tab">Varios</string>
     <string name="rules_tab">Reglas</string>
     <string name="teams_tab">Equipos</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Parar partido</string>
     <string name="confirm_start_match_question">¿Quieres comenzar el partido?</string>
     <string name="confirm_stop_match_question">¿Quieres parar el partido?</string>
-    <string name="stream_game">Emitir el partido online</string>
-    <string name="stream_online_on_message">El partido se está emitiendo</string>
-    <string name="stream_online_off_message">El partido ya no se está emitiendo</string>
+    <string name="index_game">Cambiar partido privado / público</string>
+    <string name="public_game_message">El partido ahora es público</string>
+    <string name="private_game_message">El partido ahora es privado</string>
     <string name="all_timeouts_called">%s no puede pedir más tiempos muertos</string>
     <string name="all_substitutions_used">%s no puede pedir más sustituciones</string>
     <string name="sanctions_tab">Sanciones</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Ajustes</string>
     <string name="pref_referee_name">Mi alias para \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Emitir partidos online</string>
+    <string name="pref_sync_data">Sincronizar tus datos online</string>
     <string name="pref_keep_screen_on">No apagar la pantalla durante los partidos</string>
     <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
     <string name="pref_number_of_shirts">Dorsales en la creación del equipo</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Sincronizar</string>
+    <string name="sync_failed_message">Fallo al sincronizar</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Partidos guardados</string>
@@ -146,8 +161,6 @@
     <string name="players">Jugadores</string>
     <string name="report_game">Generar informe de partido</string>
     <string name="report_exception">Error al generar o mostrar el informe del partidos</string>
-    <string name="upload_success_message">Partido subido</string>
-    <string name="upload_error_message">No se pudo subir el partido</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Equipos guardados</string>

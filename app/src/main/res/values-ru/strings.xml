@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Неверный код матча</string>
     <string name="download_error_message">Невозможно загрузить матч с сервера</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Купить</string>
+    <string name="already_purchased">Уже куплено</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Синхронизация ваших матчей, команд и правил на всех ваших устройствах.
+        \n\u2022 Безлимитное хранение ваших данных и лучшее качество трансляции матчей он-лайн.
+        \n\u2022 Планирование ваших матчей заранее.
+        \n\u2022 Восстановление случайно потерянных матчей с сервера.
+        \n\u2022 Последующие новые web функции приложения будут включены в ваш пакет бесплатно!
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Почему лучше подключаться через аккаунт?</string>
     <string name="user_sign_in_why_message">Эта функция может быть для вас интересна, если вы транслируете матчи онлайн.\n\nПодключаясь через ваш аккаунт, вы можете контролировать ваши матчи на сайте https://www.volleyball-referee.com/user\n\nНа вашей персональной странице вы можете управлять вашими правилами, командами и матчами. Вы также можете создавать отдельные турниры. Запланированные матчи могут быть использованы либо вашим приложением, либо приложением любого другого судьи. Для этого достаточно просто передать уникальный код этих матчей.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Пол</string>
     <string name="match_duration_text">Выберите длительность матча</string>
     <string name="league_name_hint">Название лиги / турнира (факультативно)</string>
+    <string name="division_name_hint">Название дивизиона / группы (факультативно)</string>
     <string name="misc_tab">Разное</string>
     <string name="rules_tab">Правила</string>
     <string name="teams_tab">Команды</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Остановить матч</string>
     <string name="confirm_start_match_question">Начать матч?</string>
     <string name="confirm_stop_match_question">Остановить матч?</string>
-    <string name="stream_game">Транслировать матч онлайн</string>
-    <string name="stream_online_on_message">Матч транслируется онлайн</string>
-    <string name="stream_online_off_message">Трансляция матча остановлена</string>
+    <string name="index_game">Поменять статус матча (публичный/скрытый)</string>
+    <string name="public_game_message">Статус матча: публичный</string>
+    <string name="private_game_message">Статус матча: скрытый</string>
     <string name="all_timeouts_called">Команда \"%s\": нет командных тайм аутов</string>
     <string name="all_substitutions_used">Команда \"%s\": нет доступных замен в данной партии</string>
     <string name="sanctions_tab">Санкции</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Параметры</string>
     <string name="pref_referee_name">Мой псевдоним \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Транслировать матчи онлайн</string>
+    <string name="pref_sync_data">Синхронизировать данные с сервером</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_interactive_notification">Включить интерактивные уведомления</string>
     <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Синхронизировать</string>
+    <string name="sync_failed_message">Ошибка синхронизации</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Сохранённые матчи</string>
@@ -146,8 +161,6 @@
     <string name="players">Игроки</string>
     <string name="report_game">Создать отчёт по матчу</string>
     <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
-    <string name="upload_success_message">Матч успешно загружен на сервер</string>
-    <string name="upload_error_message">Не удалось загрузить матч на сервер</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Сохранённые команды</string>

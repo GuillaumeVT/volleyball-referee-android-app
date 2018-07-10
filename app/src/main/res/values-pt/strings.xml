@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Código de jogo inválido</string>
     <string name="download_error_message">O jogo não pode ser descarregado</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Compra</string>
+    <string name="already_purchased">Já comprado</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Mantenha os seus jogos, equipas e regras sincronizadas entre os seus dispositivos.
+        \n\u2022 Disfrute de armazenamento ilimitado para os seus dados e a melhor qualidade de transmissão dos seus jogos ao vivo.
+        \n\u2022 Agende os seus jogos para transmitir mais tarde.
+        \n\u2022 Apagou o seu jogo por engano? Recupere os seus jogos a partir da cópia de segurança no servidor.
+        \n\u2022 Beneficie automaticamente das futuras novas funcionalidades online.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Porque devo registar-me?</string>
     <string name="user_sign_in_why_message">Se transmite os seus jogos ao vivo, deverá  registar-se.\n\nAo registar-se, ganha controlo total dos seus jogos em https://www.volleyball-referee.com/user\n\A partir desta página, poderá criar e gerir as suas próprias regras, equipas, jogos e até torneios. Os jogos agendados podem ser arbitrados na sua App ou na App de outra pessoa, providenciando o código único do jogo ao árbitro.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Género</string>
     <string name="match_duration_text">Escolha a duração do jogo</string>
     <string name="league_name_hint">Nome da Competição (opcional)</string>
+    <string name="division_name_hint">Divisão / nome da série (opcional)</string>
     <string name="misc_tab">Diversos</string>
     <string name="rules_tab">Regras</string>
     <string name="teams_tab">Equipas</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Terminar jogo</string>
     <string name="confirm_start_match_question">Deseja iniciar esse jogo?</string>
     <string name="confirm_stop_match_question">Deseja terminar essa jogo?</string>
-    <string name="stream_game">Transmitir o jogo ao vivo</string>
-    <string name="stream_online_on_message">O jogo está a ser transmitido ao vivo</string>
-    <string name="stream_online_off_message">A transmissão deste jogo ao vivo terminou</string>
+    <string name="index_game">Alternar público / jogo privado</string>
+    <string name="public_game_message">O jogo é agora público</string>
+    <string name="private_game_message">O jogo é agora privado</string>
     <string name="all_timeouts_called">%s não possui mais tempos no set</string>
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
     <string name="sanctions_tab">Sanções</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
     <string name="pref_referee_name">Nome de utilizador \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Transmitir os jogos ao vivo</string>
+    <string name="pref_sync_data">Sincronizar dados online</string>
     <string name="pref_keep_screen_on">Manter écran ligado durante os jogos</string>
     <string name="pref_interactive_notification">Usar notificações interativas</string>
     <string name="pref_number_of_shirts">Selecione a numeração da camisola mais alta da sua equipa</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Sincronizar</string>
+    <string name="sync_failed_message">Sincronização de dados falhada</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Jogos recentes</string>
@@ -146,8 +161,6 @@
     <string name="players">Jogadores</string>
     <string name="report_game">Gerar relatório do jogo</string>
     <string name="report_exception">Falha ao gerar ou exibir o relatório de jogo</string>
-    <string name="upload_success_message">O upload deste jogo foi concluído com sucesso</string>
-    <string name="upload_error_message">Não foi possível concluir o upload deste jogo</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Equipas guardadas</string>

@@ -30,6 +30,17 @@
     <string name="invalid_game_code">Helytelen mérkőzés kód</string>
     <string name="download_error_message">A mérkőzést nem sikerült letölteni</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Vásárlás</string>
+    <string name="already_purchased">Már megvetted</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Tartsd a mérkőzésedet, csapataidat és szabályaidat szinkronban az eszközeid között.
+        \n\u2022 Használd ki a korlátlan tárhelyet és jobb élő közvetítési minőséget.
+        \n\u2022 Üzemezd be mérkőzéseidet későbbre.
+        \n\u2022 Véletlenül töröltél egy mérkőzést? Állítsd vissza a szerver biztonsági mentéséből.
+        \n\u2022 Automatikusan megkapod az összes jövőbeni webes funkciót.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Miért jelentkezzek be?</string>
     <string name="user_sign_in_why_message">Jelentkezz be, ha mérkőzéseidet online is szoktad streamelni.\n\nMérkőzéseidhez hozzáférsz a https://www.volleyball-referee.com/user oldalon.\n\nEzen az oldalon kezelheted az egyedi játékszabályaidat, csapataidat, mérkőzéseidet és versenyeidet. Az online létrehozott és beidőzített mérkőzéseid közvetíthetőek a mobil appból más által is, ha adsz nekik egyedi kódot.</string>
@@ -58,6 +69,7 @@
     <string name="gender_description">Nem</string>
     <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
     <string name="league_name_hint">Bajnokság / torna neve (opcionális)</string>
+    <string name="division_name_hint">Divízió neve (opcionális)</string>
     <string name="misc_tab">Egyéb</string>
     <string name="rules_tab">Szabályok</string>
     <string name="teams_tab">Csapatok</string>
@@ -100,9 +112,9 @@
     <string name="stop_match_description">Mérkőzés megállítása</string>
     <string name="confirm_start_match_question">Biztosan elindítod a mérkőzést?</string>
     <string name="confirm_stop_match_question">Biztosan megállítod a mérkőzést?</string>
-    <string name="stream_game">Mérkőzés közvetítése</string>
-    <string name="stream_online_on_message">A mérkőzés online közvetítve van</string>
-    <string name="stream_online_off_message">A mérközés online közvetítése véget ért</string>
+    <string name="index_game">Publikus / privát mérkőzés</string>
+    <string name="public_game_message">A mérkőzés most már publikus</string>
+    <string name="private_game_message">A mérkőzés most már privát</string>
     <string name="all_timeouts_called">%s csapatnak nincs több időkérése</string>
     <string name="all_substitutions_used">%s csapatnak nincs több cserelehetősége</string>
     <string name="sanctions_tab">Szankciók</string>
@@ -124,7 +136,7 @@
     <!-- Settings activity -->
     <string name="settings">Beállítások</string>
     <string name="pref_referee_name">\'Volleyball Referee\' nevem</string>
-    <string name="pref_stream_online">Mérközések online közvetítése</string>
+    <string name="pref_sync_data">Online adat szinkronizálás</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
     <string name="pref_interactive_notification">Interaktív értesítések használata</string>
     <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>
@@ -134,6 +146,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Szinkronizálás</string>
+    <string name="sync_failed_message">Nem sikerült az adat szinkronizálás</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Korábbi mérkőzések</string>
@@ -147,8 +162,6 @@
     <string name="players">Játékosok</string>
     <string name="report_game">Jegyzőkönyv generálása</string>
     <string name="report_exception">Nem sikerült a jegyzőkönyv generálása</string>
-    <string name="upload_success_message">A mérközés feltöltése sikeres volt</string>
-    <string name="upload_error_message">A mérközést nem sikerült feltölteni</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Mentett csapatok</string>
