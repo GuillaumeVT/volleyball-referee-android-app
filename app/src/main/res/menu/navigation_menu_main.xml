@@ -32,10 +32,6 @@
                 android:id="@+id/action_search_online_games"
                 android:icon="@drawable/ic_search_online_games_menu"
                 android:title="@string/search_online_games"/>
-            <item
-                android:id="@+id/action_view_online_account"
-                android:icon="@drawable/ic_account_menu"
-                android:title="@string/view_online_account"/>
         </menu>
     </item>
 

@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.user;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
@@ -53,8 +55,14 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void goToScheduledGames(View view) {
-        Log.i("VBR-MainActivity", "Go to scheduled games");
+        Log.i("VBR-UserActivity", "Go to scheduled games");
         final Intent intent = new Intent(this, ScheduledGamesListActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToOnlineAccount(View view) {
+        Log.i("VBR-UserActivity", "View online account");
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.USER_URL));
         startActivity(intent);
     }
 

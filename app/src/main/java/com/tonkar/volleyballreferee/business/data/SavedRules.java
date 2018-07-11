@@ -249,7 +249,7 @@ public class SavedRules implements SavedRulesService {
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_RULES_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_RULES_API_URL + parameters, new byte[0],
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -285,7 +285,7 @@ public class SavedRules implements SavedRulesService {
             rules.setUserId(PrefUtils.getUserId(mContext));
             final byte[] bytes = writeRules(rules).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_RULES_URL, bytes,
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_RULES_API_URL, bytes,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -295,7 +295,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_URL, bytes,
+                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes,
                                         new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {}
@@ -329,7 +329,7 @@ public class SavedRules implements SavedRulesService {
             params.put("name", rules.getName());
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0],
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -353,7 +353,7 @@ public class SavedRules implements SavedRulesService {
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0],
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}

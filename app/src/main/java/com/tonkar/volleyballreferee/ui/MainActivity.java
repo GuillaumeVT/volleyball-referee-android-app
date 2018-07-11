@@ -178,11 +178,6 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
                         startActivity(intent);
                         break;
-                    case R.id.action_view_online_account:
-                        Log.i("VBR-MainActivity", "View online account");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.USER_URL));
-                        startActivity(intent);
-                        break;
                     case R.id.action_facebook:
                         Log.i("VBR-MainActivity", "Facebook");
                         Intent browserIntent;
@@ -411,7 +406,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         messageItem.setVisible(false);
 
         if (PrefUtils.isPrefDataSyncEnabled(this)) {
-            String url = WebUtils.HAS_MESSAGE_URL;
+            String url = WebUtils.HAS_MESSAGE_API_URL;
             BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
                     new Response.Listener<Boolean>() {
                         @Override
@@ -431,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
     private void showMessage() {
         if (PrefUtils.isPrefDataSyncEnabled(this)) {
-            String url = WebUtils.MESSAGE_URL;
+            String url = WebUtils.MESSAGE_API_URL;
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
                     new Response.Listener<String>() {
                         @Override

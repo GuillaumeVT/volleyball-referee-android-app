@@ -339,7 +339,7 @@ public class SavedTeams implements SavedTeamsService {
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_TEAM_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_TEAM_API_URL + parameters, new byte[0],
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -375,7 +375,7 @@ public class SavedTeams implements SavedTeamsService {
             team.setUserId(PrefUtils.getUserId(mContext));
             final byte[] bytes = writeTeam(team).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_URL, bytes,
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_API_URL, bytes,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -384,7 +384,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_URL, bytes,
+                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_API_URL, bytes,
                                         new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {}
@@ -420,7 +420,7 @@ public class SavedTeams implements SavedTeamsService {
             params.put("kind", gameType.toString());
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0],
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -444,7 +444,7 @@ public class SavedTeams implements SavedTeamsService {
             params.put("userId", PrefUtils.getUserId(mContext));
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0],
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}

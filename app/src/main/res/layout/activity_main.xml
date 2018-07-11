@@ -30,20 +30,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/tiny_margin_size"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="7">
 
                     <ImageView
                         android:id="@+id/indoor_game_image"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/indoor" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -53,8 +53,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_6x6"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_6x6"
                             android:onClick="startIndoorGame"
                             android:text="@string/new_volleyball_game" />
 
@@ -64,8 +63,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_4x4"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_4x4"
                             android:onClick="startIndoor4x4Game"
                             android:text="@string/new_volleyball_game" />
 
@@ -75,8 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_volley_ball"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_volley_ball"
                             android:onClick="startScoreBasedGame"
                             android:text="@string/new_score_based_game" />
 
@@ -99,20 +96,20 @@
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/tiny_margin_size"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="7">
 
                     <ImageView
                         android:id="@+id/beach_game_image"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/main_image_height"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/beach" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -122,8 +119,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_sun"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_sun"
                             android:onClick="startBeachGame"
                             android:text="@string/new_beach_volleyball_game" />
 
@@ -145,20 +141,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/tiny_margin_size"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="7">
 
                     <ImageView
                         android:id="@+id/misc_game_image"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:scaleType="fitCenter"
                         app:srcCompat="@mipmap/ic_launcher_foreground" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -168,8 +164,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_time_based"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_time_based"
                             android:onClick="startTimeBasedGame"
                             android:text="@string/new_time_based_game" />
 
@@ -179,8 +174,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_scheduled_code"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_scheduled_code"
                             android:onClick="startScheduledGameFromCode"
                             android:text="@string/new_scheduled_game_from_code" />
 
@@ -190,8 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_scheduled_list"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_scheduled_list"
                             android:onClick="goToScheduledGames"
                             android:text="@string/user_scheduled_games_title" />
 
@@ -201,8 +194,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableLeft="@drawable/ic_purchase"
-                            android:drawablePadding="@dimen/small_margin_size"
+                            android:drawableRight="@drawable/ic_purchase"
                             android:onClick="goToPurchases"
                             android:text="@string/purchase" />
 
