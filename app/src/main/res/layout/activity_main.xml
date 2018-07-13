@@ -49,7 +49,7 @@
 
                         <Button
                             android:id="@+id/start_indoor_6x6_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -59,7 +59,7 @@
 
                         <Button
                             android:id="@+id/start_indoor_4x4_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -69,7 +69,7 @@
 
                         <Button
                             android:id="@+id/start_score_based_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -115,7 +115,7 @@
 
                         <Button
                             android:id="@+id/start_beach_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -160,7 +160,7 @@
 
                         <Button
                             android:id="@+id/start_time_based_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -170,7 +170,7 @@
 
                         <Button
                             android:id="@+id/start_scheduled_code_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -180,7 +180,7 @@
 
                         <Button
                             android:id="@+id/start_scheduled_list_game_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -190,7 +190,7 @@
 
                         <Button
                             android:id="@+id/start_purchase_button"
-                            style="@style/MainActivityButton.Primary"
+                            android:theme="@style/MainActivityButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"

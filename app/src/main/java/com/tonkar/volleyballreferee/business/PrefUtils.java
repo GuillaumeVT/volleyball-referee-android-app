@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
+import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.data.UserId;
 
 public class PrefUtils {
@@ -65,11 +66,15 @@ public class PrefUtils {
         return sharedPreferences.getBoolean(PREF_PURCHASED_WEB_PREMUIM, false);
     }
 
+    public static boolean canRequest(Context context) {
+        return isPrefDataSyncEnabled(context) && WebUtils.isConnectedToInternet(context);
+    }
+
     public static boolean canSync(Context context) {
         return isWebPremiumPurchased(context) && isSignedIn(context);
     }
 
     public static boolean isSyncOn(Context context) {
-        return isPrefDataSyncEnabled(context) && canSync(context);
+        return canRequest(context) && canSync(context);
     }
 }

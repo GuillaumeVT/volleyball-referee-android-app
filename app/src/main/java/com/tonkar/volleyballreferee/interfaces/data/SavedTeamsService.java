@@ -18,6 +18,8 @@ public interface SavedTeamsService {
 
     List<RecordedTeam> getSavedTeamList(GameType gameType);
 
+    List<String> getSavedTeamNameList(GameType gameType, GenderType genderType);
+
     RecordedTeam getSavedTeam(GameType gameType, String teamName, GenderType genderType);
 
     void createTeam(GameType gameType);

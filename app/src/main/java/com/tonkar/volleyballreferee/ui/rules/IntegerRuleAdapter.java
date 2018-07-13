@@ -21,7 +21,6 @@ public class IntegerRuleAdapter extends ArrayAdapter<Integer> {
 
     public IntegerRuleAdapter(Context context, LayoutInflater layoutInflater, String[] displayedValues, String[] actualValues) {
         super(context, R.layout.rule_spinner);
-        // android.R.layout.select_dialog_singlechoice
         mLayoutInflater = layoutInflater;
         mDisplayedValues = Arrays.asList(displayedValues);
         mActualValues = new ArrayList<>();

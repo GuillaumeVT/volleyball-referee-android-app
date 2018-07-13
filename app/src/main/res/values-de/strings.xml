@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Ungültiger Spielcode</string>
     <string name="download_error_message">Das Spiel konnte nicht heruntergeladen werden</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Kaufen</string>
+    <string name="already_purchased">Schon gekauft</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Synchronisiere Ihre Spiele, Teams und Regeln zwischen Ihre Geräten.
+        \n\u2022 Genießen Sie den unbegrenzten Speicherplatz für Ihre Daten und die bessere Streaming-Qualität für Ihre Live-Spiele.
+        \n\u2022 Planen Sie Ihre Spiele.
+        \n\u2022 Ihr Spiel wurde versehentlich gelöscht? Setzen Sie Ihre Spiele von der Serversicherung fort.
+        \n\u2022 Profitieren Sie von den zukünftigen neuen Webfunktionen.
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Warum sollte ich mich anmelden?</string>
     <string name="user_sign_in_why_message">Wenn Sie Ihre Spiele online streamen, sind Sie möglicherweise daran interessiert, sich anzumelden.\n\nMit Ihrer Anmeldung erhalten Sie unter https://www.volleyball-referee.com/user die volle Kontrolle über Ihre Spiele.\n\nAuf dieser Seite können Sie eigene Regeln, Mannschaften, Spiele und sogar Turniere erstellen und verwalten. Die geplanten Spiele können dann in Ihrer App oder in einer anderen App gespielt werden, indem Sie dem Schiedsrichter den Code des Spiels geben.</string>
@@ -56,7 +67,8 @@
     <string name="confirm_game_setup_question">Stimmen Sie diesen Spieleinstellungen zu?</string>
     <string name="gender_description">Geschlecht</string>
     <string name="match_duration_text">Spieldauer auswählen</string>
-    <string name="league_name_hint">Liga-/ Wettbewerbsbezeichnung (optional)</string>
+    <string name="league_name_hint">Liga- / Wettbewerbsbezeichnung (optional)</string>
+    <string name="division_name_hint">Spielklasse- / Gruppenbezeichnung (optional)</string>
     <string name="rules_tab">Regeln</string>
     <string name="teams_tab">Mannschaften</string>
     <string name="misc_tab">Sonstiges</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Beende das Spiel</string>
     <string name="confirm_start_match_question">Wollen Sie dieses Spiel starten?</string>
     <string name="confirm_stop_match_question">Wollen Sie dieses Spiel beenden?</string>
-    <string name="stream_game">Streame das Spiel online</string>
-    <string name="stream_online_on_message">Das Spiel wird online gestreamt</string>
-    <string name="stream_online_off_message">Das Spiel wird nicht mehr online gestreamt</string>
+    <string name="index_game">Öffentliche / private Spiel umschalten</string>
+    <string name="public_game_message">Das Spiel ist jetzt öffentlich</string>
+    <string name="private_game_message">Das Spiel ist jetzt privat</string>
     <string name="all_timeouts_called">%s kann keine weitere Auszeit mehr nehmen</string>
     <string name="all_substitutions_used">%s kann keinen Spielerwechsel mehr durchführen</string>
     <string name="sanctions_tab">Sanktionen</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Einstellungen</string>
     <string name="pref_referee_name">Mein \'Volleyball Referee\' Pseudonym</string>
-    <string name="pref_stream_online">Streame das Spiel online</string>
+    <string name="pref_sync_data">Synchronisieren Sie die Daten online</string>
     <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
     <string name="pref_interactive_notification">Verwenden Sie interaktive Benachrichtigungen</string>
     <string name="pref_number_of_shirts">Anzahl der Trikots in den Mannschaftseinstellungen</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Synchronisieren</string>
+    <string name="sync_failed_message">Fehler bei der Datensynchronisation</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Gespeicherte Spiele</string>
@@ -146,8 +161,6 @@
     <string name="players">Spieler</string>
     <string name="report_game">Generiere einen Spielbericht</string>
     <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
-    <string name="upload_success_message">Das Spiel wurde erfolgreich hochgeladen</string>
-    <string name="upload_error_message">Das Spiel konnte nicht hochgeladen werden.</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Gespeicherte Mannschaften</string>

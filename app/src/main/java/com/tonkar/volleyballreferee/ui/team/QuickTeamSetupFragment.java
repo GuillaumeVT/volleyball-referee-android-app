@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -14,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.tonkar.volleyballreferee.R;
@@ -62,15 +63,16 @@ public class QuickTeamSetupFragment extends Fragment {
 
         mTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
-        final EditText teamNameInput = view.findViewById(R.id.team_name_input_text);
+        final TextInputEditText teamNameInput = view.findViewById(R.id.team_name_input_text);
+        final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
         mTeamColorButton = view.findViewById(R.id.team_color_button);
 
         switch (mTeamType) {
             case HOME:
-                teamNameInput.setHint(R.string.home_team_hint);
+                teamNameInputLayout.setHint(getResources().getString(R.string.home_team_hint));
                 break;
             case GUEST:
-                teamNameInput.setHint(R.string.guest_team_hint);
+                teamNameInputLayout.setHint(getResources().getString(R.string.guest_team_hint));
                 break;
         }
 

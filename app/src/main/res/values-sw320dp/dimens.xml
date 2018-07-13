@@ -46,4 +46,7 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">8sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
 
+    <dimen name="normal_fab_margin_size">8dp</dimen>
+    <dimen name="mini_fab_margin_size">16dp</dimen>
+
 </resources>

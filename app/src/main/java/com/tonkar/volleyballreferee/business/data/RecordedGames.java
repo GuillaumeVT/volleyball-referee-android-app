@@ -267,7 +267,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void pushGameOnline(final RecordedGameService recordedGameService) {
-        if (PrefUtils.isPrefDataSyncEnabled(mContext) && recordedGameService != null) {
+        if (PrefUtils.canRequest(mContext) && recordedGameService != null) {
             RecordedGame recordedGame = (RecordedGame) recordedGameService;
             try {
                 final byte[] bytes = recordedGameToByteArray(recordedGame);
@@ -333,7 +333,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void deleteCurrentGameOnline() {
-        if (PrefUtils.isPrefDataSyncEnabled(mContext)) {
+        if (PrefUtils.canRequest(mContext)) {
             // The match is not loaded in memory => need to read it to retrieve the date
             if (mRecordedGame == null) {
                 GameService gameService = loadCurrentGame();
@@ -850,6 +850,55 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
     }
 
+    @Override
+    public void scheduleUserGameOnline(GameDescription gameDescription, final DataSynchronizationListener listener) {
+        if (PrefUtils.isSyncOn(mContext)) {
+            try {
+                final byte[] bytes = gameDescriptionToByteArray(gameDescription);
+
+                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_GAME_API_URL, bytes,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                if (listener != null) {
+                                    listener.onSynchronizationSucceeded();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                if (error.networkResponse != null) {
+                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
+                                }
+                                if (listener != null) {
+                                    listener.onSynchronizationFailed();
+                                }
+                            }
+                        }
+                );
+                WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            } catch (JsonParseException | IOException e) {
+                Log.e(TAG, "Exception while writing game description", e);
+                if (listener != null) {
+                    listener.onSynchronizationFailed();
+                }
+            }
+        }
+    }
+
+    private byte[] gameDescriptionToByteArray(GameDescription gameDescription) throws JsonParseException, IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE, writer);
+        writer.close();
+
+        outputStream.close();
+
+        return outputStream.toByteArray();
+    }
+
     // Read game descriptions
 
     private List<GameDescription> readGameDescriptionList(String json) {
@@ -918,7 +967,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     public void onMatchIndexed(boolean indexed) {
         saveCurrentGame();
 
-        if (PrefUtils.isPrefDataSyncEnabled(mContext)) {
+        if (PrefUtils.canRequest(mContext)) {
             if (indexed) {
                 Log.d(TAG, "Making the game public");
                 pushCurrentGameOnline();

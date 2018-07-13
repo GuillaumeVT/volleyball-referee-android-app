@@ -45,10 +45,12 @@
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="standard_60">60dp</dimen>
     <dimen name="standard_120">120dp</dimen>
     <dimen name="standard_180">180dp</dimen>
+
+    <dimen name="normal_fab_margin_size">16dp</dimen>
+    <dimen name="mini_fab_margin_size">24dp</dimen>
 
 </resources>

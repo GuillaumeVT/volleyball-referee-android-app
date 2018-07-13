@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.ui.user;
+package com.tonkar.volleyballreferee.ui.setup;
 
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;

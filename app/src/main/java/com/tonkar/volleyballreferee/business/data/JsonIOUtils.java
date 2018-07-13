@@ -34,6 +34,7 @@ public class JsonIOUtils {
     public static final Type RECORDED_TEAM_TYPE         = new TypeToken<RecordedTeam>() {}.getType();
     public static final Type RULES_LIST_TYPE            = new TypeToken<List<Rules>>() {}.getType();
     public static final Type RULES_TYPE                 = new TypeToken<Rules>() {}.getType();
+    public static final Type GAME_DESCRIPTION_TYPE      = new TypeToken<GameDescription>() {}.getType();
     public static final Type GAME_DESCRIPTION_LIST_TYPE = new TypeToken<List<GameDescription>>() {}.getType();
 
     public static final Gson GSON = new GsonBuilder()

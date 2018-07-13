@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces.data;
 
+import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 
 import java.util.List;
@@ -57,7 +58,9 @@ public interface RecordedGamesService {
 
     void getGameFromCode(int code, AsyncGameRequestListener listener);
 
-    void getUserGame(final String userId, final long id, final AsyncGameRequestListener listener);
+    void getUserGame(String userId, long id, AsyncGameRequestListener listener);
 
-    void getUserScheduledGames(final String userId, final AsyncGameRequestListener listener);
+    void getUserScheduledGames(String userId, AsyncGameRequestListener listener);
+    
+    void scheduleUserGameOnline(GameDescription gameDescription, DataSynchronizationListener listener);
 }

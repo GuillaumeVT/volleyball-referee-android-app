@@ -60,7 +60,17 @@ public class GameDescription {
         mGuestTeamSets = 0;
         mRulesName = "";
     }
-
+    
+    public GameDescription(GameType gameType, String userId, String refereeName) {
+        this();
+        mGameType = gameType;
+        mGameDate = System.currentTimeMillis();
+        mGameSchedule = mGameDate;
+        mGameStatus = GameStatus.SCHEDULED;
+        mUserId = userId;
+        mRefereeName = refereeName;
+    }
+    
     public String getUserId() {
         return mUserId;
     }
@@ -123,6 +133,54 @@ public class GameDescription {
 
     public String getRulesName() {
         return mRulesName;
+    }
+
+    public void setGameSchedule(long gameSchedule) {
+        mGameSchedule = gameSchedule;
+    }
+
+    public void setGenderType(GenderType genderType) {
+        mGenderType = genderType;
+    }
+
+    public void setUsageType(UsageType usageType) {
+        mUsageType = usageType;
+    }
+
+    public void setIndexed(boolean indexed) {
+        mIndexed = indexed;
+    }
+
+    public void setRefereeName(String refereeName) {
+        mRefereeName = refereeName;
+    }
+
+    public void setLeagueName(String leagueName) {
+        mLeagueName = leagueName;
+    }
+
+    public void setDivisionName(String divisionName) {
+        mDivisionName = divisionName;
+    }
+
+    public void setHomeTeamName(String homeTeamName) {
+        mHomeTeamName = homeTeamName;
+    }
+
+    public void setGuestTeamName(String guestTeamName) {
+        mGuestTeamName = guestTeamName;
+    }
+
+    public void setHomeTeamSets(int homeTeamSets) {
+        mHomeTeamSets = homeTeamSets;
+    }
+
+    public void setGuestTeamSets(int guestTeamSets) {
+        mGuestTeamSets = guestTeamSets;
+    }
+
+    public void setRulesName(String rulesName) {
+        mRulesName = rulesName;
     }
 
 }

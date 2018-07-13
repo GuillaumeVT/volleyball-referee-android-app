@@ -82,7 +82,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         });
 
         mIsFabOpen = false;
-        mAddIndoorRulesButton = findViewById(R.id.add_indoor_tules_button);
+        mAddIndoorRulesButton = findViewById(R.id.add_indoor_rules_button);
         mAddIndoor4x4RulesButton = findViewById(R.id.add_indoor_4x4_rules_button);
         mAddBeachRulesButton = findViewById(R.id.add_beach_rules_button);
         FloatingActionButton addRulesButton = findViewById(R.id.add_rules_button);

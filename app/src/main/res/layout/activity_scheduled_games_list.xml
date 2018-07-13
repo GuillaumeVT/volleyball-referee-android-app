@@ -1,15 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sync_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tonkar.volleyballreferee.ui.user.ScheduledGamesListActivity">
+    tools:context="com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity">
 
-    <ListView
-        android:id="@+id/scheduled_games_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/scheduled_games_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_size"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/schedule_indoor_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/mini_fab_margin_size"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="scheduleIndoorGame"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_6x6" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/schedule_indoor_4x4_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/mini_fab_margin_size"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="scheduleIndoor4x4Game"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_4x4" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/schedule_beach_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/mini_fab_margin_size"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="scheduleBeachGame"
+            android:tint="@color/colorBeach"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_sun" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/schedule_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/normal_fab_margin_size"
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@android:drawable/ic_input_add"/>
+
+    </RelativeLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

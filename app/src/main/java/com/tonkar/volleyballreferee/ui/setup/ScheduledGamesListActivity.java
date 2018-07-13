@@ -1,7 +1,8 @@
-package com.tonkar.volleyballreferee.ui.user;
+package com.tonkar.volleyballreferee.ui.setup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -18,6 +19,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
+import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -25,8 +27,6 @@ import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.ui.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
-import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 
 import java.util.List;
 
@@ -34,6 +34,10 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
     private SwipeRefreshLayout        mSyncLayout;
     private ScheduledGamesListAdapter mScheduledGamesListAdapter;
+    private boolean                   mIsFabOpen;
+    private FloatingActionButton      mScheduleIndoorGameButton;
+    private FloatingActionButton      mScheduleIndoor4x4GameButton;
+    private FloatingActionButton      mScheduleBeachGameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,22 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         });
 
         updateScheduledGamesList();
+
+        mIsFabOpen = false;
+        mScheduleIndoorGameButton = findViewById(R.id.schedule_indoor_game_button);
+        mScheduleIndoor4x4GameButton = findViewById(R.id.schedule_indoor_4x4_game_button);
+        mScheduleBeachGameButton = findViewById(R.id.schedule_beach_game_button);
+        FloatingActionButton scheduleGameButton = findViewById(R.id.schedule_game_button);
+        scheduleGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mIsFabOpen){
+                    closeFABMenu();
+                }else{
+                    showFABMenu();
+                }
+            }
+        });
 
         if (savedInstanceState != null) {
             restoreEditScheduledGameDialog();
@@ -228,6 +248,56 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
                 @Override
                 public void onNeutralButtonClicked() {}
             });
+        }
+    }
+
+    public void scheduleIndoorGame(View view) {
+        GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getUserId(this), PrefUtils.getPrefRefereeName(this));
+        Log.i("VBR-SRGamesActivity", "Start activity to schedule new indoor game");
+
+        final Intent intent = new Intent(this, ScheduledGameActivity.class);
+        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        startActivity(intent);
+    }
+
+    public void scheduleIndoor4x4Game(View view) {
+        GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getUserId(this), PrefUtils.getPrefRefereeName(this));
+        Log.i("VBR-SRGamesActivity", "Start activity to schedule new indoor 4x4 game");
+
+        final Intent intent = new Intent(this, ScheduledGameActivity.class);
+        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        startActivity(intent);
+    }
+
+    public void scheduleBeachGame(View view) {
+        GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getUserId(this), PrefUtils.getPrefRefereeName(this));
+        Log.i("VBR-SRGamesActivity", "Start activity to schedule new beach game");
+
+        final Intent intent = new Intent(this, ScheduledGameActivity.class);
+        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        startActivity(intent);
+    }
+
+    private void showFABMenu(){
+        mIsFabOpen = true;
+        mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.standard_180));
+        mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
+        mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.standard_60));
+    }
+
+    private void closeFABMenu(){
+        mIsFabOpen = false;
+        mScheduleIndoorGameButton.animate().translationY(0);
+        mScheduleIndoor4x4GameButton.animate().translationY(0);
+        mScheduleBeachGameButton.animate().translationY(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mIsFabOpen){
+            closeFABMenu();
+        } else {
+            super.onBackPressed();
         }
     }
 }

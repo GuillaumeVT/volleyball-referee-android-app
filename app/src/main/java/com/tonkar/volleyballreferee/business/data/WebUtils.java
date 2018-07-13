@@ -1,6 +1,8 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -13,7 +15,6 @@ public class WebUtils {
     public static String LIVE_URL                     = BASE_URL + "/search/live";
     public static String VIEW_URL                     = BASE_URL + "/game/%d";
     public static String USER_URL                     = BASE_URL + "/user";
-    public static String USER_GAMES_URL               = USER_URL + "/games";
     public static String GAME_API_URL                 = BASE_URL + "/api/manage/game/%d";
     public static String SET_API_URL                  = GAME_API_URL + "/set/%d";
     public static String HAS_MESSAGE_API_URL          = BASE_URL + "/api/message/has";
@@ -45,4 +46,9 @@ public class WebUtils {
         return mRequestQueue;
     }
 
+    public static boolean isConnectedToInternet(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
 }

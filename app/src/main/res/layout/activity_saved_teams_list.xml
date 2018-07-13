@@ -26,12 +26,13 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/big_margin_size"
+            android:layout_margin="@dimen/mini_fab_margin_size"
             android:clickable="true"
             android:focusable="true"
             android:onClick="addIndoorTeam"
             android:tint="@color/colorPrimary"
             app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
             app:srcCompat="@drawable/ic_6x6" />
 
         <android.support.design.widget.FloatingActionButton
@@ -41,12 +42,13 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/big_margin_size"
+            android:layout_margin="@dimen/mini_fab_margin_size"
             android:clickable="true"
             android:focusable="true"
             android:onClick="addIndoor4x4Team"
             android:tint="@color/colorPrimary"
             app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
             app:srcCompat="@drawable/ic_4x4" />
 
         <android.support.design.widget.FloatingActionButton
@@ -56,12 +58,13 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/big_margin_size"
+            android:layout_margin="@dimen/mini_fab_margin_size"
             android:clickable="true"
             android:focusable="true"
             android:onClick="addBeachTeam"
             android:tint="@color/colorBeach"
             app:backgroundTint="@android:color/white"
+            app:fabSize="mini"
             app:srcCompat="@drawable/ic_sun" />
 
         <android.support.design.widget.FloatingActionButton
@@ -71,12 +74,12 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/big_margin_size"
+            android:layout_margin="@dimen/normal_fab_margin_size"
             android:clickable="true"
             android:focusable="true"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimary"
-            app:srcCompat="@android:drawable/ic_input_add"/>
+            app:srcCompat="@android:drawable/ic_input_add" />
 
-    </RelativeLayout >
+    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

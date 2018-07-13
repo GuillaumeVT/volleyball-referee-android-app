@@ -52,7 +52,7 @@ import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.user.ScheduledGamesListActivity;
+import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
         initNavigationMenu();
 
         Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
-        scheduledCodeButton.setVisibility(PrefUtils.isPrefDataSyncEnabled(this) ? View.VISIBLE : View.GONE);
+        scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
 
         final Button purchaseButton = findViewById(R.id.start_purchase_button);
         billingService.addBillingListener(new BillingListener() {
@@ -405,7 +405,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
     private void initMessageMenuVisibility(final MenuItem messageItem) {
         messageItem.setVisible(false);
 
-        if (PrefUtils.isPrefDataSyncEnabled(this)) {
+        if (PrefUtils.canRequest(this)) {
             String url = WebUtils.HAS_MESSAGE_API_URL;
             BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
                     new Response.Listener<Boolean>() {
@@ -425,7 +425,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
     }
 
     private void showMessage() {
-        if (PrefUtils.isPrefDataSyncEnabled(this)) {
+        if (PrefUtils.canRequest(this)) {
             String url = WebUtils.MESSAGE_API_URL;
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
                     new Response.Listener<String>() {

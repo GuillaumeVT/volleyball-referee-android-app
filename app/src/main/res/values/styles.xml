@@ -84,4 +84,12 @@
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
+    <style name="ScheduleButtonTheme" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="colorButtonNormal">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+    </style>
+
 </resources>

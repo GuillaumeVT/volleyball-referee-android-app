@@ -74,6 +74,19 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     @Override
+    public List<String> getSavedTeamNameList(GameType gameType, GenderType genderType) {
+        List<String> list = new ArrayList<>();
+
+        for (RecordedTeam team: mSavedTeams) {
+            if (gameType.equals(team.getGameType()) && genderType.equals(team.getGenderType())) {
+                list.add(team.getName());
+            }
+        }
+
+        return list;
+    }
+
+    @Override
     public RecordedTeam getSavedTeam(GameType gameType, String teamName, GenderType genderType) {
         RecordedTeam matching = null;
 
