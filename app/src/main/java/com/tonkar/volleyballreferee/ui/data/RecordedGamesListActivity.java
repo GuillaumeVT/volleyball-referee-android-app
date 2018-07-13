@@ -157,8 +157,10 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
     }
 
     private void updateRecordedGamesList() {
-        mSyncLayout.setRefreshing(true);
-        mRecordedGamesService.syncGamesOnline(this);
+        if (PrefUtils.isSyncOn(this)) {
+            mSyncLayout.setRefreshing(true);
+            mRecordedGamesService.syncGamesOnline(this);
+        }
     }
 
     @Override

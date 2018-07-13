@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.PreferenceManager;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -32,6 +32,7 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
@@ -97,7 +98,8 @@ public class TeamSetupFragment extends Fragment {
 
         mScrollView = view.findViewById(R.id.team_setup_scroll);
 
-        final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
+        final TextInputAutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
+        final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
         mTeamColorButton = view.findViewById(R.id.team_color_button);
         final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
@@ -106,10 +108,10 @@ public class TeamSetupFragment extends Fragment {
 
         switch (mTeamType) {
             case HOME:
-                teamNameInput.setHint(R.string.home_team_hint);
+                teamNameInputLayout.setHint(getResources().getString(R.string.home_team_hint));
                 break;
             case GUEST:
-                teamNameInput.setHint(R.string.guest_team_hint);
+                teamNameInputLayout.setHint(getResources().getString(R.string.guest_team_hint));
                 break;
         }
 

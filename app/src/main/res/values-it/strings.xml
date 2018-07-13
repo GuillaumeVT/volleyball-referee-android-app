@@ -29,6 +29,17 @@
     <string name="invalid_game_code">Codice della partita non valido</string>
     <string name="download_error_message">La partita non ha potuto essere scaricata dal server</string>
 
+    <!-- Purchase activity -->
+    <string name="purchase">Acquistare</string>
+    <string name="already_purchased">Già acquistato</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 Guardare le vostre partite, squadre e regole sincronizzate tra i vostri dispositivi.
+        \n\u2022 Approfittare di memoria illimitata per i vostri dati e di uno streaming di migliore qualità per le vostre partite in diretta.
+        \n\u2022 Programmare le vostre partite da giocare più tardi
+        \n\u2022 Avete cancellato una partita per sbaglio? Recuperate le vostre partite dal backup del server.
+        \n\u2022 Beneficiare automaticamente delle future funzioni web dell'applicazione
+    </string>
+
     <!-- User activity -->
     <string name="user_sign_in_why_title">Perché connettersi?</string>
     <string name="user_sign_in_why_message">Se pubblicate le partite in linea, questo vi riguarda.\n\nConnettendosi avrete il controllo completo delle vostre partite su: https://www.volleyball-referee.com/user\n\nDa questa pagina potrete creare e modificare le vostre regole, squadre, partite e anche i vostri tornei. Le partite programmate potranno poi essere arbitrate via la vostra applicazione oppure quella di un altro arbitro fornendogli il codice unico della partita.</string>
@@ -57,6 +68,7 @@
     <string name="gender_description">Genere</string>
     <string name="match_duration_text">Selezionare la durata di una partita</string>
     <string name="league_name_hint">Nome della categoria o del torneo (opzionale)</string>
+    <string name="division_name_hint">Nome della divisione / pool (opzionale)</string>
     <string name="misc_tab">Varie</string>
     <string name="rules_tab">Regole</string>
     <string name="teams_tab">Squadre</string>
@@ -99,9 +111,9 @@
     <string name="stop_match_description">Interrompere la partita</string>
     <string name="confirm_start_match_question">Volete iniziare la partita?</string>
     <string name="confirm_stop_match_question">Volete interrompere la partita?</string>
-    <string name="stream_game">Trasmettere la partita in linea</string>
-    <string name="stream_online_on_message">La partita é stata trasmessa in linea</string>
-    <string name="stream_online_off_message">La partita non é più trasmessa in linea</string>
+    <string name="index_game">Passare da partita pubblica a partita privata</string>
+    <string name="public_game_message">La partita è pubblica</string>
+    <string name="private_game_message">La partita è privata</string>
     <string name="all_timeouts_called">%s non ha più tempi di riposo disponibili</string>
     <string name="all_substitutions_used">%s non ha più sostituzioni di giocatori disponibili</string>
     <string name="sanctions_tab">Sanzioni</string>
@@ -123,7 +135,7 @@
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
     <string name="pref_referee_name">Il mio pseudonimo \'Volleyball Referee\'</string>
-    <string name="pref_stream_online">Trasmettere le partite in linea</string>
+    <string name="pref_sync_data">Sincronizzare i dati in linea</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
     <string name="pref_interactive_notification">Utilizzare le notifiche interattive</string>
     <string name="pref_number_of_shirts">Numero di divise nella configurazione della squadra</string>
@@ -133,6 +145,9 @@
         <item>50</item>
         <item>99</item>
     </string-array>
+
+    <string name="synchronize">Sincronizzare</string>
+    <string name="sync_failed_message">Sincronizzazione fallita</string>
 
     <!-- Recorded games activity -->
     <string name="recorded_games">Partite recenti</string>
@@ -146,8 +161,6 @@
     <string name="players">Giocatori</string>
     <string name="report_game">Generare il referto della partita</string>
     <string name="report_exception">Errore di generazione o visualizzazione del referto della partita</string>
-    <string name="upload_success_message">La partita é stata salvata sul server</string>
-    <string name="upload_error_message">La partita non ha potuto essere salvata sul server</string>
 
     <!-- Saved teams activity -->
     <string name="saved_teams">Squadre salvate</string>

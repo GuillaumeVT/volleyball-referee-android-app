@@ -141,8 +141,10 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     }
 
     private void updateScheduledGamesList() {
-        mSyncLayout.setRefreshing(true);
-        ServicesProvider.getInstance().getRecordedGamesService().getUserScheduledGames(PrefUtils.getUserId(this), this);
+        if (PrefUtils.isSyncOn(this)) {
+            mSyncLayout.setRefreshing(true);
+            ServicesProvider.getInstance().getRecordedGamesService().getUserScheduledGames(PrefUtils.getUserId(this), this);
+        }
     }
 
     @Override

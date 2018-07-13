@@ -29,16 +29,22 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorPrimaryText"/>
 
-        <AutoCompleteTextView
-            android:id="@+id/rules_name_input_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/rules_name_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size" />
+            android:layout_height="wrap_content">
+
+            <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                android:id="@+id/rules_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/rules_name_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <View
             android:layout_width="match_parent"

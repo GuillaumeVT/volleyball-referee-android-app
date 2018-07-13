@@ -9,10 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class MiscSetupFragment extends Fragment {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
         }
 
-        final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        final TextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues()));
         leagueNameInput.setAdapter(leagueNameAdapter);
@@ -57,7 +57,7 @@ public class MiscSetupFragment extends Fragment {
 
         leagueNameInput.setText(ServicesProvider.getInstance().getGeneralService().getLeagueName());
 
-        final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        final TextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
         ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
@@ -29,6 +28,7 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
 import com.tonkar.volleyballreferee.ui.team.ShirtColors;
@@ -75,7 +75,7 @@ public class QuickGameSetupFragment extends Fragment {
         mHomeTeamCaptainButton = view.findViewById(R.id.home_team_captain_number_button);
         mGuestTeamCaptainButton = view.findViewById(R.id.guest_team_captain_number_button);
 
-        final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        final TextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
         List<String> leagueNames = new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues());
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, leagueNames);
@@ -94,7 +94,7 @@ public class QuickGameSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        final TextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
         ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
@@ -114,7 +114,7 @@ public class QuickGameSetupFragment extends Fragment {
 
         divisionNameInput.setText(ServicesProvider.getInstance().getGeneralService().getDivisionName());
 
-        final AutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
+        final TextInputAutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -130,7 +130,7 @@ public class QuickGameSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        final AutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
+        final TextInputAutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

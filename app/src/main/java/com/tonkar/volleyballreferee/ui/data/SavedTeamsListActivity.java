@@ -217,8 +217,10 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
     }
 
     private void updateSavedTeamsList() {
-        mSyncLayout.setRefreshing(true);
-        mSavedTeamsService.syncTeamsOnline(this);
+        if (PrefUtils.isSyncOn(this)) {
+            mSyncLayout.setRefreshing(true);
+            mSavedTeamsService.syncTeamsOnline(this);
+        }
     }
 
     @Override

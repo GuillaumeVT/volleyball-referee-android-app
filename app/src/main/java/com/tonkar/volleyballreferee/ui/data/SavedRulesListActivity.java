@@ -219,8 +219,10 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
     }
 
     private void updateSavedRulesList() {
-        mSyncLayout.setRefreshing(true);
-        mSavedRulesService.syncRulesOnline(this);
+        if (PrefUtils.isSyncOn(this)) {
+            mSyncLayout.setRefreshing(true);
+            mSavedRulesService.syncRulesOnline(this);
+        }
     }
 
     @Override

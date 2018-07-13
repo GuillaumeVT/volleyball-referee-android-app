@@ -19,17 +19,23 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <AutoCompleteTextView
-                android:id="@+id/home_team_name_input_text"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:ems="10"
-                android:hint="@string/home_team_hint"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+                android:layout_weight="3">
+
+                <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                    android:id="@+id/home_team_name_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/home_team_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/default_text_size" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/home_team_color_button"
@@ -77,17 +83,23 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <AutoCompleteTextView
-                android:id="@+id/guest_team_name_input_text"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:ems="10"
-                android:hint="@string/guest_team_hint"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+                android:layout_weight="3">
+
+                <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                    android:id="@+id/guest_team_name_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/guest_team_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/default_text_size" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/guest_team_color_button"
@@ -141,29 +153,41 @@
             android:theme="@style/ImageButtonTheme"
             app:srcCompat="@drawable/ic_mixed" />
 
-        <AutoCompleteTextView
-            android:id="@+id/league_name_input_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            android:ems="10"
-            android:hint="@string/league_name_hint"
-            android:imeOptions="actionNext"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size" />
+            android:layout_margin="@dimen/default_margin_size">
 
-        <AutoCompleteTextView
-            android:id="@+id/division_name_input_text"
+            <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                android:id="@+id/league_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/league_name_hint"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            android:ems="10"
-            android:hint="@string/division_name_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size" />
+            android:layout_margin="@dimen/default_margin_size">
+
+            <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                android:id="@+id/division_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/division_name_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
