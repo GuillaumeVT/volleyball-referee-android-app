@@ -134,10 +134,10 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
         indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
-        indoorGame.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[9]));
-        indoorGame.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
-        indoorGame.setLiberoColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
-        indoorGame.setLiberoColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[7]));
+        indoorGame.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
+        indoorGame.setTeamColor(TeamType.GUEST, Color.parseColor("#034694"));
+        indoorGame.setLiberoColor(TeamType.HOME, Color.parseColor("#034694"));
+        indoorGame.setLiberoColor(TeamType.GUEST, Color.parseColor("#bc0019"));
 
         indoorGame.addPlayer(TeamType.HOME, 1);
         indoorGame.addPlayer(TeamType.HOME, 3);

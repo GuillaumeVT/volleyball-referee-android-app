@@ -51,8 +51,8 @@ public class TimeBasedGameTest {
 
         game.setTeamName(TeamType.HOME, "Team 1");
         game.setTeamName(TeamType.GUEST, "Team 2");
-        game.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[4]));
-        game.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[10]));
+        game.setTeamColor(TeamType.HOME, Color.parseColor("#006032"));
+        game.setTeamColor(TeamType.GUEST, Color.parseColor("#ffffff"));
 
         game.startMatch();
 

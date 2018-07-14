@@ -50,8 +50,8 @@ public class PointsScoreBoardGameTest {
 
         game.setTeamName(TeamType.HOME, "Team A");
         game.setTeamName(TeamType.GUEST, "Team B");
-        game.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[3]));
-        game.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[8]));
+        game.setTeamColor(TeamType.HOME, Color.parseColor("#052443"));
+        game.setTeamColor(TeamType.GUEST, Color.parseColor("#e25618"));
 
         game.startMatch();
 

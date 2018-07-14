@@ -69,8 +69,8 @@ public class ItalyUsaBeachGame {
         beachGame.setDivisionName("Final");
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
-        beachGame.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[7]));
-        beachGame.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[0]));
+        beachGame.setTeamColor(TeamType.HOME, Color.parseColor("#bc0019"));
+        beachGame.setTeamColor(TeamType.GUEST, Color.parseColor("#2980b9"));
         beachGame.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();

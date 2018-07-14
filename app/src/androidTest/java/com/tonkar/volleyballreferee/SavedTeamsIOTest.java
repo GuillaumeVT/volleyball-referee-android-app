@@ -43,8 +43,8 @@ public class SavedTeamsIOTest {
         BaseTeamService service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "BRAZIL");
-        service.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[9]));
-        service.setLiberoColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
+        service.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
+        service.setLiberoColor(TeamType.HOME, Color.parseColor("#034694"));
 
         service.addPlayer(TeamType.HOME, 1);
         service.addPlayer(TeamType.HOME, 3);
@@ -73,8 +73,8 @@ public class SavedTeamsIOTest {
         service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "FRANCE");
-        service.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
-        service.setLiberoColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[7]));
+        service.setTeamColor(TeamType.HOME, Color.parseColor("#034694"));
+        service.setLiberoColor(TeamType.HOME, Color.parseColor("#bc0019"));
 
         service.addPlayer(TeamType.HOME, 2);
         service.addPlayer(TeamType.HOME, 5);

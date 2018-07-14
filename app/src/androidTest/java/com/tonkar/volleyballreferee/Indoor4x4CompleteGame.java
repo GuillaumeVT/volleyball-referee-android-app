@@ -56,8 +56,8 @@ public class Indoor4x4CompleteGame {
 
         indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");
         indoor4x4Game.setTeamName(TeamType.GUEST, "Guest Team");
-        indoor4x4Game.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[0]));
-        indoor4x4Game.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[6]));
+        indoor4x4Game.setTeamColor(TeamType.HOME, Color.parseColor("#2980b9"));
+        indoor4x4Game.setTeamColor(TeamType.GUEST, Color.parseColor("#c2185b"));
 
         for (int index = 1; index <= 8; index++) {
             indoor4x4Game.addPlayer(TeamType.HOME, index);
