@@ -55,8 +55,17 @@ import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Locale;
+import java.util.Random;
 
 public class UiUtils {
+
+    private static final Random RANDOM = new Random();
+
+    public static int getRandomShirtColor(Context context) {
+        String[] colorsStr = context.getResources().getStringArray(R.array.shirt_colors);
+        String randomColorStr = colorsStr[RANDOM.nextInt(colorsStr.length - 1)];
+        return Color.parseColor(randomColorStr);
+    }
 
     public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, Button button) {
         colorTeamButton(context, teamService.getTeamColor(teamType), button);

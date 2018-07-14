@@ -1,8 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -50,8 +50,8 @@ public class PointsScoreBoardGameTest {
 
         game.setTeamName(TeamType.HOME, "Team A");
         game.setTeamName(TeamType.GUEST, "Team B");
-        game.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt4));
-        game.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt9));
+        game.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[3]));
+        game.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[8]));
 
         game.startMatch();
 

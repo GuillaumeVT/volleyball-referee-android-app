@@ -31,7 +31,6 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
-import com.tonkar.volleyballreferee.ui.team.ShirtColors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,14 +168,14 @@ public class QuickGameSetupFragment extends Fragment {
 
         if (ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.HOME) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)
                 && ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.GUEST) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            int homeTeamColor = ShirtColors.getRandomShirtColor(getContext());
+            int homeTeamColor = UiUtils.getRandomShirtColor(getContext());
             teamColorSelected(TeamType.HOME, homeTeamColor);
 
             boolean sameColor = true;
             int guestTeamColor = 0;
 
             while (sameColor) {
-                guestTeamColor = ShirtColors.getRandomShirtColor(getContext());
+                guestTeamColor = UiUtils.getRandomShirtColor(getContext());
                 sameColor = (guestTeamColor == homeTeamColor);
             }
             teamColorSelected(TeamType.GUEST, guestTeamColor);
@@ -273,7 +272,8 @@ public class QuickGameSetupFragment extends Fragment {
 
     private void selectTeamColor(final TeamType teamType) {
         Log.i("VBR-QGSActivity", String.format("Select %s team color", teamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
+                getResources().getStringArray(R.array.shirt_colors), ServicesProvider.getInstance().getTeamService().getTeamColor(teamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(teamType, selectedColor);

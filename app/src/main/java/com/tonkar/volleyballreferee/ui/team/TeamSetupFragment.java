@@ -171,7 +171,7 @@ public class TeamSetupFragment extends Fragment {
         teamNumbersGrid.setAdapter(mPlayerAdapter);
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            teamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
+            teamColorSelected(UiUtils.getRandomShirtColor(getActivity()));
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
@@ -197,7 +197,7 @@ public class TeamSetupFragment extends Fragment {
             liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
             if (mTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-                liberoColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
+                liberoColorSelected(UiUtils.getRandomShirtColor(getActivity()));
             } else {
                 liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
             }
@@ -234,7 +234,8 @@ public class TeamSetupFragment extends Fragment {
 
     private void selectTeamColor() {
         Log.i("VBR-TSActivity", String.format("Select %s team color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
+                getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);
@@ -325,7 +326,8 @@ public class TeamSetupFragment extends Fragment {
 
     private void selectLiberoColor() {
         Log.i("VBR-TSActivity", String.format("Select %s team libero color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_shirts_color)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_shirts_color),
+                getResources().getStringArray(R.array.shirt_colors), mTeamService.getLiberoColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 liberoColorSelected(selectedColor);

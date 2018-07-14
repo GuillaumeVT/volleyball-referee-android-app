@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,13 +19,18 @@ public abstract class ColorSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    protected ColorSelectionDialog(LayoutInflater layoutInflater, Context context, String title) {
+    protected ColorSelectionDialog(LayoutInflater layoutInflater, Context context, String title, String[] colorsStr, int selectedColor) {
+        int[] colors = new int[colorsStr.length];
+        for (int index = 0; index < colorsStr.length; index++) {
+            colors[index] = Color.parseColor(colorsStr[index]);
+        }
+
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(4);
         gridView.setGravity(Gravity.CENTER);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(layoutInflater, context) {
+        ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(layoutInflater, context, colors, selectedColor) {
             @Override
             public void onColorSelected(int selectedColor) {
                 ColorSelectionDialog.this.onColorSelected(selectedColor);
@@ -58,17 +63,19 @@ public abstract class ColorSelectionDialog {
 
         private final LayoutInflater mLayoutInflater;
         private final Context        mContext;
-        private final int[]          mColorIds;
+        private final int            mSelectedColor;
+        private final int[]          mColors;
 
-        ColorSelectionAdapter(LayoutInflater layoutInflater, Context context) {
+        ColorSelectionAdapter(LayoutInflater layoutInflater, Context context, int[] colors, int selectedColor) {
             mLayoutInflater = layoutInflater;
             mContext = context;
-            mColorIds = ShirtColors.getShirtColorIds();
+            mSelectedColor = selectedColor;
+            mColors = colors;
         }
 
         @Override
         public int getCount() {
-            return mColorIds.length;
+            return mColors.length;
         }
 
         @Override
@@ -91,9 +98,9 @@ public abstract class ColorSelectionDialog {
                 button = (Button) convertView;
             }
 
-            int colorId = mColorIds[index];
-            final int color = ContextCompat.getColor(mContext, colorId);
+            final int color = mColors[index];
             UiUtils.colorTeamButton(mContext, color, button);
+            button.setText(color == mSelectedColor ? "\u2713" : "");
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

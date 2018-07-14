@@ -17,19 +17,6 @@
     <color name="colorTextTeamDarkBackground">#ffffff</color>
     <color name="colorTextTeamLightBackground">#de000000</color>
 
-    <color name="colorShirt1">#2980b9</color>
-    <color name="colorShirt2">#3b5999</color>
-    <color name="colorShirt3">#034694</color>
-    <color name="colorShirt4">#052443</color>
-    <color name="colorShirt5">#006032</color>
-    <color name="colorShirt6">#6a1b9a</color>
-    <color name="colorShirt7">#c2185b</color>
-    <color name="colorShirt8">#bc0019</color>
-    <color name="colorShirt9">#e25618</color>
-    <color name="colorShirt10">#f3bc07</color>
-    <color name="colorShirt11">#ffffff</color>
-    <color name="colorShirt12">#0d1017</color>
-
     <color name="colorPlayerIn">#006032</color>
     <color name="colorPlayerOut">#bc0019</color>
 

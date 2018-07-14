@@ -350,4 +350,19 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="shirt_colors">
+        <item>#2980b9</item>
+        <item>#3b5999</item>
+        <item>#034694</item>
+        <item>#052443</item>
+        <item>#006032</item>
+        <item>#6a1b9a</item>
+        <item>#c2185b</item>
+        <item>#bc0019</item>
+        <item>#e25618</item>
+        <item>#f3bc07</item>
+        <item>#ffffff</item>
+        <item>#0d1017</item>
+    </string-array>
+
 </resources>

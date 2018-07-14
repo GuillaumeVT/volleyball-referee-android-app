@@ -1,8 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -69,8 +69,8 @@ public class ItalyUsaBeachGame {
         beachGame.setDivisionName("Final");
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
-        beachGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));
-        beachGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt1));
+        beachGame.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[7]));
+        beachGame.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[0]));
         beachGame.startMatch();
 
         ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();

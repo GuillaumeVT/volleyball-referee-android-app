@@ -1,8 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -56,8 +56,8 @@ public class Indoor4x4CompleteGame {
 
         indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");
         indoor4x4Game.setTeamName(TeamType.GUEST, "Guest Team");
-        indoor4x4Game.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt1));
-        indoor4x4Game.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt7));
+        indoor4x4Game.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[0]));
+        indoor4x4Game.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[6]));
 
         for (int index = 1; index <= 8; index++) {
             indoor4x4Game.addPlayer(TeamType.HOME, index);

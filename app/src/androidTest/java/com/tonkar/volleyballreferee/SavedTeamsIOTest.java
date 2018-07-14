@@ -1,8 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
@@ -43,8 +43,8 @@ public class SavedTeamsIOTest {
         BaseTeamService service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "BRAZIL");
-        service.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt10));
-        service.setLiberoColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt3));
+        service.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[9]));
+        service.setLiberoColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
 
         service.addPlayer(TeamType.HOME, 1);
         service.addPlayer(TeamType.HOME, 3);
@@ -73,8 +73,8 @@ public class SavedTeamsIOTest {
         service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "FRANCE");
-        service.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt3));
-        service.setLiberoColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));
+        service.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
+        service.setLiberoColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[7]));
 
         service.addPlayer(TeamType.HOME, 2);
         service.addPlayer(TeamType.HOME, 5);

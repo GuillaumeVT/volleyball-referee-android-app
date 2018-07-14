@@ -106,7 +106,7 @@ public class QuickTeamSetupFragment extends Fragment {
         });
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            teamColorSelected(ShirtColors.getRandomShirtColor(getActivity()));
+            teamColorSelected(UiUtils.getRandomShirtColor(getActivity()));
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
@@ -137,7 +137,8 @@ public class QuickTeamSetupFragment extends Fragment {
 
     private void selectTeamColor() {
         Log.i("VBR-QTSActivity", String.format("Select %s team color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
+                getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);

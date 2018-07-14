@@ -1,8 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.content.ContextCompat;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 
@@ -134,10 +134,10 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
         indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
-        indoorGame.setTeamColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt10));
-        indoorGame.setTeamColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt3));
-        indoorGame.setLiberoColor(TeamType.HOME, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt3));
-        indoorGame.setLiberoColor(TeamType.GUEST, ContextCompat.getColor(mActivityRule.getActivity(), R.color.colorShirt8));
+        indoorGame.setTeamColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[9]));
+        indoorGame.setTeamColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
+        indoorGame.setLiberoColor(TeamType.HOME, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[2]));
+        indoorGame.setLiberoColor(TeamType.GUEST, Color.parseColor(mActivityRule.getActivity().getResources().getStringArray(R.array.shirt_colors)[7]));
 
         indoorGame.addPlayer(TeamType.HOME, 1);
         indoorGame.addPlayer(TeamType.HOME, 3);
