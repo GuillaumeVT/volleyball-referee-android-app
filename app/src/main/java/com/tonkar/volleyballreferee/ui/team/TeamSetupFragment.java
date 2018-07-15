@@ -46,9 +46,9 @@ public class TeamSetupFragment extends Fragment {
     private LayoutInflater  mLayoutInflater;
     private TeamType        mTeamType;
     private BaseTeamService mTeamService;
-    private Button          mTeamColorButton;
+    private ImageButton     mTeamColorButton;
     private PlayerAdapter   mPlayerAdapter;
-    private Button          mLiberoColorButton;
+    private ImageButton     mLiberoColorButton;
     private Button          mCaptainButton;
     private LiberoAdapter   mLiberoAdapter;
     private ImageButton     mGenderButton;
@@ -246,7 +246,7 @@ public class TeamSetupFragment extends Fragment {
 
     private void teamColorSelected(int color) {
         Log.i("VBR-TSActivity", String.format("Update %s team color", mTeamType.toString()));
-        UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
         mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
         updateCaptain();
@@ -338,7 +338,7 @@ public class TeamSetupFragment extends Fragment {
 
     private void liberoColorSelected(int color) {
         Log.i("VBR-TSActivity", String.format("Update %s team libero color", mTeamType.toString()));
-        UiUtils.colorTeamButton(getActivity(), color, mLiberoColorButton);
+        UiUtils.colorTeamIconButton(getActivity(), color, mLiberoColorButton);
         mTeamService.setLiberoColor(mTeamType, color);
         mLiberoAdapter.setColor(color);
     }
@@ -445,6 +445,7 @@ public class TeamSetupFragment extends Fragment {
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         mTeamService.setGenderType(mTeamType, genderType);
+        UiUtils.colorIconButtonInWhite(context, mGenderButton);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);

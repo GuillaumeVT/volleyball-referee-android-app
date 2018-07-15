@@ -34,6 +34,7 @@ public abstract class IndoorPlayerSelectionDialog {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
+        gridView.setNumColumns(3);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
         IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, teamService, sanctionService, teamType, players) {

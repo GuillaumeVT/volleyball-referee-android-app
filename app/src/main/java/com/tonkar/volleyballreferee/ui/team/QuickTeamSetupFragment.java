@@ -31,7 +31,7 @@ public class QuickTeamSetupFragment extends Fragment {
 
     private TeamType        mTeamType;
     private BaseTeamService mTeamService;
-    private Button          mTeamColorButton;
+    private ImageButton     mTeamColorButton;
     private Button          mCaptainButton;
     private ImageButton     mGenderButton;
 
@@ -149,7 +149,7 @@ public class QuickTeamSetupFragment extends Fragment {
 
     private void teamColorSelected(int color) {
         Log.i("VBR-QTSActivity", String.format("Update %s team color", mTeamType.toString()));
-        UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
         mTeamService.setTeamColor(mTeamType, color);
         updateCaptain();
     }
@@ -186,6 +186,7 @@ public class QuickTeamSetupFragment extends Fragment {
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         mTeamService.setGenderType(mTeamType, genderType);
+        UiUtils.colorIconButtonInWhite(context, mGenderButton);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);

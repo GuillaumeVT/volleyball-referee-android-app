@@ -38,8 +38,8 @@ import java.util.List;
 public class QuickGameSetupFragment extends Fragment {
 
     private ImageButton      mGenderButton;
-    private Button           mHomeTeamColorButton;
-    private Button           mGuestTeamColorButton;
+    private ImageButton      mHomeTeamColorButton;
+    private ImageButton      mGuestTeamColorButton;
     private Button           mHomeTeamCaptainButton;
     private Button           mGuestTeamCaptainButton;
     private TeamsListAdapter mTeamsListAdapter;
@@ -284,7 +284,7 @@ public class QuickGameSetupFragment extends Fragment {
 
     private void teamColorSelected(TeamType teamType, int colorId) {
         Log.i("VBR-QGSActivity", String.format("Update %s team color", teamType.toString()));
-        final Button button;
+        final ImageButton button;
 
         if (TeamType.HOME.equals(teamType)) {
             button = mHomeTeamColorButton;
@@ -292,7 +292,7 @@ public class QuickGameSetupFragment extends Fragment {
             button = mGuestTeamColorButton;
         }
 
-        UiUtils.colorTeamButton(getContext(), colorId, button);
+        UiUtils.colorTeamIconButton(getContext(), colorId, button);
         ServicesProvider.getInstance().getTeamService().setTeamColor(teamType, colorId);
         updateCaptain(teamType);
     }
@@ -300,6 +300,7 @@ public class QuickGameSetupFragment extends Fragment {
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         ServicesProvider.getInstance().getTeamService().setGenderType(genderType);
+        UiUtils.colorIconButtonInWhite(context, mGenderButton);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);

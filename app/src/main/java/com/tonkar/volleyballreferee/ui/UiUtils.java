@@ -152,6 +152,15 @@ public class UiUtils {
         button.getDrawable().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
     }
 
+    public static void colorIconButtonInWhite(Context context, ImageButton button) {
+        int color = Color.parseColor("#ffffff");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
+        } else {
+            button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        }
+    }
+
     public static void shareGame(Context context, Window window, GameService gameService) {
         Log.i("VBR-Share", "Share screen");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {

@@ -49,4 +49,6 @@
     <dimen name="normal_fab_margin_size">32dp</dimen>
     <dimen name="mini_fab_margin_size">40dp</dimen>
 
+    <dimen name="color_button_size">70dp</dimen>
+
 </resources>

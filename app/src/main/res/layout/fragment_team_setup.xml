@@ -15,7 +15,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
             android:weightSum="4">
@@ -34,25 +33,36 @@
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:textSize="@dimen/default_text_size" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/team_color_button"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textSize="@dimen/default_text_size"
-                android:theme="@style/TeamButtonTheme"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/team_color_button"
+                    android:layout_width="@dimen/color_button_size"
+                    android:layout_height="@dimen/color_button_size"
+                    android:layout_margin="@dimen/small_margin_size"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/round_button"
+                    android:elevation="@dimen/round_button_elevation"
+                    android:textSize="@dimen/default_text_size"
+                    android:theme="@style/RoundButtonTheme"
+                    app:srcCompat="@drawable/ic_shirt_color" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
             android:weightSum="4">
@@ -64,18 +74,29 @@
                 android:layout_weight="3"
                 android:text="@string/select_gender"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textSize="@dimen/default_text_size" />
 
-            <ImageButton
-                android:id="@+id/select_gender_button"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:contentDescription="@string/gender_description"
-                android:elevation="@dimen/round_button_elevation"
-                android:theme="@style/ImageButtonTheme"
-                app:srcCompat="@drawable/ic_mixed"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/select_gender_button"
+                    android:layout_width="@dimen/color_button_size"
+                    android:layout_height="@dimen/color_button_size"
+                    android:layout_margin="@dimen/small_margin_size"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/round_button"
+                    android:contentDescription="@string/gender_description"
+                    android:elevation="@dimen/round_button_elevation"
+                    android:textSize="@dimen/default_text_size"
+                    android:theme="@style/RoundButtonTheme"
+                    app:srcCompat="@drawable/ic_mixed" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -103,7 +124,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
             android:weightSum="4">
@@ -115,23 +135,33 @@
                 android:layout_weight="3"
                 android:text="@string/select_captain"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textSize="@dimen/default_text_size" />
 
-            <Button
-                android:id="@+id/team_captain_number_button"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textSize="@dimen/default_text_size"
-                android:theme="@style/TeamButtonTheme"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/team_captain_number_button"
+                    android:layout_width="@dimen/color_button_size"
+                    android:layout_height="@dimen/color_button_size"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/small_margin_size"
+                    android:background="@drawable/round_button"
+                    android:elevation="@dimen/round_button_elevation"
+                    android:textSize="@dimen/default_text_size"
+                    android:theme="@style/RoundButtonTheme" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
             android:weightSum="4">
@@ -143,16 +173,28 @@
                 android:layout_weight="3"
                 android:text="@string/select_libero"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textSize="@dimen/default_text_size" />
 
-            <Button
-                android:id="@+id/libero_color_button"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textSize="@dimen/default_text_size"
-                android:theme="@style/TeamButtonTheme"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/libero_color_button"
+                    android:layout_width="@dimen/color_button_size"
+                    android:layout_height="@dimen/color_button_size"
+                    android:layout_margin="@dimen/small_margin_size"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/round_button"
+                    android:elevation="@dimen/round_button_elevation"
+                    android:textSize="@dimen/default_text_size"
+                    android:theme="@style/RoundButtonTheme"
+                    app:srcCompat="@drawable/ic_shirt_color" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

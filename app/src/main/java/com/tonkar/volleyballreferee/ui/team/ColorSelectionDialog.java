@@ -25,11 +25,13 @@ public abstract class ColorSelectionDialog {
             colors[index] = Color.parseColor(colorsStr[index]);
         }
 
-        final GridView gridView = new GridView(context);
-        gridView.setNumColumns(4);
-        gridView.setGravity(Gravity.CENTER);
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
-        gridView.setPadding(pixels, pixels, pixels, pixels);
+        final GridView gridView = new GridView(context);
+        gridView.setNumColumns(5);
+        gridView.setHorizontalSpacing(pixels);
+        gridView.setVerticalSpacing(pixels);
+        gridView.setGravity(Gravity.CENTER);
+        gridView.setPadding(pixels, 2 * pixels, pixels, pixels);
         ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(layoutInflater, context, colors, selectedColor) {
             @Override
             public void onColorSelected(int selectedColor) {
@@ -93,7 +95,9 @@ public abstract class ColorSelectionDialog {
             Button button;
 
             if (convertView == null) {
-                button = (Button) mLayoutInflater.inflate(R.layout.player_item, null);
+                button = (Button) mLayoutInflater.inflate(R.layout.color_item, null);
+                int pixels = mContext.getResources().getDimensionPixelSize(R.dimen.color_button_size);
+                button.setLayoutParams(new GridView.LayoutParams(pixels, pixels));
             } else {
                 button = (Button) convertView;
             }
