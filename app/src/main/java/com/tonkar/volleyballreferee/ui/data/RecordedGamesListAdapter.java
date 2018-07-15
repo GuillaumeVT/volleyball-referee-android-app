@@ -156,7 +156,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
 
         if (recordedGameService.isIndexed()) {
             viewHolder.indexedImage.setImageResource(R.drawable.ic_public);
-            viewHolder.indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark), PorterDuff.Mode.SRC_IN));
+            viewHolder.indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorWeb), PorterDuff.Mode.SRC_IN));
         } else {
             viewHolder.indexedImage.setImageResource(R.drawable.ic_private);
             viewHolder.indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));

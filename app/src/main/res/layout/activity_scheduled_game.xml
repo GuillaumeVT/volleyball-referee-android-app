@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -25,20 +25,19 @@
             android:id="@+id/date_input_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ScheduleButtonTheme" />
+            android:theme="@style/MainThemeButton.Inverted" />
 
         <Button
             android:id="@+id/time_input_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ScheduleButtonTheme" />
+            android:theme="@style/MainThemeButton.Inverted" />
 
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size">
+        android:layout_height="wrap_content">
 
         <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
             android:id="@+id/league_name_input_text"
@@ -55,8 +54,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size">
+        android:layout_height="wrap_content">
 
         <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
             android:id="@+id/division_name_input_text"
@@ -74,7 +72,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size"
         android:gravity="center|start"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -88,23 +85,34 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size" />
 
-        <ImageButton
-            android:id="@+id/switch_gender_button"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/gender_description"
-            android:elevation="@dimen/round_button_elevation"
-            android:theme="@style/ImageButtonTheme"
-            app:srcCompat="@drawable/ic_mixed" />
+            android:gravity="center|end"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/switch_gender_button"
+                android:layout_width="@dimen/color_button_size"
+                android:layout_height="@dimen/color_button_size"
+                android:layout_margin="@dimen/small_margin_size"
+                android:adjustViewBounds="true"
+                android:background="@drawable/round_button"
+                android:contentDescription="@string/gender_description"
+                android:elevation="@dimen/round_button_elevation"
+                android:textSize="@dimen/default_text_size"
+                android:theme="@style/RoundButtonTheme"
+                app:srcCompat="@drawable/ic_mixed" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/home_team_name_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
         android:text="@string/home_team_hint"
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size" />
@@ -113,9 +121,8 @@
         android:id="@+id/home_team_name_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_size"
         android:ems="10"
-        android:layout_marginLeft="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
         android:spinnerMode="dialog"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/default_text_size" />
@@ -124,9 +131,6 @@
         android:id="@+id/guest_team_name_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
-        android:layout_marginTop="@dimen/default_margin_size"
         android:text="@string/guest_team_hint"
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size" />
@@ -135,9 +139,8 @@
         android:id="@+id/guest_team_name_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_size"
         android:ems="10"
-        android:layout_marginLeft="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
         android:spinnerMode="dialog"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/default_text_size" />
@@ -146,9 +149,6 @@
         android:id="@+id/rules_name_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
-        android:layout_marginTop="@dimen/default_margin_size"
         android:text="@string/rules_name_hint"
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size" />
@@ -158,16 +158,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_marginLeft="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
         android:spinnerMode="dialog"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/default_text_size" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size">
+        android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/referee_name_input_text"

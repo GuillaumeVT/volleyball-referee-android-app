@@ -66,9 +66,9 @@
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
-    <style name="MainActivityButton" parent="Widget.AppCompat.Button.Colored" />
+    <style name="MainThemeButton" parent="Widget.AppCompat.Button.Colored" />
 
-    <style name="MainActivityButton.Primary">
+    <style name="MainThemeButton.Primary">
         <item name="colorButtonNormal">@drawable/button_color</item>
         <item name="colorAccent">@drawable/button_color</item>
         <item name="android:textColor">@android:color/white</item>
@@ -84,7 +84,7 @@
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
-    <style name="ScheduleButtonTheme" parent="Widget.AppCompat.Button.Colored">
+    <style name="MainThemeButton.Inverted">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="colorButtonNormal">@android:color/white</item>
         <item name="colorAccent">@android:color/white</item>

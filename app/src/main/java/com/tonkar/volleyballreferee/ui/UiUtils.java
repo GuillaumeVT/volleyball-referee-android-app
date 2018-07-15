@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -117,7 +118,10 @@ public class UiUtils {
         } else {
             button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         }
-        button.setTextColor(getTextColor(context, color));
+
+        int textColor = getTextColor(context, color);
+        button.setTextColor(textColor);
+        colorButtonDrawables(textColor, button);
     }
 
     public static void colorTeamText(Context context, int color, TextView text) {
@@ -149,7 +153,15 @@ public class UiUtils {
         } else {
             button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         }
-        button.getDrawable().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
+        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
+    }
+
+    public static void colorButtonDrawables(int color, Button button) {
+        for (Drawable drawable : button.getCompoundDrawables()) {
+            if (drawable != null) {
+                drawable.mutate().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
+        }
     }
 
     public static void colorIconButtonInWhite(Context context, ImageButton button) {

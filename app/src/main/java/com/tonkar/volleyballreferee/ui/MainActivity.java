@@ -78,10 +78,30 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
         initNavigationMenu();
 
+        Button startIndoorGameButton = findViewById(R.id.start_indoor_6x6_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimary), startIndoorGameButton);
+
+        Button startIndoor4x4GameButton = findViewById(R.id.start_indoor_4x4_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimary), startIndoor4x4GameButton);
+
+        Button startScoreBaseGameButton = findViewById(R.id.start_score_based_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimary), startScoreBaseGameButton);
+
+        Button startBeachGameButton = findViewById(R.id.start_beach_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorBeach), startBeachGameButton);
+
+        Button startTimeBaseGameButton = findViewById(R.id.start_time_based_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimaryText), startTimeBaseGameButton);
+
         Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorWeb), scheduledCodeButton);
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
 
+        Button scheduledGameListButton = findViewById(R.id.start_scheduled_list_game_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorWeb), scheduledGameListButton);
+
         final Button purchaseButton = findViewById(R.id.start_purchase_button);
+        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorWeb), purchaseButton);
         billingService.addBillingListener(new BillingListener() {
             @Override
             public void onPurchasesUpdated() {

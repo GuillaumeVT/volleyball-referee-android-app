@@ -28,4 +28,7 @@
 
     <color name="colorYellowCard">#f3bc07</color>
     <color name="colorRedCard">#bc0019</color>
+
+    <color name="colorWeb">#2980b9</color>
+
 </resources>
