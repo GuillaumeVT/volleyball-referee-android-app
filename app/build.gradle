@@ -7,8 +7,8 @@ android {
         applicationId "com.tonkar.volleyballreferee"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 44
-        versionName "2.2"
+        versionCode 45
+        versionName "2.25"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.facebook.android:facebook-login:4.33.0'
     implementation 'com.android.billingclient:billing:1.1'
+    implementation 'org.jsoup:jsoup:1.11.3'
+
 
     testImplementation 'junit:junit:4.12'
 }
