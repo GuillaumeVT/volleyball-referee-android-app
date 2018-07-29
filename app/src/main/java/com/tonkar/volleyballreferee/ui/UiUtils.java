@@ -43,7 +43,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.data.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -164,7 +164,7 @@ public class UiUtils {
         }
     }
 
-    public static void colorIconButtonInWhite(Context context, ImageButton button) {
+    public static void colorIconButtonInWhite(ImageButton button) {
         int color = Color.parseColor("#ffffff");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
@@ -221,7 +221,7 @@ public class UiUtils {
     public static void shareRecordedGame(Context context, RecordedGameService recordedGameService) {
         Log.i("VBR-Share", "Share recorded game");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            File file = PdfGameWriter.writeRecordedGame(context, recordedGameService);
+            File file = ScoreSheetWriter.writeRecordedGame(context, recordedGameService);
             if (file == null) {
                 Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
@@ -237,7 +237,7 @@ public class UiUtils {
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);
-                intent.setType("application/pdf");
+                intent.setType("text/html");
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 try {
@@ -250,15 +250,6 @@ public class UiUtils {
         } else {
             Log.w("VBR-Share", "No permission to share");
         }
-    }
-
-    public static void shareUrl(Context context, String url) {
-        Log.i("VBR-Share", "Share url");
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, url);
-        intent.setType("text/plain");
-        context.startActivity(Intent.createChooser(intent, context.getResources().getText(R.string.share)));
     }
 
     public static void navigateToHome(Activity activity) {

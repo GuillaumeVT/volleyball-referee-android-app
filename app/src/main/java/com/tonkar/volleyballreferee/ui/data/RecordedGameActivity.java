@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -89,14 +89,14 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
     private void generatePdf() {
         Log.i("VBR-RGameActivity", "Generate PDF");
-        File file = PdfGameWriter.writeRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
+        File file = ScoreSheetWriter.writeRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
         if (file == null) {
             Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
         } else {
             Uri uri = FileProvider.getUriForFile(this, "com.tonkar.volleyballreferee.fileprovider", file);
             grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Intent target = new Intent(Intent.ACTION_VIEW);
-            target.setDataAndType(uri,"application/pdf");
+            target.setDataAndType(uri,"text/html");
             target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -104,7 +104,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Log.e("VBR-RGameActivity", "Exception while showing PDF", e);
+                Log.e("VBR-RGameActivity", "Exception while showing report", e);
                 Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
             }
         }

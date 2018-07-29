@@ -6,9 +6,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -38,7 +38,7 @@ public class ItalyUsaBeachGame {
         playSet2_complete(beachGame);
 
         RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(beachGame.getGameDate());
-        PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
+        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
     @Test

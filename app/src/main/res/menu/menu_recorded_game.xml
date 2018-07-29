@@ -11,7 +11,7 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_generate_pdf"
-        android:icon="@drawable/ic_pdf_menu"
+        android:icon="@drawable/ic_report_menu"
         android:iconTint="@android:color/white"
         android:orderInCategory="2"
         android:title="@string/report_game"

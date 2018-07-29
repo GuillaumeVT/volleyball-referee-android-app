@@ -445,7 +445,7 @@ public class TeamSetupFragment extends Fragment {
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         mTeamService.setGenderType(mTeamType, genderType);
-        UiUtils.colorIconButtonInWhite(context, mGenderButton);
+        UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);

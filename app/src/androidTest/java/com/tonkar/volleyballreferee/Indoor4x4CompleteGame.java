@@ -6,7 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
+import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -45,7 +45,7 @@ public class Indoor4x4CompleteGame {
         playSet_complete(indoor4x4Game);
 
         RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(indoor4x4Game.getGameDate());
-        PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
+        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
     private void defineTeams(Indoor4x4Game indoor4x4Game) {

@@ -5,9 +5,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.TimeBasedGame;
-import com.tonkar.volleyballreferee.business.data.PdfGameWriter;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -40,7 +40,7 @@ public class TimeBasedGameTest {
         game.stop();
 
         RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(game.getGameDate());
-        PdfGameWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
+        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
     private void defineTeams(TimeBasedGame game) {

@@ -300,7 +300,7 @@ public class QuickGameSetupFragment extends Fragment {
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         ServicesProvider.getInstance().getTeamService().setGenderType(genderType);
-        UiUtils.colorIconButtonInWhite(context, mGenderButton);
+        UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
                 mGenderButton.setImageResource(R.drawable.ic_mixed);

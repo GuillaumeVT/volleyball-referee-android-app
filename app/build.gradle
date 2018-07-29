@@ -46,6 +46,5 @@ dependencies {
     implementation 'com.android.billingclient:billing:1.1'
     implementation 'org.jsoup:jsoup:1.11.3'
 
-
     testImplementation 'junit:junit:4.12'
 }
