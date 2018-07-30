@@ -40,8 +40,8 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             MenuItem shareMenu = menu.findItem(R.id.action_share_game);
             shareMenu.setVisible(false);
 
-            MenuItem pdfMenu = menu.findItem(R.id.action_generate_pdf);
-            pdfMenu.setVisible(false);
+            MenuItem scoreSheetMenu = menu.findItem(R.id.action_generate_score_sheet);
+            scoreSheetMenu.setVisible(false);
         }
 
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
@@ -65,8 +65,8 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             case R.id.action_index_game:
                 toggleGameIndexed();
                 return true;
-            case R.id.action_generate_pdf:
-                generatePdf();
+            case R.id.action_generate_score_sheet:
+                generateScoreSheet();
                 return true;
             case R.id.action_delete_game:
                 deleteGame();
@@ -87,8 +87,8 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         }
     }
 
-    private void generatePdf() {
-        Log.i("VBR-RGameActivity", "Generate PDF");
+    private void generateScoreSheet() {
+        Log.i("VBR-RGameActivity", "Generate score sheet");
         File file = ScoreSheetWriter.writeRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
         if (file == null) {
             Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
