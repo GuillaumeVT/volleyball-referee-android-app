@@ -151,6 +151,11 @@ public class WrappedTeam implements BaseTeamService {
     }
 
     @Override
+    public boolean isStartingLineupConfirmed(int setIndex) {
+        return false;
+    }
+
+    @Override
     public Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
         return new TreeSet<>();
     }

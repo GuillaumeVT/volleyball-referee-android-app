@@ -47,6 +47,10 @@ public class IndoorGame extends Game implements IndoorTeamService {
         return (IndoorTeamComposition) currentSet().getTeamComposition(teamType);
     }
 
+    private IndoorTeamComposition getIndoorTeamComposition(TeamType teamType, int setIndex) {
+        return (IndoorTeamComposition) getSet(setIndex).getTeamComposition(teamType);
+    }
+
     @Override
     public void addPoint(final TeamType teamType) {
         super.addPoint(teamType);
@@ -189,6 +193,11 @@ public class IndoorGame extends Game implements IndoorTeamService {
     @Override
     public boolean isStartingLineupConfirmed() {
         return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
+    }
+
+    @Override
+    public boolean isStartingLineupConfirmed(int setIndex) {
+        return getIndoorTeamComposition(TeamType.HOME, setIndex).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST, setIndex).isStartingLineupConfirmed();
     }
 
     @Override

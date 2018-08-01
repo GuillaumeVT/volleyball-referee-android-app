@@ -316,6 +316,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public boolean isStartingLineupConfirmed(int setIndex) {
+        return true;
+    }
+
+    @Override
     public java.util.Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
         return new HashSet<>();
     }

@@ -57,6 +57,8 @@ public interface BaseTeamService {
 
     boolean isStartingLineupConfirmed();
 
+    boolean isStartingLineupConfirmed(int setIndex);
+
     Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex);
 
     PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex);

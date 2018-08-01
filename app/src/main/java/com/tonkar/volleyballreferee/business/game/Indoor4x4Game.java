@@ -47,6 +47,10 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
         return (Indoor4x4TeamComposition) currentSet().getTeamComposition(teamType);
     }
 
+    private Indoor4x4TeamComposition getIndoorTeamComposition(TeamType teamType, int setIndex) {
+        return (Indoor4x4TeamComposition) getSet(setIndex).getTeamComposition(teamType);
+    }
+
     @Override
     public void addPoint(final TeamType teamType) {
         final TeamType oldServingTeam = currentSet().getServingTeam();
@@ -168,6 +172,11 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     @Override
     public boolean isStartingLineupConfirmed() {
         return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
+    }
+
+    @Override
+    public boolean isStartingLineupConfirmed(int setIndex) {
+        return getIndoorTeamComposition(TeamType.HOME, setIndex).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST, setIndex).isStartingLineupConfirmed();
     }
 
     @Override

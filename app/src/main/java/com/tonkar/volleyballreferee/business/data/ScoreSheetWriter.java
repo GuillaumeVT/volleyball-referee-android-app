@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.annotation.DrawableRes;
@@ -16,9 +17,12 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.ui.UiUtils;
 
 import org.jsoup.Jsoup;
@@ -62,13 +66,13 @@ public class ScoreSheetWriter {
                     scoreSheetWriter.writeRecordedIndoorGame();
                     break;
                 case BEACH:
-                    // TODO scoreSheetWriter.writeRecordedBeachGame();
+                    scoreSheetWriter.writeRecordedBeachGame();
                     break;
                 case INDOOR_4X4:
-                    // TODO scoreSheetWriter.writeRecordedIndoor4x4Game();
+                    scoreSheetWriter.writeRecordedIndoor4x4Game();
                     break;
                 case TIME:
-                    // TODO scoreSheetWriter.writeRecordedTimeGame();
+                    scoreSheetWriter.writeRecordedTimeGame();
                     break;
             }
             file = scoreSheetWriter.write(filename);
@@ -106,25 +110,53 @@ public class ScoreSheetWriter {
     }
 
     private void writeRecordedIndoorGame() {
-        writeRecordedGameHeader();
-        writeRecordedIndoorTeams();
+        mBody.appendChild(createRecordedGameHeader());
+
+        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+            mBody.appendChild(createRecordedIndoorTeams());
+        }
 
         for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
             Element cardDiv = new Element("div");
             cardDiv.addClass("div-card").addClass("spacing-before");
+            cardDiv.appendChild(createRecordedIndoorSetHeader(setIndex));
 
-            writeRecordedIndoorSetHeader(cardDiv, setIndex);
-            writeRecordedStartingLineup(cardDiv, setIndex);
-            writeRecordedSubstitutions(cardDiv, setIndex);
-            /*writeRecordedTimeouts(setIndex);
-            writeRecordedSanctions(cardDiv, setIndex);*/
-            writeRecordedLadder(cardDiv, setIndex);
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
+                Element teamDiv = new Element("div");
+                teamDiv.addClass("div-flex-row");
+                teamDiv.appendChild(createRecordedStartingLineup(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+
+                if (!mRecordedGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
+                        || !mRecordedGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
+                    teamDiv.appendChild(createRecordedSubstitutions(setIndex));
+                }
+
+                cardDiv.appendChild(teamDiv);
+            }
+
+            Element timeoutAndSanctionDiv = new Element("div");
+            timeoutAndSanctionDiv.addClass("div-flex-row");
+
+            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsageType()))
+                    && mRecordedGameService.getRules().areTeamTimeoutsEnabled()
+                    && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+            }
+
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())
+                    && mRecordedGameService.getRules().areSanctionsEnabled()
+                    && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
+            }
+
+            cardDiv.appendChild(timeoutAndSanctionDiv);
+            cardDiv.appendChild(createRecordedLadder(setIndex));
 
             mBody.appendChild(cardDiv);
         }
     }
 
-    private void writeRecordedGameHeader() {
+    private Element createRecordedGameHeader() {
         Element cardDiv = new Element("div");
         cardDiv.addClass("div-card");
 
@@ -180,23 +212,21 @@ public class ScoreSheetWriter {
 
         cardDiv.appendChild(guestSetInfoDiv);
 
-        mBody.appendChild(cardDiv);
+        return cardDiv;
     }
 
-    private void writeRecordedIndoorTeams() {
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
-            Element cardDiv = new Element("div");
-            cardDiv.addClass("div-card").addClass("spacing-before");
+    private Element createRecordedIndoorTeams() {
+        Element cardDiv = new Element("div");
+        cardDiv.addClass("div-card").addClass("spacing-before");
 
-            cardDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.players)));
+        cardDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.players)));
 
-            Element teamsDiv = new Element("div");
-            teamsDiv.addClass("div-flex-row");
-            teamsDiv.appendChild(createTeamDiv(TeamType.HOME)).appendChild(createSpacingDiv()).appendChild(createTeamDiv(TeamType.GUEST));
-            cardDiv.appendChild(teamsDiv);
+        Element teamsDiv = new Element("div");
+        teamsDiv.addClass("div-flex-row");
+        teamsDiv.appendChild(createTeamDiv(TeamType.HOME)).appendChild(createSpacingDiv()).appendChild(createTeamDiv(TeamType.GUEST));
+        cardDiv.appendChild(teamsDiv);
 
-            mBody.appendChild(cardDiv);
-        }
+        return cardDiv;
     }
 
     private Element createTeamDiv(TeamType teamType) {
@@ -228,7 +258,7 @@ public class ScoreSheetWriter {
         String playerStr = String.valueOf(player);
 
         if (player < 0) {
-            playerStr = " ";
+            playerStr = "-";
         } else if (player == 0) {
             playerStr = mContext.getResources().getString(R.string.coach_abbreviation);
         }
@@ -248,16 +278,18 @@ public class ScoreSheetWriter {
         return playerSpan;
     }
 
-    private void writeRecordedIndoorSetHeader(Element cardDiv, int setIndex) {
+    private Element createRecordedIndoorSetHeader(int setIndex) {
+        Element setInfoDiv = new Element("div");
+
         Element setInfoLine1Div = new Element("div");
-        setInfoLine1Div.addClass("div-grid-indoor-set-info");
+        setInfoLine1Div.addClass("div-grid-set-info");
+
+        Element setInfoLine2Div = new Element("div");
+        setInfoLine2Div.addClass("div-grid-set-info");
 
         Element indexSpan = createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_number), (setIndex + 1)), true, false);
         indexSpan.addClass((mRecordedGameService.getPoints(TeamType.HOME, setIndex) > mRecordedGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
         setInfoLine1Div.appendChild(indexSpan);
-
-        Element setInfoLine2Div = new Element("div");
-        setInfoLine2Div.addClass("div-grid-indoor-set-info");
 
         int duration = (int) Math.ceil(mRecordedGameService.getSetDuration(setIndex) / 60000.0);
         setInfoLine2Div.appendChild(createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_duration), duration), true, false));
@@ -299,19 +331,23 @@ public class ScoreSheetWriter {
             setInfoLine2Div.appendChild(createCellSpan(String.valueOf(gScore2), true, false));
         }
 
-        cardDiv.appendChild(setInfoLine1Div);
-        cardDiv.appendChild(setInfoLine2Div);
+        setInfoDiv.appendChild(setInfoLine1Div);
+        setInfoDiv.appendChild(setInfoLine2Div);
+
+        return setInfoDiv;
     }
 
-    private void writeRecordedStartingLineup(Element cardDiv, int setIndex) {
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
-            cardDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.confirm_lineup_title)).addClass("spacing-before"));
+    private Element createRecordedStartingLineup(int setIndex) {
+        Element wrapperDiv = new Element("div");
 
-            Element lineupsDiv = new Element("div");
-            lineupsDiv.addClass("div-flex-row");
-            lineupsDiv.appendChild(createLineupDiv(TeamType.HOME, setIndex)).appendChild(createSpacingDiv()).appendChild(createLineupDiv(TeamType.GUEST, setIndex));
-            cardDiv.appendChild(lineupsDiv);
-        }
+        wrapperDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.confirm_lineup_title)).addClass("spacing-before"));
+
+        Element lineupsDiv = new Element("div");
+        lineupsDiv.addClass("div-grid-h-g");
+        lineupsDiv.appendChild(createLineupDiv(TeamType.HOME, setIndex)).appendChild(createEmptyDiv()).appendChild(createLineupDiv(TeamType.GUEST, setIndex));
+        wrapperDiv.appendChild(lineupsDiv);
+
+        return wrapperDiv;
     }
 
     private Element createLineupDiv(TeamType teamType, int setIndex) {
@@ -337,16 +373,19 @@ public class ScoreSheetWriter {
         return lineupDiv;
     }
 
-    private void writeRecordedSubstitutions(Element cardDiv, int setIndex) {
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
-            cardDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.substitutions_tab)).addClass("spacing-before"));
+    private Element createRecordedSubstitutions(int setIndex) {
+        Element wrapperDiv = new Element("div");
 
-            Element substitutionsDiv = new Element("div");
-            substitutionsDiv.addClass("div-flex-row");
-            substitutionsDiv.appendChild(createSubstitutionsDiv(TeamType.HOME, setIndex)).appendChild(createSpacingDiv()).appendChild(createSubstitutionsDiv(TeamType.GUEST, setIndex));
+        wrapperDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.substitutions_tab)).addClass("spacing-before"));
 
-            cardDiv.appendChild(substitutionsDiv);
-        }
+        Element substitutionsDiv = new Element("div");
+        substitutionsDiv.addClass("div-grid-h-g");
+
+        substitutionsDiv.appendChild(createSubstitutionsDiv(TeamType.HOME, setIndex)).appendChild(createEmptyDiv()).appendChild(createSubstitutionsDiv(TeamType.GUEST, setIndex));
+
+        wrapperDiv.appendChild(substitutionsDiv);
+
+        return wrapperDiv;
     }
 
     private Element createSubstitutionsDiv(TeamType teamType, int setIndex) {
@@ -376,8 +415,133 @@ public class ScoreSheetWriter {
         return substitutionDiv;
     }
 
-    private void writeRecordedLadder(Element cardDiv, int setIndex) {
-        cardDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.ladder_tab)).addClass("spacing-before"));
+    private Element createRecordedTimeouts(int setIndex) {
+        Element wrapperDiv = new Element("div");
+
+        wrapperDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.timeouts_tab)).addClass("spacing-before"));
+
+        Element timeoutsDiv = new Element("div");
+        timeoutsDiv.addClass("div-grid-h-g");
+        timeoutsDiv.appendChild(createTimeoutsDiv(TeamType.HOME, setIndex)).appendChild(createEmptyDiv()).appendChild(createTimeoutsDiv(TeamType.GUEST, setIndex));
+
+        wrapperDiv.appendChild(timeoutsDiv);
+
+        return wrapperDiv;
+    }
+
+    private Element createTimeoutsDiv(TeamType teamType, int setIndex) {
+        Element timeoutsDiv = new Element("div");
+        timeoutsDiv.addClass("div-flex-column");
+
+        for (Timeout timeout : mRecordedGameService.getCalledTimeouts(teamType, setIndex)) {
+            timeoutsDiv.appendChild(createTimeoutDiv(teamType, timeout));
+        }
+
+        return timeoutsDiv;
+    }
+
+    private Element createTimeoutDiv(TeamType teamType, Timeout timeout) {
+        Element timeoutDiv = new Element("div");
+        timeoutDiv.addClass("div-grid-timeout");
+
+        String score = String.format(Locale.getDefault(), "%d-%d",
+                TeamType.HOME.equals(teamType) ? timeout.getHomeTeamPoints() : timeout.getGuestTeamPoints(),
+                TeamType.HOME.equals(teamType) ? timeout.getGuestTeamPoints() : timeout.getHomeTeamPoints());
+
+        timeoutDiv.appendChild(createPlayerSpan(teamType, -1, false).addClass(getTimeoutImageClass(mRecordedGameService.getTeamColor(teamType))));
+        timeoutDiv.appendChild(createCellSpan(score, false, false));
+
+        return timeoutDiv;
+    }
+
+    private String getTimeoutImageClass(int backgroundColor) {
+        String imageClass;
+
+        double a = 1 - ( 0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(backgroundColor)) / 255;
+
+        if (a < 0.5) {
+            imageClass = "timeout-gray-image";
+        } else {
+            imageClass = "timeout-white-image";
+        }
+
+        return imageClass;
+    }
+
+    private Element createRecordedSanctions(int setIndex) {
+        Element wrapperDiv = new Element("div");
+
+        wrapperDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.sanctions_tab)).addClass("spacing-before"));
+
+        Element sanctionsDiv = new Element("div");
+        sanctionsDiv.addClass("div-grid-h-g");
+        sanctionsDiv.appendChild(createSanctionsDiv(TeamType.HOME, setIndex)).appendChild(createEmptyDiv()).appendChild(createSanctionsDiv(TeamType.GUEST, setIndex));
+
+        wrapperDiv.appendChild(sanctionsDiv);
+
+        return wrapperDiv;
+    }
+
+    private Element createSanctionsDiv(TeamType teamType, int setIndex) {
+        Element sanctionsDiv = new Element("div");
+        sanctionsDiv.addClass("div-flex-column");
+
+        for (Sanction sanction : mRecordedGameService.getGivenSanctions(teamType, setIndex)) {
+            sanctionsDiv.appendChild(createSanctionDiv(teamType, sanction));
+        }
+
+        return sanctionsDiv;
+    }
+
+    private Element createSanctionDiv(TeamType teamType, Sanction sanction) {
+        Element sanctionDiv = new Element("div");
+        sanctionDiv.addClass("div-grid-sanction");
+
+        int player = sanction.getPlayer();
+
+        String score = String.format(Locale.getDefault(), "%d-%d",
+                TeamType.HOME.equals(teamType) ? sanction.getHomeTeamPoints() : sanction.getGuestTeamPoints(),
+                TeamType.HOME.equals(teamType) ? sanction.getGuestTeamPoints() : sanction.getHomeTeamPoints());
+
+        sanctionDiv.appendChild(new Element("div").addClass(getSanctionImageClass(sanction.getSanctionType())));
+        sanctionDiv.appendChild(createPlayerSpan(teamType, player, mRecordedGameService.isLibero(teamType, player)));
+        sanctionDiv.appendChild(createCellSpan(score, false, false));
+
+        return sanctionDiv;
+    }
+
+    private String getSanctionImageClass(SanctionType sanctionType) {
+        String imageClass;
+
+        switch (sanctionType) {
+            case YELLOW:
+                imageClass = "yellow-card-image";
+                break;
+            case RED:
+                imageClass = "red-card-image";
+                break;
+            case RED_EXPULSION:
+                imageClass = "expulsion-card-image";
+                break;
+            case RED_DISQUALIFICATION:
+                imageClass = "disqualification-card-image";
+                break;
+            case DELAY_WARNING:
+                imageClass = "delay-warning-image";
+                break;
+            case DELAY_PENALTY:
+            default:
+                imageClass = "delay-penalty-image";
+                break;
+        }
+
+        return imageClass;
+    }
+
+    private Element createRecordedLadder(int setIndex) {
+        Element wrapperDiv = new Element("div");
+
+        wrapperDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.ladder_tab)).addClass("spacing-before"));
 
         int homeScore = 0;
         int guestScore = 0;
@@ -395,7 +559,9 @@ public class ScoreSheetWriter {
             }
         }
 
-        cardDiv.appendChild(ladderDiv);
+        wrapperDiv.appendChild(ladderDiv);
+
+        return wrapperDiv;
     }
 
     private Element createLadderItem(TeamType teamType, int score) {
@@ -413,10 +579,214 @@ public class ScoreSheetWriter {
         return ladderItemDiv;
     }
 
+    private void writeRecordedIndoor4x4Game() {
+        mBody.appendChild(createRecordedGameHeader());
+
+        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+            mBody.appendChild(createRecordedIndoorTeams());
+        }
+
+        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+            Element cardDiv = new Element("div");
+            cardDiv.addClass("div-card").addClass("spacing-before");
+            cardDiv.appendChild(createRecordedIndoorSetHeader(setIndex));
+
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
+                Element teamDiv = new Element("div");
+                teamDiv.addClass("div-flex-row");
+                teamDiv.appendChild(createRecordedStartingLineup4x4(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+
+                if (!mRecordedGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
+                        || !mRecordedGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
+                    teamDiv.appendChild(createRecordedSubstitutions(setIndex));
+                }
+
+                cardDiv.appendChild(teamDiv);
+            }
+
+            Element timeoutAndSanctionDiv = new Element("div");
+            timeoutAndSanctionDiv.addClass("div-flex-row");
+
+            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsageType()))
+                    && mRecordedGameService.getRules().areTeamTimeoutsEnabled()
+                    && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+            }
+
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())
+                    && mRecordedGameService.getRules().areSanctionsEnabled()
+                    && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
+            }
+
+            cardDiv.appendChild(timeoutAndSanctionDiv);
+            cardDiv.appendChild(createRecordedLadder(setIndex));
+
+            mBody.appendChild(cardDiv);
+        }
+    }
+
+    private Element createRecordedStartingLineup4x4(int setIndex) {
+        Element wrapperDiv = new Element("div");
+
+        wrapperDiv.appendChild(createTitleDiv(mContext.getResources().getString(R.string.confirm_lineup_title)).addClass("spacing-before"));
+
+        Element lineupsDiv = new Element("div");
+        lineupsDiv.addClass("div-grid-h-g");
+        lineupsDiv.appendChild(createLineupDiv4x4(TeamType.HOME, setIndex)).appendChild(createEmptyDiv()).appendChild(createLineupDiv4x4(TeamType.GUEST, setIndex));
+        wrapperDiv.appendChild(lineupsDiv);
+
+        return wrapperDiv;
+    }
+
+    private Element createLineupDiv4x4(TeamType teamType, int setIndex) {
+        Element lineupDiv = new Element("div");
+        lineupDiv.addClass("div-grid-lineup").addClass("border");
+
+        lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_4_title), false, false));
+        lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_3_title), false, false));
+        lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_2_title), false, false));
+
+        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_4, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false));
+
+        lineupDiv.appendChild(createEmptyDiv());
+        lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_1_title), false, false));
+        lineupDiv.appendChild(createEmptyDiv());
+
+        lineupDiv.appendChild(createEmptyDiv());
+        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false));
+        lineupDiv.appendChild(createEmptyDiv());
+
+        return lineupDiv;
+    }
+
+    private void writeRecordedBeachGame() {
+        mBody.appendChild(createRecordedGameHeader());
+
+        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+            Element cardDiv = new Element("div");
+            cardDiv.addClass("div-card").addClass("spacing-before");
+            cardDiv.appendChild(createRecordedBeachSetHeader(setIndex));
+
+            Element timeoutAndSanctionDiv = new Element("div");
+            timeoutAndSanctionDiv.addClass("div-flex-row");
+
+            if (mRecordedGameService.getRules().areTeamTimeoutsEnabled()
+                    && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+            }
+
+            if (mRecordedGameService.getRules().areSanctionsEnabled()
+                    && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
+            }
+
+            cardDiv.appendChild(timeoutAndSanctionDiv);
+            cardDiv.appendChild(createRecordedLadder(setIndex));
+
+            mBody.appendChild(cardDiv);
+        }
+    }
+
+    private Element createRecordedBeachSetHeader(int setIndex) {
+        Element setInfoDiv = new Element("div");
+
+        Element setInfoLine1Div = new Element("div");
+        setInfoLine1Div.addClass("div-grid-set-info");
+
+        Element setInfoLine2Div = new Element("div");
+        setInfoLine2Div.addClass("div-grid-set-info");
+
+        Element indexSpan = createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_number), (setIndex + 1)), true, false);
+        indexSpan.addClass((mRecordedGameService.getPoints(TeamType.HOME, setIndex) > mRecordedGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
+        setInfoLine1Div.appendChild(indexSpan);
+
+        int duration = (int) Math.ceil(mRecordedGameService.getSetDuration(setIndex) / 60000.0);
+        setInfoLine2Div.appendChild(createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_duration), duration), true, false));
+
+        List<TeamType> ladder = mRecordedGameService.getPointsLadder(setIndex);
+        int hScore1 = 0, gScore1 = 0;
+        int hScore = 0, gScore = 0;
+
+        for (TeamType teamType : ladder) {
+            if (TeamType.HOME.equals(teamType)) {
+                hScore++;
+            } else {
+                gScore++;
+            }
+
+            if (hScore + gScore == 21) {
+                hScore1 = hScore;
+                gScore1 = gScore;
+            }
+        }
+
+        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.HOME, setIndex)), true, false));
+
+        if (hScore1 > 0 && gScore1 > 0) {
+            setInfoLine1Div.appendChild(createCellSpan(String.valueOf(hScore1), true, false));
+        }
+
+        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
+
+        if (hScore1 > 0 && gScore1 > 0) {
+            setInfoLine2Div.appendChild(createCellSpan(String.valueOf(gScore1), true, false));
+        }
+
+        setInfoDiv.appendChild(setInfoLine1Div);
+        setInfoDiv.appendChild(setInfoLine2Div);
+
+        return setInfoDiv;
+    }
+
+    private void writeRecordedTimeGame() {
+        mBody.appendChild(createRecordedGameHeader());
+
+        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+            Element cardDiv = new Element("div");
+            cardDiv.addClass("div-card").addClass("spacing-before");
+            cardDiv.appendChild(createRecordedTimeSetHeader(setIndex));
+            cardDiv.appendChild(createRecordedLadder(setIndex));
+
+            mBody.appendChild(cardDiv);
+        }
+    }
+
+    private Element createRecordedTimeSetHeader(int setIndex) {
+        Element setInfoDiv = new Element("div");
+
+        Element setInfoLine1Div = new Element("div");
+        setInfoLine1Div.addClass("div-grid-set-info");
+
+        Element setInfoLine2Div = new Element("div");
+        setInfoLine2Div.addClass("div-grid-set-info");
+
+        Element indexSpan = createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_number), (setIndex + 1)), true, false);
+        indexSpan.addClass((mRecordedGameService.getPoints(TeamType.HOME, setIndex) > mRecordedGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
+        setInfoLine1Div.appendChild(indexSpan);
+
+        int duration = (int) Math.ceil(mRecordedGameService.getSetDuration(setIndex) / 60000.0);
+        setInfoLine2Div.appendChild(createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_duration), duration), true, false));
+
+        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.HOME, setIndex)), true, false));
+        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
+
+        setInfoDiv.appendChild(setInfoLine1Div);
+        setInfoDiv.appendChild(setInfoLine2Div);
+
+        return setInfoDiv;
+    }
+
     private Element createSpacingDiv() {
         Element div = new Element("div");
         div.addClass("horizontal-spacing");
         return div;
+    }
+
+    private Element createEmptyDiv() {
+        return new Element("div");
     }
 
     private String toBase64(@DrawableRes int resource, int widthPixels, int heightPixels) {
@@ -512,6 +882,14 @@ public class ScoreSheetWriter {
                 "      font-weight: 700;\n" +
                 "      margin-bottom: 8px;\n" +
                 "    }\n" +
+                "    .div-grid-h-g {\n" +
+                "      display: grid;\n" +
+                "      grid-template-columns: 4fr 1fr 4fr;\n" +
+                "      grid-auto-rows: 1fr;\n" +
+                "      align-items: stretch;\n" +
+                "      align-content: center;\n" +
+                "      justify-content: center;\n" +
+                "    }\n" +
                 "    .div-grid-info {\n" +
                 "      display: grid;\n" +
                 "      grid-template-columns: 40fr 20fr 30fr 10fr;\n" +
@@ -538,8 +916,8 @@ public class ScoreSheetWriter {
                 "    .div-flex-column {\n" +
                 "      display: flex;\n" +
                 "      flex-flow: column wrap;\n" +
-                "      align-items: center;\n" +
-                "      align-content: center;\n" +
+                "      align-items: flex-start;\n" +
+                "      align-content: flex-start;\n" +
                 "      justify-content: flex-start;\n" +
                 "    }\n" +
                 "    .div-grid-team {\n" +
@@ -551,7 +929,7 @@ public class ScoreSheetWriter {
                 "      justify-content: center;\n" +
                 "      margin-right: 34px;\n" +
                 "    }\n" +
-                "    .div-grid-indoor-set-info {\n" +
+                "    .div-grid-set-info {\n" +
                 "      display: grid;\n" +
                 "      grid-template-columns: 15fr 5fr 5fr 5fr 70fr;\n" +
                 "      grid-auto-rows: 1fr;\n" +
@@ -570,6 +948,22 @@ public class ScoreSheetWriter {
                 "    .div-grid-substitution {\n" +
                 "      display: grid;\n" +
                 "      grid-template-columns: 24fr 16fr 24fr 34fr;\n" +
+                "      grid-auto-rows: 1fr;\n" +
+                "      align-items: center;\n" +
+                "      align-content: center;\n" +
+                "      justify-content: center;\n" +
+                "    }\n" +
+                "    .div-grid-timeout {\n" +
+                "      display: grid;\n" +
+                "      grid-template-columns: 1fr 2fr;\n" +
+                "      grid-auto-rows: 1fr;\n" +
+                "      align-items: center;\n" +
+                "      align-content: center;\n" +
+                "      justify-content: center;\n" +
+                "    }\n" +
+                "    .div-grid-sanction {\n" +
+                "      display: grid;\n" +
+                "      grid-template-columns: 3fr 2fr 4fr;\n" +
                 "      grid-auto-rows: 1fr;\n" +
                 "      align-items: center;\n" +
                 "      align-content: center;\n" +
@@ -624,56 +1018,58 @@ public class ScoreSheetWriter {
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
                 "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      min-width: 12px;\n" +
+                "      height: 12px;\n" +
                 "    }\n" +
                 "    .timeout-white-image {\n" +
                 String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.ic_thumb_timeout_white, 32, 32)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
                 "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      min-width: 12px;\n" +
+                "      height: 12px;\n" +
                 "    }\n" +
                 "    .yellow-card-image {\n" +
-                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.yellow_card, 50, 50)) +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.yellow_card, 64, 64)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
-                "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      width: 24px;\n" +
+                "      height: 24px;\n" +
                 "    }\n" +
                 "    .red-card-image {\n" +
-                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.red_card, 50, 50)) +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.red_card, 64, 64)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
-                "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      width: 24px;\n" +
+                "      height: 24px;\n" +
                 "    }\n" +
                 "    .expulsion-card-image {\n" +
-                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.expulsion_card, 75, 50)) +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.expulsion_card, 96, 64)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
-                "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      width: 36px;\n" +
+                "      height: 24px;\n" +
                 "    }\n" +
                 "    .disqualification-card-image {\n" +
-                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.disqualification_card, 120, 100)) +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.disqualification_card, 128, 64)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
-                "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      width: 48px;\n" +
+                "      height: 24px;\n" +
                 "    }\n" +
                 "    .delay-warning-image {\n" +
-                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.delay_warning, 50, 50)) +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.delay_warning, 64, 64)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
-                "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      width: 24px;\n" +
+                "      height: 24px;\n" +
                 "    }\n" +
                 "    .delay-penalty-image {\n" +
-                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.delay_penalty, 50, 50)) +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.delay_penalty, 64, 64)) +
                 "      background-repeat: no-repeat;\n" +
                 "      background-size: 100% 100%;\n" +
-                "      width: auto;\n" +
-                "      height: 20px;\n" +
+                "      width: 24px;\n" +
+                "      height: 24px;\n" +
                 "    }\n" +
                 "    </style>" +
                 "  </head>\n" +

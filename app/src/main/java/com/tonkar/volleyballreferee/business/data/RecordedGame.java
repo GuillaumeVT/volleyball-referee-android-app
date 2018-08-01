@@ -402,7 +402,12 @@ public class RecordedGame implements RecordedGameService {
 
     @Override
     public boolean isStartingLineupConfirmed() {
-        RecordedSet set = mSets.get(currentSetIndex());
+        return isStartingLineupConfirmed(currentSetIndex());
+    }
+
+    @Override
+    public boolean isStartingLineupConfirmed(int setIndex) {
+        RecordedSet set = mSets.get(setIndex);
         return !set.getStartingPlayers(TeamType.HOME).isEmpty() && !set.getStartingPlayers(TeamType.GUEST).isEmpty();
     }
 
