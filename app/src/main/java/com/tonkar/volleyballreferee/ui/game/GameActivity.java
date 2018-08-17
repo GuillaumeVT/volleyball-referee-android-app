@@ -7,27 +7,29 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
@@ -44,7 +46,7 @@ import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
 import java.util.Random;
@@ -58,21 +60,21 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private TeamType             mTeamOnRightSide;
     private TextView             mLeftTeamNameText;
     private TextView             mRightTeamNameText;
-    private ImageButton          mSwapTeamsButton;
-    private Button               mLeftTeamScoreButton;
-    private Button               mRightTeamScoreButton;
+    private FloatingActionButton mSwapTeamsButton;
+    private MaterialButton       mLeftTeamScoreButton;
+    private MaterialButton       mRightTeamScoreButton;
     private TextView             mLeftTeamSetsText;
     private TextView             mRightTeamSetsText;
-    private ImageButton          mLeftTeamServiceButton;
-    private ImageButton          mRightTeamServiceButton;
+    private FloatingActionButton mLeftTeamServiceButton;
+    private FloatingActionButton mRightTeamServiceButton;
     private TextView             mSetsText;
-    private ImageButton          mScoreRemoveButton;
-    private ImageButton          mLeftTeamTimeoutButton;
-    private ImageButton          mRightTeamTimeoutButton;
+    private FloatingActionButton mScoreRemoveButton;
+    private FloatingActionButton mLeftTeamTimeoutButton;
+    private FloatingActionButton mRightTeamTimeoutButton;
     private LinearLayout         mLeftTeamTimeoutLayout;
     private LinearLayout         mRightTeamTimeoutLayout;
-    private ImageButton          mLeftTeamCardsButton;
-    private ImageButton          mRightTeamCardsButton;
+    private FloatingActionButton mLeftTeamCardsButton;
+    private FloatingActionButton mRightTeamCardsButton;
     private CountDown            mCountDown;
 
     @Override
@@ -123,6 +125,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
         mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
+        initButtonOnClickListeners();
 
         mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
         mRightTeamSetsText = findViewById(R.id.right_team_set_text);
@@ -142,6 +145,15 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         mLeftTeamCardsButton = findViewById(R.id.left_team_cards_button);
         mRightTeamCardsButton = findViewById(R.id.right_team_cards_button);
+
+        UiUtils.fixFabCompatPadding(mSwapTeamsButton);
+        UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
+        UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
+        UiUtils.fixFabCompatPadding(mScoreRemoveButton);
+        UiUtils.fixFabCompatPadding(mLeftTeamTimeoutButton);
+        UiUtils.fixFabCompatPadding(mLeftTeamCardsButton);
+        UiUtils.fixFabCompatPadding(mRightTeamTimeoutButton);
+        UiUtils.fixFabCompatPadding(mRightTeamCardsButton);
 
         if (mGameService.getRules().areTeamTimeoutsEnabled()) {
             for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
@@ -170,16 +182,16 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 mRightTeamTimeoutLayout.addView(rightTimeout);
             }
         } else {
-            mLeftTeamTimeoutButton.setVisibility(View.INVISIBLE);
-            mRightTeamTimeoutButton.setVisibility(View.INVISIBLE);
+            mLeftTeamTimeoutButton.hide();
+            mRightTeamTimeoutButton.hide();
 
             mLeftTeamTimeoutLayout.setVisibility(View.GONE);
             mRightTeamTimeoutLayout.setVisibility(View.GONE);
         }
 
         if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
-            mLeftTeamCardsButton.setVisibility(View.INVISIBLE);
-            mRightTeamCardsButton.setVisibility(View.INVISIBLE);
+            mLeftTeamCardsButton.hide();
+            mRightTeamCardsButton.hide();
         }
 
         final BottomNavigationView gameNavigation = findViewById(R.id.game_nav);
@@ -315,6 +327,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     // UI Callbacks
+
+    private void initButtonOnClickListeners() {
+        mLeftTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseLeftScore(null); }});
+        mRightTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseRightScore(null); }});
+    }
 
     public void swapTeams(View view) {
         Log.i("VBR-GameActivity", "Swap teams");
@@ -530,11 +547,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onServiceSwapped(TeamType teamType) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamServiceButton.setVisibility(View.VISIBLE);
-            mRightTeamServiceButton.setVisibility(View.INVISIBLE);
+            mLeftTeamServiceButton.show();
+            mRightTeamServiceButton.hide();
         } else {
-            mRightTeamServiceButton.setVisibility(View.VISIBLE);
-            mLeftTeamServiceButton.setVisibility(View.INVISIBLE);
+            mRightTeamServiceButton.show();
+            mLeftTeamServiceButton.hide();
         }
     }
 

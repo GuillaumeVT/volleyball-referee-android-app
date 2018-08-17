@@ -3,9 +3,6 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,8 +14,12 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 public class SavedRulesActivity extends AppCompatActivity {
 
@@ -79,7 +80,7 @@ public class SavedRulesActivity extends AppCompatActivity {
 
     private void saveRules() {
         Log.i("VBR-SavedRulesActivity", "Save rules");
-        mSavedRulesService.getCurrentRules().setUserId(PrefUtils.getUserId(this));
+        mSavedRulesService.getCurrentRules().setUserId(PrefUtils.getAuthentication(this).getUserId());
         mSavedRulesService.saveCurrentRules();
         Toast.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);

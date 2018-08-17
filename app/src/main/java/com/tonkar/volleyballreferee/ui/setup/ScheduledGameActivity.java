@@ -6,10 +6,11 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,14 +22,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
@@ -37,7 +38,7 @@ import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -55,9 +56,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private DateFormat           mDateFormatter;
     private DateFormat           mTimeFormatter;
     private Calendar             mScheduleDate;
-    private Button               mDateInputButton;
-    private Button               mTimeInputButton;
-    private ImageButton          mGenderButton;
+    private MaterialButton       mDateInputButton;
+    private MaterialButton       mTimeInputButton;
+    private FloatingActionButton mGenderButton;
     private Spinner              mHomeTeamSpinner;
     private Spinner              mGuestTeamSpinner;
     private ArrayAdapter<String> mTeamAdapter;

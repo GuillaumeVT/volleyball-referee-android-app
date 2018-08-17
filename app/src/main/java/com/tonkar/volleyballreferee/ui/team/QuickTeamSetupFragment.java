@@ -5,35 +5,36 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
 
 public class QuickTeamSetupFragment extends Fragment {
 
-    private TeamType        mTeamType;
-    private BaseTeamService mTeamService;
-    private ImageButton     mTeamColorButton;
-    private Button          mCaptainButton;
-    private ImageButton     mGenderButton;
+    private TeamType             mTeamType;
+    private BaseTeamService      mTeamService;
+    private FloatingActionButton mTeamColorButton;
+    private MaterialButton       mCaptainButton;
+    private FloatingActionButton mGenderButton;
 
     public QuickTeamSetupFragment() {
     }

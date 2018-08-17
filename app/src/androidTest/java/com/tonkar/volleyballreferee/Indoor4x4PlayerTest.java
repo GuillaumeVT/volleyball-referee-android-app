@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.team.Indoor4x4Player;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;

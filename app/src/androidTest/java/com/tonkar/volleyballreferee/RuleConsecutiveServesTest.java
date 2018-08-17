@@ -1,10 +1,10 @@
 package com.tonkar.volleyballreferee;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
+import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -12,7 +12,8 @@ import com.tonkar.volleyballreferee.rules.Rules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class RuleConsecutiveServesTest {
@@ -23,10 +24,10 @@ public class RuleConsecutiveServesTest {
 
         for (int index = 0; index < 15; index++) {
             game.addPoint(TeamType.HOME);
-            assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
-            assertEquals(false, game.samePlayerHadServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
-            assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
-            assertEquals(false, game.samePlayerHadServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+            assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+            assertFalse(game.samePlayerHadServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+            assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+            assertFalse(game.samePlayerHadServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         }
     }
 
@@ -36,15 +37,15 @@ public class RuleConsecutiveServesTest {
 
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.HOME);
-        assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
         game.addPoint(TeamType.HOME);
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
         game.addPoint(TeamType.HOME);
-        assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
         game.removeLastPoint();
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
         game.removeLastPoint();
-        assertEquals(true, game.samePlayerHadServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertTrue(game.samePlayerHadServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
     }
 
     @Test
@@ -54,15 +55,15 @@ public class RuleConsecutiveServesTest {
         game.addPoint(TeamType.GUEST);
         game.addPoint(TeamType.GUEST);
         game.addPoint(TeamType.GUEST);
-        assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         game.addPoint(TeamType.GUEST);
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         game.addPoint(TeamType.HOME);
-        assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         game.removeLastPoint();
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         game.removeLastPoint();
-        assertEquals(true, game.samePlayerHadServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertTrue(game.samePlayerHadServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
     }
 
     @Test
@@ -71,22 +72,22 @@ public class RuleConsecutiveServesTest {
 
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.HOME);
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
         game.addPoint(TeamType.GUEST);
         game.addPoint(TeamType.GUEST);
-        assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
-        assertEquals(true, game.samePlayerHadServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertTrue(game.samePlayerHadServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         game.addPoint(TeamType.GUEST);
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.GUEST, game.getPoints(TeamType.GUEST), game.getPointsLadder()));
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.HOME);
-        assertEquals(false, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertFalse(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
         game.addPoint(TeamType.HOME);
-        assertEquals(true, game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
+        assertTrue(game.samePlayerServedNConsecutiveTimes(TeamType.HOME, game.getPoints(TeamType.HOME), game.getPointsLadder()));
     }
 
     private IndoorGame createGame(int consecutiveServes) {
-        Rules rules = new Rules(UserId.VBR_USER_ID, "My rules", System.currentTimeMillis(),
+        Rules rules = new Rules(Authentication.VBR_USER_ID, "My rules", System.currentTimeMillis(),
                 5, 25, true, 15, true, true,
                 true,2, 30,true, 60, true, 180,
                 6,false, 0, 0, consecutiveServes);

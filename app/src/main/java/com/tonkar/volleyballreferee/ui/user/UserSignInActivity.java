@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +15,15 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.business.web.AuthenticationManager;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class UserSignInActivity extends AppCompatActivity {
 
@@ -42,8 +42,7 @@ public class UserSignInActivity extends AppCompatActivity {
         setTitle("");
 
         // Google
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestId().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = AuthenticationManager.getGoogleClient(this);
 
         SignInButton googleSignInButton = findViewById(R.id.google_sign_in_button);
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -60,9 +59,7 @@ public class UserSignInActivity extends AppCompatActivity {
         facebookSignInButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                PrefUtils.signIn(UserSignInActivity.this, UserId.userIdOf(loginResult.getAccessToken().getUserId(), UserId.Provider.FACEBOOK));
-                Toast.makeText(UserSignInActivity.this, String.format(getResources().getString(R.string.user_signed_in), "facebook"), Toast.LENGTH_LONG).show();
-                UiUtils.navigateToUser(UserSignInActivity.this);
+                AuthenticationManager.signedIn(UserSignInActivity.this, Authentication.of(loginResult.getAccessToken().getUserId(), Authentication.Provider.FACEBOOK, loginResult.getAccessToken().getToken()));
             }
 
             @Override
@@ -70,8 +67,8 @@ public class UserSignInActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException exception) {
-                Log.e("VBR-UserSignInActivity", "Error during facebook sign in");
-                Toast.makeText(UserSignInActivity.this, String.format(getResources().getString(R.string.user_sign_in_error), "facebook"), Toast.LENGTH_LONG).show();
+                Log.e("VBR-UserSignInActivity", "Error during Facebook sign in");
+                Toast.makeText(UserSignInActivity.this, String.format(getResources().getString(R.string.user_sign_in_error), "Facebook"), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -107,12 +104,10 @@ public class UserSignInActivity extends AppCompatActivity {
     private void onGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            PrefUtils.signIn(this, UserId.userIdOf(account.getId(), UserId.Provider.GOOGLE));
-            Toast.makeText(this, String.format(getResources().getString(R.string.user_signed_in), "google"), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToUser(this);
+            AuthenticationManager.signedIn(this, Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
         } catch (ApiException e) {
-            Log.e("VBR-UserSignInActivity", "Error during google sign in", e);
-            Toast.makeText(this, String.format(getResources().getString(R.string.user_sign_in_error), "google"), Toast.LENGTH_LONG).show();
+            Log.e("VBR-UserSignInActivity", "Error during Google sign in", e);
+            Toast.makeText(this, String.format(getResources().getString(R.string.user_sign_in_error), "Google"), Toast.LENGTH_LONG).show();
         }
     }
 

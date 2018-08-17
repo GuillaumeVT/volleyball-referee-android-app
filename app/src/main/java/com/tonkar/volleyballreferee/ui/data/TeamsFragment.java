@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.data;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,8 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+
+import androidx.fragment.app.Fragment;
 
 public class TeamsFragment extends Fragment {
 

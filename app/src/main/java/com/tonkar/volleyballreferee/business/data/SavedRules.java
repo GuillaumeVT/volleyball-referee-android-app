@@ -9,6 +9,9 @@ import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
+import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
@@ -245,11 +248,7 @@ public class SavedRules implements SavedRulesService {
     @Override
     public void syncRulesOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_RULES_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -282,10 +281,11 @@ public class SavedRules implements SavedRulesService {
 
     private void pushRulesOnline(Rules rules) {
         if (PrefUtils.isSyncOn(mContext)) {
-            rules.setUserId(PrefUtils.getUserId(mContext));
+            final Authentication authentication = PrefUtils.getAuthentication(mContext);
+            rules.setUserId(authentication.getUserId());
             final byte[] bytes = writeRules(rules).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_RULES_API_URL, bytes,
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_RULES_API_URL, bytes, authentication,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -295,7 +295,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes,
+                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes, authentication,
                                         new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {}
@@ -325,11 +325,10 @@ public class SavedRules implements SavedRulesService {
     private void deleteRulesOnline(Rules rules) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
             params.put("name", rules.getName());
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -349,11 +348,7 @@ public class SavedRules implements SavedRulesService {
 
     private void deleteAllRulesOnline() {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}

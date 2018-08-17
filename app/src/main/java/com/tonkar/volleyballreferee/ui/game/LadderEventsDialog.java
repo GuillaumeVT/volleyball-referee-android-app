@@ -3,8 +3,9 @@ package com.tonkar.volleyballreferee.ui.game;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +19,16 @@ import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 
 public class LadderEventsDialog {
 
-    private       AlertDialog    mAlertDialog;
-    private final LayoutInflater mLayoutInflater;
-    private final Context        mContext;
-    private final TeamType       mTeamType;
+    private       AlertDialog     mAlertDialog;
+    private final LayoutInflater  mLayoutInflater;
+    private final Context         mContext;
+    private final TeamType        mTeamType;
     private final BaseTeamService mBaseTeamService;
 
     LadderEventsDialog(LayoutInflater layoutInflater, final Context context, final TeamType teamType, final LadderItem ladderItem, final BaseTeamService baseTeamService) {

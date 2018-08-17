@@ -5,10 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -18,7 +18,7 @@ import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Map;
 
@@ -53,11 +53,11 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         mScoreService = ServicesProvider.getInstance().getScoreService();
         mScoreService.addScoreListener(this);
 
-        addButtonOnLeftSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.left_team_position_1));
-        addButtonOnLeftSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.left_team_position_2));
+        addButtonOnLeftSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.left_team_position_1));
+        addButtonOnLeftSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.left_team_position_2));
 
-        addButtonOnRightSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.right_team_position_1));
-        addButtonOnRightSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.right_team_position_2));
+        addButtonOnRightSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.right_team_position_1));
+        addButtonOnRightSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.right_team_position_2));
 
         mLeftServiceImage1 = mView.findViewById(R.id.left_team_service_1);
         mLeftServiceImage2 = mView.findViewById(R.id.left_team_service_2);
@@ -66,7 +66,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
-        for (Map.Entry<PositionType, Button> entry : mLeftTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,7 +79,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
             });
         }
 
-        for (Map.Entry<PositionType, Button> entry : mRightTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -121,7 +121,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     }
 
     private void update(TeamType teamType) {
-        final Map<PositionType, Button> teamPositions;
+        final Map<PositionType, MaterialButton> teamPositions;
         ImageView serviceImage1;
         ImageView serviceImage2;
 
@@ -137,7 +137,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
         int number = 1;
         PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
-        Button button = teamPositions.get(PositionType.POSITION_1);
+        MaterialButton button = teamPositions.get(PositionType.POSITION_1);
         button.setText(String.valueOf(number));
         UiUtils.styleTeamButton(mView.getContext(), mBeachTeamService, teamType, number, button);
         applyService(teamType, positionType, serviceImage1);

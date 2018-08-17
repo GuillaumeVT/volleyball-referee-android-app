@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee.business.data;
 import android.graphics.Color;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 
 import java.util.Set;
@@ -34,7 +34,7 @@ public class RecordedTeam {
     private GenderType   mGenderType;
 
     RecordedTeam() {
-        mUserId = UserId.VBR_USER_ID;
+        mUserId = Authentication.VBR_USER_ID;
         mGameType = GameType.INDOOR;
         mName = "";
         mDate = 0L;

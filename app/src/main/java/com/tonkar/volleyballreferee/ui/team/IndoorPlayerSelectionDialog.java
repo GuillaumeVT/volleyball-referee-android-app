@@ -2,21 +2,22 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public abstract class IndoorPlayerSelectionDialog {
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
         gridView.setNumColumns(3);
+        gridView.setHorizontalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
+        gridView.setVerticalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
         IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, teamService, sanctionService, teamType, players) {
@@ -102,12 +105,12 @@ public abstract class IndoorPlayerSelectionDialog {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             final int number = mPlayers.get(position);
-            Button button;
+            MaterialButton button;
 
             if (convertView == null) {
-                button = (Button) mLayoutInflater.inflate(R.layout.player_item, null);
+                button = (MaterialButton) mLayoutInflater.inflate(R.layout.player_item, null);
             } else {
-                button = (Button) convertView;
+                button = (MaterialButton) convertView;
             }
 
             button.setText(String.valueOf(number));
@@ -123,7 +126,7 @@ public abstract class IndoorPlayerSelectionDialog {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final int selectedNumber = Integer.parseInt(((Button) view).getText().toString());
+                        final int selectedNumber = Integer.parseInt(((MaterialButton) view).getText().toString());
                         onPlayerSelected(selectedNumber);
                     }
                 });

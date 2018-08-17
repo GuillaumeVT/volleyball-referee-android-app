@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
@@ -14,6 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class Indoor4x4GameTest {
@@ -80,7 +82,7 @@ public class Indoor4x4GameTest {
             game.addPoint(TeamType.HOME);
         }
 
-        assertEquals(true, game.isMatchCompleted());
+        assertTrue(game.isMatchCompleted());
         assertEquals(3, game.getSets(TeamType.HOME));
         assertEquals(1, game.getSets(TeamType.GUEST));
         assertEquals(4, game.getNumberOfSets());
@@ -111,7 +113,7 @@ public class Indoor4x4GameTest {
             game.addPoint(TeamType.GUEST);
         }
 
-        assertEquals(true, game.isMatchCompleted());
+        assertTrue(game.isMatchCompleted());
         assertEquals(2, game.getSets(TeamType.HOME));
         assertEquals(3, game.getSets(TeamType.GUEST));
         assertEquals(5, game.getNumberOfSets());
@@ -143,16 +145,16 @@ public class Indoor4x4GameTest {
 
         game.substitutePlayer(TeamType.HOME, 5, PositionType.POSITION_1, ActionOriginType.USER);
         assertEquals(5, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));
-        assertEquals(true, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
-        assertEquals(false, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
+        assertTrue(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
+        assertFalse(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
 
         game.addPoint(TeamType.HOME);
         assertEquals(2, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));
-        assertEquals(false, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
-        assertEquals(true, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
+        assertFalse(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
+        assertTrue(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
 
         game.addPoint(TeamType.GUEST);
-        assertEquals(true, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
+        assertTrue(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
     }
 
     @Test
@@ -178,8 +180,8 @@ public class Indoor4x4GameTest {
 
         game.substitutePlayer(TeamType.HOME, 5, PositionType.POSITION_1, ActionOriginType.USER);
         assertEquals(5, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));
-        assertEquals(true, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
-        assertEquals(false, game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
+        assertTrue(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_1).contains(1));
+        assertFalse(game.getPossibleSubstitutions(TeamType.HOME, PositionType.POSITION_2).contains(1));
     }
 
 }

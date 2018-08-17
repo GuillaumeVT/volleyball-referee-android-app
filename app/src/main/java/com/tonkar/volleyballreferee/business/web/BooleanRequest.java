@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.business.data;
+package com.tonkar.volleyballreferee.business.web;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;

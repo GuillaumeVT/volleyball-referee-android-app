@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.business.data;
+package com.tonkar.volleyballreferee.business.web;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -8,17 +8,28 @@ import java.util.Map;
 
 public class JsonStringRequest extends StringRequest {
 
-    private final byte[]              mBody;
+    private final byte[]         mBody;
+    private final Authentication mAuthentication;
 
     public JsonStringRequest(int method, String url, byte[] body, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        this(method, url, body, null, listener, errorListener);
+    }
+
+    public JsonStringRequest(int method, String url, byte[] body, Authentication authentication, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(method, url, listener, errorListener);
         mBody = body;
+        mAuthentication = authentication;
     }
 
     @Override
     public Map<String, String> getHeaders() {
         Map<String, String> params = new HashMap<>();
         params.put("Content-Type", "application/json");
+        if (mAuthentication != null && !mAuthentication.getUserId().equals(Authentication.VBR_USER_ID) && !mAuthentication.getToken().isEmpty()) {
+            params.put("Authorization", String.format("Bearer %s", mAuthentication.getToken()));
+            params.put("AuthenticationProvider", mAuthentication.getProvider().toString());
+        }
+
         return params;
     }
 

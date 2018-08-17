@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.business.data;
+package com.tonkar.volleyballreferee.business.web;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

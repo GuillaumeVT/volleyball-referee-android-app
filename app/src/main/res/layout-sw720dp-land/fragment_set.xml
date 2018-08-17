@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             style="@style/CardView.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
                 android:layout_gravity="center">
 
             </FrameLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:orientation="horizontal"
             android:weightSum="6">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/set_lineup_card"
                 style="@style/CardView.Light"
                 android:layout_width="0dp"
@@ -50,7 +50,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/tiny_margin_size"
-                        android:layout_marginLeft="@dimen/set_title_margin_size"
                         android:layout_marginStart="@dimen/set_title_margin_size"
                         android:layout_marginTop="@dimen/tiny_margin_size"
                         android:gravity="center|start"
@@ -67,7 +66,7 @@
 
                         <view
                             android:id="@+id/home_team_lineup"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/small_margin_size"
@@ -79,7 +78,7 @@
 
                         <view
                             android:id="@+id/guest_team_lineup"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/small_margin_size"
@@ -92,9 +91,9 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/set_substitutions_card"
                 style="@style/CardView.Light"
                 android:layout_width="0dp"
@@ -113,7 +112,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/tiny_margin_size"
-                        android:layout_marginLeft="@dimen/set_title_margin_size"
                         android:layout_marginStart="@dimen/set_title_margin_size"
                         android:layout_marginTop="@dimen/tiny_margin_size"
                         android:gravity="center|start"
@@ -130,7 +128,7 @@
 
                         <view
                             android:id="@+id/home_team_substitutions"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedListView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
@@ -141,7 +139,7 @@
 
                         <view
                             android:id="@+id/guest_team_substitutions"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedListView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
@@ -153,7 +151,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
         <LinearLayout
@@ -162,7 +160,7 @@
             android:orientation="horizontal"
             android:weightSum="8">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/set_timeouts_card"
                 style="@style/CardView.Light"
                 android:layout_width="0dp"
@@ -181,7 +179,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/tiny_margin_size"
-                        android:layout_marginLeft="@dimen/set_title_margin_size"
                         android:layout_marginStart="@dimen/set_title_margin_size"
                         android:layout_marginTop="@dimen/tiny_margin_size"
                         android:gravity="center|start"
@@ -198,7 +195,7 @@
 
                         <view
                             android:id="@+id/home_team_timeouts"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/small_margin_size"
@@ -210,7 +207,7 @@
 
                         <view
                             android:id="@+id/guest_team_timeouts"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/small_margin_size"
@@ -223,9 +220,9 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/set_sanctions_card"
                 style="@style/CardView.Light"
                 android:layout_width="0dp"
@@ -244,7 +241,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/tiny_margin_size"
-                        android:layout_marginLeft="@dimen/set_title_margin_size"
                         android:layout_marginStart="@dimen/set_title_margin_size"
                         android:layout_marginTop="@dimen/tiny_margin_size"
                         android:gravity="center|start"
@@ -261,7 +257,7 @@
 
                         <view
                             android:id="@+id/home_team_sanctions"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedListView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
@@ -272,7 +268,7 @@
 
                         <view
                             android:id="@+id/guest_team_sanctions"
-                            class="com.tonkar.volleyballreferee.ui.ExpandedListView"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
@@ -284,7 +280,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

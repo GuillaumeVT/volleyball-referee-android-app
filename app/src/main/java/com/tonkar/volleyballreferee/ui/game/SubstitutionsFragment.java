@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,8 @@ import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+
+import androidx.fragment.app.Fragment;
 
 public class SubstitutionsFragment extends Fragment implements TeamListener {
 

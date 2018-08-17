@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="@dimen/default_margin_size"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/default_margin_size">
 
     <Spinner
         android:id="@+id/sanction_spinner"
@@ -11,15 +11,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/big_margin_size"
         android:layout_marginTop="@dimen/big_margin_size"
-        android:spinnerMode="dialog"/>
+        android:spinnerMode="dialog" />
 
     <GridView
         android:id="@+id/sanction_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="@dimen/player_big_column_width"
+        android:columnWidth="@dimen/form_button_size"
         android:gravity="center"
         android:horizontalSpacing="@dimen/default_margin_size"
         android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/default_margin_size"/>
+        android:verticalSpacing="@dimen/default_margin_size" />
 </LinearLayout>

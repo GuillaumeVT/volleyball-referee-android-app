@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:padding="@dimen/small_margin_size">
+              android:padding="@dimen/big_margin_size">
 
     <TextView
         android:id="@+id/saved_team_name"
@@ -22,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/small_margin_size"
-        android:layout_marginRight="@dimen/small_margin_size"
         android:tint="@color/colorBeach"
         app:srcCompat="@drawable/ic_sun" />
 

@@ -2,12 +2,7 @@ package com.tonkar.volleyballreferee.ui.data;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -24,9 +20,14 @@ import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class SavedTeamsListActivity extends AppCompatActivity implements DataSynchronizationListener {
 
@@ -86,6 +87,9 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         mAdd6x6TeamButton = findViewById(R.id.add_6x6_team_button);
         mAdd4x4TeamButton = findViewById(R.id.add_4x4_team_button);
         mAddBeachTeamButton = findViewById(R.id.add_beach_team_button);
+        mAdd6x6TeamButton.hide();
+        mAdd4x4TeamButton.hide();
+        mAddBeachTeamButton.hide();
         FloatingActionButton addTeamButton = findViewById(R.id.add_team_button);
         addTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,9 +199,12 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
 
     private void showFABMenu(){
         mIsFabOpen = true;
-        mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.standard_180));
-        mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
-        mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.standard_60));
+        mAdd6x6TeamButton.show();
+        mAdd4x4TeamButton.show();
+        mAddBeachTeamButton.show();
+        mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
+        mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
+        mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
     }
 
     private void closeFABMenu(){
@@ -205,6 +212,9 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         mAdd6x6TeamButton.animate().translationY(0);
         mAdd4x4TeamButton.animate().translationY(0);
         mAddBeachTeamButton.animate().translationY(0);
+        mAdd6x6TeamButton.hide();
+        mAdd4x4TeamButton.hide();
+        mAddBeachTeamButton.hide();
     }
 
     @Override

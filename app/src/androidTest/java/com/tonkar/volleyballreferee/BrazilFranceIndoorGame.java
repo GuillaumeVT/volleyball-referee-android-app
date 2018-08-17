@@ -1,9 +1,10 @@
 package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
+
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;

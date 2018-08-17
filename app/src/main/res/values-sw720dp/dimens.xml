@@ -10,7 +10,6 @@
     <dimen name="tiny_margin_size">4dp</dimen>
 
     <dimen name="player_column_width">80dp</dimen>
-    <dimen name="player_big_column_width">100dp</dimen>
 
     <dimen name="set_title_margin_size">20dp</dimen>
 
@@ -20,14 +19,14 @@
 
     <dimen name="timeout_drawable_size">20dp</dimen>
 
-    <dimen name="round_button_elevation">4dp</dimen>
-    <dimen name="round_button_size">75dp</dimen>
-
     <dimen name="number_text_elevation">2dp</dimen>
 
     <dimen name="score_button_height">160dp</dimen>
-
     <dimen name="game_buttons_horizontal_spacing">48dp</dimen>
+    <dimen name="game_fab_size">70dp</dimen>
+    <dimen name="game_fab_icon_size">56dp</dimen>
+    <dimen name="game_small_fab_size">60dp</dimen>
+    <dimen name="game_small_fab_icon_size">48dp</dimen>
 
     <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
 
@@ -37,18 +36,20 @@
 
     <dimen name="main_image_height">200dp</dimen>
 
-    <dimen name="indoor_court_x_margin">16dp</dimen>
     <dimen name="indoor_court_y_margin">24dp</dimen>
     <dimen name="beach_court_x_margin">48dp</dimen>
     <dimen name="beach_court_y_margin">24dp</dimen>
-    <dimen name="indoor_4v4_court_x_margin">16dp</dimen>
+    <dimen name="indoor_court_x_padding">16dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">12sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">16sp</dimen>
 
-    <dimen name="normal_fab_margin_size">32dp</dimen>
-    <dimen name="mini_fab_margin_size">40dp</dimen>
+    <dimen name="fab_shift_first">100dp</dimen>
+    <dimen name="fab_shift_second">200dp</dimen>
+    <dimen name="fab_shift_third">300dp</dimen>
+    <dimen name="fab_shift_default">32dp</dimen>
 
-    <dimen name="color_button_size">70dp</dimen>
+    <dimen name="form_button_size">70dp</dimen>
+    <dimen name="form_fab_icon_size">50dp</dimen>
 
 </resources>

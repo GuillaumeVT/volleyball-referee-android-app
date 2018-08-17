@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,9 +11,11 @@ import android.widget.ArrayAdapter;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
+import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 
 import java.util.ArrayList;
+
+import androidx.fragment.app.Fragment;
 
 public class MiscSetupFragment extends Fragment {
 
@@ -37,7 +38,7 @@ public class MiscSetupFragment extends Fragment {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
         }
 
-        final TextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues()));
         leagueNameInput.setAdapter(leagueNameAdapter);
@@ -57,7 +58,7 @@ public class MiscSetupFragment extends Fragment {
 
         leagueNameInput.setText(ServicesProvider.getInstance().getGeneralService().getLeagueName());
 
-        final TextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
         ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);

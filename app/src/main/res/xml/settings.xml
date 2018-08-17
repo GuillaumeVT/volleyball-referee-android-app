@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.preference.EditTextPreference
+    <androidx.preference.EditTextPreference
         android:defaultValue=""
         android:key="pref_referee_name"
         android:title="@string/pref_referee_name"/>
 
-    <android.support.v7.preference.SwitchPreferenceCompat
+    <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="pref_sync_data"
         android:title="@string/pref_sync_data"/>
 
-    <android.support.v7.preference.SwitchPreferenceCompat
+    <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="pref_keep_screen_on"
         android:title="@string/pref_keep_screen_on"/>
 
-    <android.support.v7.preference.SwitchPreferenceCompat
+    <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="pref_interactive_notification"
         android:title="@string/pref_interactive_notification"/>
 
-    <android.support.v7.preference.ListPreference
+    <androidx.preference.ListPreference
         android:defaultValue="25"
         android:key="pref_number_of_shirts"
         android:title="@string/pref_number_of_shirts"
@@ -29,4 +29,4 @@
         android:entries="@array/number_of_shirts"
         android:entryValues="@array/number_of_shirts"/>
 
-</android.support.v7.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

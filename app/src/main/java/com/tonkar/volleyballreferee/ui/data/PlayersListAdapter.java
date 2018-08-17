@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +49,12 @@ public class PlayersListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int index, View view, ViewGroup viewGroup) {
-        Button playerButton;
+        MaterialButton playerButton;
 
         if (view == null) {
-            playerButton = (Button) mLayoutInflater.inflate(R.layout.player_item, null);
+            playerButton = (MaterialButton) mLayoutInflater.inflate(R.layout.player_item, null);
         } else {
-            playerButton = (Button) view;
+            playerButton = (MaterialButton) view;
         }
 
         int number = mPlayers.get(index);

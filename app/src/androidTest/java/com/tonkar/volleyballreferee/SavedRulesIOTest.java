@@ -1,11 +1,10 @@
 package com.tonkar.volleyballreferee;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.SavedRules;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
@@ -39,7 +38,7 @@ public class SavedRulesIOTest {
         Rules rules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
 
         rules.setName("Test Rules 1");
-        rules.setUserId(UserId.userIdOf("66bgghvgh55", UserId.Provider.GOOGLE));
+        rules.setUserId("66bgghvgh55@google");
         rules.setDate(34567654L);
         rules.setSetsPerGame(15);
         rules.setPointsPerSet(22);
@@ -66,7 +65,7 @@ public class SavedRulesIOTest {
         rules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
 
         rules.setName("Test Rules 2");
-        rules.setUserId(UserId.userIdOf("byg765bvg66v", UserId.Provider.FACEBOOK));
+        rules.setUserId("byg765bvg66v@facebook");
         rules.setDate(494030L);
         rules.setSetsPerGame(1);
         rules.setPointsPerSet(99);

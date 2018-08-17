@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.ui;
+package com.tonkar.volleyballreferee.ui.util;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,18 +15,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.PreferenceManager;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.view.ViewCompat;
+import androidx.preference.PreferenceManager;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -36,21 +37,22 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
-import com.tonkar.volleyballreferee.business.data.WebUtils;
+import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -68,12 +70,12 @@ public class UiUtils {
         return Color.parseColor(randomColorStr);
     }
 
-    public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, Button button) {
+    public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, MaterialButton button) {
         colorTeamButton(context, teamService.getTeamColor(teamType), button);
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
     }
 
-    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, Button button) {
+    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (indoorTeamService.isLibero(teamType, number)) {
@@ -86,7 +88,7 @@ public class UiUtils {
         }
     }
 
-    public static void styleTeamButton(Context context, BaseTeamService teamService, TeamType teamType, int number, Button button) {
+    public static void styleTeamButton(Context context, BaseTeamService teamService, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (teamService.isLibero(teamType, number)) {
@@ -112,16 +114,13 @@ public class UiUtils {
         }
     }
 
-    public static void colorTeamButton(Context context, int color, Button button) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
-        } else {
-            button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
-        }
-
+    public static void colorTeamButton(Context context, int color, MaterialButton button) {
         int textColor = getTextColor(context, color);
         button.setTextColor(textColor);
-        colorButtonDrawables(textColor, button);
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
+        if (button.getIcon() != null) {
+            button.setIconTint(ColorStateList.valueOf(textColor));
+        }
     }
 
     public static void colorTeamText(Context context, int color, TextView text) {
@@ -147,29 +146,21 @@ public class UiUtils {
         return textColor;
     }
 
-    public static void colorTeamIconButton(Context context, int color, ImageButton button) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
-        } else {
-            button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
-        }
-        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
-    }
-
-    public static void colorButtonDrawables(int color, Button button) {
-        for (Drawable drawable : button.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-            }
+    public static void colorTeamIconButton(Context context, int color, FloatingActionButton button) {
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
+        if (button.getDrawable() != null) {
+            button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
         }
     }
 
-    public static void colorIconButtonInWhite(ImageButton button) {
+    public static void colorIconButtonInWhite(FloatingActionButton button) {
         int color = Color.parseColor("#ffffff");
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
+    }
+
+    public static void fixFabCompatPadding(FloatingActionButton button) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(color));
-        } else {
-            button.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+            button.setCompatElevation(0);
         }
     }
 

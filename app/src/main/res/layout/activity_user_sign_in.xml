@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.tonkar.volleyballreferee.ui.user.UserSignInActivity">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/big_margin_size"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:layout_marginStart="@dimen/small_margin_size"
                 android:orientation="horizontal"
                 android:weightSum="5">
@@ -52,7 +51,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:text="@string/user_sign_in_why_message"
                 android:textAppearance="@style/TextViewTheme"
                 android:textSize="@dimen/small_text_size"
@@ -62,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/big_margin_size"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:layout_marginStart="@dimen/small_margin_size"
                 android:layout_marginTop="@dimen/big_margin_size"
                 android:orientation="horizontal"
@@ -92,7 +89,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:text="@string/user_sign_in_privacy_message"
                 android:textAppearance="@style/TextViewTheme"
                 android:textSize="@dimen/small_text_size"
@@ -111,12 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingBottom="@dimen/default_margin_size"
-                    android:paddingEnd="@dimen/default_margin_size"
-                    android:paddingLeft="@dimen/default_margin_size"
-                    android:paddingRight="@dimen/default_margin_size"
-                    android:paddingStart="@dimen/default_margin_size"
-                    android:paddingTop="@dimen/default_margin_size"
+                    android:padding="@dimen/default_margin_size"
                     android:textSize="@dimen/default_text_size" />
 
                 <com.facebook.login.widget.LoginButton
@@ -124,18 +115,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin_size"
-                    android:paddingBottom="@dimen/default_margin_size"
-                    android:paddingLeft="@dimen/default_margin_size"
-                    android:paddingStart="@dimen/default_margin_size"
-                    android:paddingRight="@dimen/default_margin_size"
-                    android:paddingEnd="@dimen/default_margin_size"
-                    android:paddingTop="@dimen/default_margin_size"
+                    android:padding="@dimen/default_margin_size"
                     android:textSize="@dimen/default_text_size"
                     android:layout_weight="1"/>
             </LinearLayout>
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </ScrollView>

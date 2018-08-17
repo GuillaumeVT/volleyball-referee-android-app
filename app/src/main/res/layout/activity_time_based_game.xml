@@ -25,20 +25,20 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"/>
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/swap_teams_button"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:background="@drawable/round_button"
-            android:backgroundTint="@android:color/white"
             android:contentDescription="@string/switch_sides_description"
-            android:elevation="@dimen/round_button_elevation"
             android:onClick="swapTeams"
-            android:theme="@style/RoundButtonTheme"
-            app:srcCompat="@drawable/ic_swap"/>
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@android:color/white"
+            app:fabCustomSize="@dimen/game_fab_size"
+            app:maxImageSize="@dimen/game_fab_icon_size"
+            app:srcCompat="@drawable/ic_swap" />
 
         <TextView
             android:id="@+id/right_team_name_text"
@@ -57,87 +57,90 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="6">
+        android:weightSum="3">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/left_team_score_button"
             android:layout_width="0dp"
             android:layout_height="@dimen/score_button_height"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:onClick="increaseLeftScore"
             android:textSize="@dimen/score_point_size"
-            android:theme="@style/TeamButtonTheme"/>
+            android:theme="@style/ButtonTheme.Team" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="bottom|center"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="2">
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/left_team_service_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/round_button"
-                android:backgroundTint="@android:color/white"
                 android:contentDescription="@string/swap_first_service"
-                android:elevation="@dimen/round_button_elevation"
                 android:onClick="swapFirstService"
-                android:theme="@style/RoundButtonTheme"
-                app:srcCompat="@drawable/ic_volley_ball"/>
+                android:tint="@color/colorPrimary"
+                app:backgroundTint="@android:color/white"
+                app:fabCustomSize="@dimen/game_small_fab_size"
+                app:maxImageSize="@dimen/game_small_fab_icon_size"
+                app:srcCompat="@drawable/ic_volley_ball" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/right_team_service_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/round_button"
-                android:backgroundTint="@android:color/white"
                 android:contentDescription="@string/swap_first_service"
-                android:elevation="@dimen/round_button_elevation"
                 android:onClick="swapFirstService"
-                android:theme="@style/RoundButtonTheme"
-                app:srcCompat="@drawable/ic_volley_ball"/>
+                android:tint="@color/colorPrimary"
+                app:backgroundTint="@android:color/white"
+                app:fabCustomSize="@dimen/game_small_fab_size"
+                app:maxImageSize="@dimen/game_small_fab_icon_size"
+                app:srcCompat="@drawable/ic_volley_ball" />
 
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/right_team_score_button"
             android:layout_width="0dp"
             android:layout_height="@dimen/score_button_height"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:onClick="increaseRightScore"
             android:textSize="@dimen/score_point_size"
-            android:theme="@style/TeamButtonTheme"/>
+            android:theme="@style/ButtonTheme.Team" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/score_remove_button"
-            android:layout_width="@dimen/round_button_size"
-            android:layout_height="@dimen/round_button_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
             android:adjustViewBounds="true"
-            android:background="@drawable/round_button"
-            android:backgroundTint="@android:color/white"
             android:contentDescription="@string/remove_point_description"
-            android:elevation="@dimen/round_button_elevation"
             android:onClick="removeLastPoint"
-            android:theme="@style/RoundButtonTheme"
-            app:srcCompat="@drawable/ic_score_revert"/>
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@android:color/white"
+            app:fabCustomSize="@dimen/game_fab_size"
+            app:maxImageSize="@dimen/game_fab_icon_size"
+            app:srcCompat="@drawable/ic_score_revert" />
 
     </LinearLayout>
 
@@ -156,39 +159,35 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/score_point_size"/>
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/start_match_button"
-            android:layout_width="@dimen/round_button_size"
-            android:layout_height="@dimen/round_button_size"
-            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_margin="@dimen/small_margin_size"
             android:adjustViewBounds="true"
-            android:background="@drawable/round_button"
-            android:backgroundTint="@android:color/white"
             android:contentDescription="@string/start_match_description"
-            android:elevation="@dimen/round_button_elevation"
             android:onClick="startMatch"
-            android:theme="@style/RoundButtonTheme"
             android:tint="@android:color/holo_green_dark"
-            app:srcCompat="@drawable/ic_play"/>
+            app:backgroundTint="@android:color/white"
+            app:fabCustomSize="@dimen/game_fab_size"
+            app:maxImageSize="@dimen/game_fab_icon_size"
+            app:srcCompat="@drawable/ic_play" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/stop_match_button"
-            android:layout_width="@dimen/round_button_size"
-            android:layout_height="@dimen/round_button_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_margin="@dimen/small_margin_size"
             android:adjustViewBounds="true"
-            android:background="@drawable/round_button"
-            android:backgroundTint="@android:color/white"
-            android:contentDescription="@string/start_match_description"
-            android:elevation="@dimen/round_button_elevation"
+            android:contentDescription="@string/stop_match_description"
             android:onClick="stopMatch"
-            android:theme="@style/RoundButtonTheme"
             android:tint="@android:color/holo_red_dark"
-            app:srcCompat="@drawable/ic_stop"/>
+            app:backgroundTint="@android:color/white"
+            app:fabCustomSize="@dimen/game_fab_size"
+            app:maxImageSize="@dimen/game_fab_icon_size"
+            app:srcCompat="@drawable/ic_stop" />
 
     </RelativeLayout>
 

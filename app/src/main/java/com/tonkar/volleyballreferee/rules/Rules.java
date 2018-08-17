@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.rules;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
+import com.tonkar.volleyballreferee.business.web.Authentication;
 
 public class Rules {
 
@@ -91,25 +91,25 @@ public class Rules {
     }
 
     public static Rules defaultUniversalRules() {
-        return new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
+        return new Rules(Authentication.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
                 6, true, 7, 5, 9999);
     }
     public static Rules officialIndoorRules() {
-        return new Rules(UserId.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
+        return new Rules(Authentication.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
                 6, false, 7, 5, 9999);
     }
     public static Rules officialBeachRules() {
-        return new Rules(UserId.VBR_USER_ID, "FIVB beach rules", 0L,
+        return new Rules(Authentication.VBR_USER_ID, "FIVB beach rules", 0L,
                 3, 21, true, 15, true, true, true, 1, 30,
                 true, 30, true, 60,
                 6, true, 7, 5, 9999);
     }
     public static Rules defaultIndoor4x4Rules() {
-        return new Rules(UserId.VBR_USER_ID, "Default 4x4 rules", 0L,
+        return new Rules(Authentication.VBR_USER_ID, "Default 4x4 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
                 4, false, 7, 5, 9999);

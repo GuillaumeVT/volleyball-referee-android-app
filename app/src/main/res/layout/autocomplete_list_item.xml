@@ -5,6 +5,6 @@
           android:layout_gravity="center"
           android:drawableTint="@color/colorPrimary"
           android:gravity="center|start"
-          android:padding="@dimen/small_margin_size"
+          android:padding="@dimen/big_margin_size"
           android:textAppearance="@style/TextViewTheme"
           android:textSize="@dimen/default_text_size"/>

@@ -12,6 +12,8 @@ import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.game.BaseGame;
+import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
+import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
@@ -453,7 +455,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void createCurrentGame() {
-        String userId = PrefUtils.getUserId(mContext);
+        String userId = PrefUtils.getAuthentication(mContext).getUserId();
 
         mRecordedGame = new RecordedGame();
         mRecordedGame.setUserId(userId);
@@ -774,13 +776,12 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void getUserGame(final String userId, final long id, final AsyncGameRequestListener listener) {
+    public void getUserGame(final long id, final AsyncGameRequestListener listener) {
         Map<String, String> params = new HashMap<>();
-        params.put("userId", userId);
         params.put("id", String.valueOf(id));
         String parameters = JsonStringRequest.getParameters(params);
 
-        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_GAME_API_URL + parameters, new byte[0],
+        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -816,12 +817,8 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void getUserScheduledGames(final String userId, final AsyncGameRequestListener listener) {
-        Map<String, String> params = new HashMap<>();
-        params.put("userId", userId);
-        String parameters = JsonStringRequest.getParameters(params);
-
-        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_SCHEDULED_GAMES_API_URL + parameters, new byte[0],
+    public void getUserScheduledGames(final AsyncGameRequestListener listener) {
+        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_SCHEDULED_GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -856,7 +853,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             try {
                 final byte[] bytes = gameDescriptionToByteArray(gameDescription);
 
-                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_GAME_API_URL, bytes,
+                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_GAME_API_URL, bytes, PrefUtils.getAuthentication(mContext),
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -917,11 +914,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     private void deleteGameOnline(long gameDate) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
             params.put("id", String.valueOf(gameDate));
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -941,11 +937,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     private void deleteAllGamesOnline() {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -991,11 +983,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     @Override
     public void syncGamesOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_COMPLETED_GAMES_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_COMPLETED_GAMES_API_URL, new byte[0],  PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -1066,7 +1054,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             }
         } else {
             GameDescription remoteGame = remoteGames.poll();
-            getUserGame(PrefUtils.getUserId(mContext), remoteGame.getGameDate(), new AsyncGameRequestListener() {
+            getUserGame(remoteGame.getGameDate(), new AsyncGameRequestListener() {
                 @Override
                 public void onUserGameReceived(RecordedGameService recordedGameService) {
                     mRecordedGames.add((RecordedGame) recordedGameService);

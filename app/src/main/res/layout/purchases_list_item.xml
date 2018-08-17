@@ -25,13 +25,12 @@
 
     <Button
         android:id="@+id/purchase_button"
-        style="@style/MainThemeButton.Primary"
+        style="@style/ButtonTheme.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:drawableLeft="@drawable/ic_purchase"
-        android:drawablePadding="@dimen/small_margin_size"
         android:onClick="goToScheduledGames"
-        android:text="@string/purchase" />
+        android:text="@string/purchase"
+        app:icon="@drawable/ic_purchase" />
 
 </LinearLayout>

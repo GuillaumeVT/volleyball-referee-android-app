@@ -5,17 +5,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.AlertDialogFragment;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.IndoorPlayerSelectionDialog;
 
 import java.util.Map;
@@ -47,19 +47,19 @@ public class IndoorCourtFragment extends CourtFragment {
         mIndoorTeamService = (IndoorTeamService) mTeamService;
         mLayoutInflater = inflater;
 
-        addButtonOnLeftSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.left_team_position_1));
-        addButtonOnLeftSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.left_team_position_2));
-        addButtonOnLeftSide(PositionType.POSITION_3, (Button) mView.findViewById(R.id.left_team_position_3));
-        addButtonOnLeftSide(PositionType.POSITION_4, (Button) mView.findViewById(R.id.left_team_position_4));
-        addButtonOnLeftSide(PositionType.POSITION_5, (Button) mView.findViewById(R.id.left_team_position_5));
-        addButtonOnLeftSide(PositionType.POSITION_6, (Button) mView.findViewById(R.id.left_team_position_6));
+        addButtonOnLeftSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.left_team_position_1));
+        addButtonOnLeftSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.left_team_position_2));
+        addButtonOnLeftSide(PositionType.POSITION_3, (MaterialButton) mView.findViewById(R.id.left_team_position_3));
+        addButtonOnLeftSide(PositionType.POSITION_4, (MaterialButton) mView.findViewById(R.id.left_team_position_4));
+        addButtonOnLeftSide(PositionType.POSITION_5, (MaterialButton) mView.findViewById(R.id.left_team_position_5));
+        addButtonOnLeftSide(PositionType.POSITION_6, (MaterialButton) mView.findViewById(R.id.left_team_position_6));
 
-        addButtonOnRightSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.right_team_position_1));
-        addButtonOnRightSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.right_team_position_2));
-        addButtonOnRightSide(PositionType.POSITION_3, (Button) mView.findViewById(R.id.right_team_position_3));
-        addButtonOnRightSide(PositionType.POSITION_4, (Button) mView.findViewById(R.id.right_team_position_4));
-        addButtonOnRightSide(PositionType.POSITION_5, (Button) mView.findViewById(R.id.right_team_position_5));
-        addButtonOnRightSide(PositionType.POSITION_6, (Button) mView.findViewById(R.id.right_team_position_6));
+        addButtonOnRightSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.right_team_position_1));
+        addButtonOnRightSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.right_team_position_2));
+        addButtonOnRightSide(PositionType.POSITION_3, (MaterialButton) mView.findViewById(R.id.right_team_position_3));
+        addButtonOnRightSide(PositionType.POSITION_4, (MaterialButton) mView.findViewById(R.id.right_team_position_4));
+        addButtonOnRightSide(PositionType.POSITION_5, (MaterialButton) mView.findViewById(R.id.right_team_position_5));
+        addButtonOnRightSide(PositionType.POSITION_6, (MaterialButton) mView.findViewById(R.id.right_team_position_6));
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
@@ -74,7 +74,7 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     protected void initLeftTeamListeners() {
-        for (Map.Entry<PositionType, Button> entry : mLeftTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,7 +107,7 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     protected void initRightTeamListeners() {
-        for (Map.Entry<PositionType, Button> entry : mRightTeamPositions.entrySet()) {
+        for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -152,8 +152,8 @@ public class IndoorCourtFragment extends CourtFragment {
         if (PositionType.BENCH.equals(positionType)) {
             onTeamRotated(teamType);
         } else {
-            final Map<PositionType, Button> teamPositions = getTeamPositions(teamType);
-            Button button = teamPositions.get(positionType);
+            final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
+            MaterialButton button = teamPositions.get(positionType);
             button.setText(String.valueOf(number));
             UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
 
@@ -171,9 +171,9 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onTeamRotated(TeamType teamType) {
-        final Map<PositionType, Button> teamPositions = getTeamPositions(teamType);
+        final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
 
-        for (final Button button : teamPositions.values()) {
+        for (final MaterialButton button : teamPositions.values()) {
             button.setText("!");
             UiUtils.styleBaseTeamButton(mView.getContext(), mIndoorTeamService, teamType, button);
         }
@@ -182,7 +182,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
         for (Integer number : players) {
             final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
-            final Button button = teamPositions.get(positionType);
+            final MaterialButton button = teamPositions.get(positionType);
             button.setText(String.valueOf(number));
             UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
         }
@@ -299,8 +299,8 @@ public class IndoorCourtFragment extends CourtFragment {
         final Set<Integer> filteredSubstitutions = mIndoorTeamService.filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
 
         if (filteredSubstitutions.size() > 0) {
-            final Map<PositionType, Button> teamPositions = getTeamPositions(teamType);
-            Button button = teamPositions.get(positionType);
+            final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
+            MaterialButton button = teamPositions.get(positionType);
             UiUtils.animate(getContext(), button);
             Log.i("VBR-Court", String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
@@ -309,8 +309,8 @@ public class IndoorCourtFragment extends CourtFragment {
         }
     }
 
-    private Map<PositionType, Button> getTeamPositions(TeamType teamType) {
-        final Map<PositionType, Button> teamPositions;
+    private Map<PositionType, MaterialButton> getTeamPositions(TeamType teamType) {
+        final Map<PositionType, MaterialButton> teamPositions;
 
         if (mTeamOnLeftSide.equals(teamType)) {
             teamPositions = mLeftTeamPositions;

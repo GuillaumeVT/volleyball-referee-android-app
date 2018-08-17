@@ -2,10 +2,6 @@ package com.tonkar.volleyballreferee.ui.setup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -25,10 +22,14 @@ import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
-import com.tonkar.volleyballreferee.ui.AlertDialogFragment;
+import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ScheduledGamesListActivity extends AppCompatActivity implements AsyncGameRequestListener {
 
@@ -69,7 +70,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
                 if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                    ServicesProvider.getInstance().getRecordedGamesService().getUserGame(PrefUtils.getUserId(ScheduledGamesListActivity.this), gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                    ServicesProvider.getInstance().getRecordedGamesService().getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
                 }
             }
         });
@@ -80,6 +81,9 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         mScheduleIndoorGameButton = findViewById(R.id.schedule_indoor_game_button);
         mScheduleIndoor4x4GameButton = findViewById(R.id.schedule_indoor_4x4_game_button);
         mScheduleBeachGameButton = findViewById(R.id.schedule_beach_game_button);
+        mScheduleIndoorGameButton.hide();
+        mScheduleIndoor4x4GameButton.hide();
+        mScheduleBeachGameButton.hide();
         FloatingActionButton scheduleGameButton = findViewById(R.id.schedule_game_button);
         scheduleGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +147,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     private void updateScheduledGamesList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            ServicesProvider.getInstance().getRecordedGamesService().getUserScheduledGames(PrefUtils.getUserId(this), this);
+            ServicesProvider.getInstance().getRecordedGamesService().getUserScheduledGames(this);
         }
     }
 
@@ -254,7 +258,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     }
 
     public void scheduleIndoorGame(View view) {
-        GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getUserId(this), PrefUtils.getPrefRefereeName(this));
+        GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
         Log.i("VBR-SRGamesActivity", "Start activity to schedule new indoor game");
 
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
@@ -263,7 +267,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     }
 
     public void scheduleIndoor4x4Game(View view) {
-        GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getUserId(this), PrefUtils.getPrefRefereeName(this));
+        GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
         Log.i("VBR-SRGamesActivity", "Start activity to schedule new indoor 4x4 game");
 
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
@@ -272,7 +276,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     }
 
     public void scheduleBeachGame(View view) {
-        GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getUserId(this), PrefUtils.getPrefRefereeName(this));
+        GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
         Log.i("VBR-SRGamesActivity", "Start activity to schedule new beach game");
 
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
@@ -282,9 +286,12 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
     private void showFABMenu(){
         mIsFabOpen = true;
-        mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.standard_180));
-        mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.standard_120));
-        mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.standard_60));
+        mScheduleIndoorGameButton.show();
+        mScheduleIndoor4x4GameButton.show();
+        mScheduleBeachGameButton.show();
+        mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
+        mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
+        mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
     }
 
     private void closeFABMenu(){
@@ -292,6 +299,9 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         mScheduleIndoorGameButton.animate().translationY(0);
         mScheduleIndoor4x4GameButton.animate().translationY(0);
         mScheduleBeachGameButton.animate().translationY(0);
+        mScheduleIndoorGameButton.hide();
+        mScheduleIndoor4x4GameButton.hide();
+        mScheduleBeachGameButton.hide();
     }
 
     @Override

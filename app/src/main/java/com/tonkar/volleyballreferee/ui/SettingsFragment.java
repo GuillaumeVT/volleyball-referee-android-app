@@ -2,12 +2,13 @@ package com.tonkar.volleyballreferee.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.EditTextPreference;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceManager;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+
+import androidx.preference.EditTextPreference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

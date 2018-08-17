@@ -5,8 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -34,15 +34,15 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
         mIndoorTeamService = (IndoorTeamService) mTeamService;
         mLayoutInflater = inflater;
 
-        addButtonOnLeftSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.left_team_position_1));
-        addButtonOnLeftSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.left_team_position_2));
-        addButtonOnLeftSide(PositionType.POSITION_3, (Button) mView.findViewById(R.id.left_team_position_3));
-        addButtonOnLeftSide(PositionType.POSITION_4, (Button) mView.findViewById(R.id.left_team_position_4));
+        addButtonOnLeftSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.left_team_position_1));
+        addButtonOnLeftSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.left_team_position_2));
+        addButtonOnLeftSide(PositionType.POSITION_3, (MaterialButton) mView.findViewById(R.id.left_team_position_3));
+        addButtonOnLeftSide(PositionType.POSITION_4, (MaterialButton) mView.findViewById(R.id.left_team_position_4));
 
-        addButtonOnRightSide(PositionType.POSITION_1, (Button) mView.findViewById(R.id.right_team_position_1));
-        addButtonOnRightSide(PositionType.POSITION_2, (Button) mView.findViewById(R.id.right_team_position_2));
-        addButtonOnRightSide(PositionType.POSITION_3, (Button) mView.findViewById(R.id.right_team_position_3));
-        addButtonOnRightSide(PositionType.POSITION_4, (Button) mView.findViewById(R.id.right_team_position_4));
+        addButtonOnRightSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.right_team_position_1));
+        addButtonOnRightSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.right_team_position_2));
+        addButtonOnRightSide(PositionType.POSITION_3, (MaterialButton) mView.findViewById(R.id.right_team_position_3));
+        addButtonOnRightSide(PositionType.POSITION_4, (MaterialButton) mView.findViewById(R.id.right_team_position_4));
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 

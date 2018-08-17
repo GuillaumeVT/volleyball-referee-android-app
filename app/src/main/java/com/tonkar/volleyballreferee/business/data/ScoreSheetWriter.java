@@ -8,8 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 
@@ -23,7 +24,7 @@ import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

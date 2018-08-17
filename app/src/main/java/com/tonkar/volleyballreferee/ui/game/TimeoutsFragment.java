@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,8 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutService;
+
+import androidx.fragment.app.Fragment;
 
 public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamListener {
 

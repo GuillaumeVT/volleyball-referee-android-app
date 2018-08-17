@@ -6,22 +6,24 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.PreferenceManager;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
@@ -33,7 +35,7 @@ import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,15 +53,15 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     private TeamType             mTeamOnRightSide;
     private TextView             mLeftTeamNameText;
     private TextView             mRightTeamNameText;
-    private ImageButton          mSwapTeamsButton;
-    private Button               mLeftTeamScoreButton;
-    private Button               mRightTeamScoreButton;
-    private ImageButton          mLeftTeamServiceButton;
-    private ImageButton          mRightTeamServiceButton;
-    private ImageButton          mScoreRemoveButton;
+    private FloatingActionButton mSwapTeamsButton;
+    private MaterialButton       mLeftTeamScoreButton;
+    private MaterialButton       mRightTeamScoreButton;
+    private FloatingActionButton mLeftTeamServiceButton;
+    private FloatingActionButton mRightTeamServiceButton;
+    private FloatingActionButton mScoreRemoveButton;
     private TextView             mRemainingTimeText;
-    private ImageButton          mStartMatchButton;
-    private ImageButton          mStopMatchButton;
+    private FloatingActionButton mStartMatchButton;
+    private FloatingActionButton mStopMatchButton;
     private SimpleDateFormat     mTimeFormat;
     private CountDownTimer       mCountDownTimer;
 
@@ -103,6 +105,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
         mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
         mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
+        initButtonOnClickListeners();
 
         mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
         mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
@@ -113,6 +116,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         mRemainingTimeText = findViewById(R.id.remaining_time_text);
         mStartMatchButton = findViewById(R.id.start_match_button);
         mStopMatchButton = findViewById(R.id.stop_match_button);
+
+        UiUtils.fixFabCompatPadding(mSwapTeamsButton);
+        UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
+        UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
+        UiUtils.fixFabCompatPadding(mScoreRemoveButton);
+        UiUtils.fixFabCompatPadding(mStartMatchButton);
+        UiUtils.fixFabCompatPadding(mStopMatchButton);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, LaddersFragment.newInstance());
@@ -265,6 +275,11 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     // UI Callbacks
 
+    private void initButtonOnClickListeners() {
+        mLeftTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseLeftScore(null); }});
+        mRightTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseRightScore(null); }});
+    }
+
     public void swapTeams(View view) {
         Log.i(TAG, "Swap teams");
         UiUtils.animate(this, mSwapTeamsButton);
@@ -407,11 +422,11 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public void onServiceSwapped(TeamType teamType) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamServiceButton.setVisibility(View.VISIBLE);
-            mRightTeamServiceButton.setVisibility(View.INVISIBLE);
+            mLeftTeamServiceButton.show();
+            mRightTeamServiceButton.hide();
         } else {
-            mRightTeamServiceButton.setVisibility(View.VISIBLE);
-            mLeftTeamServiceButton.setVisibility(View.INVISIBLE);
+            mRightTeamServiceButton.show();
+            mLeftTeamServiceButton.hide();
         }
     }
 
@@ -445,8 +460,16 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     private void computeStartStopVisibility() {
-        mStartMatchButton.setVisibility(mGameService.isMatchStarted() ? View.INVISIBLE : View.VISIBLE);
-        mStopMatchButton.setVisibility(mGameService.isMatchRunning()? View.VISIBLE : View.INVISIBLE);
+        if (mGameService.isMatchStarted()) {
+            mStartMatchButton.hide();
+        } else {
+            mStartMatchButton.show();
+        }
+        if (mGameService.isMatchRunning()) {
+            mStopMatchButton.show();
+        } else {
+            mStopMatchButton.hide();
+        }
     }
 
     private void runMatch() {

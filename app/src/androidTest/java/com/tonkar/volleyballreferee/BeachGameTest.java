@@ -1,7 +1,5 @@
 package com.tonkar.volleyballreferee;
 
-import android.support.test.runner.AndroidJUnit4;
-
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -10,7 +8,10 @@ import com.tonkar.volleyballreferee.rules.Rules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class BeachGameTest {
@@ -69,7 +70,7 @@ public class BeachGameTest {
             game.addPoint(TeamType.HOME);
         }
 
-        assertEquals(true, game.isMatchCompleted());
+        assertTrue(game.isMatchCompleted());
         assertEquals(2, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
         assertEquals(2, game.getNumberOfSets());
@@ -92,7 +93,7 @@ public class BeachGameTest {
             game.addPoint(TeamType.GUEST);
         }
 
-        assertEquals(true, game.isMatchCompleted());
+        assertTrue(game.isMatchCompleted());
         assertEquals(1, game.getSets(TeamType.HOME));
         assertEquals(2, game.getSets(TeamType.GUEST));
         assertEquals(3, game.getNumberOfSets());

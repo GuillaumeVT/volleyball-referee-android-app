@@ -8,7 +8,7 @@
         android:iconTint="@android:color/white"
         android:orderInCategory="1"
         android:title="@string/search_games"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView"/>
     <item
         android:id="@+id/action_sync"

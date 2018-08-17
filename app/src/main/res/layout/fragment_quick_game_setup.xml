@@ -18,15 +18,16 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3">
 
-                <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                     android:id="@+id/home_team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_clear"
                     android:ems="10"
                     android:hint="@string/home_team_hint"
                     android:imeOptions="actionNext"
@@ -34,7 +35,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/default_text_size" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -43,16 +44,14 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/home_team_color_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
-                    android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_shirt_color" />
 
             </LinearLayout>
@@ -83,16 +82,15 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/home_team_captain_number_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="@dimen/form_button_size"
+                    android:layout_height="@dimen/form_button_size"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
+                    android:layout_marginBottom="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/small_margin_size"
                     android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme" />
+                    android:theme="@style/ButtonTheme.Team" />
 
             </LinearLayout>
 
@@ -104,15 +102,16 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3">
 
-                <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                     android:id="@+id/guest_team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_clear"
                     android:ems="10"
                     android:hint="@string/guest_team_hint"
                     android:imeOptions="actionNext"
@@ -120,7 +119,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/default_text_size" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -129,16 +128,14 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/guest_team_color_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
-                    android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_shirt_color" />
 
             </LinearLayout>
@@ -170,16 +167,15 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/guest_team_captain_number_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="@dimen/form_button_size"
+                    android:layout_height="@dimen/form_button_size"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
+                    android:layout_marginBottom="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/small_margin_size"
                     android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme" />
+                    android:theme="@style/ButtonTheme.Team" />
 
             </LinearLayout>
 
@@ -203,31 +199,31 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/switch_gender_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/round_button"
                     android:contentDescription="@string/gender_description"
-                    android:elevation="@dimen/round_button_elevation"
-                    android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme"
+                    app:backgroundTint="@android:color/white"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_mixed" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+            <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                 android:id="@+id/league_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_clear"
                 android:ems="10"
                 android:hint="@string/league_name_hint"
                 android:imeOptions="actionNext"
@@ -235,16 +231,17 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+            <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                 android:id="@+id/division_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_clear"
                 android:ems="10"
                 android:hint="@string/division_name_hint"
                 android:imeOptions="actionDone"
@@ -252,7 +249,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

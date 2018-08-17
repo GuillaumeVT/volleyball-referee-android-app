@@ -3,17 +3,18 @@ package com.tonkar.volleyballreferee.ui.team;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
+
+import androidx.appcompat.app.AlertDialog;
 
 public abstract class ColorSelectionDialog {
 
@@ -31,7 +32,7 @@ public abstract class ColorSelectionDialog {
         gridView.setHorizontalSpacing(pixels);
         gridView.setVerticalSpacing(pixels);
         gridView.setGravity(Gravity.CENTER);
-        gridView.setPadding(pixels, 2 * pixels, pixels, pixels);
+        gridView.setPadding(pixels, 2 * pixels, pixels, 2 * pixels);
         ColorSelectionAdapter colorSelectionAdapter = new ColorSelectionAdapter(layoutInflater, context, colors, selectedColor) {
             @Override
             public void onColorSelected(int selectedColor) {
@@ -92,19 +93,19 @@ public abstract class ColorSelectionDialog {
 
         @Override
         public View getView(int index, View convertView, ViewGroup viewGroup) {
-            Button button;
+            FloatingActionButton button;
 
             if (convertView == null) {
-                button = (Button) mLayoutInflater.inflate(R.layout.color_item, null);
-                int pixels = mContext.getResources().getDimensionPixelSize(R.dimen.color_button_size);
+                button = (FloatingActionButton) mLayoutInflater.inflate(R.layout.color_item, null);
+                int pixels = mContext.getResources().getDimensionPixelSize(R.dimen.form_button_size);
                 button.setLayoutParams(new GridView.LayoutParams(pixels, pixels));
             } else {
-                button = (Button) convertView;
+                button = (FloatingActionButton) convertView;
             }
 
             final int color = mColors[index];
-            UiUtils.colorTeamButton(mContext, color, button);
-            button.setText(color == mSelectedColor ? "\u2713" : "");
+            button.setImageResource(color == mSelectedColor ? R.drawable.ic_check : 0);
+            UiUtils.colorTeamIconButton(mContext, color, button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

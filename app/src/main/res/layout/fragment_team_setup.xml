@@ -19,23 +19,24 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/team_name_input_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3">
 
-                <com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView
+                <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                     android:id="@+id/team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_clear"
                     android:ems="10"
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/default_text_size" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -44,16 +45,14 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/team_color_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
-                    android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_shirt_color" />
 
             </LinearLayout>
@@ -83,17 +82,16 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/select_gender_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/round_button"
                     android:contentDescription="@string/gender_description"
-                    android:elevation="@dimen/round_button_elevation"
-                    android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme"
+                    app:backgroundTint="@android:color/white"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_mixed" />
 
             </LinearLayout>
@@ -111,11 +109,11 @@
 
         <view
             android:id="@+id/team_member_numbers_grid"
-            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
+            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/default_margin_size"
-            android:columnWidth="@dimen/player_big_column_width"
+            android:columnWidth="@dimen/form_button_size"
             android:gravity="center"
             android:horizontalSpacing="@dimen/default_margin_size"
             android:numColumns="auto_fit"
@@ -144,16 +142,15 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/team_captain_number_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="@dimen/form_button_size"
+                    android:layout_height="@dimen/form_button_size"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
+                    android:layout_marginBottom="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/small_margin_size"
                     android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme" />
+                    android:theme="@style/ButtonTheme.Team" />
 
             </LinearLayout>
 
@@ -182,16 +179,14 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/libero_color_button"
-                    android:layout_width="@dimen/color_button_size"
-                    android:layout_height="@dimen/color_button_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/round_button"
-                    android:elevation="@dimen/round_button_elevation"
-                    android:textSize="@dimen/default_text_size"
-                    android:theme="@style/RoundButtonTheme"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_shirt_color" />
 
             </LinearLayout>
@@ -200,12 +195,12 @@
 
         <view
             android:id="@+id/team_libero_numbers_grid"
-            class="com.tonkar.volleyballreferee.ui.ExpandedGridView"
+            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/default_margin_size"
             android:layout_marginTop="@dimen/default_margin_size"
-            android:columnWidth="@dimen/player_big_column_width"
+            android:columnWidth="@dimen/form_button_size"
             android:gravity="center"
             android:horizontalSpacing="@dimen/default_margin_size"
             android:numColumns="auto_fit"

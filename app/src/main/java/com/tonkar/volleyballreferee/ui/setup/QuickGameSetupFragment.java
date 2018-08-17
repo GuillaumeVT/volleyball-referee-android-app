@@ -5,8 +5,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,11 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
@@ -28,8 +29,8 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
 
 import java.util.ArrayList;
@@ -37,12 +38,12 @@ import java.util.List;
 
 public class QuickGameSetupFragment extends Fragment {
 
-    private ImageButton      mGenderButton;
-    private ImageButton      mHomeTeamColorButton;
-    private ImageButton      mGuestTeamColorButton;
-    private Button           mHomeTeamCaptainButton;
-    private Button           mGuestTeamCaptainButton;
-    private TeamsListAdapter mTeamsListAdapter;
+    private FloatingActionButton mGenderButton;
+    private FloatingActionButton mHomeTeamColorButton;
+    private FloatingActionButton mGuestTeamColorButton;
+    private MaterialButton       mHomeTeamCaptainButton;
+    private MaterialButton       mGuestTeamCaptainButton;
+    private TeamsListAdapter     mTeamsListAdapter;
 
     public QuickGameSetupFragment() {
     }
@@ -74,7 +75,7 @@ public class QuickGameSetupFragment extends Fragment {
         mHomeTeamCaptainButton = view.findViewById(R.id.home_team_captain_number_button);
         mGuestTeamCaptainButton = view.findViewById(R.id.guest_team_captain_number_button);
 
-        final TextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
         List<String> leagueNames = new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues());
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, leagueNames);
@@ -93,7 +94,7 @@ public class QuickGameSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        final TextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
         ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
@@ -113,7 +114,7 @@ public class QuickGameSetupFragment extends Fragment {
 
         divisionNameInput.setText(ServicesProvider.getInstance().getGeneralService().getDivisionName());
 
-        final TextInputAutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
+        final ClearableTextInputAutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -129,7 +130,7 @@ public class QuickGameSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        final TextInputAutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
+        final ClearableTextInputAutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -284,7 +285,7 @@ public class QuickGameSetupFragment extends Fragment {
 
     private void teamColorSelected(TeamType teamType, int colorId) {
         Log.i("VBR-QGSActivity", String.format("Update %s team color", teamType.toString()));
-        final ImageButton button;
+        final FloatingActionButton button;
 
         if (TeamType.HOME.equals(teamType)) {
             button = mHomeTeamColorButton;
@@ -326,7 +327,7 @@ public class QuickGameSetupFragment extends Fragment {
         Log.i("VBR-QGSActivity", String.format("Update %s team captain", teamType.toString()));
         ServicesProvider.getInstance().getTeamService().setCaptain(teamType, number);
 
-        final Button button;
+        final MaterialButton button;
 
         if (TeamType.HOME.equals(teamType)) {
             button = mHomeTeamCaptainButton;

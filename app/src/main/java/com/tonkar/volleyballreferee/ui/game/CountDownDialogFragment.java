@@ -4,14 +4,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 public class CountDownDialogFragment extends DialogFragment {
 
@@ -44,7 +45,7 @@ public class CountDownDialogFragment extends DialogFragment {
         String title = getArguments().getString("title");
 
         mCountDownView = new TextView(getActivity());
-        mCountDownView.setTextAppearance(getActivity(), android.support.v7.appcompat.R.style.TextAppearance_AppCompat_Headline);
+        mCountDownView.setTextAppearance(getActivity(), androidx.appcompat.R.style.TextAppearance_AppCompat_Headline);
         mCountDownView.setTextSize(72);
         mCountDownView.setGravity(Gravity.CENTER_HORIZONTAL);
 

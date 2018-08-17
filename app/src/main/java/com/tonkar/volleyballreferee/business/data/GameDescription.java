@@ -1,10 +1,10 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 
 public class GameDescription {
@@ -43,7 +43,7 @@ public class GameDescription {
     private String     mRulesName;
 
     public GameDescription() {
-        mUserId = UserId.VBR_USER_ID;
+        mUserId = Authentication.VBR_USER_ID;
         mGameType = GameType.INDOOR;
         mGameDate = 0L;
         mGameSchedule = 0L;

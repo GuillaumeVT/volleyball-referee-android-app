@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.billing;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -9,6 +8,8 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.billing.BillingManager;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PurchasesListActivity extends AppCompatActivity implements BillingListener {
 

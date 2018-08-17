@@ -5,15 +5,15 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,21 +21,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.billing.BillingManager;
-import com.tonkar.volleyballreferee.business.data.BooleanRequest;
+import com.tonkar.volleyballreferee.business.web.AuthenticationManager;
+import com.tonkar.volleyballreferee.business.web.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
-import com.tonkar.volleyballreferee.business.data.JsonStringRequest;
-import com.tonkar.volleyballreferee.business.data.WebUtils;
+import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
+import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -55,6 +58,7 @@ import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
+import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 
 import java.util.List;
 import java.util.Locale;
@@ -78,30 +82,12 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
         initNavigationMenu();
 
-        Button startIndoorGameButton = findViewById(R.id.start_indoor_6x6_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimary), startIndoorGameButton);
+        initButtonOnClickListeners();
 
-        Button startIndoor4x4GameButton = findViewById(R.id.start_indoor_4x4_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimary), startIndoor4x4GameButton);
-
-        Button startScoreBaseGameButton = findViewById(R.id.start_score_based_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimary), startScoreBaseGameButton);
-
-        Button startBeachGameButton = findViewById(R.id.start_beach_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorBeach), startBeachGameButton);
-
-        Button startTimeBaseGameButton = findViewById(R.id.start_time_based_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorPrimaryText), startTimeBaseGameButton);
-
-        Button scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorWeb), scheduledCodeButton);
+        MaterialButton scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
 
-        Button scheduledGameListButton = findViewById(R.id.start_scheduled_list_game_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorWeb), scheduledGameListButton);
-
-        final Button purchaseButton = findViewById(R.id.start_purchase_button);
-        UiUtils.colorTeamButton(this, getResources().getColor(R.color.colorWeb), purchaseButton);
+        final MaterialButton purchaseButton = findViewById(R.id.start_purchase_button);
         billingService.addBillingListener(new BillingListener() {
             @Override
             public void onPurchasesUpdated() {
@@ -159,7 +145,10 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
             restoreScheduledGameFromCodeDialog();
             restoreEditScheduledGameFromCodeDialog();
         }
+
+        AuthenticationManager.checkAuthentication(this);
     }
+
 
     private void initNavigationMenu() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -275,6 +264,18 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void initButtonOnClickListeners() {
+        findViewById(R.id.start_indoor_6x6_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startIndoorGame(null); }});
+        findViewById(R.id.start_indoor_4x4_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startIndoor4x4Game(null); }});
+        findViewById(R.id.start_score_based_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startScoreBasedGame(null); }});
+        findViewById(R.id.start_beach_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startBeachGame(null); }});
+        findViewById(R.id.start_time_based_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startTimeBasedGame(null); }});
+        findViewById(R.id.start_scheduled_code_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startScheduledGameFromCode(null); }});
+        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToScheduledGames(null); }});
+        findViewById(R.id.start_purchase_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToPurchases(null); }});
+    }
+
 
     public void startIndoorGame(View view) {
         Log.i("VBR-MainActivity", "Start an indoor game");
@@ -453,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                         public void onResponse(String response) {
                             if (response != null) {
                                 Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, response, Snackbar.LENGTH_INDEFINITE);
-                                TextView textView = infoSnackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+                                TextView textView = infoSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
                                 textView.setMaxLines(3);
                                 infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
                                 infoSnackbar.setAction("Close", new View.OnClickListener() {

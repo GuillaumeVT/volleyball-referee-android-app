@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,7 +18,7 @@
             android:gravity="top|center"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 style="@style/CardView.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,43 +47,52 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_indoor_6x6_game_button"
-                            android:theme="@style/MainThemeButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_6x6"
                             android:onClick="startIndoorGame"
-                            android:text="@string/new_volleyball_game" />
+                            android:text="@string/new_volleyball_game"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:icon="@drawable/ic_6x6"
+                            app:iconTint="@android:color/white" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_indoor_4x4_game_button"
-                            android:theme="@style/MainThemeButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_4x4"
                             android:onClick="startIndoor4x4Game"
-                            android:text="@string/new_volleyball_game" />
+                            android:text="@string/new_volleyball_game"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:icon="@drawable/ic_4x4"
+                            app:iconTint="@android:color/white" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_score_based_game_button"
-                            android:theme="@style/MainThemeButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_volley_ball"
                             android:onClick="startScoreBasedGame"
-                            android:text="@string/new_score_based_game" />
+                            android:text="@string/new_score_based_game"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:icon="@drawable/ic_volley_ball"
+                            app:iconTint="@android:color/white" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 style="@style/CardView.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,23 +122,26 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_beach_game_button"
-                            android:theme="@style/MainThemeButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_sun"
                             android:onClick="startBeachGame"
-                            android:text="@string/new_beach_volleyball_game" />
+                            android:text="@string/new_beach_volleyball_game"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorBeach"
+                            app:icon="@drawable/ic_sun"
+                            app:iconTint="@color/colorPrimaryText" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 style="@style/CardView.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,56 +170,68 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_time_based_game_button"
-                            android:theme="@style/MainThemeButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_time_based"
                             android:onClick="startTimeBasedGame"
-                            android:text="@string/new_time_based_game" />
+                            android:text="@string/new_time_based_game"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorPrimaryText"
+                            app:icon="@drawable/ic_time_based"
+                            app:iconTint="@android:color/white" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_scheduled_code_game_button"
-                            android:theme="@style/MainThemeButton.Inverted"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_scheduled_code"
                             android:onClick="startScheduledGameFromCode"
-                            android:text="@string/new_scheduled_game_from_code" />
+                            android:text="@string/new_scheduled_game_from_code"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorWeb"
+                            app:icon="@drawable/ic_scheduled_code"
+                            app:iconTint="@android:color/white" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_scheduled_list_game_button"
-                            android:theme="@style/MainThemeButton.Inverted"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_scheduled_list"
                             android:onClick="goToScheduledGames"
-                            android:text="@string/user_scheduled_games_title" />
+                            android:text="@string/user_scheduled_games_title"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorWeb"
+                            app:icon="@drawable/ic_scheduled_list"
+                            app:iconTint="@android:color/white" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/start_purchase_button"
-                            android:theme="@style/MainThemeButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
-                            android:drawableRight="@drawable/ic_purchase"
                             android:onClick="goToPurchases"
-                            android:text="@string/purchase" />
+                            android:text="@string/purchase"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorWeb"
+                            app:icon="@drawable/ic_purchase"
+                            app:iconTint="@android:color/white" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -216,7 +240,7 @@
         app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
         app:itemTextColor="@color/colorPrimaryText"
         app:menu="@menu/navigation_menu_main">
-    </android.support.design.widget.NavigationView>
+    </com.google.android.material.navigation.NavigationView>
 
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -58,9 +58,9 @@ public interface RecordedGamesService {
 
     void getGameFromCode(int code, AsyncGameRequestListener listener);
 
-    void getUserGame(String userId, long id, AsyncGameRequestListener listener);
+    void getUserGame(long id, AsyncGameRequestListener listener);
 
-    void getUserScheduledGames(String userId, AsyncGameRequestListener listener);
+    void getUserScheduledGames(AsyncGameRequestListener listener);
     
     void scheduleUserGameOnline(GameDescription gameDescription, DataSynchronizationListener listener);
 }

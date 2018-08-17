@@ -13,6 +13,9 @@ import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
+import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -348,11 +351,7 @@ public class SavedTeams implements SavedTeamsService {
     @Override
     public void syncTeamsOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_TEAM_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_TEAM_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -385,10 +384,11 @@ public class SavedTeams implements SavedTeamsService {
 
     private void pushTeamOnline(RecordedTeam team) {
         if (PrefUtils.isSyncOn(mContext)) {
-            team.setUserId(PrefUtils.getUserId(mContext));
+            final Authentication authentication = PrefUtils.getAuthentication(mContext);
+            team.setUserId(authentication.getUserId());
             final byte[] bytes = writeTeam(team).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_API_URL, bytes,
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_API_URL, bytes, authentication,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -397,7 +397,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_API_URL, bytes,
+                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_API_URL, bytes, authentication,
                                         new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {}
@@ -427,13 +427,12 @@ public class SavedTeams implements SavedTeamsService {
     private void deleteTeamOnline(GameType gameType, String teamName, GenderType genderType) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
             params.put("name", teamName);
             params.put("gender", genderType.toString());
             params.put("kind", gameType.toString());
             String parameters = JsonStringRequest.getParameters(params);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}
@@ -453,11 +452,7 @@ public class SavedTeams implements SavedTeamsService {
 
     private void deleteAllTeamsOnline() {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", PrefUtils.getUserId(mContext));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0],
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {}

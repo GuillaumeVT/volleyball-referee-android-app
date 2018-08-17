@@ -5,15 +5,13 @@
               android:layout_height="wrap_content"
               android:gravity="center|start"
               android:orientation="horizontal"
-              android:padding="@dimen/default_margin_size"
-    >
+              android:padding="@dimen/default_margin_size">
 
     <ImageView
         android:id="@+id/sanction_type_image"
         android:layout_width="@dimen/sanction_max_width"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin_size"
-        android:layout_marginRight="@dimen/default_margin_size"
         app:srcCompat="@drawable/yellow_card"/>
 
     <TextView

@@ -3,30 +3,20 @@ package com.tonkar.volleyballreferee.ui.user;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.WebUtils;
-import com.tonkar.volleyballreferee.interfaces.data.UserId;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.business.web.AuthenticationManager;
+import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 
-public class UserActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
 
-    private GoogleSignInClient mGoogleSignInClient;
+public class UserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +27,9 @@ public class UserActivity extends AppCompatActivity {
 
         setTitle("");
 
-        // Google
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestId().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         ServicesProvider.getInstance().restoreAllServicesAndSync(getApplicationContext());
+
+        initButtonOnClickListeners();
     }
 
     @Override
@@ -53,6 +41,12 @@ public class UserActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void initButtonOnClickListeners() {
+        findViewById(R.id.goto_account_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToOnlineAccount(null); }});
+        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToScheduledGames(null); }});
+        findViewById(R.id.sign_out_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { signOut(null); }});
     }
 
     public void goToScheduledGames(View view) {
@@ -69,33 +63,6 @@ public class UserActivity extends AppCompatActivity {
 
     public void signOut(View view) {
         Log.i("VBR-UserActivity", "Sign out");
-
-        String userId = PrefUtils.getUserId(this);
-
-        if (UserId.isGoogle(userId)) {
-            googleSignOut();
-        } else if (UserId.isFacebook(userId)) {
-            facebookSignOut();
-        }
-    }
-
-    private void googleSignOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                signOut();
-            }
-        });
-    }
-
-    private void facebookSignOut() {
-        LoginManager.getInstance().logOut();
-        signOut();
-    }
-
-    private void signOut() {
-        PrefUtils.signOut(UserActivity.this);
-        Toast.makeText(UserActivity.this, getResources().getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
-        UiUtils.navigateToHome(UserActivity.this);
+        AuthenticationManager.signOut(this);
     }
 }

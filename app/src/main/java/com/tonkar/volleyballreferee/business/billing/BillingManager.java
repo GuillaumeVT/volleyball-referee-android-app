@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.business.billing;
 
 import android.app.Activity;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.android.billingclient.api.BillingClient;
@@ -23,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import androidx.annotation.Nullable;
 
 public class BillingManager implements BillingService, PurchasesUpdatedListener {
 

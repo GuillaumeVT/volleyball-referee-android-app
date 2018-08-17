@@ -8,15 +8,16 @@
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.setup.GameSetupActivity">
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/game_setup_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin_size"
         android:layout_marginTop="@dimen/default_margin_size"
         android:background="@android:color/white"
-        app:elevation="@dimen/cardview_default_elevation"
+        app:elevation="@dimen/elevation"
         app:itemBackground="@drawable/navigation_menu_item"
+        app:itemHorizontalTranslationEnabled="true"
         app:itemIconTint="@drawable/navigation_menu_item"
         app:itemTextColor="@drawable/navigation_menu_item"
         app:menu="@menu/navigation_menu_game_setup"/>

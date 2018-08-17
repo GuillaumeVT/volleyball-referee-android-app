@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="@dimen/small_margin_size">
+              android:padding="@dimen/big_margin_size">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right|center|end"
+        android:gravity="center|end"
         android:orientation="horizontal">
 
         <TextView
@@ -53,7 +53,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginRight="@dimen/small_margin_size"
             android:tint="@android:color/holo_red_dark"
             app:srcCompat="@drawable/ic_live" />
 
@@ -63,7 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginRight="@dimen/small_margin_size"
             android:tint="@color/colorBeach"
             app:srcCompat="@drawable/ic_sun" />
 

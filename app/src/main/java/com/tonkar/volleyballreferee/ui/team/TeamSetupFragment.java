@@ -6,10 +6,10 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.preference.PreferenceManager;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,12 +19,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
@@ -32,8 +33,8 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.TeamsListAdapter;
@@ -43,16 +44,16 @@ import java.util.List;
 
 public class TeamSetupFragment extends Fragment {
 
-    private LayoutInflater  mLayoutInflater;
-    private TeamType        mTeamType;
-    private BaseTeamService mTeamService;
-    private ImageButton     mTeamColorButton;
-    private PlayerAdapter   mPlayerAdapter;
-    private ImageButton     mLiberoColorButton;
-    private Button          mCaptainButton;
-    private LiberoAdapter   mLiberoAdapter;
-    private ImageButton     mGenderButton;
-    private ScrollView      mScrollView;
+    private LayoutInflater       mLayoutInflater;
+    private TeamType             mTeamType;
+    private BaseTeamService      mTeamService;
+    private FloatingActionButton mTeamColorButton;
+    private PlayerAdapter        mPlayerAdapter;
+    private FloatingActionButton mLiberoColorButton;
+    private MaterialButton       mCaptainButton;
+    private LiberoAdapter        mLiberoAdapter;
+    private FloatingActionButton mGenderButton;
+    private ScrollView           mScrollView;
 
     public TeamSetupFragment() {
     }
@@ -98,7 +99,7 @@ public class TeamSetupFragment extends Fragment {
 
         mScrollView = view.findViewById(R.id.team_setup_scroll);
 
-        final TextInputAutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
+        final ClearableTextInputAutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
         mTeamColorButton = view.findViewById(R.id.team_color_button);
         final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
@@ -210,7 +211,7 @@ public class TeamSetupFragment extends Fragment {
             });
         } else {
             liberoNumbersGrid.setVisibility(View.GONE);
-            mLiberoColorButton.setVisibility(View.GONE);
+            mLiberoColorButton.hide();
             final TextView liberoNumbersTitle =  view.findViewById(R.id.team_libero_numbers_title);
             liberoNumbersTitle.setVisibility(View.GONE);
         }

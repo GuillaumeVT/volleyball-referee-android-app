@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.data;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +18,8 @@ import com.tonkar.volleyballreferee.ui.game.SanctionsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.LadderListAdapter;
 import com.tonkar.volleyballreferee.ui.game.SubstitutionsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.TimeoutsListAdapter;
+
+import androidx.fragment.app.Fragment;
 
 public class SetFragment extends Fragment {
 

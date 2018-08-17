@@ -1,16 +1,17 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatButton;
+
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.ui.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-public class PlayerToggleButton extends AppCompatButton {
+public class PlayerToggleButton extends MaterialButton {
 
     private boolean                      mChecked;
     private int                          mBackgroundColor;

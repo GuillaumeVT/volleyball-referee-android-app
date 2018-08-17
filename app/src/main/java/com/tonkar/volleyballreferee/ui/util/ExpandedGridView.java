@@ -1,21 +1,21 @@
-package com.tonkar.volleyballreferee.ui;
+package com.tonkar.volleyballreferee.ui.util;
 
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.content.Context;
 
-public class ExpandedListView extends ListView {
+public class ExpandedGridView extends GridView {
 
-    public ExpandedListView(Context context) {
+    public ExpandedGridView(Context context) {
         super(context);
     }
 
-    public ExpandedListView(Context context, AttributeSet attrs) {
+    public ExpandedGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ExpandedListView(Context context, AttributeSet attrs, int defStyle) {
+    public ExpandedGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -30,4 +30,5 @@ public class ExpandedListView extends ListView {
         ViewGroup.LayoutParams params = getLayoutParams();
         params.height = getMeasuredHeight();
     }
+
 }

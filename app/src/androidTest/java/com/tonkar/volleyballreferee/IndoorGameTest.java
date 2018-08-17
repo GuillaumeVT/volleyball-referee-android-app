@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class IndoorGameTest {
@@ -77,7 +78,7 @@ public class IndoorGameTest {
             game.addPoint(TeamType.HOME);
         }
 
-        assertEquals(true, game.isMatchCompleted());
+        assertTrue(game.isMatchCompleted());
         assertEquals(3, game.getSets(TeamType.HOME));
         assertEquals(1, game.getSets(TeamType.GUEST));
         assertEquals(4, game.getNumberOfSets());
@@ -108,7 +109,7 @@ public class IndoorGameTest {
             game.addPoint(TeamType.GUEST);
         }
 
-        assertEquals(true, game.isMatchCompleted());
+        assertTrue(game.isMatchCompleted());
         assertEquals(2, game.getSets(TeamType.HOME));
         assertEquals(3, game.getSets(TeamType.GUEST));
         assertEquals(5, game.getNumberOfSets());

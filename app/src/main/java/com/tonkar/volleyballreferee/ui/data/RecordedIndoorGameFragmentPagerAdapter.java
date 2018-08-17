@@ -1,15 +1,16 @@
 package com.tonkar.volleyballreferee.ui.data;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class RecordedIndoorGameFragmentPagerAdapter extends FragmentStatePagerAdapter {
 

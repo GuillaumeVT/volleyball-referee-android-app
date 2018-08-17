@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.rules;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,25 +16,28 @@ import android.widget.Spinner;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.rules.Rules;
-import com.tonkar.volleyballreferee.ui.TextInputAutoCompleteTextView;
+import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesListAdapter;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.Fragment;
 
 public class RulesSetupFragment extends Fragment {
 
     private Rules mRules;
 
-    private ScrollView                    mScrollView;
-    private TextInputAutoCompleteTextView mRulesNameInput;
-    private Spinner                       mSetsPerGameSpinner;
-    private Spinner                       mPointsPerSetSpinner;
-    private SwitchCompat                  mTieBreakSwitch;
-    private Spinner                       mPointsInTieBreakSpinner;
-    private SwitchCompat                  mTwoPointsDifferenceSwitch;
-    private SwitchCompat                  mSanctionsSwitch;
-    private SwitchCompat                  mTeamTimeoutsSwitch;
-    private Spinner                       mTeamTimeoutsPerSetSpinner;
+    private ScrollView                             mScrollView;
+    private ClearableTextInputAutoCompleteTextView mRulesNameInput;
+    private Spinner                                mSetsPerGameSpinner;
+    private Spinner                                mPointsPerSetSpinner;
+    private SwitchCompat                           mTieBreakSwitch;
+    private Spinner                                mPointsInTieBreakSpinner;
+    private SwitchCompat                           mTwoPointsDifferenceSwitch;
+    private SwitchCompat                           mSanctionsSwitch;
+    private SwitchCompat                           mTeamTimeoutsSwitch;
+    private Spinner                                mTeamTimeoutsPerSetSpinner;
     private Spinner                       mTeamTimeoutDurationSpinner;
     private SwitchCompat                  mTechnicalTimeoutsSwitch;
     private Spinner                       mTechnicalTimeoutDurationSpinner;
