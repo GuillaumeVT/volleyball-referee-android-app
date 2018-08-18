@@ -82,7 +82,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         Log.i("VBR-SavedRulesActivity", "Save rules");
         mSavedRulesService.getCurrentRules().setUserId(PrefUtils.getAuthentication(this).getUserId());
         mSavedRulesService.saveCurrentRules();
-        Toast.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -95,7 +95,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 mSavedRulesService.deleteSavedRules(mRules.getName());
-                Toast.makeText(SavedRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(SavedRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

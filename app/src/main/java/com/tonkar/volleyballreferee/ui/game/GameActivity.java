@@ -288,7 +288,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private void tossACoin() {
         Log.i("VBR-GameActivity", "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
-        Toast.makeText(this, tossResult, Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, tossResult, Toast.LENGTH_LONG).show();
     }
 
     private void navigateToHomeWithDialog() {
@@ -490,7 +490,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 UiUtils.showNotification(this, getResources().getString(R.string.switch_sides));
                 UiUtils.playNotificationSound(this);
             } else {
-                Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -522,13 +522,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             String text = getResources().getString(R.string.match_point);
             setTitle(text);
             if (mGameService.areNotificationsEnabled()) {
-                Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+                UiUtils.makeText(this, text, Toast.LENGTH_LONG).show();
             }
         } else if (mGameService.isSetPoint()) {
             String text = getResources().getString(R.string.set_point);
             setTitle(text);
             if (mGameService.areNotificationsEnabled()) {
-                Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+                UiUtils.makeText(this, text, Toast.LENGTH_LONG).show();
             }
         } else {
             setTitle("");
@@ -567,7 +567,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         invalidateOptionsMenu();
         deleteToolbarCountdown();
         deleteFragmentCountdown();
-        Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -688,26 +688,30 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        String sanctionText = "";
+
         switch (sanctionType) {
             case YELLOW:
-                Toast.makeText(this, getResources().getString(R.string.yellow_card), Toast.LENGTH_LONG).show();
+                sanctionText = getResources().getString(R.string.yellow_card);
                 break;
             case RED:
-                Toast.makeText(this, getResources().getString(R.string.red_card), Toast.LENGTH_LONG).show();
+                sanctionText = getResources().getString(R.string.red_card);
                 break;
             case RED_EXPULSION:
-                Toast.makeText(this, getResources().getString(R.string.red_card_expulsion), Toast.LENGTH_LONG).show();
+                sanctionText = getResources().getString(R.string.red_card_expulsion);
                 break;
             case RED_DISQUALIFICATION:
-                Toast.makeText(this, getResources().getString(R.string.red_card_disqualification), Toast.LENGTH_LONG).show();
+                sanctionText = getResources().getString(R.string.red_card_disqualification);
                 break;
             case DELAY_WARNING:
-                Toast.makeText(this, getResources().getString(R.string.yellow_card), Toast.LENGTH_LONG).show();
+                sanctionText = getResources().getString(R.string.yellow_card);
                 break;
             case DELAY_PENALTY:
-                Toast.makeText(this, getResources().getString(R.string.red_card), Toast.LENGTH_LONG).show();
+                sanctionText = getResources().getString(R.string.red_card);
                 break;
         }
+
+        UiUtils.makeText(this, sanctionText, Toast.LENGTH_LONG).show();
     }
 
     private void initGameNavigation(final BottomNavigationView gameNavigation, Bundle savedInstanceState) {
@@ -784,9 +788,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onMatchIndexed(boolean indexed) {
         if (indexed) {
-            Toast.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
         invalidateOptionsMenu();
     }

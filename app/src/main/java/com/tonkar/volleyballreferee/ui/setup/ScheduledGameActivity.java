@@ -360,7 +360,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
                     @Override
                     public void onSynchronizationFailed() {
-                        Toast.makeText(ScheduledGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        UiUtils.makeText(ScheduledGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
                     }
                 });
     }

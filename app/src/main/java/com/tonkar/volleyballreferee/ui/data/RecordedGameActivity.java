@@ -92,7 +92,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         Log.i("VBR-RGameActivity", "Generate score sheet");
         File file = ScoreSheetWriter.writeRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
         if (file == null) {
-            Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
         } else {
             Uri uri = FileProvider.getUriForFile(this, "com.tonkar.volleyballreferee.fileprovider", file);
             grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -106,7 +106,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Log.e("VBR-RGameActivity", "Exception while showing report", e);
-                Toast.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -118,7 +118,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 mRecordedGamesService.deleteRecordedGame(mGameDate);
-                Toast.makeText(RecordedGameActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(RecordedGameActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(RecordedGameActivity.this, RecordedGamesListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -24,6 +24,7 @@ import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 
@@ -196,19 +197,19 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     @Override
     public void onNotFound() {
         mSyncLayout.setRefreshing(false);
-        Toast.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onInternalError() {
         mSyncLayout.setRefreshing(false);
-        Toast.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onError() {
         mSyncLayout.setRefreshing(false);
-        Toast.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
     }
 
     private void restoreEditScheduledGameDialog() {

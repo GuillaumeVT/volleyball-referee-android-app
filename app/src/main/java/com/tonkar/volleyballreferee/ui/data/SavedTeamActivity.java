@@ -102,7 +102,7 @@ public class SavedTeamActivity extends AppCompatActivity {
     private void saveTeam() {
         Log.i("VBR-SavedTeamActivity", "Save team");
         mSavedTeamsService.saveCurrentTeam();
-        Toast.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -115,7 +115,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 mSavedTeamsService.deleteSavedTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGenderType());
-                Toast.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

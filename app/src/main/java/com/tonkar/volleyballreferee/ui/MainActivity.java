@@ -8,7 +8,6 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -34,7 +33,6 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.billing.BillingManager;
-import com.tonkar.volleyballreferee.business.web.AuthenticationManager;
 import com.tonkar.volleyballreferee.business.web.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
@@ -59,11 +57,12 @@ import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements AsyncGameRequestListener {
+public class MainActivity extends AuthenticationActivity implements AsyncGameRequestListener {
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
             restoreEditScheduledGameFromCodeDialog();
         }
 
-        AuthenticationManager.checkAuthentication(this);
+        checkAuthentication();
     }
 
 
@@ -382,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                     public void onNegativeButtonClicked() {
                         Log.i("VBR-MainActivity", "Delete current game");
                         ServicesProvider.getInstance().getRecordedGamesService().deleteCurrentGame();
-                        Toast.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
+                        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
                         invalidateOptionsMenu();
                     }
 
@@ -390,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                     public void onPositiveButtonClicked() {
                         Log.i("VBR-MainActivity", "Start game activity and resume current game");
                         if (ServicesProvider.getInstance().getGameService() == null) {
-                            Toast.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
+                            UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
                         } else {
                             if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
                                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
@@ -491,7 +490,7 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
                         Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
                         ServicesProvider.getInstance().getRecordedGamesService().getGameFromCode(code, MainActivity.this);
                     } else {
-                        Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
+                        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -538,12 +537,12 @@ public class MainActivity extends AppCompatActivity implements AsyncGameRequestL
 
     @Override
     public void onNotFound() {
-        Toast.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onInternalError() {
-        Toast.makeText(MainActivity.this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
     }
 
     @Override

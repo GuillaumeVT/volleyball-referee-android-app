@@ -186,7 +186,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 mSavedTeamsService.deleteAllSavedTeams();
-                Toast.makeText(SavedTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(SavedTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
                 UiUtils.navigateToHome(SavedTeamsListActivity.this);
             }
         });
@@ -241,7 +241,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
 
     @Override
     public void onSynchronizationFailed() {
-        Toast.makeText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
         mSyncLayout.setRefreshing(false);
     }
 }

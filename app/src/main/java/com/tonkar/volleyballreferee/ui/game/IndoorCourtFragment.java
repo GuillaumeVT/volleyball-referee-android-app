@@ -85,7 +85,7 @@ public class IndoorCourtFragment extends CourtFragment {
                         Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
                         showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleSubstitutions);
                     } else {
-                        Toast.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
+                        UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -118,7 +118,7 @@ public class IndoorCourtFragment extends CourtFragment {
                         Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
                         showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleSubstitutions);
                     } else {
-                        Toast.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
+                        UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -305,7 +305,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i("VBR-Court", String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            Toast.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -9,14 +9,12 @@ import android.view.View;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.web.AuthenticationManager;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AuthenticationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +61,6 @@ public class UserActivity extends AppCompatActivity {
 
     public void signOut(View view) {
         Log.i("VBR-UserActivity", "Sign out");
-        AuthenticationManager.signOut(this);
+        signOut();
     }
 }

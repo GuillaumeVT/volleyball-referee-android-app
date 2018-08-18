@@ -182,7 +182,7 @@ public class UiUtils {
             String title = String.format(Locale.getDefault(), "%s_%s_%d", gameService.getTeamName(TeamType.HOME), gameService.getTeamName(TeamType.GUEST), System.currentTimeMillis());
             String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, null);
             if (path == null) {
-                Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
                 Uri bitmapUri = Uri.parse(path);
 
@@ -201,7 +201,7 @@ public class UiUtils {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
                     Log.e("VBR-Share", "Exception while sharing", e);
-                    Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                    UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
@@ -214,7 +214,7 @@ public class UiUtils {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             File file = ScoreSheetWriter.writeRecordedGame(context, recordedGameService);
             if (file == null) {
-                Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
                 Uri uri = FileProvider.getUriForFile(context, "com.tonkar.volleyballreferee.fileprovider", file);
                 context.grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -235,7 +235,7 @@ public class UiUtils {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
                     Log.e("VBR-Share", "Exception while sharing recorded game", e);
-                    Toast.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                    UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
@@ -331,7 +331,7 @@ public class UiUtils {
             centerAlertDialogMessage(alertDialog);
             setAlertDialogMessageSize(alertDialog, context.getResources());
         } else {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            makeText(context, message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -347,5 +347,19 @@ public class UiUtils {
         if (textView != null) {
             textView.setGravity(Gravity.CENTER);
         }
+    }
+
+    public static Toast makeText(Context context, CharSequence text, int duration) {
+        View layout = View.inflate(context, R.layout.custom_toast, null);
+
+        TextView textView = layout.findViewById(R.id.toast_text);
+        textView.setText(text);
+        colorTeamText(context, ContextCompat.getColor(context, R.color.colorPrimary), textView);
+
+        Toast toast = new Toast(context.getApplicationContext());
+        toast.setDuration(duration);
+        toast.setView(layout);
+
+        return toast;
     }
 }

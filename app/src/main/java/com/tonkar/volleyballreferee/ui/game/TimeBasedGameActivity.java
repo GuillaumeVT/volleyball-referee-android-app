@@ -215,7 +215,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     private void tossACoin() {
         Log.i(TAG, "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
-        Toast.makeText(this, tossResult, Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, tossResult, Toast.LENGTH_LONG).show();
     }
 
     private void navigateToHomeWithDialog() {
@@ -397,7 +397,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         UiUtils.animateBounce(this, mRightTeamScoreButton);
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            Toast.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -438,7 +438,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     public void onMatchCompleted(final TeamType winner) {
-        Toast.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
     }
 
     private void onRemainingTimeUpdated() {
@@ -491,9 +491,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public void onMatchIndexed(boolean indexed) {
         if (indexed) {
-            Toast.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
         invalidateOptionsMenu();
     }
