@@ -15,7 +15,7 @@
 
     <dimen name="score_point_size">40sp</dimen>
     <dimen name="score_set_size">20sp</dimen>
-    <dimen name="court_position_size">18sp</dimen>
+    <dimen name="court_position_size">17sp</dimen>
 
     <dimen name="timeout_drawable_size">12dp</dimen>
 

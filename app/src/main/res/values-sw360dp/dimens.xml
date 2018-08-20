@@ -14,8 +14,8 @@
     <dimen name="set_title_margin_size">10dp</dimen>
 
     <dimen name="score_point_size">36sp</dimen>
-    <dimen name="score_set_size">18sp</dimen>
-    <dimen name="court_position_size">18sp</dimen>
+    <dimen name="score_set_size">17sp</dimen>
+    <dimen name="court_position_size">17sp</dimen>
 
     <dimen name="timeout_drawable_size">12dp</dimen>
 
@@ -36,7 +36,7 @@
 
     <dimen name="main_image_height">120dp</dimen>
 
-    <dimen name="indoor_court_y_margin">8dp</dimen>
+    <dimen name="indoor_court_y_margin">6dp</dimen>
     <dimen name="beach_court_x_margin">24dp</dimen>
     <dimen name="beach_court_y_margin">16dp</dimen>
     <dimen name="indoor_court_x_padding">16dp</dimen>
@@ -44,9 +44,14 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
 
+    <dimen name="fab_shift_first">70dp</dimen>
+    <dimen name="fab_shift_second">140dp</dimen>
+    <dimen name="fab_shift_third">210dp</dimen>
     <dimen name="fab_shift_default">16dp</dimen>
 
     <dimen name="form_button_size">56dp</dimen>
-    <dimen name="form_fab_icon_size">32dp</dimen>
+    <dimen name="form_fab_icon_size">40dp</dimen>
+
+    <dimen name="elevation">2dp</dimen>
 
 </resources>
