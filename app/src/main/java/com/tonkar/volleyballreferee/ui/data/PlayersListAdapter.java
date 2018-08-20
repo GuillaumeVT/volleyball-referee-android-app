@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -49,29 +49,29 @@ public class PlayersListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int index, View view, ViewGroup viewGroup) {
-        MaterialButton playerButton;
+        TextView playerText;
 
         if (view == null) {
-            playerButton = (MaterialButton) mLayoutInflater.inflate(R.layout.player_item, null);
+            playerText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
         } else {
-            playerButton = (MaterialButton) view;
+            playerText = (TextView) view;
         }
 
         int number = mPlayers.get(index);
-        playerButton.setText(String.valueOf(number));
+        playerText.setText(String.valueOf(number));
 
         if (mTeamService.isLibero(mTeamType, number)) {
-            UiUtils.colorTeamButton(mContext, mTeamService.getLiberoColor(mTeamType), playerButton);
+            UiUtils.colorTeamText(mContext, mTeamService.getLiberoColor(mTeamType), playerText);
         } else {
-            UiUtils.colorTeamButton(mContext, mTeamService.getTeamColor(mTeamType), playerButton);
+            UiUtils.colorTeamText(mContext, mTeamService.getTeamColor(mTeamType), playerText);
         }
 
         if (mTeamService.isCaptain(mTeamType, number)) {
-            playerButton.setPaintFlags(playerButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            playerText.setPaintFlags(playerText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         } else {
-            playerButton.setPaintFlags(playerButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+            playerText.setPaintFlags(playerText.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
         }
 
-        return playerButton;
+        return playerText;
     }
 }

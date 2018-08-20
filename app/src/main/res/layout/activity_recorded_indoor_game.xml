@@ -90,10 +90,11 @@
         android:id="@+id/indoor_game_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextAppearance="@style/DynamicTabText"
+        android:layout_marginTop="@dimen/default_margin_size"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/colorPrimary"/>
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextAppearance="@style/DynamicTabText" />
 
     <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                                          android:id="@+id/indoor_game_pager"

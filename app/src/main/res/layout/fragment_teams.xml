@@ -14,9 +14,9 @@
         android:layout_weight="1"
         android:columnWidth="@dimen/player_column_width"
         android:gravity="center"
-        android:horizontalSpacing="@dimen/tiny_margin_size"
+        android:horizontalSpacing="@dimen/default_margin_size"
         android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/tiny_margin_size"/>
+        android:verticalSpacing="@dimen/default_margin_size" />
 
     <GridView
         android:id="@+id/guest_team_players_list"
@@ -26,8 +26,8 @@
         android:layout_weight="1"
         android:columnWidth="@dimen/player_column_width"
         android:gravity="center"
-        android:horizontalSpacing="@dimen/tiny_margin_size"
+        android:horizontalSpacing="@dimen/default_margin_size"
         android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/tiny_margin_size"/>
+        android:verticalSpacing="@dimen/default_margin_size" />
 
 </LinearLayout>
