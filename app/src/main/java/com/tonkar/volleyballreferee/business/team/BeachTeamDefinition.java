@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.util.HashSet;
@@ -61,7 +62,7 @@ public class BeachTeamDefinition extends TeamDefinition {
     @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
-            Log.i(TAG, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
             mCaptain = number;
         }
     }

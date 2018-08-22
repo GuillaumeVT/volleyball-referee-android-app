@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -100,7 +101,7 @@ public class SavedTeamActivity extends AppCompatActivity {
     }
 
     private void saveTeam() {
-        Log.i("VBR-SavedTeamActivity", "Save team");
+        Log.i(Tags.SAVED_TEAMS, "Save team");
         mSavedTeamsService.saveCurrentTeam();
         UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
@@ -109,7 +110,7 @@ public class SavedTeamActivity extends AppCompatActivity {
     }
 
     private void deleteTeam() {
-        Log.i("VBR-SavedTeamActivity", "Delete team");
+        Log.i(Tags.SAVED_TEAMS, "Delete team");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -152,10 +153,10 @@ public class SavedTeamActivity extends AppCompatActivity {
             if (mTeamService.getTeamName(null).isEmpty()
                     || mTeamService.getNumberOfPlayers(null) < mTeamService.getExpectedNumberOfPlayersOnCourt()
                     || mTeamService.getCaptain(null) < 1) {
-                Log.i("VBR-SavedTeamActivity", "Save button is invisible");
+                Log.i(Tags.SAVED_TEAMS, "Save button is invisible");
                 mSaveItem.setVisible(false);
             } else {
-                Log.i("VBR-SavedTeamActivity", "Save button is visible");
+                Log.i(Tags.SAVED_TEAMS, "Save button is visible");
                 mSaveItem.setVisible(true);
             }
         }

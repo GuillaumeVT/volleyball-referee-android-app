@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -24,7 +25,7 @@ public class RecordedBeachGameActivity extends RecordedGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-RGameActivity", "Create recorded beach game activity");
+        Log.i(Tags.SAVED_GAMES, "Create recorded beach game activity");
         setContentView(R.layout.activity_recorded_beach_game);
         setTitle("");
 

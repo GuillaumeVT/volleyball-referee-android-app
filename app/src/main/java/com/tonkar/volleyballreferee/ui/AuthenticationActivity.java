@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import androidx.annotation.NonNull;
@@ -28,8 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class AuthenticationActivity extends AppCompatActivity {
 
-    private static final String TAG = "VBR-Auth";
-    private static final int    RC_SIGN_IN = 101;
+    private static final int RC_SIGN_IN = 101;
 
     private GoogleSignInClient mGoogleSignInClient;
     private CallbackManager    mFacebookCallbackManager;
@@ -48,7 +48,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
 
     protected void checkAuthentication() {
         if (PrefUtils.isSyncOn(this)) {
-            Log.i(TAG, "Check authentication");
+            Log.i(Tags.AUTH, "Check authentication");
 
             Authentication authentication = PrefUtils.getAuthentication(this);
 
@@ -111,7 +111,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             signedIn(Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
         } catch (ApiException e) {
-            Log.e(TAG, "Error during Google sign in", e);
+            Log.e(Tags.AUTH, "Error during Google sign in", e);
             UiUtils.makeText(this, String.format(getResources().getString(R.string.user_sign_in_error), "Google"), Toast.LENGTH_LONG).show();
         }
     }
@@ -128,7 +128,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException exception) {
-                Log.e(TAG, "Error during Facebook sign in");
+                Log.e(Tags.AUTH, "Error during Facebook sign in");
                 UiUtils.makeText(AuthenticationActivity.this, String.format(getResources().getString(R.string.user_sign_in_error), "Facebook"), Toast.LENGTH_LONG).show();
             }
         });
@@ -136,7 +136,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
 
     protected void signOut() {
         if (PrefUtils.isSyncOn(this)) {
-            Log.i(TAG, "Sign out");
+            Log.i(Tags.AUTH, "Sign out");
 
             Authentication authentication = PrefUtils.getAuthentication(this);
 

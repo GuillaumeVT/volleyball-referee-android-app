@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
@@ -43,8 +44,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class ScoreSheetWriter {
-
-    private static final String TAG = "VBR-ScoreSheet";
 
     private final Context             mContext;
     private final RecordedGameService mRecordedGameService;
@@ -105,7 +104,7 @@ public class ScoreSheetWriter {
             writer.close();
             outputStream.close();
         } catch (IOException e) {
-            Log.e(TAG, "Exception while writing report", e);
+            Log.e(Tags.SCORE_SHEET, "Exception while writing report", e);
             file = null;
         }
 

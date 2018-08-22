@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -13,8 +14,7 @@ import java.util.TreeSet;
 
 public abstract class TeamDefinition {
 
-    protected static final String TAG           = "VBR-Team";
-    public static final    String DEFAULT_COLOR = "#633303";
+    public static final String DEFAULT_COLOR = "#633303";
 
     @SerializedName("classType")
     private       String       mClassType;
@@ -51,7 +51,7 @@ public abstract class TeamDefinition {
 
     public void setName(final String name) {
         mName = name;
-        Log.i(TAG, String.format("%s team name is %s", mTeamType.toString(), mName));
+        Log.i(Tags.TEAM, String.format("%s team name is %s", mTeamType.toString(), mName));
     }
 
     public TeamType getTeamType() {
@@ -67,12 +67,12 @@ public abstract class TeamDefinition {
     }
 
     public void addPlayer(final int number) {
-        Log.i(TAG, String.format("Add player #%d to %s team", number, mTeamType.toString()));
+        Log.i(Tags.TEAM, String.format("Add player #%d to %s team", number, mTeamType.toString()));
         mPlayers.add(number);
     }
 
     public void removePlayer(final int number) {
-        Log.i(TAG, String.format("Remove player #%d from %s team", number, mTeamType.toString()));
+        Log.i(Tags.TEAM, String.format("Remove player #%d from %s team", number, mTeamType.toString()));
         mPlayers.remove(number);
     }
 

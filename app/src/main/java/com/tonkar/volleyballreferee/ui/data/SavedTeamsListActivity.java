@@ -18,6 +18,7 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -43,7 +44,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-TeamsListActivity", "Create teams list activity");
+        Log.i(Tags.SAVED_TEAMS, "Create teams list activity");
         setContentView(R.layout.activity_saved_teams_list);
 
         ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
@@ -73,7 +74,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 RecordedTeam team = mSavedTeamsListAdapter.getItem(i);
                 mSavedTeamsService.editTeam(team.getGameType(), team.getName(), team.getGenderType());
-                Log.i("VBR-TeamsListActivity", String.format("Start activity to edit saved team %s", team.getName()));
+                Log.i(Tags.SAVED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
 
                 final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
                 intent.putExtra("kind", team.getGameType().toString());
@@ -120,7 +121,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
 
     private void addTeam(GameType gameType) {
         mSavedTeamsService.createTeam(gameType);
-        Log.i("VBR-TeamsListActivity", "Start activity to create new team");
+        Log.i(Tags.SAVED_TEAMS, "Start activity to create new team");
 
         final Intent intent = new Intent(this, SavedTeamActivity.class);
         intent.putExtra("kind", gameType.toString());
@@ -180,7 +181,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
     }
 
     private void deleteAllTeams() {
-        Log.i("VBR-TeamsListActivity", "Delete all teams");
+        Log.i(Tags.SAVED_TEAMS, "Delete all teams");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_teams)).setMessage(getResources().getString(R.string.delete_teams_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

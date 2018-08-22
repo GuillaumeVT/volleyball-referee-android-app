@@ -40,6 +40,7 @@ import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
@@ -254,7 +255,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                         intent = new Intent(this, UserSignInActivity.class);
                     }
                 } else {
-                    Log.i("VBR-UserActivity", "Purchase");
+                    Log.i(Tags.BILLING, "Purchase");
                     intent = new Intent(this, PurchasesListActivity.class);
                 }
                 startActivity(intent);

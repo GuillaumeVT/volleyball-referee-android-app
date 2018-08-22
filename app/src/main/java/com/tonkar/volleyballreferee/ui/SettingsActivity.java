@@ -7,6 +7,7 @@ import android.util.Log;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Log.i("VBR-SettingsActivity", "Create settings activity");
+        Log.i(Tags.SETTINGS, "Create settings activity");
 
         setTitle(getResources().getString(R.string.settings));
         ActionBar actionBar = getSupportActionBar();

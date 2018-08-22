@@ -17,6 +17,7 @@ import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
@@ -40,8 +41,6 @@ import java.util.Map;
 
 public class SavedTeams implements SavedTeamsService {
 
-    private static final String TAG = "VBR-SavedTeams";
-    
     private final Context            mContext;
     private final List<RecordedTeam> mSavedTeams;
     private       WrappedTeam        mWrappedTeam;
@@ -253,7 +252,7 @@ public class SavedTeams implements SavedTeamsService {
     // Read saved teams
 
     private void readSavedTeams() {
-        Log.i(TAG, String.format("Read saved teams from %s", SAVED_TEAMS_FILE));
+        Log.i(Tags.SAVED_TEAMS, String.format("Read saved teams from %s", SAVED_TEAMS_FILE));
 
         try {
             FileInputStream inputStream = mContext.openFileInput(SAVED_TEAMS_FILE);
@@ -261,9 +260,9 @@ public class SavedTeams implements SavedTeamsService {
             mSavedTeams.addAll(readTeamsStream(inputStream));
             inputStream.close();
         } catch (FileNotFoundException e) {
-            Log.i(TAG, String.format("%s saved teams file does not yet exist", SAVED_TEAMS_FILE));
+            Log.i(Tags.SAVED_TEAMS, String.format("%s saved teams file does not yet exist", SAVED_TEAMS_FILE));
         } catch (JsonParseException | IOException e) {
-            Log.e(TAG, "Exception while reading teams", e);
+            Log.e(Tags.SAVED_TEAMS, "Exception while reading teams", e);
         }
     }
 
@@ -283,13 +282,13 @@ public class SavedTeams implements SavedTeamsService {
     // Write saved teams
 
     private void writeSavedTeams() {
-        Log.i(TAG, String.format("Write saved teams into %s", SAVED_TEAMS_FILE));
+        Log.i(Tags.SAVED_TEAMS, String.format("Write saved teams into %s", SAVED_TEAMS_FILE));
         try {
             FileOutputStream outputStream = mContext.openFileOutput(SAVED_TEAMS_FILE, Context.MODE_PRIVATE);
             writeTeamsStream(outputStream, mSavedTeams);
             outputStream.close();
         } catch (JsonParseException | IOException e) {
-            Log.e(TAG, "Exception while writing teams", e);
+            Log.e(Tags.SAVED_TEAMS, "Exception while writing teams", e);
         }
     }
 
@@ -366,7 +365,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
+                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
                             }
                             if (listener != null){
                                 listener.onSynchronizationFailed();
@@ -406,7 +405,7 @@ public class SavedTeams implements SavedTeamsService {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 if (error.networkResponse != null) {
-                                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
+                                                    Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
                                                 }
                                             }
                                         }
@@ -414,7 +413,7 @@ public class SavedTeams implements SavedTeamsService {
                                 WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
                             } else {
                                 if (error.networkResponse != null) {
-                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
+                                    Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
                                 }
                             }
                         }
@@ -441,7 +440,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
+                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -461,7 +460,7 @@ public class SavedTeams implements SavedTeamsService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
+                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
                             }
                         }
                     }

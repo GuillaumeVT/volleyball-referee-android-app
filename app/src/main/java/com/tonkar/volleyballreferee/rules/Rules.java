@@ -4,10 +4,9 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 
 public class Rules {
-
-    private static final String TAG = "VBR-Rules";
 
     @SerializedName("userId")
     private String  mUserId;
@@ -316,24 +315,24 @@ public class Rules {
     }
 
     public void printRules() {
-        Log.i(TAG, String.format("setsPerGame: %d", mSetsPerGame));
-        Log.i(TAG, String.format("pointsPerSet: %d", mPointsPerSet));
-        Log.i(TAG, String.format("tieBreakInLastSet: %b", mTieBreakInLastSet));
-        Log.i(TAG, String.format("pointsInTieBreak: %d", mPointsInTieBreak));
-        Log.i(TAG, String.format("twoPointsDifference: %b", mTwoPointsDifference));
-        Log.i(TAG, String.format("sanctions: %b", mSanctionsEnabled));
-        Log.i(TAG, String.format("teamTimeouts: %b", mTeamTimeoutsEnabled));
-        Log.i(TAG, String.format("teamTimeoutsPerSet: %d", mTeamTimeoutsPerSet));
-        Log.i(TAG, String.format("teamTimeoutDuration: %d", mTeamTimeoutDuration));
-        Log.i(TAG, String.format("technicalTimeouts: %b", mTechnicalTimeoutsEnabled));
-        Log.i(TAG, String.format("technicalTimeoutDuration: %d", mTechnicalTimeoutDuration));
-        Log.i(TAG, String.format("gameIntervals: %b", mGameIntervalsEnabled));
-        Log.i(TAG, String.format("gameIntervalDuration: %d", mGameIntervalDuration));
-        Log.i(TAG, String.format("teamSubstitutionsPerSet: %d", mTeamSubstitutionsPerSet));
-        Log.i(TAG, String.format("beachCourtSwitches: %b", mBeachCourtSwitchesEnabled));
-        Log.i(TAG, String.format("beachCourtSwitchFreq: %d", mBeachCourtSwitchFrequency));
-        Log.i(TAG, String.format("beachCourtSwitchFreqTieBreak: %d", mBeachCourtSwitchFrequencyTieBreak));
-        Log.i(TAG, String.format("customConsecutiveServesPerPlayer: %d", mCustomConsecutiveServesPerPlayer));
+        Log.i(Tags.RULES, String.format("setsPerGame: %d", mSetsPerGame));
+        Log.i(Tags.RULES, String.format("pointsPerSet: %d", mPointsPerSet));
+        Log.i(Tags.RULES, String.format("tieBreakInLastSet: %b", mTieBreakInLastSet));
+        Log.i(Tags.RULES, String.format("pointsInTieBreak: %d", mPointsInTieBreak));
+        Log.i(Tags.RULES, String.format("twoPointsDifference: %b", mTwoPointsDifference));
+        Log.i(Tags.RULES, String.format("sanctions: %b", mSanctionsEnabled));
+        Log.i(Tags.RULES, String.format("teamTimeouts: %b", mTeamTimeoutsEnabled));
+        Log.i(Tags.RULES, String.format("teamTimeoutsPerSet: %d", mTeamTimeoutsPerSet));
+        Log.i(Tags.RULES, String.format("teamTimeoutDuration: %d", mTeamTimeoutDuration));
+        Log.i(Tags.RULES, String.format("technicalTimeouts: %b", mTechnicalTimeoutsEnabled));
+        Log.i(Tags.RULES, String.format("technicalTimeoutDuration: %d", mTechnicalTimeoutDuration));
+        Log.i(Tags.RULES, String.format("gameIntervals: %b", mGameIntervalsEnabled));
+        Log.i(Tags.RULES, String.format("gameIntervalDuration: %d", mGameIntervalDuration));
+        Log.i(Tags.RULES, String.format("teamSubstitutionsPerSet: %d", mTeamSubstitutionsPerSet));
+        Log.i(Tags.RULES, String.format("beachCourtSwitches: %b", mBeachCourtSwitchesEnabled));
+        Log.i(Tags.RULES, String.format("beachCourtSwitchFreq: %d", mBeachCourtSwitchFrequency));
+        Log.i(Tags.RULES, String.format("beachCourtSwitchFreqTieBreak: %d", mBeachCourtSwitchFrequencyTieBreak));
+        Log.i(Tags.RULES, String.format("customConsecutiveServesPerPlayer: %d", mCustomConsecutiveServesPerPlayer));
     }
 
     @Override

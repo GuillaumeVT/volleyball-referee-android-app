@@ -6,14 +6,13 @@ import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.billing.BillingManager;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PurchasesListActivity extends AppCompatActivity implements BillingListener {
-
-    private static final String TAG = "VBR-BuyActivity";
 
     private BillingService       mBillingService;
     private PurchasesListAdapter mPurchasesListAdapter;
@@ -22,7 +21,7 @@ public class PurchasesListActivity extends AppCompatActivity implements BillingL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "Create purchases list activity");
+        Log.i(Tags.BILLING, "Create purchases list activity");
         setContentView(R.layout.activity_purchases_list);
 
         setTitle(getResources().getString(R.string.purchase));

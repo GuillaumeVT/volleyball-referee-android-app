@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -25,7 +26,7 @@ public class RecordedIndoorGameActivity extends RecordedGameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-RGameActivity", "Create recorded indoor game activity");
+        Log.i(Tags.SAVED_GAMES, "Create recorded indoor game activity");
         setContentView(R.layout.activity_recorded_indoor_game);
         setTitle("");
 

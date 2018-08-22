@@ -17,6 +17,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -43,7 +44,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-RulesListActivity", "Create rules list activity");
+        Log.i(Tags.SAVED_RULES, "Create rules list activity");
         setContentView(R.layout.activity_saved_rules_list);
 
         ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
@@ -73,7 +74,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Rules rules = mSavedRulesListAdapter.getItem(i);
                 mSavedRulesService.editRules(rules.getName());
-                Log.i("VBR-RulesListActivity", String.format("Start activity to edit saved rules %s", rules.getName()));
+                Log.i(Tags.SAVED_RULES, String.format("Start activity to edit saved rules %s", rules.getName()));
 
                 final Intent intent = new Intent(SavedRulesListActivity.this, SavedRulesActivity.class);
                 boolean editable = !PrefUtils.isSignedIn(SavedRulesListActivity.this);
@@ -104,7 +105,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
 
     public void addIndoorRules(View view) {
         mSavedRulesService.createRules(GameType.INDOOR);
-        Log.i("VBR-RulesListActivity", "Start activity to create new indoor rules");
+        Log.i(Tags.SAVED_RULES, "Start activity to create new indoor rules");
 
         final Intent intent = new Intent(this, SavedRulesActivity.class);
         intent.putExtra("editable", true);
@@ -113,7 +114,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
 
     public void addIndoor4x4Rules(View view) {
         mSavedRulesService.createRules(GameType.INDOOR_4X4);
-        Log.i("VBR-RulesListActivity", "Start activity to create new indoor 4x4 rules");
+        Log.i(Tags.SAVED_RULES, "Start activity to create new indoor 4x4 rules");
 
         final Intent intent = new Intent(this, SavedRulesActivity.class);
         intent.putExtra("editable", true);
@@ -122,7 +123,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
 
     public void addBeachRules(View view) {
         mSavedRulesService.createRules(GameType.BEACH);
-        Log.i("VBR-RulesListActivity", "Start activity to create new beach rules");
+        Log.i(Tags.SAVED_RULES, "Start activity to create new beach rules");
 
         final Intent intent = new Intent(this, SavedRulesActivity.class);
         intent.putExtra("editable", true);
@@ -182,7 +183,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
     }
 
     private void deleteAllRules() {
-        Log.i("VBR-RulesListActivity", "Delete all rules");
+        Log.i(Tags.SAVED_RULES, "Delete all rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_all_rules_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

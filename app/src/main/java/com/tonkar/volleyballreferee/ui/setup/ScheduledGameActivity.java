@@ -34,6 +34,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -49,8 +50,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class ScheduledGameActivity extends AppCompatActivity {
-
-    private static final String TAG = "VBR-ScheduledUI";
 
     private GameDescription      mGameDescription;
     private DateFormat           mDateFormatter;
@@ -113,7 +112,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(TAG, "Update league name");
+                Log.i(Tags.SCHEDULE_UI, "Update league name");
                 mGameDescription.setLeagueName(s.toString());
             }
 
@@ -133,7 +132,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(TAG, "Update division name");
+                Log.i(Tags.SCHEDULE_UI, "Update division name");
                 mGameDescription.setDivisionName(s.toString());
             }
 
@@ -218,7 +217,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(TAG, "Update referee name");
+                Log.i(Tags.SCHEDULE_UI, "Update referee name");
                 mGameDescription.setRefereeName(s.toString());
             }
 
@@ -336,17 +335,17 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private void computeConfirmItemVisibility() {
         if (mConfirmItem != null) {
             if (mGameDescription.getHomeTeamName().isEmpty() || mGameDescription.getGuestTeamName().isEmpty() || mGameDescription.getRulesName().isEmpty()) {
-                Log.i(TAG, "Confirm button is invisible");
+                Log.i(Tags.SCHEDULE_UI, "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {
-                Log.i(TAG, "Confirm button is visible");
+                Log.i(Tags.SCHEDULE_UI, "Confirm button is visible");
                 mConfirmItem.setVisible(true);
             }
         }
     }
 
     private void confirmSetup() {
-        Log.i(TAG, "Validate schedule");
+        Log.i(Tags.SCHEDULE_UI, "Validate schedule");
         ServicesProvider.getInstance().getRecordedGamesService().scheduleUserGameOnline(mGameDescription,
                 new DataSynchronizationListener() {
                     @Override

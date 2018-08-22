@@ -12,6 +12,7 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 
@@ -26,8 +27,6 @@ import java.util.Set;
 import androidx.annotation.Nullable;
 
 public class BillingManager implements BillingService, PurchasesUpdatedListener {
-
-    private static final String TAG = "VBR-Billing";
 
     private       Activity             mActivity;
     private       BillingClient        mBillingClient;
@@ -63,9 +62,9 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
                 handlePurchase(purchase);
             }
         } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
-            Log.w(TAG, "Purchase canceled by user");
+            Log.w(Tags.BILLING, "Purchase canceled by user");
         } else {
-            Log.w(TAG, String.format("Unknown purchase response code code %d", responseCode));
+            Log.w(Tags.BILLING, String.format("Unknown purchase response code code %d", responseCode));
         }
 
         for (BillingListener listener : mBillingListeners) {
@@ -77,7 +76,7 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
         mBillingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-                Log.d(TAG, String.format("Billing setup finished with response code %d", billingResponseCode));
+                Log.d(Tags.BILLING, String.format("Billing setup finished with response code %d", billingResponseCode));
 
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     mIsServiceConnected = true;

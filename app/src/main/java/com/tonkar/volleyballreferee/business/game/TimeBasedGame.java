@@ -10,6 +10,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
@@ -545,7 +546,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     private void notifyTeamsSwapped(final TeamType leftTeamType, final TeamType rightTeamType, final ActionOriginType actionOriginType) {
-        Log.i("VBR-Team", String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
+        Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
         }
@@ -656,7 +657,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     private void notifyPointsUpdated(final TeamType teamType, int newCount) {
-        Log.i("VBR-Score", String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
+        Log.i(Tags.SCORE, String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
@@ -664,7 +665,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     private void notifyServiceSwapped(final TeamType servingTeam) {
-        Log.i("VBR-Score", String.format("%s team is now serving", servingTeam.toString()));
+        Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam.toString()));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onServiceSwapped(servingTeam);
@@ -672,7 +673,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     private void notifyMatchCompleted(TeamType winner) {
-        Log.i("VBR-Score", String.format("Match is completed and %s team won", winner.toString()));
+        Log.i(Tags.SCORE, String.format("Match is completed and %s team won", winner.toString()));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onSetCompleted();

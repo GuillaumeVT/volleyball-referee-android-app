@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -79,7 +80,7 @@ public class SavedRulesActivity extends AppCompatActivity {
     }
 
     private void saveRules() {
-        Log.i("VBR-SavedRulesActivity", "Save rules");
+        Log.i(Tags.SAVED_RULES, "Save rules");
         mSavedRulesService.getCurrentRules().setUserId(PrefUtils.getAuthentication(this).getUserId());
         mSavedRulesService.saveCurrentRules();
         UiUtils.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
@@ -89,7 +90,7 @@ public class SavedRulesActivity extends AppCompatActivity {
     }
 
     private void deleteRules() {
-        Log.i("VBR-SavedRulesActivity", "Delete rules");
+        Log.i(Tags.SAVED_RULES, "Delete rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_rules_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -130,10 +131,10 @@ public class SavedRulesActivity extends AppCompatActivity {
     public void computeSaveItemVisibility() {
         if (mSaveItem != null) {
             if (mRules.getName().length() > 0 && mSavedRulesService.getSavedRules(mRules.getName()) == null) {
-                Log.i("VBR-SavedRulesActivity", "Save button is visible");
+                Log.i(Tags.SAVED_RULES, "Save button is visible");
                 mSaveItem.setVisible(true);
             } else {
-                Log.i("VBR-SavedRulesActivity", "Save button is invisible");
+                Log.i(Tags.SAVED_RULES, "Save button is invisible");
                 mSaveItem.setVisible(false);
             }
         }

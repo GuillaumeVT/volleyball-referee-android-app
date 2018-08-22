@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.EditText;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
@@ -54,7 +55,7 @@ public class CodeInputDialogFragment extends DialogFragment {
                     try {
                         code = Integer.valueOf(codeStr);
                     } catch (NumberFormatException e) {
-                        Log.e("VBR-Code", String.format("Error while reading the code %s", codeStr), e);
+                        Log.e(Tags.CODE, String.format("Error while reading the code %s", codeStr), e);
                     }
 
                     mAlertDialogListener.onPositiveButtonClicked(code);

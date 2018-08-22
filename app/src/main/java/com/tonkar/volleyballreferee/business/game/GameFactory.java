@@ -4,51 +4,50 @@ import android.util.Log;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 public class GameFactory {
 
-    private static final String TAG = "VBR-Factory";
-
     public static IndoorGame createIndoorGame(final long gameDate, final long gameSchedule, final Rules rules) {
-        Log.i(TAG, "Create indoor game rules");
+        Log.i(Tags.FACTORY, "Create indoor game rules");
         IndoorGame game = new IndoorGame(gameDate, gameSchedule, rules);
         ServicesProvider.getInstance().initGameService(game);
         return game;
     }
 
     public static BeachGame createBeachGame(final long gameDate, final long gameSchedule, final Rules rules) {
-        Log.i(TAG, "Create beach game");
+        Log.i(Tags.FACTORY, "Create beach game");
         BeachGame game = new BeachGame(gameDate, gameSchedule, rules);
         ServicesProvider.getInstance().initGameService(game);
         return game;
     }
 
     public static IndoorGame createPointBasedGame(final long gameDate, final long gameSchedule, final Rules rules) {
-        Log.i(TAG, "Create score-based game");
+        Log.i(Tags.FACTORY, "Create score-based game");
         IndoorGame game = createIndoorGame(gameDate, gameSchedule, rules);
         game.setUsageType(UsageType.POINTS_SCOREBOARD);
         return game;
     }
 
     public static TimeBasedGame createTimeBasedGame(final long gameDate, final long gameSchedule) {
-        Log.i(TAG, "Create time-based game");
+        Log.i(Tags.FACTORY, "Create time-based game");
         TimeBasedGame game = new TimeBasedGame(gameDate, gameSchedule);
         ServicesProvider.getInstance().initGameService(game);
         return game;
     }
 
     public static Indoor4x4Game createIndoor4x4Game(final long gameDate, final long gameSchedule, final Rules rules) {
-        Log.i(TAG, "Create indoor 4x4 game");
+        Log.i(Tags.FACTORY, "Create indoor 4x4 game");
         Indoor4x4Game game = new Indoor4x4Game(gameDate, gameSchedule, rules);
         ServicesProvider.getInstance().initGameService(game);
         return game;
     }
 
     public static GameService createGame(RecordedGameService recordedGameService) {
-        Log.i(TAG, "Create game from web");
+        Log.i(Tags.FACTORY, "Create game from web");
         GameService gameService = null;
 
         switch (recordedGameService.getGameType()) {

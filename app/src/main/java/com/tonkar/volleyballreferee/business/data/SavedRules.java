@@ -13,6 +13,7 @@ import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -34,8 +35,6 @@ import java.util.Map;
 
 public class SavedRules implements SavedRulesService {
 
-    private static final String TAG = "VBR-SavedRules";
-    
     private final Context     mContext;
     private final List<Rules> mSavedRulesList;
     private       Rules       mSavedRules;
@@ -150,7 +149,7 @@ public class SavedRules implements SavedRulesService {
     // Read saved rules
 
     private void readSavedRules() {
-        Log.i(TAG, String.format("Read saved rules from %s", SAVED_RULES_FILE));
+        Log.i(Tags.SAVED_RULES, String.format("Read saved rules from %s", SAVED_RULES_FILE));
 
         try {
             FileInputStream inputStream = mContext.openFileInput(SAVED_RULES_FILE);
@@ -158,9 +157,9 @@ public class SavedRules implements SavedRulesService {
             mSavedRulesList.addAll(readRulesStream(inputStream));
             inputStream.close();
         } catch (FileNotFoundException e) {
-            Log.i(TAG, String.format("%s saved rules file does not yet exist", SAVED_RULES_FILE));
+            Log.i(Tags.SAVED_RULES, String.format("%s saved rules file does not yet exist", SAVED_RULES_FILE));
         } catch (JsonParseException | IOException e) {
-            Log.e(TAG, "Exception while reading rules", e);
+            Log.e(Tags.SAVED_RULES, "Exception while reading rules", e);
         }
     }
 
@@ -180,13 +179,13 @@ public class SavedRules implements SavedRulesService {
     // Write saved rules
 
     private void writeSavedRules() {
-        Log.i(TAG, String.format("Write saved rules into %s", SAVED_RULES_FILE));
+        Log.i(Tags.SAVED_RULES, String.format("Write saved rules into %s", SAVED_RULES_FILE));
         try {
             FileOutputStream outputStream = mContext.openFileOutput(SAVED_RULES_FILE, Context.MODE_PRIVATE);
             writeRulesStream(outputStream, mSavedRulesList);
             outputStream.close();
         } catch (JsonParseException | IOException e) {
-            Log.e(TAG, "Exception while writing rules", e);
+            Log.e(Tags.SAVED_RULES, "Exception while writing rules", e);
         }
     }
 
@@ -263,7 +262,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
+                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
                             }
                             if (listener != null){
                                 listener.onSynchronizationFailed();
@@ -304,7 +303,7 @@ public class SavedRules implements SavedRulesService {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 if (error.networkResponse != null) {
-                                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
+                                                    Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
                                                 }
                                             }
                                         }
@@ -312,7 +311,7 @@ public class SavedRules implements SavedRulesService {
                                 WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
                             } else {
                                 if (error.networkResponse != null) {
-                                    Log.e(TAG, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
+                                    Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
                                 }
                             }
                         }
@@ -337,7 +336,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
+                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -357,7 +356,7 @@ public class SavedRules implements SavedRulesService {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.networkResponse != null) {
-                                Log.e(TAG, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
+                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
                             }
                         }
                     }

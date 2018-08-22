@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -81,7 +82,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     }
 
     private void toggleGameIndexed() {
-        Log.i("VBR-RGameActivity", "Toggle game indexed");
+        Log.i(Tags.SAVED_GAMES, "Toggle game indexed");
         if (PrefUtils.isSyncOn(this)) {
             mRecordedGamesService.toggleGameIndexed(mGameDate);
             invalidateOptionsMenu();
@@ -89,7 +90,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     }
 
     private void generateScoreSheet() {
-        Log.i("VBR-RGameActivity", "Generate score sheet");
+        Log.i(Tags.SAVED_GAMES, "Generate score sheet");
         File file = ScoreSheetWriter.writeRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
         if (file == null) {
             UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
@@ -105,14 +106,14 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Log.e("VBR-RGameActivity", "Exception while showing report", e);
+                Log.e(Tags.SAVED_GAMES, "Exception while showing report", e);
                 UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
             }
         }
     }
 
     private void deleteGame() {
-        Log.i("VBR-RGameActivity", "Delete game");
+        Log.i(Tags.SAVED_GAMES, "Delete game");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_game)).setMessage(getResources().getString(R.string.delete_game_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -133,7 +134,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     }
 
     private void shareGame() {
-        Log.i("VBR-RGameActivity", "Share game");
+        Log.i(Tags.SAVED_GAMES, "Share game");
         UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
     }
 

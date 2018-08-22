@@ -7,6 +7,7 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
@@ -225,7 +226,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyMatchCompleted(final TeamType winner) {
-        Log.i("VBR-Score", String.format("Match is completed and %s team won", winner.toString()));
+        Log.i(Tags.SCORE, String.format("Match is completed and %s team won", winner.toString()));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onMatchCompleted(winner);
@@ -307,7 +308,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyPointsUpdated(final TeamType teamType, int newCount) {
-        Log.i("VBR-Score", String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
+        Log.i(Tags.SCORE, String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
@@ -414,7 +415,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySetsUpdated(final TeamType teamType, int newCount) {
-        Log.i("VBR-Score", String.format("Sets are updated for %s team: %d", teamType.toString(), newCount));
+        Log.i(Tags.SCORE, String.format("Sets are updated for %s team: %d", teamType.toString(), newCount));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onSetsUpdated(teamType, newCount);
@@ -422,7 +423,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySetStarted() {
-        Log.i("VBR-Score", "Set is started");
+        Log.i(Tags.SCORE, "Set is started");
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onSetStarted();
@@ -430,7 +431,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySetCompleted() {
-        Log.i("VBR-Score", "Set is completed");
+        Log.i(Tags.SCORE, "Set is completed");
 
         notifySetsUpdated(TeamType.HOME, getSets(TeamType.HOME));
         notifySetsUpdated(TeamType.GUEST, getSets(TeamType.GUEST));
@@ -480,7 +481,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyServiceSwapped(final TeamType servingTeam) {
-        Log.i("VBR-Score", String.format("%s team is now serving", servingTeam.toString()));
+        Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam.toString()));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onServiceSwapped(servingTeam);
@@ -674,33 +675,33 @@ public abstract class Game extends BaseGame {
     }
 
     void rotateToNextPositions(TeamType teamType) {
-        Log.i("VBR-Team", String.format("Rotate all players of %s team to next position", teamType.toString()));
+        Log.i(Tags.TEAM, String.format("Rotate all players of %s team to next position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToNextPositions();
         notifyTeamRotated(teamType);
     }
 
     void rotateToPreviousPositions(TeamType teamType) {
-        Log.i("VBR-Team", String.format("Rotate all players of %s team to previous position", teamType.toString()));
+        Log.i(Tags.TEAM, String.format("Rotate all players of %s team to previous position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToPreviousPositions();
         notifyTeamRotated(teamType);
     }
 
     void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        Log.i("VBR-Team", String.format("Player #%d of %s team is on %s position", number, teamType.toString(), positionType.toString()));
+        Log.i(Tags.TEAM, String.format("Player #%d of %s team is on %s position", number, teamType.toString(), positionType.toString()));
         for (final TeamListener listener : mTeamListeners) {
             listener.onPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
 
     private void notifyTeamsSwapped(final TeamType leftTeamType, final TeamType rightTeamType, final ActionOriginType actionOriginType) {
-        Log.i("VBR-Team", String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
+        Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
         }
     }
 
     void notifyTeamRotated(TeamType teamType) {
-        Log.i("VBR-Team", String.format("%s team rotated", teamType.toString()));
+        Log.i(Tags.TEAM, String.format("%s team rotated", teamType.toString()));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamRotated(teamType);
         }
@@ -755,28 +756,28 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyTimeoutCalled(TeamType teamType) {
-        Log.i("VBR-Timeout", "Team timeout is called");
+        Log.i(Tags.TIMEOUT, "Team timeout is called");
         for (final TimeoutListener listener : mTimeoutListeners) {
             listener.onTimeout(teamType, mRules.getTeamTimeoutDuration());
         }
     }
 
     private void notifyTimeoutUpdated(final TeamType teamType, final int maxCount, final int newCount) {
-        Log.i("VBR-Timeout", String.format("%s has %d timeouts left on %d", teamType.toString(), newCount, maxCount));
+        Log.i(Tags.TIMEOUT, String.format("%s has %d timeouts left on %d", teamType.toString(), newCount, maxCount));
         for (final TimeoutListener listener : mTimeoutListeners) {
             listener.onTimeoutUpdated(teamType, maxCount, newCount);
         }
     }
 
     void notifyTechnicalTimeoutReached() {
-        Log.i("VBR-Timeout", "Technical timeout is reached");
+        Log.i(Tags.TIMEOUT, "Technical timeout is reached");
         for (final TimeoutListener listener : mTimeoutListeners) {
             listener.onTechnicalTimeout(mRules.getTechnicalTimeoutDuration());
         }
     }
 
     private void notifyGameIntervalReached() {
-        Log.i("VBR-Timeout", "Game interval is reached");
+        Log.i(Tags.TIMEOUT, "Game interval is reached");
         for (final TimeoutListener listener : mTimeoutListeners) {
             listener.onGameInterval(mRules.getGameIntervalDuration());
         }
@@ -799,7 +800,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySanctionGiven(TeamType teamType, SanctionType sanctionType, int number) {
-        Log.i("VBR-Sanction", String.format("Player %d of %s team was given a %s sanction", number, teamType.toString(), sanctionType.toString()));
+        Log.i(Tags.SANCTION, String.format("Player %d of %s team was given a %s sanction", number, teamType.toString(), sanctionType.toString()));
         for (final SanctionListener listener : mSanctionListeners) {
             listener.onSanction(teamType, sanctionType, number);
         }

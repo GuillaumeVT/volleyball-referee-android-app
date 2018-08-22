@@ -16,6 +16,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -40,7 +41,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-RGamesActivity", "Create recorded games list activity");
+        Log.i(Tags.SAVED_GAMES, "Create recorded games list activity");
         setContentView(R.layout.activity_recorded_games_list);
 
         ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
@@ -71,7 +72,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 RecordedGameService recordedGameService = mRecordedGamesListAdapter.getItem(i);
-                Log.i("VBR-RGamesActivity", String.format("Start activity to display recorded game %s", recordedGameService.getGameSummary()));
+                Log.i(Tags.SAVED_GAMES, String.format("Start activity to display recorded game %s", recordedGameService.getGameSummary()));
 
                 final Intent intent;
 
@@ -140,7 +141,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
     }
 
     private void deleteAllGames() {
-        Log.i("VBR-RGamesActivity", "Delete all games");
+        Log.i(Tags.SAVED_GAMES, "Delete all games");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_games)).setMessage(getResources().getString(R.string.delete_games_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

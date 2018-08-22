@@ -9,6 +9,7 @@ import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -28,7 +29,7 @@ public class TeamsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-RGameActivity", "Create teams fragment");
+        Log.i(Tags.SAVED_GAMES, "Create teams fragment");
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 
         long gameDate = getArguments().getLong("game_date");

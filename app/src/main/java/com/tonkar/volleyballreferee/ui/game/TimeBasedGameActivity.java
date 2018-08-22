@@ -29,6 +29,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
@@ -43,8 +44,6 @@ import java.util.Locale;
 import java.util.Random;
 
 public class TimeBasedGameActivity extends AppCompatActivity implements GeneralListener, ScoreListener, TeamListener {
-
-    private static final String TAG = "VBR-TBGameActivity";
 
     private TimeBasedGameService mGameService;
     private RecordedGamesService mRecordedGamesService;
@@ -69,7 +68,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "Create time-based game activity");
+        Log.i(Tags.GAME_UI, "Create time-based game activity");
         setContentView(R.layout.activity_time_based_game);
 
         if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
@@ -213,13 +212,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     private void tossACoin() {
-        Log.i(TAG, "Toss a coin");
+        Log.i(Tags.GAME_UI, "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
         UiUtils.makeText(this, tossResult, Toast.LENGTH_LONG).show();
     }
 
     private void navigateToHomeWithDialog() {
-        Log.i(TAG, "Navigate to home");
+        Log.i(Tags.GAME_UI, "Navigate to home");
         if (mGameService.isMatchCompleted()) {
             UiUtils.navigateToHome(this, false);
         } else {
@@ -243,14 +242,14 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
                 builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.i(TAG, "User accepts to stop");
+                        Log.i(Tags.GAME_UI, "User accepts to stop");
                         mGameService.stop();
                         UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
                     }
                 });
                 builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.i(TAG, "User refuses to stop");
+                        Log.i(Tags.GAME_UI, "User refuses to stop");
                     }
                 });
                 AlertDialog alertDialog = builder.show();
@@ -260,7 +259,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     private void share() {
-        Log.i(TAG, "Share game");
+        Log.i(Tags.GAME_UI, "Share game");
         if (mGameService.isMatchCompleted()) {
             UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
         } else {
@@ -269,7 +268,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     private void toggleIndexed() {
-        Log.i(TAG, "Toggle indexed");
+        Log.i(Tags.GAME_UI, "Toggle indexed");
         mGameService.setIndexed(!mGameService.isIndexed());
     }
 
@@ -281,18 +280,18 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     public void swapTeams(View view) {
-        Log.i(TAG, "Swap teams");
+        Log.i(Tags.GAME_UI, "Swap teams");
         UiUtils.animate(this, mSwapTeamsButton);
         mGameService.swapTeams(ActionOriginType.USER);
     }
 
     public void swapFirstService(View view) {
-        Log.i(TAG, "Swap first service");
+        Log.i(Tags.GAME_UI, "Swap first service");
         mGameService.swapServiceAtStart();
     }
 
     public void removeLastPoint(View view) {
-        Log.i(TAG, "Remove last point");
+        Log.i(Tags.GAME_UI, "Remove last point");
         UiUtils.animate(this, mScoreRemoveButton);
         if (mGameService.isMatchRunning()) {
             mGameService.removeLastPoint();
@@ -300,7 +299,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     public void increaseLeftScore(View view) {
-        Log.i(TAG, "Increase left score");
+        Log.i(Tags.GAME_UI, "Increase left score");
         UiUtils.animate(this, mLeftTeamScoreButton);
         if (mGameService.isMatchRunning()) {
             mGameService.addPoint(mTeamOnLeftSide);
@@ -308,7 +307,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     public void increaseRightScore(View view) {
-        Log.i(TAG, "Increase right score");
+        Log.i(Tags.GAME_UI, "Increase right score");
         UiUtils.animate(this, mRightTeamScoreButton);
         if (mGameService.isMatchRunning()) {
             mGameService.addPoint(mTeamOnRightSide);
@@ -316,7 +315,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     public void startMatch(View view) {
-        Log.i(TAG, "Start match");
+        Log.i(Tags.GAME_UI, "Start match");
         UiUtils.animate(this, mStartMatchButton);
         if (!mGameService.isMatchStarted() && mGameService.getRemainingTime() > 0L) {
             startGameWithDialog();
@@ -324,7 +323,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     public void stopMatch(View view) {
-        Log.i(TAG, "Stop match");
+        Log.i(Tags.GAME_UI, "Stop match");
         UiUtils.animate(this, mStopMatchButton);
         if (mGameService.isMatchRunning()) {
             stopGameWithDialog();
@@ -336,7 +335,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         builder.setTitle(R.string.start_match_description).setMessage(getResources().getString(R.string.confirm_start_match_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "User accepts to start");
+                Log.i(Tags.GAME_UI, "User accepts to start");
                 mGameService.start();
                 computeStartStopVisibility();
                 runMatch();
@@ -344,7 +343,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "User refuses to start");
+                Log.i(Tags.GAME_UI, "User refuses to start");
             }
         });
         AlertDialog alertDialog = builder.show();
@@ -356,7 +355,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "User accepts to stop");
+                Log.i(Tags.GAME_UI, "User accepts to stop");
                 mGameService.stop();
                 mCountDownTimer.cancel();
                 disableView();
@@ -366,7 +365,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         });
         builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "User refuses to stop");
+                Log.i(Tags.GAME_UI, "User refuses to stop");
             }
         });
         AlertDialog alertDialog = builder.show();

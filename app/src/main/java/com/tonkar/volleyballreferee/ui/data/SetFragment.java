@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.SanctionsListAdapter;
@@ -36,7 +37,7 @@ public class SetFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-RGameActivity", "Create set fragment");
+        Log.i(Tags.SAVED_GAMES, "Create set fragment");
         View view = inflater.inflate(R.layout.fragment_set, container, false);
 
         long gameDate = getArguments().getLong("game_date");
