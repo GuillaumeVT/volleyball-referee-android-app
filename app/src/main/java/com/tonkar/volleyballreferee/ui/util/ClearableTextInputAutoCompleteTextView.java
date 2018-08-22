@@ -54,14 +54,19 @@ public class ClearableTextInputAutoCompleteTextView extends AppCompatAutoComplet
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 ClearableTextInputAutoCompleteTextView textView = ClearableTextInputAutoCompleteTextView.this;
+                final int drawableLeftIndex = 0;
                 final int drawableRightIndex = 2;
+                final Drawable drawableLeft = textView.getCompoundDrawables()[drawableLeftIndex];
                 final Drawable drawableRight = textView.getCompoundDrawables()[drawableRightIndex];
 
-                if(event.getAction() == MotionEvent.ACTION_UP
-                        && drawableRight != null
-                        && (event.getRawX() >= (textView.getRight() - drawableRight.getBounds().width()))) {
-                    textView.getText().clear();
-                    return performClick();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (drawableRight != null && (event.getX() >= (textView.getWidth() - drawableRight.getBounds().width()))) {
+                        textView.getText().clear();
+                        return performClick();
+                    } else if (drawableLeft != null && event.getX() <= drawableLeft.getBounds().width()) {
+                        textView.getText().clear();
+                        return performClick();
+                    }
                 }
                 return false;
             }
