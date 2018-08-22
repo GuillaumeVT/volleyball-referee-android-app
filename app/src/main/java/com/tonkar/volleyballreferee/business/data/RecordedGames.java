@@ -61,7 +61,7 @@ import java.util.TreeSet;
 
 public class RecordedGames implements RecordedGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
-    private static final String TAG = "VBR-RecordedGames";
+    private static final String TAG = "VBR-SavedGames";
     
     private final Context            mContext;
     private       GameService        mGameService;

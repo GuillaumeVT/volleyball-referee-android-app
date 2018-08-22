@@ -72,22 +72,22 @@ public class Indoor4x4TeamComposition extends TeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
-        Log.i("VBR-Team", String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), indoorTeamDefinition().getTeamType().toString()));
+        Log.i(TAG, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), indoorTeamDefinition().getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {
-            Log.i("VBR-Team", "Actual substitution");
+            Log.i(TAG, "Actual substitution");
             mSubstitutions.put(newNumber, oldNumber);
             mFullSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
             // A captain on the bench can no longer be acting captain
             if (indoorTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
-                Log.i("VBR-Team", String.format("Player #%d acting captain of %s team leaves the court", oldNumber, indoorTeamDefinition().getTeamType().toString()));
+                Log.i(TAG, String.format("Player #%d acting captain of %s team leaves the court", oldNumber, indoorTeamDefinition().getTeamType().toString()));
                 mActingCaptain = -1;
             }
 
             // The game captain coming back on the court is automatically the captain again
             if (indoorTeamDefinition().isCaptain(newNumber)) {
-                Log.i("VBR-Team", String.format("Player #%d captain of %s team is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
+                Log.i(TAG, String.format("Player #%d captain of %s team is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
                 setActingCaptain(indoorTeamDefinition().getCaptain());
             }
         }
@@ -146,7 +146,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
             availablePlayers.addAll(getPlayersOnBench());
         }
 
-        Log.i("VBR-Team", String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), indoorTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
+        Log.i(TAG, String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), indoorTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
 
         return availablePlayers;
     }
@@ -206,7 +206,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
 
     public void setActingCaptain(int number) {
         if (isStartingLineupConfirmed() && indoorTeamDefinition().hasPlayer(number)) {
-            Log.i("VBR-Team", String.format("Player #%d of %s team is now acting captain", number, indoorTeamDefinition().getTeamType().toString()));
+            Log.i(TAG, String.format("Player #%d of %s team is now acting captain", number, indoorTeamDefinition().getTeamType().toString()));
             mActingCaptain = number;
         }
     }

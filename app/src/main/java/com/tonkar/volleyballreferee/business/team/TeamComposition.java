@@ -12,6 +12,8 @@ import java.util.TreeSet;
 
 public abstract class TeamComposition {
 
+    protected static final String TAG = "VBR-Team";
+
     @SerializedName("classType")
     private       String               mClassType;
     @SerializedName("teamDef")
@@ -42,7 +44,7 @@ public abstract class TeamComposition {
             }
         }
 
-        Log.i("VBR-Team", String.format("Players on court for %s team: %s", mTeamDefinition.getTeamType().toString(), playersOnCourt.toString()));
+        Log.i(TAG, String.format("Players on court for %s team: %s", mTeamDefinition.getTeamType().toString(), playersOnCourt.toString()));
 
         return playersOnCourt;
     }
@@ -68,7 +70,7 @@ public abstract class TeamComposition {
 
         int oldNumber = getPlayerAtPosition(positionType);
 
-        Log.i("VBR-Team", String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamDefinition.getTeamType().toString(), number, positionType.toString()));
+        Log.i(TAG, String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamDefinition.getTeamType().toString(), number, positionType.toString()));
 
         if (mTeamDefinition.hasPlayer(number)) {
             mPlayers.get(number).setPosition(positionType);
@@ -77,7 +79,7 @@ public abstract class TeamComposition {
 
         if (result && oldNumber > 0 && mTeamDefinition.hasPlayer(oldNumber)) {
             mPlayers.get(oldNumber).setPosition(PositionType.BENCH);
-            Log.i("VBR-Team", String.format("Player #%d of %s team is now on bench", oldNumber, mTeamDefinition.getTeamType().toString()));
+            Log.i(TAG, String.format("Player #%d of %s team is now on bench", oldNumber, mTeamDefinition.getTeamType().toString()));
         }
 
         if (result) {

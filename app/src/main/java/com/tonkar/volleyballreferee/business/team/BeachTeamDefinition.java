@@ -61,7 +61,7 @@ public class BeachTeamDefinition extends TeamDefinition {
     @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
-            Log.i("VBR-Team", String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
+            Log.i(TAG, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
             mCaptain = number;
         }
     }

@@ -799,7 +799,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySanctionGiven(TeamType teamType, SanctionType sanctionType, int number) {
-        Log.i("VBR-Card", String.format("Player %d of %s team was given a %s sanction", number, teamType.toString(), sanctionType.toString()));
+        Log.i("VBR-Sanction", String.format("Player %d of %s team was given a %s sanction", number, teamType.toString(), sanctionType.toString()));
         for (final SanctionListener listener : mSanctionListeners) {
             listener.onSanction(teamType, sanctionType, number);
         }

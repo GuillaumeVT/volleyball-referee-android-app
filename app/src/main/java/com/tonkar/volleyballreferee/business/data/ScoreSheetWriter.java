@@ -44,6 +44,8 @@ import java.util.TimeZone;
 
 public class ScoreSheetWriter {
 
+    private static final String TAG = "VBR-ScoreSheet";
+
     private final Context             mContext;
     private final RecordedGameService mRecordedGameService;
     private       Document            mDocument;
@@ -103,7 +105,7 @@ public class ScoreSheetWriter {
             writer.close();
             outputStream.close();
         } catch (IOException e) {
-            Log.e("VBR-Report", "Exception while writing report", e);
+            Log.e(TAG, "Exception while writing report", e);
             file = null;
         }
 
@@ -878,7 +880,7 @@ public class ScoreSheetWriter {
                 String.format("      background-color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorBackgroundCardview))) +
                 "      padding: 8px;\n" +
                 "      margin: 8px;\n" +
-                "      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n" +
+                "      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n" +
                 "    }\n" +
                 "    .div-title {\n" +
                 "      font-weight: 700;\n" +

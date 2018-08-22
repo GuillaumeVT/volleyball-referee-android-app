@@ -118,7 +118,7 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet4(indoorGame);
         playSet4_substitutions(indoorGame);
 
-        for (int index = 0; index < 1000; index++) {
+        for (int index = 0; index < 200; index++) {
             Log.i("VBR-Test", "playGame_io index #" + index);
             ServicesProvider.getInstance().getRecordedGamesService().saveCurrentGame();
             GameService gameService = ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
