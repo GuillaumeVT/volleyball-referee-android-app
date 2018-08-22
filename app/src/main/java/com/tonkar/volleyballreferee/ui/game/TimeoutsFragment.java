@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
@@ -37,7 +38,7 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Timeouts", "Create Timeouts fragment");
+        Log.i(Tags.TIMEOUT, "Create Timeouts fragment");
         View view = inflater.inflate(R.layout.fragment_timeouts, container, false);
 
         mTimeoutService = ServicesProvider.getInstance().getTimeoutService();

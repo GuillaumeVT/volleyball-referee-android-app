@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -39,7 +40,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Court", "Create indoor court view");
+        Log.i(Tags.GAME_UI, "Create indoor court view");
         mView = inflater.inflate(R.layout.fragment_indoor_court, container, false);
 
         initView();
@@ -82,7 +83,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
                     if (possibleSubstitutions.size() > 0) {
                         UiUtils.animate(getContext(), view);
-                        Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
+                        Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
                         showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleSubstitutions);
                     } else {
                         UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
@@ -115,7 +116,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
                     if (possibleSubstitutions.size() > 0) {
                         UiUtils.animate(getContext(), view);
-                        Log.i("VBR-Court", String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
+                        Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
                         showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleSubstitutions);
                     } else {
                         UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
@@ -238,7 +239,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 mIndoorTeamService, mSanctionService, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
-                Log.i("VBR-Court", String.format("Substitute %s team player at %s position by #%d player", teamType.toString(), positionType.toString(), selectedNumber));
+                Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position by #%d player", teamType.toString(), positionType.toString(), selectedNumber));
                 mIndoorTeamService.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
             }
         };
@@ -262,7 +263,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 mIndoorTeamService, mSanctionService, teamType, mIndoorTeamService.getPossibleActingCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
-                Log.i("VBR-Court", String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
+                Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
                 mIndoorTeamService.setActingCaptain(teamType, selectedNumber);
                 // refresh the team with the new captain
                 onTeamRotated(teamType);
@@ -302,7 +303,7 @@ public class IndoorCourtFragment extends CourtFragment {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
             MaterialButton button = teamPositions.get(positionType);
             UiUtils.animate(getContext(), button);
-            Log.i("VBR-Court", String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
+            Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
             UiUtils.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();

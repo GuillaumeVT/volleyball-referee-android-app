@@ -26,6 +26,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -54,7 +55,7 @@ public class QuickGameSetupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-QGSActivity", "Create game setup fragment");
+        Log.i(Tags.SETUP_UI, "Create game setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_game_setup, container, false);
 
         if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
@@ -86,7 +87,7 @@ public class QuickGameSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-QGSActivity", "Update league name");
+                Log.i(Tags.SETUP_UI, "Update league name");
                 ServicesProvider.getInstance().getGeneralService().setLeagueName(s.toString());
             }
 
@@ -104,7 +105,7 @@ public class QuickGameSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-QGSActivity", "Update division name");
+                Log.i(Tags.SETUP_UI, "Update division name");
                 ServicesProvider.getInstance().getGeneralService().setDivisionName(s.toString());
             }
 
@@ -121,7 +122,7 @@ public class QuickGameSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-QGSActivity", String.format("Update %s team name", TeamType.HOME.toString()));
+                Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME.toString()));
                 ServicesProvider.getInstance().getTeamService().setTeamName(TeamType.HOME, s.toString());
                 computeConfirmItemVisibility();
             }
@@ -137,7 +138,7 @@ public class QuickGameSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-QGSActivity", String.format("Update %s team name", TeamType.GUEST.toString()));
+                Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST.toString()));
                 ServicesProvider.getInstance().getTeamService().setTeamName(TeamType.GUEST, s.toString());
                 computeConfirmItemVisibility();
             }
@@ -272,7 +273,7 @@ public class QuickGameSetupFragment extends Fragment {
     }
 
     private void selectTeamColor(final TeamType teamType) {
-        Log.i("VBR-QGSActivity", String.format("Select %s team color", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Select %s team color", teamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), ServicesProvider.getInstance().getTeamService().getTeamColor(teamType)) {
             @Override
@@ -284,7 +285,7 @@ public class QuickGameSetupFragment extends Fragment {
     }
 
     private void teamColorSelected(TeamType teamType, int colorId) {
-        Log.i("VBR-QGSActivity", String.format("Update %s team color", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team color", teamType.toString()));
         final FloatingActionButton button;
 
         if (TeamType.HOME.equals(teamType)) {
@@ -324,7 +325,7 @@ public class QuickGameSetupFragment extends Fragment {
     }
 
     private void captainUpdated(TeamType teamType, int number) {
-        Log.i("VBR-QGSActivity", String.format("Update %s team captain", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team captain", teamType.toString()));
         ServicesProvider.getInstance().getTeamService().setCaptain(teamType, number);
 
         final MaterialButton button;

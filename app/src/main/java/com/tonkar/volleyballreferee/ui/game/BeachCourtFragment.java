@@ -12,6 +12,7 @@ import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
@@ -44,7 +45,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Court", "Create beach court view");
+        Log.i(Tags.GAME_UI, "Create beach court view");
         mView = inflater.inflate(R.layout.fragment_beach_court, container, false);
 
         initView();
@@ -72,7 +73,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
                 public void onClick(View view) {
                     if (mScoreService.getServingTeam().equals(mTeamOnLeftSide)) {
                         UiUtils.animate(getContext(), view);
-                        Log.i("VBR-Court", String.format("Swap %s team player", mTeamOnLeftSide.toString()));
+                        Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnLeftSide.toString()));
                         mBeachTeamService.swapPlayers(mTeamOnLeftSide);
                     }
                 }
@@ -85,7 +86,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
                 public void onClick(View view) {
                     if (mScoreService.getServingTeam().equals(mTeamOnRightSide)) {
                         UiUtils.animate(getContext(), view);
-                        Log.i("VBR-Court", String.format("Swap %s team player", mTeamOnRightSide.toString()));
+                        Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnRightSide.toString()));
                         mBeachTeamService.swapPlayers(mTeamOnRightSide);
                     }
                 }

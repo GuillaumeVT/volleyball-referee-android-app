@@ -20,6 +20,7 @@ import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
@@ -45,7 +46,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-SRGamesActivity", "Create scheduled games list activity");
+        Log.i(Tags.SCHEDULE_UI, "Create scheduled games list activity");
         setContentView(R.layout.activity_scheduled_games_list);
 
         setTitle(getResources().getString(R.string.user_scheduled_games_title));
@@ -159,7 +160,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     public void onUserGameReceived(RecordedGameService recordedGameService) {
         if (recordedGameService != null) {
             final GameService gameService = GameFactory.createGame(recordedGameService);
-            Log.i("VBR-SRGamesActivity", "Start game activity after receiving game");
+            Log.i(Tags.SCHEDULE_UI, "Start game activity after receiving game");
 
             switch (recordedGameService.getMatchStatus()) {
                 case SCHEDULED:
@@ -228,7 +229,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
             alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
                 @Override
                 public void onNegativeButtonClicked() {
-                    Log.i("VBR-SRGamesActivity", "Start scheduled game immediately");
+                    Log.i(Tags.SCHEDULE_UI, "Start scheduled game immediately");
                     gameService.startMatch();
                     final Intent gameIntent = new Intent(ScheduledGamesListActivity.this, GameActivity.class);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -239,7 +240,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
                 @Override
                 public void onPositiveButtonClicked() {
-                    Log.i("VBR-SRGamesActivity", "Edit scheduled game before starting");
+                    Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
                     final Intent setupIntent;
                     if (gameService.getGameType().equals(GameType.BEACH)) {
                         setupIntent = new Intent(ScheduledGamesListActivity.this, QuickGameSetupActivity.class);
@@ -260,7 +261,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
     public void scheduleIndoorGame(View view) {
         GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        Log.i("VBR-SRGamesActivity", "Start activity to schedule new indoor game");
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor game");
 
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
@@ -269,7 +270,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
     public void scheduleIndoor4x4Game(View view) {
         GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        Log.i("VBR-SRGamesActivity", "Start activity to schedule new indoor 4x4 game");
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor 4x4 game");
 
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
@@ -278,7 +279,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
 
     public void scheduleBeachGame(View view) {
         GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        Log.i("VBR-SRGamesActivity", "Start activity to schedule new beach game");
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new beach game");
 
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));

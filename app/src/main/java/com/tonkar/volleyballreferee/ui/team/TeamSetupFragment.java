@@ -30,6 +30,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -74,7 +75,7 @@ public class TeamSetupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-TSActivity", "Create team setup fragment");
+        Log.i(Tags.SETUP_UI, "Create team setup fragment");
         mLayoutInflater = inflater;
         View view = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
 
@@ -159,7 +160,7 @@ public class TeamSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-TSActivity", String.format("Update %s team name", mTeamType.toString()));
+                Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString());
                 computeConfirmItemVisibility();
             }
@@ -234,7 +235,7 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void selectTeamColor() {
-        Log.i("VBR-TSActivity", String.format("Select %s team color", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
             @Override
@@ -246,7 +247,7 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void teamColorSelected(int color) {
-        Log.i("VBR-TSActivity", String.format("Update %s team color", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType.toString()));
         UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
         mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
@@ -302,10 +303,10 @@ public class TeamSetupFragment extends Fragment {
                     UiUtils.animate(mContext, button);
                     final int number = Integer.parseInt(button.getText().toString());
                     if (isChecked) {
-                        Log.i("VBR-TSActivity", String.format("Checked #%d player of %s team", number, mTeamType.toString()));
+                        Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team", number, mTeamType.toString()));
                         mTeamService.addPlayer(mTeamType, number);
                     } else {
-                        Log.i("VBR-TSActivity", String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
+                        Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
                         mTeamService.removePlayer(mTeamType, number);
                     }
                     updateCaptain();
@@ -326,7 +327,7 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void selectLiberoColor() {
-        Log.i("VBR-TSActivity", String.format("Select %s team libero color", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Select %s team libero color", mTeamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mTeamService.getLiberoColor(mTeamType)) {
             @Override
@@ -338,7 +339,7 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void liberoColorSelected(int color) {
-        Log.i("VBR-TSActivity", String.format("Update %s team libero color", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team libero color", mTeamType.toString()));
         UiUtils.colorTeamIconButton(getActivity(), color, mLiberoColorButton);
         mTeamService.setLiberoColor(mTeamType, color);
         mLiberoAdapter.setColor(color);
@@ -354,14 +355,14 @@ public class TeamSetupFragment extends Fragment {
     }
 
     private void captainUpdated(TeamType teamType, int number) {
-        Log.i("VBR-TSActivity", String.format("Update %s team captain", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team captain", teamType.toString()));
         mTeamService.setCaptain(teamType, number);
         mCaptainButton.setText(String.valueOf(number));
         UiUtils.styleTeamButton(getContext(), mTeamService, teamType, number, mCaptainButton);
     }
 
     private void selectCaptain() {
-        Log.i("VBR-TSActivity", String.format("Select %s team captain", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Select %s team captain", mTeamType.toString()));
         IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_captain), mTeamService,
                 mTeamType, mTeamService.getPossibleCaptains(mTeamType)) {
             @Override
@@ -420,14 +421,14 @@ public class TeamSetupFragment extends Fragment {
                     final int number = Integer.parseInt(button.getText().toString());
                     if (isChecked) {
                         if (mTeamService.canAddLibero(mTeamType)) {
-                            Log.i("VBR-TSActivity", String.format("Checked #%d player of %s team as libero", number, mTeamType.toString()));
+                            Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team as libero", number, mTeamType.toString()));
                             mTeamService.addLibero(mTeamType, number);
                             updateCaptain();
                         } else {
                             button.setChecked(false);
                         }
                     } else {
-                        Log.i("VBR-TSActivity", String.format("Unchecked #%d player of %s team as libero", number, mTeamType.toString()));
+                        Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team as libero", number, mTeamType.toString()));
                         mTeamService.removeLibero(mTeamType, number);
                         updateCaptain();
                     }

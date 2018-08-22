@@ -10,6 +10,7 @@ import android.view.View;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
@@ -21,7 +22,7 @@ public class UserActivity extends AuthenticationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        Log.i("VBR-UserActivity", "Create user activity");
+        Log.i(Tags.WEB, "Create user activity");
 
         setTitle("");
 
@@ -48,19 +49,19 @@ public class UserActivity extends AuthenticationActivity {
     }
 
     public void goToScheduledGames(View view) {
-        Log.i("VBR-UserActivity", "Go to scheduled games");
+        Log.i(Tags.WEB, "Go to scheduled games");
         final Intent intent = new Intent(this, ScheduledGamesListActivity.class);
         startActivity(intent);
     }
 
     public void goToOnlineAccount(View view) {
-        Log.i("VBR-UserActivity", "View online account");
+        Log.i(Tags.WEB, "View online account");
         final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.USER_URL));
         startActivity(intent);
     }
 
     public void signOut(View view) {
-        Log.i("VBR-UserActivity", "Sign out");
+        Log.i(Tags.WEB, "Sign out");
         signOut();
     }
 }

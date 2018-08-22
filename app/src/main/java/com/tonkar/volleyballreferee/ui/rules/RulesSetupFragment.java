@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesActivity;
@@ -79,7 +80,7 @@ public class RulesSetupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-RSActivity", "Create rules setup fragment");
+        Log.i(Tags.RULES, "Create rules setup fragment");
         View view = inflater.inflate(R.layout.fragment_rules_setup, container, false);
 
         final boolean isGameContext = getArguments().getBoolean("is_game");
@@ -192,7 +193,7 @@ public class RulesSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-RSActivity", "Update rules name");
+                Log.i(Tags.RULES, "Update rules name");
                 mRules.setName(s.toString());
                 computeConfirmItemVisibility();
             }

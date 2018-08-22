@@ -11,6 +11,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
@@ -38,7 +39,7 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Ladders", "Initialise scores fragment");
+        Log.i(Tags.SCORE, "Initialise scores fragment");
         View view = inflater.inflate(R.layout.fragment_scores, container, false);
 
         mGameService = ServicesProvider.getInstance().getGameService();

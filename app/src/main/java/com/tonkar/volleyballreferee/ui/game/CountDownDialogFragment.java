@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import androidx.appcompat.app.AlertDialog;
@@ -53,13 +54,13 @@ public class CountDownDialogFragment extends DialogFragment {
         builder.setTitle(title).setView(mCountDownView).setCancelable(false);
         builder.setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-CountDown", "User cancels the countdown");
+                Log.i(Tags.TIMEOUT, "User cancels the countdown");
                 mCountDown.getCountDownTimer().cancel();
             }
         });
         builder.setNeutralButton(R.string.run_background, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("VBR-CountDown", "User runs the countdown in background");
+                Log.i(Tags.TIMEOUT, "User runs the countdown in background");
                 mCountDown.getCountDownTimer().cancel();
                 if (isAdded() && getActivity() instanceof GameActivity) {
                     GameActivity activity = (GameActivity) getActivity();

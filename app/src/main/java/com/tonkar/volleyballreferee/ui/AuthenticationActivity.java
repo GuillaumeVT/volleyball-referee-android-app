@@ -48,7 +48,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
 
     protected void checkAuthentication() {
         if (PrefUtils.isSyncOn(this)) {
-            Log.i(Tags.AUTH, "Check authentication");
+            Log.i(Tags.WEB, "Check authentication");
 
             Authentication authentication = PrefUtils.getAuthentication(this);
 
@@ -111,7 +111,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             signedIn(Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
         } catch (ApiException e) {
-            Log.e(Tags.AUTH, "Error during Google sign in", e);
+            Log.e(Tags.WEB, "Error during Google sign in", e);
             UiUtils.makeText(this, String.format(getResources().getString(R.string.user_sign_in_error), "Google"), Toast.LENGTH_LONG).show();
         }
     }
@@ -128,7 +128,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException exception) {
-                Log.e(Tags.AUTH, "Error during Facebook sign in");
+                Log.e(Tags.WEB, "Error during Facebook sign in");
                 UiUtils.makeText(AuthenticationActivity.this, String.format(getResources().getString(R.string.user_sign_in_error), "Facebook"), Toast.LENGTH_LONG).show();
             }
         });
@@ -136,7 +136,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
 
     protected void signOut() {
         if (PrefUtils.isSyncOn(this)) {
-            Log.i(Tags.AUTH, "Sign out");
+            Log.i(Tags.WEB, "Sign out");
 
             Authentication authentication = PrefUtils.getAuthentication(this);
 

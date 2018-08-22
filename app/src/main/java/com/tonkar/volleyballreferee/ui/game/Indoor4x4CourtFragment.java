@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 
@@ -26,7 +27,7 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Court", "Create indoor court view");
+        Log.i(Tags.GAME_UI, "Create indoor court view");
         mView = inflater.inflate(R.layout.fragment_indoor_4x4_court, container, false);
 
         initView();

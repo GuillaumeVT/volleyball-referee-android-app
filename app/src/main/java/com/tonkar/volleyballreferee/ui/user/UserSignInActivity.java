@@ -8,6 +8,7 @@ import android.view.View;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.SignInButton;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -18,7 +19,7 @@ public class UserSignInActivity extends AuthenticationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_sign_in);
 
-        Log.i("VBR-UserSignInActivity", "Create user sign in activity");
+        Log.i(Tags.WEB, "Create user sign in activity");
 
         setTitle("");
 

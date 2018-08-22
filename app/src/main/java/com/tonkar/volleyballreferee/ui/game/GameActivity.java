@@ -37,6 +37,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -81,7 +82,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-GameActivity", "Create game activity");
+        Log.i(Tags.GAME_UI, "Create game activity");
         setContentView(R.layout.activity_game);
 
         if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
@@ -286,13 +287,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     private void tossACoin() {
-        Log.i("VBR-GameActivity", "Toss a coin");
+        Log.i(Tags.GAME_UI, "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
         UiUtils.makeText(this, tossResult, Toast.LENGTH_LONG).show();
     }
 
     private void navigateToHomeWithDialog() {
-        Log.i("VBR-GameActivity", "Navigate to home");
+        Log.i(Tags.GAME_UI, "Navigate to home");
         if (mGameService.isMatchCompleted()) {
             UiUtils.navigateToHome(this, false);
         } else {
@@ -313,7 +314,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     private void share() {
-        Log.i("VBR-GameActivity", "Share game");
+        Log.i(Tags.GAME_UI, "Share game");
         if (mGameService.isMatchCompleted()) {
             UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
         } else {
@@ -322,7 +323,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     private void toggleIndexed() {
-        Log.i("VBR-GameActivity", "Toggle indexed");
+        Log.i(Tags.GAME_UI, "Toggle indexed");
         mGameService.setIndexed(!mGameService.isIndexed());
     }
 
@@ -334,54 +335,54 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     public void swapTeams(View view) {
-        Log.i("VBR-GameActivity", "Swap teams");
+        Log.i(Tags.GAME_UI, "Swap teams");
         UiUtils.animate(this, mSwapTeamsButton);
         mGameService.swapTeams(ActionOriginType.USER);
     }
 
     public void swapFirstService(View view) {
-        Log.i("VBR-GameActivity", "Swap first service");
+        Log.i(Tags.GAME_UI, "Swap first service");
         mGameService.swapServiceAtStart();
     }
 
     public void removeLastPoint(View view) {
-        Log.i("VBR-GameActivity", "Remove last point");
+        Log.i(Tags.GAME_UI, "Remove last point");
         UiUtils.animate(this, mScoreRemoveButton);
         mGameService.removeLastPoint();
     }
 
     public void increaseLeftScore(View view) {
-        Log.i("VBR-GameActivity", "Increase left score");
+        Log.i(Tags.GAME_UI, "Increase left score");
         UiUtils.animate(this, mLeftTeamScoreButton);
         increaseScoreWithDialog(mTeamOnLeftSide);
     }
 
     public void callLeftTimeout(View view) {
-        Log.i("VBR-GameActivity", "Call left timeout");
+        Log.i(Tags.GAME_UI, "Call left timeout");
         UiUtils.animate(this, mLeftTeamTimeoutButton);
         callTimeoutWithDialog(mTeamOnLeftSide);
     }
 
     public void giveLeftSanction(View view) {
-        Log.i("VBR-GameActivity", "Give left sanction");
+        Log.i(Tags.GAME_UI, "Give left sanction");
         UiUtils.animate(this, mLeftTeamCardsButton);
         showSanctionDialog(mTeamOnLeftSide);
     }
 
     public void increaseRightScore(View view) {
-        Log.i("VBR-GameActivity", "Increase right score");
+        Log.i(Tags.GAME_UI, "Increase right score");
         UiUtils.animate(this, mRightTeamScoreButton);
         increaseScoreWithDialog(mTeamOnRightSide);
     }
 
     public void callRightTimeout(View view) {
-        Log.i("VBR-GameActivity", "Call right timeout");
+        Log.i(Tags.GAME_UI, "Call right timeout");
         UiUtils.animate(this, mRightTeamTimeoutButton);
         callTimeoutWithDialog(mTeamOnRightSide);
     }
 
     public void giveRightSanction(View view) {
-        Log.i("VBR-GameActivity", "Give right sanction");
+        Log.i(Tags.GAME_UI, "Give right sanction");
         UiUtils.animate(this, mRightTeamCardsButton);
         showSanctionDialog(mTeamOnRightSide);
     }
@@ -394,13 +395,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             builder.setTitle(title).setMessage(getResources().getString(R.string.confirm_set_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Log.i("VBR-GameActivity", "User accepts the set point");
+                    Log.i(Tags.GAME_UI, "User accepts the set point");
                     mGameService.addPoint(teamType);
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Log.i("VBR-GameActivity", "User refuses the set point");
+                    Log.i(Tags.GAME_UI, "User refuses the set point");
                 }
             });
             AlertDialog alertDialog = builder.show();
@@ -416,13 +417,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Log.i("VBR-GameActivity", "User accepts the timeout");
+                    Log.i(Tags.GAME_UI, "User accepts the timeout");
                     mGameService.callTimeout(teamType);
                 }
             });
             builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Log.i("VBR-GameActivity", "User refuses the timeout");
+                    Log.i(Tags.GAME_UI, "User refuses the timeout");
                 }
             });
             AlertDialog alertDialog = builder.show();
@@ -675,7 +676,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     private void disableView() {
-        Log.i("VBR-GameActivity", "Disable game activity view");
+        Log.i(Tags.GAME_UI, "Disable game activity view");
         mSwapTeamsButton.setEnabled(false);
         mLeftTeamScoreButton.setEnabled(false);
         mRightTeamScoreButton.setEnabled(false);

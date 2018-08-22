@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -50,7 +51,7 @@ public class QuickTeamSetupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-QTSActivity", "Create team setup fragment");
+        Log.i(Tags.SETUP_UI, "Create team setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_team_setup, container, false);
 
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
@@ -87,7 +88,7 @@ public class QuickTeamSetupFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("VBR-QTSActivity", String.format("Update %s team name", mTeamType.toString()));
+                Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString());
                 computeSaveItemVisibility();
             }
@@ -137,7 +138,7 @@ public class QuickTeamSetupFragment extends Fragment {
     }
 
     private void selectTeamColor() {
-        Log.i("VBR-QTSActivity", String.format("Select %s team color", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
             @Override
@@ -149,7 +150,7 @@ public class QuickTeamSetupFragment extends Fragment {
     }
 
     private void teamColorSelected(int color) {
-        Log.i("VBR-QTSActivity", String.format("Update %s team color", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType.toString()));
         UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
         mTeamService.setTeamColor(mTeamType, color);
         updateCaptain();
@@ -161,7 +162,7 @@ public class QuickTeamSetupFragment extends Fragment {
     }
 
     private void captainUpdated(int number) {
-        Log.i("VBR-QTSActivity", String.format("Update %s team captain", mTeamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team captain", mTeamType.toString()));
         mTeamService.setCaptain(mTeamType, number);
         mCaptainButton.setText(String.valueOf(number));
         UiUtils.styleTeamButton(getContext(), mTeamService, mTeamType, number, mCaptainButton);

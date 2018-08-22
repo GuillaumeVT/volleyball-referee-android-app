@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -38,7 +39,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-QGSActivity", "Create quick game setup activity");
+        Log.i(Tags.SETUP_UI, "Create quick game setup activity");
         setContentView(R.layout.activity_quick_game_setup);
 
         if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
@@ -96,21 +97,21 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
             if (teamService.getTeamName(TeamType.HOME).isEmpty() || teamService.getTeamName(TeamType.GUEST).isEmpty()
                     || rules.getName().length() == 0) {
-                Log.i("VBR-QGSActivity", "Confirm button is invisible");
+                Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {
-                Log.i("VBR-QGSActivity", "Confirm button is visible");
+                Log.i(Tags.SETUP_UI, "Confirm button is visible");
                 mConfirmItem.setVisible(true);
             }
         }
     }
 
     public void confirmSetup() {
-        Log.i("VBR-QGSActivity", "Validate setup");
+        Log.i(Tags.SETUP_UI, "Validate setup");
         ServicesProvider.getInstance().getGeneralService().startMatch();
 
         if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
-            Log.i("VBR-QGSActivity", "Start time-based game activity");
+            Log.i(Tags.SETUP_UI, "Start time-based game activity");
             final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -121,7 +122,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                 saveTeams();
             }
             saveRules();
-            Log.i("VBR-QGSActivity", "Start game activity");
+            Log.i(Tags.SETUP_UI, "Start game activity");
             final Intent gameIntent = new Intent(this, GameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -144,7 +145,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void cancelSetup() {
-        Log.i("VBR-QGSActivity", "Cancel setup");
+        Log.i(Tags.SETUP_UI, "Cancel setup");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));

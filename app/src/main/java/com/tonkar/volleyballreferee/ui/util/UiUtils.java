@@ -46,6 +46,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
@@ -165,7 +166,7 @@ public class UiUtils {
     }
 
     public static void shareGame(Context context, Window window, GameService gameService) {
-        Log.i("VBR-Share", "Share screen");
+        Log.i(Tags.UTILS_UI, "Share screen");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             View rootView = window.getDecorView().findViewById(android.R.id.content);
             View screenView = rootView.getRootView();
@@ -200,17 +201,17 @@ public class UiUtils {
                 try {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
-                    Log.e("VBR-Share", "Exception while sharing", e);
+                    Log.e(Tags.UTILS_UI, "Exception while sharing", e);
                     UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
-            Log.w("VBR-Share", "No permission to share");
+            Log.w(Tags.UTILS_UI, "No permission to share");
         }
     }
 
     public static void shareRecordedGame(Context context, RecordedGameService recordedGameService) {
-        Log.i("VBR-Share", "Share recorded game");
+        Log.i(Tags.UTILS_UI, "Share recorded game");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             File file = ScoreSheetWriter.writeRecordedGame(context, recordedGameService);
             if (file == null) {
@@ -234,12 +235,12 @@ public class UiUtils {
                 try {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
-                    Log.e("VBR-Share", "Exception while sharing recorded game", e);
+                    Log.e(Tags.UTILS_UI, "Exception while sharing recorded game", e);
                     UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
-            Log.w("VBR-Share", "No permission to share");
+            Log.w(Tags.UTILS_UI, "No permission to share");
         }
     }
 

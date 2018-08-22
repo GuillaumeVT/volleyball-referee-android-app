@@ -451,7 +451,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     private void disableView() {
-        Log.i("VBR-GameActivity", "Disable game activity view");
+        Log.i(Tags.GAME_UI, "Disable game activity view");
         mSwapTeamsButton.setEnabled(false);
         mLeftTeamScoreButton.setEnabled(false);
         mRightTeamScoreButton.setEnabled(false);

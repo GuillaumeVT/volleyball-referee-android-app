@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
@@ -34,7 +35,7 @@ public class SubstitutionsFragment extends Fragment implements TeamListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Substitutions", "Create substitutions fragment");
+        Log.i(Tags.GAME_UI, "Create substitutions fragment");
         View view = inflater.inflate(R.layout.fragment_substitutions, container, false);
 
         mIndoorTeamService = (IndoorTeamService) ServicesProvider.getInstance().getTeamService();

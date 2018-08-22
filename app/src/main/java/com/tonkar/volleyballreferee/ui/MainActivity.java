@@ -73,7 +73,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-MainActivity", "Create main activity");
+        Log.i(Tags.MAIN_UI, "Create main activity");
         setContentView(R.layout.activity_main);
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -158,37 +158,37 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_saved_rules:
-                        Log.i("VBR-MainActivity", "Saved Rules");
+                        Log.i(Tags.SAVED_RULES, "Saved Rules");
                         Intent intent = new Intent(MainActivity.this, SavedRulesListActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_settings:
-                        Log.i("VBR-MainActivity", "Settings");
+                        Log.i(Tags.SETTINGS, "Settings");
                         intent = new Intent(MainActivity.this, SettingsActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_recorded_games:
-                        Log.i("VBR-MainActivity", "Recorded games");
+                        Log.i(Tags.SAVED_GAMES, "Recorded games");
                         intent = new Intent(MainActivity.this, RecordedGamesListActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_saved_teams:
-                        Log.i("VBR-MainActivity", "Saved teams");
+                        Log.i(Tags.SAVED_TEAMS, "Saved teams");
                         intent = new Intent(MainActivity.this, SavedTeamsListActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_view_live_games:
-                        Log.i("VBR-MainActivity", "Live games");
+                        Log.i(Tags.WEB, "Live games");
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
                         startActivity(intent);
                         break;
                     case R.id.action_search_online_games:
-                        Log.i("VBR-MainActivity", "Search online games");
+                        Log.i(Tags.WEB, "Search online games");
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
                         startActivity(intent);
                         break;
                     case R.id.action_facebook:
-                        Log.i("VBR-MainActivity", "Facebook");
+                        Log.i(Tags.WEB, "Facebook");
                         Intent browserIntent;
                         try {
                             browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
@@ -229,7 +229,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Log.i("VBR-MainActivity", "Drawer");
+                Log.i(Tags.MAIN_UI, "Drawer");
                 if (isNavDrawerOpen()) {
                     mDrawerLayout.closeDrawers();
                 } else {
@@ -237,21 +237,21 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 }
                 return true;
             case R.id.action_important_message:
-                Log.i("VBR-MainActivity", "Resume game");
+                Log.i(Tags.GAME_UI, "Resume game");
                 resumeCurrentGameWithDialog(null);
                 return true;
             case R.id.action_message:
-                Log.i("VBR-MainActivity", "VBR Message");
+                Log.i(Tags.WEB, "VBR Message");
                 showMessage();
                 return true;
             case R.id.action_account:
                 final Intent intent;
                 if (PrefUtils.isWebPremiumPurchased(this)) {
                     if (PrefUtils.isSignedIn(this)) {
-                        Log.i("VBR-MainActivity", "User account");
+                        Log.i(Tags.WEB, "User account");
                         intent = new Intent(this, UserActivity.class);
                     } else {
-                        Log.i("VBR-MainActivity", "User sign in");
+                        Log.i(Tags.WEB, "User sign in");
                         intent = new Intent(this, UserSignInActivity.class);
                     }
                 } else {
@@ -278,52 +278,52 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
 
     public void startIndoorGame(View view) {
-        Log.i("VBR-MainActivity", "Start an indoor game");
+        Log.i(Tags.GAME_UI, "Start an indoor game");
         GameFactory.createIndoorGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
 
-        Log.i("VBR-MainActivity", "Start activity to setup game");
+        Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startBeachGame(View view) {
-        Log.i("VBR-MainActivity", "Start a beach game");
+        Log.i(Tags.GAME_UI, "Start a beach game");
         GameFactory.createBeachGame(System.currentTimeMillis(), 0L, Rules.officialBeachRules());
 
-        Log.i("VBR-MainActivity", "Start activity to setup game quickly");
+        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startIndoor4x4Game(View view) {
-        Log.i("VBR-MainActivity", "Start a 4x4 indoor game");
+        Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
         GameFactory.createIndoor4x4Game(System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
 
-        Log.i("VBR-MainActivity", "Start activity to setup game");
+        Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startTimeBasedGame(View view) {
-        Log.i("VBR-MainActivity", "Start a time-based game");
+        Log.i(Tags.GAME_UI, "Start a time-based game");
         GameFactory.createTimeBasedGame(System.currentTimeMillis(), 0L);
 
-        Log.i("VBR-MainActivity", "Start activity to setup game quickly");
+        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startScoreBasedGame(View view) {
-        Log.i("VBR-MainActivity", "Start a score-based game");
+        Log.i(Tags.GAME_UI, "Start a score-based game");
         GameFactory.createPointBasedGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
 
-        Log.i("VBR-MainActivity", "Start activity to setup game quickly");
+        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         startActivity(intent);
     }
 
     public void startScheduledGameFromCode(View view) {
-        Log.i("VBR-MainActivity", "Start a scheduled game from code");
+        Log.i(Tags.GAME_UI, "Start a scheduled game from code");
 
         CodeInputDialogFragment dialogFragment = (CodeInputDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code");
 
@@ -341,14 +341,14 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         if (PrefUtils.isWebPremiumPurchased(this)) {
             if (PrefUtils.isSignedIn(this)) {
-                Log.i("VBR-MainActivity", "Scheduled games");
+                Log.i(Tags.SCHEDULE_UI, "Scheduled games");
                 intent = new Intent(this, ScheduledGamesListActivity.class);
             } else {
-                Log.i("VBR-MainActivity", "User sign in");
+                Log.i(Tags.WEB, "User sign in");
                 intent = new Intent(this, UserSignInActivity.class);
             }
         } else {
-            Log.i("VBR-MainActivity", "Purchases");
+            Log.i(Tags.BILLING, "Purchases");
             intent = new Intent(this, PurchasesListActivity.class);
         }
 
@@ -356,7 +356,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     }
 
     public void goToPurchases(View view) {
-        Log.i("VBR-MainActivity", "Purchases");
+        Log.i(Tags.BILLING, "Purchases");
         final Intent intent = new Intent(this, PurchasesListActivity.class);
         startActivity(intent);
     }
@@ -380,7 +380,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
                     @Override
                     public void onNegativeButtonClicked() {
-                        Log.i("VBR-MainActivity", "Delete current game");
+                        Log.i(Tags.SAVED_GAMES, "Delete current game");
                         ServicesProvider.getInstance().getRecordedGamesService().deleteCurrentGame();
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
                         invalidateOptionsMenu();
@@ -388,7 +388,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
                     @Override
                     public void onPositiveButtonClicked() {
-                        Log.i("VBR-MainActivity", "Start game activity and resume current game");
+                        Log.i(Tags.GAME_UI, "Start game activity and resume current game");
                         if (ServicesProvider.getInstance().getGameService() == null) {
                             UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
                         } else {
@@ -488,7 +488,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 @Override
                 public void onPositiveButtonClicked(int code) {
                     if (code > 9999999) {
-                        Log.i("VBR-MainActivity", String.format(Locale.getDefault(), "Requesting game from code %d", code));
+                        Log.i(Tags.GAME_UI, String.format(Locale.getDefault(), "Requesting game from code %d", code));
                         ServicesProvider.getInstance().getRecordedGamesService().getGameFromCode(code, MainActivity.this);
                     } else {
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
@@ -502,7 +502,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {
         if (recordedGameService != null) {
             final GameService gameService = GameFactory.createGame(recordedGameService);
-            Log.i("VBR-MainActivity", "Start game activity after receiving code");
+            Log.i(Tags.GAME_UI, "Start game activity after receiving code");
 
             switch (recordedGameService.getMatchStatus()) {
                 case SCHEDULED:
@@ -567,7 +567,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
                 @Override
                 public void onNegativeButtonClicked() {
-                    Log.i("VBR-MainActivity", "Start game from code immediately");
+                    Log.i(Tags.GAME_UI, "Start game from code immediately");
                     gameService.startMatch();
                     final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -578,7 +578,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
                 @Override
                 public void onPositiveButtonClicked() {
-                    Log.i("VBR-MainActivity", "Edit game from code before starting");
+                    Log.i(Tags.SETUP_UI, "Edit game from code before starting");
                     final Intent setupIntent;
                     if (gameService.getGameType().equals(GameType.BEACH)) {
                         setupIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);

@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -43,7 +44,7 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     }
 
     protected void initView() {
-        Log.i("VBR-Court", "Create court fragment");
+        Log.i(Tags.GAME_UI, "Create court fragment");
         mTeamService = ServicesProvider.getInstance().getTeamService();
         mSanctionService = ServicesProvider.getInstance().getSanctionService();
 

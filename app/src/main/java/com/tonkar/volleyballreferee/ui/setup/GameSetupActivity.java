@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -37,7 +38,7 @@ public class GameSetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("VBR-GSActivity", "Create game setup activity");
+        Log.i(Tags.SETUP_UI, "Create game setup activity");
         setContentView(R.layout.activity_game_setup);
 
         if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
@@ -97,17 +98,17 @@ public class GameSetupActivity extends AppCompatActivity {
                     || indoorTeamService.getTeamName(TeamType.GUEST).isEmpty() || indoorTeamService.getNumberOfPlayers(TeamType.GUEST) < indoorTeamService.getExpectedNumberOfPlayersOnCourt()
                     || indoorTeamService.getCaptain(TeamType.HOME) < 1 || indoorTeamService.getCaptain(TeamType.GUEST) < 1
                     || rules.getName().length() == 0) {
-                Log.i("VBR-GSActivity", "Confirm button is invisible");
+                Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {
-                Log.i("VBR-GSActivity", "Confirm button is visible");
+                Log.i(Tags.SETUP_UI, "Confirm button is visible");
                 mConfirmItem.setVisible(true);
             }
         }
     }
 
     public void confirmSetup() {
-        Log.i("VBR-GSActivity", "Validate setup");
+        Log.i(Tags.SETUP_UI, "Validate setup");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.confirm_game_setup_question));
@@ -116,7 +117,7 @@ public class GameSetupActivity extends AppCompatActivity {
                 ServicesProvider.getInstance().getGameService().startMatch();
                 saveTeams();
                 saveRules();
-                Log.i("VBR-GSActivity", "Start game activity");
+                Log.i(Tags.SETUP_UI, "Start game activity");
                 final Intent gameIntent = new Intent(GameSetupActivity.this, GameActivity.class);
                 gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -145,7 +146,7 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     private void cancelSetup() {
-        Log.i("VBR-GSActivity", "Cancel setup");
+        Log.i(Tags.SETUP_UI, "Cancel setup");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -38,7 +39,7 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("VBR-Card", "Create sanctions fragment");
+        Log.i(Tags.GAME_UI, "Create sanctions fragment");
         View view = inflater.inflate(R.layout.fragment_sanctions, container, false);
 
         mSanctionService = ServicesProvider.getInstance().getSanctionService();
