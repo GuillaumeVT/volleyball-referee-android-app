@@ -189,17 +189,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     @Override
     public GameService loadCurrentGame() {
-        GameService gameService = readCurrentGame(CURRENT_GAME_FILE);
-
-        if (gameService == null) {
-            int attempts = 0;
-            while (attempts < 5 && gameService == null) {
-                gameService = readCurrentGame(CURRENT_GAME_FILE);
-                attempts++;
-            }
-        }
-
-        return gameService;
+        return readCurrentGame(CURRENT_GAME_FILE);
     }
 
     @Override
@@ -207,12 +197,6 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         updateCurrentGame();
         if (!mGameService.isMatchCompleted()) {
             writeCurrentGame(CURRENT_GAME_FILE, mGameService);
-
-            int attempts = 0;
-            while (attempts < 5 && readCurrentGame(CURRENT_GAME_FILE) == null) {
-                writeCurrentGame(CURRENT_GAME_FILE, mGameService);
-                attempts++;
-            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -58,6 +60,11 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        cancelSetup();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_quick_teams_setup, menu);
@@ -75,10 +82,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                 confirmSetup();
                 return true;
             case android.R.id.home:
-                if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
-                    ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
-                }
-                UiUtils.navigateToHome(this, false);
+                cancelSetup();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -137,6 +141,27 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     private void saveRules() {
         SavedRulesService savedRulesService = ServicesProvider.getInstance().getSavedRulesService();
         savedRulesService.createAndSaveRulesFrom(ServicesProvider.getInstance().getGeneralService().getRules());
+    }
+
+    private void cancelSetup() {
+        Log.i("VBR-QGSActivity", "Cancel setup");
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+        builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
+                    ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
+                }
+                UiUtils.navigateToHome(QuickGameSetupActivity.this, false);
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
     private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
