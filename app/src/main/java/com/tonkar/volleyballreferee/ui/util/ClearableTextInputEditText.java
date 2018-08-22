@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.util;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,15 +30,18 @@ public class ClearableTextInputEditText extends TextInputEditText {
         return super.performClick();
     }
 
-    public void addTextClearListener() {
+    private void addTextClearListener() {
         this.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int drawableRight = 2;
+            public boolean onTouch(View view, MotionEvent event) {
+                ClearableTextInputEditText textView = ClearableTextInputEditText.this;
+                final int drawableRightIndex = 2;
+                final Drawable drawableRight = textView.getCompoundDrawables()[drawableRightIndex];
 
                 if(event.getAction() == MotionEvent.ACTION_UP
-                        && (event.getRawX() >= (ClearableTextInputEditText.this.getRight() - ClearableTextInputEditText.this.getCompoundDrawables()[drawableRight].getBounds().width()))) {
-                    ClearableTextInputEditText.this.getText().clear();
+                        && drawableRight != null
+                        && (event.getRawX() >= (textView.getRight() - drawableRight.getBounds().width()))) {
+                    textView.getText().clear();
                     return performClick();
                 }
                 return false;

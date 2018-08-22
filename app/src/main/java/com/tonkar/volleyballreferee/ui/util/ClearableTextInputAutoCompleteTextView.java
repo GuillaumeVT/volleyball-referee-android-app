@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.util;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,15 +49,18 @@ public class ClearableTextInputAutoCompleteTextView extends AppCompatAutoComplet
         return super.performClick();
     }
 
-    public void addTextClearListener() {
+    private void addTextClearListener() {
         this.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int drawableRight = 2;
+            public boolean onTouch(View view, MotionEvent event) {
+                ClearableTextInputAutoCompleteTextView textView = ClearableTextInputAutoCompleteTextView.this;
+                final int drawableRightIndex = 2;
+                final Drawable drawableRight = textView.getCompoundDrawables()[drawableRightIndex];
 
                 if(event.getAction() == MotionEvent.ACTION_UP
-                        && (event.getRawX() >= (ClearableTextInputAutoCompleteTextView.this.getRight() - ClearableTextInputAutoCompleteTextView.this.getCompoundDrawables()[drawableRight].getBounds().width()))) {
-                    ClearableTextInputAutoCompleteTextView.this.getText().clear();
+                        && drawableRight != null
+                        && (event.getRawX() >= (textView.getRight() - drawableRight.getBounds().width()))) {
+                    textView.getText().clear();
                     return performClick();
                 }
                 return false;
