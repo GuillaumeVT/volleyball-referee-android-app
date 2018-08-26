@@ -9,6 +9,8 @@ import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
+import com.tonkar.volleyballreferee.business.data.db.RulesEntity;
 import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
@@ -18,9 +20,9 @@ import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,107 +37,106 @@ import java.util.Map;
 
 public class SavedRules implements SavedRulesService {
 
-    private final Context     mContext;
-    private final List<Rules> mSavedRulesList;
-    private       Rules       mSavedRules;
+    private final Context mContext;
+    private       Rules   mCurrentRules;
 
     public SavedRules(Context context) {
         mContext = context;
-        mSavedRulesList = new ArrayList<>();
-    }
-
-    @Override
-    public void loadSavedRules() {
-        mSavedRules = null;
-        readSavedRules();
-        syncRulesOnline();
     }
 
     @Override
     public List<Rules> getSavedRules() {
-        return new ArrayList<>(mSavedRulesList);
+        List<String> jsonRulesList = AppDatabase.getInstance(mContext).rulesDao().getAllContents();
+        List<Rules> rulesList = new ArrayList<>();
+
+        for (String jsonRules : jsonRulesList) {
+            rulesList.add(readRules(jsonRules));
+        }
+
+        return rulesList;
     }
 
     @Override
     public Rules getSavedRules(String rulesName) {
-        Rules matching = null;
-
-        for (Rules savedRules : mSavedRulesList) {
-            if (savedRules.getName().equals(rulesName)) {
-                matching = savedRules;
-            }
-        }
-
-        return matching;
+        String jsonRules = AppDatabase.getInstance(mContext).rulesDao().findContentByName(rulesName);
+        return readRules(jsonRules);
     }
 
     @Override
     public void createRules() {
-        mSavedRules = Rules.defaultUniversalRules();
-        mSavedRules.setName("");
-        mSavedRules.setDate(System.currentTimeMillis());
+        mCurrentRules = Rules.defaultUniversalRules();
+        mCurrentRules.setName("");
+        mCurrentRules.setDate(System.currentTimeMillis());
     }
 
     @Override
     public void createRules(GameType gameType) {
         switch (gameType) {
             case INDOOR:
-                mSavedRules = Rules.officialIndoorRules();
+                mCurrentRules = Rules.officialIndoorRules();
                 break;
             case INDOOR_4X4:
-                mSavedRules = Rules.defaultIndoor4x4Rules();
+                mCurrentRules = Rules.defaultIndoor4x4Rules();
                 break;
             case BEACH:
-                mSavedRules = Rules.officialBeachRules();
+                mCurrentRules = Rules.officialBeachRules();
                 break;
             default:
-                mSavedRules = Rules.defaultUniversalRules();
+                mCurrentRules = Rules.defaultUniversalRules();
                 break;
         }
-        mSavedRules.setName("");
-        mSavedRules.setDate(System.currentTimeMillis());
+        mCurrentRules.setName("");
+        mCurrentRules.setDate(System.currentTimeMillis());
     }
 
     @Override
     public void editRules(String rulesName) {
-        mSavedRules = getSavedRules(rulesName);
-        mSavedRulesList.remove(mSavedRules);
+        mCurrentRules = getSavedRules(rulesName);
     }
 
     @Override
     public Rules getCurrentRules() {
-        return mSavedRules;
+        return mCurrentRules;
     }
 
     @Override
     public void saveCurrentRules() {
-        mSavedRules.setDate(System.currentTimeMillis());
-        mSavedRulesList.add(mSavedRules);
-        writeSavedRules();
-        pushRulesOnline(mSavedRules);
-        mSavedRules = null;
+        mCurrentRules.setDate(System.currentTimeMillis());
+        insertRulesIntoDb(mCurrentRules);
+        pushRulesOnline(mCurrentRules);
+        mCurrentRules = null;
     }
 
     @Override
-    public void deleteSavedRules(String rulesName) {
-        if (mSavedRules != null && mSavedRules.getName().equals(rulesName)) {
-            deleteRulesOnline(mSavedRules);
-            writeSavedRules();
-            mSavedRules = null;
-        }
+    public void cancelCurrentRules() {
+        mCurrentRules = null;
+    }
+
+    @Override
+    public void deleteSavedRules(final String rulesName) {
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).rulesDao().deleteByName(rulesName);
+                deleteRulesOnline(rulesName);
+                mCurrentRules = null;
+            }
+        }.start();
     }
 
     @Override
     public void deleteAllSavedRules() {
-        mSavedRulesList.clear();
-        writeSavedRules();
-        deleteAllRulesOnline();
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).rulesDao().deleteAll();
+                deleteAllRulesOnline();
+            }
+        }.start();
     }
 
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
         if (rules.getName().length() > 0
-                && getSavedRules(rules.getName()) == null
+                && AppDatabase.getInstance(mContext).rulesDao().countByName(rules.getName()) == 0
                 && !rules.getName().equals(Rules.officialBeachRules().getName())
                 && !rules.getName().equals(Rules.officialIndoorRules().getName())
                 && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())
@@ -148,19 +149,44 @@ public class SavedRules implements SavedRulesService {
 
     // Read saved rules
 
-    private void readSavedRules() {
-        Log.i(Tags.SAVED_RULES, String.format("Read saved rules from %s", SAVED_RULES_FILE));
+    @Override
+    public void migrateSavedRules() {
+        String filename = "device_saved_rules.json";
+        File rulesFile = mContext.getFileStreamPath(filename);
 
-        try {
-            FileInputStream inputStream = mContext.openFileInput(SAVED_RULES_FILE);
-            mSavedRulesList.clear();
-            mSavedRulesList.addAll(readRulesStream(inputStream));
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            Log.i(Tags.SAVED_RULES, String.format("%s saved rules file does not yet exist", SAVED_RULES_FILE));
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_RULES, "Exception while reading rules", e);
+        if (rulesFile != null && rulesFile.exists()) {
+            Log.i(Tags.SAVED_RULES, String.format("Migrate saved rules from %s", filename));
+
+            try {
+                FileInputStream inputStream = mContext.openFileInput(filename);
+                List<Rules> rulesList = readRulesStream(inputStream);
+                inputStream.close();
+
+                final List<RulesEntity> rulesEntities = new ArrayList<>();
+
+                for (Rules rules : rulesList) {
+                    rulesEntities.add(new RulesEntity(rules.getName(), writeRules(rules)));
+                }
+
+                new Thread() {
+                    public void run() {
+                        AppDatabase.getInstance(mContext).rulesDao().insertAll(rulesEntities);
+                        syncRulesOnline();
+                    }
+                }.start();
+
+                mContext.deleteFile(filename);
+            } catch (FileNotFoundException e) {
+                Log.i(Tags.SAVED_RULES, String.format("%s saved rules file does not exist", filename));
+            } catch (JsonParseException | IOException e) {
+                Log.e(Tags.SAVED_RULES, "Exception while reading rules", e);
+            }
         }
+    }
+
+    @Override
+    public boolean hasSavedRules() {
+        return AppDatabase.getInstance(mContext).rulesDao().count() > 0;
     }
 
     public static List<Rules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
@@ -172,21 +198,24 @@ public class SavedRules implements SavedRulesService {
         }
     }
 
-    private List<Rules> readRules(String json) {
+    private Rules readRules(String json) {
+        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RULES_TYPE);
+    }
+
+    private List<Rules> readRulesList(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RULES_LIST_TYPE);
     }
 
     // Write saved rules
 
-    private void writeSavedRules() {
-        Log.i(Tags.SAVED_RULES, String.format("Write saved rules into %s", SAVED_RULES_FILE));
-        try {
-            FileOutputStream outputStream = mContext.openFileOutput(SAVED_RULES_FILE, Context.MODE_PRIVATE);
-            writeRulesStream(outputStream, mSavedRulesList);
-            outputStream.close();
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_RULES, "Exception while writing rules", e);
-        }
+    private void insertRulesIntoDb(final Rules rules) {
+        new Thread() {
+            public void run() {
+                String json = writeRules(rules);
+                RulesEntity rulesEntity = new RulesEntity(rules.getName(), json);
+                AppDatabase.getInstance(mContext).rulesDao().insert(rulesEntity);
+            }
+        }.start();
     }
 
     public static void writeRulesStream(OutputStream outputStream, List<Rules> rules) throws JsonParseException, IOException {
@@ -202,7 +231,9 @@ public class SavedRules implements SavedRulesService {
     // Web
 
     private void syncRules(List<Rules> remoteRulesList) {
-        for (Rules localRules : mSavedRulesList) {
+        List<Rules> localRulesList = getSavedRules();
+
+        for (Rules localRules : localRulesList) {
             boolean foundRemoteVersion = false;
 
             for (Rules remoteRules : remoteRulesList) {
@@ -211,6 +242,7 @@ public class SavedRules implements SavedRulesService {
 
                     if (localRules.getDate() < remoteRules.getDate()) {
                         localRules.setAll(remoteRules);
+                        insertRulesIntoDb(localRules);
                     } else if (localRules.getDate() > remoteRules.getDate()) {
                         pushRulesOnline(localRules);
                     }
@@ -225,18 +257,16 @@ public class SavedRules implements SavedRulesService {
         for (Rules remoteRules : remoteRulesList) {
             boolean foundLocalVersion = false;
 
-            for (Rules localRules : mSavedRulesList) {
+            for (Rules localRules : localRulesList) {
                 if (localRules.getName().equals(remoteRules.getName())) {
                     foundLocalVersion = true;
                 }
             }
 
             if (!foundLocalVersion) {
-                mSavedRulesList.add(remoteRules);
+                insertRulesIntoDb(remoteRules);
             }
         }
-
-        writeSavedRules();
     }
 
     @Override
@@ -251,7 +281,7 @@ public class SavedRules implements SavedRulesService {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            List<Rules> rulesList = readRules(response);
+                            List<Rules> rulesList = readRulesList(response);
                             syncRules(rulesList);
                             if (listener != null){
                                 listener.onSynchronizationSucceeded();
@@ -321,10 +351,10 @@ public class SavedRules implements SavedRulesService {
         }
     }
 
-    private void deleteRulesOnline(Rules rules) {
+    private void deleteRulesOnline(String rulesName) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
-            params.put("name", rules.getName());
+            params.put("name", rulesName);
             String parameters = JsonStringRequest.getParameters(params);
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),

@@ -84,7 +84,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         setTitle("");
 
         mGameService = (TimeBasedGameService) ServicesProvider.getInstance().getGameService();
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
 
         if (mGameService == null || mRecordedGamesService == null) {
             UiUtils.navigateToHome(this);

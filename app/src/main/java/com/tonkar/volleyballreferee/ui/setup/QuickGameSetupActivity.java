@@ -42,7 +42,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         Log.i(Tags.SETUP_UI, "Create quick game setup activity");
         setContentView(R.layout.activity_quick_game_setup);
 
-        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
+        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
         }
 
@@ -57,7 +57,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ServicesProvider.getInstance().getRecordedGamesService().saveSetupGame(ServicesProvider.getInstance().getGameService());
+        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).saveSetupGame(ServicesProvider.getInstance().getGameService());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveTeams() {
-        SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
+        SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
         BaseTeamService teamService = ServicesProvider.getInstance().getTeamService();
         GameType gameType = teamService.getTeamsKind();
         savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.HOME);
@@ -140,7 +140,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveRules() {
-        SavedRulesService savedRulesService = ServicesProvider.getInstance().getSavedRulesService();
+        SavedRulesService savedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
         savedRulesService.createAndSaveRulesFrom(ServicesProvider.getInstance().getGeneralService().getRules());
     }
 
@@ -151,8 +151,8 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
-                    ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
+                if (ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasSetupGame()) {
+                    ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteSetupGame();
                 }
                 UiUtils.navigateToHome(QuickGameSetupActivity.this, false);
             }

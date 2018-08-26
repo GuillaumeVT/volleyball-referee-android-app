@@ -30,12 +30,10 @@ public class RecordedIndoorGameActivity extends RecordedGameActivity {
         setContentView(R.layout.activity_recorded_indoor_game);
         setTitle("");
 
-        ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
-
         Intent intent = getIntent();
         mGameDate = intent.getLongExtra("game_date", 0L);
 
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
 
         RecordedGameService recordedGameService = mRecordedGamesService.getRecordedGameService(mGameDate);
 

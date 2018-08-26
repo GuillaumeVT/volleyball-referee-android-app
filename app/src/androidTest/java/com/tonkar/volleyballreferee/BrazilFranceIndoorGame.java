@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import androidx.test.filters.LargeTest;
@@ -55,7 +56,7 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet5(indoorGame);
         playSet5_complete(indoorGame);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(indoorGame.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(indoorGame.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -118,11 +119,19 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet4(indoorGame);
         playSet4_substitutions(indoorGame);
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
+
         for (int index = 0; index < 200; index++) {
             Log.i("VBR-Test", "playGame_io index #" + index);
-            ServicesProvider.getInstance().getRecordedGamesService().saveCurrentGame();
-            GameService gameService = ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
-            assertNotEquals(null, indoorGame);
+            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).saveCurrentGame();
+            GameService gameService = ServicesProvider.getInstance().getRecordedGamesService(applicationContext).loadCurrentGame();
+            assertNotEquals(null, gameService);
             assertEquals(indoorGame, gameService);
         }
     }
@@ -181,7 +190,7 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
     }
 
     private void composeTeamsSet1(IndoorGame indoorGame) {

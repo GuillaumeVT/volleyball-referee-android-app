@@ -33,7 +33,7 @@ public class TeamsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 
         long gameDate = getArguments().getLong("game_date");
-        BaseTeamService teamService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(gameDate);
+        BaseTeamService teamService = ServicesProvider.getInstance().getRecordedGamesService(getActivity().getApplicationContext()).getRecordedGameService(gameDate);
 
         GridView homeTeamPlayersList = view.findViewById(R.id.home_team_players_list);
         PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), teamService, TeamType.HOME);

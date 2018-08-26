@@ -1,6 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -9,6 +11,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -21,6 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class PointsScoreBoardGameTest {
@@ -37,12 +41,25 @@ public class PointsScoreBoardGameTest {
         playSet(game);
         playSet(game);
 
-        IndoorGame loadedGame = (IndoorGame) ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
-        assertEquals(game, loadedGame);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
+
+        for (int index = 0; index < 5; index++) {
+            Log.i("VBR-Test", "playGame_complete index #" + index);
+            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).saveCurrentGame();
+            GameService gameService = ServicesProvider.getInstance().getRecordedGamesService(applicationContext).loadCurrentGame();
+            assertNotEquals(null, gameService);
+            assertEquals(game, gameService);
+        }
 
         playSet(game);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(game.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(game.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -56,7 +73,7 @@ public class PointsScoreBoardGameTest {
 
         game.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
     }
 
     private void playSet(IndoorGame indoorGame) {

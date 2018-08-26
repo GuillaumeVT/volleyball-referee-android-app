@@ -45,7 +45,7 @@ public class Indoor4x4CompleteGame {
         composeTeams(indoor4x4Game);
         playSet_complete(indoor4x4Game);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(indoor4x4Game.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(indoor4x4Game.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -70,7 +70,7 @@ public class Indoor4x4CompleteGame {
 
         indoor4x4Game.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
     }
 
     private void composeTeams(Indoor4x4Game indoor4x4Game) {

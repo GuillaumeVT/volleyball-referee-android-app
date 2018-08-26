@@ -44,8 +44,6 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         Log.i(Tags.SAVED_GAMES, "Create recorded games list activity");
         setContentView(R.layout.activity_recorded_games_list);
 
-        ServicesProvider.getInstance().restoreRecordedGamesService(getApplicationContext());
-
         setTitle(getResources().getString(R.string.recorded_games));
 
         mSyncLayout = findViewById(R.id.sync_layout);
@@ -58,7 +56,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
                 }
         );
 
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
 
         List<RecordedGameService> recordedGameServiceList = mRecordedGamesService.getRecordedGameServiceList();
         // Inverse list to have most recent games on top of the list
@@ -94,7 +92,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         inflater.inflate(R.menu.menu_recorded_games, menu);
 
         MenuItem deleteAllGamesItem = menu.findItem(R.id.action_delete_games);
-        deleteAllGamesItem.setVisible(mRecordedGamesService.getRecordedGameServiceList().size() > 0);
+        deleteAllGamesItem.setVisible(mRecordedGamesService.hasRecordedGames());
 
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();

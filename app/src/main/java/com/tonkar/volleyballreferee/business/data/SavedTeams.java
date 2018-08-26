@@ -9,6 +9,8 @@ import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
+import com.tonkar.volleyballreferee.business.data.db.TeamEntity;
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
@@ -24,9 +26,9 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -41,66 +43,46 @@ import java.util.Map;
 
 public class SavedTeams implements SavedTeamsService {
 
-    private final Context            mContext;
-    private final List<RecordedTeam> mSavedTeams;
-    private       WrappedTeam        mWrappedTeam;
+    private final Context     mContext;
+    private       WrappedTeam mCurrentTeam;
 
     public SavedTeams(Context context) {
         mContext = context;
-        mSavedTeams = new ArrayList<>();
-    }
-
-    @Override
-    public void loadSavedTeams() {
-        mWrappedTeam = null;
-        readSavedTeams();
-        syncTeamsOnline();
     }
 
     @Override
     public List<RecordedTeam> getSavedTeamList() {
-        return new ArrayList<>(mSavedTeams);
+        List<String> jsonTeamList = AppDatabase.getInstance(mContext).teamDao().getAllContents();
+        List<RecordedTeam> teams = new ArrayList<>();
+
+        for (String jsonTeam : jsonTeamList) {
+            teams.add(readTeam(jsonTeam));
+        }
+
+        return teams;
     }
 
     @Override
     public List<RecordedTeam> getSavedTeamList(GameType gameType) {
-        List<RecordedTeam> list = new ArrayList<>();
+        List<String> jsonTeamList = AppDatabase.getInstance(mContext).teamDao().findContentByKind(gameType.toString());
+        List<RecordedTeam> teams = new ArrayList<>();
 
-        for (RecordedTeam team: mSavedTeams) {
-            if (gameType.equals(team.getGameType())) {
-                list.add(team);
-            }
+        for (String jsonTeam : jsonTeamList) {
+            teams.add(readTeam(jsonTeam));
         }
 
-        return list;
+        return teams;
     }
 
     @Override
     public List<String> getSavedTeamNameList(GameType gameType, GenderType genderType) {
-        List<String> list = new ArrayList<>();
-
-        for (RecordedTeam team: mSavedTeams) {
-            if (gameType.equals(team.getGameType()) && genderType.equals(team.getGenderType())) {
-                list.add(team.getName());
-            }
-        }
-
-        return list;
+        return AppDatabase.getInstance(mContext).teamDao().findNamesByGenderAndKind(genderType.toString(), gameType.toString());
     }
 
     @Override
     public RecordedTeam getSavedTeam(GameType gameType, String teamName, GenderType genderType) {
-        RecordedTeam matching = null;
-
-        for (RecordedTeam team : mSavedTeams) {
-            if (team.getGameType().equals(gameType)
-                    && team.getName().equals(teamName)
-                    && team.getGenderType().equals(genderType)) {
-                matching = team;
-            }
-        }
-
-        return matching;
+        String jsonTeam = AppDatabase.getInstance(mContext).teamDao().findContentByNameAndGenderAndKind(teamName, genderType.toString(), gameType.toString());
+        return readTeam(jsonTeam);
     }
 
     private WrappedTeam createWrappedTeam(GameType gameType) {
@@ -127,55 +109,61 @@ public class SavedTeams implements SavedTeamsService {
 
     @Override
     public void createTeam(GameType gameType) {
-        mWrappedTeam = createWrappedTeam(gameType);
+        mCurrentTeam = createWrappedTeam(gameType);
     }
 
     @Override
     public void editTeam(GameType gameType, String teamName, GenderType genderType) {
         RecordedTeam savedTeam = getSavedTeam(gameType, teamName, genderType);
-        mWrappedTeam = createWrappedTeam(gameType);
-        copyTeam(savedTeam, mWrappedTeam, TeamType.HOME);
-        mSavedTeams.remove(savedTeam);
+        mCurrentTeam = createWrappedTeam(gameType);
+        copyTeam(savedTeam, mCurrentTeam, TeamType.HOME);
     }
 
     @Override
     public BaseTeamService getCurrentTeam() {
-        return mWrappedTeam;
+        return mCurrentTeam;
     }
 
     @Override
-    public synchronized void saveCurrentTeam() {
+    public void saveCurrentTeam() {
         RecordedTeam savedTeam = new RecordedTeam();
-        copyTeam(mWrappedTeam, savedTeam, TeamType.HOME);
-        mSavedTeams.add(savedTeam);
-        writeSavedTeams();
+        copyTeam(mCurrentTeam, savedTeam, TeamType.HOME);
+        insertTeamIntoDb(savedTeam);
         pushTeamOnline(savedTeam);
-        mWrappedTeam = null;
+        mCurrentTeam = null;
     }
 
     @Override
-    public void deleteSavedTeam(GameType gameType, String teamName, GenderType genderType) {
-        if (mWrappedTeam != null && mWrappedTeam.getTeamsKind().equals(gameType)
-                && mWrappedTeam.getTeamName(null).equals(teamName)
-                && mWrappedTeam.getGenderType().equals(genderType)) {
-            deleteTeamOnline(gameType, teamName, genderType);
-            writeSavedTeams();
-            mWrappedTeam = null;
-        }
+    public void cancelCurrentTeam() {
+        mCurrentTeam = null;
+    }
+
+    @Override
+    public void deleteSavedTeam(final GameType gameType, final String teamName, final GenderType genderType) {
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).teamDao().deleteByNameAndGenderAndKind(teamName, genderType.toString(), gameType.toString());
+                deleteTeamOnline(gameType, teamName, genderType);
+                mCurrentTeam = null;
+            }
+        }.start();
     }
 
     @Override
     public void deleteAllSavedTeams() {
-        mSavedTeams.clear();
-        writeSavedTeams();
-        deleteAllTeamsOnline();
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).teamDao().deleteAll();
+                deleteAllTeamsOnline();
+            }
+        }.start();
     }
 
     @Override
     public void createAndSaveTeamFrom(GameType gameType, BaseTeamService teamService, TeamType teamType) {
-        if (getSavedTeam(gameType, teamService.getTeamName(teamType), teamService.getGenderType(teamType)) == null) {
+        if (AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGenderType(teamType).toString(), gameType.toString()) == 0) {
             createTeam(gameType);
-            copyTeam(teamService, mWrappedTeam, teamType);
+            copyTeam(teamService, mCurrentTeam, teamType);
             saveCurrentTeam();
         }
     }
@@ -251,19 +239,44 @@ public class SavedTeams implements SavedTeamsService {
 
     // Read saved teams
 
-    private void readSavedTeams() {
-        Log.i(Tags.SAVED_TEAMS, String.format("Read saved teams from %s", SAVED_TEAMS_FILE));
+    @Override
+    public void migrateSavedTeams() {
+        String filename = "device_saved_teams.json";
+        File teamsFile = mContext.getFileStreamPath(filename);
 
-        try {
-            FileInputStream inputStream = mContext.openFileInput(SAVED_TEAMS_FILE);
-            mSavedTeams.clear();
-            mSavedTeams.addAll(readTeamsStream(inputStream));
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            Log.i(Tags.SAVED_TEAMS, String.format("%s saved teams file does not yet exist", SAVED_TEAMS_FILE));
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_TEAMS, "Exception while reading teams", e);
+        if (teamsFile != null && teamsFile.exists()) {
+            Log.i(Tags.SAVED_TEAMS, String.format("Migrate saved teams from %s", filename));
+
+            try {
+                FileInputStream inputStream = mContext.openFileInput(filename);
+                List<RecordedTeam> teams = readTeamsStream(inputStream);
+                inputStream.close();
+
+                final List<TeamEntity> teamEntities = new ArrayList<>();
+
+                for (RecordedTeam team : teams) {
+                    teamEntities.add(new TeamEntity(team.getName(), team.getGenderType().toString(), team.getGameType().toString(), writeTeam(team)));
+                }
+
+                new Thread() {
+                    public void run() {
+                        AppDatabase.getInstance(mContext).teamDao().insertAll(teamEntities);
+                        syncTeamsOnline();
+                    }
+                }.start();
+
+                mContext.deleteFile(filename);
+            } catch (FileNotFoundException e) {
+                Log.i(Tags.SAVED_TEAMS, String.format("%s saved teams file does not exist", filename));
+            } catch (JsonParseException | IOException e) {
+                Log.e(Tags.SAVED_TEAMS, "Exception while reading teams", e);
+            }
         }
+    }
+
+    @Override
+    public boolean hasSavedTeams() {
+        return AppDatabase.getInstance(mContext).teamDao().count() > 0;
     }
 
     public static List<RecordedTeam> readTeamsStream(InputStream inputStream) throws IOException, JsonParseException {
@@ -275,21 +288,24 @@ public class SavedTeams implements SavedTeamsService {
         }
     }
 
+    private RecordedTeam readTeam(String json) {
+        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_TEAM_TYPE);
+    }
+
     private List<RecordedTeam> readTeams(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_TEAM_LIST_TYPE);
     }
 
     // Write saved teams
 
-    private void writeSavedTeams() {
-        Log.i(Tags.SAVED_TEAMS, String.format("Write saved teams into %s", SAVED_TEAMS_FILE));
-        try {
-            FileOutputStream outputStream = mContext.openFileOutput(SAVED_TEAMS_FILE, Context.MODE_PRIVATE);
-            writeTeamsStream(outputStream, mSavedTeams);
-            outputStream.close();
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_TEAMS, "Exception while writing teams", e);
-        }
+    private void insertTeamIntoDb(final RecordedTeam recordedTeam) {
+        new Thread() {
+            public void run() {
+                String json = writeTeam(recordedTeam);
+                TeamEntity teamEntity = new TeamEntity(recordedTeam.getName(), recordedTeam.getGenderType().toString(), recordedTeam.getGameType().toString(), json);
+                AppDatabase.getInstance(mContext).teamDao().insert(teamEntity);
+            }
+        }.start();
     }
 
     public static void writeTeamsStream(OutputStream outputStream, List<RecordedTeam> teams) throws JsonParseException, IOException {
@@ -305,7 +321,9 @@ public class SavedTeams implements SavedTeamsService {
     // Web
 
     private void syncTeams(List<RecordedTeam> remoteTeamList) {
-        for (RecordedTeam localTeam : mSavedTeams) {
+        List<RecordedTeam> localTeamList = getSavedTeamList();
+
+        for (RecordedTeam localTeam : localTeamList) {
             boolean foundRemoteVersion = false;
 
             for (RecordedTeam remoteTeam : remoteTeamList) {
@@ -314,6 +332,7 @@ public class SavedTeams implements SavedTeamsService {
 
                     if (localTeam.getDate() < remoteTeam.getDate()) {
                         localTeam.setAll(remoteTeam);
+                        insertTeamIntoDb(localTeam);
                     } else if (localTeam.getDate() > remoteTeam.getDate()) {
                         pushTeamOnline(localTeam);
                     }
@@ -328,18 +347,16 @@ public class SavedTeams implements SavedTeamsService {
         for (RecordedTeam remoteTeam : remoteTeamList) {
             boolean foundLocalVersion = false;
 
-            for (RecordedTeam localTeam : mSavedTeams) {
+            for (RecordedTeam localTeam : localTeamList) {
                 if (localTeam.getName().equals(remoteTeam.getName()) && localTeam.getGenderType().equals(remoteTeam.getGenderType()) && localTeam.getGameType().equals(remoteTeam.getGameType())) {
                     foundLocalVersion = true;
                 }
             }
 
             if (!foundLocalVersion) {
-                mSavedTeams.add(remoteTeam);
+                insertTeamIntoDb(remoteTeam);
             }
         }
-
-        writeSavedTeams();
     }
 
     @Override

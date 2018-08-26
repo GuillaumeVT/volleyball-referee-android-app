@@ -37,7 +37,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 switch (key) {
                     case PrefUtils.PREF_SYNC_DATA:
-                        ServicesProvider.getInstance().restoreAllServicesAndSync(getApplicationContext());
+                        ServicesProvider.getInstance().getSavedRulesService(getApplicationContext()).syncRulesOnline();
+                        ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext()).syncTeamsOnline();
+                        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).syncGamesOnline();
                         break;
                     default:
                         break;

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
@@ -25,8 +24,6 @@ public class UserActivity extends AuthenticationActivity {
         Log.i(Tags.WEB, "Create user activity");
 
         setTitle("");
-
-        ServicesProvider.getInstance().restoreAllServicesAndSync(getApplicationContext());
 
         initButtonOnClickListeners();
     }

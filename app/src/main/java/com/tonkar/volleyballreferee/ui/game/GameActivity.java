@@ -104,7 +104,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         }
 
         mGameService = ServicesProvider.getInstance().getGameService();
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService();
+        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
 
         if (mGameService == null || mRecordedGamesService == null) {
             UiUtils.navigateToHome(this);

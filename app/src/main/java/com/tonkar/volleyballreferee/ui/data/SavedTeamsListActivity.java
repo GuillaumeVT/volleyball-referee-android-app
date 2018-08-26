@@ -47,8 +47,6 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         Log.i(Tags.SAVED_TEAMS, "Create teams list activity");
         setContentView(R.layout.activity_saved_teams_list);
 
-        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
-
         setTitle(getResources().getString(R.string.saved_teams));
 
         mSyncLayout = findViewById(R.id.sync_layout);
@@ -61,7 +59,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
                 }
         );
 
-        mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
+        mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
 
         List<RecordedTeam> teams = mSavedTeamsService.getSavedTeamList();
 
@@ -135,7 +133,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         inflater.inflate(R.menu.menu_saved_teams, menu);
 
         MenuItem deleteAllTeamsItem = menu.findItem(R.id.action_delete_teams);
-        deleteAllTeamsItem.setVisible(mSavedTeamsService.getSavedTeamList().size() > 0);
+        deleteAllTeamsItem.setVisible(mSavedTeamsService.hasSavedTeams());
 
         MenuItem searchTeamsItem = menu.findItem(R.id.action_search_teams);
         SearchView searchTeamsView = (SearchView) searchTeamsItem.getActionView();

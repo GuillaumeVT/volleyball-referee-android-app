@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface SavedRulesService {
 
-    String SAVED_RULES_FILE = "device_saved_rules.json";
+    void migrateSavedRules();
 
-    void loadSavedRules();
+    boolean hasSavedRules();
 
     List<Rules> getSavedRules();
 
@@ -24,6 +24,8 @@ public interface SavedRulesService {
     Rules getCurrentRules();
 
     void saveCurrentRules();
+
+    void cancelCurrentRules();
 
     void deleteSavedRules(String rulesName);
 

@@ -55,39 +55,29 @@ public class ServicesProvider {
         return mCurrentGame;
     }
 
-    public RecordedGamesService getRecordedGamesService() {
+    public RecordedGamesService getRecordedGamesService(Context context) {
+        if (mRecordedGames == null) {
+            mRecordedGames = new RecordedGames(context);
+        }
         return mRecordedGames;
     }
 
-    public SavedTeamsService getSavedTeamsService() {
+    public SavedTeamsService getSavedTeamsService(Context context) {
+        if (mSavedTeams == null) {
+            mSavedTeams = new SavedTeams(context);
+        }
         return mSavedTeams;
     }
 
-    public SavedRulesService getSavedRulesService() {
+    public SavedRulesService getSavedRulesService(Context context) {
+        if (mSavedRules == null) {
+            mSavedRules = new SavedRules(context);
+        }
         return mSavedRules;
     }
 
     public boolean isGameServiceUnavailable() {
-        return mCurrentGame == null || isRecordedGamesServiceUnavailable();
-    }
-
-    public boolean areSetupServicesUnavailable() {
-        return mCurrentGame == null
-                || isRecordedGamesServiceUnavailable()
-                || isSavedTeamsServiceUnavailable()
-                || isSavedRulesServiceUnavailable();
-    }
-
-    private boolean isRecordedGamesServiceUnavailable() {
-        return mRecordedGames == null;
-    }
-
-    public boolean isSavedTeamsServiceUnavailable() {
-        return mSavedTeams == null;
-    }
-
-    public boolean isSavedRulesServiceUnavailable() {
-        return mSavedRules == null;
+        return mCurrentGame == null;
     }
 
     public void initGameService(GameService gameService) {
@@ -95,57 +85,16 @@ public class ServicesProvider {
     }
 
     public void restoreGameService(Context context) {
-        restoreRecordedGamesService(context);
-        if (mRecordedGames.hasCurrentGame()) {
-            initGameService(mRecordedGames.loadCurrentGame());
+        RecordedGamesService recordedGamesService = getRecordedGamesService(context);
+        if (recordedGamesService.hasCurrentGame()) {
+            initGameService(recordedGamesService.loadCurrentGame());
         }
     }
 
     public void restoreGameServiceForSetup(Context context) {
-        restoreRecordedGamesService(context);
-        restoreSavedTeamsService(context);
-        restoreSavedRulesService(context);
-        if (mRecordedGames.hasSetupGame()) {
-            initGameService(mRecordedGames.loadSetupGame());
-        }
-    }
-
-    public void restoreRecordedGamesService(Context context) {
-        if (isRecordedGamesServiceUnavailable()) {
-            mRecordedGames = new RecordedGames(context);
-            mRecordedGames.loadRecordedGames();
-        }
-    }
-
-    public void restoreSavedTeamsService(Context context) {
-        if (isSavedTeamsServiceUnavailable()) {
-            mSavedTeams = new SavedTeams(context);
-            mSavedTeams.loadSavedTeams();
-        }
-    }
-
-    public void restoreSavedRulesService(Context context) {
-        if (isSavedRulesServiceUnavailable()) {
-            mSavedRules = new SavedRules(context);
-            mSavedRules.loadSavedRules();
-        }
-    }
-
-    public void restoreAllServicesAndSync(Context context) {
-        if (isSavedRulesServiceUnavailable()) {
-            restoreSavedRulesService(context);
-        } else {
-            getSavedRulesService().syncRulesOnline();
-        }
-        if (isSavedTeamsServiceUnavailable()) {
-            restoreSavedTeamsService(context);
-        } else {
-            getSavedTeamsService().syncTeamsOnline();
-        }
-        if (isRecordedGamesServiceUnavailable()) {
-            restoreRecordedGamesService(context);
-        } else {
-            getRecordedGamesService().syncGamesOnline();
+        RecordedGamesService recordedGamesService = getRecordedGamesService(context);
+        if (recordedGamesService.hasSetupGame()) {
+            initGameService(recordedGamesService.loadSetupGame());
         }
     }
 }

@@ -33,8 +33,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_rules);
 
-        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-        mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService();
+        mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
         mRules = mSavedRulesService.getCurrentRules();
 
         boolean editable = getIntent().getBooleanExtra("editable", true);
@@ -115,7 +114,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.leave_rules_creation_title)).setMessage(getResources().getString(R.string.leave_rules_creation_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                mSavedRulesService.loadSavedRules();
+                mSavedRulesService.cancelCurrentRules();
                 Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -130,7 +129,7 @@ public class SavedRulesActivity extends AppCompatActivity {
 
     public void computeSaveItemVisibility() {
         if (mSaveItem != null) {
-            if (mRules.getName().length() > 0 && mSavedRulesService.getSavedRules(mRules.getName()) == null) {
+            if (mRules.getName().length() > 0) {
                 Log.i(Tags.SAVED_RULES, "Save button is visible");
                 mSaveItem.setVisible(true);
             } else {

@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import androidx.test.rule.ActivityTestRule;
@@ -38,10 +39,10 @@ public class SavedTeamsIOTest {
 
     @Test
     public void save() {
-        ServicesProvider.getInstance().restoreSavedTeamsService(mActivityRule.getActivity());
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
 
-        ServicesProvider.getInstance().getSavedTeamsService().createTeam(GameType.INDOOR);
-        BaseTeamService service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
+        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).createTeam(GameType.INDOOR);
+        BaseTeamService service = ServicesProvider.getInstance().getSavedTeamsService(applicationContext).getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "BRAZIL");
         service.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
@@ -68,10 +69,10 @@ public class SavedTeamsIOTest {
         service.setCaptain(TeamType.HOME, 1);
         service.setGenderType(TeamType.HOME, GenderType.GENTS);
 
-        ServicesProvider.getInstance().getSavedTeamsService().saveCurrentTeam();
+        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).saveCurrentTeam();
 
-        ServicesProvider.getInstance().getSavedTeamsService().createTeam(GameType.INDOOR);
-        service = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
+        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).createTeam(GameType.INDOOR);
+        service = ServicesProvider.getInstance().getSavedTeamsService(applicationContext).getCurrentTeam();
 
         service.setTeamName(TeamType.HOME, "FRANCE");
         service.setTeamColor(TeamType.HOME, Color.parseColor("#034694"));
@@ -98,16 +99,16 @@ public class SavedTeamsIOTest {
         service.setCaptain(TeamType.HOME, 6);
         service.setGenderType(TeamType.HOME, GenderType.GENTS);
 
-        ServicesProvider.getInstance().getSavedTeamsService().saveCurrentTeam();
+        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).saveCurrentTeam();
     }
 
     @Test
     public void writeThenRead() {
-        ServicesProvider.getInstance().restoreSavedTeamsService(mActivityRule.getActivity());
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
 
         List<RecordedTeam> expectedList = new ArrayList<>();
-        expectedList.add(ServicesProvider.getInstance().getSavedTeamsService().getSavedTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
-        expectedList.add(ServicesProvider.getInstance().getSavedTeamsService().getSavedTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
+        expectedList.add(ServicesProvider.getInstance().getSavedTeamsService(applicationContext).getSavedTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
+        expectedList.add(ServicesProvider.getInstance().getSavedTeamsService(applicationContext).getSavedTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
         List<RecordedTeam> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -42,7 +42,7 @@ public class SetFragment extends Fragment {
 
         long gameDate = getArguments().getLong("game_date");
         int setIndex = getArguments().getInt("set_index");
-        RecordedGameService gameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(gameDate);
+        RecordedGameService gameService = ServicesProvider.getInstance().getRecordedGamesService(getActivity().getApplicationContext()).getRecordedGameService(gameDate);
 
         FrameLayout ladderLayout = view.findViewById(R.id.ladder_layout);
         LadderListAdapter ladderListAdapter = new LadderListAdapter(inflater, gameService, gameService, gameService, gameService, false);

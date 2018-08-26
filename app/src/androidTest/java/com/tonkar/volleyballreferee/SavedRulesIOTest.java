@@ -1,5 +1,7 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
+
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -32,10 +34,10 @@ public class SavedRulesIOTest {
 
     @Test
     public void save() {
-        ServicesProvider.getInstance().restoreSavedRulesService(mActivityRule.getActivity());
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
 
-        ServicesProvider.getInstance().getSavedRulesService().createRules();
-        Rules rules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
+        ServicesProvider.getInstance().getSavedRulesService(applicationContext).createRules();
+        Rules rules = ServicesProvider.getInstance().getSavedRulesService(applicationContext).getCurrentRules();
 
         rules.setName("Test Rules 1");
         rules.setUserId("66bgghvgh55@google");
@@ -59,10 +61,10 @@ public class SavedRulesIOTest {
         rules.setBeachCourtSwitchFrequencyTieBreak(1);
         rules.setCustomConsecutiveServesPerPlayer(77);
 
-        ServicesProvider.getInstance().getSavedRulesService().saveCurrentRules();
+        ServicesProvider.getInstance().getSavedRulesService(applicationContext).saveCurrentRules();
 
-        ServicesProvider.getInstance().getSavedRulesService().createRules();
-        rules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
+        ServicesProvider.getInstance().getSavedRulesService(applicationContext).createRules();
+        rules = ServicesProvider.getInstance().getSavedRulesService(applicationContext).getCurrentRules();
 
         rules.setName("Test Rules 2");
         rules.setUserId("byg765bvg66v@facebook");
@@ -86,16 +88,16 @@ public class SavedRulesIOTest {
         rules.setBeachCourtSwitchFrequencyTieBreak(9);
         rules.setCustomConsecutiveServesPerPlayer(10);
 
-        ServicesProvider.getInstance().getSavedRulesService().saveCurrentRules();
+        ServicesProvider.getInstance().getSavedRulesService(applicationContext).saveCurrentRules();
     }
 
     @Test
     public void writeThenRead() {
-        ServicesProvider.getInstance().restoreSavedRulesService(mActivityRule.getActivity());
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
 
         List<Rules> expectedList = new ArrayList<>();
-        expectedList.add(ServicesProvider.getInstance().getSavedRulesService().getSavedRules("Test Rules 1"));
-        expectedList.add(ServicesProvider.getInstance().getSavedRulesService().getSavedRules("Test Rules 2"));
+        expectedList.add(ServicesProvider.getInstance().getSavedRulesService(applicationContext).getSavedRules("Test Rules 1"));
+        expectedList.add(ServicesProvider.getInstance().getSavedRulesService(applicationContext).getSavedRules("Test Rules 2"));
 
         List<Rules> actualList = new ArrayList<>();
 
@@ -115,7 +117,6 @@ public class SavedRulesIOTest {
 
     @Test
     public void clear() {
-        ServicesProvider.getInstance().restoreSavedRulesService(mActivityRule.getActivity());
-        ServicesProvider.getInstance().getSavedRulesService().deleteAllSavedRules();
+        ServicesProvider.getInstance().getSavedRulesService(mActivityRule.getActivity().getApplicationContext()).deleteAllSavedRules();
     }
 }

@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,13 +36,15 @@ public class MiscSetupFragment extends Fragment {
         Log.i(Tags.SETUP_UI, "Create misc setup fragment");
         View view = inflater.inflate(R.layout.fragment_misc_setup, container, false);
 
-        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
-            ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
+        Context applicationContext = getActivity().getApplicationContext();
+
+        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
+            ServicesProvider.getInstance().restoreGameServiceForSetup(applicationContext);
         }
 
         final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues()));
+        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(applicationContext).getRecordedLeagues()));
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -61,7 +64,7 @@ public class MiscSetupFragment extends Fragment {
 
         final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(applicationContext).getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override

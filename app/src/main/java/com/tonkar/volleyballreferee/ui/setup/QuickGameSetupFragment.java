@@ -58,8 +58,10 @@ public class QuickGameSetupFragment extends Fragment {
         Log.i(Tags.SETUP_UI, "Create game setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_game_setup, container, false);
 
-        if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
-            ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
+        Context applicationContext = getActivity().getApplicationContext();
+
+        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
+            ServicesProvider.getInstance().restoreGameServiceForSetup(applicationContext);
         }
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
@@ -78,7 +80,7 @@ public class QuickGameSetupFragment extends Fragment {
 
         final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        List<String> leagueNames = new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedLeagues());
+        List<String> leagueNames = new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(applicationContext).getRecordedLeagues());
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, leagueNames);
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
@@ -97,7 +99,7 @@ public class QuickGameSetupFragment extends Fragment {
 
         final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService().getRecordedDivisions()));
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(applicationContext).getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -226,7 +228,7 @@ public class QuickGameSetupFragment extends Fragment {
                 }
             });
 
-            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamList(GameType.BEACH));
+            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService(applicationContext).getSavedTeamList(GameType.BEACH));
 
             homeTeamNameInput.setAdapter(mTeamsListAdapter);
             homeTeamNameInput.setThreshold(2);
@@ -235,7 +237,7 @@ public class QuickGameSetupFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
                     RecordedTeam team = mTeamsListAdapter.getItem(index);
                     homeTeamNameInput.setText(team.getName());
-                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.HOME);
+                    ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.HOME);
 
                     teamColorSelected(TeamType.HOME, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.HOME));
                     updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.HOME));
@@ -251,7 +253,7 @@ public class QuickGameSetupFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
                     RecordedTeam team = mTeamsListAdapter.getItem(index);
                     guestTeamNameInput.setText(team.getName());
-                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.GUEST);
+                    ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.GUEST);
 
                     teamColorSelected(TeamType.GUEST, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.GUEST));
                     updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.GUEST));

@@ -72,7 +72,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
                 if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                    ServicesProvider.getInstance().getRecordedGamesService().getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                    ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
                 }
             }
         });
@@ -149,7 +149,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     private void updateScheduledGamesList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            ServicesProvider.getInstance().getRecordedGamesService().getUserScheduledGames(this);
+            ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getUserScheduledGames(this);
         }
     }
 

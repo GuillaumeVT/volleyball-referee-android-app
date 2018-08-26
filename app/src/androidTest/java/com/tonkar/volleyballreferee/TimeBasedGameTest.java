@@ -40,7 +40,7 @@ public class TimeBasedGameTest {
 
         game.stop();
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(game.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(game.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -57,7 +57,7 @@ public class TimeBasedGameTest {
 
         game.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
     }
 
 }

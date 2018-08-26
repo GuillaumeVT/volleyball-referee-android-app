@@ -59,11 +59,7 @@ public class QuickTeamSetupFragment extends Fragment {
 
         final boolean editable = getArguments().getBoolean("editable");
 
-        if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreSavedTeamsService(getActivity().getApplicationContext());
-        }
-
-        mTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
+        mTeamService = ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getCurrentTeam();
 
         final TextInputEditText teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);

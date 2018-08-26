@@ -87,15 +87,12 @@ public class TeamSetupFragment extends Fragment {
         final boolean isGameContext = getArguments().getBoolean("is_game");
 
         if (isGameContext) {
-            if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
+            if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
                 ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
             }
             mTeamService = ServicesProvider.getInstance().getTeamService();
         } else {
-            if (ServicesProvider.getInstance().isSavedTeamsServiceUnavailable()) {
-                ServicesProvider.getInstance().restoreSavedTeamsService(getActivity().getApplicationContext());
-            }
-            mTeamService = ServicesProvider.getInstance().getSavedTeamsService().getCurrentTeam();
+            mTeamService = ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getCurrentTeam();
         }
 
         mScrollView = view.findViewById(R.id.team_setup_scroll);
@@ -124,13 +121,13 @@ public class TeamSetupFragment extends Fragment {
 
         if (isGameContext) {
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService().getSavedTeamList(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getSavedTeamList(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
                     RecordedTeam team = (RecordedTeam) teamNameInput.getAdapter().getItem(index);
                     teamNameInput.setText(team.getName());
-                    ServicesProvider.getInstance().getSavedTeamsService().copyTeam(team, mTeamService, mTeamType);
+                    ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, mTeamService, mTeamType);
 
                     teamColorSelected(mTeamService.getTeamColor(mTeamType));
                     updateGender(mTeamService.getGenderType(mTeamType));

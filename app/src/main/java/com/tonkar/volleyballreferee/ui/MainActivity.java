@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -101,13 +102,20 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             }
         });
 
+        Context applicationContext = getApplicationContext();
+
+        ServicesProvider.getInstance().getSavedRulesService(applicationContext).migrateSavedRules();
+        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).migrateSavedTeams();
+        ServicesProvider.getInstance().getRecordedGamesService(applicationContext).migrateRecordedGames();
+
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-        if (ServicesProvider.getInstance().getRecordedGamesService().hasSetupGame()) {
-            ServicesProvider.getInstance().getRecordedGamesService().deleteSetupGame();
+        if (ServicesProvider.getInstance().getRecordedGamesService(applicationContext).hasSetupGame()) {
+            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).deleteSetupGame();
         }
 
-        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
+        ServicesProvider.getInstance().getSavedRulesService(applicationContext).syncRulesOnline();
+        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).syncTeamsOnline();
+        ServicesProvider.getInstance().getRecordedGamesService(applicationContext).syncGamesOnline();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
@@ -137,7 +145,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             }
         }
 
-        if (ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame()) {
+        if (ServicesProvider.getInstance().getRecordedGamesService(applicationContext).hasCurrentGame()) {
             resumeCurrentGameWithDialog(savedInstanceState);
         }
 
@@ -217,7 +225,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         inflater.inflate(R.menu.menu_main, menu);
 
         MenuItem importantMessageItem = menu.findItem(R.id.action_important_message);
-        importantMessageItem.setVisible(ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame());
+        importantMessageItem.setVisible(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame());
 
         final MenuItem messageItem = menu.findItem(R.id.action_message);
         initMessageMenuVisibility(messageItem);
@@ -365,7 +373,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true);
         getIntent().removeExtra("show_resume_game");
 
-        if (ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame() && showResumeGameDialog) {
+        if (ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame() && showResumeGameDialog) {
             AlertDialogFragment alertDialogFragment;
 
             if (savedInstanceState == null) {
@@ -381,7 +389,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     @Override
                     public void onNegativeButtonClicked() {
                         Log.i(Tags.SAVED_GAMES, "Delete current game");
-                        ServicesProvider.getInstance().getRecordedGamesService().deleteCurrentGame();
+                        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteCurrentGame();
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
                         invalidateOptionsMenu();
                     }
@@ -489,7 +497,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 public void onPositiveButtonClicked(int code) {
                     if (code > 9999999) {
                         Log.i(Tags.GAME_UI, String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                        ServicesProvider.getInstance().getRecordedGamesService().getGameFromCode(code, MainActivity.this);
+                        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getGameFromCode(code, MainActivity.this);
                     } else {
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
                     }
@@ -555,7 +563,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         GameService gameService = ServicesProvider.getInstance().getGameService();
         AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
 
-        if ((ServicesProvider.getInstance().getRecordedGamesService().hasCurrentGame() || gameService == null) && alertDialogFragment != null) {
+        if ((ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame() || gameService == null) && alertDialogFragment != null) {
             alertDialogFragment.dismiss();
         } else {
             setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);

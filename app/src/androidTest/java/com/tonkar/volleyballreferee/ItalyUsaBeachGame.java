@@ -1,6 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -10,6 +12,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -21,6 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -38,7 +42,7 @@ public class ItalyUsaBeachGame {
         playSet1_complete(beachGame);
         playSet2_complete(beachGame);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService().getRecordedGameService(beachGame.getGameDate());
+        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(beachGame.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -51,8 +55,21 @@ public class ItalyUsaBeachGame {
         playSet1_complete(beachGame);
         playSet2_matchPoint(beachGame);
 
-        BeachGame loadedGame = (BeachGame) ServicesProvider.getInstance().getRecordedGamesService().loadCurrentGame();
-        assertEquals(beachGame, loadedGame);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
+
+        for (int index = 0; index < 5; index++) {
+            Log.i("VBR-Test", "playGame_matchPoint index #" + index);
+            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).saveCurrentGame();
+            GameService gameService = ServicesProvider.getInstance().getRecordedGamesService(applicationContext).loadCurrentGame();
+            assertNotEquals(null, gameService);
+            assertEquals(beachGame, gameService);
+        }
     }
 
     @Test
@@ -74,7 +91,7 @@ public class ItalyUsaBeachGame {
         beachGame.setTeamColor(TeamType.GUEST, Color.parseColor("#2980b9"));
         beachGame.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService().connectGameRecorder();
+        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
     }
 
     private void playSet1_complete(BeachGame beachGame) {

@@ -47,8 +47,6 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         Log.i(Tags.SAVED_RULES, "Create rules list activity");
         setContentView(R.layout.activity_saved_rules_list);
 
-        ServicesProvider.getInstance().restoreSavedRulesService(getApplicationContext());
-
         setTitle(getResources().getString(R.string.saved_rules_list));
 
         mSyncLayout = findViewById(R.id.sync_layout);
@@ -61,7 +59,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
                 }
         );
 
-        mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService();
+        mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
 
         List<Rules> savedRules = mSavedRulesService.getSavedRules();
 
@@ -136,7 +134,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         inflater.inflate(R.menu.menu_saved_rules_list, menu);
 
         MenuItem deleteAllRulesItem = menu.findItem(R.id.action_delete_rules);
-        deleteAllRulesItem.setVisible(mSavedRulesService.getSavedRules().size() > 0);
+        deleteAllRulesItem.setVisible(mSavedRulesService.hasSavedRules());
 
         MenuItem searchRulesItem = menu.findItem(R.id.action_search_rules);
         SearchView searchRulesView = (SearchView) searchRulesItem.getActionView();

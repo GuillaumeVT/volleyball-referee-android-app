@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface SavedTeamsService {
 
-    String SAVED_TEAMS_FILE = "device_saved_teams.json";
+    void migrateSavedTeams();
 
-    void loadSavedTeams();
+    boolean hasSavedTeams();
 
     List<RecordedTeam> getSavedTeamList();
 
@@ -29,6 +29,8 @@ public interface SavedTeamsService {
     BaseTeamService getCurrentTeam();
 
     void saveCurrentTeam();
+
+    void cancelCurrentTeam();
 
     void deleteSavedTeam(GameType gameType, String teamName, GenderType genderType);
 

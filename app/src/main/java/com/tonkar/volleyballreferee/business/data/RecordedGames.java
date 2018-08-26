@@ -11,7 +11,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.game.BaseGame;
+import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
+import com.tonkar.volleyballreferee.business.data.db.FullGameEntity;
+import com.tonkar.volleyballreferee.business.data.db.GameEntity;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -42,7 +44,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -51,34 +52,31 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class RecordedGames implements RecordedGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
-    private final Context            mContext;
-    private       GameService        mGameService;
-    private       RecordedGame       mRecordedGame;
-    private final List<RecordedGame> mRecordedGames;
-    private final Set<String>        mRecordedLeagues;
-    private final Set<String>        mRecordedDivisions;
+    private static final String sCurrentGame = "current";
+    private static final String sSetupGame   = "setup";
+
+    private final Context      mContext;
+    private       GameService  mGameService;
+    private       RecordedGame mRecordedGame;
 
     public RecordedGames(Context context) {
         mContext = context;
-        mRecordedGames = new ArrayList<>();
-        mRecordedLeagues = new TreeSet<>();
-        mRecordedDivisions = new TreeSet<>();
     }
 
     @Override
     public void connectGameRecorder() {
         Log.i(Tags.SAVED_GAMES, "Connect the game recorder");
+
         if (hasSetupGame()) {
             deleteSetupGame();
         }
@@ -98,10 +96,12 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     @Override
     public void disconnectGameRecorder(boolean exiting) {
         Log.i(Tags.SAVED_GAMES, "Disconnect the game recorder");
+
         if (exiting) {
             saveCurrentGame();
             deleteCurrentGameOnline();
         }
+
         mGameService.removeGeneralListener(this);
         mGameService.removeScoreListener(this);
         mGameService.removeTeamListener(this);
@@ -110,123 +110,106 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void loadRecordedGames() {
-        readRecordedGames();
-        collectLeaguesAndDivisions();
-        syncGamesOnline();
-    }
-
-    private void collectLeaguesAndDivisions() {
-        mRecordedLeagues.clear();
-        mRecordedDivisions.clear();
-        for (RecordedGame recordedGame : mRecordedGames) {
-            recordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
-            if (recordedGame.getGameSchedule() == 0L) {
-                recordedGame.setGameSchedule(recordedGame.getGameDate());
-            }
-            if (!recordedGame.getLeagueName().isEmpty()) {
-                mRecordedLeagues.add(recordedGame.getLeagueName());
-            }
-            if (!recordedGame.getDivisionName().isEmpty()) {
-                mRecordedDivisions.add(recordedGame.getDivisionName());
-            }
-        }
-    }
-
-    @Override
     public List<RecordedGameService> getRecordedGameServiceList() {
-        return new ArrayList<RecordedGameService>(mRecordedGames);
+        List<String> jsonGameList = AppDatabase.getInstance(mContext).gameDao().getAllContents();
+        List<RecordedGameService> games = new ArrayList<>();
+
+        for (String jsonGame : jsonGameList) {
+            games.add(readRecordedGame(jsonGame));
+        }
+
+        return games;
     }
 
     @Override
     public RecordedGameService getRecordedGameService(long gameDate) {
-        RecordedGame matching = null;
-
-        for (RecordedGame recordedGame : mRecordedGames) {
-            if (recordedGame.getGameDate() == gameDate) {
-                matching = recordedGame;
-            }
-        }
-
-        return matching;
+        String jsonGame = AppDatabase.getInstance(mContext).gameDao().findContentByDate(gameDate);
+        return readRecordedGame(jsonGame);
     }
 
     @Override
     public Set<String> getRecordedLeagues() {
-        return mRecordedLeagues;
+        return new HashSet<>(AppDatabase.getInstance(mContext).gameDao().getLeagues());
     }
 
     @Override
     public Set<String> getRecordedDivisions() {
-        return mRecordedDivisions;
+        return new HashSet<>(AppDatabase.getInstance(mContext).gameDao().getDivisions());
     }
 
     @Override
-    public void deleteRecordedGame(long gameDate) {
-        for (Iterator<RecordedGame> iterator = mRecordedGames.iterator(); iterator.hasNext();) {
-            RecordedGame recordedGame = iterator.next();
-            if (recordedGame.getGameDate() == gameDate) {
-                iterator.remove();
-                deleteGameOnline(recordedGame.getGameDate());
+    public void deleteRecordedGame(final long gameDate) {
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).gameDao().deleteByDate(gameDate);
+                deleteGameOnline(gameDate);
             }
-        }
-        writeRecordedGames();
+        }.start();
     }
 
     @Override
     public void deleteAllRecordedGames() {
-        mRecordedGames.clear();
-        deleteAllGamesOnline();
-        writeRecordedGames();
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).gameDao().deleteAll();
+                deleteAllGamesOnline();
+            }
+        }.start();
     }
 
     @Override
     public boolean hasCurrentGame() {
-        File currentGameFile = mContext.getFileStreamPath(RecordedGamesService.CURRENT_GAME_FILE);
-        return currentGameFile != null && currentGameFile.exists();
+        return AppDatabase.getInstance(mContext).fullGameDao().countByType(sCurrentGame) > 0;
     }
 
     @Override
     public GameService loadCurrentGame() {
-        return readCurrentGame(CURRENT_GAME_FILE);
+        String jsonGame = AppDatabase.getInstance(mContext).fullGameDao().findContentByType(sCurrentGame);
+        return readCurrentGame(jsonGame);
     }
 
     @Override
     public synchronized void saveCurrentGame() {
         updateCurrentGame();
         if (!mGameService.isMatchCompleted()) {
-            writeCurrentGame(CURRENT_GAME_FILE, mGameService);
+            insertCurrentGameIntoDb(sCurrentGame, mGameService);
         }
     }
 
     @Override
     public void deleteCurrentGame() {
-        Log.d(Tags.SAVED_GAMES, String.format("Delete serialized game in %s", CURRENT_GAME_FILE));
-        deleteCurrentGameOnline();
-        mContext.deleteFile(CURRENT_GAME_FILE);
-        mRecordedGame = null;
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).fullGameDao().deleteByType(sCurrentGame);
+                deleteCurrentGameOnline();
+                mRecordedGame = null;
+            }
+        }.start();
     }
 
     @Override
     public boolean hasSetupGame() {
-        File setupGameFile = mContext.getFileStreamPath(RecordedGamesService.SETUP_GAME_FILE);
-        return setupGameFile != null && setupGameFile.exists();
+        return AppDatabase.getInstance(mContext).fullGameDao().countByType(sSetupGame) > 0;
     }
 
     @Override
     public GameService loadSetupGame() {
-        return readCurrentGame(SETUP_GAME_FILE);
+        String jsonGame = AppDatabase.getInstance(mContext).fullGameDao().findContentByType(sSetupGame);
+        return readCurrentGame(jsonGame);
     }
 
     @Override
     public void saveSetupGame(GameService gameService) {
-        writeCurrentGame(SETUP_GAME_FILE, gameService);
+        insertCurrentGameIntoDb(sSetupGame, gameService);
     }
 
     @Override
     public void deleteSetupGame() {
-        Log.d(Tags.SAVED_GAMES, String.format("Delete serialized setup game in %s", SETUP_GAME_FILE));
-        mContext.deleteFile(SETUP_GAME_FILE);
+        new Thread() {
+            public void run() {
+                AppDatabase.getInstance(mContext).fullGameDao().deleteByType(sSetupGame);
+            }
+        }.start();
     }
 
     @Override
@@ -247,7 +230,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         if (recordedGameService != null) {
             recordedGameService.setIndexed(!recordedGameService.isIndexed());
             pushGameOnline(recordedGameService);
-            writeRecordedGames();
+            insertRecordedGameIntoDb((RecordedGame) recordedGameService, false);
         }
     }
 
@@ -366,9 +349,8 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     @Override
     public void onMatchCompleted(TeamType winner) {
         if (mRecordedGame != null) {
-            mRecordedGames.add(mRecordedGame);
+            insertRecordedGameIntoDb(mRecordedGame, true);
         }
-        writeRecordedGames();
         pushCurrentGameOnline();
         deleteCurrentGame();
     }
@@ -593,58 +575,71 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     // Read current game
 
-    private GameService readCurrentGame(String fileName) {
-        Log.i(Tags.SAVED_GAMES, String.format("Read current game from %s", fileName));
-        BaseGame game = null;
-
-        try {
-            FileInputStream inputStream = mContext.openFileInput(fileName);
-            JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-            try {
-                game = JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.CURRENT_GAME_TYPE);
-            } finally {
-                reader.close();
-            }
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            Log.i(Tags.SAVED_GAMES, String.format("%s current game file does not yet exist", fileName));
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_GAMES, "Exception while reading current game", e);
-        }
-
-        return game;
+    private GameService readCurrentGame(String jsonGame) {
+        return JsonIOUtils.GSON.fromJson(jsonGame, JsonIOUtils.CURRENT_GAME_TYPE);
     }
 
     // Write current game
 
-    private void writeCurrentGame(String fileName, GameService gameService) {
-        Log.i(Tags.SAVED_GAMES, String.format("Write current game into %s", fileName));
-        try {
-            FileOutputStream outputStream = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
-            OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-            JsonIOUtils.GSON.toJson(gameService, JsonIOUtils.CURRENT_GAME_TYPE, writer);
-            writer.close();
-            outputStream.close();
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_GAMES, "Exception while writing current game", e);
-        }
+    private void insertCurrentGameIntoDb(final String type, GameService gameService) {
+        final String json = writeCurrentGame(gameService);
+        new Thread() {
+            public void run() {
+                FullGameEntity fullGameEntity = new FullGameEntity(type, json);
+                AppDatabase.getInstance(mContext).fullGameDao().insert(fullGameEntity);
+            }
+        }.start();
+    }
+
+    private String writeCurrentGame(GameService gameService) {
+        return JsonIOUtils.GSON.toJson(gameService, JsonIOUtils.CURRENT_GAME_TYPE);
     }
 
     // Read recorded games
 
-    private void readRecordedGames() {
-        Log.i(Tags.SAVED_GAMES, String.format("Read recorded games from %s", RECORDED_GAMES_FILE));
+    @Override
+    public void migrateRecordedGames() {
+        String currentFilename = "current_game.json";
+        mContext.deleteFile(currentFilename);
+        String setupFilename = "setup_game.json";
+        mContext.deleteFile(setupFilename);
 
-        try {
-            FileInputStream inputStream = mContext.openFileInput(RECORDED_GAMES_FILE);
-            mRecordedGames.clear();
-            mRecordedGames.addAll(readRecordedGamesStream(inputStream));
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            Log.i(Tags.SAVED_GAMES, String.format("%s recorded games file does not yet exist", RECORDED_GAMES_FILE));
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_GAMES, "Exception while reading games", e);
+        String filename = "device_games_history.json";
+        File gamesFile = mContext.getFileStreamPath(filename);
+
+        if (gamesFile != null && gamesFile.exists()) {
+            Log.i(Tags.SAVED_GAMES, String.format("Migrate recorded games from %s", gamesFile));
+
+            try {
+                FileInputStream inputStream = mContext.openFileInput(filename);
+                List<RecordedGame> games = readRecordedGamesStream(inputStream);
+                inputStream.close();
+
+                final List<GameEntity> gameEntities = new ArrayList<>();
+
+                for (RecordedGame game : games) {
+                    gameEntities.add(new GameEntity(game.getGameDate(), game.getLeagueName(), game.getDivisionName(), writeRecordedGame(game)));
+                }
+
+                new Thread() {
+                    public void run() {
+                        AppDatabase.getInstance(mContext).gameDao().insertAll(gameEntities);
+                        syncGamesOnline();
+                    }
+                }.start();
+
+                mContext.deleteFile(filename);
+            } catch (FileNotFoundException e) {
+                Log.i(Tags.SAVED_GAMES, String.format("%s recorded games file does not exist", filename));
+            } catch (JsonParseException | IOException e) {
+                Log.e(Tags.SAVED_GAMES, "Exception while reading games", e);
+            }
         }
+    }
+
+    @Override
+    public boolean hasRecordedGames() {
+        return AppDatabase.getInstance(mContext).gameDao().count() > 0;
     }
 
     public static List<RecordedGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
@@ -666,29 +661,31 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private RecordedGame readRecordedGame(String json) {
-        Log.i(Tags.SAVED_GAMES, "Read recorded game");
-        RecordedGame recordedGame = null;
-
-        try {
-            recordedGame = JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_GAME_TYPE);
-        } catch (JsonParseException e) {
-            Log.e(Tags.SAVED_GAMES, "Exception while reading game", e);
-        }
-
-        return recordedGame;
+        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_GAME_TYPE);
     }
 
     // Write recorded games
 
-    private void writeRecordedGames() {
-        Log.i(Tags.SAVED_GAMES, String.format("Write recorded games into %s", RECORDED_GAMES_FILE));
-        try {
-            FileOutputStream outputStream = mContext.openFileOutput(RECORDED_GAMES_FILE, Context.MODE_PRIVATE);
-            writeRecordedGamesStream(outputStream, mRecordedGames);
-            outputStream.close();
-        } catch (JsonParseException | IOException e) {
-            Log.e(Tags.SAVED_GAMES, "Exception while writing games", e);
+    private void insertRecordedGameIntoDb(final RecordedGame recordedGame, boolean sync) {
+        if (sync) {
+            insertRecordedGameIntoDb(recordedGame);
+        } else {
+            new Thread() {
+                public void run() {
+                    insertRecordedGameIntoDb(recordedGame);
+                }
+            }.start();
         }
+    }
+
+    private void insertRecordedGameIntoDb(final RecordedGame recordedGame) {
+        String json = writeRecordedGame(recordedGame);
+        GameEntity gameEntity = new GameEntity(recordedGame.getGameDate(), recordedGame.getLeagueName(), recordedGame.getDivisionName(), json);
+        AppDatabase.getInstance(mContext).gameDao().insert(gameEntity);
+    }
+
+    private String writeRecordedGame(RecordedGame recordedGame) {
+        return JsonIOUtils.GSON.toJson(recordedGame, JsonIOUtils.RECORDED_GAME_TYPE);
     }
 
     public static void writeRecordedGamesStream(OutputStream outputStream, List<RecordedGame> recordedGames) throws JsonParseException, IOException {
@@ -995,7 +992,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void syncGames(List<GameDescription> remoteGameList, DataSynchronizationListener listener) {
-        for (RecordedGame localGame : mRecordedGames) {
+        List<RecordedGameService> localGameList = getRecordedGameServiceList();
+
+        for (RecordedGameService localGame : localGameList) {
             boolean foundRemoteVersion = false;
 
             for (GameDescription remoteGame : remoteGameList) {
@@ -1014,7 +1013,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         for (GameDescription remoteGame : remoteGameList) {
             boolean foundLocalVersion = false;
 
-            for (RecordedGame localGame : mRecordedGames) {
+            for (RecordedGameService localGame : localGameList) {
                 if (localGame.getGameDate() == remoteGame.getGameDate()) {
                     foundLocalVersion = true;
                 }
@@ -1030,8 +1029,6 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     private void downloadUserGamesRecursive(final Queue<GameDescription> remoteGames, final DataSynchronizationListener listener) {
         if (remoteGames.isEmpty()) {
-            writeRecordedGames();
-            collectLeaguesAndDivisions();
             if (listener != null) {
                 listener.onSynchronizationSucceeded();
             }
@@ -1040,7 +1037,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             getUserGame(remoteGame.getGameDate(), new AsyncGameRequestListener() {
                 @Override
                 public void onUserGameReceived(RecordedGameService recordedGameService) {
-                    mRecordedGames.add((RecordedGame) recordedGameService);
+                    insertRecordedGameIntoDb((RecordedGame) recordedGameService, false);
                     downloadUserGamesRecursive(remoteGames, listener);
                 }
 

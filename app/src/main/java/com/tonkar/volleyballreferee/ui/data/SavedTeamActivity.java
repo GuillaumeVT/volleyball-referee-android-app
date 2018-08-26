@@ -56,8 +56,7 @@ public class SavedTeamActivity extends AppCompatActivity {
                 break;
         }
 
-        ServicesProvider.getInstance().restoreSavedTeamsService(getApplicationContext());
-        mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService();
+        mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
         mTeamService = mSavedTeamsService.getCurrentTeam();
 
         setTitle("");
@@ -135,7 +134,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.leave_team_creation_title)).setMessage(getResources().getString(R.string.leave_team_creation_question));
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                mSavedTeamsService.loadSavedTeams();
+                mSavedTeamsService.cancelCurrentTeam();
                 Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

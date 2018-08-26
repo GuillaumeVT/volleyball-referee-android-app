@@ -39,16 +39,16 @@ public class RulesSetupFragment extends Fragment {
     private SwitchCompat                           mSanctionsSwitch;
     private SwitchCompat                           mTeamTimeoutsSwitch;
     private Spinner                                mTeamTimeoutsPerSetSpinner;
-    private Spinner                       mTeamTimeoutDurationSpinner;
-    private SwitchCompat                  mTechnicalTimeoutsSwitch;
-    private Spinner                       mTechnicalTimeoutDurationSpinner;
-    private SwitchCompat                  mGameIntervalsSwitch;
-    private Spinner                       mGameIntervalDurationSpinner;
-    private Spinner                       mTeamSubstitutionsPerSetSpinner;
-    private SwitchCompat                  mCourtSwitchesSwitch;
-    private Spinner                       mCourtSwitchFrequencySpinner;
-    private Spinner                       mCourtSwitchFrequencyTieBreakSpinner;
-    private Spinner                       mConsecutiveServesSpinner;
+    private Spinner                                mTeamTimeoutDurationSpinner;
+    private SwitchCompat                           mTechnicalTimeoutsSwitch;
+    private Spinner                                mTechnicalTimeoutDurationSpinner;
+    private SwitchCompat                           mGameIntervalsSwitch;
+    private Spinner                                mGameIntervalDurationSpinner;
+    private Spinner                                mTeamSubstitutionsPerSetSpinner;
+    private SwitchCompat                           mCourtSwitchesSwitch;
+    private Spinner                                mCourtSwitchFrequencySpinner;
+    private Spinner                                mCourtSwitchFrequencyTieBreakSpinner;
+    private Spinner                                mConsecutiveServesSpinner;
 
     private IntegerRuleAdapter mSetsPerGameAdapter;
     private IntegerRuleAdapter mPointsPerSetAdapter;
@@ -87,15 +87,12 @@ public class RulesSetupFragment extends Fragment {
         final boolean editable = getArguments().getBoolean("editable");
 
         if (isGameContext) {
-            if (ServicesProvider.getInstance().areSetupServicesUnavailable()) {
+            if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
                 ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
             }
             mRules = ServicesProvider.getInstance().getGeneralService().getRules();
         } else {
-            if (ServicesProvider.getInstance().isSavedRulesServiceUnavailable()) {
-                ServicesProvider.getInstance().restoreSavedRulesService(getActivity().getApplicationContext());
-            }
-            mRules = ServicesProvider.getInstance().getSavedRulesService().getCurrentRules();
+            mRules = ServicesProvider.getInstance().getSavedRulesService(getActivity().getApplicationContext()).getCurrentRules();
         }
 
         mScrollView = view.findViewById(R.id.rules_setup_scroll);
@@ -165,7 +162,7 @@ public class RulesSetupFragment extends Fragment {
 
         if (isGameContext) {
             mRulesNameInput.setThreshold(2);
-            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedRulesService().getSavedRules()));
+            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedRulesService(getActivity().getApplicationContext()).getSavedRules()));
             mRulesNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
