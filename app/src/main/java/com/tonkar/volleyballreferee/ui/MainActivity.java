@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -113,9 +115,15 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             ServicesProvider.getInstance().getRecordedGamesService(applicationContext).deleteSetupGame();
         }
 
-        ServicesProvider.getInstance().getSavedRulesService(applicationContext).syncRulesOnline();
-        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).syncTeamsOnline();
-        ServicesProvider.getInstance().getRecordedGamesService(applicationContext).syncGamesOnline();
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final long currentTime = System.currentTimeMillis();
+
+        if (sharedPreferences.getLong("last_full_sync", 0L) + 3600000L < currentTime) {
+            ServicesProvider.getInstance().getSavedRulesService(applicationContext).syncRulesOnline();
+            ServicesProvider.getInstance().getSavedTeamsService(applicationContext).syncTeamsOnline();
+            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).syncGamesOnline();
+            sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;

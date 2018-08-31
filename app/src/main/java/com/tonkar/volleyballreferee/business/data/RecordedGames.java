@@ -65,12 +65,14 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     private static final String sCurrentGame = "current";
     private static final String sSetupGame   = "setup";
 
-    private final Context      mContext;
-    private       GameService  mGameService;
-    private       RecordedGame mRecordedGame;
+    private final Context         mContext;
+    private       GameService     mGameService;
+    private       RecordedGame    mRecordedGame;
+    private final BatteryReceiver mBatteryReceiver;
 
     public RecordedGames(Context context) {
         mContext = context;
+        mBatteryReceiver = new BatteryReceiver();
     }
 
     @Override
@@ -80,6 +82,8 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         if (hasSetupGame()) {
             deleteSetupGame();
         }
+
+        mBatteryReceiver.register(mContext);
 
         mGameService = ServicesProvider.getInstance().getGameService();
         mGameService.addGeneralListener(this);
@@ -107,6 +111,8 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         mGameService.removeTeamListener(this);
         mGameService.removeTimeoutListener(this);
         mGameService.removeSanctionListener(this);
+
+        mBatteryReceiver.unregister(mContext);
     }
 
     @Override
@@ -235,7 +241,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void pushGameOnline(final RecordedGameService recordedGameService) {
-        if (PrefUtils.canRequest(mContext) && recordedGameService != null) {
+        if (mBatteryReceiver.canPushGameOnline() && PrefUtils.canRequest(mContext) && recordedGameService != null) {
             RecordedGame recordedGame = (RecordedGame) recordedGameService;
             try {
                 final byte[] bytes = recordedGameToByteArray(recordedGame);
@@ -268,7 +274,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void pushCurrentSetOnline() {
-        if (PrefUtils.isSyncOn(mContext) && mRecordedGame != null) {
+        if (mBatteryReceiver.canPushSetOnline() && PrefUtils.isSyncOn(mContext) && mRecordedGame != null) {
             int setIndex = mRecordedGame.currentSetIndex();
             RecordedSet recordedSet = mRecordedGame.getSets().get(setIndex);
 
