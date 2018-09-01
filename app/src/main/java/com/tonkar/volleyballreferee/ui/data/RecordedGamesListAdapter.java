@@ -50,7 +50,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         mRecordedGameServiceList = recordedGameServiceList;
         mFilteredRecordedGameServiceList = new ArrayList<>();
         mFilteredRecordedGameServiceList.addAll(mRecordedGameServiceList);
-        mFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        mFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
         mNamesFilter = new NamesFilter();
         mIsSyncOn = PrefUtils.isSyncOn(context);

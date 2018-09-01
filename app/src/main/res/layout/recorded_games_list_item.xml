@@ -9,50 +9,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/recorded_game_summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center|start"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/default_text_size"/>
-
-        <TextView
-            android:id="@+id/recorded_game_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="end"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/small_text_size"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center|start"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/recorded_game_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center|start"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/small_text_size" />
 
         <ImageView
             android:id="@+id/recorded_game_type_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/small_margin_size"
             android:tint="@color/colorBeach"
             app:srcCompat="@drawable/ic_sun" />
@@ -61,7 +25,7 @@
             android:id="@+id/recorded_game_gender_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/small_margin_size"
             android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_ladies" />
 
@@ -69,18 +33,39 @@
             android:id="@+id/recorded_game_indexed_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/small_margin_size"
             app:srcCompat="@drawable/ic_public" />
 
+        <TextView
+            android:id="@+id/recorded_game_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/small_text_size" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/recorded_game_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextViewTheme"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/big_text_size" />
+
+    <TextView
+        android:id="@+id/recorded_game_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextViewTheme"
+        android:textSize="@dimen/small_text_size" />
 
     <TextView
         android:id="@+id/recorded_game_league"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/small_margin_size"
         android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/small_text_size"/>
+        android:textSize="@dimen/small_text_size" />
 
 </LinearLayout>

@@ -44,7 +44,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
         mLayoutInflater = layoutInflater;
         mGameDescriptionList = new ArrayList<>();
         mFilteredGameDescriptionList = new ArrayList<>();
-        mFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        mFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
         mNamesFilter = new NamesFilter();
     }
