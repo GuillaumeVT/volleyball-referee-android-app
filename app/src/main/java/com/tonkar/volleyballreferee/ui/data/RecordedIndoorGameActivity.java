@@ -37,7 +37,7 @@ public class RecordedIndoorGameActivity extends RecordedGameActivity {
 
         RecordedGameService recordedGameService = mRecordedGamesService.getRecordedGameService(mGameDate);
 
-        DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         formatter.setTimeZone(TimeZone.getDefault());
 
         TextView gameDate = findViewById(R.id.game_date);
