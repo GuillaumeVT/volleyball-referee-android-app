@@ -801,4 +801,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
             mGameSchedule = System.currentTimeMillis();
         }
     }
+
+    @Override
+    public void resetCurrentSet() {}
 }

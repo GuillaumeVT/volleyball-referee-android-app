@@ -216,6 +216,14 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public void resetCurrentSet() {
+        if (!isMatchCompleted() && currentSetIndex() >= 0) {
+            mSets.set(currentSetIndex(), createSet(mRules, isTieBreakSet() ? mRules.getPointsInTieBreak() : mRules.getPointsPerSet(), mServingTeamAtStart));
+            notifySetStarted();
+        }
+    }
+
+    @Override
     public boolean isMatchCompleted() {
         final int homeTeamSetCount = getSets(TeamType.HOME);
         final int guestTeamSetCount = getSets(TeamType.GUEST);

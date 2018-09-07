@@ -7,4 +7,6 @@ public interface GeneralService extends BaseGeneralService {
     void removeGeneralListener(GeneralListener listener);
 
     void startMatch();
+
+    void resetCurrentSet();
 }

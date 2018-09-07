@@ -28,4 +28,9 @@
         android:orderInCategory="4"
         android:title="@string/toss_coin"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_reset_set"
+        android:orderInCategory="4"
+        android:title="@string/reset_set"
+        app:showAsAction="never" />
 </menu>

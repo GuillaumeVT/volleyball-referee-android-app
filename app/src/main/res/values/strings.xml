@@ -82,6 +82,8 @@
     <string name="toss_coin">Toss a coin</string>
     <string name="swap_first_service">Swap first service</string>
     <string name="navigate_home">Back to home page</string>
+    <string name="reset_set">Reset current set</string>
+    <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
     <string name="share">Share</string>
     <string name="share_exception">Failed to share the game</string>
     <string name="navigate_home_question">You may resume the current match later. Leave?</string>

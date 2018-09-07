@@ -241,9 +241,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game, menu);
 
-        if (mGameService.isMatchCompleted()) {
+        if (mGameService.isMatchCompleted() || GameType.BEACH.equals(mGameService.getGameType())) {
             MenuItem tossCoinMenu = menu.findItem(R.id.action_toss_coin);
             tossCoinMenu.setVisible(false);
+            MenuItem resetMenu = menu.findItem(R.id.action_reset_set);
+            resetMenu.setVisible(false);
         }
 
         MenuItem indexMenu = menu.findItem(R.id.action_index_game);
@@ -280,6 +282,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 return true;
             case R.id.action_index_game:
                 toggleIndexed();
+                return true;
+            case R.id.action_reset_set:
+                resetCurrentSetWithDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -325,6 +330,26 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private void toggleIndexed() {
         Log.i(Tags.GAME_UI, "Toggle indexed");
         mGameService.setIndexed(!mGameService.isIndexed());
+    }
+
+    private void resetCurrentSetWithDialog() {
+        Log.i(Tags.GAME_UI, "Reset current set");
+        if (!mGameService.isMatchCompleted()) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+            builder.setTitle(getResources().getString(R.string.reset_set)).setMessage(getResources().getString(R.string.reset_set_question));
+            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    mGameService.resetCurrentSet();
+                    recreate();
+                }
+            });
+            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {}
+            });
+
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+        }
     }
 
     // UI Callbacks
@@ -764,7 +789,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             gameNavigation.getMenu().removeItem(R.id.timeouts_tab);
         }
 
-        if (!ServicesProvider.getInstance().getGameService().getRules().areSanctionsEnabled()) {
+        if (!ServicesProvider.getInstance().getGameService().getRules().areSanctionsEnabled()
+                || UsageType.POINTS_SCOREBOARD.equals(mGameService.getUsageType())) {
             gameNavigation.getMenu().removeItem(R.id.sanctions_tab);
         }
 
