@@ -129,17 +129,13 @@ public class Indoor4x4TeamComposition extends TeamComposition {
                 // A player who just served cannot serve again on the next rotation
                 if (PositionType.POSITION_1.equals(positionType)) {
                     for (int player : mForbiddenSub1) {
-                        if (availablePlayers.contains(player)) {
-                            availablePlayers.remove(player);
-                        }
+                        availablePlayers.remove(player);
                     }
                 }
                 // A player who just served cannot serve again on the next rotation
                 if (PositionType.POSITION_2.equals(positionType)) {
                     for (int player : mForbiddenSub2) {
-                        if (availablePlayers.contains(player)) {
-                            availablePlayers.remove(player);
-                        }
+                        availablePlayers.remove(player);
                     }
                 }
             }

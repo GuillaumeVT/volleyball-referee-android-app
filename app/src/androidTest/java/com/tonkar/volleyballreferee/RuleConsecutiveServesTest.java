@@ -90,7 +90,7 @@ public class RuleConsecutiveServesTest {
         Rules rules = new Rules(Authentication.VBR_USER_ID, "My rules", System.currentTimeMillis(),
                 5, 25, true, 15, true, true,
                 true,2, 30,true, 60, true, 180,
-                6,false, 0, 0, consecutiveServes);
+                Rules.SINGLE_SUBSTITUTE_TYPE, 6, false, 0, 0, consecutiveServes);
 
         IndoorGame game = new IndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), rules);
 

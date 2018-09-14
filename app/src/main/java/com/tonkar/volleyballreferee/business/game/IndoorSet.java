@@ -19,7 +19,7 @@ public class IndoorSet extends Set {
 
     @Override
     protected TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition) {
-        return new IndoorTeamComposition(teamDefinition, rules.getTeamSubstitutionsPerSet());
+        return new IndoorTeamComposition(teamDefinition, rules.getSubstitutionType(), rules.getTeamSubstitutionsPerSet());
     }
 
 

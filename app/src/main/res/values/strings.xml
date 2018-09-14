@@ -207,6 +207,7 @@
     <string name="rules_technical_timeout_duration">Duration of a technical timeout</string>
     <string name="rules_game_intervals">Game intervals</string>
     <string name="rules_game_intervals_duration">Duration of a game interval</string>
+    <string name="rules_substitution_type">Substitution type</string>
     <string name="rules_team_substitutions_per_set">Number of team substitutions per set</string>
     <string name="rules_consecutive_serves_per_player">Limit of consecutive serves per player</string>
     <string name="rules_court_switches">Court switches</string>
@@ -257,7 +258,14 @@
         <item>2 minutes</item>
         <item>1 minute</item>
     </string-array>
+    <string-array name="substitution_type_entries">
+        <item>Allow substituting each starting player with a single substitute player (Conventional)</item>
+        <item>Allow substituting each starting player with several substitute players</item>
+        <item>Free substitutions</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 substitutions per set (according to substitution type)</item>
+        <item>15 substitutions per set (according to substitution type)</item>
         <item>12 substitutions per set</item>
         <item>6 substitutions per set</item>
         <item>5 substitutions per set</item>
@@ -329,7 +337,14 @@
         <item>120</item>
         <item>60</item>
     </string-array>
+    <string-array name="substitution_type_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_values" translatable="false">
+        <item>18</item>
+        <item>15</item>
         <item>12</item>
         <item>6</item>
         <item>5</item>

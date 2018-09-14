@@ -18,6 +18,7 @@ import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.SubstitutionService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
 
@@ -54,6 +55,8 @@ public class JsonIOUtils {
             .registerTypeAdapter(PositionType.class, new PositionTypeSerializer())
             .registerTypeAdapter(SanctionType.class, new SanctionTypeDeserializer())
             .registerTypeAdapter(SanctionType.class, new SanctionTypeSerializer())
+            .registerTypeAdapter(SubstitutionService.class, new InheritanceDeserializer<SubstitutionService>())
+            .registerTypeAdapter(SubstitutionService.class, new InheritanceSerializer<SubstitutionService>())
             .create();
 
     public static class TeamTypeSerializer implements JsonSerializer<TeamType> {

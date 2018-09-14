@@ -290,6 +290,29 @@
             android:layout_marginEnd="@dimen/big_margin_size"
             android:layout_marginStart="@dimen/big_margin_size"
             android:layout_marginTop="@dimen/big_margin_size"
+            android:text="@string/rules_substitution_type"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size" />
+
+        <Spinner
+            android:id="@+id/rules_substitution_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/big_margin_size"
+            android:layout_marginEnd="@dimen/big_margin_size"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:prompt="@string/rules_substitution_type"
+            android:spinnerMode="dialog"
+            android:textColor="@color/colorDisabledText"
+            android:textSize="@dimen/default_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="@dimen/big_margin_size"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:layout_marginTop="@dimen/big_margin_size"
             android:text="@string/rules_team_substitutions_per_set"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size" />

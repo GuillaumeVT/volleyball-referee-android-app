@@ -80,6 +80,8 @@
     <string name="toss_coin">Tirer au sort</string>
     <string name="swap_first_service">Échanger le premier service</string>
     <string name="navigate_home">Retour à la page d\'accueil</string>
+    <string name="reset_set">Redémarrer ce set</string>
+    <string name="reset_set_question">Ce set sera redémarré et toutes les actions effectuées seront perdues. Redémarrer?</string>
     <string name="share">Partager</string>
     <string name="share_exception">Échec du partage du match</string>
     <string name="navigate_home_question">Il sera possible de reprendre le match en cours. Quitter?</string>
@@ -203,6 +205,7 @@
     <string name="rules_technical_timeout_duration">Durée d\'un temps mort technique</string>
     <string name="rules_game_intervals">Pauses entre les sets</string>
     <string name="rules_game_intervals_duration">Durée de la pause entre les sets</string>
+    <string name="rules_substitution_type">Type de changements</string>
     <string name="rules_team_substitutions_per_set">Nombre de changements d\'équipe par set</string>
     <string name="rules_consecutive_serves_per_player">Limite de services consécutifs par joueur</string>
     <string name="rules_court_switches">Changements de côtés</string>
@@ -253,7 +256,14 @@
         <item>2 minutes</item>
         <item>1 minute</item>
     </string-array>
+    <string-array name="substitution_type_entries">
+        <item>Permettre le remplacement de chaque joueur titulaire par un seul joueur remplaçant (Classique)</item>
+        <item>Permettre le remplacement de chaque joueur titulaire par plusieurs joueurs remplaçants</item>
+        <item>Changements libres</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 changements par set (en fonction du type de changements)</item>
+        <item>15 changements par set (en fonction du type de changements)</item>
         <item>12 changements par set</item>
         <item>6 changements par set</item>
         <item>5 changements par set</item>

@@ -32,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -110,7 +111,12 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         ServicesProvider.getInstance().getSavedTeamsService(applicationContext).migrateSavedTeams();
         ServicesProvider.getInstance().getRecordedGamesService(applicationContext).migrateRecordedGames();
 
-        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+        try {
+            ServicesProvider.getInstance().restoreGameService(getApplicationContext());
+        } catch (JsonSyntaxException e) {
+            Log.e(Tags.SAVED_GAMES, "Failed to read the recorded game because the JSON format was invalid", e);
+            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).deleteCurrentGame();
+        }
         if (ServicesProvider.getInstance().getRecordedGamesService(applicationContext).hasSetupGame()) {
             ServicesProvider.getInstance().getRecordedGamesService(applicationContext).deleteSetupGame();
         }

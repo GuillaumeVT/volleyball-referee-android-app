@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.interfaces.team.SubstitutionService;
+import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,41 +20,52 @@ import java.util.TreeSet;
 public class IndoorTeamComposition extends TeamComposition {
 
     @SerializedName("startingLineupConfirmed")
-    private       boolean               mStartingLineupConfirmed;
+    private       boolean              mStartingLineupConfirmed;
     @SerializedName("startingLineup")
-    private final Map<Integer, Player>  mStartingLineup;
+    private final Map<Integer, Player> mStartingLineup;
+    @SerializedName("substitutionService")
+    private       SubstitutionService  mSubstitutionService;
     @SerializedName("maxSubstitutionsPerSet")
-    private final int                   mMaxSubstitutionsPerSet;
+    private final int                  mMaxSubstitutionsPerSet;
     @SerializedName("substitutions")
-    private final Map<Integer, Integer> mSubstitutions;
-    @SerializedName("fullSubstitutions")
-    private final List<Substitution>    mFullSubstitutions;
+    private final List<Substitution>   mSubstitutions;
     @SerializedName("actingLibero")
-    private       int                   mActingLibero;
+    private       int                  mActingLibero;
     @SerializedName("middleBlockers")
-    private final Set<Integer>          mMiddleBlockers;
+    private final Set<Integer>         mMiddleBlockers;
     @SerializedName("waitingMiddleBlocker")
-    private       int                   mWaitingMiddleBlocker;
+    private       int                  mWaitingMiddleBlocker;
     @SerializedName("actingCaptain")
-    private       int                   mActingCaptain;
+    private       int                  mActingCaptain;
 
-    public IndoorTeamComposition(final TeamDefinition teamDefinition, int maxSubstitutionsPerSet) {
+    public IndoorTeamComposition(final TeamDefinition teamDefinition, int substitutionType, int maxSubstitutionsPerSet) {
         super(teamDefinition);
 
         mStartingLineupConfirmed = false;
         mStartingLineup = new LinkedHashMap<>();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
-        mSubstitutions = new LinkedHashMap<>();
-        mFullSubstitutions = new ArrayList<>();
+        mSubstitutions = new ArrayList<>();
         mActingLibero = -1;
         mMiddleBlockers = new HashSet<>();
         mWaitingMiddleBlocker = -1;
         mActingCaptain = -1;
+
+        switch (substitutionType) {
+            case Rules.SINGLE_SUBSTITUTE_TYPE:
+                mSubstitutionService = new SingleSubstitutionService();
+                break;
+            case Rules.PLURAL_SUBSTITUTES_TYPE:
+                mSubstitutionService = new PluralSubstitutionService();
+                break;
+            case Rules.FREE_SUBSTITUTIONS_TYPE:
+                mSubstitutionService = new FreeSubstitutionService();
+                break;
+        }
     }
 
     // For GSON Deserialization
     public IndoorTeamComposition() {
-        this(new IndoorTeamDefinition(), 0);
+        this(new IndoorTeamDefinition(), Rules.SINGLE_SUBSTITUTE_TYPE, 0);
     }
 
     @Override
@@ -96,8 +109,7 @@ public class IndoorTeamComposition extends TeamComposition {
                 mWaitingMiddleBlocker = -1;
             } else {
                 Log.i(Tags.TEAM, "Actual substitution");
-                mSubstitutions.put(newNumber, oldNumber);
-                mFullSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
+                mSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
                 if (isMiddleBlocker(oldNumber)) {
                     Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, indoorTeamDefinition().getTeamType().toString()));
@@ -166,15 +178,15 @@ public class IndoorTeamComposition extends TeamComposition {
             } else {
                 // Can only do a fix number of substitutions
                 if (canSubstitute()) {
-                    // A player who was replaced can only do one return trip with his regular replacement player
-                    if (hasReplacementPlayer(number)) {
+                    // A player who was replaced can only do one return trip with his regular substitute player
+                    if (isInvolvedInPastSubstitution(number)) {
                         if (canSubstitute(number)) {
-                            availablePlayers.add(getReplacementPlayer(number));
+                            availablePlayers.addAll(getSubstitutePlayers(number));
                         }
                     } else {
                         availablePlayers.addAll(getFreePlayersOnBench());
                         // The waiting middle blocker may be on the bench, but it should never be available
-                        if (hasWaitingMiddleBlocker() && !hasReplacementPlayer(mWaitingMiddleBlocker)) {
+                        if (hasWaitingMiddleBlocker() && !isInvolvedInPastSubstitution(mWaitingMiddleBlocker)) {
                             availablePlayers.remove(mWaitingMiddleBlocker);
                         }
                     }
@@ -209,43 +221,23 @@ public class IndoorTeamComposition extends TeamComposition {
         return indoorTeamDefinition().isLibero(number) || indoorTeamDefinition().isLibero(getPlayerAtPosition(positionType));
     }
 
-    private boolean hasReplacementPlayer(int number) {
-        return mSubstitutions.containsKey(number) || mSubstitutions.containsValue(number);
+    private boolean isInvolvedInPastSubstitution(int number) {
+        return mSubstitutionService.isInvolvedInPastSubstitution(mSubstitutions, number);
     }
 
-    // A player can only do one return trip in each set
     private boolean canSubstitute(int number) {
-        int count = 0;
-
-        if (mSubstitutions.containsKey(number)) {
-            count++;
-        }
-        if (mSubstitutions.containsValue(number)) {
-            count++;
-        }
-
-        return count < 2;
+        return mSubstitutionService.canSubstitute(mSubstitutions, number);
     }
 
-    private int getReplacementPlayer(int number) {
-        int replacementNumber = -1;
-
-        for (Map.Entry<Integer, Integer> entry : mSubstitutions.entrySet()) {
-            if (entry.getKey() == number) {
-                replacementNumber = entry.getValue();
-            } else if (entry.getValue() == number) {
-                replacementNumber = entry.getKey();
-            }
-        }
-
-        return replacementNumber;
+    private Set<Integer> getSubstitutePlayers(int number) {
+        return mSubstitutionService.getSubstitutePlayers(mSubstitutions, number, getFreePlayersOnBench());
     }
 
     private List<Integer> getFreePlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
         for (int number : indoorTeamDefinition().getPlayers()) {
-            if (PositionType.BENCH.equals(getPlayerPosition(number)) && !hasReplacementPlayer(number) && !indoorTeamDefinition().isLibero(number)) {
+            if (PositionType.BENCH.equals(getPlayerPosition(number)) && !isInvolvedInPastSubstitution(number) && !indoorTeamDefinition().isLibero(number)) {
                 players.add(number);
             }
         }
@@ -335,7 +327,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     public List<Substitution> getSubstitutions() {
-        return new ArrayList<>(mFullSubstitutions);
+        return new ArrayList<>(mSubstitutions);
     }
 
     public Set<Integer> getPlayersInStartingLineup() {
@@ -427,4 +419,5 @@ public class IndoorTeamComposition extends TeamComposition {
 
         return result;
     }
+
 }

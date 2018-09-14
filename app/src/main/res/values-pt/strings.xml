@@ -80,6 +80,8 @@
     <string name="toss_coin">Atire a moeda</string>
     <string name="swap_first_service">Alterar primeiro serviço</string>
     <string name="navigate_home">Voltar ao Início</string>
+    <string name="reset_set">Reiniciar o set atual</string>
+    <string name="reset_set_question">O set atual será reiniciado e todas as ações serão perdidas. Reiniciar?</string>
     <string name="share">Partilhar</string>
     <string name="share_exception">Falha ao partilhar jogo</string>
     <string name="navigate_home_question">Deseja continuar o jogo atual, posteriormente?</string>
@@ -203,6 +205,7 @@
     <string name="rules_technical_timeout_duration">Duração do tempo técnico</string>
     <string name="rules_game_intervals">Intervalo</string>
     <string name="rules_game_intervals_duration">Duração do intervalo</string>
+    <string name="rules_substitution_type">Tipo de substituição</string>
     <string name="rules_team_substitutions_per_set">Número de substituições por set</string>
     <string name="rules_consecutive_serves_per_player">Limite de serviços consecutivos por jogador</string>
     <string name="rules_court_switches">Mudança de campo</string>
@@ -253,7 +256,14 @@
         <item>2 minutos</item>
         <item>1 minuto</item>
     </string-array>
+    <string-array name="substitution_type_entries">
+        <item>Permite a substituição de cada jogador inicial por um jogador substituto (convencional)</item>
+        <item>Permite a substituição de cada jogador inicial por vários jogadores substitutos</item>
+        <item>Substituições livres</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 substituições por set (de acordo com o tipo de substituições)</item>
+        <item>15 substituições por set (de acordo com o tipo de substituições)</item>
         <item>12 substituições por set</item>
         <item>6 substituições por set</item>
         <item>5 substituições por set</item>

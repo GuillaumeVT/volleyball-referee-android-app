@@ -102,7 +102,7 @@ public class BeachSetTest {
         Rules rules = new Rules(Authentication.VBR_USER_ID, "My rules", System.currentTimeMillis(),
                 3, 21, true, 15, false, true,
                 true, 1, 30,true, 30, true, 180,
-                0, true, 7, 5, 9999);
+                Rules.SINGLE_SUBSTITUTE_TYPE, 0, true, 7, 5, 9999);
         BeachSet set = new BeachSet(rules, rules.getPointsPerSet(), TeamType.GUEST, null, null);
 
         for (int index = 0; index < 20; index++) {

@@ -44,6 +44,7 @@ public class RulesSetupFragment extends Fragment {
     private Spinner                                mTechnicalTimeoutDurationSpinner;
     private SwitchCompat                           mGameIntervalsSwitch;
     private Spinner                                mGameIntervalDurationSpinner;
+    private Spinner                                mSubstitutionTypeSpinner;
     private Spinner                                mTeamSubstitutionsPerSetSpinner;
     private SwitchCompat                           mCourtSwitchesSwitch;
     private Spinner                                mCourtSwitchFrequencySpinner;
@@ -57,6 +58,7 @@ public class RulesSetupFragment extends Fragment {
     private IntegerRuleAdapter mTeamTimeoutDurationAdapter;
     private IntegerRuleAdapter mTechnicalTimeoutDurationAdapter;
     private IntegerRuleAdapter mGameIntervalDurationAdapter;
+    private IntegerRuleAdapter mSubstitutionTypeAdapter;
     private IntegerRuleAdapter mTeamSubstitutionsPerSetAdapter;
     private IntegerRuleAdapter mCourtSwitchFrequencyAdapter;
     private IntegerRuleAdapter mCourtSwitchFrequencyTieBreakAdapter;
@@ -139,6 +141,10 @@ public class RulesSetupFragment extends Fragment {
         mGameIntervalDurationSpinner = view.findViewById(R.id.rules_game_intervals_duration);
         mGameIntervalDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.game_interval_duration_entries), getResources().getStringArray(R.array.game_interval_duration_values));
         mGameIntervalDurationSpinner.setAdapter(mGameIntervalDurationAdapter);
+
+        mSubstitutionTypeSpinner = view.findViewById(R.id.rules_substitution_type);
+        mSubstitutionTypeAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitution_type_entries), getResources().getStringArray(R.array.substitution_type_values));
+        mSubstitutionTypeSpinner.setAdapter(mSubstitutionTypeAdapter);
 
         mTeamSubstitutionsPerSetSpinner = view.findViewById(R.id.rules_team_substitutions_per_set);
         mTeamSubstitutionsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.team_substitutions_per_set_entries), getResources().getStringArray(R.array.team_substitutions_per_set_values));
@@ -310,10 +316,22 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
+        mSubstitutionTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                mRules.setSubstitutionType(mSubstitutionTypeAdapter.getItem(index));
+                mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
         mTeamSubstitutionsPerSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
                 mRules.setTeamSubstitutionsPerSet(mTeamSubstitutionsPerSetAdapter.getItem(index));
+                mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
             }
 
             @Override
@@ -383,6 +401,7 @@ public class RulesSetupFragment extends Fragment {
         mGameIntervalsSwitch.setChecked(mRules.areGameIntervalsEnabled());
         mGameIntervalDurationSpinner.setSelection(mGameIntervalDurationAdapter.getPosition(mRules.getGameIntervalDuration()));
         mGameIntervalDurationSpinner.setEnabled(mRules.areGameIntervalsEnabled());
+        mSubstitutionTypeSpinner.setSelection(mSubstitutionTypeAdapter.getPosition(mRules.getSubstitutionType()));
         mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
         mCourtSwitchesSwitch.setChecked(mRules.areBeachCourtSwitchesEnabled());
         mCourtSwitchFrequencySpinner.setSelection(mCourtSwitchFrequencyAdapter.getPosition(mRules.getBeachCourtSwitchFrequency()));
