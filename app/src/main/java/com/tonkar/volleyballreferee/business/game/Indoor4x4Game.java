@@ -81,19 +81,31 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
                     && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
                 notifyTechnicalTimeoutReached();
             }
+
+            // Specific custom rule
+            if (samePlayerServedNConsecutiveTimes(teamType, getPoints(teamType), getPointsLadder())) {
+                rotateToNextPositions(teamType);
+            }
         }
     }
 
     @Override
     public void removeLastPoint() {
+        final TeamType oldServingTeam = getServingTeam();
         final int oldLeadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
         super.removeLastPoint();
 
+        final TeamType newServingTeam = getServingTeam();
         final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
         // In indoor volley, the teams change sides after the 8th during the tie break
         if (isTieBreakSet() && leadingScore == 7 && oldLeadingScore == 8) {
             swapTeams(ActionOriginType.APPLICATION);
+        }
+
+        // Specific custom rule
+        if (oldServingTeam.equals(newServingTeam) && samePlayerHadServedNConsecutiveTimes(oldServingTeam, getPoints(oldServingTeam), getPointsLadder())) {
+            rotateToPreviousPositions(oldServingTeam);
         }
     }
 

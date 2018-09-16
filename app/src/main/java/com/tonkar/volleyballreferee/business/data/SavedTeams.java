@@ -161,7 +161,8 @@ public class SavedTeams implements SavedTeamsService {
 
     @Override
     public void createAndSaveTeamFrom(GameType gameType, BaseTeamService teamService, TeamType teamType) {
-        if (AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGenderType(teamType).toString(), gameType.toString()) == 0) {
+        if (teamService.getTeamName(teamType).length() > 1
+                && AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGenderType(teamType).toString(), gameType.toString()) == 0) {
             createTeam(gameType);
             copyTeam(teamService, mCurrentTeam, teamType);
             saveCurrentTeam();

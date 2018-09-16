@@ -241,7 +241,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void pushGameOnline(final RecordedGameService recordedGameService) {
-        if (mBatteryReceiver.canPushGameOnline() && PrefUtils.canRequest(mContext) && recordedGameService != null) {
+        if (mBatteryReceiver.canPushGameOnline() && PrefUtils.canRequest(mContext) && recordedGameService != null && isNotTestGame(recordedGameService)) {
             RecordedGame recordedGame = (RecordedGame) recordedGameService;
             try {
                 final byte[] bytes = recordedGameToByteArray(recordedGame);
@@ -274,7 +274,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void pushCurrentSetOnline() {
-        if (mBatteryReceiver.canPushSetOnline() && PrefUtils.isSyncOn(mContext) && mRecordedGame != null) {
+        if (mBatteryReceiver.canPushSetOnline() && PrefUtils.isSyncOn(mContext) && mRecordedGame != null && isNotTestGame(mRecordedGame)) {
             int setIndex = mRecordedGame.currentSetIndex();
             RecordedSet recordedSet = mRecordedGame.getSets().get(setIndex);
 
@@ -1075,5 +1075,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 }
             });
         }
+    }
+
+    private boolean isNotTestGame(RecordedGameService recordedGameService) {
+        return recordedGameService.getTeamName(TeamType.HOME).length() > 1 && recordedGameService.getTeamName(TeamType.GUEST).length() > 1;
     }
 }

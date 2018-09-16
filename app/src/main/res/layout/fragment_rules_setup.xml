@@ -333,6 +333,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_marginEnd="@dimen/big_margin_size"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:layout_marginTop="@dimen/big_margin_size"
+            android:text="@string/rules_consecutive_serves_per_player"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size" />
+
+        <Spinner
+            android:id="@+id/rules_consecutive_serves_per_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/big_margin_size"
+            android:layout_marginEnd="@dimen/big_margin_size"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:prompt="@string/rules_consecutive_serves_per_player"
+            android:spinnerMode="dialog"
+            android:textColor="@color/colorDisabledText"
+            android:textSize="@dimen/default_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginBottom="@dimen/big_margin_size"
             android:layout_marginTop="@dimen/big_margin_size"
             android:text="@string/beach_rules"
@@ -393,42 +416,6 @@
             android:layout_marginEnd="@dimen/big_margin_size"
             android:layout_marginStart="@dimen/big_margin_size"
             android:prompt="@string/rules_court_switch_frequency_tie_break"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:text="@string/specific_leagues_rules"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextViewTheme"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:text="@string/rules_consecutive_serves_per_player"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/default_text_size" />
-
-        <Spinner
-            android:id="@+id/rules_consecutive_serves_per_player"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:prompt="@string/rules_consecutive_serves_per_player"
             android:spinnerMode="dialog"
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />

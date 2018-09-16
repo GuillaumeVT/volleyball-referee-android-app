@@ -105,25 +105,25 @@ public class Rules {
         return new Rules(Authentication.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
-                1, 6, true, 7, 5, 9999);
+                SINGLE_SUBSTITUTE_TYPE, 6, true, 7, 5, 9999);
     }
     public static Rules officialIndoorRules() {
         return new Rules(Authentication.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
-                1, 6, false, 7, 5, 9999);
+                SINGLE_SUBSTITUTE_TYPE, 6, false, 7, 5, 9999);
     }
     public static Rules officialBeachRules() {
         return new Rules(Authentication.VBR_USER_ID, "FIVB beach rules", 0L,
                 3, 21, true, 15, true, true, true, 1, 30,
                 true, 30, true, 60,
-                1, 6, true, 7, 5, 9999);
+                SINGLE_SUBSTITUTE_TYPE, 6, true, 7, 5, 9999);
     }
     public static Rules defaultIndoor4x4Rules() {
         return new Rules(Authentication.VBR_USER_ID, "Default 4x4 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
-                3, 4, false, 7, 5, 9999);
+                FREE_SUBSTITUTIONS_TYPE, 4, false, 7, 5, 9999);
     }
 
     public String getUserId() {
