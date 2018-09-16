@@ -188,7 +188,6 @@
     <string name="timeout_rules">Time-out</string>
     <string name="indoor_rules">Indoorvolleybal</string>
     <string name="beach_rules">Beachvolleybal</string>
-    <string name="specific_leagues_rules">Aangepaste regels voor specifieke competities</string>
 
     <string name="rules_points_per_set">Aantal punten per set</string>
     <string name="rules_sets_per_game">Aantal sets per wedstrijd</string>

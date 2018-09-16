@@ -188,7 +188,6 @@
     <string name="timeout_rules">Tempo di riposo</string>
     <string name="indoor_rules">Pallavolo</string>
     <string name="beach_rules">Beach volley</string>
-    <string name="specific_leagues_rules">Regole personalizzate per alcuni campionati o serie</string>
 
     <string name="rules_points_per_set">Numero di punti per set</string>
     <string name="rules_sets_per_game">Numero di set per partita</string>

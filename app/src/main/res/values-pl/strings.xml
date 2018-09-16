@@ -188,7 +188,6 @@
     <string name="timeout_rules">Czas</string>
     <string name="indoor_rules">Siatkówka halowa</string>
     <string name="beach_rules">Siatkówka plazowa</string>
-    <string name="specific_leagues_rules">Zasady niestandardowe dla konkretnych lig</string>
 
     <string name="rules_points_per_set">Ilosc punktów na set</string>
     <string name="rules_sets_per_game">Ilosc punktów na mecz</string>

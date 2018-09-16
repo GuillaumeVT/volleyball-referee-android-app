@@ -194,7 +194,6 @@
     <string name="timeout_rules">Vaheajad</string>
     <string name="indoor_rules">Klassikaline võrkpall</string>
     <string name="beach_rules">Ranna võrkpall</string>
-    <string name="specific_leagues_rules">Spetsiifilised reeglid teatud liigade jaoks</string>
 
     <string name="rules_points_per_set">Punktide arv geimis</string>
     <string name="rules_sets_per_game">Punktide arv mängus</string>

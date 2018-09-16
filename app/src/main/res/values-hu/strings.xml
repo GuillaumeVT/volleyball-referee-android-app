@@ -189,7 +189,6 @@
     <string name="timeout_rules">Időkérés</string>
     <string name="indoor_rules">Teremröplabda</string>
     <string name="beach_rules">Strandröplabda</string>
-    <string name="specific_leagues_rules">Egyedi szabályok</string>
 
     <string name="rules_points_per_set">Játszmánkénti pontok</string>
     <string name="rules_sets_per_game">Játszmák száma</string>

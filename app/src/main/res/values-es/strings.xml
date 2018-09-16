@@ -188,7 +188,6 @@
     <string name="timeout_rules">Tiempos muertos</string>
     <string name="indoor_rules">Voleibol (pista)</string>
     <string name="beach_rules">Voley-Playa</string>
-    <string name="specific_leagues_rules">Reglas personalizadas para algunos países</string>
 
     <string name="rules_points_per_set">Puntos para ganar un set</string>
     <string name="rules_sets_per_game">Sets por partido</string>

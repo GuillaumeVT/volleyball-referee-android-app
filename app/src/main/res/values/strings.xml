@@ -192,7 +192,6 @@
     <string name="timeout_rules">Timeout</string>
     <string name="indoor_rules">Indoor volleyball</string>
     <string name="beach_rules">Beach volleyball</string>
-    <string name="specific_leagues_rules">Custom rules for specific leagues</string>
 
     <string name="rules_points_per_set">Number of points per set</string>
     <string name="rules_sets_per_game">Number of sets per game</string>

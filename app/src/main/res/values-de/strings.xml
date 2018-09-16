@@ -188,7 +188,6 @@
     <string name="timeout_rules">Auszeit</string>
     <string name="indoor_rules">Hallenvolleyball</string>
     <string name="beach_rules">Beachvolleyball</string>
-    <string name="specific_leagues_rules">Benutzerdefinierte Regeln für bestimmte Ligen</string>
 
     <string name="rules_points_per_set">Anzahl der Punkte pro Satz</string>
     <string name="rules_sets_per_game">Anzahl der Sätze pro Spiel</string>

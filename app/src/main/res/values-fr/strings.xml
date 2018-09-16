@@ -190,7 +190,6 @@
     <string name="timeout_rules">Temps morts</string>
     <string name="indoor_rules">Volley-ball en salle</string>
     <string name="beach_rules">Beach volley-ball</string>
-    <string name="specific_leagues_rules">Règles personnalisées pour certaines ligues</string>
 
     <string name="rules_points_per_set">Nombre de points par set</string>
     <string name="rules_sets_per_game">Nombre de sets par match</string>

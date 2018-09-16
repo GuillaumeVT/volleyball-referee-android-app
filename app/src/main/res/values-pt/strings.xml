@@ -190,7 +190,6 @@
     <string name="timeout_rules">Tempo</string>
     <string name="indoor_rules">Voleibol</string>
     <string name="beach_rules">Voleibol de praia</string>
-    <string name="specific_leagues_rules">Regras específicas para ligas específicas</string>
 
     <string name="rules_points_per_set">Número de pontos por set</string>
     <string name="rules_sets_per_game">Número de sets por jogo</string>
