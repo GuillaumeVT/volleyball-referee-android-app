@@ -258,9 +258,9 @@
         <item>1 minute</item>
     </string-array>
     <string-array name="substitution_type_entries">
-        <item>Allow substituting each starting player with a single substitute player (Conventional)</item>
-        <item>Allow substituting each starting player with several substitute players</item>
-        <item>Free substitutions</item>
+        <item>A substitute player on court can only be substituted by the starting player on this position (Conventional)</item>
+        <item>A substitute player on court can be substituted by any player who played on this position or by any free player on the bench</item>
+        <item>A player on court can be substituted by any player on the bench</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 substitutions per set (according to substitution type)</item>

@@ -256,9 +256,9 @@
         <item>1 minuto</item>
     </string-array>
     <string-array name="substitution_type_entries">
-        <item>Permite a substituição de cada jogador inicial por um jogador substituto (convencional)</item>
-        <item>Permite a substituição de cada jogador inicial por vários jogadores substitutos</item>
-        <item>Substituições livres</item>
+        <item>Um jogador substituto em campo só poderá ser substituído pelo jogador inicial nesta posição (Convencional)</item>
+        <item>Um jogador substituto em campo pode ser substituído por qualquer jogador que jogou nesta posição ou por qualquer jogador livre no banco</item>
+        <item>Um jogador em campo pode ser substituído por qualquer jogador no banco</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 substituições por set (de acordo com o tipo de substituições)</item>

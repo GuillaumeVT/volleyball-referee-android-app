@@ -256,9 +256,9 @@
         <item>1 minute</item>
     </string-array>
     <string-array name="substitution_type_entries">
-        <item>Permettre le remplacement de chaque joueur titulaire par un seul joueur remplaçant (Classique)</item>
-        <item>Permettre le remplacement de chaque joueur titulaire par plusieurs joueurs remplaçants</item>
-        <item>Changements libres</item>
+        <item>Un joueur remplaçant sur le court peut seulement être remplacé par le joueur titulaire sur ce poste (Classique)</item>
+        <item>Un joueur remplaçant sur le court peut être remplacé par n\'importe quel joueur libre du banc ou par les joueurs ayant joué à ce poste</item>
+        <item>Un joueur sur le court peut être remplacé par n\'importe quel joueur du banc</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 changements par set (en fonction du type de changements)</item>

@@ -80,6 +80,8 @@
     <string name="toss_coin">Жеребьёвка</string>
     <string name="swap_first_service">Поменять первую подачу</string>
     <string name="navigate_home">Вернуться на главную страницу</string>
+    <string name="reset_set">Начать партию сначала</string>
+    <string name="reset_set_question">Партия начнётся сначала и все ваши действия будут потеряны. Перезагрузить?</string>
     <string name="share">Поделиться</string>
     <string name="share_exception">Ошибка! Не удалось поделиться результатами матча</string>
     <string name="navigate_home_question">Закончить данный матч позже. Покинуть страницу?</string>
@@ -202,6 +204,7 @@
     <string name="rules_technical_timeout_duration">Длительность технических перерывов</string>
     <string name="rules_game_intervals">Перерывы между партиями</string>
     <string name="rules_game_intervals_duration">Длительность перерывов между партиями</string>
+    <string name="rules_substitution_type">Режим замен</string>
     <string name="rules_team_substitutions_per_set">Количество замен в партии</string>
     <string name="rules_consecutive_serves_per_player">Максимальное число последовательных подач одним игроком</string>
     <string name="rules_court_switches">Смена сторон</string>
@@ -252,7 +255,14 @@
         <item>2 минуты</item>
         <item>1 минута</item>
     </string-array>
+    <string-array name="substitution_type_entries">
+        <item>Разрешить замену каждого основного игрока одним единственным игроком замены (Стандартная замена)</item>
+        <item>Разрешить замену каждого основного игрока несколькими игроками замены</item>
+        <item>Неограниченные замены</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 замен в партии (в зависимости от режима замен)</item>
+        <item>15 замен в партии (в зависимости от режима замен)</item>
         <item>12 замен в партии</item>
         <item>6 замен в партии</item>
         <item>5 замен в партии</item>
