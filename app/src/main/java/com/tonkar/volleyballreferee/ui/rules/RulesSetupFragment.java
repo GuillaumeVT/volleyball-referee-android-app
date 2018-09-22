@@ -150,7 +150,7 @@ public class RulesSetupFragment extends Fragment {
         mGameIntervalDurationSpinner.setAdapter(mGameIntervalDurationAdapter);
 
         mSubstitutionsLimitationSpinner = view.findViewById(R.id.rules_substitutions_limitation);
-        mSubstitutionsLimitationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitutions_limitation_entries), getResources().getStringArray(R.array.substitution_type_values));
+        mSubstitutionsLimitationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitutions_limitation_entries), getResources().getStringArray(R.array.substitutions_limitation_values));
         mSubstitutionsLimitationSpinner.setAdapter(mSubstitutionsLimitationAdapter);
 
         mSubstitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);

@@ -55,11 +55,10 @@ public class IndoorTeamComposition extends TeamComposition {
                 mSubstitutionsLimitation = new FivbSubstitutionsLimitation();
                 break;
             case Rules.ALTERNATIVE_LIMITATION_1:
-                // TODO
-                //mSubstitutionsLimitation = new PluralSubstitutionsLimitation();
+                mSubstitutionsLimitation = new AlternativeSubstitutionsLimitation1();
                 break;
             case Rules.ALTERNATIVE_LIMITATION_2:
-                mSubstitutionsLimitation = new PluralSubstitutionsLimitation();
+                mSubstitutionsLimitation = new AlternativeSubstitutionsLimitation2();
                 break;
             case Rules.NO_LIMITATION:
                 mSubstitutionsLimitation = new NoSubstitutionsLimitation();

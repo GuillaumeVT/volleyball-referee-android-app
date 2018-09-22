@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PluralSubstitutionsLimitation extends SubstitutionsLimitation {
+public class AlternativeSubstitutionsLimitation2 extends SubstitutionsLimitation {
 
-    PluralSubstitutionsLimitation() {
+    AlternativeSubstitutionsLimitation2() {
         super();
     }
 

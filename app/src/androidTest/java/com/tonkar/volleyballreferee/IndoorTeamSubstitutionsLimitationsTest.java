@@ -19,7 +19,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class IndoorTeamAlternativeCompositionTest {
+public class IndoorTeamSubstitutionsLimitationsTest {
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
         IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, TeamType.GUEST);
@@ -45,7 +45,12 @@ public class IndoorTeamAlternativeCompositionTest {
     }
 
     @Test
-    public void substitution_fillCourt_plural() {
+    public void substitution_fillCourt_alternativeLimitation1() {
+        substitution_fillCourt(Rules.ALTERNATIVE_LIMITATION_1);
+    }
+
+    @Test
+    public void substitution_fillCourt_alternativeLimitation2() {
         substitution_fillCourt(Rules.ALTERNATIVE_LIMITATION_2);
     }
 
@@ -70,12 +75,17 @@ public class IndoorTeamAlternativeCompositionTest {
     }
 
     @Test
-    public void substitution_changePlayer_free_plural() {
+    public void substitution_changePlayer_noLimitation_alternativeLimitation1() {
+        substitution_changePlayer_free(Rules.ALTERNATIVE_LIMITATION_1);
+    }
+
+    @Test
+    public void substitution_changePlayer_noLimitation_alternativeLimitation2() {
         substitution_changePlayer_free(Rules.ALTERNATIVE_LIMITATION_2);
     }
 
     @Test
-    public void substitution_changePlayer_free_free() {
+    public void substitution_changePlayer_free_noLimitation() {
         substitution_changePlayer_free(Rules.NO_LIMITATION);
     }
 
@@ -94,7 +104,40 @@ public class IndoorTeamAlternativeCompositionTest {
     }
 
     @Test
-    public void substitution_changePlayer_confirmed_front_plural() {
+    public void substitution_changePlayer_confirmed_front_alternativeLimitation1() {
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(11, Rules.ALTERNATIVE_LIMITATION_1);
+        team.confirmStartingLineup();
+        assertTrue(team.substitutePlayer(7, PositionType.POSITION_4));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
+
+        Set<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
+        assertEquals(1, availablePlayers.size());
+        assertTrue(availablePlayers.contains(4));
+
+        assertFalse(team.substitutePlayer(4, PositionType.POSITION_6));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
+
+        assertTrue(team.substitutePlayer(4, PositionType.POSITION_4));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
+        assertEquals(1, availablePlayers.size());
+
+        assertTrue(team.substitutePlayer(7, PositionType.POSITION_4));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(4));
+
+        assertFalse(team.substitutePlayer(8, PositionType.POSITION_4));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(8));
+
+        assertTrue(team.substitutePlayer(4, PositionType.POSITION_4));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_4);
+        assertEquals(1, availablePlayers.size());
+    }
+
+    @Test
+    public void substitution_changePlayer_confirmed_front_alternativeLimitation2() {
         IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10, Rules.ALTERNATIVE_LIMITATION_2);
         team.confirmStartingLineup();
         assertTrue(team.substitutePlayer(7, PositionType.POSITION_4));
@@ -147,7 +190,7 @@ public class IndoorTeamAlternativeCompositionTest {
     }
 
     @Test
-    public void substitution_changePlayer_confirmed_front_free() {
+    public void substitution_changePlayer_confirmed_front_noLimitation() {
         IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10, Rules.NO_LIMITATION);
         team.confirmStartingLineup();
         assertTrue(team.substitutePlayer(7, PositionType.POSITION_4));
@@ -172,7 +215,58 @@ public class IndoorTeamAlternativeCompositionTest {
     }
 
     @Test
-    public void substitution_changePlayer_confirmed_back_plural() {
+    public void substitution_changePlayer_confirmed_back_alternativeLimitation1() {
+        IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10, Rules.ALTERNATIVE_LIMITATION_1);
+        team.confirmStartingLineup();
+        assertTrue(team.substitutePlayer(7, PositionType.POSITION_6));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
+
+        Set<Integer> availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        assertEquals(1, availablePlayers.size());
+        assertTrue(availablePlayers.contains(6));
+
+        assertFalse(team.substitutePlayer(6, PositionType.POSITION_3));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(6));
+
+        assertTrue(team.substitutePlayer(6, PositionType.POSITION_6));
+        assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        assertEquals(1, availablePlayers.size());
+
+        assertTrue(team.substitutePlayer(7, PositionType.POSITION_6));
+        assertEquals(PositionType.POSITION_6, team.getPlayerPosition(7));
+
+        IndoorTeamDefinition teamDefinition = (IndoorTeamDefinition) team.getTeamDefinition();
+        teamDefinition.addLibero(10);
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        assertEquals(2, availablePlayers.size());
+        assertTrue(availablePlayers.contains(10));
+
+        assertTrue(team.substitutePlayer(10, PositionType.POSITION_6));
+        assertEquals(PositionType.POSITION_6, team.getPlayerPosition(10));
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        assertEquals(1, availablePlayers.size());
+
+        assertTrue(team.substitutePlayer(7, PositionType.POSITION_6));
+        assertEquals(PositionType.POSITION_6, team.getPlayerPosition(7));
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        assertEquals(2, availablePlayers.size());
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_5);
+        assertEquals(3, availablePlayers.size());
+
+        assertTrue(team.substitutePlayer(10, PositionType.POSITION_5));
+        assertEquals(PositionType.POSITION_5, team.getPlayerPosition(10));
+
+        availablePlayers = team.getPossibleSubstitutions(PositionType.POSITION_6);
+        assertEquals(1, availablePlayers.size());
+    }
+
+    @Test
+    public void substitution_changePlayer_confirmed_back_alternativeLimitation2() {
         IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10, Rules.ALTERNATIVE_LIMITATION_2);
         team.confirmStartingLineup();
         assertTrue(team.substitutePlayer(7, PositionType.POSITION_6));
@@ -217,7 +311,7 @@ public class IndoorTeamAlternativeCompositionTest {
     }
 
     @Test
-    public void substitution_changePlayer_confirmed_back_free() {
+    public void substitution_changePlayer_confirmed_back_noLimitation() {
         IndoorTeamComposition team = createTeamWithNPlayersAndFillCourt(10, Rules.NO_LIMITATION);
         team.confirmStartingLineup();
         assertTrue(team.substitutePlayer(7, PositionType.POSITION_6));
