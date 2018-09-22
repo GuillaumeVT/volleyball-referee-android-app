@@ -24,7 +24,7 @@ public class IndoorTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(GameType.INDOOR, TeamType.HOME), Rules.SINGLE_SUBSTITUTE_TYPE, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(GameType.INDOOR, TeamType.HOME), Rules.FIVB_LIMITATION, 6);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -44,7 +44,7 @@ public class IndoorTeamCompositionTest {
             assertTrue(teamDefinition.hasPlayer(index));
         }
 
-        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.SINGLE_SUBSTITUTE_TYPE, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.FIVB_LIMITATION, 6);
         assertEquals(0, team.getPlayersOnCourt().size());
 
         for (int index = 1; index <= playerCount; index++) {
@@ -90,7 +90,7 @@ public class IndoorTeamCompositionTest {
     private IndoorTeamComposition createTeamWithNPlayersAndFillCourt(int playerCount) {
         IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(playerCount);
         teamDefinition.setCaptain(3);
-        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.SINGLE_SUBSTITUTE_TYPE, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.FIVB_LIMITATION, 6);
         int playersOnCourt = 6;
 
         for (int index = 1; index <= playersOnCourt; index++) {
@@ -103,7 +103,7 @@ public class IndoorTeamCompositionTest {
     @Test
     public void substitution_fillCourt() {
         IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(10);
-        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.SINGLE_SUBSTITUTE_TYPE, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.FIVB_LIMITATION, 6);
         int playerCount = 6;
 
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -378,7 +378,7 @@ public class IndoorTeamCompositionTest {
         teamDefinition.addLibero(7);
         teamDefinition.addLibero(8);
         teamDefinition.setCaptain(3);
-        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.SINGLE_SUBSTITUTE_TYPE, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(teamDefinition, Rules.FIVB_LIMITATION, 6);
         int playersOnCourt = 6;
 
         for (int index = 1; index <= playersOnCourt; index++) {

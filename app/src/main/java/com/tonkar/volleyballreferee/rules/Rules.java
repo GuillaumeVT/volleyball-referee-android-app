@@ -8,9 +8,10 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 
 public class Rules {
 
-    public static final transient int SINGLE_SUBSTITUTE_TYPE  = 1;
-    public static final transient int PLURAL_SUBSTITUTES_TYPE = 2;
-    public static final transient int FREE_SUBSTITUTIONS_TYPE = 3;
+    public static final transient int FIVB_LIMITATION          = 1;
+    public static final transient int ALTERNATIVE_LIMITATION_1 = 2;
+    public static final transient int ALTERNATIVE_LIMITATION_2 = 3;
+    public static final transient int NO_LIMITATION            = 4;
 
     @SerializedName("userId")
     private String  mUserId;
@@ -44,8 +45,8 @@ public class Rules {
     private boolean mGameIntervalsEnabled;
     @SerializedName("gameIntervalDuration")
     private int     mGameIntervalDuration;
-    @SerializedName("substitutionType")
-    private int     mSubstitutionType;
+    @SerializedName("substitutionsLimitation")
+    private int     mSubstitutionsLimitation;
     @SerializedName("teamSubstitutionsPerSet")
     private int     mTeamSubstitutionsPerSet;
     @SerializedName("beachCourtSwitches")
@@ -67,7 +68,7 @@ public class Rules {
                  boolean teamTimeoutsEnabled, int teamTimeoutsPerSet, int teamTimeoutDuration,
                  boolean technicalTimeoutsEnabled, int technicalTimeoutDuration,
                  boolean gameIntervalsEnabled, int gameIntervalDuration,
-                 int substitutionType, int teamSubstitutionsPerSet,
+                 int substitutionsLimitation, int teamSubstitutionsPerSet,
                  boolean beachCourtSwitchesEnabled, int beachCourtSwitchFrequency, int beachCourtSwitchFrequencyTieBreak, int customConsecutiveServesPerPlayer) {
         mUserId = userId;
         mName = name;
@@ -90,7 +91,7 @@ public class Rules {
         mGameIntervalsEnabled = gameIntervalsEnabled;
         mGameIntervalDuration = gameIntervalDuration;
 
-        mSubstitutionType = substitutionType;
+        mSubstitutionsLimitation = substitutionsLimitation;
         mTeamSubstitutionsPerSet = teamSubstitutionsPerSet;
         checkSubstitutions();
 
@@ -105,25 +106,25 @@ public class Rules {
         return new Rules(Authentication.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
-                SINGLE_SUBSTITUTE_TYPE, 6, true, 7, 5, 9999);
+                FIVB_LIMITATION, 6, true, 7, 5, 9999);
     }
     public static Rules officialIndoorRules() {
         return new Rules(Authentication.VBR_USER_ID, "FIVB indoor 6x6 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
-                SINGLE_SUBSTITUTE_TYPE, 6, false, 7, 5, 9999);
+                FIVB_LIMITATION, 6, false, 7, 5, 9999);
     }
     public static Rules officialBeachRules() {
         return new Rules(Authentication.VBR_USER_ID, "FIVB beach rules", 0L,
                 3, 21, true, 15, true, true, true, 1, 30,
                 true, 30, true, 60,
-                SINGLE_SUBSTITUTE_TYPE, 6, true, 7, 5, 9999);
+                FIVB_LIMITATION, 6, true, 7, 5, 9999);
     }
     public static Rules defaultIndoor4x4Rules() {
         return new Rules(Authentication.VBR_USER_ID, "Default 4x4 rules", 0L,
                 5, 25, true, 15, true, true, true, 2, 30,
                 true, 60, true, 180,
-                FREE_SUBSTITUTIONS_TYPE, 4, false, 7, 5, 9999);
+                NO_LIMITATION, 4, false, 7, 5, 9999);
     }
 
     public String getUserId() {
@@ -190,8 +191,8 @@ public class Rules {
         return mGameIntervalDuration;
     }
 
-    public int getSubstitutionType() {
-        return mSubstitutionType;
+    public int getSubstitutionsLimitation() {
+        return mSubstitutionsLimitation;
     }
 
     public int getTeamSubstitutionsPerSet() {
@@ -278,8 +279,8 @@ public class Rules {
         mGameIntervalDuration = gameIntervalDuration;
     }
 
-    public void setSubstitutionType(int substitutionType) {
-        this.mSubstitutionType = substitutionType;
+    public void setSubstitutionsLimitation(int substitutionLimitation) {
+        this.mSubstitutionsLimitation = substitutionLimitation;
         checkSubstitutions();
     }
 
@@ -326,7 +327,7 @@ public class Rules {
         mGameIntervalsEnabled = rules.areGameIntervalsEnabled();
         mGameIntervalDuration = rules.getGameIntervalDuration();
 
-        mSubstitutionType = rules.getSubstitutionType();
+        mSubstitutionsLimitation = rules.getSubstitutionsLimitation();
         mTeamSubstitutionsPerSet = rules.getTeamSubstitutionsPerSet();
 
         mBeachCourtSwitchesEnabled = rules.areBeachCourtSwitchesEnabled();
@@ -337,7 +338,7 @@ public class Rules {
     }
 
     private void checkSubstitutions() {
-        if (SINGLE_SUBSTITUTE_TYPE == mSubstitutionType && mTeamSubstitutionsPerSet > 12) {
+        if (FIVB_LIMITATION == mSubstitutionsLimitation && mTeamSubstitutionsPerSet > 12) {
             mTeamSubstitutionsPerSet = 12;
         }
     }
@@ -356,7 +357,7 @@ public class Rules {
         Log.i(Tags.RULES, String.format("technicalTimeoutDuration: %d", mTechnicalTimeoutDuration));
         Log.i(Tags.RULES, String.format("gameIntervals: %b", mGameIntervalsEnabled));
         Log.i(Tags.RULES, String.format("gameIntervalDuration: %d", mGameIntervalDuration));
-        Log.i(Tags.RULES, String.format("substitutionType: %d", mSubstitutionType));
+        Log.i(Tags.RULES, String.format("substitutionLimitation: %d", mSubstitutionsLimitation));
         Log.i(Tags.RULES, String.format("teamSubstitutionsPerSet: %d", mTeamSubstitutionsPerSet));
         Log.i(Tags.RULES, String.format("beachCourtSwitches: %b", mBeachCourtSwitchesEnabled));
         Log.i(Tags.RULES, String.format("beachCourtSwitchFreq: %d", mBeachCourtSwitchFrequency));
@@ -388,7 +389,7 @@ public class Rules {
                     && (this.getTechnicalTimeoutDuration() == other.getTechnicalTimeoutDuration())
                     && (this.areGameIntervalsEnabled() == other.areGameIntervalsEnabled())
                     && (this.getGameIntervalDuration() == other.getGameIntervalDuration())
-                    && (this.getSubstitutionType() == other.getSubstitutionType())
+                    && (this.getSubstitutionsLimitation() == other.getSubstitutionsLimitation())
                     && (this.getTeamSubstitutionsPerSet() == other.getTeamSubstitutionsPerSet())
                     && (this.areBeachCourtSwitchesEnabled() == other.areBeachCourtSwitchesEnabled())
                     && (this.getBeachCourtSwitchFrequency() == other.getBeachCourtSwitchFrequency())

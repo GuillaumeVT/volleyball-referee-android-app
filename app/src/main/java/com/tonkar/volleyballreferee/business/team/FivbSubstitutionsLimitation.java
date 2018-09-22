@@ -1,15 +1,15 @@
 package com.tonkar.volleyballreferee.business.team;
 
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
-import com.tonkar.volleyballreferee.interfaces.team.SubstitutionService;
+import com.tonkar.volleyballreferee.interfaces.team.SubstitutionsLimitation;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SingleSubstitutionService extends SubstitutionService {
+public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
 
-    SingleSubstitutionService() {
+    FivbSubstitutionsLimitation() {
         super();
     }
 

@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Длительность технических перерывов</string>
     <string name="rules_game_intervals">Перерывы между партиями</string>
     <string name="rules_game_intervals_duration">Длительность перерывов между партиями</string>
-    <string name="rules_substitution_type">Режим замен</string>
+    <string name="rules_substitutions_limitation">Режим замен</string>
     <string name="rules_team_substitutions_per_set">Количество замен в партии</string>
     <string name="rules_consecutive_serves_per_player">Максимальное число последовательных подач одним игроком</string>
     <string name="rules_court_switches">Смена сторон</string>
@@ -255,7 +255,7 @@
         <item>2 минуты</item>
         <item>1 минута</item>
     </string-array>
-    <string-array name="substitution_type_entries">
+    <string-array name="substitutions_limitation_entries">
         <item>Разрешить замену каждого основного игрока одним единственным игроком замены (Стандартная замена)</item>
         <item>Разрешить замену каждого основного игрока несколькими игроками замены</item>
         <item>Неограниченные замены</item>

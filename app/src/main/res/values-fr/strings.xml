@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Durée d\'un temps mort technique</string>
     <string name="rules_game_intervals">Pauses entre les sets</string>
     <string name="rules_game_intervals_duration">Durée de la pause entre les sets</string>
-    <string name="rules_substitution_type">Type de changements</string>
+    <string name="rules_substitutions_limitation">Type de changements</string>
     <string name="rules_team_substitutions_per_set">Nombre de changements d\'équipe par set</string>
     <string name="rules_consecutive_serves_per_player">Limite de services consécutifs par joueur</string>
     <string name="rules_court_switches">Changements de côtés</string>
@@ -255,7 +255,7 @@
         <item>2 minutes</item>
         <item>1 minute</item>
     </string-array>
-    <string-array name="substitution_type_entries">
+    <string-array name="substitutions_limitation_entries">
         <item>Un joueur remplaçant sur le court peut seulement être remplacé par le joueur titulaire sur ce poste (Classique)</item>
         <item>Un joueur remplaçant sur le court peut être remplacé par n\'importe quel joueur libre du banc ou par les joueurs ayant joué à ce poste</item>
         <item>Un joueur sur le court peut être remplacé par n\'importe quel joueur du banc</item>

@@ -206,7 +206,7 @@
     <string name="rules_technical_timeout_duration">Duration of a technical timeout</string>
     <string name="rules_game_intervals">Game intervals</string>
     <string name="rules_game_intervals_duration">Duration of a game interval</string>
-    <string name="rules_substitution_type">Substitution type</string>
+    <string name="rules_substitutions_limitation">Limitation of substitutions</string>
     <string name="rules_team_substitutions_per_set">Number of team substitutions per set</string>
     <string name="rules_consecutive_serves_per_player">Limit of consecutive serves per player</string>
     <string name="rules_court_switches">Court switches</string>
@@ -257,10 +257,17 @@
         <item>2 minutes</item>
         <item>1 minute</item>
     </string-array>
-    <string-array name="substitution_type_entries">
-        <item>A substitute player on court can only be substituted by the starting player on this position (Conventional)</item>
-        <item>A substitute player on court can be substituted by any player who played on this position or by any free player on the bench</item>
-        <item>A player on court can be substituted by any player on the bench</item>
+    <string-array name="substitutions_limitation_entries">
+        <item>FIVB limitation</item>
+        <item>Alternative limitation 1</item>
+        <item>Alternative limitation 2</item>
+        <item>No limitation</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
+        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
+        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
+        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 substitutions per set (according to substitution type)</item>

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
-import com.tonkar.volleyballreferee.interfaces.team.SubstitutionService;
+import com.tonkar.volleyballreferee.interfaces.team.SubstitutionsLimitation;
 import com.tonkar.volleyballreferee.rules.Rules;
 
 import java.util.ArrayList;
@@ -20,23 +20,23 @@ import java.util.TreeSet;
 public class IndoorTeamComposition extends TeamComposition {
 
     @SerializedName("startingLineupConfirmed")
-    private       boolean              mStartingLineupConfirmed;
+    private       boolean                 mStartingLineupConfirmed;
     @SerializedName("startingLineup")
-    private final Map<Integer, Player> mStartingLineup;
-    @SerializedName("substitutionService")
-    private       SubstitutionService  mSubstitutionService;
+    private final Map<Integer, Player>    mStartingLineup;
+    @SerializedName("substitutionsLimitation")
+    private       SubstitutionsLimitation mSubstitutionsLimitation;
     @SerializedName("maxSubstitutionsPerSet")
-    private final int                  mMaxSubstitutionsPerSet;
+    private final int                     mMaxSubstitutionsPerSet;
     @SerializedName("substitutions")
-    private final List<Substitution>   mSubstitutions;
+    private final List<Substitution>      mSubstitutions;
     @SerializedName("actingLibero")
-    private       int                  mActingLibero;
+    private       int                     mActingLibero;
     @SerializedName("middleBlockers")
-    private final Set<Integer>         mMiddleBlockers;
+    private final Set<Integer>            mMiddleBlockers;
     @SerializedName("waitingMiddleBlocker")
-    private       int                  mWaitingMiddleBlocker;
+    private       int                     mWaitingMiddleBlocker;
     @SerializedName("actingCaptain")
-    private       int                  mActingCaptain;
+    private       int                     mActingCaptain;
 
     public IndoorTeamComposition(final TeamDefinition teamDefinition, int substitutionType, int maxSubstitutionsPerSet) {
         super(teamDefinition);
@@ -51,21 +51,25 @@ public class IndoorTeamComposition extends TeamComposition {
         mActingCaptain = -1;
 
         switch (substitutionType) {
-            case Rules.SINGLE_SUBSTITUTE_TYPE:
-                mSubstitutionService = new SingleSubstitutionService();
+            case Rules.FIVB_LIMITATION:
+                mSubstitutionsLimitation = new FivbSubstitutionsLimitation();
                 break;
-            case Rules.PLURAL_SUBSTITUTES_TYPE:
-                mSubstitutionService = new PluralSubstitutionService();
+            case Rules.ALTERNATIVE_LIMITATION_1:
+                // TODO
+                //mSubstitutionsLimitation = new PluralSubstitutionsLimitation();
                 break;
-            case Rules.FREE_SUBSTITUTIONS_TYPE:
-                mSubstitutionService = new FreeSubstitutionService();
+            case Rules.ALTERNATIVE_LIMITATION_2:
+                mSubstitutionsLimitation = new PluralSubstitutionsLimitation();
+                break;
+            case Rules.NO_LIMITATION:
+                mSubstitutionsLimitation = new NoSubstitutionsLimitation();
                 break;
         }
     }
 
     // For GSON Deserialization
     public IndoorTeamComposition() {
-        this(new IndoorTeamDefinition(), Rules.SINGLE_SUBSTITUTE_TYPE, 0);
+        this(new IndoorTeamDefinition(), Rules.FIVB_LIMITATION, 0);
     }
 
     @Override
@@ -222,15 +226,15 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean isInvolvedInPastSubstitution(int number) {
-        return mSubstitutionService.isInvolvedInPastSubstitution(mSubstitutions, number);
+        return mSubstitutionsLimitation.isInvolvedInPastSubstitution(mSubstitutions, number);
     }
 
     private boolean canSubstitute(int number) {
-        return mSubstitutionService.canSubstitute(mSubstitutions, number);
+        return mSubstitutionsLimitation.canSubstitute(mSubstitutions, number);
     }
 
     private Set<Integer> getSubstitutePlayers(int number) {
-        return mSubstitutionService.getSubstitutePlayers(mSubstitutions, number, getFreePlayersOnBench());
+        return mSubstitutionsLimitation.getSubstitutePlayers(mSubstitutions, number, getFreePlayersOnBench());
     }
 
     private List<Integer> getFreePlayersOnBench() {

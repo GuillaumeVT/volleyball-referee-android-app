@@ -1,5 +1,8 @@
 package com.tonkar.volleyballreferee.ui.rules;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -23,6 +27,7 @@ import com.tonkar.volleyballreferee.ui.data.SavedRulesListAdapter;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 public class RulesSetupFragment extends Fragment {
@@ -44,7 +49,7 @@ public class RulesSetupFragment extends Fragment {
     private Spinner                                mTechnicalTimeoutDurationSpinner;
     private SwitchCompat                           mGameIntervalsSwitch;
     private Spinner                                mGameIntervalDurationSpinner;
-    private Spinner                                mSubstitutionTypeSpinner;
+    private Spinner                                mSubstitutionsLimitationSpinner;
     private Spinner                                mTeamSubstitutionsPerSetSpinner;
     private SwitchCompat                           mCourtSwitchesSwitch;
     private Spinner                                mCourtSwitchFrequencySpinner;
@@ -58,11 +63,13 @@ public class RulesSetupFragment extends Fragment {
     private IntegerRuleAdapter mTeamTimeoutDurationAdapter;
     private IntegerRuleAdapter mTechnicalTimeoutDurationAdapter;
     private IntegerRuleAdapter mGameIntervalDurationAdapter;
-    private IntegerRuleAdapter mSubstitutionTypeAdapter;
+    private IntegerRuleAdapter mSubstitutionsLimitationAdapter;
     private IntegerRuleAdapter mTeamSubstitutionsPerSetAdapter;
     private IntegerRuleAdapter mCourtSwitchFrequencyAdapter;
     private IntegerRuleAdapter mCourtSwitchFrequencyTieBreakAdapter;
     private IntegerRuleAdapter mConsecutiveServesAdapter;
+
+    private TextView mSubstitutionsLimitationDescription;
 
     public RulesSetupFragment() {
     }
@@ -142,9 +149,16 @@ public class RulesSetupFragment extends Fragment {
         mGameIntervalDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.game_interval_duration_entries), getResources().getStringArray(R.array.game_interval_duration_values));
         mGameIntervalDurationSpinner.setAdapter(mGameIntervalDurationAdapter);
 
-        mSubstitutionTypeSpinner = view.findViewById(R.id.rules_substitution_type);
-        mSubstitutionTypeAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitution_type_entries), getResources().getStringArray(R.array.substitution_type_values));
-        mSubstitutionTypeSpinner.setAdapter(mSubstitutionTypeAdapter);
+        mSubstitutionsLimitationSpinner = view.findViewById(R.id.rules_substitutions_limitation);
+        mSubstitutionsLimitationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitutions_limitation_entries), getResources().getStringArray(R.array.substitution_type_values));
+        mSubstitutionsLimitationSpinner.setAdapter(mSubstitutionsLimitationAdapter);
+
+        mSubstitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
+        final int drawableLeftIndex = 0;
+        Drawable drawable = mSubstitutionsLimitationDescription.getCompoundDrawables()[drawableLeftIndex];
+        if (drawable != null) {
+            drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+        }
 
         mTeamSubstitutionsPerSetSpinner = view.findViewById(R.id.rules_team_substitutions_per_set);
         mTeamSubstitutionsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.team_substitutions_per_set_entries), getResources().getStringArray(R.array.team_substitutions_per_set_values));
@@ -316,11 +330,12 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mSubstitutionTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSubstitutionsLimitationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setSubstitutionType(mSubstitutionTypeAdapter.getItem(index));
+                mRules.setSubstitutionsLimitation(mSubstitutionsLimitationAdapter.getItem(index));
                 mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
+                mSubstitutionsLimitationDescription.setText(getResources().getStringArray(R.array.substitutions_limitation_description_entries)[index]);
             }
 
             @Override
@@ -401,7 +416,7 @@ public class RulesSetupFragment extends Fragment {
         mGameIntervalsSwitch.setChecked(mRules.areGameIntervalsEnabled());
         mGameIntervalDurationSpinner.setSelection(mGameIntervalDurationAdapter.getPosition(mRules.getGameIntervalDuration()));
         mGameIntervalDurationSpinner.setEnabled(mRules.areGameIntervalsEnabled());
-        mSubstitutionTypeSpinner.setSelection(mSubstitutionTypeAdapter.getPosition(mRules.getSubstitutionType()));
+        mSubstitutionsLimitationSpinner.setSelection(mSubstitutionsLimitationAdapter.getPosition(mRules.getSubstitutionsLimitation()));
         mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
         mCourtSwitchesSwitch.setChecked(mRules.areBeachCourtSwitchesEnabled());
         mCourtSwitchFrequencySpinner.setSelection(mCourtSwitchFrequencyAdapter.getPosition(mRules.getBeachCourtSwitchFrequency()));

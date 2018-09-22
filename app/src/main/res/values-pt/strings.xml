@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Duração do tempo técnico</string>
     <string name="rules_game_intervals">Intervalo</string>
     <string name="rules_game_intervals_duration">Duração do intervalo</string>
-    <string name="rules_substitution_type">Tipo de substituição</string>
+    <string name="rules_substitutions_limitation">Tipo de substituição</string>
     <string name="rules_team_substitutions_per_set">Número de substituições por set</string>
     <string name="rules_consecutive_serves_per_player">Limite de serviços consecutivos por jogador</string>
     <string name="rules_court_switches">Mudança de campo</string>
@@ -255,7 +255,7 @@
         <item>2 minutos</item>
         <item>1 minuto</item>
     </string-array>
-    <string-array name="substitution_type_entries">
+    <string-array name="substitutions_limitation_entries">
         <item>Um jogador substituto em campo só poderá ser substituído pelo jogador inicial nesta posição (Convencional)</item>
         <item>Um jogador substituto em campo pode ser substituído por qualquer jogador que jogou nesta posição ou por qualquer jogador livre no banco</item>
         <item>Um jogador em campo pode ser substituído por qualquer jogador no banco</item>

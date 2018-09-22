@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Set;
 
-public abstract class SubstitutionService {
+public abstract class SubstitutionsLimitation {
 
     @SerializedName("classType")
     private String mClassType;
 
-    public SubstitutionService() {
+    public SubstitutionsLimitation() {
         mClassType = getClass().getName();
     }
 
