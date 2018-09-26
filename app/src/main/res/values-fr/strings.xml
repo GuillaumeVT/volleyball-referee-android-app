@@ -257,15 +257,15 @@
     </string-array>
     <string-array name="substitutions_limitation_entries">
         <item>Limitation FIVB</item>
-        <item>Limitation alternative 1</item>
-        <item>Limitation alternative 2</item>
+        <item>Autre limitation type 1</item>
+        <item>Autre limitation type 2</item>
         <item>Pas de limitation</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
         <item>Un joueur de la formation de départ peut sortir du jeu mais une fois par set et n’y retourner qu’une seule fois par set et uniquement à la place qu’il occupait précédemment dans la formation de départ.\n\nUn joueur remplaçant peut entrer au jeu à la place d’un joueur de la formation de départ mais une fois par set et ne peut être remplacé que par le même joueur de la formation de départ.</item>
         <item>Un joueur de la formation de départ peut sortir du jeu, un nombre illimité de fois par set dans la limite des remplacements, et y retourner, un nombre illimité de fois par set dans la limite des remplacements, et uniquement à la place qu’il occupait précédemment dans la formation de départ.\n\nUn joueur remplaçant peut entrer au jeu à la place d’un joueur de la formation de départ, un nombre illimité de fois par set dans la limite des remplacements, et ne peut être remplacé que par le même joueur de la formation de départ.</item>
-        <item>Un joueur de la formation de départ peut sortir du jeu, un nombre illimité de fois par set dans la limite des remplacements, et y retourner, un nombre illimité de fois par set dans la limite des remplacements, et uniquement à la place qu’il occupait précédemment dans la formation de départ.\n\nUn joueur remplaçant peut entrer au jeu à la place d’un joueur de la formation de départ, un nombre illimité de fois par set dans la limite des remplacements.\n\nPlusieurs remplaçant peuvent entrer sur la même position au cours d \'un set.</item>
-        <item>Les joueurs peuvent sortir du jeu et y retourner sur n \'importe quelle position, un nombre illimité de fois par set dans la limite des remplacements.</item>
+        <item>Un joueur de la formation de départ peut sortir du jeu, un nombre illimité de fois par set dans la limite des remplacements, et y retourner, un nombre illimité de fois par set dans la limite des remplacements, et uniquement à la place qu’il occupait précédemment dans la formation de départ.\n\nUn joueur remplaçant peut entrer au jeu à la place d’un joueur de la formation de départ, un nombre illimité de fois par set dans la limite des remplacements.\n\nPlusieurs remplaçants peuvent entrer sur la même position au cours d\'un set.</item>
+        <item>Les joueurs peuvent sortir du jeu et y retourner sur n\'importe quelle position, un nombre illimité de fois par set dans la limite des remplacements.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 remplacements par set (en fonction des limitations de remplacements)</item>

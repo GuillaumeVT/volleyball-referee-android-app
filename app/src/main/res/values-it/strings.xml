@@ -86,7 +86,7 @@
     <string name="select_player_title">Scegli un giocatore dalla panchina</string>
     <string name="court_position_tab">Posizioni</string>
     <string name="ladder_tab">Punti</string>
-    <string name="substitutions_tab">Cambi</string>
+    <string name="substitutions_tab">Sostituzioni</string>
     <string name="timeouts_tab">Tempo di riposo</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d minuti</string>
@@ -202,7 +202,7 @@
     <string name="rules_technical_timeout_duration">Durata del tempo tecnico</string>
     <string name="rules_game_intervals">Intervalli di gioco</string>
     <string name="rules_game_intervals_duration">Durata degli intervalli di gioco</string>
-    <string name="rules_team_substitutions_per_set">Numero di cambi per squadra per set</string>
+    <string name="rules_team_substitutions_per_set">Numero di sostituzioni per squadra per set</string>
     <string name="rules_consecutive_serves_per_player">Limite di servizi consecutivi per uno stesso giocatore</string>
     <string name="rules_court_switches">Cambio campo</string>
     <string name="rules_court_switch_frequency">Frequenza di cambio campo in un set normale</string>
@@ -253,11 +253,11 @@
         <item>1 minuto</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>12 cambi per set</item>
-        <item>6 cambi per set</item>
-        <item>5 cambi per set</item>
-        <item>4 cambi per set</item>
-        <item>3 cambi per set</item>
+        <item>12 sostituzioni per set</item>
+        <item>6 sostituzioni per set</item>
+        <item>5 sostituzioni per set</item>
+        <item>4 sostituzioni per set</item>
+        <item>3 sostituzioni per set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Cambio campo ogni 10 punti</item>
