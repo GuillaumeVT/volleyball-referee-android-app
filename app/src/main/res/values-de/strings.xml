@@ -80,6 +80,8 @@
     <string name="toss_coin">Wirf eine Münze</string>
     <string name="swap_first_service">Wechsel erster Aufschlag</string>
     <string name="navigate_home">Zurück zur Startseite</string>
+    <string name="reset_set">Reset current set</string>
+    <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
     <string name="share">Teilen</string>
     <string name="share_exception">Fehler beim Teilen des Spiels</string>
     <string name="navigate_home_question">Du kannst das aktuelle Spiel später fortsetzen. Verlassen?</string>
@@ -202,6 +204,7 @@
     <string name="rules_technical_timeout_duration">Dauer einer technischen Auszeit</string>
     <string name="rules_game_intervals">Satzpausen</string>
     <string name="rules_game_intervals_duration">Dauer einer Satzpause</string>
+    <string name="rules_substitutions_limitation">Limitation of substitutions</string>
     <string name="rules_team_substitutions_per_set">Anzahl der Mannschaftsauswechslungen pro Satz</string>
     <string name="rules_consecutive_serves_per_player">Limit der aufeinander folgenden Aufschläge pro Spieler</string>
     <string name="rules_court_switches">Seitenwechsel</string>
@@ -252,7 +255,21 @@
         <item>2 Minuten</item>
         <item>1 Minute</item>
     </string-array>
+    <string-array name="substitutions_limitation_entries">
+        <item>FIVB limitation</item>
+        <item>Alternative limitation 1</item>
+        <item>Alternative limitation 2</item>
+        <item>No limitation</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
+        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions), and he/she can only be substituted by the same starting player.</item>
+        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions).\n\nMore than one substitute may enter the set in each position.</item>
+        <item>Players can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 Auswechslungen pro Satz</item>
+        <item>15 Auswechslungen pro Satz</item>
         <item>12 Auswechslungen pro Satz</item>
         <item>6 Auswechslungen pro Satz</item>
         <item>5 Auswechslungen pro Satz</item>
