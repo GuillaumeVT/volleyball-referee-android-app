@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Duração do tempo técnico</string>
     <string name="rules_game_intervals">Intervalo</string>
     <string name="rules_game_intervals_duration">Duração do intervalo</string>
-    <string name="rules_substitutions_limitation">Tipo de substituição</string>
+    <string name="rules_substitutions_limitation">Limitação de substituições</string>
     <string name="rules_team_substitutions_per_set">Número de substituições por set</string>
     <string name="rules_consecutive_serves_per_player">Limite de serviços consecutivos por jogador</string>
     <string name="rules_court_switches">Mudança de campo</string>
@@ -256,13 +256,20 @@
         <item>1 minuto</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>Um jogador substituto em campo só poderá ser substituído pelo jogador inicial nesta posição (Convencional)</item>
-        <item>Um jogador substituto em campo pode ser substituído por qualquer jogador que jogou nesta posição ou por qualquer jogador livre no banco</item>
-        <item>Um jogador em campo pode ser substituído por qualquer jogador no banco</item>
+        <item>Limitação FIVB</item>
+        <item>Limitação alternativa 1</item>
+        <item>Limitação alternativa 2</item>
+        <item>Sem limitação</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>Um jogador da formação inicial pode sair do jogo, mas apenas uma vez em cada set, e reentrar, mas apenas uma vez em cada set, e apenas para a sua posição anterior na formação inicial.\n\nUm jogador substituto pode entrar no jogo no lugar dum jogador da formação inicial, mas apenas uma vez em cada set, e ele/ela só poderá ser substituído(a) pelo mesmo jogador da formação inicial.</item>
+        <item>Um jogador da formação inicial pode sair do jogo, várias vez em cada set, e reentrar, de forma ilimitada em cada set (dentro do limite do número de substituições de equipa permitidas), e só para a sua posição anterior na formação inicial.\n\nUm jogador substituto pode entrar no jogo no lugar dum jogador da formação inicial, de forma ilimitada em cada set (dentro do limite do número de substituições de equipa permitidas), e ele/ela só poderá ser substituído(a) pelo mesmo jogador da formação inicial.</item>
+        <item>Um jogador da formação inicial pode sair do jogo, várias vez em cada set, e reentrar, de forma ilimitada em cada set (dentro do limite do número de substituições de equipa permitidas), e só para a sua posição anterior na formação inicial.\n\nUm jogador substituto pode entrar no jogo no lugar dum jogador da formação inicial, de forma ilimitada em cada set (dentro do limite do número de substituições de equipa permitidas).\n\nMais do que um substituto pode entrar no set em cada posição.</item>
+        <item>Os jogadores podem sair e reentrar no jogo em qualquer posição, de forma ilimitada em cada set, dentro do limite do número de substituições de equipa permitida.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 substituições por set (de acordo com o tipo de substituições)</item>
-        <item>15 substituições por set (de acordo com o tipo de substituições)</item>
+        <item>18 substituições por set (de acordo com a limitação de substituições)</item>
+        <item>15 substituições por set (de acordo com a limitação de substituições)</item>
         <item>12 substituições por set</item>
         <item>6 substituições por set</item>
         <item>5 substituições por set</item>

@@ -80,6 +80,8 @@
     <string name="toss_coin">Lancia la moneta</string>
     <string name="swap_first_service">Cambia il primo servizio</string>
     <string name="navigate_home">Torna alla pagina principale</string>
+    <string name="reset_set">Ricominciare questo set</string>
+    <string name="reset_set_question">Ricominciando questo set tutte le azioni effettuate saranno perdute. Ricominciare?</string>
     <string name="share">Condividi</string>
     <string name="share_exception">Errore nella condivisione della partita</string>
     <string name="navigate_home_question">Potrai riprendere l\'attuale partita più tardi. Uscrire?</string>
@@ -202,6 +204,7 @@
     <string name="rules_technical_timeout_duration">Durata del tempo tecnico</string>
     <string name="rules_game_intervals">Intervalli di gioco</string>
     <string name="rules_game_intervals_duration">Durata degli intervalli di gioco</string>
+    <string name="rules_substitutions_limitation">Limite di sostituzioni</string>
     <string name="rules_team_substitutions_per_set">Numero di sostituzioni per squadra per set</string>
     <string name="rules_consecutive_serves_per_player">Limite di servizi consecutivi per uno stesso giocatore</string>
     <string name="rules_court_switches">Cambio campo</string>
@@ -252,7 +255,21 @@
         <item>2 minuti</item>
         <item>1 minuto</item>
     </string-array>
+    <string-array name="substitutions_limitation_entries">
+        <item>Limite FIVB</item>
+        <item>Altro limite (Tipo 1)</item>
+        <item>Altro limite (Tipo 2)</item>
+        <item>Nessun limite</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>Un giocatore titolare può uscire dal gioco una volta per set e rientrare una sola volta per set allo stesso posto che occupava all\'inizio.\n\nUn giocatore di riserva può entrare sul campo al posto di un giocatore titolare una volta per set e può essere solo sostituito nuovamente dallo stesso giocatore titolare di cui aveva preso il posto.</item>
+        <item>Un giocatore titolare può uscire dal gioco un numero illimitato di volte per set e rientrare un numero illimitato di volte per set (nel limite del numero di sostituzioni) ma solamente al posto che occupava all\'inizio.\n\nUn giocatore di riserva può entrare in campo al posto di un giocatore titolare un numero illimitato di volte per set (nel limite del numero di sostituzioni) e può essere sostituito a sua volta solo dal giocatore titolare di cui aveva preso il posto.</item>
+        <item>Un giocatore titolare può uscire dal gioco un numero illimitato di volte per set e rientrare un numero illimitato di volte per set (nel limite del numero di sostituzioni) ma solamente al posto che occupava all\'inizio.\n\nUn giocatore di riserva può entrare al posto di un giocatore titolare un numero illimitato di volte per set (nel limite del numero di sostituzioni).\n\nPiù giocatori di riserva possono entrare sul campo nella stessa posizione durante un set.</item>
+        <item>I giocatori possono uscire dal gioco e rientrare su qualunque posizione illimitatamente durante un set nel limite del numero di sostituzioni.</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 sostituzioni per set (sulla base dei limite delle sostituzioni)</item>
+        <item>15 sostituzioni per set (sulla base dei limite delle sostituzioni)</item>
         <item>12 sostituzioni per set</item>
         <item>6 sostituzioni per set</item>
         <item>5 sostituzioni per set</item>

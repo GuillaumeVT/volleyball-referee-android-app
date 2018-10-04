@@ -80,6 +80,8 @@
     <string name="toss_coin">Lanzar una moneda</string>
     <string name="swap_first_service">Cambiar primer saque</string>
     <string name="navigate_home">Volver al inicio</string>
+    <string name="reset_set">Reinicial set actual</string>
+    <string name="reset_set_question">El set actual se reiniciará, y todas las acciones se perderán. ¿Reiniciar?</string>
     <string name="share">Compartir</string>
     <string name="share_exception">Error al compartir el partido</string>
     <string name="navigate_home_question">Puedes continuar el partido más tarde. ¿Salir?</string>
@@ -202,6 +204,7 @@
     <string name="rules_technical_timeout_duration">Duración del tiempo técnico</string>
     <string name="rules_game_intervals">Intervalos</string>
     <string name="rules_game_intervals_duration">Duración de un intervalo</string>
+    <string name="rules_substitutions_limitation">Reglas para las sustituciones</string>
     <string name="rules_team_substitutions_per_set">Número de sustituciones por set</string>
     <string name="rules_consecutive_serves_per_player">Límite de servicios consecutivos por jugador</string>
     <string name="rules_court_switches">Cambios de campo</string>
@@ -252,7 +255,21 @@
         <item>2 minutos</item>
         <item>1 minuto</item>
     </string-array>
+    <string-array name="substitutions_limitation_entries">
+        <item>Sustituciones FIVB</item>
+        <item>Sustituciones alternativas 1</item>
+        <item>Sustituciones alternativas 2</item>
+        <item>Sin restricciones</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>Un jugador titular puede salir del juego, sólo una vez en el set, y volver a entrar, pero sólo una vez en el set y únicamente a su posición previa en la formación inicial.\n\nUn jugador suplente puede ingresar al juego para reemplazar a un jugador titular, pero sólo una vez en el set, y a su vez, solamente puede ser reemplazado por el mismo jugador titular.</item>
+        <item>Un jugador titular puede ser sustituido varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo), y únicamente en su posición original en la rotación.\n\nUn jugador suplente puede ingresar al juego para reemplazar a un jugador titular varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo), y sólo puede ser sustituido por el mismo jugador titular.</item>
+        <item>Un jugador titular puede ser sustituido varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo), y únicamente en su posición original en la rotación.\n\nUn jugador suplente puede ingresar al juego para reemplazar a un jugador titular varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo).\n\nMás de un suplente pueden entrar a jugar en cada posición.</item>
+        <item>Los jugadores pueden salir y entrar del juego en cualquier posición tantas veces como quieran, sin exceder el número de sustiticuiones permitidas por equipo.</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 sustituciones por set (según restricciones de sustituciones)</item>
+        <item>15 sustituciones por set (según restricciones de sustituciones)</item>
         <item>12 sustituciones por set</item>
         <item>6 sustituciones por set</item>
         <item>5 sustituciones por set</item>

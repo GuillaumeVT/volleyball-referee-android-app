@@ -81,6 +81,8 @@
     <string name="toss_coin">Pénzfeldobás</string>
     <string name="swap_first_service">Nyító csapat váltása</string>
     <string name="navigate_home">Vissza a kezdő képernyőre</string>
+    <string name="reset_set">Aktuális játszma alaphelyzetbe állítása</string>
+    <string name="reset_set_question">A játszma minden eseménye el fog veszni. Biztosan alaphelyzetbe akarod állítani a játszmát?</string>
     <string name="share">Megosztás</string>
     <string name="share_exception">Nem sikerült a mérkőzés megosztása</string>
     <string name="navigate_home_question">Később folytathatod a mérkőzést. Nyugodtan kiléphetsz.</string>
@@ -203,6 +205,7 @@
     <string name="rules_technical_timeout_duration">Technikai idő hossza</string>
     <string name="rules_game_intervals">Játszmák közötti szünetek</string>
     <string name="rules_game_intervals_duration">Szünet hossza</string>
+    <string name="rules_substitutions_limitation">Csere szabályok</string>
     <string name="rules_team_substitutions_per_set">Játszmánkénti cserék száma</string>
     <string name="rules_consecutive_serves_per_player">Egymás utáni nyitások maximális száma</string>
     <string name="rules_court_switches">Térfélcserék</string>
@@ -253,7 +256,21 @@
         <item>2 perc</item>
         <item>1 perc</item>
     </string-array>
+    <string-array name="substitutions_limitation_entries">
+        <item>FIVB szabályok</item>
+        <item>Alternatív szabály 1</item>
+        <item>Alternatív szabály 2</item>
+        <item>Nincsen korlátozás</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>Egy kezdőjátékos egy játszmán belül egyszer lecserélhető és visszacserélhető, de csak a korábbi helyére.\n\nEgy cserejátékos pályára léphet egy kezdőjátékos helyére, de játszmánként csak egyszer és csak ugyanaz a játékos cserélheti őt le.</item>
+        <item>Egy kezdőjátékos többször is lecserélhető egy játszmán belül és többször  vissza is állhat, de csak a csapat számára engedélyezett összes cserék számának figyelembe vételével, és mindig csak ugyanabba a pozícióba.\n\nEgy cserejátékos többször is  pályára léphet egy kezdőjátékos helyére, a csapat számára engedélyezett összes cserék számának figyelembe vételével és mindig csak ugyanazzal a kezdőjátékossal cserélhet.</item>
+        <item>Egy kezdőjátékos többször is lecserélhető egy játszmán belül és többször  vissza is állhat, de csak a csapat számára engedélyezett összes cserék számának figyelembe vételével, és mindig csak ugyanabba a pozícióba.\n\nEgy cserejátékos többször is  pályára léphet egy kezdőjátékos helyére, a csapat számára engedélyezett összes cserék számának figyelembe vételével.\n\nEgy pozícióra egynél több cserejátkos is beállítható.</item>
+        <item>Bármelyik játékos bármelyik helyre becserélhető, a csapat számára engedélyezett összes cserék számának figyelembe vételével.</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 csere játszmánként (a cserékre vonatkozó korlátozások szerint)</item>
+        <item>15 csere játszmánként (a cserékre vonatkozó korlátozások szerint)</item>
         <item>12 csere játszmánként</item>
         <item>6 csere játszmánként</item>
         <item>5 csere játszmánként</item>

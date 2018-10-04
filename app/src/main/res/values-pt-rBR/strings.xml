@@ -80,6 +80,8 @@
     <string name="toss_coin">Jogue a moeda</string>
     <string name="swap_first_service">Alterar primeiro saque</string>
     <string name="navigate_home">Retornar ao Início</string>
+    <string name="reset_set">Reiniciar set atual</string>
+    <string name="reset_set_question">O set atual será reiniciando e todoas as ações serão perdidas. Confirmar?</string>
     <string name="share">Compartilhar</string>
     <string name="share_exception">Falha ao compartilhar partida</string>
     <string name="navigate_home_question">Deseja continuar a partida atual depois?</string>
@@ -202,6 +204,7 @@
     <string name="rules_technical_timeout_duration">Duração do tempo técnico</string>
     <string name="rules_game_intervals">Intervalo</string>
     <string name="rules_game_intervals_duration">Duração do intervalo</string>
+    <string name="rules_substitutions_limitation">Limite de Substituições</string>
     <string name="rules_team_substitutions_per_set">Número de substituições por set</string>
     <string name="rules_consecutive_serves_per_player">Limite de saques consecutivos por jogador</string>
     <string name="rules_court_switches">Trocas de quadras</string>
@@ -252,7 +255,21 @@
         <item>2 minutos</item>
         <item>1 minuto</item>
     </string-array>
+    <string-array name="substitutions_limitation_entries">
+        <item>Limite da Federação Internacional de Voleibol</item>
+        <item>Limite de substituições alternativa 1</item>
+        <item>Limite de substituições alternativa 2</item>
+        <item>Sem limite de substituições</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>Um jogador que iniciou a partida pode ser substituído apenas uma vez por set, e pode retornar à quadra desde que no lugar do atleta que o substituiu.\n\nUm jogador reserva pode entrar na partida no lugar de um jogador titular uma vez por set, e poderá ser substituído neste set pelo atleta que substituiu em primeiro lugar.</item>
+        <item>Um jogador titular pode ser substituído diversas vezes no set, entrar e sair de forma ilimitada desde que seja na posição em que iniciou o set como titular de acordo com o limite de substituições estabelecido.\n\nUm jogador reserva pode entrar na partida no lugar de um titular inúmeras vezes por set de acordo com o limite de substituições estabelecido, porém só poderá substituir o mesmo jogador titular em todas as substituições.</item>
+        <item>Um jogador titular pode ser substituído diversas vezes no set, entrar e sair de forma ilimitada desde que seja na posição em que iniciou o set como titular de acordo com o limite de substituições estabelecido.\n\nUm jogador reserva pode entrar na partida no lugar de qualquer titular inúmeras vezes por set de acordo com o limite de substituições estabelecido.\n\nMais de um reserva pode entrar na partida por set na mesma posição.</item>
+        <item>Jogadores podem sair e entrar da partida em qualquer posição no mesmo set, de acordo com o número de substituições estabelecido.</item>
+    </string-array>
     <string-array name="team_substitutions_per_set_entries">
+        <item>18 substiuições por set (de acordo com o limite de substituições)</item>
+        <item>15 substiuições por set (de acordo com o limite de substituições)</item>
         <item>12 substiuições por set</item>
         <item>6 substiuições por set</item>
         <item>5 substiuições por set</item>
