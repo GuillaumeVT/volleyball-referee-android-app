@@ -80,8 +80,8 @@
     <string name="toss_coin">Rzut moneta</string>
     <string name="swap_first_service">Zmien druzyne serwujaca</string>
     <string name="navigate_home">Powrot na strone glowna</string>
-    <string name="reset_set">Reset current set</string>
-    <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
+    <string name="reset_set">Zrestartuj set</string>
+    <string name="reset_set_question">Bieżący set zostanie uruchomiony ponownie i wszystkie czynności zostaną utracone. Zresetować?</string>
     <string name="share">Udostepnij</string>
     <string name="share_exception">Nie udało się udostępnić meczu</string>
     <string name="navigate_home_question">Możesz wznowić bieżący mecz później, kontynuowac?</string>
@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Czas trwania przerwy technicznej</string>
     <string name="rules_game_intervals">Przerwa miedzy setami</string>
     <string name="rules_game_intervals_duration">Czas trwania przerwy miedzy setami</string>
-    <string name="rules_substitutions_limitation">Limitation of substitutions</string>
+    <string name="rules_substitutions_limitation">Limit zmian</string>
     <string name="rules_team_substitutions_per_set">Ilosc zmian na set</string>
     <string name="rules_consecutive_serves_per_player">Limit ilosci zagrywek na gracza</string>
     <string name="rules_court_switches">Zmiana stron</string>
@@ -256,20 +256,20 @@
         <item>1 minuta</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>FIVB limitation</item>
-        <item>Alternative limitation 1</item>
-        <item>Alternative limitation 2</item>
-        <item>No limitation</item>
+        <item>Ograniczenia FIVB</item>
+        <item>Alternatywne ograniczenie 1</item>
+        <item>Alternatywne ograniczenie 2</item>
+        <item>Bez Ograniczeń</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
-        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions), and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions).\n\nMore than one substitute may enter the set in each position.</item>
-        <item>Players can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
+        <item>Zawodnik z wyjściowego składu może opuścić grę, ale tylko raz w secie i wejść ponownie, ale tylko raz w secie i tylko do swojej / jej poprzedniej pozycji w składzie.\n\nZawodnik zmianowy może wejść do gry w miejsce gracza z wyjściowego składu, ale tylko raz na set, oraz on / ona może być zastąpiony tylko przez tego samego zawodnika wyjściowego.</item>
+        <item>Zawodnik z wyjściowego składu może opuścić grę kilka razy w secie i ponownie wejść nieograniczoną ilość razy na set w ramach liczby dozwolonych zmian drużynowych i tylko na swoją poprzednią pozycę w składzie.\n\nZawodnik zmianowy może wejść do gry w miejsce gracza z wyjściowego składu, nieograniczoną liczbę razy w secie w ramach liczby dozwolonych zmian drużynowych, a on / ona może być zastąpieni tylko przez tego samego gracza rozpoczynającego.</item>
+        <item>Zawodnik z wyjściowego składu może opuścić grę kilka razy w secie i ponownie wejść nieograniczoną ilość razy na set w ramach liczby dozwolonych zmian drużynowych i tylko na swoją poprzednią pozycę w składzie.\n\nZawodnik zmianowy może wejść do gry w miejsce gracza z wyjściowego składu, nieograniczoną ilość razy w secie w w ramach liczby dozwolonych zmian drużynowych.\n\nWięcej niż jeden zawodnik zmianowy może wejść w secie na danąj pozycję.</item>
+        <item>Zawodnicy mogą opuścić i ponownie wejść do gry na dowolnej pozycji, nieograniczoną liczbę razy w seciew ramach liczby dozwolonych zmian drużynowych.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 zmian na set</item>
-        <item>15 zmian na set</item>
+        <item>18 zmian na set (zgodnie z ograniczeniem zmian)</item>
+        <item>15 zmian na set (zgodnie z ograniczeniem zmian)</item>
         <item>12 zmian na set</item>
         <item>6 zmian na set</item>
         <item>5 zmian na set</item>
