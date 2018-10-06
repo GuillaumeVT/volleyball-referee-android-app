@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sync_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity">
 
-    <RelativeLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sync_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ListView
             android:id="@+id/scheduled_games_list"
@@ -19,69 +19,69 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin_size"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/schedule_indoor_game_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/fab_shift_default"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="scheduleIndoorGame"
-            android:tint="@color/colorPrimary"
-            app:backgroundTint="@android:color/white"
-            app:fabCustomSize="@dimen/form_button_size"
-            app:maxImageSize="@dimen/form_fab_icon_size"
-            app:srcCompat="@drawable/ic_6x6" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/schedule_indoor_4x4_game_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/fab_shift_default"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="scheduleIndoor4x4Game"
-            android:tint="@color/colorPrimary"
-            app:backgroundTint="@android:color/white"
-            app:fabCustomSize="@dimen/form_button_size"
-            app:maxImageSize="@dimen/form_fab_icon_size"
-            app:srcCompat="@drawable/ic_4x4" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/schedule_indoor_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_shift_default"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="scheduleIndoorGame"
+        android:tint="@color/colorPrimary"
+        app:backgroundTint="@android:color/white"
+        app:fabCustomSize="@dimen/form_button_size"
+        app:maxImageSize="@dimen/form_fab_icon_size"
+        app:srcCompat="@drawable/ic_6x6" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/schedule_beach_game_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/fab_shift_default"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="scheduleBeachGame"
-            android:tint="@color/colorBeach"
-            app:backgroundTint="@android:color/white"
-            app:fabCustomSize="@dimen/form_button_size"
-            app:maxImageSize="@dimen/form_fab_icon_size"
-            app:srcCompat="@drawable/ic_sun" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/schedule_indoor_4x4_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_shift_default"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="scheduleIndoor4x4Game"
+        android:tint="@color/colorPrimary"
+        app:backgroundTint="@android:color/white"
+        app:fabCustomSize="@dimen/form_button_size"
+        app:maxImageSize="@dimen/form_fab_icon_size"
+        app:srcCompat="@drawable/ic_4x4" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/schedule_game_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/fab_shift_default"
-            android:clickable="true"
-            android:focusable="true"
-            android:tint="@android:color/white"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabCustomSize="@dimen/form_button_size"
-            app:maxImageSize="@dimen/form_fab_icon_size"
-            app:srcCompat="@android:drawable/ic_input_add" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/schedule_beach_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_shift_default"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="scheduleBeachGame"
+        android:tint="@color/colorBeach"
+        app:backgroundTint="@android:color/white"
+        app:fabCustomSize="@dimen/form_button_size"
+        app:maxImageSize="@dimen/form_fab_icon_size"
+        app:srcCompat="@drawable/ic_sun" />
 
-    </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/schedule_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_shift_default"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabCustomSize="@dimen/form_button_size"
+        app:maxImageSize="@dimen/form_fab_icon_size"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</RelativeLayout>
