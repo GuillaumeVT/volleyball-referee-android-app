@@ -144,7 +144,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
             int homePoints = recordedGameService.getPoints(TeamType.HOME, setIndex);
             int guestPoints = recordedGameService.getPoints(TeamType.GUEST, setIndex);
-            builder.append(String.valueOf(homePoints)).append('-').append(String.valueOf(guestPoints)).append("\t\t");
+            builder.append(UiUtils.formatScoreFromLocale(homePoints, guestPoints, false)).append("\t\t");
         }
 
         return builder.toString();

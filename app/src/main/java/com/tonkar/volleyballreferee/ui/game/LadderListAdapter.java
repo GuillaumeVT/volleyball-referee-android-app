@@ -102,7 +102,7 @@ public class LadderListAdapter extends BaseAdapter {
         int actualIndex = mReverseOrder ? (mBaseScoreService.getNumberOfSets() - index - 1) : index;
 
         viewHolder.setNumberText.setText(String.format(setView.getContext().getResources().getString(R.string.set_number), actualIndex+1));
-        viewHolder.setScoreText.setText(String.format(Locale.getDefault(), "%d\t-\t%d", mBaseScoreService.getPoints(TeamType.HOME, actualIndex), mBaseScoreService.getPoints(TeamType.GUEST, actualIndex)));
+        viewHolder.setScoreText.setText(UiUtils.formatScoreFromLocale(mBaseScoreService.getPoints(TeamType.HOME, actualIndex), mBaseScoreService.getPoints(TeamType.GUEST, actualIndex), true));
         viewHolder.setDurationText.setText(String.format(setView.getContext().getResources().getString(R.string.set_duration), mBaseScoreService.getSetDuration(actualIndex) / 60000L));
 
         List<LadderItem> ladderItems = createLadderItems(mBaseScoreService.getPointsLadder(actualIndex));
@@ -220,11 +220,11 @@ public class LadderListAdapter extends BaseAdapter {
                 if (TeamType.HOME.equals(ladderItem.getTeamType())) {
                     homeText.setVisibility(View.VISIBLE);
                     guestText.setVisibility(View.INVISIBLE);
-                    homeText.setText(String.valueOf(ladderItem.getHomePoints()));
+                    homeText.setText(UiUtils.formatNumberFromLocal(ladderItem.getHomePoints()));
                 } else {
                     guestText.setVisibility(View.VISIBLE);
                     homeText.setVisibility(View.INVISIBLE);
-                    guestText.setText(String.valueOf(ladderItem.getGuestPoints()));
+                    guestText.setText(UiUtils.formatNumberFromLocal(ladderItem.getGuestPoints()));
                 }
 
                 if (ladderItem.hasEvent(TeamType.HOME)) {

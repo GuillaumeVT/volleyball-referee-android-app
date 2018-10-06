@@ -155,7 +155,7 @@ public class IndoorCourtFragment extends CourtFragment {
         } else {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
             MaterialButton button = teamPositions.get(positionType);
-            button.setText(String.valueOf(number));
+            button.setText(UiUtils.formatNumberFromLocal(number));
             UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
 
             checkCaptain(teamType, number);
@@ -184,7 +184,7 @@ public class IndoorCourtFragment extends CourtFragment {
         for (Integer number : players) {
             final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
             final MaterialButton button = teamPositions.get(positionType);
-            button.setText(String.valueOf(number));
+            button.setText(UiUtils.formatNumberFromLocal(number));
             UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
         }
 

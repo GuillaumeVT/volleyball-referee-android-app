@@ -101,8 +101,8 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         } else {
             viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getGuestTeamPoints(), substitution.getHomeTeamPoints()));
         }
-        viewHolder.playerInText.setText(String.valueOf(substitution.getPlayerIn()));
-        viewHolder.playerOutText.setText(String.valueOf(substitution.getPlayerOut()));
+        viewHolder.playerInText.setText(UiUtils.formatNumberFromLocal(substitution.getPlayerIn()));
+        viewHolder.playerOutText.setText(UiUtils.formatNumberFromLocal(substitution.getPlayerOut()));
 
         UiUtils.styleTeamText(mContext, mTeamService, mTeamType, substitution.getPlayerIn(), viewHolder.playerInText);
         UiUtils.styleTeamText(mContext, mTeamService, mTeamType, substitution.getPlayerOut(), viewHolder.playerOutText);

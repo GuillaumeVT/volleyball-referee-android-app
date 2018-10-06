@@ -28,6 +28,7 @@ import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.preference.PreferenceManager;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -362,5 +363,14 @@ public class UiUtils {
         toast.setView(layout);
 
         return toast;
+    }
+
+    public static String formatNumberFromLocal(int number) {
+        return String.format(Locale.getDefault(), "%d", number);
+    }
+
+    public static String formatScoreFromLocale(int leftScore, int rightScore, boolean withSpace) {
+        String format = withSpace ? "%d\t-\t%d" : "%d-%d";
+        return String.format(Locale.getDefault(), format, leftScore, rightScore);
     }
 }

@@ -51,9 +51,7 @@
                 android:id="@+id/set_ladder_home_team_event_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginRight="@dimen/small_margin_size"
                 android:layout_marginEnd="@dimen/small_margin_size"
                 android:gravity="start"/>
 
@@ -61,9 +59,7 @@
                 android:id="@+id/set_ladder_home_team_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginRight="@dimen/small_margin_size"
                 android:layout_marginEnd="@dimen/small_margin_size"
                 android:gravity="start"/>
 
@@ -71,9 +67,7 @@
                 android:id="@+id/set_ladder_guest_team_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginRight="@dimen/small_margin_size"
                 android:layout_marginEnd="@dimen/small_margin_size"
                 android:gravity="start"/>
 
@@ -81,9 +75,7 @@
                 android:id="@+id/set_ladder_guest_team_event_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/small_margin_size"
                 android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginRight="@dimen/small_margin_size"
                 android:layout_marginEnd="@dimen/small_margin_size"
                 android:gravity="start"/>
 

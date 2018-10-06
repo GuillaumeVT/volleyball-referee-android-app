@@ -13,8 +13,6 @@
         android:background="@drawable/text_round_background"
         android:paddingBottom="@dimen/tiny_margin_size"
         android:paddingEnd="@dimen/small_margin_size"
-        android:paddingLeft="@dimen/small_margin_size"
-        android:paddingRight="@dimen/small_margin_size"
         android:paddingStart="@dimen/small_margin_size"
         android:paddingTop="@dimen/tiny_margin_size"
         android:textAlignment="center"

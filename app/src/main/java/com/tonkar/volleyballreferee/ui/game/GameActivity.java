@@ -530,9 +530,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamScoreButton.setText(String.valueOf(newCount));
+            mLeftTeamScoreButton.setText(UiUtils.formatNumberFromLocal(newCount));
         } else {
-            mRightTeamScoreButton.setText(String.valueOf(newCount));
+            mRightTeamScoreButton.setText(UiUtils.formatNumberFromLocal(newCount));
         }
 
         StringBuilder builder = new StringBuilder();
@@ -540,7 +540,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         for (int index = 0; index < mGameService.getNumberOfSets(); index++) {
             int leftPointsCount = mGameService.getPoints(mTeamOnLeftSide, index);
             int rightPointsCount = mGameService.getPoints(mTeamOnRightSide, index);
-            builder.append(String.valueOf(leftPointsCount)).append('-').append(String.valueOf(rightPointsCount)).append("\t\t");
+            builder.append(UiUtils.formatScoreFromLocale(leftPointsCount, rightPointsCount, false)).append("\t\t");
         }
         mSetsText.setText(builder.toString());
 
@@ -564,9 +564,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onSetsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamSetsText.setText(String.valueOf(newCount));
+            mLeftTeamSetsText.setText(UiUtils.formatNumberFromLocal(newCount));
         } else {
-            mRightTeamSetsText.setText(String.valueOf(newCount));
+            mRightTeamSetsText.setText(UiUtils.formatNumberFromLocal(newCount));
         }
     }
 

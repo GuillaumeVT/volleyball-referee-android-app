@@ -16,6 +16,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
             int homePoints = recordedGameService.getPoints(TeamType.HOME, setIndex);
             int guestPoints = recordedGameService.getPoints(TeamType.GUEST, setIndex);
-            builder.append(String.valueOf(homePoints)).append('-').append(String.valueOf(guestPoints)).append("\t\t");
+            builder.append(UiUtils.formatScoreFromLocale(homePoints, guestPoints, false)).append("\t\t");
         }
         viewHolder.scoreText.setText(builder.toString());
 

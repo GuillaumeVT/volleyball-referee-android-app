@@ -139,14 +139,14 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         int number = 1;
         PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
         MaterialButton button = teamPositions.get(PositionType.POSITION_1);
-        button.setText(String.valueOf(number));
+        button.setText(UiUtils.formatNumberFromLocal(number));
         UiUtils.styleTeamButton(mView.getContext(), mBeachTeamService, teamType, number, button);
         applyService(teamType, positionType, serviceImage1);
 
         number = 2;
         positionType = mTeamService.getPlayerPosition(teamType, number);
         button = teamPositions.get(PositionType.POSITION_2);
-        button.setText(String.valueOf(number));
+        button.setText(UiUtils.formatNumberFromLocal(number));
         UiUtils.styleTeamButton(mView.getContext(), mBeachTeamService, teamType, number, button);
         applyService(teamType, positionType, serviceImage2);
     }

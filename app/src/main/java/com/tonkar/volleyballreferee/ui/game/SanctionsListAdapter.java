@@ -138,7 +138,7 @@ public class SanctionsListAdapter extends BaseAdapter {
             viewHolder.playerText.setVisibility(View.INVISIBLE);
         } else {
             if (sanction.getPlayer() > 0) {
-                viewHolder.playerText.setText(String.valueOf(sanction.getPlayer()));
+                viewHolder.playerText.setText(UiUtils.formatNumberFromLocal(sanction.getPlayer()));
             } else {
                 viewHolder.playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
             }

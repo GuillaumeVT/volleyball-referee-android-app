@@ -227,7 +227,7 @@ public abstract class SanctionSelectionDialog {
 
             if (mPlayers.size() > position) {
                 player = mPlayers.get(position);
-                button.setText(String.valueOf(player));
+                button.setText(UiUtils.formatNumberFromLocal(player));
                 if (mTeamService.isLibero(mTeamType, player)) {
                     button.setColor(mContext, mTeamService.getLiberoColor(mTeamType));
                 } else {

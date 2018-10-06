@@ -113,7 +113,7 @@ public abstract class IndoorPlayerSelectionDialog {
                 button = (MaterialButton) convertView;
             }
 
-            button.setText(String.valueOf(number));
+            button.setText(UiUtils.formatNumberFromLocal(number));
             UiUtils.styleTeamButton(mContext, mTeamService, mTeamType, number, button);
 
             if (isExpulsedOrDisqualified(number)) {

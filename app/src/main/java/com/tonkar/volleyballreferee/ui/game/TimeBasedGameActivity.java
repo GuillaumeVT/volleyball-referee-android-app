@@ -409,9 +409,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamScoreButton.setText(String.valueOf(newCount));
+            mLeftTeamScoreButton.setText(UiUtils.formatNumberFromLocal(newCount));
         } else {
-            mRightTeamScoreButton.setText(String.valueOf(newCount));
+            mRightTeamScoreButton.setText(UiUtils.formatNumberFromLocal(newCount));
         }
     }
 
