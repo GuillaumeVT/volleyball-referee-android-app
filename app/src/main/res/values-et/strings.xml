@@ -80,8 +80,8 @@
     <string name="toss_coin">Loosimine</string>
     <string name="swap_first_service">Vaheta esimest pallingut</string>
     <string name="navigate_home">Mine tagasi avalehele</string>
-    <string name="reset_set">Reset current set</string>
-    <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
+    <string name="reset_set">Tühista jooksva geimi</string>
+    <string name="reset_set_question">Jooksva geimi taaskäivitatakse ning kõik tegevused kaotatakse. Kas tühistan ?</string>
     <string name="share">Jagada</string>
     <string name="share_exception">Viga! Mängu tulemuste jagamine ebaõnnestus</string>
     <string name="navigate_home_question">Lõpeta antud mängu hiljem. Kas soovite lehelt lahkuda?</string>
@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Tehnilise vaheaja kestvus</string>
     <string name="rules_game_intervals">Geimide vahelised intervallid</string>
     <string name="rules_game_intervals_duration">Intervallide kestvus</string>
-    <string name="rules_substitutions_limitation">Limitation of substitutions</string>
+    <string name="rules_substitutions_limitation">Vahetuste piirang</string>
     <string name="rules_team_substitutions_per_set">Vahetuste arv geimis</string>
     <string name="rules_consecutive_serves_per_player">Maksimaalne järjestiku pallingute arv ühe mängija poolt</string>
     <string name="rules_court_switches">Poolte vahetus</string>
@@ -256,20 +256,20 @@
         <item>1 minut</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>FIVB limitation</item>
-        <item>Alternative limitation 1</item>
-        <item>Alternative limitation 2</item>
-        <item>No limitation</item>
+        <item>FIVB piirang</item>
+        <item>Alternatiivne piirang 1</item>
+        <item>Alternatiivne piirang 2</item>
+        <item>Piiranguteta</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
-        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions), and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions).\n\nMore than one substitute may enter the set in each position.</item>
-        <item>Players can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
+        <item>Algasetuses alustanud mängija võib ainult ühe korra geimi jooksul mängust lahkuda ja tagasi tulla geimi jooksul ning ta peab asuma samale algasetuse kohale.\n\nVahetusmängija võib mängu tulla algasetuses alustanud  mängija asemele vaid ühe korra geimi jooksul ning teda võib välja vahetada ainult sama algasetuse mängija.</item>
+        <item>Algasetusel alustanud mängija võib mitmel korral mängust lahkuda ja tagasi tulla piiramatu kordadel vastavalt võistkonnale lubatud vahetuste arvule geimi jooksul ning ta peab asuma samale algasetusese kohale.\n\nVahetusmängija võib mängu tulla algasetuses alustanud  mängija asemele piiramatu kordadel vastavalt võistkonnale lubatud vahetuste arvule geimi jooksul ning teda võib välja vahetada ainult sama algasetuse mängija.</item>
+        <item>Algasetusel alustanud mängija võib mitmel korral mängust lahkuda ja tagasi tulla piiramatu kordadel vastavalt võistkonnale lubatud vahetuste arvule geimi jooksul ning ta peab asuma samale algasetusese kohale.\n\nVahetusmängija võib mängu tulla algasetuses alustanud  mängija asemele piiramatu kordadel vastavalt võistkonnale lubatud vahetuste arvule geimi jooksul.\n\nOn lubatud rohkem kui üks vahetus iga positsiooni kohta.</item>
+        <item>Mängijad võivad lahkuda  ning uuesti siseneda mängu ükskõik millise positioonile piiramatu kordadel vastavalt võistkonnale lubatud vahetuste arvule geimi jooksul ning teda võib välja vahetada ainult sama algasetuse mängija.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 vahetust geimis</item>
-        <item>15 vahetust geimis</item>
+        <item>18 vahetust geimis (vastavalt vahetuste piirangule)</item>
+        <item>15 vahetust geimis (vastavalt vahetuste piirangule)</item>
         <item>12 vahetust geimis</item>
         <item>6 vahetust geimis</item>
         <item>5 vahetust geimis</item>
