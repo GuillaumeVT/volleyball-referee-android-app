@@ -24,7 +24,7 @@ public class RulesEntity {
     }
 
     @Ignore
-    public RulesEntity(String name, String content) {
+    public RulesEntity(@NonNull String name, @NonNull String content) {
         mName = name;
         mContent = content;
     }

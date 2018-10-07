@@ -34,7 +34,7 @@ public class GameEntity {
     }
 
     @Ignore
-    public GameEntity(Long date, String league, String division, String content) {
+    public GameEntity(@NonNull Long date, @NonNull String league, @NonNull String division, @NonNull String content) {
         mDate = date;
         mLeague = league;
         mDivision = division;

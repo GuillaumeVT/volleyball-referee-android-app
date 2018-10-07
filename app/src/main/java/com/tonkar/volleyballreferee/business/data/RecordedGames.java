@@ -14,6 +14,7 @@ import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
 import com.tonkar.volleyballreferee.business.data.db.FullGameEntity;
 import com.tonkar.volleyballreferee.business.data.db.GameEntity;
+import com.tonkar.volleyballreferee.business.data.db.SyncEntity;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -250,7 +251,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
                         new Response.Listener<String>() {
                             @Override
-                            public void onResponse(String response) {}
+                            public void onResponse(String response) {
+                                insertSyncIntoDb(recordedGameService.getGameDate());
+                            }
                         },
                         new Response.ErrorListener() {
                             @Override
@@ -897,7 +900,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         return gameDescriptionList;
     }
 
-    private void deleteGameOnline(long gameDate) {
+    private void deleteGameOnline(final long gameDate) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("id", String.valueOf(gameDate));
@@ -906,7 +909,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -926,7 +931,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.GAME_ENTITY);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -1010,7 +1017,13 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             }
 
             if (!foundRemoteVersion) {
-                pushGameOnline(localGame);
+                if (isSynced(localGame.getGameDate())) {
+                    // if the game was synced, then it was deleted from the server and it must be deleted locally
+                    deleteRecordedGame(localGame.getGameDate());
+                } else {
+                    // if the game was not synced, then it is missing from the server because sending it must have failed, so send it again
+                    pushGameOnline(localGame);
+                }
             }
         }
 
@@ -1026,7 +1039,13 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             }
 
             if (!foundLocalVersion) {
-                missingRemoteGames.add(remoteGame);
+                if (isSynced(remoteGame.getGameDate())) {
+                    // if the game was synced, then sending the deletion to the server must have failed, so send the deletion again
+                    deleteGameOnline(remoteGame.getGameDate());
+                } else {
+                    // if the game was not synced, then it was added on the server and it must be added locally
+                    missingRemoteGames.add(remoteGame);
+                }
             }
         }
 
@@ -1044,6 +1063,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 @Override
                 public void onUserGameReceived(RecordedGameService recordedGameService) {
                     insertRecordedGameIntoDb((RecordedGame) recordedGameService, false);
+                    insertSyncIntoDb(recordedGameService.getGameDate());
                     downloadUserGamesRecursive(remoteGames, listener);
                 }
 
@@ -1079,5 +1099,13 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     private boolean isNotTestGame(RecordedGameService recordedGameService) {
         return recordedGameService.getTeamName(TeamType.HOME).length() > 1 && recordedGameService.getTeamName(TeamType.GUEST).length() > 1;
+    }
+
+    private boolean isSynced(long gameDate) {
+        return AppDatabase.getInstance(mContext).syncDao().countByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY) > 0;
+    }
+
+    private void insertSyncIntoDb(long gameDate) {
+        AppDatabase.getInstance(mContext).syncDao().insert(SyncEntity.createGameSyncEntity(gameDate));
     }
 }

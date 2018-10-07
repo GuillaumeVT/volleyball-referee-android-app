@@ -32,7 +32,7 @@ public class TeamEntity {
     }
 
     @Ignore
-    public TeamEntity(String name, String gender, String kind, String content) {
+    public TeamEntity(@NonNull String name, @NonNull String gender, @NonNull String kind, @NonNull String content) {
         mName = name;
         mGender = gender;
         mKind = kind;

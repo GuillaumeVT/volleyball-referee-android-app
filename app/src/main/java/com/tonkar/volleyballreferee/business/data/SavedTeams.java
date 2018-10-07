@@ -10,6 +10,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
+import com.tonkar.volleyballreferee.business.data.db.SyncEntity;
 import com.tonkar.volleyballreferee.business.data.db.TeamEntity;
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
@@ -341,7 +342,13 @@ public class SavedTeams implements SavedTeamsService {
             }
 
             if (!foundRemoteVersion) {
-                pushTeamOnline(localTeam);
+                if (isSynced(localTeam)) {
+                    // if the team was synced, then it was deleted from the server and it must be deleted locally
+                    deleteSavedTeam(localTeam.getGameType(), localTeam.getName(), localTeam.getGenderType());
+                } else {
+                    // if the team was not synced, then it is missing from the server because sending it must have failed, so send it again
+                    pushTeamOnline(localTeam);
+                }
             }
         }
 
@@ -355,7 +362,14 @@ public class SavedTeams implements SavedTeamsService {
             }
 
             if (!foundLocalVersion) {
-                insertTeamIntoDb(remoteTeam);
+                if (isSynced(remoteTeam)) {
+                    // if the team was synced, then sending the deletion to the server must have failed, so send the deletion again
+                    deleteTeamOnline(remoteTeam.getGameType(), remoteTeam.getName(), remoteTeam.getGenderType());
+                } else {
+                    // if the team was not synced, then it was added on the server and it must be added locally
+                    insertTeamIntoDb(remoteTeam);
+                    pushTeamOnline(remoteTeam);
+                }
             }
         }
     }
@@ -399,7 +413,7 @@ public class SavedTeams implements SavedTeamsService {
         }
     }
 
-    private void pushTeamOnline(RecordedTeam team) {
+    private void pushTeamOnline(final RecordedTeam team) {
         if (PrefUtils.isSyncOn(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             team.setUserId(authentication.getUserId());
@@ -408,7 +422,9 @@ public class SavedTeams implements SavedTeamsService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_API_URL, bytes, authentication,
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            insertSyncIntoDb(team);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -417,7 +433,9 @@ public class SavedTeams implements SavedTeamsService {
                                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_API_URL, bytes, authentication,
                                         new Response.Listener<String>() {
                                             @Override
-                                            public void onResponse(String response) {}
+                                            public void onResponse(String response) {
+                                                insertSyncIntoDb(team);
+                                            }
                                         },
                                         new Response.ErrorListener() {
                                             @Override
@@ -441,7 +459,7 @@ public class SavedTeams implements SavedTeamsService {
         }
     }
 
-    private void deleteTeamOnline(GameType gameType, String teamName, GenderType genderType) {
+    private void deleteTeamOnline(final GameType gameType, final String teamName, final GenderType genderType) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("name", teamName);
@@ -452,7 +470,9 @@ public class SavedTeams implements SavedTeamsService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createTeamItem(teamName, genderType.toString(), gameType.toString()), SyncEntity.RULES_ENTITY);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -472,7 +492,9 @@ public class SavedTeams implements SavedTeamsService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.TEAM_ENTITY);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -485,5 +507,13 @@ public class SavedTeams implements SavedTeamsService {
             );
             WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
+    }
+
+    private boolean isSynced(RecordedTeam recordedTeam) {
+        return AppDatabase.getInstance(mContext).syncDao().countByItemAndType(SyncEntity.createTeamItem(recordedTeam.getName(), recordedTeam.getGenderType().toString(), recordedTeam.getGameType().toString()), SyncEntity.TEAM_ENTITY) > 0;
+    }
+
+    private void insertSyncIntoDb(RecordedTeam recordedTeam) {
+        AppDatabase.getInstance(mContext).syncDao().insert(SyncEntity.createTeamSyncEntity(recordedTeam.getName(), recordedTeam.getGenderType().toString(), recordedTeam.getGameType().toString()));
     }
 }

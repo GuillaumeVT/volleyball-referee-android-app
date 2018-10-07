@@ -11,6 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
 import com.tonkar.volleyballreferee.business.data.db.RulesEntity;
+import com.tonkar.volleyballreferee.business.data.db.SyncEntity;
 import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
@@ -250,7 +251,13 @@ public class SavedRules implements SavedRulesService {
             }
 
             if (!foundRemoteVersion) {
-                pushRulesOnline(localRules);
+                if (isSynced(localRules.getName())) {
+                    // if the rules were synced, then they were deleted from the server and they must be deleted locally
+                    deleteSavedRules(localRules.getName());
+                } else {
+                    // if the rules were not synced, then they are missing from the server because sending them must have failed, so send them again
+                    pushRulesOnline(localRules);
+                }
             }
         }
 
@@ -264,7 +271,14 @@ public class SavedRules implements SavedRulesService {
             }
 
             if (!foundLocalVersion) {
-                insertRulesIntoDb(remoteRules);
+                if (isSynced(remoteRules.getName())) {
+                    // if the rules were synced, then sending the deletion to the server must have failed, so send the deletion again
+                    deleteRulesOnline(remoteRules.getName());
+                } else {
+                    // if the rules were not synced, then they were added on the server and they must be added locally
+                    insertRulesIntoDb(remoteRules);
+                    pushRulesOnline(remoteRules);
+                }
             }
         }
     }
@@ -308,7 +322,7 @@ public class SavedRules implements SavedRulesService {
         }
     }
 
-    private void pushRulesOnline(Rules rules) {
+    private void pushRulesOnline(final Rules rules) {
         if (PrefUtils.isSyncOn(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             rules.setUserId(authentication.getUserId());
@@ -318,6 +332,7 @@ public class SavedRules implements SavedRulesService {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            insertSyncIntoDb(rules.getName());
                         }
                     },
                     new Response.ErrorListener() {
@@ -327,7 +342,9 @@ public class SavedRules implements SavedRulesService {
                                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes, authentication,
                                         new Response.Listener<String>() {
                                             @Override
-                                            public void onResponse(String response) {}
+                                            public void onResponse(String response) {
+                                                insertSyncIntoDb(rules.getName());
+                                            }
                                         },
                                         new Response.ErrorListener() {
                                             @Override
@@ -351,7 +368,7 @@ public class SavedRules implements SavedRulesService {
         }
     }
 
-    private void deleteRulesOnline(String rulesName) {
+    private void deleteRulesOnline(final String rulesName) {
         if (PrefUtils.isSyncOn(mContext)) {
             Map<String, String> params = new HashMap<>();
             params.put("name", rulesName);
@@ -360,7 +377,9 @@ public class SavedRules implements SavedRulesService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createRulesItem(rulesName), SyncEntity.RULES_ENTITY);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -380,7 +399,9 @@ public class SavedRules implements SavedRulesService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {}
+                        public void onResponse(String response) {
+                            AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.RULES_ENTITY);
+                        }
                     },
                     new Response.ErrorListener() {
                         @Override
@@ -393,5 +414,13 @@ public class SavedRules implements SavedRulesService {
             );
             WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
+    }
+
+    private boolean isSynced(String rulesName) {
+        return AppDatabase.getInstance(mContext).syncDao().countByItemAndType(SyncEntity.createRulesItem(rulesName), SyncEntity.RULES_ENTITY) > 0;
+    }
+
+    private void insertSyncIntoDb(final String rulesName) {
+        AppDatabase.getInstance(mContext).syncDao().insert(SyncEntity.createRulesSyncEntity(rulesName));
     }
 }
