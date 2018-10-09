@@ -84,6 +84,8 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
                 startActivity(intent);
             }
         });
+
+        updateRecordedGamesList();
     }
 
     @Override

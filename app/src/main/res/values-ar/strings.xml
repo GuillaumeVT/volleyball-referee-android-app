@@ -4,13 +4,13 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">الكرة الطائرة</string>
     <string name="new_beach_volleyball_game">الكرة الطائرة الشاطئية</string>
-    <string name="new_score_based_game">اللوحة</string>
+    <string name="new_score_based_game">لوحة النتائج</string>
     <string name="new_time_based_game">محدد الوقت</string>
     <string name="new_scheduled_game_from_code">من الرمز</string>
-    <string name="permission_title">حول أذونات التطبيق</string>
-    <string name="permission_message">يحتاج هذا التطبيق إلى أذونات التخزين لمشاركة نتائج المباريات.</string>
+    <string name="permission_title">حول صلاحيات التطبيق</string>
+    <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
-    <string name="resume_game_question">التطبيق وجد مباراة قيد التقدم. هل ترغب في استئنافها أو حذفها؟</string>
+    <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في استئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
@@ -38,7 +38,7 @@
     <string name="facebook_app_id" translatable="false">2086514551632301</string>
     <string name="server_client_id" translatable="false">802590775795-kdff0cnflla62jr2dj0pleqbiv05q97l.apps.googleusercontent.com</string>
     <string name="user_sign_in_why_title">لماذا يجب علي تسجيل الدخول؟</string>
-    <string name="user_sign_in_why_message">في حالة بث مبارياتك عبر الإنترنت ، قد تكون مهتمًا بتسجيل الدخول.\n\nعن طريق تسجيل الدخول ، سوف تكسب السيطرة الكاملة على الألعاب الخاصة بك على https://www.volleyball-referee.com/user\n\nمن هذه الصفحة ، يمكنك إنشاء وإدارة القوانين والفرق والمباريات والبطولات الخاصة بك. يمكن بعد ذلك تنظيم الألعاب المجدولة على التطبيق الخاص بك أو على تطبيق شخص آخر عن طريق توفير رمز لعبة فريد للحكم.</string>
+    <string name="user_sign_in_why_message">في حالة بث مبارياتك عبر الإنترنت ، قد تكون مهتمًا بتسجيل الدخول.\n\nعن طريق تسجيل الدخول ، سوف تكسب السيطرة الكاملة على المباريات الخاصة بك على https://www.volleyball-referee.com/user\n\nمن هذه الصفحة ، يمكنك إنشاء وإدارة القوانين والفرق والمباريات والبطولات الخاصة بك. يمكن بعد ذلك تنظيم الألعاب المجدولة على التطبيق الخاص بك أو على تطبيق شخص آخر عن طريق توفير رمز لعبة فريد للحكم.</string>
     <string name="user_sign_in_privacy_title">هل هو آمن؟</string>
     <string name="user_sign_in_privacy_message">نعم فعلا. عند تسجيل الدخول ، فإن المعلومات الوحيدة التي نسترجعها من ملفك الشخصي هي معرفك الاجتماعي الفريد الذي نستخدمه لتحديد هويتك.</string>
     <string name="user_signed_in">تم تسجيل الدخول باستخدام %s</string>
@@ -52,8 +52,8 @@
     <string name="game_setup_title">إعداد المباراة</string>
     <string name="home_team_tab">الفريق المضيف</string>
     <string name="home_team_hint">اسم الفريق المضيف</string>
-    <string name="guest_team_tab">فريق الضيف</string>
-    <string name="guest_team_hint">اسم فريق الضيف</string>
+    <string name="guest_team_tab">الفريق الضيف</string>
+    <string name="guest_team_hint">اسم الفريق الضيف</string>
     <string name="select_players">حدد اللاعبين (من ضمنهم اللاعب الحر)</string>
     <string name="select_shirts_color">حدد لون ملابس الفريق</string>
     <string name="select_captain">حدد قائد الفريق</string>
@@ -71,8 +71,8 @@
     <string name="leave_game_setup_question">سيتم فقد إعداد هذه المباراة. اترك على أي حال؟</string>
 
     <!-- Game activity -->
-    <string name="toss_tails">طرة</string>
-    <string name="toss_heads">كتبة</string>
+    <string name="toss_tails">كتبة</string>
+    <string name="toss_heads">رأس</string>
     <string name="toss_coin">إرم عملة</string>
     <string name="swap_first_service">مبادلة أول إرسال</string>
     <string name="navigate_home">العودة إلى الصفحة الرئيسية</string>
@@ -80,7 +80,7 @@
     <string name="reset_set_question">سيتم إعادة تشغيل الشوط الحالي وسيتم فقدان كل الإجراءات. إعادة تعيين؟</string>
     <string name="share">مشاركة</string>
     <string name="share_exception">فشل في مشاركة المباراة</string>
-    <string name="navigate_home_question">يمكنك استئناف المباراة الحالية في وقت لاحق. غادر؟</string>
+    <string name="navigate_home_question">يمكنك استئناف المباراة الحالية في وقت لاحق. مغادرة؟</string>
     <string name="select_player_title">اختر لاعب من البدلاء</string>
     <string name="court_position_tab">المواقع</string>
     <string name="ladder_tab">النقط</string>
@@ -97,7 +97,7 @@
     <string name="skip">تخطي</string>
     <string name="run_background">تشغيل في الخلفية</string>
     <string name="switch_sides_description">تبديل يدوي للساحة</string>
-    <string name="remove_point_description">حدف اخر نقطة</string>
+    <string name="remove_point_description">حذف اخر نقطة</string>
     <string name="call_timeout_description">طلب وقت مستقطع</string>
     <string name="match_point">نقطة المباراة</string>
     <string name="set_point">نقطة الشوط</string>
@@ -120,7 +120,7 @@
     <string name="red_card">نقطة و إرسال للخصم</string>
     <string name="red_card_expulsion">طرد ما تبقى من الشوط</string>
     <string name="red_card_disqualification">طرد ما تبقى من المباراة</string>
-    <string name="coach_abbreviation">C.</string>
+    <string name="coach_abbreviation">المدرب</string>
     <string name="set_lost_incomplete">%s خسارة الشوط لكون الفريق غير مكتمل</string>
     <string name="match_lost_incomplete">%s خسارة المباراة لكون الفريق غير مكتمل</string>
     <string name="position_1_title">1</string>
@@ -136,7 +136,7 @@
     <string name="pref_sync_data">تزامن البيانات عبر الإنترنت</string>
     <string name="pref_keep_screen_on">الحفاظ على شاشة الهاتف مشتغلة اثناء المباراة</string>
     <string name="pref_interactive_notification">استخدم الإشعارات التفاعلية</string>
-    <string name="pref_number_of_shirts">عدد القمصان في تعريف الفريق</string>
+    <string name="pref_number_of_shirts">عدد القمصان لكل فريق</string>
 
     <string name="synchronize">المزامنة</string>
     <string name="sync_failed_message">فشل في مزامنة البيانات</string>
@@ -160,7 +160,7 @@
     <string name="delete_teams">مسح جميع الفرق</string>
     <string name="delete_team">مسح الفريق</string>
     <string name="save_team">حفظ الفريق</string>
-    <string name="delete_teams_question">هل تريد حذف جميعالفرق المحفوظة؟</string>
+    <string name="delete_teams_question">هل تريد حذف جميع الفرق المحفوظة؟</string>
     <string name="delete_team_question">هل تريد حذف هذا الفريق المحفوظ؟</string>
     <string name="deleted_team">تم مسح الفريق</string>
     <string name="saved_team">تم حفظ الفريق</string>
@@ -171,7 +171,7 @@
     <!-- Rules activity -->
     <string name="saved_rules_list">القوانين المحفوظة</string>
     <string name="delete_all_rules">حذف جميع القوانين</string>
-    <string name="delete_rules">حذف القانون</string>
+    <string name="delete_rules">حذف القوانين</string>
     <string name="save_rules">حفظ القانون</string>
     <string name="search_rules">البحث عن القوانين</string>
     <string name="delete_all_rules_question">هل تريد محو جميع القوانين المحفوظة؟</string>
@@ -179,11 +179,11 @@
     <string name="deleted_rules">تم حذف القوانين</string>
     <string name="saved_rules">تم حفظ القوانين</string>
     <string name="deleted_all_rules">تم حذف جميع القوانين</string>
-    <string name="leave_rules_creation_title">مغادرة إانشاء القوانين</string>
+    <string name="leave_rules_creation_title">مغادرة إنشاء القوانين</string>
     <string name="leave_rules_creation_question">لن يتم حفظ هذه القوانين. اترك على أي حال؟</string>
     <string name="rules_name_hint">اسم القانون</string>
     <string name="general_rules">عام</string>
-    <string name="timeout_rules">نفذ الوقت</string>
+    <string name="timeout_rules">قوانين الوقت المستقطع</string>
     <string name="indoor_rules">الكرة الطائرة داخل الصالات</string>
     <string name="beach_rules">الكرة الطائرة الشاطئية</string>
 

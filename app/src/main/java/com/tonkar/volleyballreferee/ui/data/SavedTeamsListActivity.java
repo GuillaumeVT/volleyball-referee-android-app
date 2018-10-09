@@ -100,6 +100,8 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
                 }
             }
         });
+
+        updateSavedTeamsList();
     }
 
     public void addIndoorTeam(View view) {

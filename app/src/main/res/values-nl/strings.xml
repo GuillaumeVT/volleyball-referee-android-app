@@ -80,8 +80,8 @@
     <string name="toss_coin">Een munt opgooien</string>
     <string name="swap_first_service">Eerste opslag wisselen</string>
     <string name="navigate_home">Terug naar de startpagina</string>
-    <string name="reset_set">Reset current set</string>
-    <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
+    <string name="reset_set">Reset huidige set</string>
+    <string name="reset_set_question">De huidige set wordt opnieuw gestart en alle acties gaan verloren. Reset?</string>
     <string name="share">Delen</string>
     <string name="share_exception">Kan de wedstrijd niet delen</string>
     <string name="navigate_home_question">Je kan de huidige wedstrijd later hervatten. Weggaan?</string>

@@ -99,6 +99,8 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
                 }
             }
         });
+
+        updateSavedRulesList();
     }
 
     public void addIndoorRules(View view) {
