@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.EditTextPreference
         android:defaultValue=""
         android:key="pref_referee_name"
-        android:title="@string/pref_referee_name"/>
+        android:title="@string/pref_referee_name"
+        app:iconSpaceReserved="false"/>
 
     <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="pref_sync_data"
-        android:title="@string/pref_sync_data"/>
+        android:title="@string/pref_sync_data"
+        app:iconSpaceReserved="false"/>
 
     <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="pref_keep_screen_on"
-        android:title="@string/pref_keep_screen_on"/>
+        android:title="@string/pref_keep_screen_on"
+        app:iconSpaceReserved="false"/>
 
     <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="pref_interactive_notification"
-        android:title="@string/pref_interactive_notification"/>
+        android:title="@string/pref_interactive_notification"
+        app:iconSpaceReserved="false"/>
 
     <androidx.preference.ListPreference
         android:defaultValue="25"
@@ -27,6 +33,7 @@
         android:title="@string/pref_number_of_shirts"
         android:summary="%s"
         android:entries="@array/number_of_shirts"
-        android:entryValues="@array/number_of_shirts"/>
+        android:entryValues="@array/number_of_shirts"
+        app:iconSpaceReserved="false"/>
 
 </androidx.preference.PreferenceScreen>
