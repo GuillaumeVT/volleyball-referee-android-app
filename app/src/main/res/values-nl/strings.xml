@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Duur van een technische time-out</string>
     <string name="rules_game_intervals">Setonderbrekingen</string>
     <string name="rules_game_intervals_duration">Duur van een setonderbreking</string>
-    <string name="rules_substitutions_limitation">Limitation of substitutions</string>
+    <string name="rules_substitutions_limitation">Beperking van spelerswissels</string>
     <string name="rules_team_substitutions_per_set">Aantal ploegvervangingen per set</string>
     <string name="rules_consecutive_serves_per_player">Limiet van opeenvolgende opslagen per speler</string>
     <string name="rules_court_switches">Kampwissels</string>
@@ -256,20 +256,20 @@
         <item>1 minuut</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>FIVB limitation</item>
-        <item>Alternative limitation 1</item>
-        <item>Alternative limitation 2</item>
-        <item>No limitation</item>
+        <item>FIVB beperking</item>
+        <item>Alternatieve beperking 1</item>
+        <item>Alternatieve beperking 2</item>
+        <item>Geen beperking</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
-        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions), and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions).\n\nMore than one substitute may enter the set in each position.</item>
-        <item>Players can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
+        <item>Een speler van de beginopstelling mag het spel slecht éénmaal verlaten en per set terug aantreden en alleen op zijn/haar oorspronkelijke plaats in de opstelling.\n\nEen wisselspeler mag invallen in plaats van een basispeler. Dit mag maar éénmaal gebeuren per set en hij/zijn kan enkel vervangen worden door dezelfde basisspeler.</item>
+        <item>Een speler van de beginopstelling mag het spel meerdere keren verlaten en terug invallen. Dit mag per set onbeperkt gebeuren binnen het aantal toegestane wissels en alleen op zijn/haar oorspronkeleijke plaats in de opstelling.\n\nEen wisselspeler mag invallen in plaats van een basispeler. Dit mag per set onbeperkt gebeuren binnen het aantal toegestane wissels en hij/zij kan enkel vervangen worden door dezelfde basisspeler.</item>
+        <item>Een speler van de beginopstelling mag het spel meerdere keren verlaten en terug invallen. Dit mag per set onbeperkt gebeuren binnen het aantal toegestane wissels en alleen op zijn/haar oorspronkeleijke plaats in de opstelling.\n\nEen wisselspeler mag invallen in plaats van een basispeler. Dit mag per set onbeperkt gebeuren binnen het aantal toegestane wissels.\n\nMeer dan één wisselspeler mag per set gewisseld worden in elke positie.</item>
+        <item>Spelers kunnen het spel verlaten en opnieuw betreden op elke positie. Dit mag onbeperkt gebeuren per set set binnen het aantal toegestane wissels.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 wissels per set</item>
-        <item>15 wissels per set</item>
+        <item>18 wissels per set (volgens beperking van spelerswissels)</item>
+        <item>15 wissels per set (volgens beperking van spelerswissels)</item>
         <item>12 wissels per set</item>
         <item>6 wissels per set</item>
         <item>5 wissels per set</item>
