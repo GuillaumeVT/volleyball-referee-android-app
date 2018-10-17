@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.util.Log;
+import com.tonkar.volleyballreferee.interfaces.Tags;
 
 public class BatteryReceiver extends BroadcastReceiver {
 
@@ -25,7 +27,11 @@ public class BatteryReceiver extends BroadcastReceiver {
     }
 
     public void unregister(Context context) {
-        context.unregisterReceiver(this);
+        try {
+            context.unregisterReceiver(this);
+        } catch (IllegalArgumentException e) {
+            Log.e(Tags.BATTERY, e.getMessage(), e);
+        }
     }
 
     @Override

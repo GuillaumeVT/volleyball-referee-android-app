@@ -204,7 +204,7 @@
     <string name="rules_technical_timeout_duration">Dauer einer technischen Auszeit</string>
     <string name="rules_game_intervals">Satzpausen</string>
     <string name="rules_game_intervals_duration">Dauer einer Satzpause</string>
-    <string name="rules_substitutions_limitation">Beschränkung des Ersatzes</string>
+    <string name="rules_substitutions_limitation">Regelung zur Mannschaftsauswechslung</string>
     <string name="rules_team_substitutions_per_set">Anzahl der Mannschaftsauswechslungen pro Satz</string>
     <string name="rules_consecutive_serves_per_player">Limit der aufeinander folgenden Aufschläge pro Spieler</string>
     <string name="rules_court_switches">Seitenwechsel</string>
@@ -256,20 +256,20 @@
         <item>1 Minute</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>FIVB Beschränkung</item>
-        <item>Andere Einschränkung 1</item>
-        <item>Andere Einschränkung 2</item>
-        <item>Keine Einschränkung</item>
+        <item>FIVB Regelung</item>
+        <item>Alternative Regelung 1</item>
+        <item>Alternative Regelung 2</item>
+        <item>Keine Limitierung</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
-        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions), and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions).\n\nMore than one substitute may enter the set in each position.</item>
-        <item>Players can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
+        <item>Ein Spieler der Startaufstellung darf nur einmal pro Satz ausgewechselt werden und danach nur an seine ursprüngliche Position wieder eingewechselt werden.\n\nEin Auswechselspieler darf nur einmal pro Satz einen Spieler der Startaufstellung ersetzen und darf nur durch diesen Spieler erneut ersetzt werden.</item>
+        <item>Ein Spieler der Startaufstellung darf auf seiner Position unter Beachtung der Gesamtzahl der Auswechslungen pro Team beliebig oft ersetzt und wieder eingewechselt werden.\n\nEin Auswechselspieler darf unter Beachtung der Gesamtzahl der Auswechslungen pro Team beliebig oft eingewechselt werden. Aber nur durch den Startspieler der Position erneut ersetzt werden.</item>
+        <item>Ein Spieler der Startaufstellung darf auf seiner Position unter Beachtung der Gesamtzahl der Auswechslungen pro Team beliebig oft ersetzt und wieder eingewechselt werden.\n\nEin Auswechselspieler darf unter Beachtung der Gesamtzahl der Auswechslungen pro Team beliebig oft eingewechselt werden.\n\Mehrere Auswechselspieler dürfen im Verlauf eines Satzes auf einer Position spielen.</item>
+        <item>Spieler können unter Beachtung der Gesamtzahl der Auswechslungen pro Team beliebig oft an jeder Position aus- und eingewechselt werden.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 Auswechslungen pro Satz (Abhängig von den Ersatzbeschränkungen)</item>
-        <item>15 Auswechslungen pro Satz (Abhängig von den Ersatzbeschränkungen)</item>
+        <item>18 Auswechslungen pro Satz (entsprechend der Regelung zur Spielerauswecheslung)</item>
+        <item>15 Auswechslungen pro Satz (entsprechend der Regelung zur Spielerauswecheslung)</item>
         <item>12 Auswechslungen pro Satz</item>
         <item>6 Auswechslungen pro Satz</item>
         <item>5 Auswechslungen pro Satz</item>

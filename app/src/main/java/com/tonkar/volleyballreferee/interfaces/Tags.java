@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.interfaces;
 public class Tags {
 
     public static final String FACTORY     = "V-Factory";
+    public static final String BATTERY     = "V-Battery";
     public static final String BILLING     = "V-Billing";
     public static final String SAVED_GAMES = "V-SavedGames";
     public static final String SAVED_RULES = "V-SavedRules";
