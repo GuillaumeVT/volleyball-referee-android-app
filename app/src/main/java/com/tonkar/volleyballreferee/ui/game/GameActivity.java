@@ -108,102 +108,102 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         if (mGameService == null || mRecordedGamesService == null) {
             UiUtils.navigateToHome(this);
-        }
-
-        mGameService.addGeneralListener(this);
-        mGameService.addScoreListener(this);
-        mGameService.addTimeoutListener(this);
-        mGameService.addTeamListener(this);
-        mGameService.addSanctionListener(this);
-        mRecordedGamesService.connectGameRecorder();
-
-        mRandom = new Random();
-
-        mLeftTeamNameText = findViewById(R.id.left_team_name_text);
-        mRightTeamNameText = findViewById(R.id.right_team_name_text);
-
-        mSwapTeamsButton = findViewById(R.id.swap_teams_button);
-
-        mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
-        mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
-        initButtonOnClickListeners();
-
-        mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
-        mRightTeamSetsText = findViewById(R.id.right_team_set_text);
-
-        mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
-        mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
-
-        mSetsText = findViewById(R.id.set_text);
-
-        mScoreRemoveButton = findViewById(R.id.score_remove_button);
-
-        mLeftTeamTimeoutButton = findViewById(R.id.left_team_timeout_button);
-        mRightTeamTimeoutButton = findViewById(R.id.right_team_timeout_button);
-
-        mLeftTeamTimeoutLayout = findViewById(R.id.left_team_timeout_layout);
-        mRightTeamTimeoutLayout = findViewById(R.id.right_team_timeout_layout);
-
-        mLeftTeamCardsButton = findViewById(R.id.left_team_cards_button);
-        mRightTeamCardsButton = findViewById(R.id.right_team_cards_button);
-
-        UiUtils.fixFabCompatPadding(mSwapTeamsButton);
-        UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
-        UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
-        UiUtils.fixFabCompatPadding(mScoreRemoveButton);
-        UiUtils.fixFabCompatPadding(mLeftTeamTimeoutButton);
-        UiUtils.fixFabCompatPadding(mLeftTeamCardsButton);
-        UiUtils.fixFabCompatPadding(mRightTeamTimeoutButton);
-        UiUtils.fixFabCompatPadding(mRightTeamCardsButton);
-
-        if (mGameService.getRules().areTeamTimeoutsEnabled()) {
-            for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
-                final ImageView leftTimeout = new ImageView(this);
-                leftTimeout.setImageResource(R.drawable.timeout_shape);
-                final LinearLayout.LayoutParams leftTimeoutLayout = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                int margin = (int) getResources().getDimension(R.dimen.tiny_margin_size);
-                leftTimeoutLayout.topMargin = margin;
-                leftTimeoutLayout.bottomMargin = margin;
-                leftTimeoutLayout.leftMargin = margin;
-                leftTimeoutLayout.rightMargin = margin;
-                leftTimeout.setLayoutParams(leftTimeoutLayout);
-                mLeftTeamTimeoutLayout.addView(leftTimeout);
-
-                final ImageView rightTimeout = new ImageView(this);
-                rightTimeout.setImageResource(R.drawable.timeout_shape);
-                final LinearLayout.LayoutParams rightTimeoutLayout = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                margin = (int) getResources().getDimension(R.dimen.tiny_margin_size);
-                rightTimeoutLayout.topMargin = margin;
-                rightTimeoutLayout.bottomMargin = margin;
-                rightTimeoutLayout.leftMargin = margin;
-                rightTimeoutLayout.rightMargin = margin;
-                rightTimeout.setLayoutParams(rightTimeoutLayout);
-                mRightTeamTimeoutLayout.addView(rightTimeout);
-            }
         } else {
-            mLeftTeamTimeoutButton.hide();
-            mRightTeamTimeoutButton.hide();
+            mGameService.addGeneralListener(this);
+            mGameService.addScoreListener(this);
+            mGameService.addTimeoutListener(this);
+            mGameService.addTeamListener(this);
+            mGameService.addSanctionListener(this);
+            mRecordedGamesService.connectGameRecorder();
 
-            mLeftTeamTimeoutLayout.setVisibility(View.GONE);
-            mRightTeamTimeoutLayout.setVisibility(View.GONE);
-        }
+            mRandom = new Random();
 
-        if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
-            mLeftTeamCardsButton.hide();
-            mRightTeamCardsButton.hide();
-        }
+            mLeftTeamNameText = findViewById(R.id.left_team_name_text);
+            mRightTeamNameText = findViewById(R.id.right_team_name_text);
 
-        final BottomNavigationView gameNavigation = findViewById(R.id.game_nav);
-        initGameNavigation(gameNavigation, savedInstanceState);
+            mSwapTeamsButton = findViewById(R.id.swap_teams_button);
 
-        mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
-        mTeamOnRightSide = mGameService.getTeamOnRightSide();
-        onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, ActionOriginType.USER);
+            mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
+            mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
+            initButtonOnClickListeners();
 
-        if (mGameService.isMatchCompleted()) {
-            disableView();
+            mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
+            mRightTeamSetsText = findViewById(R.id.right_team_set_text);
+
+            mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
+            mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
+
+            mSetsText = findViewById(R.id.set_text);
+
+            mScoreRemoveButton = findViewById(R.id.score_remove_button);
+
+            mLeftTeamTimeoutButton = findViewById(R.id.left_team_timeout_button);
+            mRightTeamTimeoutButton = findViewById(R.id.right_team_timeout_button);
+
+            mLeftTeamTimeoutLayout = findViewById(R.id.left_team_timeout_layout);
+            mRightTeamTimeoutLayout = findViewById(R.id.right_team_timeout_layout);
+
+            mLeftTeamCardsButton = findViewById(R.id.left_team_cards_button);
+            mRightTeamCardsButton = findViewById(R.id.right_team_cards_button);
+
+            UiUtils.fixFabCompatPadding(mSwapTeamsButton);
+            UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
+            UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
+            UiUtils.fixFabCompatPadding(mScoreRemoveButton);
+            UiUtils.fixFabCompatPadding(mLeftTeamTimeoutButton);
+            UiUtils.fixFabCompatPadding(mLeftTeamCardsButton);
+            UiUtils.fixFabCompatPadding(mRightTeamTimeoutButton);
+            UiUtils.fixFabCompatPadding(mRightTeamCardsButton);
+
+            if (mGameService.getRules().areTeamTimeoutsEnabled()) {
+                for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
+                    final ImageView leftTimeout = new ImageView(this);
+                    leftTimeout.setImageResource(R.drawable.timeout_shape);
+                    final LinearLayout.LayoutParams leftTimeoutLayout = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    int margin = (int) getResources().getDimension(R.dimen.tiny_margin_size);
+                    leftTimeoutLayout.topMargin = margin;
+                    leftTimeoutLayout.bottomMargin = margin;
+                    leftTimeoutLayout.leftMargin = margin;
+                    leftTimeoutLayout.rightMargin = margin;
+                    leftTimeout.setLayoutParams(leftTimeoutLayout);
+                    mLeftTeamTimeoutLayout.addView(leftTimeout);
+
+                    final ImageView rightTimeout = new ImageView(this);
+                    rightTimeout.setImageResource(R.drawable.timeout_shape);
+                    final LinearLayout.LayoutParams rightTimeoutLayout = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    margin = (int) getResources().getDimension(R.dimen.tiny_margin_size);
+                    rightTimeoutLayout.topMargin = margin;
+                    rightTimeoutLayout.bottomMargin = margin;
+                    rightTimeoutLayout.leftMargin = margin;
+                    rightTimeoutLayout.rightMargin = margin;
+                    rightTimeout.setLayoutParams(rightTimeoutLayout);
+                    mRightTeamTimeoutLayout.addView(rightTimeout);
+                }
+            } else {
+                mLeftTeamTimeoutButton.hide();
+                mRightTeamTimeoutButton.hide();
+
+                mLeftTeamTimeoutLayout.setVisibility(View.GONE);
+                mRightTeamTimeoutLayout.setVisibility(View.GONE);
+            }
+
+            if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
+                mLeftTeamCardsButton.hide();
+                mRightTeamCardsButton.hide();
+            }
+
+            final BottomNavigationView gameNavigation = findViewById(R.id.game_nav);
+            initGameNavigation(gameNavigation, savedInstanceState);
+
+            mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
+            mTeamOnRightSide = mGameService.getTeamOnRightSide();
+            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, ActionOriginType.USER);
+
+            if (mGameService.isMatchCompleted()) {
+                disableView();
+            }
         }
     }
 
