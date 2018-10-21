@@ -88,56 +88,56 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
         if (mGameService == null || mRecordedGamesService == null) {
             UiUtils.navigateToHome(this);
-        }
+        } else {
+            mGameService.addGeneralListener(this);
+            mGameService.addScoreListener(this);
+            mGameService.addTeamListener(this);
+            mRecordedGamesService.connectGameRecorder();
 
-        mGameService.addGeneralListener(this);
-        mGameService.addScoreListener(this);
-        mGameService.addTeamListener(this);
-        mRecordedGamesService.connectGameRecorder();
+            mRandom = new Random();
 
-        mRandom = new Random();
+            mLeftTeamNameText = findViewById(R.id.left_team_name_text);
+            mRightTeamNameText = findViewById(R.id.right_team_name_text);
 
-        mLeftTeamNameText = findViewById(R.id.left_team_name_text);
-        mRightTeamNameText = findViewById(R.id.right_team_name_text);
+            mSwapTeamsButton = findViewById(R.id.swap_teams_button);
 
-        mSwapTeamsButton = findViewById(R.id.swap_teams_button);
+            mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
+            mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
+            initButtonOnClickListeners();
 
-        mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
-        mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
-        initButtonOnClickListeners();
+            mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
+            mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
 
-        mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
-        mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
+            mScoreRemoveButton = findViewById(R.id.score_remove_button);
 
-        mScoreRemoveButton = findViewById(R.id.score_remove_button);
+            mTimeFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
+            mRemainingTimeText = findViewById(R.id.remaining_time_text);
+            mStartMatchButton = findViewById(R.id.start_match_button);
+            mStopMatchButton = findViewById(R.id.stop_match_button);
 
-        mTimeFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
-        mRemainingTimeText = findViewById(R.id.remaining_time_text);
-        mStartMatchButton = findViewById(R.id.start_match_button);
-        mStopMatchButton = findViewById(R.id.stop_match_button);
+            UiUtils.fixFabCompatPadding(mSwapTeamsButton);
+            UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
+            UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
+            UiUtils.fixFabCompatPadding(mScoreRemoveButton);
+            UiUtils.fixFabCompatPadding(mStartMatchButton);
+            UiUtils.fixFabCompatPadding(mStopMatchButton);
 
-        UiUtils.fixFabCompatPadding(mSwapTeamsButton);
-        UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
-        UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
-        UiUtils.fixFabCompatPadding(mScoreRemoveButton);
-        UiUtils.fixFabCompatPadding(mStartMatchButton);
-        UiUtils.fixFabCompatPadding(mStopMatchButton);
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, LaddersFragment.newInstance());
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, LaddersFragment.newInstance());
+            fragmentTransaction.commit();
 
 
-        mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
-        mTeamOnRightSide = mGameService.getTeamOnRightSide();
-        onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, ActionOriginType.USER);
-        onRemainingTimeUpdated();
-        computeStartStopVisibility();
+            mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
+            mTeamOnRightSide = mGameService.getTeamOnRightSide();
+            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, ActionOriginType.USER);
+            onRemainingTimeUpdated();
+            computeStartStopVisibility();
 
-        if (mGameService.isMatchRunning()) {
-            runMatch();
-        } else  if (mGameService.isMatchStopped()) {
-            disableView();
+            if (mGameService.isMatchRunning()) {
+                runMatch();
+            } else if (mGameService.isMatchStopped()) {
+                disableView();
+            }
         }
     }
 
