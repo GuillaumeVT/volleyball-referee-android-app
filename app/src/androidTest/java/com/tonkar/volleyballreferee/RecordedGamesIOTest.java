@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.data.RecordedGame;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;

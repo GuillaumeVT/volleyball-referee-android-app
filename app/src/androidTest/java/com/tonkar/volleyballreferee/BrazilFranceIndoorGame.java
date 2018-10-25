@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.business.ServicesProvider;
