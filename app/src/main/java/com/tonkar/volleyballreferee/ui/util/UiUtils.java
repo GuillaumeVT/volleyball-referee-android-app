@@ -56,6 +56,7 @@ import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
+import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -260,6 +261,14 @@ public class UiUtils {
 
     public static void navigateToUser(Activity activity) {
         Intent intent = new Intent(activity, UserActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+    }
+
+    public static void navigateToUserSignIn(Activity activity) {
+        Intent intent = new Intent(activity, UserSignInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

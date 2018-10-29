@@ -82,4 +82,8 @@ public class PrefUtils {
     public static boolean isSyncOn(Context context) {
         return canRequest(context) && canSync(context);
     }
+
+    public static boolean shouldSignIn(Context context) {
+        return canRequest(context) && isWebPremiumPurchased(context) && !isSignedIn(context);
+    }
 }

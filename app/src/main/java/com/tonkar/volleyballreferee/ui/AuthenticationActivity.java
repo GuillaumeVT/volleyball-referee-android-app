@@ -62,6 +62,8 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
                 default:
                     break;
             }
+        } else if (PrefUtils.shouldSignIn(this)) {
+            UiUtils.navigateToUserSignIn(this);
         }
     }
 

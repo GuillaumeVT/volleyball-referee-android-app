@@ -171,7 +171,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         checkAuthentication();
     }
 
-
     private void initNavigationMenu() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
@@ -367,6 +366,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 intent = new Intent(this, ScheduledGamesListActivity.class);
             } else {
                 Log.i(Tags.WEB, "User sign in");
+                UiUtils.navigateToUserSignIn(this);
                 intent = new Intent(this, UserSignInActivity.class);
             }
         } else {
