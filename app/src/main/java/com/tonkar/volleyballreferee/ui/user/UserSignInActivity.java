@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.ui.user;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.SignInButton;
@@ -24,20 +23,10 @@ public class UserSignInActivity extends AuthenticationActivity {
         setTitle("");
 
         SignInButton googleSignInButton = findViewById(R.id.google_sign_in_button);
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googleSignIn();
-            }
-        });
+        googleSignInButton.setOnClickListener(button -> googleSignIn());
 
         LoginButton facebookSignInButton = findViewById(R.id.facebook_sign_in_button);
-        facebookSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                facebookSignIn();
-            }
-        });
+        facebookSignInButton.setOnClickListener(button -> facebookSignIn());
     }
 
     @Override

@@ -20,9 +20,9 @@ public class Authentication {
         }
     }
 
-    private String   mUserId;
-    private String   mToken;
-    private Provider mProvider;
+    private final String   mUserId;
+    private final String   mToken;
+    private final Provider mProvider;
 
     private Authentication(String socialId, Provider provider, String token) {
         mUserId = userIdOf(socialId, provider);

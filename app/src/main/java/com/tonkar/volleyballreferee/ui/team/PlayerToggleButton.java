@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
@@ -44,13 +43,10 @@ public class PlayerToggleButton extends MaterialButton {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.default_text_size));
         color();
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setChecked(!mChecked);
-                if (mListener != null) {
-                    mListener.onCheckedChanged(PlayerToggleButton.this, mChecked);
-                }
+        setOnClickListener(view -> {
+            setChecked(!mChecked);
+            if (mListener != null) {
+                mListener.onCheckedChanged(PlayerToggleButton.this, mChecked);
             }
         });
     }

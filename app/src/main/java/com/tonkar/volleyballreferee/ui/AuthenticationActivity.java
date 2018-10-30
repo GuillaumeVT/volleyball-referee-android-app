@@ -16,7 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
@@ -24,8 +23,9 @@ import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Collections;
 
 public abstract class AuthenticationActivity extends AppCompatActivity {
 
@@ -68,15 +68,12 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
     }
 
     private void checkAuthenticationGoogle() {
-        mGoogleSignInClient.silentSignIn().addOnCompleteListener(this, new OnCompleteListener<GoogleSignInAccount>() {
-            @Override
-            public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                try {
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    PrefUtils.signIn(AuthenticationActivity.this, Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
-                } catch (ApiException e) {
-                    googleSignOut(true);
-                }
+        mGoogleSignInClient.silentSignIn().addOnCompleteListener(this, task -> {
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                PrefUtils.signIn(AuthenticationActivity.this, Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
+            } catch (ApiException e) {
+                googleSignOut(true);
             }
         });
     }
@@ -119,6 +116,7 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
     }
 
     protected void facebookSignIn() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("public_profile"));
         LoginManager.getInstance().registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -156,13 +154,10 @@ public abstract class AuthenticationActivity extends AppCompatActivity {
     }
 
     private void googleSignOut(final boolean andSignInAgain) {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                signedOut(andSignInAgain);
-                if (andSignInAgain) {
-                    googleSignIn();
-                }
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            signedOut(andSignInAgain);
+            if (andSignInAgain) {
+                googleSignIn();
             }
         });
     }

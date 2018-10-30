@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -54,9 +53,7 @@ public abstract class IndoorPlayerSelectionDialog {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
         builder.setTitle(title).setView(gridView);
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
         mAlertDialog = builder.create();
     }
@@ -123,12 +120,9 @@ public abstract class IndoorPlayerSelectionDialog {
 
             } else {
                 button.setEnabled(true);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final int selectedNumber = Integer.parseInt(((MaterialButton) view).getText().toString());
-                        onPlayerSelected(selectedNumber);
-                    }
+                button.setOnClickListener(view -> {
+                    final int selectedNumber = Integer.parseInt(((MaterialButton) view).getText().toString());
+                    onPlayerSelected(selectedNumber);
                 });
             }
 

@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -225,33 +224,20 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             if (mGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
                 builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
-                    }
-                });
-                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(TimeBasedGameActivity.this, false));
+                builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
                 AlertDialog alertDialog = builder.show();
                 UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
             } else {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
                 builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.i(Tags.GAME_UI, "User accepts to stop");
-                        mGameService.stop();
-                        UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
-                    }
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    Log.i(Tags.GAME_UI, "User accepts to stop");
+                    mGameService.stop();
+                    UiUtils.navigateToHome(TimeBasedGameActivity.this, false);
                 });
-                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.i(Tags.GAME_UI, "User refuses to stop");
-                    }
-                });
+                builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to stop"));
                 AlertDialog alertDialog = builder.show();
                 UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
             }
@@ -275,8 +261,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     // UI Callbacks
 
     private void initButtonOnClickListeners() {
-        mLeftTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseLeftScore(null); }});
-        mRightTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseRightScore(null); }});
+        mLeftTeamScoreButton.setOnClickListener(button -> increaseLeftScore(null));
+        mRightTeamScoreButton.setOnClickListener(button -> increaseRightScore(null));
     }
 
     public void swapTeams(View view) {
@@ -333,19 +319,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     private void startGameWithDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(R.string.start_match_description).setMessage(getResources().getString(R.string.confirm_start_match_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(Tags.GAME_UI, "User accepts to start");
-                mGameService.start();
-                computeStartStopVisibility();
-                runMatch();
-            }
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            Log.i(Tags.GAME_UI, "User accepts to start");
+            mGameService.start();
+            computeStartStopVisibility();
+            runMatch();
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(Tags.GAME_UI, "User refuses to start");
-            }
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to start"));
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
@@ -353,21 +333,15 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     private void stopGameWithDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(Tags.GAME_UI, "User accepts to stop");
-                mGameService.stop();
-                mCountDownTimer.cancel();
-                disableView();
-                invalidateOptionsMenu();
-                computeStartStopVisibility();
-            }
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            Log.i(Tags.GAME_UI, "User accepts to stop");
+            mGameService.stop();
+            mCountDownTimer.cancel();
+            disableView();
+            invalidateOptionsMenu();
+            computeStartStopVisibility();
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(Tags.GAME_UI, "User refuses to stop");
-            }
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to stop"));
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }

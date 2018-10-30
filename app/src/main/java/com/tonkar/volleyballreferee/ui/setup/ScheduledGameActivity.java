@@ -82,24 +82,18 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         mDateInputButton = findViewById(R.id.date_input_button);
         updateDate(mScheduleDate.get(Calendar.YEAR), mScheduleDate.get(Calendar.MONTH), mScheduleDate.get(Calendar.DAY_OF_MONTH));
-        mDateInputButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerFragment fragment = new DatePickerFragment();
-                fragment.setScheduledGameActivity(ScheduledGameActivity.this);
-                fragment.show(getSupportFragmentManager(), "datePicker");
-            }
+        mDateInputButton.setOnClickListener(button -> {
+            DatePickerFragment fragment = new DatePickerFragment();
+            fragment.setScheduledGameActivity(ScheduledGameActivity.this);
+            fragment.show(getSupportFragmentManager(), "datePicker");
         });
 
         mTimeInputButton = findViewById(R.id.time_input_button);
         updateTime(mScheduleDate.get(Calendar.HOUR_OF_DAY), mScheduleDate.get(Calendar.MINUTE));
-        mTimeInputButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerFragment fragment = new TimePickerFragment();
-                fragment.setScheduledGameActivity(ScheduledGameActivity.this);
-                fragment.show(getSupportFragmentManager(), "timePicker");
-            }
+        mTimeInputButton.setOnClickListener(button -> {
+            TimePickerFragment fragment = new TimePickerFragment();
+            fragment.setScheduledGameActivity(ScheduledGameActivity.this);
+            fragment.show(getSupportFragmentManager(), "timePicker");
         });
 
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);

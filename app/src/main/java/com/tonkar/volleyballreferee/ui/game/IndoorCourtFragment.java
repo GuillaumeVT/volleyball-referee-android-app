@@ -48,19 +48,19 @@ public class IndoorCourtFragment extends CourtFragment {
         mIndoorTeamService = (IndoorTeamService) mTeamService;
         mLayoutInflater = inflater;
 
-        addButtonOnLeftSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.left_team_position_1));
-        addButtonOnLeftSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.left_team_position_2));
-        addButtonOnLeftSide(PositionType.POSITION_3, (MaterialButton) mView.findViewById(R.id.left_team_position_3));
-        addButtonOnLeftSide(PositionType.POSITION_4, (MaterialButton) mView.findViewById(R.id.left_team_position_4));
-        addButtonOnLeftSide(PositionType.POSITION_5, (MaterialButton) mView.findViewById(R.id.left_team_position_5));
-        addButtonOnLeftSide(PositionType.POSITION_6, (MaterialButton) mView.findViewById(R.id.left_team_position_6));
+        addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
+        addButtonOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_position_2));
+        addButtonOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_position_3));
+        addButtonOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_position_4));
+        addButtonOnLeftSide(PositionType.POSITION_5, mView.findViewById(R.id.left_team_position_5));
+        addButtonOnLeftSide(PositionType.POSITION_6, mView.findViewById(R.id.left_team_position_6));
 
-        addButtonOnRightSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.right_team_position_1));
-        addButtonOnRightSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.right_team_position_2));
-        addButtonOnRightSide(PositionType.POSITION_3, (MaterialButton) mView.findViewById(R.id.right_team_position_3));
-        addButtonOnRightSide(PositionType.POSITION_4, (MaterialButton) mView.findViewById(R.id.right_team_position_4));
-        addButtonOnRightSide(PositionType.POSITION_5, (MaterialButton) mView.findViewById(R.id.right_team_position_5));
-        addButtonOnRightSide(PositionType.POSITION_6, (MaterialButton) mView.findViewById(R.id.right_team_position_6));
+        addButtonOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_position_1));
+        addButtonOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_position_2));
+        addButtonOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_position_3));
+        addButtonOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_position_4));
+        addButtonOnRightSide(PositionType.POSITION_5, mView.findViewById(R.id.right_team_position_5));
+        addButtonOnRightSide(PositionType.POSITION_6, mView.findViewById(R.id.right_team_position_6));
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
@@ -77,32 +77,26 @@ public class IndoorCourtFragment extends CourtFragment {
     protected void initLeftTeamListeners() {
         for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
-            entry.getValue().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
-                    if (possibleSubstitutions.size() > 0) {
-                        UiUtils.animate(getContext(), view);
-                        Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
-                        showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleSubstitutions);
-                    } else {
-                        UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
-                    }
+            entry.getValue().setOnClickListener(view -> {
+                final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
+                if (possibleSubstitutions.size() > 0) {
+                    UiUtils.animate(getContext(), view);
+                    Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
+                    showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleSubstitutions);
+                } else {
+                    UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
                 }
             });
 
-            entry.getValue().setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if (!mIndoorTeamService.isStartingLineupConfirmed()) {
-                        int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnLeftSide, positionType);
-                        if (number > 0) {
-                            UiUtils.animateBounce(getContext(), view);
-                            mIndoorTeamService.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
-                        }
+            entry.getValue().setOnLongClickListener(view -> {
+                if (!mIndoorTeamService.isStartingLineupConfirmed()) {
+                    int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnLeftSide, positionType);
+                    if (number > 0) {
+                        UiUtils.animateBounce(getContext(), view);
+                        mIndoorTeamService.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
                     }
-                    return true;
                 }
+                return true;
             });
         }
     }
@@ -110,32 +104,26 @@ public class IndoorCourtFragment extends CourtFragment {
     protected void initRightTeamListeners() {
         for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
-            entry.getValue().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
-                    if (possibleSubstitutions.size() > 0) {
-                        UiUtils.animate(getContext(), view);
-                        Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
-                        showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleSubstitutions);
-                    } else {
-                        UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
-                    }
+            entry.getValue().setOnClickListener(view -> {
+                final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
+                if (possibleSubstitutions.size() > 0) {
+                    UiUtils.animate(getContext(), view);
+                    Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
+                    showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleSubstitutions);
+                } else {
+                    UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
                 }
             });
 
-            entry.getValue().setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if (!mIndoorTeamService.isStartingLineupConfirmed()) {
-                        int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnRightSide, positionType);
-                        if (number > 0) {
-                            UiUtils.animateBounce(getContext(), view);
-                            mIndoorTeamService.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
-                        }
+            entry.getValue().setOnLongClickListener(view -> {
+                if (!mIndoorTeamService.isStartingLineupConfirmed()) {
+                    int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnRightSide, positionType);
+                    if (number > 0) {
+                        UiUtils.animateBounce(getContext(), view);
+                        mIndoorTeamService.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
                     }
-                    return true;
                 }
+                return true;
             });
         }
     }

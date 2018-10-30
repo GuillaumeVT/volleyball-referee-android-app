@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.util;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.tonkar.volleyballreferee.R;
@@ -56,40 +55,25 @@ public class AlertDialogFragment extends DialogFragment {
 
         String negativeButtonText = getArguments().getString("negative");
         if (negativeButtonText != null) {
-            builder.setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    mAlertDialogListener.onNegativeButtonClicked();
-                }
-            });
+            builder.setNegativeButton(negativeButtonText, (dialog, which) -> mAlertDialogListener.onNegativeButtonClicked());
         }
 
         String positiveButtonText = getArguments().getString("positive");
         if (positiveButtonText != null) {
-            builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    mAlertDialogListener.onPositiveButtonClicked();
-                }
-            });
+            builder.setPositiveButton(positiveButtonText, (dialog, which) -> mAlertDialogListener.onPositiveButtonClicked());
         }
 
         String neutralButtonText = getArguments().getString("neutral");
         if (neutralButtonText != null) {
-            builder.setNeutralButton(neutralButtonText, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    mAlertDialogListener.onNeutralButtonClicked();
-                }
-            });
+            builder.setNeutralButton(neutralButtonText, (dialog, which) -> mAlertDialogListener.onNeutralButtonClicked());
         }
 
         setCancelable(false);
 
         final AlertDialog alertDialog = builder.create();
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                if (isAdded()) {
-                    UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-                }
+        alertDialog.setOnShowListener(dialogInterface -> {
+            if (isAdded()) {
+                UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
             }
         });
         return alertDialog;

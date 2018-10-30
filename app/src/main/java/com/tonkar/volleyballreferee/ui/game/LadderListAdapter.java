@@ -23,7 +23,6 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class LadderListAdapter extends BaseAdapter {
 
@@ -230,12 +229,9 @@ public class LadderListAdapter extends BaseAdapter {
                 if (ladderItem.hasEvent(TeamType.HOME)) {
                     homeImage.setVisibility(View.VISIBLE);
                     homeImage.setImageResource(getIcon(TeamType.HOME, ladderItem));
-                    homeImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(), TeamType.HOME, ladderItem, mBaseTeamService);
-                            ladderEventsDialog.show();
-                        }
+                    homeImage.setOnClickListener(view -> {
+                        LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(), TeamType.HOME, ladderItem, mBaseTeamService);
+                        ladderEventsDialog.show();
                     });
                 } else {
                     homeImage.setVisibility(View.INVISIBLE);
@@ -244,12 +240,9 @@ public class LadderListAdapter extends BaseAdapter {
                 if (ladderItem.hasEvent(TeamType.GUEST)) {
                     guestImage.setVisibility(View.VISIBLE);
                     guestImage.setImageResource(getIcon(TeamType.GUEST, ladderItem));
-                    guestImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(), TeamType.GUEST, ladderItem, mBaseTeamService);
-                            ladderEventsDialog.show();
-                        }
+                    guestImage.setOnClickListener(view -> {
+                        LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(), TeamType.GUEST, ladderItem, mBaseTeamService);
+                        ladderEventsDialog.show();
                     });
                 } else {
                     guestImage.setVisibility(View.INVISIBLE);

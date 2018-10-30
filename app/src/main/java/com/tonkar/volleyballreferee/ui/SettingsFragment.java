@@ -26,11 +26,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         updateRefereeName(sharedPreferences);
 
-        mRefereeNameListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                if(key.equals(PrefUtils.PREF_REFEREE_NAME)) {
-                    updateRefereeName(prefs);
-                }
+        mRefereeNameListener = (prefs, key) -> {
+            if(key.equals(PrefUtils.PREF_REFEREE_NAME)) {
+                updateRefereeName(prefs);
             }
         };
 

@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,26 +53,16 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
 
         mSyncLayout = findViewById(R.id.sync_layout);
-        mSyncLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        updateScheduledGamesList();
-                    }
-                }
-        );
+        mSyncLayout.setOnRefreshListener(this::updateScheduledGamesList);
 
         final ListView scheduledGamesList = findViewById(R.id.scheduled_games_list);
         mScheduledGamesListAdapter = new ScheduledGamesListAdapter(getLayoutInflater());
         scheduledGamesList.setAdapter(mScheduledGamesListAdapter);
 
-        scheduledGamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
-                if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                    ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
-                }
+        scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
+            GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
+            if (!GameType.TIME.equals(gameDescription.getGameType())) {
+                ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
             }
         });
 
@@ -87,14 +76,11 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         mScheduleIndoor4x4GameButton.hide();
         mScheduleBeachGameButton.hide();
         FloatingActionButton scheduleGameButton = findViewById(R.id.schedule_game_button);
-        scheduleGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mIsFabOpen){
-                    closeFABMenu();
-                }else{
-                    showFABMenu();
-                }
+        scheduleGameButton.setOnClickListener(button -> {
+            if(mIsFabOpen){
+                closeFABMenu();
+            }else{
+                showFABMenu();
             }
         });
 
@@ -111,11 +97,7 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();
 
-        searchGamesView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            }
-        });
+        searchGamesView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {});
 
         searchGamesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

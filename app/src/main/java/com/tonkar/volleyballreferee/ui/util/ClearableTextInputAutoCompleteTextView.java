@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewParent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -50,26 +49,23 @@ public class ClearableTextInputAutoCompleteTextView extends AppCompatAutoComplet
     }
 
     private void addTextClearListener() {
-        this.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                ClearableTextInputAutoCompleteTextView textView = ClearableTextInputAutoCompleteTextView.this;
-                final int drawableLeftIndex = 0;
-                final int drawableRightIndex = 2;
-                final Drawable drawableLeft = textView.getCompoundDrawables()[drawableLeftIndex];
-                final Drawable drawableRight = textView.getCompoundDrawables()[drawableRightIndex];
+        this.setOnTouchListener((view, event) -> {
+            ClearableTextInputAutoCompleteTextView textView = ClearableTextInputAutoCompleteTextView.this;
+            final int drawableLeftIndex = 0;
+            final int drawableRightIndex = 2;
+            final Drawable drawableLeft = textView.getCompoundDrawables()[drawableLeftIndex];
+            final Drawable drawableRight = textView.getCompoundDrawables()[drawableRightIndex];
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (drawableRight != null && (event.getX() >= (textView.getWidth() - drawableRight.getBounds().width()))) {
-                        textView.getText().clear();
-                        return performClick();
-                    } else if (drawableLeft != null && event.getX() <= drawableLeft.getBounds().width()) {
-                        textView.getText().clear();
-                        return performClick();
-                    }
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (drawableRight != null && (event.getX() >= (textView.getWidth() - drawableRight.getBounds().width()))) {
+                    textView.getText().clear();
+                    return performClick();
+                } else if (drawableLeft != null && event.getX() <= drawableLeft.getBounds().width()) {
+                    textView.getText().clear();
+                    return performClick();
                 }
-                return false;
             }
+            return false;
         });
     }
 }

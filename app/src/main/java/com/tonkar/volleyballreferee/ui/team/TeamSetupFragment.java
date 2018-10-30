@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ScrollView;
@@ -122,28 +121,21 @@ public class TeamSetupFragment extends Fragment {
         if (isGameContext) {
             teamNameInput.setThreshold(2);
             teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getSavedTeamList(mTeamService.getTeamsKind())));
-            teamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    RecordedTeam team = (RecordedTeam) teamNameInput.getAdapter().getItem(index);
-                    teamNameInput.setText(team.getName());
-                    ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, mTeamService, mTeamType);
+            teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
+                RecordedTeam team = (RecordedTeam) teamNameInput.getAdapter().getItem(index);
+                teamNameInput.setText(team.getName());
+                ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, mTeamService, mTeamType);
 
-                    teamColorSelected(mTeamService.getTeamColor(mTeamType));
-                    updateGender(mTeamService.getGenderType(mTeamType));
-                    mPlayerAdapter.notifyDataSetChanged();
-                    captainUpdated(mTeamType, mTeamService.getCaptain(mTeamType));
-                    if (manageLiberos()) {
-                        liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
-                        mLiberoAdapter.notifyDataSetChanged();
-                    }
-                    mScrollView.post(new Runnable() {
-                        public void run() {
-                            mScrollView.fullScroll(ScrollView.FOCUS_UP);
-                        }
-                    });
-                    computeConfirmItemVisibility();
+                teamColorSelected(mTeamService.getTeamColor(mTeamType));
+                updateGender(mTeamService.getGenderType(mTeamType));
+                mPlayerAdapter.notifyDataSetChanged();
+                captainUpdated(mTeamType, mTeamService.getCaptain(mTeamType));
+                if (manageLiberos()) {
+                    liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
+                    mLiberoAdapter.notifyDataSetChanged();
                 }
+                mScrollView.post(() -> mScrollView.fullScroll(ScrollView.FOCUS_UP));
+                computeConfirmItemVisibility();
             });
         }
 
@@ -174,21 +166,15 @@ public class TeamSetupFragment extends Fragment {
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
-        mTeamColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mTeamColorButton);
-                selectTeamColor();
-            }
+        mTeamColorButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mTeamColorButton);
+            selectTeamColor();
         });
 
         updateCaptain();
-        mCaptainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mCaptainButton);
-                selectCaptain();
-            }
+        mCaptainButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mCaptainButton);
+            selectCaptain();
         });
 
         if (manageLiberos()) {
@@ -200,12 +186,9 @@ public class TeamSetupFragment extends Fragment {
             } else {
                 liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
             }
-            mLiberoColorButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UiUtils.animate(getContext(), mLiberoColorButton);
-                    selectLiberoColor();
-                }
+            mLiberoColorButton.setOnClickListener(button -> {
+                UiUtils.animate(getContext(), mLiberoColorButton);
+                selectLiberoColor();
             });
         } else {
             liberoNumbersGrid.setVisibility(View.GONE);
@@ -217,13 +200,10 @@ public class TeamSetupFragment extends Fragment {
         mGenderButton = view.findViewById(R.id.select_gender_button);
         mGenderButton.setEnabled(editable);
         updateGender(mTeamService.getGenderType(mTeamType));
-        mGenderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mGenderButton);
-                GenderType genderType = mTeamService.getGenderType(mTeamType).next();
-                updateGender(genderType);
-            }
+        mGenderButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mGenderButton);
+            GenderType genderType = mTeamService.getGenderType(mTeamType).next();
+            updateGender(genderType);
         });
 
         computeConfirmItemVisibility();
@@ -294,24 +274,21 @@ public class TeamSetupFragment extends Fragment {
             button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 
-            button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(PlayerToggleButton button, boolean isChecked) {
-                    UiUtils.animate(mContext, button);
-                    final int number = Integer.parseInt(button.getText().toString());
-                    if (isChecked) {
-                        Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team", number, mTeamType.toString()));
-                        mTeamService.addPlayer(mTeamType, number);
-                    } else {
-                        Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
-                        mTeamService.removePlayer(mTeamType, number);
-                    }
-                    updateCaptain();
-                    if (manageLiberos()) {
-                        mLiberoAdapter.notifyDataSetChanged();
-                    }
-                    computeConfirmItemVisibility();
+            button.setOnCheckedChangeListener((cButton, isChecked) -> {
+                UiUtils.animate(mContext, cButton);
+                final int number = Integer.parseInt(cButton.getText().toString());
+                if (isChecked) {
+                    Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team", number, mTeamType.toString()));
+                    mTeamService.addPlayer(mTeamType, number);
+                } else {
+                    Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
+                    mTeamService.removePlayer(mTeamType, number);
                 }
+                updateCaptain();
+                if (manageLiberos()) {
+                    mLiberoAdapter.notifyDataSetChanged();
+                }
+                computeConfirmItemVisibility();
             });
 
             return button;
@@ -411,24 +388,21 @@ public class TeamSetupFragment extends Fragment {
             button.setChecked(mTeamService.isLibero(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 
-            button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(PlayerToggleButton button, boolean isChecked) {
-                    UiUtils.animate(mContext, button);
-                    final int number = Integer.parseInt(button.getText().toString());
-                    if (isChecked) {
-                        if (mTeamService.canAddLibero(mTeamType)) {
-                            Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team as libero", number, mTeamType.toString()));
-                            mTeamService.addLibero(mTeamType, number);
-                            updateCaptain();
-                        } else {
-                            button.setChecked(false);
-                        }
-                    } else {
-                        Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team as libero", number, mTeamType.toString()));
-                        mTeamService.removeLibero(mTeamType, number);
+            button.setOnCheckedChangeListener((cButton, isChecked) -> {
+                UiUtils.animate(mContext, cButton);
+                final int number = Integer.parseInt(cButton.getText().toString());
+                if (isChecked) {
+                    if (mTeamService.canAddLibero(mTeamType)) {
+                        Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team as libero", number, mTeamType.toString()));
+                        mTeamService.addLibero(mTeamType, number);
                         updateCaptain();
+                    } else {
+                        cButton.setChecked(false);
                     }
+                } else {
+                    Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team as libero", number, mTeamType.toString()));
+                    mTeamService.removeLibero(mTeamType, number);
+                    updateCaptain();
                 }
             });
 

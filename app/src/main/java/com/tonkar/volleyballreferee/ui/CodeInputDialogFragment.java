@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -36,30 +35,24 @@ public class CodeInputDialogFragment extends DialogFragment {
 
         String negativeButtonText = getArguments().getString("negative");
         if (negativeButtonText != null) {
-            builder.setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    mAlertDialogListener.onNegativeButtonClicked();
-                }
-            });
+            builder.setNegativeButton(negativeButtonText, (dialog, which) -> mAlertDialogListener.onNegativeButtonClicked());
         }
 
         String positiveButtonText = getArguments().getString("positive");
         if (positiveButtonText != null) {
-            builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    EditText editText = ((AlertDialog) dialog).findViewById(R.id.code_input);
-                    String codeStr = editText.getText().toString();
+            builder.setPositiveButton(positiveButtonText, (dialog, which) -> {
+                EditText editText = ((AlertDialog) dialog).findViewById(R.id.code_input);
+                String codeStr = editText.getText().toString();
 
-                    int code = -1;
+                int code = -1;
 
-                    try {
-                        code = Integer.valueOf(codeStr);
-                    } catch (NumberFormatException e) {
-                        Log.e(Tags.CODE, String.format("Error while reading the code %s", codeStr), e);
-                    }
-
-                    mAlertDialogListener.onPositiveButtonClicked(code);
+                try {
+                    code = Integer.valueOf(codeStr);
+                } catch (NumberFormatException e) {
+                    Log.e(Tags.CODE, String.format("Error while reading the code %s", codeStr), e);
                 }
+
+                mAlertDialogListener.onPositiveButtonClicked(code);
             });
         }
 

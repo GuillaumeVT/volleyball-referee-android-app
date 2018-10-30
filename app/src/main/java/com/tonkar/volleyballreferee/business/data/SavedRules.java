@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
@@ -191,11 +189,8 @@ public class SavedRules implements SavedRulesService {
     }
 
     public static List<Rules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
-        JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RULES_LIST_TYPE);
-        } finally {
-            reader.close();
         }
     }
 
@@ -292,25 +287,19 @@ public class SavedRules implements SavedRulesService {
     public void syncRulesOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            List<Rules> rulesList = readRulesList(response);
-                            syncRules(rulesList);
-                            if (listener != null){
-                                listener.onSynchronizationSucceeded();
-                            }
+                    response -> {
+                        List<Rules> rulesList = readRulesList(response);
+                        syncRules(rulesList);
+                        if (listener != null){
+                            listener.onSynchronizationSucceeded();
                         }
                     },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
-                            }
-                            if (listener != null){
-                                listener.onSynchronizationFailed();
-                            }
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
+                        }
+                        if (listener != null){
+                            listener.onSynchronizationFailed();
                         }
                     }
             );
@@ -329,37 +318,21 @@ public class SavedRules implements SavedRulesService {
             final byte[] bytes = writeRules(rules).getBytes();
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_RULES_API_URL, bytes, authentication,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            insertSyncIntoDb(rules.getName());
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes, authentication,
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                insertSyncIntoDb(rules.getName());
-                                            }
-                                        },
-                                        new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                if (error.networkResponse != null) {
-                                                    Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
-                                                }
-                                            }
+                    response -> insertSyncIntoDb(rules.getName()),
+                    error -> {
+                        if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes, authentication,
+                                    response -> insertSyncIntoDb(rules.getName()),
+                                    error2 -> {
+                                        if (error2.networkResponse != null) {
+                                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error2.networkResponse.statusCode));
                                         }
-                                );
-                                WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
-                            } else {
-                                if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
-                                }
+                                    }
+                            );
+                            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
+                        } else {
+                            if (error.networkResponse != null) {
+                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -375,18 +348,10 @@ public class SavedRules implements SavedRulesService {
             String parameters = JsonStringRequest.getParameters(params);
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createRulesItem(rulesName), SyncEntity.RULES_ENTITY);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
-                            }
+                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createRulesItem(rulesName), SyncEntity.RULES_ENTITY),
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -397,18 +362,10 @@ public class SavedRules implements SavedRulesService {
     private void deleteAllRulesOnline() {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.RULES_ENTITY);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
-                            }
+                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.RULES_ENTITY),
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
                         }
                     }
             );

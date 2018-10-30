@@ -89,17 +89,7 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         } else {
             viewHolder.purchaseButton.setText(skuDetails.getPrice());
             viewHolder.purchaseButton.setClickable(true);
-            viewHolder.purchaseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mBillingService.executeServiceRequest(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBillingService.launchPurchase(skuDetails.getSku());
-                        }
-                    });
-                }
-            });
+            viewHolder.purchaseButton.setOnClickListener(view -> mBillingService.executeServiceRequest(() -> mBillingService.launchPurchase(skuDetails.getSku())));
         }
     }
 

@@ -5,8 +5,6 @@ import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
@@ -249,18 +247,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
                 String url = String.format(Locale.getDefault(), WebUtils.GAME_API_URL, recordedGameService.getGameDate());
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                insertSyncIntoDb(recordedGameService.getGameDate());
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
-                                }
+                        response -> insertSyncIntoDb(recordedGameService.getGameDate()),
+                        error -> {
+                            if (error.networkResponse != null) {
+                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
                             }
                         }
                 );
@@ -286,18 +276,12 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
                 String url = String.format(Locale.getDefault(), WebUtils.SET_API_URL, mRecordedGame.getGameDate(), setIndex);
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {}
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
-                                    if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                        pushCurrentGameOnline();
-                                    }
+                        response -> {},
+                        error -> {
+                            if (error.networkResponse != null) {
+                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
+                                if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                    pushCurrentGameOnline();
                                 }
                             }
                         }
@@ -317,16 +301,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 if (gameService != null) {
                     String url = String.format(Locale.getDefault(), WebUtils.GAME_API_URL, gameService.getGameDate());
                     JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {}
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    if (error.networkResponse != null) {
-                                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
-                                    }
+                            response -> {},
+                            error -> {
+                                if (error.networkResponse != null) {
+                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                                 }
                             }
                     );
@@ -336,16 +314,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 if (!mRecordedGame.isMatchCompleted()) {
                     String url = String.format(Locale.getDefault(), WebUtils.GAME_API_URL, mRecordedGame.getGameDate());
                     JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {}
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    if (error.networkResponse != null) {
-                                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
-                                    }
+                            response -> {},
+                            error -> {
+                                if (error.networkResponse != null) {
+                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                                 }
                             }
                     );
@@ -652,20 +624,14 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     public static List<RecordedGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
-        JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_GAME_LIST_TYPE);
-        } finally {
-            reader.close();
         }
     }
 
     public static RecordedGame byteArrayToRecordedGame(byte[] bytes) throws IOException, JsonParseException {
-        JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(bytes)));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(bytes)))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_GAME_TYPE);
-        } finally {
-            reader.close();
         }
     }
 
@@ -732,32 +698,26 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         String url = String.format(Locale.getDefault(), WebUtils.GAME_CODE_API_URL, code);
 
         JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        RecordedGame recordedGame = readRecordedGame(response);
+                response -> {
+                    RecordedGame recordedGame = readRecordedGame(response);
 
-                        if (recordedGame == null) {
-                            Log.e(Tags.SAVED_GAMES, "Failed to deserialize a game from code or to notify the listener");
-                            listener.onInternalError();
-                        } else {
-                            listener.onRecordedGameReceivedFromCode(recordedGame);
-                        }
+                    if (recordedGame == null) {
+                        Log.e(Tags.SAVED_GAMES, "Failed to deserialize a game from code or to notify the listener");
+                        listener.onInternalError();
+                    } else {
+                        listener.onRecordedGameReceivedFromCode(recordedGame);
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
-                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                listener.onNotFound();
-                            } else {
-                                listener.onError();
-                            }
+                error -> {
+                    if (error.networkResponse != null) {
+                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
+                        if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                            listener.onNotFound();
                         } else {
                             listener.onError();
                         }
+                    } else {
+                        listener.onError();
                     }
                 }
         );
@@ -771,34 +731,28 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         String parameters = JsonStringRequest.getParameters(params);
 
         JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        RecordedGame recordedGame = readRecordedGame(response);
+                response -> {
+                    RecordedGame recordedGame = readRecordedGame(response);
 
-                        if (recordedGame == null) {
-                            Log.e(Tags.SAVED_GAMES, "Failed to deserialize a user game or to notify the listener");
-                            listener.onInternalError();
-                        } else {
-                            if (listener != null) {
-                                listener.onUserGameReceived(recordedGame);
-                            }
+                    if (recordedGame == null) {
+                        Log.e(Tags.SAVED_GAMES, "Failed to deserialize a user game or to notify the listener");
+                        listener.onInternalError();
+                    } else {
+                        if (listener != null) {
+                            listener.onUserGameReceived(recordedGame);
                         }
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
-                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                listener.onNotFound();
-                            } else {
-                                listener.onError();
-                            }
+                error -> {
+                    if (error.networkResponse != null) {
+                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
+                        if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                            listener.onNotFound();
                         } else {
                             listener.onError();
                         }
+                    } else {
+                        listener.onError();
                     }
                 }
         );
@@ -808,29 +762,23 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     @Override
     public void getUserScheduledGames(final AsyncGameRequestListener listener) {
         JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_SCHEDULED_GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        List<GameDescription> gameDescriptionList = readGameDescriptionList(response);
+                response -> {
+                    List<GameDescription> gameDescriptionList = readGameDescriptionList(response);
 
-                        if (gameDescriptionList == null) {
-                            Log.e(Tags.SAVED_GAMES, "Failed to deserialize a user scheduled game list or to notify the listener");
-                            listener.onInternalError();
-                        } else {
-                            if (listener != null) {
-                                listener.onUserGameListReceived(gameDescriptionList);
-                            }
+                    if (gameDescriptionList == null) {
+                        Log.e(Tags.SAVED_GAMES, "Failed to deserialize a user scheduled game list or to notify the listener");
+                        listener.onInternalError();
+                    } else {
+                        if (listener != null) {
+                            listener.onUserGameListReceived(gameDescriptionList);
                         }
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
-                        }
-                        listener.onError();
+                error -> {
+                    if (error.networkResponse != null) {
+                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
                     }
+                    listener.onError();
                 }
         );
         WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
@@ -843,23 +791,17 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 final byte[] bytes = gameDescriptionToByteArray(gameDescription);
 
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_GAME_API_URL, bytes, PrefUtils.getAuthentication(mContext),
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                if (listener != null) {
-                                    listener.onSynchronizationSucceeded();
-                                }
+                        response -> {
+                            if (listener != null) {
+                                listener.onSynchronizationSucceeded();
                             }
                         },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
-                                }
-                                if (listener != null) {
-                                    listener.onSynchronizationFailed();
-                                }
+                        error -> {
+                            if (error.networkResponse != null) {
+                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
+                            }
+                            if (listener != null) {
+                                listener.onSynchronizationFailed();
                             }
                         }
                 );
@@ -907,18 +849,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             String parameters = JsonStringRequest.getParameters(params);
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
-                            }
+                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY),
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -929,18 +863,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     private void deleteAllGamesOnline() {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.GAME_ENTITY);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while all deleting games", error.networkResponse.statusCode));
-                            }
+                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.GAME_ENTITY),
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while all deleting games", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -977,22 +903,16 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     public void syncGamesOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_COMPLETED_GAMES_API_URL, new byte[0],  PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            List<GameDescription> gameList = readGameDescriptionList(response);
-                            syncGames(gameList, listener);
-                        }
+                    response -> {
+                        List<GameDescription> gameList = readGameDescriptionList(response);
+                        syncGames(gameList, listener);
                     },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", error.networkResponse.statusCode));
-                            }
-                            if (listener != null){
-                                listener.onSynchronizationFailed();
-                            }
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", error.networkResponse.statusCode));
+                        }
+                        if (listener != null){
+                            listener.onSynchronizationFailed();
                         }
                     }
             );

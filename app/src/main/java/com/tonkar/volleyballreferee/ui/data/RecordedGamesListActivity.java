@@ -1,14 +1,11 @@
 package com.tonkar.volleyballreferee.ui.data;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -47,14 +44,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         setTitle(getResources().getString(R.string.recorded_games));
 
         mSyncLayout = findViewById(R.id.sync_layout);
-        mSyncLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        updateRecordedGamesList();
-                    }
-                }
-        );
+        mSyncLayout.setOnRefreshListener(this::updateRecordedGamesList);
 
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
 
@@ -66,23 +56,20 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         mRecordedGamesListAdapter = new RecordedGamesListAdapter(this, getLayoutInflater(), recordedGameServiceList);
         recordedGamesList.setAdapter(mRecordedGamesListAdapter);
 
-        recordedGamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                RecordedGameService recordedGameService = mRecordedGamesListAdapter.getItem(i);
-                Log.i(Tags.SAVED_GAMES, String.format("Start activity to display recorded game %s", recordedGameService.getGameSummary()));
+        recordedGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
+            RecordedGameService recordedGameService = mRecordedGamesListAdapter.getItem(i);
+            Log.i(Tags.SAVED_GAMES, String.format("Start activity to display recorded game %s", recordedGameService.getGameSummary()));
 
-                final Intent intent;
+            final Intent intent;
 
-                if ((GameType.INDOOR.equals(recordedGameService.getGameType()) || GameType.INDOOR_4X4.equals(recordedGameService.getGameType())) && UsageType.NORMAL.equals(recordedGameService.getUsageType())) {
-                    intent = new Intent(RecordedGamesListActivity.this, RecordedIndoorGameActivity.class);
-                } else {
-                    intent = new Intent(RecordedGamesListActivity.this, RecordedBeachGameActivity.class);
-                }
-
-                intent.putExtra("game_date", recordedGameService.getGameDate());
-                startActivity(intent);
+            if ((GameType.INDOOR.equals(recordedGameService.getGameType()) || GameType.INDOOR_4X4.equals(recordedGameService.getGameType())) && UsageType.NORMAL.equals(recordedGameService.getUsageType())) {
+                intent = new Intent(RecordedGamesListActivity.this, RecordedIndoorGameActivity.class);
+            } else {
+                intent = new Intent(RecordedGamesListActivity.this, RecordedBeachGameActivity.class);
             }
+
+            intent.putExtra("game_date", recordedGameService.getGameDate());
+            startActivity(intent);
         });
 
         updateRecordedGamesList();
@@ -99,11 +86,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();
 
-        searchGamesView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            }
-        });
+        searchGamesView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {});
 
         searchGamesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -144,16 +127,12 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         Log.i(Tags.SAVED_GAMES, "Delete all games");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_games)).setMessage(getResources().getString(R.string.delete_games_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                mRecordedGamesService.deleteAllRecordedGames();
-                UiUtils.makeText(RecordedGamesListActivity.this, getResources().getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
-                UiUtils.navigateToHome(RecordedGamesListActivity.this);
-            }
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            mRecordedGamesService.deleteAllRecordedGames();
+            UiUtils.makeText(RecordedGamesListActivity.this, getResources().getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
+            UiUtils.navigateToHome(RecordedGamesListActivity.this);
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }

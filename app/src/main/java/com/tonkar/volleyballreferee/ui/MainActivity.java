@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,8 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -45,7 +42,6 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -92,18 +88,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
 
         final MaterialButton purchaseButton = findViewById(R.id.start_purchase_button);
-        billingService.addBillingListener(new BillingListener() {
-            @Override
-            public void onPurchasesUpdated() {
-                purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE);
-            }
-        });
-        billingService.executeServiceRequest(new Runnable() {
-            @Override
-            public void run() {
-                purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE);
-            }
-        });
+        billingService.addBillingListener(() -> purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE));
+        billingService.executeServiceRequest(() -> purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE));
 
         Context applicationContext = getApplicationContext();
 
@@ -174,55 +160,52 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     private void initNavigationMenu() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_saved_rules:
-                        Log.i(Tags.SAVED_RULES, "Saved Rules");
-                        Intent intent = new Intent(MainActivity.this, SavedRulesListActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.action_settings:
-                        Log.i(Tags.SETTINGS, "Settings");
-                        intent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.action_recorded_games:
-                        Log.i(Tags.SAVED_GAMES, "Recorded games");
-                        intent = new Intent(MainActivity.this, RecordedGamesListActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.action_saved_teams:
-                        Log.i(Tags.SAVED_TEAMS, "Saved teams");
-                        intent = new Intent(MainActivity.this, SavedTeamsListActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.action_view_live_games:
-                        Log.i(Tags.WEB, "Live games");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
-                        startActivity(intent);
-                        break;
-                    case R.id.action_search_online_games:
-                        Log.i(Tags.WEB, "Search online games");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
-                        startActivity(intent);
-                        break;
-                    case R.id.action_facebook:
-                        Log.i(Tags.WEB, "Facebook");
-                        Intent browserIntent;
-                        try {
-                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
-                            startActivity(browserIntent);
-                        } catch (ActivityNotFoundException e) {
-                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
-                            startActivity(browserIntent);
-                        }
-                        break;
-                }
-                mDrawerLayout.closeDrawers();
-                return true;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_saved_rules:
+                    Log.i(Tags.SAVED_RULES, "Saved Rules");
+                    Intent intent = new Intent(MainActivity.this, SavedRulesListActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.action_settings:
+                    Log.i(Tags.SETTINGS, "Settings");
+                    intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.action_recorded_games:
+                    Log.i(Tags.SAVED_GAMES, "Recorded games");
+                    intent = new Intent(MainActivity.this, RecordedGamesListActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.action_saved_teams:
+                    Log.i(Tags.SAVED_TEAMS, "Saved teams");
+                    intent = new Intent(MainActivity.this, SavedTeamsListActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.action_view_live_games:
+                    Log.i(Tags.WEB, "Live games");
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
+                    startActivity(intent);
+                    break;
+                case R.id.action_search_online_games:
+                    Log.i(Tags.WEB, "Search online games");
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
+                    startActivity(intent);
+                    break;
+                case R.id.action_facebook:
+                    Log.i(Tags.WEB, "Facebook");
+                    Intent browserIntent;
+                    try {
+                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
+                        startActivity(browserIntent);
+                    } catch (ActivityNotFoundException e) {
+                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
+                        startActivity(browserIntent);
+                    }
+                    break;
             }
+            mDrawerLayout.closeDrawers();
+            return true;
         });
 
         ActionBar actionBar = getSupportActionBar();
@@ -287,14 +270,14 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     }
 
     private void initButtonOnClickListeners() {
-        findViewById(R.id.start_indoor_6x6_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startIndoorGame(null); }});
-        findViewById(R.id.start_indoor_4x4_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startIndoor4x4Game(null); }});
-        findViewById(R.id.start_score_based_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startScoreBasedGame(null); }});
-        findViewById(R.id.start_beach_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startBeachGame(null); }});
-        findViewById(R.id.start_time_based_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startTimeBasedGame(null); }});
-        findViewById(R.id.start_scheduled_code_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { startScheduledGameFromCode(null); }});
-        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToScheduledGames(null); }});
-        findViewById(R.id.start_purchase_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToPurchases(null); }});
+        findViewById(R.id.start_indoor_6x6_game_button).setOnClickListener(button -> startIndoorGame(null));
+        findViewById(R.id.start_indoor_4x4_game_button).setOnClickListener(button -> startIndoor4x4Game(null));
+        findViewById(R.id.start_score_based_game_button).setOnClickListener(button -> startScoreBasedGame(null));
+        findViewById(R.id.start_beach_game_button).setOnClickListener(button -> startBeachGame(null));
+        findViewById(R.id.start_time_based_game_button).setOnClickListener(button -> startTimeBasedGame(null));
+        findViewById(R.id.start_scheduled_code_game_button).setOnClickListener(button -> startScheduledGameFromCode(null));
+        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(button -> goToScheduledGames(null));
+        findViewById(R.id.start_purchase_button).setOnClickListener(button -> goToPurchases(null));
     }
 
 
@@ -451,17 +434,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         if (PrefUtils.canRequest(this)) {
             String url = WebUtils.HAS_MESSAGE_API_URL;
             BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
-                    new Response.Listener<Boolean>() {
-                        @Override
-                        public void onResponse(Boolean response) {
-                            messageItem.setVisible(response);
-                        }
-                    }, new Response.ErrorListener() {
-                         @Override
-                        public void onErrorResponse(VolleyError error) {
-                            messageItem.setVisible(false);
-                        }
-                    }
+                    response -> messageItem.setVisible(response), error -> messageItem.setVisible(false)
             );
             WebUtils.getInstance().getRequestQueue(this).add(booleanRequest);
         }
@@ -471,26 +444,16 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         if (PrefUtils.canRequest(this)) {
             String url = WebUtils.MESSAGE_API_URL;
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (response != null) {
-                                Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, response, Snackbar.LENGTH_INDEFINITE);
-                                TextView textView = infoSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
-                                textView.setMaxLines(3);
-                                infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
-                                infoSnackbar.setAction("Close", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                    }
-                                });
-                                infoSnackbar.show();
-                            }
+                    response -> {
+                        if (response != null) {
+                            Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, response, Snackbar.LENGTH_INDEFINITE);
+                            TextView textView = infoSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
+                            textView.setMaxLines(3);
+                            infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
+                            infoSnackbar.setAction("Close", view -> {});
+                            infoSnackbar.show();
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {}
-            }
+                    }, error -> {}
             );
             WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
         }

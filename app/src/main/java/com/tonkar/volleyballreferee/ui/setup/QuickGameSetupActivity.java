@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +24,6 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -149,50 +147,42 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasSetupGame()) {
-                    ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteSetupGame();
-                }
-                UiUtils.navigateToHome(QuickGameSetupActivity.this, false);
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            if (ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasSetupGame()) {
+                ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteSetupGame();
             }
+            UiUtils.navigateToHome(QuickGameSetupActivity.this, false);
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
     private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
-        gameSetupNavigation.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        final Fragment fragment;
+        gameSetupNavigation.setOnNavigationItemSelectedListener(item -> {
+                    final Fragment fragment;
 
-                        switch (item.getItemId()) {
-                            case R.id.teams_tab:
-                                fragment = QuickGameSetupFragment.newInstance();
-                                break;
-                            case R.id.rules_tab:
-                                if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
-                                    fragment = null;
-                                } else {
-                                    fragment = RulesSetupFragment.newInstance();
-                                }
-                                break;
-                            default:
+                    switch (item.getItemId()) {
+                        case R.id.teams_tab:
+                            fragment = QuickGameSetupFragment.newInstance();
+                            break;
+                        case R.id.rules_tab:
+                            if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
                                 fragment = null;
-                                break;
-                        }
-
-                        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.quick_game_setup_container, fragment).commit();
-
-                        return true;
+                            } else {
+                                fragment = RulesSetupFragment.newInstance();
+                            }
+                            break;
+                        default:
+                            fragment = null;
+                            break;
                     }
+
+                    final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.quick_game_setup_container, fragment).commit();
+
+                    return true;
                 }
         );
 

@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -47,9 +46,7 @@ public abstract class ColorSelectionDialog {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
         builder.setTitle(title).setView(gridView);
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
         mAlertDialog = builder.create();
     }
@@ -106,12 +103,7 @@ public abstract class ColorSelectionDialog {
             final int color = mColors[index];
             button.setImageResource(color == mSelectedColor ? R.drawable.ic_check : 0);
             UiUtils.colorTeamIconButton(mContext, color, button);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onColorSelected(color);
-                }
-            });
+            button.setOnClickListener(fab -> onColorSelected(color));
             return button;
         }
 

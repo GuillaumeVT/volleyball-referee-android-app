@@ -7,12 +7,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.TextView;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
+
+import java.util.Locale;
 
 public class UserActivity extends AuthenticationActivity {
 
@@ -24,6 +28,9 @@ public class UserActivity extends AuthenticationActivity {
         Log.i(Tags.WEB, "Create user activity");
 
         setTitle("");
+
+        TextView userIdText = findViewById(R.id.user_id_text);
+        userIdText.setText(String.format(Locale.getDefault(), getResources().getString(R.string.user_signed_in), PrefUtils.getAuthentication(this).getUserId()));
 
         initButtonOnClickListeners();
     }
@@ -40,9 +47,9 @@ public class UserActivity extends AuthenticationActivity {
     }
 
     private void initButtonOnClickListeners() {
-        findViewById(R.id.goto_account_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToOnlineAccount(null); }});
-        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { goToScheduledGames(null); }});
-        findViewById(R.id.sign_out_button).setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { signOut(null); }});
+        findViewById(R.id.goto_account_button).setOnClickListener(button -> goToOnlineAccount(null));
+        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(button -> goToScheduledGames(null));
+        findViewById(R.id.sign_out_button).setOnClickListener(button -> signOut(null));
     }
 
     public void goToScheduledGames(View view) {

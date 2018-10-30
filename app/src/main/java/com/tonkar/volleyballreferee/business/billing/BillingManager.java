@@ -10,7 +10,6 @@ import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
-import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
@@ -46,12 +45,9 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
 
         mBillingClient = BillingClient.newBuilder(mActivity).setListener(this).build();
 
-        startServiceConnection(new Runnable() {
-            @Override
-            public void run() {
-                querySkuList();
-                queryPurchases();
-            }
+        startServiceConnection(() -> {
+            querySkuList();
+            queryPurchases();
         });
     }
 
@@ -107,28 +103,22 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
         params.setSkusList(Arrays.asList(BillingService.IN_APP_SKUS)).setType(BillingClient.SkuType.INAPP);
         mBillingClient.querySkuDetailsAsync(
                 params.build(),
-                new SkuDetailsResponseListener() {
-                    @Override
-                    public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
-                        if (responseCode == BillingClient.BillingResponse.OK && skuDetailsList != null) {
-                            mSkuDetailsList.clear();
-                            mSkuDetailsList.addAll(skuDetailsList);
-                        }
+                (responseCode, skuDetailsList) -> {
+                    if (responseCode == BillingClient.BillingResponse.OK && skuDetailsList != null) {
+                        mSkuDetailsList.clear();
+                        mSkuDetailsList.addAll(skuDetailsList);
+                    }
 
-                        for (BillingListener listener : mBillingListeners) {
-                            listener.onPurchasesUpdated();
-                        }
+                    for (BillingListener listener : mBillingListeners) {
+                        listener.onPurchasesUpdated();
                     }
                 });
     }
 
     private void queryPurchases() {
-        Runnable queryToExecute = new Runnable() {
-            @Override
-            public void run() {
-                Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.INAPP);
-                onPurchasesUpdated(purchasesResult.getResponseCode(), purchasesResult.getPurchasesList());
-            }
+        Runnable queryToExecute = () -> {
+            Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.INAPP);
+            onPurchasesUpdated(purchasesResult.getResponseCode(), purchasesResult.getPurchasesList());
         };
 
         executeServiceRequest(queryToExecute);

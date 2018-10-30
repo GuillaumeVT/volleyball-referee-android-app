@@ -33,12 +33,22 @@ public class PrefUtils {
 
     public static void signIn(Context context, Authentication authentication) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_USER_ID, authentication.getUserId()).putString(PREF_USER_TOKEN, authentication.getToken()).putBoolean(PREF_USER_SIGNED_IN, true).apply();
+        sharedPreferences
+                .edit()
+                .putString(PREF_USER_ID, authentication.getUserId())
+                .putString(PREF_USER_TOKEN, authentication.getToken())
+                .putBoolean(PREF_USER_SIGNED_IN, true)
+                .apply();
     }
 
     public static void signOut(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_USER_ID).remove(PREF_USER_TOKEN).putBoolean(PREF_USER_SIGNED_IN, false).apply();
+        sharedPreferences
+                .edit()
+                .remove(PREF_USER_ID)
+                .remove(PREF_USER_TOKEN)
+                .putBoolean(PREF_USER_SIGNED_IN, false)
+                .apply();
     }
 
     public static boolean isSignedIn(Context context) {

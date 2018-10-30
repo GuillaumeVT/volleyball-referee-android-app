@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -52,20 +51,16 @@ public class CountDownDialogFragment extends DialogFragment {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle(title).setView(mCountDownView).setCancelable(false);
-        builder.setNegativeButton(R.string.skip, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(Tags.TIMEOUT, "User cancels the countdown");
-                mCountDown.getCountDownTimer().cancel();
-            }
+        builder.setNegativeButton(R.string.skip, (dialog, which) -> {
+            Log.i(Tags.TIMEOUT, "User cancels the countdown");
+            mCountDown.getCountDownTimer().cancel();
         });
-        builder.setNeutralButton(R.string.run_background, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(Tags.TIMEOUT, "User runs the countdown in background");
-                mCountDown.getCountDownTimer().cancel();
-                if (isAdded() && getActivity() instanceof GameActivity) {
-                    GameActivity activity = (GameActivity) getActivity();
-                    activity.startToolbarCountDown(mCountDown.getDuration());
-                }
+        builder.setNeutralButton(R.string.run_background, (dialog, which) -> {
+            Log.i(Tags.TIMEOUT, "User runs the countdown in background");
+            mCountDown.getCountDownTimer().cancel();
+            if (isAdded() && getActivity() instanceof GameActivity) {
+                GameActivity activity = (GameActivity) getActivity();
+                activity.startToolbarCountDown(mCountDown.getDuration());
             }
         });
         final AlertDialog alertDialog = builder.create();

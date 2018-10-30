@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -150,20 +149,14 @@ public class QuickGameSetupFragment extends Fragment {
         });
 
         mHomeTeamColorButton = view.findViewById(R.id.home_team_color_button);
-        mHomeTeamColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mHomeTeamColorButton);
-                selectTeamColor(TeamType.HOME);
-            }
+        mHomeTeamColorButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mHomeTeamColorButton);
+            selectTeamColor(TeamType.HOME);
         });
         mGuestTeamColorButton = view.findViewById(R.id.guest_team_color_button);
-        mGuestTeamColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mGuestTeamColorButton);
-                selectTeamColor(TeamType.GUEST);
-            }
+        mGuestTeamColorButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mGuestTeamColorButton);
+            selectTeamColor(TeamType.GUEST);
         });
 
         leagueNameInput.setText(ServicesProvider.getInstance().getGeneralService().getLeagueName());
@@ -198,12 +191,7 @@ public class QuickGameSetupFragment extends Fragment {
             matchDurationPicker.setMaxValue(40);
             matchDurationPicker.setValue((int) (timeBasedGameService.getDuration() / 60000L));
 
-            matchDurationPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldValue, int newValue){
-                    timeBasedGameService.setDuration(newValue * 60000L);
-                }
-            });
+            matchDurationPicker.setOnValueChangedListener((picker, oldValue, newValue) -> timeBasedGameService.setDuration(newValue * 60000L));
         } else {
             matchDurationPicker.setVisibility(View.GONE);
             matchDurationText.setVisibility(View.GONE);
@@ -211,55 +199,43 @@ public class QuickGameSetupFragment extends Fragment {
 
         if (GameType.BEACH.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
             updateCaptain(TeamType.HOME);
-            mHomeTeamCaptainButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UiUtils.animate(getContext(), mHomeTeamCaptainButton);
-                    switchCaptain(TeamType.HOME);
-                }
+            mHomeTeamCaptainButton.setOnClickListener(button -> {
+                UiUtils.animate(getContext(), mHomeTeamCaptainButton);
+                switchCaptain(TeamType.HOME);
             });
 
             updateCaptain(TeamType.GUEST);
-            mGuestTeamCaptainButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UiUtils.animate(getContext(), mGuestTeamCaptainButton);
-                    switchCaptain(TeamType.GUEST);
-                }
+            mGuestTeamCaptainButton.setOnClickListener(button -> {
+                UiUtils.animate(getContext(), mGuestTeamCaptainButton);
+                switchCaptain(TeamType.GUEST);
             });
 
             mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService(applicationContext).getSavedTeamList(GameType.BEACH));
 
             homeTeamNameInput.setAdapter(mTeamsListAdapter);
             homeTeamNameInput.setThreshold(2);
-            homeTeamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    RecordedTeam team = mTeamsListAdapter.getItem(index);
-                    homeTeamNameInput.setText(team.getName());
-                    ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.HOME);
+            homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
+                RecordedTeam team = mTeamsListAdapter.getItem(index);
+                homeTeamNameInput.setText(team.getName());
+                ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.HOME);
 
-                    teamColorSelected(TeamType.HOME, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.HOME));
-                    updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.HOME));
-                    updateCaptain(TeamType.HOME);
-                    computeConfirmItemVisibility();
-                }
+                teamColorSelected(TeamType.HOME, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.HOME));
+                updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.HOME));
+                updateCaptain(TeamType.HOME);
+                computeConfirmItemVisibility();
             });
 
             guestTeamNameInput.setAdapter(mTeamsListAdapter);
             guestTeamNameInput.setThreshold(2);
-            guestTeamNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    RecordedTeam team = mTeamsListAdapter.getItem(index);
-                    guestTeamNameInput.setText(team.getName());
-                    ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.GUEST);
+            guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
+                RecordedTeam team = mTeamsListAdapter.getItem(index);
+                guestTeamNameInput.setText(team.getName());
+                ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, ServicesProvider.getInstance().getTeamService(), TeamType.GUEST);
 
-                    teamColorSelected(TeamType.GUEST, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.GUEST));
-                    updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.GUEST));
-                    updateCaptain(TeamType.GUEST);
-                    computeConfirmItemVisibility();
-                }
+                teamColorSelected(TeamType.GUEST, ServicesProvider.getInstance().getTeamService().getTeamColor(TeamType.GUEST));
+                updateGender(ServicesProvider.getInstance().getTeamService().getGenderType(TeamType.GUEST));
+                updateCaptain(TeamType.GUEST);
+                computeConfirmItemVisibility();
             });
 
             guestTeamNameInput.setAdapter(mTeamsListAdapter);

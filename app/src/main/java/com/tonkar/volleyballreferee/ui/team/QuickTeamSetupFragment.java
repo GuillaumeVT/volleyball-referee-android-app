@@ -95,12 +95,9 @@ public class QuickTeamSetupFragment extends Fragment {
 
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
         updateCaptain();
-        mCaptainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mCaptainButton);
-                switchCaptain();
-            }
+        mCaptainButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mCaptainButton);
+            switchCaptain();
         });
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
@@ -108,24 +105,18 @@ public class QuickTeamSetupFragment extends Fragment {
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
-        mTeamColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mTeamColorButton);
-                selectTeamColor();
-            }
+        mTeamColorButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mTeamColorButton);
+            selectTeamColor();
         });
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
         mGenderButton.setEnabled(editable);
         updateGender(mTeamService.getGenderType(mTeamType));
-        mGenderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mGenderButton);
-                GenderType genderType = mTeamService.getGenderType(mTeamType).next();
-                updateGender(genderType);
-            }
+        mGenderButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mGenderButton);
+            GenderType genderType = mTeamService.getGenderType(mTeamType).next();
+            updateGender(genderType);
         });
 
         computeSaveItemVisibility();

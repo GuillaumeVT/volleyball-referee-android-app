@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,18 +60,14 @@ public abstract class SanctionSelectionDialog {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
         builder.setTitle(title).setView(sanctionsView);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
-                    onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), -1);
-                } else {
-                    onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), mPlayerAdapter.getSelectedPlayer());
-                }
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            if (SanctionType.DELAY_WARNING.equals(mSelectedSanctionType) || SanctionType.DELAY_PENALTY.equals(mSelectedSanctionType)) {
+                onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), -1);
+            } else {
+                onSanction(teamType, sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition()), mPlayerAdapter.getSelectedPlayer());
             }
         });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {});
 
         mAlertDialog = builder.create();
     }
@@ -240,24 +235,21 @@ public abstract class SanctionSelectionDialog {
             }
 
 
-            button.setOnCheckedChangeListener(new PlayerToggleButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(PlayerToggleButton button, boolean isChecked) {
-                    UiUtils.animate(mContext, button);
-                    if (isChecked) {
-                        for (int index = 0; index < parent.getChildCount(); index++) {
-                            PlayerToggleButton child = (PlayerToggleButton) parent.getChildAt(index);
-                            if (child != button && child.isChecked()) {
-                                child.setChecked(false);
-                                mSelectedPlayer = -1;
-                            }
+            button.setOnCheckedChangeListener((cButton, isChecked) -> {
+                UiUtils.animate(mContext, cButton);
+                if (isChecked) {
+                    for (int index = 0; index < parent.getChildCount(); index++) {
+                        PlayerToggleButton child = (PlayerToggleButton) parent.getChildAt(index);
+                        if (child != cButton && child.isChecked()) {
+                            child.setChecked(false);
+                            mSelectedPlayer = -1;
                         }
-                        mSelectedPlayer = player;
-                    } else {
-                        mSelectedPlayer = -1;
                     }
-                    computeOkAvailability();
+                    mSelectedPlayer = player;
+                } else {
+                    mSelectedPlayer = -1;
                 }
+                computeOkAvailability();
             });
 
             return button;

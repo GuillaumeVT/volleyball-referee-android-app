@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.data;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,14 +48,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         setTitle(getResources().getString(R.string.saved_rules_list));
 
         mSyncLayout = findViewById(R.id.sync_layout);
-        mSyncLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        updateSavedRulesList();
-                    }
-                }
-        );
+        mSyncLayout.setOnRefreshListener(this::updateSavedRulesList);
 
         mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
 
@@ -67,18 +58,15 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         mSavedRulesListAdapter = new SavedRulesListAdapter(this, getLayoutInflater(), savedRules);
         savedRulesList.setAdapter(mSavedRulesListAdapter);
 
-        savedRulesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Rules rules = mSavedRulesListAdapter.getItem(i);
-                mSavedRulesService.editRules(rules.getName());
-                Log.i(Tags.SAVED_RULES, String.format("Start activity to edit saved rules %s", rules.getName()));
+        savedRulesList.setOnItemClickListener((adapterView, view, i, l) -> {
+            Rules rules = mSavedRulesListAdapter.getItem(i);
+            mSavedRulesService.editRules(rules.getName());
+            Log.i(Tags.SAVED_RULES, String.format("Start activity to edit saved rules %s", rules.getName()));
 
-                final Intent intent = new Intent(SavedRulesListActivity.this, SavedRulesActivity.class);
-                boolean editable = !PrefUtils.isSignedIn(SavedRulesListActivity.this);
-                intent.putExtra("editable", editable);
-                startActivity(intent);
-            }
+            final Intent intent = new Intent(SavedRulesListActivity.this, SavedRulesActivity.class);
+            boolean editable = !PrefUtils.isSignedIn(SavedRulesListActivity.this);
+            intent.putExtra("editable", editable);
+            startActivity(intent);
         });
 
         mIsFabOpen = false;
@@ -89,14 +77,11 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         mAddIndoor4x4RulesButton.hide();
         mAddBeachRulesButton.hide();
         FloatingActionButton addRulesButton = findViewById(R.id.add_rules_button);
-        addRulesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mIsFabOpen){
-                    closeFABMenu();
-                }else{
-                    showFABMenu();
-                }
+        addRulesButton.setOnClickListener(view -> {
+            if(mIsFabOpen){
+                closeFABMenu();
+            }else{
+                showFABMenu();
             }
         });
 
@@ -141,11 +126,7 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         MenuItem searchRulesItem = menu.findItem(R.id.action_search_rules);
         SearchView searchRulesView = (SearchView) searchRulesItem.getActionView();
 
-        searchRulesView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            }
-        });
+        searchRulesView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {});
 
         searchRulesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -186,16 +167,12 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
         Log.i(Tags.SAVED_RULES, "Delete all rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_all_rules_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                mSavedRulesService.deleteAllSavedRules();
-                UiUtils.makeText(SavedRulesListActivity.this, getResources().getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
-                UiUtils.navigateToHome(SavedRulesListActivity.this);
-            }
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            mSavedRulesService.deleteAllSavedRules();
+            UiUtils.makeText(SavedRulesListActivity.this, getResources().getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
+            UiUtils.navigateToHome(SavedRulesListActivity.this);
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }

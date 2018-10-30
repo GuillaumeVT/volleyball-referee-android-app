@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -183,20 +182,13 @@ public class RulesSetupFragment extends Fragment {
         if (isGameContext) {
             mRulesNameInput.setThreshold(2);
             mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedRulesService(getActivity().getApplicationContext()).getSavedRules()));
-            mRulesNameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    Rules rules = (Rules) mRulesNameInput.getAdapter().getItem(index);
-                    mRulesNameInput.setText(rules.getName());
-                    mRules.setAll(rules);
-                    initValues();
-                    mScrollView.post(new Runnable() {
-                        public void run() {
-                            mScrollView.fullScroll(ScrollView.FOCUS_UP);
-                        }
-                    });
-                    computeConfirmItemVisibility();
-                }
+            mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
+                Rules rules = (Rules) mRulesNameInput.getAdapter().getItem(index);
+                mRulesNameInput.setText(rules.getName());
+                mRules.setAll(rules);
+                initValues();
+                mScrollView.post(() -> mScrollView.fullScroll(ScrollView.FOCUS_UP));
+                computeConfirmItemVisibility();
             });
         }
 
@@ -239,11 +231,9 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mTieBreakSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setTieBreakInLastSet(isChecked);
-                mPointsInTieBreakSpinner.setEnabled(isChecked);
-            }
+        mTieBreakSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+            mRules.setTieBreakInLastSet(isChecked);
+            mPointsInTieBreakSpinner.setEnabled(isChecked);
         });
 
         mPointsInTieBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -256,24 +246,14 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mTwoPointsDifferenceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setTwoPointsDifference(isChecked);
-            }
-        });
+        mTwoPointsDifferenceSwitch.setOnCheckedChangeListener((button, isChecked) -> mRules.setTwoPointsDifference(isChecked));
 
-        mSanctionsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setSanctionsEnabled(isChecked);
-            }
-        });
+        mSanctionsSwitch.setOnCheckedChangeListener((button, isChecked) -> mRules.setSanctionsEnabled(isChecked));
 
-        mTeamTimeoutsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setTeamTimeoutsEnabled(isChecked);
-                mTeamTimeoutsPerSetSpinner.setEnabled(isChecked);
-                mTeamTimeoutDurationSpinner.setEnabled(isChecked);
-            }
+        mTeamTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+            mRules.setTeamTimeoutsEnabled(isChecked);
+            mTeamTimeoutsPerSetSpinner.setEnabled(isChecked);
+            mTeamTimeoutDurationSpinner.setEnabled(isChecked);
         });
 
         mTeamTimeoutsPerSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -296,11 +276,9 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mTechnicalTimeoutsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setTechnicalTimeoutsEnabled(isChecked);
-                mTechnicalTimeoutDurationSpinner.setEnabled(isChecked);
-            }
+        mTechnicalTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+            mRules.setTechnicalTimeoutsEnabled(isChecked);
+            mTechnicalTimeoutDurationSpinner.setEnabled(isChecked);
         });
 
         mTechnicalTimeoutDurationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -313,11 +291,9 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mGameIntervalsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setGameIntervalsEnabled(isChecked);
-                mGameIntervalDurationSpinner.setEnabled(isChecked);
-            }
+        mGameIntervalsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+            mRules.setGameIntervalsEnabled(isChecked);
+            mGameIntervalDurationSpinner.setEnabled(isChecked);
         });
 
         mGameIntervalDurationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -353,12 +329,10 @@ public class RulesSetupFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mCourtSwitchesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mRules.setBeachCourtSwitchesEnabled(isChecked);
-                mCourtSwitchFrequencySpinner.setEnabled(isChecked);
-                mCourtSwitchFrequencyTieBreakSpinner.setEnabled(isChecked);
-            }
+        mCourtSwitchesSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+            mRules.setBeachCourtSwitchesEnabled(isChecked);
+            mCourtSwitchFrequencySpinner.setEnabled(isChecked);
+            mCourtSwitchFrequencyTieBreakSpinner.setEnabled(isChecked);
         });
 
         mCourtSwitchFrequencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

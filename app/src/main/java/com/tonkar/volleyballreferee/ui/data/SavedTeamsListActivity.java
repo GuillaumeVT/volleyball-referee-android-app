@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.data;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,14 +48,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         setTitle(getResources().getString(R.string.saved_teams));
 
         mSyncLayout = findViewById(R.id.sync_layout);
-        mSyncLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        updateSavedTeamsList();
-                    }
-                }
-        );
+        mSyncLayout.setOnRefreshListener(this::updateSavedTeamsList);
 
         mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
 
@@ -67,19 +58,16 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         mSavedTeamsListAdapter = new SavedTeamsListAdapter(this, getLayoutInflater(), teams);
         savedTeamsList.setAdapter(mSavedTeamsListAdapter);
 
-        savedTeamsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                RecordedTeam team = mSavedTeamsListAdapter.getItem(i);
-                mSavedTeamsService.editTeam(team.getGameType(), team.getName(), team.getGenderType());
-                Log.i(Tags.SAVED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
+        savedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
+            RecordedTeam team = mSavedTeamsListAdapter.getItem(i);
+            mSavedTeamsService.editTeam(team.getGameType(), team.getName(), team.getGenderType());
+            Log.i(Tags.SAVED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
 
-                final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
-                intent.putExtra("kind", team.getGameType().toString());
-                boolean editable = !PrefUtils.isSignedIn(SavedTeamsListActivity.this);
-                intent.putExtra("editable", editable);
-                startActivity(intent);
-            }
+            final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
+            intent.putExtra("kind", team.getGameType().toString());
+            boolean editable = !PrefUtils.isSignedIn(SavedTeamsListActivity.this);
+            intent.putExtra("editable", editable);
+            startActivity(intent);
         });
 
         mIsFabOpen = false;
@@ -90,14 +78,11 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         mAdd4x4TeamButton.hide();
         mAddBeachTeamButton.hide();
         FloatingActionButton addTeamButton = findViewById(R.id.add_team_button);
-        addTeamButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mIsFabOpen){
-                    closeFABMenu();
-                }else{
-                    showFABMenu();
-                }
+        addTeamButton.setOnClickListener(view -> {
+            if(mIsFabOpen){
+                closeFABMenu();
+            }else{
+                showFABMenu();
             }
         });
 
@@ -140,10 +125,7 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         MenuItem searchTeamsItem = menu.findItem(R.id.action_search_teams);
         SearchView searchTeamsView = (SearchView) searchTeamsItem.getActionView();
 
-        searchTeamsView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {}
-        });
+        searchTeamsView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {});
 
         searchTeamsView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -184,16 +166,12 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
         Log.i(Tags.SAVED_TEAMS, "Delete all teams");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_teams)).setMessage(getResources().getString(R.string.delete_teams_question));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                mSavedTeamsService.deleteAllSavedTeams();
-                UiUtils.makeText(SavedTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
-                UiUtils.navigateToHome(SavedTeamsListActivity.this);
-            }
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            mSavedTeamsService.deleteAllSavedTeams();
+            UiUtils.makeText(SavedTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
+            UiUtils.navigateToHome(SavedTeamsListActivity.this);
         });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }

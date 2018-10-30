@@ -33,17 +33,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mPreferencesListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                switch (key) {
-                    case PrefUtils.PREF_SYNC_DATA:
-                        ServicesProvider.getInstance().getSavedRulesService(getApplicationContext()).syncRulesOnline();
-                        ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext()).syncTeamsOnline();
-                        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).syncGamesOnline();
-                        break;
-                    default:
-                        break;
-                }
+        mPreferencesListener = (prefs, key) -> {
+            switch (key) {
+                case PrefUtils.PREF_SYNC_DATA:
+                    ServicesProvider.getInstance().getSavedRulesService(getApplicationContext()).syncRulesOnline();
+                    ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext()).syncTeamsOnline();
+                    ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).syncGamesOnline();
+                    break;
+                default:
+                    break;
             }
         };
 

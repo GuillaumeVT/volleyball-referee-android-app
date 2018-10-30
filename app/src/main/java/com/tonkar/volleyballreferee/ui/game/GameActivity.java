@@ -1,14 +1,12 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -304,14 +302,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
-            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    UiUtils.navigateToHome(GameActivity.this, false);
-                }
-            });
-            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {}
-            });
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(GameActivity.this, false));
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
@@ -337,15 +329,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (!mGameService.isMatchCompleted()) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(getResources().getString(R.string.reset_set)).setMessage(getResources().getString(R.string.reset_set_question));
-            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    mGameService.resetCurrentSet();
-                    recreate();
-                }
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                mGameService.resetCurrentSet();
+                recreate();
             });
-            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {}
-            });
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
@@ -355,8 +343,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     // UI Callbacks
 
     private void initButtonOnClickListeners() {
-        mLeftTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseLeftScore(null); }});
-        mRightTeamScoreButton.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View view) { increaseRightScore(null); }});
+        mLeftTeamScoreButton.setOnClickListener(button -> increaseLeftScore(null));
+        mRightTeamScoreButton.setOnClickListener(button -> increaseRightScore(null));
     }
 
     public void swapTeams(View view) {
@@ -418,17 +406,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(title).setMessage(getResources().getString(R.string.confirm_set_question));
-            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.i(Tags.GAME_UI, "User accepts the set point");
-                    mGameService.addPoint(teamType);
-                }
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                Log.i(Tags.GAME_UI, "User accepts the set point");
+                mGameService.addPoint(teamType);
             });
-            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.i(Tags.GAME_UI, "User refuses the set point");
-                }
-            });
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses the set point"));
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
@@ -440,17 +422,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (mGameService.getRemainingTimeouts(teamType) > 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
-            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.i(Tags.GAME_UI, "User accepts the timeout");
-                    mGameService.callTimeout(teamType);
-                }
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                Log.i(Tags.GAME_UI, "User accepts the timeout");
+                mGameService.callTimeout(teamType);
             });
-            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.i(Tags.GAME_UI, "User refuses the timeout");
-                }
-            });
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses the timeout"));
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
@@ -741,47 +717,43 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     private void initGameNavigation(final BottomNavigationView gameNavigation, Bundle savedInstanceState) {
-        gameNavigation.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        final Fragment fragment;
+        gameNavigation.setOnNavigationItemSelectedListener(item -> {
+                    final Fragment fragment;
 
-                        switch (item.getItemId()) {
-                            case R.id.court_position_tab:
-                                switch (mGameService.getGameType()) {
-                                    case INDOOR_4X4:
-                                        fragment = Indoor4x4CourtFragment.newInstance();
-                                        break;
-                                    case BEACH:
-                                        fragment = BeachCourtFragment.newInstance();
-                                        break;
-                                    case INDOOR:
-                                    default:
-                                        fragment = IndoorCourtFragment.newInstance();
-                                        break;
-                                }
-                                break;
-                            case R.id.substitutions_tab:
-                                fragment = SubstitutionsFragment.newInstance();
-                                break;
-                            case R.id.timeouts_tab:
-                                fragment = TimeoutsFragment.newInstance();
-                                break;
-                            case R.id.sanctions_tab:
-                                fragment = SanctionsFragment.newInstance();
-                                break;
-                            case R.id.ladder_tab:
-                            default:
-                                fragment = LaddersFragment.newInstance();
-                                break;
-                        }
-
-                        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.game_container, fragment).commit();
-
-                        return true;
+                    switch (item.getItemId()) {
+                        case R.id.court_position_tab:
+                            switch (mGameService.getGameType()) {
+                                case INDOOR_4X4:
+                                    fragment = Indoor4x4CourtFragment.newInstance();
+                                    break;
+                                case BEACH:
+                                    fragment = BeachCourtFragment.newInstance();
+                                    break;
+                                case INDOOR:
+                                default:
+                                    fragment = IndoorCourtFragment.newInstance();
+                                    break;
+                            }
+                            break;
+                        case R.id.substitutions_tab:
+                            fragment = SubstitutionsFragment.newInstance();
+                            break;
+                        case R.id.timeouts_tab:
+                            fragment = TimeoutsFragment.newInstance();
+                            break;
+                        case R.id.sanctions_tab:
+                            fragment = SanctionsFragment.newInstance();
+                            break;
+                        case R.id.ladder_tab:
+                        default:
+                            fragment = LaddersFragment.newInstance();
+                            break;
                     }
+
+                    final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.game_container, fragment).commit();
+
+                    return true;
                 }
         );
 

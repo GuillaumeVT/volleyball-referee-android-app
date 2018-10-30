@@ -54,11 +54,11 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         mScoreService = ServicesProvider.getInstance().getScoreService();
         mScoreService.addScoreListener(this);
 
-        addButtonOnLeftSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.left_team_position_1));
-        addButtonOnLeftSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.left_team_position_2));
+        addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
+        addButtonOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_position_2));
 
-        addButtonOnRightSide(PositionType.POSITION_1, (MaterialButton) mView.findViewById(R.id.right_team_position_1));
-        addButtonOnRightSide(PositionType.POSITION_2, (MaterialButton) mView.findViewById(R.id.right_team_position_2));
+        addButtonOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_position_1));
+        addButtonOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_position_2));
 
         mLeftServiceImage1 = mView.findViewById(R.id.left_team_service_1);
         mLeftServiceImage2 = mView.findViewById(R.id.left_team_service_2);
@@ -68,27 +68,21 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
         for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
-            entry.getValue().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mScoreService.getServingTeam().equals(mTeamOnLeftSide)) {
-                        UiUtils.animate(getContext(), view);
-                        Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnLeftSide.toString()));
-                        mBeachTeamService.swapPlayers(mTeamOnLeftSide);
-                    }
+            entry.getValue().setOnClickListener(view -> {
+                if (mScoreService.getServingTeam().equals(mTeamOnLeftSide)) {
+                    UiUtils.animate(getContext(), view);
+                    Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnLeftSide.toString()));
+                    mBeachTeamService.swapPlayers(mTeamOnLeftSide);
                 }
             });
         }
 
         for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
-            entry.getValue().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mScoreService.getServingTeam().equals(mTeamOnRightSide)) {
-                        UiUtils.animate(getContext(), view);
-                        Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnRightSide.toString()));
-                        mBeachTeamService.swapPlayers(mTeamOnRightSide);
-                    }
+            entry.getValue().setOnClickListener(view -> {
+                if (mScoreService.getServingTeam().equals(mTeamOnRightSide)) {
+                    UiUtils.animate(getContext(), view);
+                    Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnRightSide.toString()));
+                    mBeachTeamService.swapPlayers(mTeamOnRightSide);
                 }
             });
         }

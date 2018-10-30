@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -28,7 +27,6 @@ import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.preference.PreferenceManager;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -55,7 +53,6 @@ import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -259,14 +256,6 @@ public class UiUtils {
         activity.startActivity(intent);
     }
 
-    public static void navigateToUser(Activity activity) {
-        Intent intent = new Intent(activity, UserActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        activity.startActivity(intent);
-    }
-
     public static void navigateToUserSignIn(Activity activity) {
         Intent intent = new Intent(activity, UserSignInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -291,12 +280,7 @@ public class UiUtils {
         final MediaPlayer timeoutPlayer = MediaPlayer.create(context, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         if (timeoutPlayer != null) {
             timeoutPlayer.setLooping(false);
-            timeoutPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    timeoutPlayer.release();
-                }
-            });
+            timeoutPlayer.setOnCompletionListener(mediaPlayer -> timeoutPlayer.release());
             timeoutPlayer.start();
         }
     }
@@ -335,9 +319,7 @@ public class UiUtils {
         if (interactiveNotification) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
             builder.setMessage(message);
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {}
-            });
+            builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {});
             AlertDialog alertDialog = builder.show();
             centerAlertDialogMessage(alertDialog);
             setAlertDialogMessageSize(alertDialog, context.getResources());

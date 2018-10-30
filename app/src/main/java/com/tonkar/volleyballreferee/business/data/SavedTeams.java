@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
@@ -282,11 +280,8 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     public static List<RecordedTeam> readTeamsStream(InputStream inputStream) throws IOException, JsonParseException {
-        JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_TEAM_LIST_TYPE);
-        } finally {
-            reader.close();
         }
     }
 
@@ -383,25 +378,19 @@ public class SavedTeams implements SavedTeamsService {
     public void syncTeamsOnline(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_TEAM_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            List<RecordedTeam> teamList = readTeams(response);
-                            syncTeams(teamList);
-                            if (listener != null){
-                                listener.onSynchronizationSucceeded();
-                            }
+                    response -> {
+                        List<RecordedTeam> teamList = readTeams(response);
+                        syncTeams(teamList);
+                        if (listener != null){
+                            listener.onSynchronizationSucceeded();
                         }
                     },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
-                            }
-                            if (listener != null){
-                                listener.onSynchronizationFailed();
-                            }
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
+                        }
+                        if (listener != null){
+                            listener.onSynchronizationFailed();
                         }
                     }
             );
@@ -420,37 +409,21 @@ public class SavedTeams implements SavedTeamsService {
             final byte[] bytes = writeTeam(team).getBytes();
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_TEAM_API_URL, bytes, authentication,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            insertSyncIntoDb(team);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_API_URL, bytes, authentication,
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                insertSyncIntoDb(team);
-                                            }
-                                        },
-                                        new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                if (error.networkResponse != null) {
-                                                    Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
-                                                }
-                                            }
+                    response -> insertSyncIntoDb(team),
+                    error -> {
+                        if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, WebUtils.USER_TEAM_API_URL, bytes, authentication,
+                                    response -> insertSyncIntoDb(team),
+                                    error2 -> {
+                                        if (error2.networkResponse != null) {
+                                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error2.networkResponse.statusCode));
                                         }
-                                );
-                                WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
-                            } else {
-                                if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
-                                }
+                                    }
+                            );
+                            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
+                        } else {
+                            if (error.networkResponse != null) {
+                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -468,18 +441,10 @@ public class SavedTeams implements SavedTeamsService {
             String parameters = JsonStringRequest.getParameters(params);
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createTeamItem(teamName, genderType.toString(), gameType.toString()), SyncEntity.RULES_ENTITY);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
-                            }
+                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createTeamItem(teamName, genderType.toString(), gameType.toString()), SyncEntity.RULES_ENTITY),
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -490,18 +455,10 @@ public class SavedTeams implements SavedTeamsService {
     private void deleteAllTeamsOnline() {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_TEAM_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.TEAM_ENTITY);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
-                            }
+                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.TEAM_ENTITY),
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
                         }
                     }
             );
