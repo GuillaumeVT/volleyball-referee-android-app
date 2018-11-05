@@ -151,7 +151,7 @@ public class QuickTeamSetupFragment extends Fragment {
     private void captainUpdated(int number) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team captain", mTeamType.toString()));
         mTeamService.setCaptain(mTeamType, number);
-        mCaptainButton.setText(UiUtils.formatNumberFromLocal(number));
+        mCaptainButton.setText(UiUtils.formatNumberFromLocale(number));
         UiUtils.styleTeamButton(getContext(), mTeamService, mTeamType, number, mCaptainButton);
     }
 

@@ -219,11 +219,11 @@ public class LadderListAdapter extends BaseAdapter {
                 if (TeamType.HOME.equals(ladderItem.getTeamType())) {
                     homeText.setVisibility(View.VISIBLE);
                     guestText.setVisibility(View.INVISIBLE);
-                    homeText.setText(UiUtils.formatNumberFromLocal(ladderItem.getHomePoints()));
+                    homeText.setText(UiUtils.formatNumberFromLocale(ladderItem.getHomePoints()));
                 } else {
                     guestText.setVisibility(View.VISIBLE);
                     homeText.setVisibility(View.INVISIBLE);
-                    guestText.setText(UiUtils.formatNumberFromLocal(ladderItem.getGuestPoints()));
+                    guestText.setText(UiUtils.formatNumberFromLocale(ladderItem.getGuestPoints()));
                 }
 
                 if (ladderItem.hasEvent(TeamType.HOME)) {

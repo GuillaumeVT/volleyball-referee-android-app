@@ -6,8 +6,8 @@ android {
         applicationId "com.tonkar.volleyballreferee"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 56
-        versionName "2.511"
+        versionCode 57
+        versionName "2.52"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
@@ -37,12 +37,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.1'
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
     implementation 'androidx.preference:preference:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'

@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.widget.ImageView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -46,6 +47,7 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
@@ -356,12 +358,35 @@ public class UiUtils {
         return toast;
     }
 
-    public static String formatNumberFromLocal(int number) {
+    public static String formatNumberFromLocale(int number) {
         return String.format(Locale.getDefault(), "%d", number);
     }
 
     public static String formatScoreFromLocale(int leftScore, int rightScore, boolean withSpace) {
         String format = withSpace ? "%d\t-\t%d" : "%d-%d";
         return String.format(Locale.getDefault(), format, leftScore, rightScore);
+    }
+
+    public static void setSanctionImage(ImageView imageView, SanctionType sanctionType) {
+        switch (sanctionType) {
+            case YELLOW:
+                imageView.setImageResource(R.drawable.yellow_card);
+                break;
+            case RED:
+                imageView.setImageResource(R.drawable.red_card);
+                break;
+            case RED_EXPULSION:
+                imageView.setImageResource(R.drawable.expulsion_card);
+                break;
+            case RED_DISQUALIFICATION:
+                imageView.setImageResource(R.drawable.disqualification_card);
+                break;
+            case DELAY_WARNING:
+                imageView.setImageResource(R.drawable.delay_warning);
+                break;
+            case DELAY_PENALTY:
+                imageView.setImageResource(R.drawable.delay_penalty);
+                break;
+        }
     }
 }

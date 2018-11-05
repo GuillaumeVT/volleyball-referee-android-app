@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
+import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,10 +12,12 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
+import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +31,14 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     protected       TeamType                          mTeamOnRightSide;
     protected final Map<PositionType, MaterialButton> mLeftTeamPositions;
     protected final Map<PositionType, MaterialButton> mRightTeamPositions;
+    protected final Map<PositionType, ImageView>      mLeftTeamSanctionImages;
+    protected final Map<PositionType, ImageView>      mRightTeamSanctionImages;
 
     public CourtFragment() {
         mLeftTeamPositions = new HashMap<>();
         mRightTeamPositions = new HashMap<>();
+        mLeftTeamSanctionImages = new HashMap<>();
+        mRightTeamSanctionImages = new HashMap<>();
     }
 
     @Override
@@ -41,6 +48,8 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         mSanctionService.removeSanctionListener(this);
         mLeftTeamPositions.clear();
         mRightTeamPositions.clear();
+        mLeftTeamSanctionImages.clear();
+        mRightTeamSanctionImages.clear();
     }
 
     protected void initView() {
@@ -62,9 +71,28 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         mRightTeamPositions.put(positionType, button);
     }
 
+    protected void addSanctionImageOnLeftSide(final PositionType positionType, final ImageView sanctionImage) {
+        mLeftTeamSanctionImages.put(positionType, sanctionImage);
+    }
+
+    protected void addSanctionImageOnRightSide(final PositionType positionType, final ImageView sanctionImage) {
+        mRightTeamSanctionImages.put(positionType, sanctionImage);
+    }
+
     @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
         mTeamOnRightSide = rightTeamType;
     }
+
+    protected void updateSanction(TeamType teamType, int number, ImageView sanctionImage) {
+        if (mSanctionService.hasSanctions(teamType, number)) {
+            SanctionType sanctionType = mSanctionService.getMostSeriousSanction(teamType, number);
+            UiUtils.setSanctionImage(sanctionImage, sanctionType);
+            sanctionImage.setVisibility(View.VISIBLE);
+        } else {
+            sanctionImage.setVisibility(View.INVISIBLE);
+        }
+    }
+
 }

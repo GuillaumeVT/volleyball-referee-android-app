@@ -25,5 +25,9 @@
         <pair source="c" header="h" fileNamingConvention="NONE" />
       </extensions>
     </Objective-C-extensions>
+    <codeStyleSettings language="JAVA">
+      <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+      <option name="ALIGN_GROUP_FIELD_DECLARATIONS" value="true" />
+    </codeStyleSettings>
   </code_scheme>
 </component>

@@ -759,6 +759,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public SanctionType getMostSeriousSanction(TeamType teamType, int number) {
+        return SanctionType.YELLOW;
+    }
+
+    @Override
     public List<Sanction> getGivenSanctions(TeamType teamType) {
         return new ArrayList<>();
     }

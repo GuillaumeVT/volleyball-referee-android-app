@@ -13,4 +13,6 @@ public interface SanctionService extends BaseSanctionService {
     void giveSanction(TeamType teamType, SanctionType sanctionType, int number);
 
     Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType);
+
+    SanctionType getMostSeriousSanction(TeamType teamType, int number);
 }

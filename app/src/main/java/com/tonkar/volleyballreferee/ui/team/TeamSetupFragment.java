@@ -270,7 +270,7 @@ public class TeamSetupFragment extends Fragment {
                 button = (PlayerToggleButton) view;
             }
 
-            button.setText(UiUtils.formatNumberFromLocal(playerShirtNumber));
+            button.setText(UiUtils.formatNumberFromLocale(playerShirtNumber));
             button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 
@@ -331,7 +331,7 @@ public class TeamSetupFragment extends Fragment {
     private void captainUpdated(TeamType teamType, int number) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team captain", teamType.toString()));
         mTeamService.setCaptain(teamType, number);
-        mCaptainButton.setText(UiUtils.formatNumberFromLocal(number));
+        mCaptainButton.setText(UiUtils.formatNumberFromLocale(number));
         UiUtils.styleTeamButton(getContext(), mTeamService, teamType, number, mCaptainButton);
     }
 
@@ -384,7 +384,7 @@ public class TeamSetupFragment extends Fragment {
                 button = (PlayerToggleButton) view;
             }
 
-            button.setText(UiUtils.formatNumberFromLocal(playerShirtNumber));
+            button.setText(UiUtils.formatNumberFromLocale(playerShirtNumber));
             button.setChecked(mTeamService.isLibero(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 

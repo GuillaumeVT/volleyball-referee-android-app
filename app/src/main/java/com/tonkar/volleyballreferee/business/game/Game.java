@@ -876,6 +876,20 @@ public abstract class Game extends BaseGame {
         return players;
     }
 
+    @Override
+    public SanctionType getMostSeriousSanction(TeamType teamType, int number) {
+        SanctionType sanctionType = SanctionType.YELLOW;
+        List<Sanction> sanctions = getSanctions(teamType, number);
+
+        for (Sanction sanction: sanctions) {
+            if (sanction.getSanctionType().seriousness() > sanctionType.seriousness()) {
+                sanctionType = sanction.getSanctionType();
+            }
+        }
+
+        return sanctionType;
+    }
+
     /* *******************************
      * Specific custom rules section *
      * *******************************/

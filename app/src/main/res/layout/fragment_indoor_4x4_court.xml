@@ -10,6 +10,30 @@
     android:paddingStart="@dimen/indoor_court_x_padding"
     android:weightSum="4">
 
+    <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+        <ImageView
+                android:id="@+id/left_team_sanction_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/left_team_position_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:textSize="@dimen/court_position_size"
+                android:theme="@style/ButtonTheme.Team" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -17,14 +41,77 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/left_team_position_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/left_team_sanction_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/left_team_position_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/indoor_court_y_margin"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/indoor_court_y_margin"
+                    android:textSize="@dimen/court_position_size"
+                    android:theme="@style/ButtonTheme.Team" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/left_team_sanction_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/left_team_position_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/indoor_court_y_margin"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/indoor_court_y_margin"
+                    android:textSize="@dimen/court_position_size"
+                    android:theme="@style/ButtonTheme.Team" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/left_team_sanction_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/left_team_position_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/indoor_court_y_margin"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/indoor_court_y_margin"
+                    android:textSize="@dimen/court_position_size"
+                    android:theme="@style/ButtonTheme.Team" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -35,99 +122,102 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/left_team_position_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/left_team_position_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+            <ImageView
+                    android:id="@+id/right_team_sanction_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/left_team_position_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/right_team_position_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/indoor_court_y_margin"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/indoor_court_y_margin"
+                    android:textSize="@dimen/court_position_size"
+                    android:theme="@style/ButtonTheme.Team" />
 
-    </LinearLayout>
+        </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/right_team_position_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+            <ImageView
+                    android:id="@+id/right_team_sanction_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/right_team_position_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/right_team_position_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/indoor_court_y_margin"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/indoor_court_y_margin"
+                    android:textSize="@dimen/court_position_size"
+                    android:theme="@style/ButtonTheme.Team" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/right_team_position_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/right_team_sanction_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/right_team_position_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/indoor_court_y_margin"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/indoor_court_y_margin"
+                    android:textSize="@dimen/court_position_size"
+                    android:theme="@style/ButtonTheme.Team" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+    <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+        <ImageView
+                android:id="@+id/right_team_sanction_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/right_team_position_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:textSize="@dimen/court_position_size"
-            android:theme="@style/ButtonTheme.Team" />
+                android:id="@+id/right_team_position_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:textSize="@dimen/court_position_size"
+                android:theme="@style/ButtonTheme.Team" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

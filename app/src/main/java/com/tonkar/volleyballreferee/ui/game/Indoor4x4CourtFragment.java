@@ -44,6 +44,16 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
         addButtonOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_position_3));
         addButtonOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_position_4));
 
+        addSanctionImageOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_sanction_1));
+        addSanctionImageOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_sanction_2));
+        addSanctionImageOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_sanction_3));
+        addSanctionImageOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_sanction_4));
+
+        addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
+        addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
+        addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
+        addSanctionImageOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_sanction_4));
+
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
         initLeftTeamListeners();

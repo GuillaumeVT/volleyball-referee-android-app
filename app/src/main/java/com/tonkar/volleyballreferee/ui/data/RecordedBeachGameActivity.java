@@ -49,8 +49,8 @@ public class RecordedBeachGameActivity extends RecordedGameActivity {
         gameDate.setText(formatter.format(new Date(mGameDate)));
         homeTeamName.setText(recordedGameService.getTeamName(TeamType.HOME));
         guestTeamName.setText(recordedGameService.getTeamName(TeamType.GUEST));
-        homeTeamSets.setText(UiUtils.formatNumberFromLocal(recordedGameService.getSets(TeamType.HOME)));
-        guestTeamSets.setText(UiUtils.formatNumberFromLocal(recordedGameService.getSets(TeamType.GUEST)));
+        homeTeamSets.setText(UiUtils.formatNumberFromLocale(recordedGameService.getSets(TeamType.HOME)));
+        guestTeamSets.setText(UiUtils.formatNumberFromLocale(recordedGameService.getSets(TeamType.GUEST)));
 
         UiUtils.colorTeamText(this, recordedGameService.getTeamColor(TeamType.HOME), homeTeamSets);
         UiUtils.colorTeamText(this, recordedGameService.getTeamColor(TeamType.GUEST), guestTeamSets);

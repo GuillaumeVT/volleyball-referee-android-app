@@ -506,9 +506,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamScoreButton.setText(UiUtils.formatNumberFromLocal(newCount));
+            mLeftTeamScoreButton.setText(UiUtils.formatNumberFromLocale(newCount));
         } else {
-            mRightTeamScoreButton.setText(UiUtils.formatNumberFromLocal(newCount));
+            mRightTeamScoreButton.setText(UiUtils.formatNumberFromLocale(newCount));
         }
 
         StringBuilder builder = new StringBuilder();
@@ -540,9 +540,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onSetsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamSetsText.setText(UiUtils.formatNumberFromLocal(newCount));
+            mLeftTeamSetsText.setText(UiUtils.formatNumberFromLocale(newCount));
         } else {
-            mRightTeamSetsText.setText(UiUtils.formatNumberFromLocal(newCount));
+            mRightTeamSetsText.setText(UiUtils.formatNumberFromLocale(newCount));
         }
     }
 

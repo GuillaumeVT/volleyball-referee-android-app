@@ -58,4 +58,30 @@ public enum SanctionType {
 
         return sanctionType;
     }
+
+    public int seriousness() {
+        int seriousness;
+
+        switch (this) {
+            case DELAY_WARNING:
+            case DELAY_PENALTY:
+                seriousness = -1;
+                break;
+            case RED:
+                seriousness = 2;
+                break;
+            case RED_EXPULSION:
+                seriousness = 3;
+                break;
+            case RED_DISQUALIFICATION:
+                seriousness = 4;
+                break;
+            case YELLOW:
+            default:
+                seriousness = 1;
+                break;
+        }
+
+        return seriousness;
+    }
 }

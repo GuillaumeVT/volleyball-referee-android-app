@@ -58,7 +58,7 @@ public class PlayersListAdapter extends BaseAdapter {
         }
 
         int number = mPlayers.get(index);
-        playerText.setText(UiUtils.formatNumberFromLocal(number));
+        playerText.setText(UiUtils.formatNumberFromLocale(number));
 
         if (mTeamService.isLibero(mTeamType, number)) {
             UiUtils.colorTeamText(mContext, mTeamService.getLiberoColor(mTeamType), playerText);

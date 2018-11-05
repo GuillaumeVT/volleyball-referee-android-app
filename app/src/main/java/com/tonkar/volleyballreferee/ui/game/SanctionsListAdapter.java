@@ -113,32 +113,13 @@ public class SanctionsListAdapter extends BaseAdapter {
             viewHolder.setText.setVisibility(View.GONE);
         }
 
-        switch (sanction.getSanctionType()) {
-            case YELLOW:
-                viewHolder.cardTypeImage.setImageResource(R.drawable.yellow_card);
-                break;
-            case RED:
-                viewHolder.cardTypeImage.setImageResource(R.drawable.red_card);
-                break;
-            case RED_EXPULSION:
-                viewHolder.cardTypeImage.setImageResource(R.drawable.expulsion_card);
-                break;
-            case RED_DISQUALIFICATION:
-                viewHolder.cardTypeImage.setImageResource(R.drawable.disqualification_card);
-                break;
-            case DELAY_WARNING:
-                viewHolder.cardTypeImage.setImageResource(R.drawable.delay_warning);
-                break;
-            case DELAY_PENALTY:
-                viewHolder.cardTypeImage.setImageResource(R.drawable.delay_penalty);
-                break;
-        }
+        UiUtils.setSanctionImage(viewHolder.cardTypeImage, sanction.getSanctionType());
 
         if (sanction.getPlayer() < 0) {
             viewHolder.playerText.setVisibility(View.INVISIBLE);
         } else {
             if (sanction.getPlayer() > 0) {
-                viewHolder.playerText.setText(UiUtils.formatNumberFromLocal(sanction.getPlayer()));
+                viewHolder.playerText.setText(UiUtils.formatNumberFromLocale(sanction.getPlayer()));
             } else {
                 viewHolder.playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
             }

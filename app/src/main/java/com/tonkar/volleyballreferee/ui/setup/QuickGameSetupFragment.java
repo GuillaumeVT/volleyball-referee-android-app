@@ -314,7 +314,7 @@ public class QuickGameSetupFragment extends Fragment {
             button = mGuestTeamCaptainButton;
         }
 
-        button.setText(UiUtils.formatNumberFromLocal(number));
+        button.setText(UiUtils.formatNumberFromLocale(number));
         UiUtils.styleTeamButton(getContext(), ServicesProvider.getInstance().getTeamService(), teamType, number, button);
     }
 

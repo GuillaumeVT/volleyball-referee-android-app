@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -61,6 +62,20 @@ public class IndoorCourtFragment extends CourtFragment {
         addButtonOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_position_4));
         addButtonOnRightSide(PositionType.POSITION_5, mView.findViewById(R.id.right_team_position_5));
         addButtonOnRightSide(PositionType.POSITION_6, mView.findViewById(R.id.right_team_position_6));
+
+        addSanctionImageOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_sanction_1));
+        addSanctionImageOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_sanction_2));
+        addSanctionImageOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_sanction_3));
+        addSanctionImageOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_sanction_4));
+        addSanctionImageOnLeftSide(PositionType.POSITION_5, mView.findViewById(R.id.left_team_sanction_5));
+        addSanctionImageOnLeftSide(PositionType.POSITION_6, mView.findViewById(R.id.left_team_sanction_6));
+
+        addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
+        addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
+        addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
+        addSanctionImageOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_sanction_4));
+        addSanctionImageOnRightSide(PositionType.POSITION_5, mView.findViewById(R.id.right_team_sanction_5));
+        addSanctionImageOnRightSide(PositionType.POSITION_6, mView.findViewById(R.id.right_team_sanction_6));
 
         onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
@@ -141,10 +156,8 @@ public class IndoorCourtFragment extends CourtFragment {
         if (PositionType.BENCH.equals(positionType)) {
             onTeamRotated(teamType);
         } else {
-            final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
-            MaterialButton button = teamPositions.get(positionType);
-            button.setText(UiUtils.formatNumberFromLocal(number));
-            UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
+            updatePosition(teamType, number, getTeamPositions(teamType).get(positionType));
+            updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
 
             checkCaptain(teamType, number);
         }
@@ -161,19 +174,23 @@ public class IndoorCourtFragment extends CourtFragment {
     @Override
     public void onTeamRotated(TeamType teamType) {
         final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
+        final Map<PositionType, ImageView> teamSanctionImages = getTeamSanctionImages(teamType);
 
         for (final MaterialButton button : teamPositions.values()) {
             button.setText("!");
             UiUtils.styleBaseTeamButton(mView.getContext(), mIndoorTeamService, teamType, button);
         }
 
+        for (final ImageView imageView : teamSanctionImages.values()) {
+            imageView.setVisibility(View.INVISIBLE);
+        }
+
         final Set<Integer> players = mTeamService.getPlayersOnCourt(teamType);
 
         for (Integer number : players) {
             final PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
-            final MaterialButton button = teamPositions.get(positionType);
-            button.setText(UiUtils.formatNumberFromLocal(number));
-            UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, button);
+            updatePosition(teamType, number, teamPositions.get(positionType));
+            updateSanction(teamType, number, teamSanctionImages.get(positionType));
         }
 
         confirmStartingLineup();
@@ -262,10 +279,11 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        if (number > 0 && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
+        if (number > 0) {
             PositionType positionType = mIndoorTeamService.getPlayerPosition(teamType, number);
+            updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
 
-            if (!PositionType.BENCH.equals(positionType)) {
+            if ((SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) && !PositionType.BENCH.equals(positionType)) {
                 showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
             }
         }
@@ -310,4 +328,20 @@ public class IndoorCourtFragment extends CourtFragment {
         return teamPositions;
     }
 
+    private Map<PositionType, ImageView> getTeamSanctionImages(TeamType teamType) {
+        final Map<PositionType, ImageView> teamSanctionImages;
+
+        if (mTeamOnLeftSide.equals(teamType)) {
+            teamSanctionImages = mLeftTeamSanctionImages;
+        } else {
+            teamSanctionImages = mRightTeamSanctionImages;
+        }
+
+        return teamSanctionImages;
+    }
+
+    protected void updatePosition(TeamType teamType, int number, MaterialButton positionButton) {
+        positionButton.setText(UiUtils.formatNumberFromLocale(number));
+        UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, positionButton);
+    }
 }

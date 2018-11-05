@@ -60,6 +60,12 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         addButtonOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_position_1));
         addButtonOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_position_2));
 
+        addSanctionImageOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_sanction_1));
+        addSanctionImageOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_sanction_2));
+
+        addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
+        addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
+
         mLeftServiceImage1 = mView.findViewById(R.id.left_team_service_1);
         mLeftServiceImage2 = mView.findViewById(R.id.left_team_service_2);
         mRightServiceImage1 = mView.findViewById(R.id.right_team_service_1);
@@ -117,6 +123,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     private void update(TeamType teamType) {
         final Map<PositionType, MaterialButton> teamPositions;
+        final Map<PositionType, ImageView> teamSanctionImages;
         ImageView serviceImage1;
         ImageView serviceImage2;
 
@@ -124,28 +131,32 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
             teamPositions = mLeftTeamPositions;
             serviceImage1 = mLeftServiceImage1;
             serviceImage2 = mLeftServiceImage2;
+            teamSanctionImages = mLeftTeamSanctionImages;
         } else {
             teamPositions = mRightTeamPositions;
             serviceImage1 = mRightServiceImage1;
             serviceImage2 = mRightServiceImage2;
+            teamSanctionImages = mRightTeamSanctionImages;
         }
 
         int number = 1;
         PositionType positionType = mTeamService.getPlayerPosition(teamType, number);
         MaterialButton button = teamPositions.get(PositionType.POSITION_1);
-        button.setText(UiUtils.formatNumberFromLocal(number));
+        button.setText(UiUtils.formatNumberFromLocale(number));
         UiUtils.styleTeamButton(mView.getContext(), mBeachTeamService, teamType, number, button);
-        applyService(teamType, positionType, serviceImage1);
+        updateService(teamType, positionType, serviceImage1);
+        updateSanction(teamType, number, teamSanctionImages.get(PositionType.POSITION_1));
 
         number = 2;
         positionType = mTeamService.getPlayerPosition(teamType, number);
         button = teamPositions.get(PositionType.POSITION_2);
-        button.setText(UiUtils.formatNumberFromLocal(number));
+        button.setText(UiUtils.formatNumberFromLocale(number));
         UiUtils.styleTeamButton(mView.getContext(), mBeachTeamService, teamType, number, button);
-        applyService(teamType, positionType, serviceImage2);
+        updateService(teamType, positionType, serviceImage2);
+        updateSanction(teamType, number, teamSanctionImages.get(PositionType.POSITION_2));
     }
 
-    private void applyService(TeamType teamType, PositionType positionType, ImageView imageView) {
+    private void updateService(TeamType teamType, PositionType positionType, ImageView imageView) {
         if (mScoreService.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
             imageView.setVisibility(View.VISIBLE);
         } else {
@@ -182,5 +193,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
             // The team is excluded for this match, the other team wins
             UiUtils.makeText(getActivity(), String.format(getResources().getString(R.string.match_lost_incomplete), mTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }
+
+        update(teamType);
     }
 }

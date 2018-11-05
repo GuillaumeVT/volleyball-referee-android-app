@@ -138,8 +138,8 @@ public class LadderEventsDialog {
             TextView playerOutText = substitutionView.findViewById(R.id.player_out_text);
 
             Substitution substitution = mSubstitutions.get(index);
-            playerInText.setText(UiUtils.formatNumberFromLocal(substitution.getPlayerIn()));
-            playerOutText.setText(UiUtils.formatNumberFromLocal(substitution.getPlayerOut()));
+            playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
+            playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
             UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerIn(), playerInText);
             UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerOut(), playerOutText);
@@ -187,33 +187,13 @@ public class LadderEventsDialog {
             ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
             Sanction sanction = mSanctions.get(index);
-
-            switch (sanction.getSanctionType()) {
-                case YELLOW:
-                    sanctionTypeImage.setImageResource(R.drawable.yellow_card);
-                    break;
-                case RED:
-                    sanctionTypeImage.setImageResource(R.drawable.red_card);
-                    break;
-                case RED_EXPULSION:
-                    sanctionTypeImage.setImageResource(R.drawable.expulsion_card);
-                    break;
-                case RED_DISQUALIFICATION:
-                    sanctionTypeImage.setImageResource(R.drawable.disqualification_card);
-                    break;
-                case DELAY_WARNING:
-                    sanctionTypeImage.setImageResource(R.drawable.delay_warning);
-                    break;
-                case DELAY_PENALTY:
-                    sanctionTypeImage.setImageResource(R.drawable.delay_penalty);
-                    break;
-            }
+            UiUtils.setSanctionImage(sanctionTypeImage, sanction.getSanctionType());
 
             if (sanction.getPlayer() < 0) {
                 playerText.setVisibility(View.GONE);
             } else {
                 if (sanction.getPlayer() > 0) {
-                    playerText.setText(UiUtils.formatNumberFromLocal(sanction.getPlayer()));
+                    playerText.setText(UiUtils.formatNumberFromLocale(sanction.getPlayer()));
                 } else {
                     playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
                 }
