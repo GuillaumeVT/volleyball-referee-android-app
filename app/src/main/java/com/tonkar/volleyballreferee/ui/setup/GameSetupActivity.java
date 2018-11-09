@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -39,11 +41,17 @@ public class GameSetupActivity extends AppCompatActivity {
         Log.i(Tags.SETUP_UI, "Create game setup activity");
         setContentView(R.layout.activity_game_setup);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
             ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
         }
-
-        setTitle("");
 
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState);

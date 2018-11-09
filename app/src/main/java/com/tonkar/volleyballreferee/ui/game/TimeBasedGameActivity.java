@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
@@ -80,7 +81,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        setTitle("");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
 
         mGameService = (TimeBasedGameService) ServicesProvider.getInstance().getGameService();
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());

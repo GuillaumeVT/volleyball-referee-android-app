@@ -19,16 +19,16 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class SavedTeamsListActivity extends AppCompatActivity implements DataSynchronizationListener {
+public class SavedTeamsListActivity extends NavigationActivity implements DataSynchronizationListener {
 
     private SavedTeamsService     mSavedTeamsService;
     private SavedTeamsListAdapter mSavedTeamsListAdapter;
@@ -39,13 +39,23 @@ public class SavedTeamsListActivity extends AppCompatActivity implements DataSyn
     private FloatingActionButton  mAddBeachTeamButton;
 
     @Override
+    protected String getToolbarTitle() {
+        return "";
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_saved_teams;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SAVED_TEAMS, "Create teams list activity");
         setContentView(R.layout.activity_saved_teams_list);
 
-        setTitle(getResources().getString(R.string.saved_teams));
+        initNavigationMenu();
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateSavedTeamsList);

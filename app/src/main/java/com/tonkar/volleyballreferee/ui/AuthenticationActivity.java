@@ -23,11 +23,9 @@ import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Collections;
 
-public abstract class AuthenticationActivity extends AppCompatActivity {
+public abstract class AuthenticationActivity extends NavigationActivity {
 
     private static final int RC_SIGN_IN = 101;
 

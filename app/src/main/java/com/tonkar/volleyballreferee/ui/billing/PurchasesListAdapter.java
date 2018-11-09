@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.billingclient.api.SkuDetails;
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 
@@ -17,9 +17,9 @@ import java.util.List;
 public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
 
     static class ViewHolder {
-        TextView  purchaseTitle;
-        TextView  purchaseSummary;
-        Button    purchaseButton;
+        TextView       purchaseTitle;
+        TextView       purchaseSummary;
+        MaterialButton purchaseButton;
     }
 
     private final LayoutInflater   mLayoutInflater;

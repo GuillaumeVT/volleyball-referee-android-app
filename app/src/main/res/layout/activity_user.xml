@@ -1,134 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.tonkar.volleyballreferee.ui.user.UserActivity">
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.tonkar.volleyballreferee.ui.user.UserActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top|center"
-        android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
-            style="@style/CardView.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorBackgroundCardview">
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+        <include layout="@layout/toolbar"/>
+
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/tiny_margin_size"
-                android:gravity="top|center"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|center"
+                    android:orientation="vertical">
 
-                <TextView
+                <androidx.cardview.widget.CardView
+                        style="@style/CardView.Light"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="@dimen/default_margin_size"
-                        android:layout_marginBottom="@dimen/default_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/default_text_size" android:id="@+id/user_id_text"/>
+                        android:layout_margin="@dimen/default_margin_size"
+                        app:cardBackgroundColor="@color/colorBackgroundCardview">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/goto_account_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:onClick="goToOnlineAccount"
-                    android:text="@string/view_online_account"
-                    android:theme="@style/ButtonTheme.Primary"
-                    app:icon="@drawable/ic_account_menu" />
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
 
-            </LinearLayout>
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginTop="@dimen/default_margin_size"
+                                android:layout_marginBottom="@dimen/default_margin_size"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/default_text_size" android:id="@+id/user_id_text"/>
 
-        </androidx.cardview.widget.CardView>
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/goto_account_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/small_margin_size"
+                                android:onClick="goToOnlineAccount"
+                                android:text="@string/view_online_account"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/colorPrimary"
+                                app:strokeWidth="1dp"
+                                android:textColor="@color/colorPrimary"
+                                app:iconTint="@color/colorPrimary"
+                                app:icon="@drawable/ic_account_menu" android:textAllCaps="false"/>
 
-        <androidx.cardview.widget.CardView
-            style="@style/CardView.Light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorBackgroundCardview">
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/tiny_margin_size"
-                android:gravity="top|center"
-                android:orientation="vertical">
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/big_margin_size"
-                    android:layout_marginStart="@dimen/small_margin_size"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
-
-                    <TextView
-                        android:layout_width="0dp"
+                <androidx.cardview.widget.CardView
+                        style="@style/CardView.Light"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_weight="4"
-                        android:paddingBottom="@dimen/default_margin_size"
-                        android:paddingTop="@dimen/default_margin_size"
-                        android:text="@string/user_scheduled_games_title"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/big_text_size" />
+                        android:layout_margin="@dimen/default_margin_size"
+                        app:cardBackgroundColor="@color/colorBackgroundCardview">
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:scaleType="fitEnd"
-                        app:srcCompat="@mipmap/ic_launcher_foreground" />
-                </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/small_margin_size"
-                    android:autoLink="web"
-                    android:paddingBottom="@dimen/big_margin_size"
-                    android:text="@string/user_scheduled_games_message"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/small_text_size" />
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                            <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_weight="4"
+                                    android:paddingBottom="@dimen/default_margin_size"
+                                    android:paddingTop="@dimen/default_margin_size"
+                                    android:text="@string/user_scheduled_games_title"
+                                    android:textAppearance="@style/TextViewTheme"
+                                    android:textSize="@dimen/big_text_size"/>
+
+                            <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitEnd"
+                                    app:srcCompat="@mipmap/ic_launcher_foreground"/>
+                        </LinearLayout>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:autoLink="web"
+                                android:paddingBottom="@dimen/big_margin_size"
+                                android:text="@string/user_scheduled_games_message"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/small_text_size"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/start_scheduled_list_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/small_margin_size"
+                                android:onClick="goToScheduledGames"
+                                android:text="@string/user_scheduled_games_title"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/colorPrimary"
+                                app:strokeWidth="1dp"
+                                android:textColor="@color/colorPrimary"
+                                app:iconTint="@color/colorPrimary"
+                                app:icon="@drawable/ic_scheduled_list" android:textAllCaps="false"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/start_scheduled_list_game_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:onClick="goToScheduledGames"
-                    android:text="@string/user_scheduled_games_title"
-                    android:theme="@style/ButtonTheme.Primary"
-                    app:icon="@drawable/ic_scheduled_list" />
+                        android:id="@+id/sign_out_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:layout_margin="@dimen/default_margin_size"
+                        android:onClick="signOut"
+                        android:text="@string/sign_out"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        app:strokeColor="@color/colorDisabledText"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/colorDisabledText"
+                        app:iconTint="@color/colorDisabledText"
+                        app:icon="@drawable/ic_logout" android:textAllCaps="false"/>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sign_out_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_margin="@dimen/default_margin_size"
-            android:onClick="signOut"
-            android:text="@string/sign_out"
-            android:theme="@style/ButtonTheme.Primary"
-            app:backgroundTint="@color/colorDisabledText"
-            app:icon="@drawable/ic_logout" />
+        </ScrollView>
 
     </LinearLayout>
 
+    <include layout="@layout/navigation_drawer"/>
 
-</ScrollView>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -27,7 +29,14 @@ public class RecordedBeachGameActivity extends RecordedGameActivity {
 
         Log.i(Tags.SAVED_GAMES, "Create recorded beach game activity");
         setContentView(R.layout.activity_recorded_beach_game);
-        setTitle("");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent intent = getIntent();
         mGameDate = intent.getLongExtra("game_date", 0L);

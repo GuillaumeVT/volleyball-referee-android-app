@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
@@ -28,7 +30,14 @@ public class RecordedIndoorGameActivity extends RecordedGameActivity {
 
         Log.i(Tags.SAVED_GAMES, "Create recorded indoor game activity");
         setContentView(R.layout.activity_recorded_indoor_game);
-        setTitle("");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent intent = getIntent();
         mGameDate = intent.getLongExtra("game_date", 0L);

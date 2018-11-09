@@ -1,18 +1,13 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
 
 import android.os.Bundle;
@@ -27,13 +22,11 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.billing.BillingManager;
 import com.tonkar.volleyballreferee.business.web.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
@@ -42,21 +35,14 @@ import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
-import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
-import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
-import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
-import com.tonkar.volleyballreferee.ui.user.UserActivity;
-import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -67,7 +53,15 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
-    private DrawerLayout mDrawerLayout;
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.app_name);
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_home;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,18 +72,12 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        final BillingService billingService = new BillingManager(this);
-
         initNavigationMenu();
 
         initButtonOnClickListeners();
 
         MaterialButton scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
-
-        final MaterialButton purchaseButton = findViewById(R.id.start_purchase_button);
-        billingService.addBillingListener(() -> purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE));
-        billingService.executeServiceRequest(() -> purchaseButton.setVisibility(billingService.isAllPurchased() ? View.GONE : View.VISIBLE));
 
         Context applicationContext = getApplicationContext();
 
@@ -157,74 +145,20 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         checkAuthentication();
     }
 
-    private void initNavigationMenu() {
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.action_saved_rules:
-                    Log.i(Tags.SAVED_RULES, "Saved Rules");
-                    Intent intent = new Intent(MainActivity.this, SavedRulesListActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.action_settings:
-                    Log.i(Tags.SETTINGS, "Settings");
-                    intent = new Intent(MainActivity.this, SettingsActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.action_recorded_games:
-                    Log.i(Tags.SAVED_GAMES, "Recorded games");
-                    intent = new Intent(MainActivity.this, RecordedGamesListActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.action_saved_teams:
-                    Log.i(Tags.SAVED_TEAMS, "Saved teams");
-                    intent = new Intent(MainActivity.this, SavedTeamsListActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.action_view_live_games:
-                    Log.i(Tags.WEB, "Live games");
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
-                    startActivity(intent);
-                    break;
-                case R.id.action_search_online_games:
-                    Log.i(Tags.WEB, "Search online games");
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
-                    startActivity(intent);
-                    break;
-                case R.id.action_facebook:
-                    Log.i(Tags.WEB, "Facebook");
-                    Intent browserIntent;
-                    try {
-                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
-                        startActivity(browserIntent);
-                    } catch (ActivityNotFoundException e) {
-                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
-                        startActivity(browserIntent);
-                    }
-                    break;
-            }
-            mDrawerLayout.closeDrawers();
-            return true;
-        });
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
-        MenuItem importantMessageItem = menu.findItem(R.id.action_important_message);
+        MenuItem importantMessageItem = menu.findItem(R.id.action_resume_menu);
         importantMessageItem.setVisible(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame());
 
-        final MenuItem messageItem = menu.findItem(R.id.action_message);
+        final MenuItem messageItem = menu.findItem(R.id.action_message_menu);
         initMessageMenuVisibility(messageItem);
+
+        final MenuItem purchaseItem = menu.findItem(R.id.action_purchase_menu);
+        computePurchaseItemVisibility(purchaseItem);
 
         return true;
     }
@@ -232,36 +166,17 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                Log.i(Tags.MAIN_UI, "Drawer");
-                if (isNavDrawerOpen()) {
-                    mDrawerLayout.closeDrawers();
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                }
-                return true;
-            case R.id.action_important_message:
+            case R.id.action_resume_menu:
                 Log.i(Tags.GAME_UI, "Resume game");
                 resumeCurrentGameWithDialog(null);
                 return true;
-            case R.id.action_message:
+            case R.id.action_message_menu:
                 Log.i(Tags.WEB, "VBR Message");
                 showMessage();
                 return true;
-            case R.id.action_account:
-                final Intent intent;
-                if (PrefUtils.isWebPremiumPurchased(this)) {
-                    if (PrefUtils.isSignedIn(this)) {
-                        Log.i(Tags.WEB, "User account");
-                        intent = new Intent(this, UserActivity.class);
-                    } else {
-                        Log.i(Tags.WEB, "User sign in");
-                        intent = new Intent(this, UserSignInActivity.class);
-                    }
-                } else {
-                    Log.i(Tags.BILLING, "Purchase");
-                    intent = new Intent(this, PurchasesListActivity.class);
-                }
+            case R.id.action_purchase_menu:
+                Log.i(Tags.BILLING, "Purchase");
+                Intent intent = new Intent(this, PurchasesListActivity.class);
                 startActivity(intent);
                 return true;
             default:
@@ -276,10 +191,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         findViewById(R.id.start_beach_game_button).setOnClickListener(button -> startBeachGame(null));
         findViewById(R.id.start_time_based_game_button).setOnClickListener(button -> startTimeBasedGame(null));
         findViewById(R.id.start_scheduled_code_game_button).setOnClickListener(button -> startScheduledGameFromCode(null));
-        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(button -> goToScheduledGames(null));
-        findViewById(R.id.start_purchase_button).setOnClickListener(button -> goToPurchases(null));
     }
-
 
     public void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
@@ -340,32 +252,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         setScheduledGameFromCodeListener(dialogFragment);
     }
 
-    public void goToScheduledGames(View view) {
-        final Intent intent;
-
-        if (PrefUtils.isWebPremiumPurchased(this)) {
-            if (PrefUtils.isSignedIn(this)) {
-                Log.i(Tags.SCHEDULE_UI, "Scheduled games");
-                intent = new Intent(this, ScheduledGamesListActivity.class);
-            } else {
-                Log.i(Tags.WEB, "User sign in");
-                UiUtils.navigateToUserSignIn(this);
-                intent = new Intent(this, UserSignInActivity.class);
-            }
-        } else {
-            Log.i(Tags.BILLING, "Purchases");
-            intent = new Intent(this, PurchasesListActivity.class);
-        }
-
-        startActivity(intent);
-    }
-
-    public void goToPurchases(View view) {
-        Log.i(Tags.BILLING, "Purchases");
-        final Intent intent = new Intent(this, PurchasesListActivity.class);
-        startActivity(intent);
-    }
-
     private void resumeCurrentGameWithDialog(Bundle savedInstanceState) {
         boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true);
         getIntent().removeExtra("show_resume_game");
@@ -415,26 +301,12 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isNavDrawerOpen()) {
-            mDrawerLayout.closeDrawers();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    private boolean isNavDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START);
-    }
-
     private void initMessageMenuVisibility(final MenuItem messageItem) {
         messageItem.setVisible(false);
 
         if (PrefUtils.canRequest(this)) {
             String url = WebUtils.HAS_MESSAGE_API_URL;
-            BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url,
-                    response -> messageItem.setVisible(response), error -> messageItem.setVisible(false)
+            BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url, messageItem::setVisible, error -> messageItem.setVisible(false)
             );
             WebUtils.getInstance().getRequestQueue(this).add(booleanRequest);
         }

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/indoor_court"
-    android:baselineAligned="false"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingEnd="@dimen/indoor_court_x_padding"
-    android:paddingStart="@dimen/indoor_court_x_padding"
-    android:weightSum="4">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/indoor_court"
+              android:baselineAligned="false"
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:paddingEnd="@dimen/indoor_court_x_padding"
+              android:paddingStart="@dimen/indoor_court_x_padding"
+              android:weightSum="4">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
         <RelativeLayout
                 android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -61,7 +63,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -85,17 +88,18 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
         <RelativeLayout
                 android:layout_width="wrap_content"
@@ -117,7 +121,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -141,7 +146,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -165,17 +171,18 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
         <RelativeLayout
                 android:layout_width="wrap_content"
@@ -197,7 +204,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -221,7 +229,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -245,18 +254,19 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
         <RelativeLayout
                 android:layout_width="wrap_content"
@@ -278,7 +288,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -302,7 +313,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 
@@ -326,7 +338,8 @@
                     android:layout_marginStart="@dimen/small_margin_size"
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
-                    android:theme="@style/ButtonTheme.Team" />
+                    app:cornerRadius="@dimen/form_button_radius"
+                    android:theme="@style/ButtonTheme.Team"/>
 
         </RelativeLayout>
 

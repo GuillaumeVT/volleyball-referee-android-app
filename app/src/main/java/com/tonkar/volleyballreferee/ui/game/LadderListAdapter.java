@@ -114,11 +114,7 @@ public class LadderListAdapter extends BaseAdapter {
         fillLadder(viewHolder, ladderItems);
 
         if (mReverseOrder && index == 0) {
-            viewHolder.setLadderScroll.post(new Runnable() {
-                public void run() {
-                    viewHolder.setLadderScroll.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
-                }
-            });
+            viewHolder.setLadderScroll.post(() -> viewHolder.setLadderScroll.fullScroll(HorizontalScrollView.FOCUS_RIGHT));
         }
 
         return setView;

@@ -349,7 +349,14 @@ public class UiUtils {
 
         TextView textView = layout.findViewById(R.id.toast_text);
         textView.setText(text);
-        colorTeamText(context, ContextCompat.getColor(context, R.color.colorPrimary), textView);
+
+        int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryLight);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
+        } else {
+            textView.getBackground().setColorFilter(new PorterDuffColorFilter(backgroundColor, PorterDuff.Mode.SRC));
+        }
+        textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
         Toast toast = new Toast(context.getApplicationContext());
         toast.setDuration(duration);

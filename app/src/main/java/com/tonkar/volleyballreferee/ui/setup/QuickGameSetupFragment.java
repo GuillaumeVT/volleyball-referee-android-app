@@ -65,13 +65,10 @@ public class QuickGameSetupFragment extends Fragment {
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
         updateGender(ServicesProvider.getInstance().getTeamService().getGenderType());
-        mGenderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(getContext(), mGenderButton);
-                GenderType genderType = ServicesProvider.getInstance().getTeamService().getGenderType().next();
-                updateGender(genderType);
-            }
+        mGenderButton.setOnClickListener(button -> {
+            UiUtils.animate(getContext(), mGenderButton);
+            GenderType genderType = ServicesProvider.getInstance().getTeamService().getGenderType().next();
+            updateGender(genderType);
         });
 
         mHomeTeamCaptainButton = view.findViewById(R.id.home_team_captain_number_button);

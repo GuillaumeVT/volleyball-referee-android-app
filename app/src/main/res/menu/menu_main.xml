@@ -3,21 +3,22 @@
       xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_account"
-        android:icon="@drawable/ic_account_menu"
+        android:id="@+id/action_purchase_menu"
+        android:icon="@drawable/ic_purchase"
         android:orderInCategory="1"
-        android:title="@string/view_online_account"
-        app:showAsAction="always"/>
+        android:title="@string/purchase"
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
-        android:id="@+id/action_message"
+        android:id="@+id/action_message_menu"
         android:icon="@drawable/ic_message_menu"
         android:orderInCategory="2"
         android:title="@string/app_name"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/action_important_message"
+        android:id="@+id/action_resume_menu"
         android:contentDescription="@string/resume_game_title"
         android:icon="@drawable/ic_important_message_menu"
         android:orderInCategory="3"

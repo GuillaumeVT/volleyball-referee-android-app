@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.TextView;
@@ -13,12 +12,21 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 
 import java.util.Locale;
 
 public class UserActivity extends AuthenticationActivity {
+
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.view_online_account);
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_view_account;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,23 +35,12 @@ public class UserActivity extends AuthenticationActivity {
 
         Log.i(Tags.WEB, "Create user activity");
 
-        setTitle("");
+        initNavigationMenu();
 
         TextView userIdText = findViewById(R.id.user_id_text);
         userIdText.setText(String.format(Locale.getDefault(), getResources().getString(R.string.user_signed_in), PrefUtils.getAuthentication(this).getUserId()));
 
         initButtonOnClickListeners();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                UiUtils.navigateToHome(this, false);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void initButtonOnClickListeners() {

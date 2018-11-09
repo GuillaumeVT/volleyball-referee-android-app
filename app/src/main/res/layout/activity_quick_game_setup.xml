@@ -8,6 +8,8 @@
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity">
 
+    <include layout="@layout/toolbar" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/quick_game_setup_nav"
         android:layout_width="wrap_content"

@@ -6,6 +6,8 @@
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.data.RecordedBeachGameActivity">
 
+    <include layout="@layout/toolbar" />
+
     <TextView
         android:id="@+id/game_date"
         android:layout_width="wrap_content"

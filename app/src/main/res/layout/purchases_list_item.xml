@@ -23,14 +23,19 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size" />
 
-    <Button
-        android:id="@+id/purchase_button"
-        style="@style/ButtonTheme.Primary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:onClick="goToScheduledGames"
-        android:text="@string/purchase"
-        app:icon="@drawable/ic_purchase" />
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/purchase_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_gravity="end"
+            android:onClick="goToScheduledGames"
+            android:text="@string/purchase"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp"
+            android:textColor="@color/colorPrimary"
+            app:iconTint="@color/colorPrimary"
+            app:icon="@drawable/ic_purchase" android:textAllCaps="false"/>
 
 </LinearLayout>

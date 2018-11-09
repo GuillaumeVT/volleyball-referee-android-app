@@ -10,12 +10,22 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.tonkar.volleyballreferee.ui.NavigationActivity;
 
-public class PurchasesListActivity extends AppCompatActivity implements BillingListener {
+public class PurchasesListActivity extends NavigationActivity implements BillingListener {
 
     private BillingService       mBillingService;
     private PurchasesListAdapter mPurchasesListAdapter;
+
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.purchase);
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_purchase;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +34,7 @@ public class PurchasesListActivity extends AppCompatActivity implements BillingL
         Log.i(Tags.BILLING, "Create purchases list activity");
         setContentView(R.layout.activity_purchases_list);
 
-        setTitle(getResources().getString(R.string.purchase));
+        initNavigationMenu();
 
         mBillingService = new BillingManager(this);
 

@@ -7,8 +7,10 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -93,8 +95,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         if (savedInstanceState == null) {
-            setTitle("");
+            setActionBarTitle("");
         }
         else {
             long duration = savedInstanceState.getLong("saved_timeout_duration");
@@ -522,18 +527,18 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         if (mGameService.isMatchPoint()) {
             String text = getResources().getString(R.string.match_point);
-            setTitle(text);
+            setActionBarTitle(text);
             if (mGameService.areNotificationsEnabled()) {
                 UiUtils.makeText(this, text, Toast.LENGTH_LONG).show();
             }
         } else if (mGameService.isSetPoint()) {
             String text = getResources().getString(R.string.set_point);
-            setTitle(text);
+            setActionBarTitle(text);
             if (mGameService.areNotificationsEnabled()) {
                 UiUtils.makeText(this, text, Toast.LENGTH_LONG).show();
             }
         } else {
-            setTitle("");
+            setActionBarTitle("");
         }
     }
 
@@ -642,7 +647,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 public void onTick(long millisUntilFinished) {
                     if (mCountDown != null) {
                         mCountDown.setDuration(millisUntilFinished);
-                        setTitle(mCountDown.format(millisUntilFinished));
+                        setActionBarTitle(mCountDown.format(millisUntilFinished));
                     }
                 }
 
@@ -651,7 +656,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                     mCountDown = null;
                     UiUtils.playNotificationSound(GameActivity.this);
                     // Reset the title and possibly replaces it with set point or match point
-                    setTitle("");
+                    setActionBarTitle("");
                     onPointsUpdated(TeamType.HOME, mGameService.getPoints(TeamType.HOME));
                 }
             });
@@ -664,7 +669,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (mCountDown != null) {
             mCountDown.getCountDownTimer().cancel();
             mCountDown = null;
-            setTitle("");
+            setActionBarTitle("");
             onPointsUpdated(TeamType.HOME, mGameService.getPoints(TeamType.HOME));
         }
     }
@@ -792,5 +797,12 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             UiUtils.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
         invalidateOptionsMenu();
+    }
+
+    private void setActionBarTitle(String title) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
     }
 }

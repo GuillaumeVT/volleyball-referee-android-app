@@ -52,7 +52,7 @@ public abstract class SanctionSelectionDialog {
 
         mSanctionGrid = sanctionsView.findViewById(R.id.sanction_grid);
 
-        mPlayerAdapter = new PlayerAdapter(context, gameService, teamType);
+        mPlayerAdapter = new PlayerAdapter(layoutInflater, context, gameService, teamType);
         mSanctionGrid.setAdapter(mPlayerAdapter);
 
         mSelectedSanctionType = sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition());
@@ -178,13 +178,15 @@ public abstract class SanctionSelectionDialog {
 
     private class PlayerAdapter extends BaseAdapter {
 
+        private final LayoutInflater  mLayoutInflater;
         private final Context         mContext;
         private final BaseTeamService mTeamService;
         private final TeamType        mTeamType;
         private final List<Integer>   mPlayers;
         private       int             mSelectedPlayer;
 
-        private PlayerAdapter(Context context, BaseTeamService teamService, TeamType teamType) {
+        private PlayerAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType) {
+            mLayoutInflater = layoutInflater;
             mContext = context;
             mTeamService = teamService;
             mTeamType = teamType;
@@ -213,7 +215,7 @@ public abstract class SanctionSelectionDialog {
             PlayerToggleButton button;
 
             if (view == null) {
-                button = new PlayerToggleButton(mContext);
+                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, null);
             } else {
                 button = (PlayerToggleButton) view;
             }

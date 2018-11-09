@@ -19,16 +19,16 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class SavedRulesListActivity extends AppCompatActivity implements DataSynchronizationListener {
+public class SavedRulesListActivity extends NavigationActivity implements DataSynchronizationListener {
 
     private SavedRulesService     mSavedRulesService;
     private SavedRulesListAdapter mSavedRulesListAdapter;
@@ -39,13 +39,23 @@ public class SavedRulesListActivity extends AppCompatActivity implements DataSyn
     private FloatingActionButton  mAddBeachRulesButton;
 
     @Override
+    protected String getToolbarTitle() {
+        return "";
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_saved_rules;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SAVED_RULES, "Create rules list activity");
         setContentView(R.layout.activity_saved_rules_list);
 
-        setTitle(getResources().getString(R.string.saved_rules_list));
+        initNavigationMenu();
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateSavedRulesList);

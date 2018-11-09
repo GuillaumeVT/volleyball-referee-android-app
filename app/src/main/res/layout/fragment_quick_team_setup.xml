@@ -83,10 +83,13 @@
                 android:id="@+id/team_captain_number_button"
                 android:layout_width="@dimen/form_button_size"
                 android:layout_height="@dimen/form_button_size"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/small_margin_size"
                 android:layout_marginTop="@dimen/small_margin_size"
                 android:textSize="@dimen/default_text_size"
+                app:cornerRadius="@dimen/form_button_radius"
                 android:theme="@style/ButtonTheme.Team" />
 
         </LinearLayout>

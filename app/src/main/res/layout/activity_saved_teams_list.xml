@@ -1,87 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/sync_layout"
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:context="com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity">
 
-        <ListView
-            android:id="@+id/saved_teams_list"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"/>
+            android:gravity="top|center"
+            android:orientation="vertical">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <include layout="@layout/toolbar"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_6x6_team_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_shift_default"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="addIndoorTeam"
-        android:tint="@color/colorPrimary"
-        app:backgroundTint="@android:color/white"
-        app:fabCustomSize="@dimen/form_button_size"
-        app:maxImageSize="@dimen/form_fab_icon_size"
-        app:srcCompat="@drawable/ic_6x6" />
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_4x4_team_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_shift_default"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="addIndoor4x4Team"
-        android:tint="@color/colorPrimary"
-        app:backgroundTint="@android:color/white"
-        app:fabCustomSize="@dimen/form_button_size"
-        app:maxImageSize="@dimen/form_fab_icon_size"
-        app:srcCompat="@drawable/ic_4x4" />
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/sync_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_beach_team_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_shift_default"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="addBeachTeam"
-        android:tint="@color/colorBeach"
-        app:backgroundTint="@android:color/white"
-        app:fabCustomSize="@dimen/form_button_size"
-        app:maxImageSize="@dimen/form_fab_icon_size"
-        app:srcCompat="@drawable/ic_sun" />
+                <ListView
+                        android:id="@+id/saved_teams_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin_size"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_team_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_shift_default"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabCustomSize="@dimen/form_button_size"
-        app:maxImageSize="@dimen/form_fab_icon_size"
-        app:srcCompat="@android:drawable/ic_input_add" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</RelativeLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_6x6_team_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="addIndoorTeam"
+                    android:tint="@color/colorPrimary"
+                    app:backgroundTint="@android:color/white"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_6x6"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_4x4_team_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="addIndoor4x4Team"
+                    android:tint="@color/colorPrimary"
+                    app:backgroundTint="@android:color/white"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_4x4"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_beach_team_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="addBeachTeam"
+                    android:tint="@color/colorBeach"
+                    app:backgroundTint="@android:color/white"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_sun"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_team_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:tint="@android:color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@android:drawable/ic_input_add"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/navigation_drawer"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

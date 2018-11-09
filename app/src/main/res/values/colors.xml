@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimary">#1f4294</color>
     <color name="colorPrimaryDark">#1f4294</color>
+    <color name="colorPrimaryLight">#cedaf5</color>
     <color name="colorAccent">#1f4294</color>
-    <color name="colorBackgroundMain">#e4e2e4</color>
+    <color name="colorBackgroundMain">#ecebec</color>
     <color name="colorBackgroundCardview">#f3f3f3</color>
 
     <color name="colorBeach">#f2bb1a</color>

@@ -1,127 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.tonkar.volleyballreferee.ui.user.UserSignInActivity">
-
-    <androidx.cardview.widget.CardView
-        style="@style/CardView.Light"
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size"
-        app:cardBackgroundColor="@color/colorBackgroundCardview">
+        android:layout_height="match_parent"
+        tools:context="com.tonkar.volleyballreferee.ui.user.UserSignInActivity">
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/tiny_margin_size"
+            android:gravity="top|center"
             android:orientation="vertical">
 
-            <LinearLayout
+        <include layout="@layout/toolbar"/>
+
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/big_margin_size"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:orientation="horizontal"
-                android:weightSum="5">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="4"
-                    android:paddingBottom="@dimen/default_margin_size"
-                    android:paddingTop="@dimen/default_margin_size"
-                    android:text="@string/user_sign_in_why_title"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/big_text_size" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="fitEnd"
-                    app:srcCompat="@mipmap/ic_launcher_foreground" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:text="@string/user_sign_in_why_message"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/small_text_size"
-                android:autoLink="web" />
+                android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/big_margin_size"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/big_margin_size"
-                android:orientation="horizontal"
-                android:weightSum="5">
-
-                <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="4"
-                    android:paddingBottom="@dimen/default_margin_size"
-                    android:paddingTop="@dimen/default_margin_size"
-                    android:text="@string/user_sign_in_privacy_title"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/big_text_size" />
+                    android:gravity="top|center"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="fitEnd"
-                    app:srcCompat="@mipmap/ic_launcher_foreground" />
+                <androidx.cardview.widget.CardView
+                        style="@style/CardView.Light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin_size"
+                        app:cardBackgroundColor="@color/colorBackgroundCardview">
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            android:orientation="vertical">
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                            <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_weight="4"
+                                    android:paddingBottom="@dimen/default_margin_size"
+                                    android:paddingTop="@dimen/default_margin_size"
+                                    android:text="@string/user_sign_in_why_title"
+                                    android:textAppearance="@style/TextViewTheme"
+                                    android:textSize="@dimen/big_text_size"/>
+
+                            <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitEnd"
+                                    app:srcCompat="@mipmap/ic_launcher_foreground"/>
+                        </LinearLayout>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:text="@string/user_sign_in_why_message"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/small_text_size"
+                                android:autoLink="web"/>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                            <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:layout_weight="4"
+                                    android:paddingBottom="@dimen/default_margin_size"
+                                    android:paddingTop="@dimen/default_margin_size"
+                                    android:text="@string/user_sign_in_privacy_title"
+                                    android:textAppearance="@style/TextViewTheme"
+                                    android:textSize="@dimen/big_text_size"/>
+
+                            <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitEnd"
+                                    app:srcCompat="@mipmap/ic_launcher_foreground"/>
+                        </LinearLayout>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginStart="@dimen/small_margin_size"
+                                android:text="@string/user_sign_in_privacy_message"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/small_text_size"
+                                android:autoLink="web"/>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                            <com.google.android.gms.common.SignInButton
+                                    android:id="@+id/google_sign_in_button"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/default_margin_size"
+                                    android:textSize="@dimen/default_text_size"/>
+
+                            <com.facebook.login.widget.LoginButton
+                                    android:id="@+id/facebook_sign_in_button"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/default_margin_size"
+                                    android:padding="@dimen/default_margin_size"
+                                    android:textSize="@dimen/default_text_size"
+                                    android:layout_weight="1"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:text="@string/user_sign_in_privacy_message"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/small_text_size"
-                android:autoLink="web" />
+        </ScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/big_margin_size"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
+    </LinearLayout>
 
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/google_sign_in_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/default_margin_size"
-                    android:textSize="@dimen/default_text_size" />
+    <include layout="@layout/navigation_drawer"/>
 
-                <com.facebook.login.widget.LoginButton
-                    android:id="@+id/facebook_sign_in_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin_size"
-                    android:padding="@dimen/default_margin_size"
-                    android:textSize="@dimen/default_text_size"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</ScrollView>
+</androidx.drawerlayout.widget.DrawerLayout>

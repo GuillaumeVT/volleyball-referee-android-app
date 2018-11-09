@@ -22,17 +22,17 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class ScheduledGamesListActivity extends AppCompatActivity implements AsyncGameRequestListener {
+public class ScheduledGamesListActivity extends NavigationActivity implements AsyncGameRequestListener {
 
     private SwipeRefreshLayout        mSyncLayout;
     private ScheduledGamesListAdapter mScheduledGamesListAdapter;
@@ -42,13 +42,23 @@ public class ScheduledGamesListActivity extends AppCompatActivity implements Asy
     private FloatingActionButton      mScheduleBeachGameButton;
 
     @Override
+    protected String getToolbarTitle() {
+        return "";
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_view_scheduled_games;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SCHEDULE_UI, "Create scheduled games list activity");
         setContentView(R.layout.activity_scheduled_games_list);
 
-        setTitle(getResources().getString(R.string.user_scheduled_games_title));
+        initNavigationMenu();
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
 

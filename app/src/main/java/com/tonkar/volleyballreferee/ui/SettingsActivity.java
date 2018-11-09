@@ -4,18 +4,27 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.IdRes;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends NavigationActivity {
 
     private SharedPreferences.OnSharedPreferenceChangeListener mPreferencesListener;
+
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.settings);
+    }
+
+    @Override
+    protected @IdRes int getCheckedItem() {
+        return R.id.action_settings;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Log.i(Tags.SETTINGS, "Create settings activity");
 
-        setTitle(getResources().getString(R.string.settings));
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        initNavigationMenu();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 

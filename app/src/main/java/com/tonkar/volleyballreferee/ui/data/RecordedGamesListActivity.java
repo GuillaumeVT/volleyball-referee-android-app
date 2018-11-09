@@ -18,21 +18,31 @@ import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
+import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class RecordedGamesListActivity extends AppCompatActivity implements DataSynchronizationListener {
+public class RecordedGamesListActivity extends NavigationActivity implements DataSynchronizationListener {
 
     private RecordedGamesService     mRecordedGamesService;
     private RecordedGamesListAdapter mRecordedGamesListAdapter;
     private SwipeRefreshLayout       mSyncLayout;
+
+    @Override
+    protected String getToolbarTitle() {
+        return "";
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_recorded_games;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +51,7 @@ public class RecordedGamesListActivity extends AppCompatActivity implements Data
         Log.i(Tags.SAVED_GAMES, "Create recorded games list activity");
         setContentView(R.layout.activity_recorded_games_list);
 
-        setTitle(getResources().getString(R.string.recorded_games));
+        initNavigationMenu();
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateRecordedGamesList);

@@ -51,6 +51,8 @@
 
     <dimen name="form_button_size">56dp</dimen>
     <dimen name="form_fab_icon_size">40dp</dimen>
+    <dimen name="form_button_radius">12dp</dimen>
+
 
     <dimen name="elevation">2dp</dimen>
 

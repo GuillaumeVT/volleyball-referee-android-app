@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -67,6 +69,14 @@ public class ScheduledGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduled_game);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         ServicesProvider.getInstance().restoreGameService(getApplicationContext());
 
@@ -166,15 +176,12 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         mGenderButton = findViewById(R.id.switch_gender_button);
         updateGender(mGameDescription.getGenderType());
-        mGenderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UiUtils.animate(ScheduledGameActivity.this, mGenderButton);
-                GenderType genderType = mGameDescription.getGenderType().next();
-                updateGender(genderType);
-                updateTeamSpinners(true);
-                computeConfirmItemVisibility();
-            }
+        mGenderButton.setOnClickListener(button -> {
+            UiUtils.animate(ScheduledGameActivity.this, mGenderButton);
+            GenderType genderType = mGameDescription.getGenderType().next();
+            updateGender(genderType);
+            updateTeamSpinners(true);
+            computeConfirmItemVisibility();
         });
 
         List<String> rulesNames = new ArrayList<>();

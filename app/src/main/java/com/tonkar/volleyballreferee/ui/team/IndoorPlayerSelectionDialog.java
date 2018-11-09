@@ -34,7 +34,7 @@ public abstract class IndoorPlayerSelectionDialog {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
-        gridView.setNumColumns(3);
+        gridView.setNumColumns(4);
         gridView.setHorizontalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
         gridView.setVerticalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);

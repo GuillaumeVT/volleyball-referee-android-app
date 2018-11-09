@@ -158,7 +158,7 @@ public class TeamSetupFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        mPlayerAdapter = new PlayerAdapter(getActivity(), mTeamService.getTeamColor(mTeamType));
+        mPlayerAdapter = new PlayerAdapter(getLayoutInflater(), getActivity(), mTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
@@ -178,7 +178,7 @@ public class TeamSetupFragment extends Fragment {
         });
 
         if (manageLiberos()) {
-            mLiberoAdapter = new LiberoAdapter(getActivity(), mTeamService.getLiberoColor(mTeamType));
+            mLiberoAdapter = new LiberoAdapter(getLayoutInflater(), getActivity(), mTeamService.getLiberoColor(mTeamType));
             liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
             if (mTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
@@ -233,11 +233,13 @@ public class TeamSetupFragment extends Fragment {
 
     private class PlayerAdapter extends BaseAdapter {
 
-        private final Context mContext;
-        private       int     mColor;
-        private final int     mCount;
+        private final LayoutInflater mLayoutInflater;
+        private final Context        mContext;
+        private       int            mColor;
+        private final int            mCount;
 
-        private PlayerAdapter(Context context, int color) {
+        private PlayerAdapter(LayoutInflater layoutInflater, Context context, int color) {
+            mLayoutInflater = layoutInflater;
             mContext = context;
             mColor = color;
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -265,7 +267,7 @@ public class TeamSetupFragment extends Fragment {
             PlayerToggleButton button;
 
             if (view == null) {
-                button = new PlayerToggleButton(mContext);
+                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, null);
             } else {
                 button = (PlayerToggleButton) view;
             }
@@ -349,10 +351,12 @@ public class TeamSetupFragment extends Fragment {
 
     private class LiberoAdapter extends BaseAdapter {
 
-        private final Context       mContext;
-        private       int           mColor;
+        private final LayoutInflater mLayoutInflater;
+        private final Context        mContext;
+        private       int            mColor;
 
-        private LiberoAdapter(Context context, int color) {
+        private LiberoAdapter(LayoutInflater layoutInflater, Context context, int color) {
+            mLayoutInflater = layoutInflater;
             mContext = context;
             mColor = color;
         }
@@ -379,7 +383,7 @@ public class TeamSetupFragment extends Fragment {
             final PlayerToggleButton button;
 
             if (view == null) {
-                button = new PlayerToggleButton(mContext);
+                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, null);
             } else {
                 button = (PlayerToggleButton) view;
             }

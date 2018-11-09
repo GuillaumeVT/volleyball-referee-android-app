@@ -2,16 +2,24 @@ package com.tonkar.volleyballreferee.ui.user;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.SignInButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class UserSignInActivity extends AuthenticationActivity {
+
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.view_online_account);
+    }
+
+    @Override
+    protected int getCheckedItem() {
+        return R.id.action_view_account;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,24 +28,13 @@ public class UserSignInActivity extends AuthenticationActivity {
 
         Log.i(Tags.WEB, "Create user sign in activity");
 
-        setTitle("");
+        initNavigationMenu();
 
         SignInButton googleSignInButton = findViewById(R.id.google_sign_in_button);
         googleSignInButton.setOnClickListener(button -> googleSignIn());
 
         LoginButton facebookSignInButton = findViewById(R.id.facebook_sign_in_button);
         facebookSignInButton.setOnClickListener(button -> facebookSignIn());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                UiUtils.navigateToHome(this, false);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 }
