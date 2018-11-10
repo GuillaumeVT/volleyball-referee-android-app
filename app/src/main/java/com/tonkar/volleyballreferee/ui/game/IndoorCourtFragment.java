@@ -281,10 +281,13 @@ public class IndoorCourtFragment extends CourtFragment {
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (number > 0) {
             PositionType positionType = mIndoorTeamService.getPlayerPosition(teamType, number);
-            updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
 
-            if ((SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) && !PositionType.BENCH.equals(positionType)) {
-                showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
+            if (!PositionType.BENCH.equals(positionType)) {
+                updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
+
+                if (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
+                    showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
+                }
             }
         }
     }

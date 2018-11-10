@@ -24,7 +24,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledText"/>
+            android:background="@color/colorDisabledButton"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_index_game"
@@ -71,7 +71,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledText"/>
+            android:background="@color/colorDisabledButton"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_reset_set"
