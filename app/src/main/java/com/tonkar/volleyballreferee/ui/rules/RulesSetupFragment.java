@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.ui.rules;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -153,10 +154,13 @@ public class RulesSetupFragment extends Fragment {
         mSubstitutionsLimitationSpinner.setAdapter(mSubstitutionsLimitationAdapter);
 
         mSubstitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
-        final int drawableLeftIndex = 0;
-        Drawable drawable = mSubstitutionsLimitationDescription.getCompoundDrawables()[drawableLeftIndex];
-        if (drawable != null) {
-            drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            mSubstitutionsLimitationDescription.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info, 0, 0, 0);
+        }
+        for (Drawable drawable : mSubstitutionsLimitationDescription.getCompoundDrawables()) {
+            if (drawable != null) {
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+            }
         }
 
         mTeamSubstitutionsPerSetSpinner = view.findViewById(R.id.rules_team_substitutions_per_set);

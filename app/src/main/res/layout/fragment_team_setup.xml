@@ -66,7 +66,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/select_gender_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
 
         </LinearLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/team_member_numbers_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/team_libero_numbers_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

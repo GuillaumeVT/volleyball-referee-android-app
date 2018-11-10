@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/game_menu_sheet"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/big_margin_size"
+              android:orientation="vertical"
+              android:gravity="start">
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_navigate_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/big_margin_size"
+            android:text="@string/navigate_home"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_home_menu"
+            android:drawableTint="@color/colorPrimary"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:gravity="center_vertical|start"
+            android:foreground="?android:selectableItemBackground"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDisabledText"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_index_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/big_margin_size"
+            android:text="@string/index_game"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_public"
+            android:drawableTint="@color/colorPrimary"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:gravity="center_vertical|start"
+            android:foreground="?android:selectableItemBackground"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_share_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/big_margin_size"
+            android:text="@string/share"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_share_menu"
+            android:drawableTint="@color/colorPrimary"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:gravity="center_vertical|start"
+            android:foreground="?android:selectableItemBackground"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_toss_coin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/big_margin_size"
+            android:text="@string/toss_coin"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_coin_menu"
+            android:drawableTint="@color/colorPrimary"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:gravity="center_vertical|start"
+            android:foreground="?android:selectableItemBackground"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDisabledText"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_reset_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/big_margin_size"
+            android:text="@string/reset_set"
+            android:textAppearance="@style/TextViewTheme"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_reset_menu"
+            android:drawableTint="@color/colorPrimary"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:gravity="center_vertical|start"
+            android:foreground="?android:selectableItemBackground"/>
+
+</LinearLayout>

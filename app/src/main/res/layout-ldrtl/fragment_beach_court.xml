@@ -25,7 +25,7 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/left_team_service_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/left_team_sanction_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/left_team_service_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/left_team_sanction_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/right_team_sanction_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
 
             </RelativeLayout>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/right_team_service_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/right_team_sanction_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
 
             </RelativeLayout>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/right_team_service_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

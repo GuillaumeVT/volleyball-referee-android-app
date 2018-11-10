@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/left_team_sanction_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/left_team_sanction_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/left_team_sanction_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/left_team_sanction_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/left_team_sanction_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/left_team_sanction_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/right_team_sanction_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/right_team_sanction_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/right_team_sanction_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -272,7 +272,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/right_team_sanction_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -297,7 +297,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/right_team_sanction_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -322,7 +322,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/right_team_sanction_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

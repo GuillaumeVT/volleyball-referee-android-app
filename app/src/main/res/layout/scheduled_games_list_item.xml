@@ -13,7 +13,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/scheduled_game_status_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:tint="@android:color/holo_red_dark"
             app:srcCompat="@drawable/ic_live" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/scheduled_game_type_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:tint="@color/colorBeach"
             app:srcCompat="@drawable/ic_sun" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/scheduled_game_gender_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_ladies" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/scheduled_game_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:textSize="@dimen/small_text_size" />
     </LinearLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/scheduled_game_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/big_text_size" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/scheduled_game_league"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

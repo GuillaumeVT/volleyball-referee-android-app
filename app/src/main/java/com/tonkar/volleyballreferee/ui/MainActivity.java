@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -75,6 +78,11 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         initNavigationMenu();
 
         initButtonOnClickListeners();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            MaterialButton beachButton = findViewById(R.id.start_beach_game_button);
+            beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+        }
 
         MaterialButton scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);

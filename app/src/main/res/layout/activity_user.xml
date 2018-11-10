@@ -40,7 +40,7 @@
                             android:gravity="top|center"
                             android:orientation="vertical">
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
@@ -90,7 +90,7 @@
                                 android:orientation="horizontal"
                                 android:weightSum="5">
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start"
@@ -101,7 +101,7 @@
                                     android:textAppearance="@style/TextViewTheme"
                                     android:textSize="@dimen/big_text_size"/>
 
-                            <ImageView
+                            <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
@@ -109,7 +109,7 @@
                                     app:srcCompat="@mipmap/ic_launcher_foreground"/>
                         </LinearLayout>
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"

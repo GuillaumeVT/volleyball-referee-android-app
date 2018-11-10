@@ -8,7 +8,7 @@
               android:padding="@dimen/tiny_margin_size"
               android:weightSum="10">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/score_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/player_in_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,21 +28,21 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:tint="@color/colorPlayerIn"
         app:srcCompat="@drawable/ic_player_in"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:tint="@color/colorPlayerOut"
         app:srcCompat="@drawable/ic_player_out"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/player_out_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

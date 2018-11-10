@@ -8,7 +8,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/game_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/home_team_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/home_team_set_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/guest_team_set_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/guest_team_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/game_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

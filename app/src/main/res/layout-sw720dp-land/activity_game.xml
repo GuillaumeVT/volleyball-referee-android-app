@@ -31,7 +31,7 @@
                     android:orientation="horizontal"
                     android:weightSum="7">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/left_team_name_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                         app:maxImageSize="@dimen/game_fab_icon_size"
                         app:srcCompat="@drawable/ic_swap"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/right_team_name_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/left_team_set_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/right_team_set_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
 
             </LinearLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/set_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

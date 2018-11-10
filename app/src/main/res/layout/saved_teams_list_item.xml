@@ -6,7 +6,7 @@
               android:orientation="horizontal"
               android:padding="@dimen/big_margin_size">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/saved_team_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/saved_team_type_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:tint="@color/colorBeach"
         app:srcCompat="@drawable/ic_sun" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/saved_team_gender_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

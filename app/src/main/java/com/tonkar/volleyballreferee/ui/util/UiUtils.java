@@ -46,7 +46,9 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -256,6 +258,43 @@ public class UiUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("show_resume_game", showResumeGameDialog);
         activity.startActivity(intent);
+    }
+
+    public static void navigateToHomeWithDialog(Activity activity, GameService gameService) {
+        Log.i(Tags.GAME_UI, "Navigate to home");
+        if (gameService.isMatchCompleted()) {
+            UiUtils.navigateToHome(activity, false);
+        } else if (GameType.TIME.equals(gameService.getGameType())) {
+            TimeBasedGameService timeBasedGameService = (TimeBasedGameService) gameService;
+            if (timeBasedGameService.getRemainingTime() > 0L) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
+                builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity, false));
+                builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
+
+                AlertDialog alertDialog = builder.show();
+                UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
+            } else {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
+                builder.setTitle(R.string.stop_match_description).setMessage(activity.getString(R.string.confirm_stop_match_question));
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    Log.i(Tags.GAME_UI, "User accepts to stop");
+                    timeBasedGameService.stop();
+                    UiUtils.navigateToHome(activity, false);
+                });
+                builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to stop"));
+                AlertDialog alertDialog = builder.show();
+                UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
+            }
+        } else {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
+            builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity, false));
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
+
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
+        }
     }
 
     public static void navigateToUserSignIn(Activity activity) {

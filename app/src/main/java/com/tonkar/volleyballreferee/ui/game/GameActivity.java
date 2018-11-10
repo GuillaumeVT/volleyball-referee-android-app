@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.Manifest;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -32,7 +30,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -50,13 +47,11 @@ import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
-import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements GeneralListener, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private GameService          mGameService;
     private RecordedGamesService mRecordedGamesService;
-    private Random               mRandom;
     private TeamType             mTeamOnLeftSide;
     private TeamType             mTeamOnRightSide;
     private TextView             mLeftTeamNameText;
@@ -118,8 +113,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             mGameService.addTeamListener(this);
             mGameService.addSanctionListener(this);
             mRecordedGamesService.connectGameRecorder();
-
-            mRandom = new Random();
 
             mLeftTeamNameText = findViewById(R.id.left_team_name_text);
             mRightTeamNameText = findViewById(R.id.right_team_name_text);
@@ -234,7 +227,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     @Override
     public void onBackPressed() {
-        navigateToHomeWithDialog();
+        UiUtils.navigateToHomeWithDialog(this, mGameService);
     }
 
     // Menu
@@ -244,105 +237,23 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game, menu);
 
-        if (mGameService.isMatchCompleted() || GameType.BEACH.equals(mGameService.getGameType())) {
-            MenuItem tossCoinMenu = menu.findItem(R.id.action_toss_coin);
-            tossCoinMenu.setVisible(false);
-            MenuItem resetMenu = menu.findItem(R.id.action_reset_set);
-            resetMenu.setVisible(false);
-        }
-
-        MenuItem indexMenu = menu.findItem(R.id.action_index_game);
-
-        if (PrefUtils.isSyncOn(this)) {
-            if (mGameService.isIndexed()) {
-                indexMenu.setIcon(R.drawable.ic_public);
-            } else {
-                indexMenu.setIcon(R.drawable.ic_private);
-            }
-        } else {
-            indexMenu.setVisible(false);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            MenuItem shareMenu = menu.findItem(R.id.action_share);
-            shareMenu.setVisible(false);
-        }
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_toss_coin:
-                tossACoin();
-                return true;
-            case R.id.action_navigate_home:
-                navigateToHomeWithDialog();
-                return true;
-            case R.id.action_share:
-                share();
-                return true;
-            case R.id.action_index_game:
-                toggleIndexed();
-                return true;
-            case R.id.action_reset_set:
-                resetCurrentSetWithDialog();
+            case R.id.action_more:
+                showGameMenuSheet();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void tossACoin() {
-        Log.i(Tags.GAME_UI, "Toss a coin");
-        final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
-        UiUtils.makeText(this, tossResult, Toast.LENGTH_LONG).show();
-    }
-
-    private void navigateToHomeWithDialog() {
-        Log.i(Tags.GAME_UI, "Navigate to home");
-        if (mGameService.isMatchCompleted()) {
-            UiUtils.navigateToHome(this, false);
-        } else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-            builder.setTitle(getResources().getString(R.string.navigate_home)).setMessage(getResources().getString(R.string.navigate_home_question));
-            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(GameActivity.this, false));
-            builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
-
-            AlertDialog alertDialog = builder.show();
-            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-        }
-    }
-
-    private void share() {
-        Log.i(Tags.GAME_UI, "Share game");
-        if (mGameService.isMatchCompleted()) {
-            UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
-        } else {
-            UiUtils.shareGame(this, getWindow(), mGameService);
-        }
-    }
-
-    private void toggleIndexed() {
-        Log.i(Tags.GAME_UI, "Toggle indexed");
-        mGameService.setIndexed(!mGameService.isIndexed());
-    }
-
-    private void resetCurrentSetWithDialog() {
-        Log.i(Tags.GAME_UI, "Reset current set");
-        if (!mGameService.isMatchCompleted()) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-            builder.setTitle(getResources().getString(R.string.reset_set)).setMessage(getResources().getString(R.string.reset_set_question));
-            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                mGameService.resetCurrentSet();
-                recreate();
-            });
-            builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
-
-            AlertDialog alertDialog = builder.show();
-            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-        }
+    private void showGameMenuSheet() {
+        GameMenuSheet gameMenuSheet = GameMenuSheet.newInstance();
+        gameMenuSheet.show(getSupportFragmentManager(), "game_menu_sheet");
     }
 
     // UI Callbacks
@@ -571,7 +482,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onMatchCompleted(final TeamType winner) {
         disableView();
-        invalidateOptionsMenu();
         deleteToolbarCountdown();
         deleteFragmentCountdown();
         UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
@@ -796,7 +706,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         } else {
             UiUtils.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
-        invalidateOptionsMenu();
     }
 
     private void setActionBarTitle(String title) {
