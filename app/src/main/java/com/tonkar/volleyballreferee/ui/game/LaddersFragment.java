@@ -44,14 +44,16 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
 
         mGameService = ServicesProvider.getInstance().getGameService();
 
-        mGameService.addScoreListener(this);
-        mGameService.addTimeoutListener(this);
-        mGameService.addTeamListener(this);
-        mGameService.addSanctionListener(this);
+        if (mGameService != null) {
+            mGameService.addScoreListener(this);
+            mGameService.addTimeoutListener(this);
+            mGameService.addTeamListener(this);
+            mGameService.addSanctionListener(this);
 
-        ListView setsList = view.findViewById(R.id.set_list);
-        mLadderListAdapter = new LadderListAdapter(inflater, mGameService, mGameService, mGameService, mGameService, true);
-        setsList.setAdapter(mLadderListAdapter);
+            ListView setsList = view.findViewById(R.id.set_list);
+            mLadderListAdapter = new LadderListAdapter(inflater, mGameService, mGameService, mGameService, mGameService, true);
+            setsList.setAdapter(mLadderListAdapter);
+        }
 
         return view;
     }
@@ -59,10 +61,13 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mGameService.removeScoreListener(this);
-        mGameService.removeTimeoutListener(this);
-        mGameService.removeTeamListener(this);
-        mGameService.removeSanctionListener(this);
+
+        if (mGameService != null) {
+            mGameService.removeScoreListener(this);
+            mGameService.removeTimeoutListener(this);
+            mGameService.removeTeamListener(this);
+            mGameService.removeSanctionListener(this);
+        }
     }
 
     @Override

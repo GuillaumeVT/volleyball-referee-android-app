@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import java.util.Random;
 
 public class GameMenuSheet extends BottomSheetDialogFragment {
 
+    private Activity             mActivity;
     private GameService          mGameService;
     private RecordedGamesService mRecordedGamesService;
     private Random               mRandom;
@@ -54,10 +56,11 @@ public class GameMenuSheet extends BottomSheetDialogFragment {
 
         Context context = inflater.getContext();
 
+        mActivity = getActivity();
         mGameService = ServicesProvider.getInstance().getGameService();
         mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(context);
 
-        if (mGameService != null && mRecordedGamesService != null) {
+        if (mActivity != null && mGameService != null && mRecordedGamesService != null) {
             mRandom = new Random();
 
             TextView navigateHomeText = view.findViewById(R.id.action_navigate_home);
@@ -98,7 +101,7 @@ public class GameMenuSheet extends BottomSheetDialogFragment {
             colorIcon(context, tossCoinText, R.color.colorPrimary);
             colorIcon(context, resetSetText, R.color.colorPrimary);
 
-            navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(getActivity(), mGameService));
+            navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGameService));
             indexGameText.setOnClickListener(textView -> toggleIndexed());
             shareGameText.setOnClickListener(textView -> share());
             tossCoinText.setOnClickListener(textView -> tossACoin());
@@ -130,9 +133,9 @@ public class GameMenuSheet extends BottomSheetDialogFragment {
     private void share() {
         Log.i(Tags.GAME_UI, "Share game");
         if (mGameService.isMatchCompleted()) {
-            UiUtils.shareRecordedGame(getActivity(), mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
+            UiUtils.shareRecordedGame(mActivity, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
         } else {
-            UiUtils.shareGame(getActivity(), getActivity().getWindow(), mGameService);
+            UiUtils.shareGame(mActivity, mActivity.getWindow(), mGameService);
         }
         dismiss();
     }
@@ -140,18 +143,18 @@ public class GameMenuSheet extends BottomSheetDialogFragment {
     private void tossACoin() {
         Log.i(Tags.GAME_UI, "Toss a coin");
         final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
-        UiUtils.makeText(getActivity(), tossResult, Toast.LENGTH_LONG).show();
+        UiUtils.makeText(mActivity, tossResult, Toast.LENGTH_LONG).show();
         dismiss();
     }
 
     private void resetCurrentSetWithDialog() {
         Log.i(Tags.GAME_UI, "Reset current set");
         if (!mGameService.isMatchCompleted()) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.AppTheme_Dialog);
             builder.setTitle(getResources().getString(R.string.reset_set)).setMessage(getResources().getString(R.string.reset_set_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                 mGameService.resetCurrentSet();
-                getActivity().recreate();
+                mActivity.recreate();
             });
             builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 

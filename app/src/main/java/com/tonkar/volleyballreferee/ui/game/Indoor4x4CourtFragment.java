@@ -32,35 +32,38 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
         initView();
 
         mIndoorTeamService = (IndoorTeamService) mTeamService;
-        mLayoutInflater = inflater;
 
-        addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
-        addButtonOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_position_2));
-        addButtonOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_position_3));
-        addButtonOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_position_4));
+        if (mTeamService != null) {
+            mLayoutInflater = inflater;
 
-        addButtonOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_position_1));
-        addButtonOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_position_2));
-        addButtonOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_position_3));
-        addButtonOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_position_4));
+            addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
+            addButtonOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_position_2));
+            addButtonOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_position_3));
+            addButtonOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_position_4));
 
-        addSanctionImageOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_sanction_1));
-        addSanctionImageOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_sanction_2));
-        addSanctionImageOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_sanction_3));
-        addSanctionImageOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_sanction_4));
+            addButtonOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_position_1));
+            addButtonOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_position_2));
+            addButtonOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_position_3));
+            addButtonOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_position_4));
 
-        addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
-        addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
-        addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
-        addSanctionImageOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_sanction_4));
+            addSanctionImageOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_sanction_1));
+            addSanctionImageOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_sanction_2));
+            addSanctionImageOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_sanction_3));
+            addSanctionImageOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_sanction_4));
 
-        onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
+            addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
+            addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
+            addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
+            addSanctionImageOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_sanction_4));
 
-        initLeftTeamListeners();
-        initRightTeamListeners();
+            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
-        if (savedInstanceState != null) {
-            restoreStartingLineupDialog();
+            initLeftTeamListeners();
+            initRightTeamListeners();
+
+            if (savedInstanceState != null) {
+                restoreStartingLineupDialog();
+            }
         }
 
         return mView;

@@ -44,12 +44,15 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mTeamService.removeTeamListener(this);
-        mSanctionService.removeSanctionListener(this);
-        mLeftTeamPositions.clear();
-        mRightTeamPositions.clear();
-        mLeftTeamSanctionImages.clear();
-        mRightTeamSanctionImages.clear();
+
+        if (mTeamService != null && mSanctionService != null) {
+            mTeamService.removeTeamListener(this);
+            mSanctionService.removeSanctionListener(this);
+            mLeftTeamPositions.clear();
+            mRightTeamPositions.clear();
+            mLeftTeamSanctionImages.clear();
+            mRightTeamSanctionImages.clear();
+        }
     }
 
     protected void initView() {
@@ -57,10 +60,12 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         mTeamService = ServicesProvider.getInstance().getTeamService();
         mSanctionService = ServicesProvider.getInstance().getSanctionService();
 
-        mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
-        mTeamOnRightSide = mTeamService.getTeamOnRightSide();
-        mTeamService.addTeamListener(this);
-        mSanctionService.addSanctionListener(this);
+        if (mTeamService != null && mSanctionService != null) {
+            mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
+            mTeamOnRightSide = mTeamService.getTeamOnRightSide();
+            mTeamService.addTeamListener(this);
+            mSanctionService.addSanctionListener(this);
+        }
     }
 
     protected void addButtonOnLeftSide(final PositionType positionType, final MaterialButton button) {

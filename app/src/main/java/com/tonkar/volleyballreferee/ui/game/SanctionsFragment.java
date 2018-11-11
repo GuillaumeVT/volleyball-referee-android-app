@@ -43,17 +43,20 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
         View view = inflater.inflate(R.layout.fragment_sanctions, container, false);
 
         mSanctionService = ServicesProvider.getInstance().getSanctionService();
-        mSanctionService.addSanctionListener(this);
         mTeamService = ServicesProvider.getInstance().getTeamService();
-        mTeamService.addTeamListener(this);
 
-        ListView leftTeamSanctionsList = view.findViewById(R.id.left_team_sanctions_list);
-        mLeftTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mSanctionService, mTeamService, mTeamService.getTeamOnLeftSide());
-        leftTeamSanctionsList.setAdapter(mLeftTeamSanctionsListAdapter);
+        if (mSanctionService != null && mTeamService != null) {
+            mSanctionService.addSanctionListener(this);
+            mTeamService.addTeamListener(this);
 
-        ListView rightTeamSanctionsList = view.findViewById(R.id.right_team_sanctions_list);
-        mRightTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mSanctionService, mTeamService, mTeamService.getTeamOnRightSide());
-        rightTeamSanctionsList.setAdapter(mRightTeamSanctionsListAdapter);
+            ListView leftTeamSanctionsList = view.findViewById(R.id.left_team_sanctions_list);
+            mLeftTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mSanctionService, mTeamService, mTeamService.getTeamOnLeftSide());
+            leftTeamSanctionsList.setAdapter(mLeftTeamSanctionsListAdapter);
+
+            ListView rightTeamSanctionsList = view.findViewById(R.id.right_team_sanctions_list);
+            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mSanctionService, mTeamService, mTeamService.getTeamOnRightSide());
+            rightTeamSanctionsList.setAdapter(mRightTeamSanctionsListAdapter);
+        }
 
         return view;
     }
@@ -61,8 +64,11 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mSanctionService.removeSanctionListener(this);
-        mTeamService.removeTeamListener(this);
+
+        if (mSanctionService != null && mTeamService != null) {
+            mSanctionService.removeSanctionListener(this);
+            mTeamService.removeTeamListener(this);
+        }
     }
 
     @Override

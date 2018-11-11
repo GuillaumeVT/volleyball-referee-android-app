@@ -39,15 +39,18 @@ public class SubstitutionsFragment extends Fragment implements TeamListener {
         View view = inflater.inflate(R.layout.fragment_substitutions, container, false);
 
         mIndoorTeamService = (IndoorTeamService) ServicesProvider.getInstance().getTeamService();
-        mIndoorTeamService.addTeamListener(this);
 
-        ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
-        mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnLeftSide());
-        leftTeamSubstitutionsList.setAdapter(mLeftTeamSubstitutionsListAdapter);
+        if (mIndoorTeamService != null) {
+            mIndoorTeamService.addTeamListener(this);
 
-        ListView rightTeamSubstitutionsList = view.findViewById(R.id.right_team_substitutions_list);
-        mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnRightSide());
-        rightTeamSubstitutionsList.setAdapter(mRightTeamSubstitutionsListAdapter);
+            ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
+            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnLeftSide());
+            leftTeamSubstitutionsList.setAdapter(mLeftTeamSubstitutionsListAdapter);
+
+            ListView rightTeamSubstitutionsList = view.findViewById(R.id.right_team_substitutions_list);
+            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnRightSide());
+            rightTeamSubstitutionsList.setAdapter(mRightTeamSubstitutionsListAdapter);
+        }
 
         return view;
     }
@@ -55,7 +58,10 @@ public class SubstitutionsFragment extends Fragment implements TeamListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mIndoorTeamService.removeTeamListener(this);
+
+        if (mIndoorTeamService != null) {
+            mIndoorTeamService.removeTeamListener(this);
+        }
     }
 
     @Override

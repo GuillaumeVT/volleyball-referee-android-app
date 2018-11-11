@@ -42,18 +42,20 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
         View view = inflater.inflate(R.layout.fragment_timeouts, container, false);
 
         mTimeoutService = ServicesProvider.getInstance().getTimeoutService();
-        mTimeoutService.addTimeoutListener(this);
-
         mTeamService = ServicesProvider.getInstance().getTeamService();
-        mTeamService.addTeamListener(this);
 
-        ListView leftTeamTimeoutsList = view.findViewById(R.id.left_team_timeouts_list);
-        mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnLeftSide());
-        leftTeamTimeoutsList.setAdapter(mLeftTeamTimeoutsListAdapter);
+        if (mTimeoutService != null && mTeamService != null) {
+            mTimeoutService.addTimeoutListener(this);
+            mTeamService.addTeamListener(this);
 
-        ListView rightTeamTimeoutsList = view.findViewById(R.id.right_team_timeouts_list);
-        mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnRightSide());
-        rightTeamTimeoutsList.setAdapter(mRightTeamTimeoutsListAdapter);
+            ListView leftTeamTimeoutsList = view.findViewById(R.id.left_team_timeouts_list);
+            mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnLeftSide());
+            leftTeamTimeoutsList.setAdapter(mLeftTeamTimeoutsListAdapter);
+
+            ListView rightTeamTimeoutsList = view.findViewById(R.id.right_team_timeouts_list);
+            mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mTimeoutService, mTeamService, mTeamService.getTeamOnRightSide());
+            rightTeamTimeoutsList.setAdapter(mRightTeamTimeoutsListAdapter);
+        }
 
         return view;
     }
@@ -61,8 +63,11 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mTimeoutService.removeTimeoutListener(this);
-        mTeamService.removeTeamListener(this);
+
+        if (mTimeoutService != null && mTeamService != null) {
+            mTimeoutService.removeTimeoutListener(this);
+            mTeamService.removeTeamListener(this);
+        }
     }
 
     @Override
