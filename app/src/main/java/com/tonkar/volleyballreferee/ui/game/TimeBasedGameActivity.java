@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
@@ -70,7 +71,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean keepScreenOnSetting = sharedPreferences.getBoolean("pref_keep_screen_on", false);
+        boolean keepScreenOnSetting = sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false);
         if (keepScreenOnSetting) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
@@ -166,17 +167,25 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_more:
-                showGameMenuSheet();
+            case R.id.action_game_action_menu:
+                showGameActionMenu();
+                return true;
+            case R.id.action_game_settings_menu:
+                showGameSettingsMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void showGameMenuSheet() {
-        GameMenuSheet gameMenuSheet = GameMenuSheet.newInstance();
-        gameMenuSheet.show(getSupportFragmentManager(), "game_menu_sheet");
+    private void showGameActionMenu() {
+        GameActionMenu gameActionMenu = GameActionMenu.newInstance();
+        gameActionMenu.show(getSupportFragmentManager(), "game_action_menu");
+    }
+
+    private void showGameSettingsMenu() {
+        GameSettingsMenu gameSettingsMenu = GameSettingsMenu.newInstance();
+        gameSettingsMenu.show(getSupportFragmentManager(), "game_settings_menu");
     }
 
     // UI Callbacks

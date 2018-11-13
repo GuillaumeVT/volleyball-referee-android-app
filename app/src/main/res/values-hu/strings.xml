@@ -141,7 +141,6 @@
     <string name="pref_sync_data">Online adat szinkronizálás</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
     <string name="pref_interactive_notification">Interaktív értesítések használata</string>
-    <string name="pref_number_of_shirts">Legnagyobb választható mezszám</string>
 
     <string name="synchronize">Szinkronizálás</string>
     <string name="sync_failed_message">Nem sikerült az adat szinkronizálás</string>

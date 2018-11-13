@@ -140,7 +140,6 @@
     <string name="pref_sync_data">Andmete sünktoniseerimine serveriga</string>
     <string name="pref_keep_screen_on">Jäta mängu ajaks aktiivseks ekraani</string>
     <string name="pref_interactive_notification">Aktiveeri interaktiivsed teated</string>
-    <string name="pref_number_of_shirts">Mängivate numbrite arvud võistkonna settingutes</string>
 
     <string name="synchronize">Sünkroniseerida</string>
     <string name="sync_failed_message">Sünkroniseerimise viga</string>

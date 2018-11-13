@@ -10,12 +10,14 @@ import androidx.preference.PreferenceManager;
 
 public class PrefUtils {
 
-    public static final  String PREF_SYNC_DATA             = "pref_sync_data";
-    public static final  String PREF_REFEREE_NAME          = "pref_referee_name";
-    private static final String PREF_USER_SIGNED_IN        = "pref_user_connected";
-    private static final String PREF_USER_ID               = "pref_user_identifier";
-    private static final String PREF_USER_TOKEN            = "pref_user_token";
-    private static final String PREF_PURCHASED_WEB_PREMUIM = "pref_purchased_web_premium";
+    public static final  String PREF_SYNC_DATA                 = "pref_sync_data";
+    public static final  String PREF_REFEREE_NAME              = "pref_referee_name";
+    public static final  String PREF_KEEP_SCREEN_ON            = "pref_keep_screen_on";
+    public static final  String PREF_INTERACTIVE_NOTIFICATIONS = "pref_interactive_notification";
+    private static final String PREF_USER_SIGNED_IN            = "pref_user_connected";
+    private static final String PREF_USER_ID                   = "pref_user_identifier";
+    private static final String PREF_USER_TOKEN                = "pref_user_token";
+    private static final String PREF_PURCHASED_WEB_PREMUIM     = "pref_purchased_web_premium";
 
     public static boolean isPrefDataSyncEnabled(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

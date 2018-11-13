@@ -1,14 +1,12 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,6 +45,7 @@ public class TeamSetupFragment extends Fragment {
     private LayoutInflater       mLayoutInflater;
     private TeamType             mTeamType;
     private BaseTeamService      mTeamService;
+    private int                  mNumberOfShirts;
     private FloatingActionButton mTeamColorButton;
     private PlayerAdapter        mPlayerAdapter;
     private FloatingActionButton mLiberoColorButton;
@@ -64,10 +63,12 @@ public class TeamSetupFragment extends Fragment {
 
     public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext, boolean editable) {
         TeamSetupFragment fragment = new TeamSetupFragment();
+
         Bundle args = new Bundle();
         args.putString(TeamType.class.getName(), teamType.toString());
         args.putBoolean("is_game", isGameContext);
         args.putBoolean("editable", editable);
+        args.putInt("number_of_shirts", 25);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,8 +83,13 @@ public class TeamSetupFragment extends Fragment {
         mTeamType = TeamType.valueOf(teamTypeStr);
 
         final boolean editable = getArguments().getBoolean("editable");
-
         final boolean isGameContext = getArguments().getBoolean("is_game");
+
+        if (savedInstanceState == null) {
+            mNumberOfShirts = getArguments().getInt("number_of_shirts");
+        } else {
+            mNumberOfShirts = savedInstanceState.getInt("number_of_shirts");
+        }
 
         if (isGameContext) {
             if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
@@ -211,6 +217,12 @@ public class TeamSetupFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("number_of_shirts", mNumberOfShirts);
+    }
+
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
@@ -236,14 +248,13 @@ public class TeamSetupFragment extends Fragment {
         private final LayoutInflater mLayoutInflater;
         private final Context        mContext;
         private       int            mColor;
-        private final int            mCount;
+        private       int            mCount;
 
         private PlayerAdapter(LayoutInflater layoutInflater, Context context, int color) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mColor = color;
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-            mCount = Integer.valueOf(sharedPreferences.getString("pref_number_of_shirts", "25"));
+            initCount();
         }
 
         @Override
@@ -272,25 +283,46 @@ public class TeamSetupFragment extends Fragment {
                 button = (PlayerToggleButton) view;
             }
 
-            button.setText(UiUtils.formatNumberFromLocale(playerShirtNumber));
-            button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
-            button.setColor(mContext, mColor);
+            final boolean isShirt = isShirt(position);
+            final boolean isLess = isLess(position);
+
+            if (isShirt) {
+                button.setText(UiUtils.formatNumberFromLocale(playerShirtNumber));
+                button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
+                button.setColor(mContext, mColor);
+            } else if (isLess) {
+                button.setText("-");
+                button.setChecked(false);
+            } else {
+                button.setText("+");
+                button.setChecked(false);
+            }
 
             button.setOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);
-                final int number = Integer.parseInt(cButton.getText().toString());
-                if (isChecked) {
-                    Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team", number, mTeamType.toString()));
-                    mTeamService.addPlayer(mTeamType, number);
+                if (isShirt) {
+                    final int number = Integer.parseInt(cButton.getText().toString());
+                    if (isChecked) {
+                        Log.i(Tags.SETUP_UI, String.format("Checked #%d player of %s team", number, mTeamType.toString()));
+                        mTeamService.addPlayer(mTeamType, number);
+                    } else {
+                        Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
+                        mTeamService.removePlayer(mTeamType, number);
+                    }
+                    updateCaptain();
+                    if (manageLiberos()) {
+                        mLiberoAdapter.notifyDataSetChanged();
+                    }
+                    computeConfirmItemVisibility();
+                } else if (isLess) {
+                    lessShirts();
+                    initCount();
+                    notifyDataSetChanged();
                 } else {
-                    Log.i(Tags.SETUP_UI, String.format("Unchecked #%d player of %s team", number, mTeamType.toString()));
-                    mTeamService.removePlayer(mTeamType, number);
+                    moreShirts();
+                    initCount();
+                    notifyDataSetChanged();
                 }
-                updateCaptain();
-                if (manageLiberos()) {
-                    mLiberoAdapter.notifyDataSetChanged();
-                }
-                computeConfirmItemVisibility();
             });
 
             return button;
@@ -299,6 +331,62 @@ public class TeamSetupFragment extends Fragment {
         public void setColor(int color) {
             mColor = color;
             notifyDataSetChanged();
+        }
+
+        private void initCount() {
+            switch (mNumberOfShirts) {
+                case 99:
+                    mCount = 100;
+                    break;
+                case 50:
+                    mCount = 52;
+                    break;
+                default:
+                    mCount = 26;
+                    break;
+            }
+        }
+
+        private boolean isShirt(int position) {
+            return position < mNumberOfShirts;
+        }
+
+        private boolean isLess(int position) {
+            final boolean result;
+
+            switch (mNumberOfShirts) {
+                case 99:
+                case 50:
+                    result = position == mNumberOfShirts;
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+
+            return result;
+        }
+
+        private void moreShirts() {
+            switch (mNumberOfShirts) {
+                case 25:
+                    mNumberOfShirts = 50;
+                    break;
+                case 50:
+                    mNumberOfShirts = 99;
+                    break;
+            }
+        }
+
+        private void lessShirts() {
+            switch (mNumberOfShirts) {
+                case 99:
+                    mNumberOfShirts = 50;
+                    break;
+                case 50:
+                    mNumberOfShirts = 25;
+                    break;
+            }
         }
     }
 

@@ -140,7 +140,6 @@
     <string name="pref_sync_data">Синхронизировать данные с сервером</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_interactive_notification">Включить интерактивные уведомления</string>
-    <string name="pref_number_of_shirts">Количество игровых номеров в настройках команды</string>
 
     <string name="synchronize">Синхронизировать</string>
     <string name="sync_failed_message">Ошибка синхронизации</string>

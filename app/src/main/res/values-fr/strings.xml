@@ -140,7 +140,6 @@
     <string name="pref_sync_data">Synchroniser les données en ligne</string>
     <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
     <string name="pref_interactive_notification">Utiliser les notifications interactives</string>
-    <string name="pref_number_of_shirts">Nombre de maillots dans la définition d\'équipe</string>
 
     <string name="synchronize">Synchroniser</string>
     <string name="sync_failed_message">Échec de la synchronisation</string>

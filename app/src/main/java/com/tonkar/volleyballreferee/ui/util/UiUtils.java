@@ -355,7 +355,7 @@ public class UiUtils {
 
     public static void showNotification(Context context, String message) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean interactiveNotification = sharedPreferences.getBoolean("pref_interactive_notification", false);
+        boolean interactiveNotification = sharedPreferences.getBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, false);
 
         if (interactiveNotification) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);

@@ -140,7 +140,6 @@
     <string name="pref_sync_data">Sincronizar dados online</string>
     <string name="pref_keep_screen_on">Manter écran ligado durante os jogos</string>
     <string name="pref_interactive_notification">Usar notificações interativas</string>
-    <string name="pref_number_of_shirts">Selecione a numeração da camisola mais alta da sua equipa</string>
 
     <string name="synchronize">Sincronizar</string>
     <string name="sync_failed_message">Sincronização de dados falhada</string>

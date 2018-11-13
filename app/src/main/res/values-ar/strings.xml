@@ -136,7 +136,6 @@
     <string name="pref_sync_data">تزامن البيانات عبر الإنترنت</string>
     <string name="pref_keep_screen_on">الحفاظ على شاشة الهاتف مشتغلة اثناء المباراة</string>
     <string name="pref_interactive_notification">استخدم الإشعارات التفاعلية</string>
-    <string name="pref_number_of_shirts">عدد القمصان لكل فريق</string>
 
     <string name="synchronize">المزامنة</string>
     <string name="sync_failed_message">فشل في مزامنة البيانات</string>

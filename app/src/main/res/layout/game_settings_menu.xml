@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/game_settings_menu"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/big_margin_size"
+              android:orientation="vertical"
+              android:gravity="start">
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/keep_screen_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_size"
+            android:text="@string/pref_keep_screen_on"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_keep_screen_on_menu"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:drawableTint="@color/colorPrimary"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/interactive_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_size"
+            android:text="@string/pref_interactive_notification"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_interactive_notification_menu"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:drawableTint="@color/colorPrimary"/>
+
+</LinearLayout>

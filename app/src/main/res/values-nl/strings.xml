@@ -140,7 +140,6 @@
     <string name="pref_sync_data">Synchroniseer de gegevens online</string>
     <string name="pref_keep_screen_on">Houd het scherm aan tijdens wedstrijden</string>
     <string name="pref_interactive_notification">Gebruik interactieve meldingen</string>
-    <string name="pref_number_of_shirts">Aantal shirts in ploegdefinitie</string>
 
     <string name="synchronize">Synchroniseer</string>
     <string name="sync_failed_message">Gegevenssynchronisatie mislukt</string>

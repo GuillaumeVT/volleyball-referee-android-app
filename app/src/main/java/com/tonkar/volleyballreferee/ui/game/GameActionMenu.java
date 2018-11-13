@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -35,15 +36,15 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Random;
 
-public class GameMenuSheet extends BottomSheetDialogFragment {
+public class GameActionMenu extends BottomSheetDialogFragment {
 
     private Activity             mActivity;
     private GameService          mGameService;
     private RecordedGamesService mRecordedGamesService;
     private Random               mRandom;
 
-    public static GameMenuSheet newInstance() {
-        GameMenuSheet fragment = new GameMenuSheet();
+    public static GameActionMenu newInstance() {
+        GameActionMenu fragment = new GameActionMenu();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -51,8 +52,10 @@ public class GameMenuSheet extends BottomSheetDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(Tags.GAME_UI, "Create game menu sheet fragment");
-        View view = inflater.inflate(R.layout.game_menu_sheet, container, false);
+        Log.i(Tags.GAME_UI, "Create game action menu fragment");
+        View view = inflater
+                .cloneInContext(new ContextThemeWrapper(inflater.getContext(), R.style.AppTheme_Dialog))
+                .inflate(R.layout.game_action_menu, container, false);
 
         Context context = inflater.getContext();
 

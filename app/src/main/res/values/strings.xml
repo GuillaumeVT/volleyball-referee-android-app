@@ -142,7 +142,6 @@
     <string name="pref_sync_data">Synchronize the data online</string>
     <string name="pref_keep_screen_on">Keep the screen on during games</string>
     <string name="pref_interactive_notification">Use interactive notifications</string>
-    <string name="pref_number_of_shirts">Number of shirts in team definition</string>
 
     <string name="synchronize">Synchronize</string>
     <string name="sync_failed_message">Data synchronization failed</string>
@@ -294,11 +293,6 @@
         <item>2 serves</item>
     </string-array>
 
-    <string-array name="number_of_shirts" translatable="false">
-        <item>25</item>
-        <item>50</item>
-        <item>99</item>
-    </string-array>
     <string-array name="points_per_set_values" translatable="false">
         <item>30</item>
         <item>29</item>
