@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -21,7 +22,9 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -65,23 +68,31 @@ public class GameActionMenu extends BottomSheetDialogFragment {
 
         if (mActivity != null && mGameService != null && mRecordedGamesService != null) {
             mRandom = new Random();
+            final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
             TextView navigateHomeText = view.findViewById(R.id.action_navigate_home);
-            TextView indexGameText = view.findViewById(R.id.action_index_game);
+            SwitchCompat indexGameText = view.findViewById(R.id.action_index_game);
             TextView shareGameText = view.findViewById(R.id.action_share_game);
             TextView tossCoinText = view.findViewById(R.id.action_toss_coin);
             TextView resetSetText = view.findViewById(R.id.action_reset_set);
+            SwitchCompat keepScreenOnSwitch = view.findViewById(R.id.keep_screen_on);
+            SwitchCompat interactiveNotificationSwitch = view.findViewById(R.id.interactive_notification);
+
+            keepScreenOnSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false));
+            interactiveNotificationSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, false));
 
             if (mGameService.isMatchCompleted()) {
                 tossCoinText.setVisibility(View.GONE);
                 indexGameText.setVisibility(View.GONE);
                 resetSetText.setVisibility(View.GONE);
+                keepScreenOnSwitch.setVisibility(View.GONE);
+                interactiveNotificationSwitch.setVisibility(View.GONE);
             } else if (GameType.TIME.equals(mGameService.getGameType())) {
                 resetSetText.setVisibility(View.GONE);
             }
 
             if (PrefUtils.isSyncOn(context)) {
-                setIcon(indexGameText, mGameService.isIndexed() ? R.drawable.ic_public : R.drawable.ic_private);
+                indexGameText.setChecked(mGameService.isIndexed());
             } else {
                 indexGameText.setVisibility(View.GONE);
             }
@@ -92,23 +103,32 @@ public class GameActionMenu extends BottomSheetDialogFragment {
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 setIcon(navigateHomeText, R.drawable.ic_home_menu);
-                setIcon(indexGameText, mGameService.isIndexed() ? R.drawable.ic_public : R.drawable.ic_private);
+                setIcon(indexGameText, R.drawable.ic_private);
                 setIcon(shareGameText, R.drawable.ic_share_menu);
                 setIcon(tossCoinText, R.drawable.ic_coin_menu);
                 setIcon(resetSetText, R.drawable.ic_reset_menu);
+                setIcon(keepScreenOnSwitch, R.drawable.ic_keep_screen_on_menu);
+                setIcon(interactiveNotificationSwitch, R.drawable.ic_interactive_notification_menu);
             }
 
             colorIcon(context, navigateHomeText, R.color.colorPrimary);
-            colorIcon(context, indexGameText, mGameService.isIndexed() ? R.color.colorPrimary : android.R.color.holo_red_dark);
+            colorIcon(context, indexGameText, R.color.colorPrimary);
             colorIcon(context, shareGameText, R.color.colorPrimary);
             colorIcon(context, tossCoinText, R.color.colorPrimary);
             colorIcon(context, resetSetText, R.color.colorPrimary);
 
             navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGameService));
-            indexGameText.setOnClickListener(textView -> toggleIndexed());
+            indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
             shareGameText.setOnClickListener(textView -> share());
             tossCoinText.setOnClickListener(textView -> tossACoin());
             resetSetText.setOnClickListener(textView -> resetCurrentSetWithDialog());
+            keepScreenOnSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+                sharedPreferences.edit().putBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, isChecked).apply();
+                mActivity.recreate();
+            });
+            interactiveNotificationSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+                sharedPreferences.edit().putBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, isChecked).apply();
+            });
         }
 
         return view;
@@ -130,7 +150,6 @@ public class GameActionMenu extends BottomSheetDialogFragment {
     private void toggleIndexed() {
         Log.i(Tags.GAME_UI, "Toggle indexed");
         mGameService.setIndexed(!mGameService.isIndexed());
-        dismiss();
     }
 
     private void share() {

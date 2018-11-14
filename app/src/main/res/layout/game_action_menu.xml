@@ -26,19 +26,17 @@
             android:layout_height="1dp"
             android:background="@color/colorDisabledButton"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/action_index_game"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
             android:text="@string/index_game"
-            android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_public"
-            android:drawableTint="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_private"
             android:drawablePadding="@dimen/big_margin_size"
-            android:gravity="center_vertical|start"
-            android:foreground="?android:selectableItemBackground"/>
+            android:drawableTint="@color/colorPrimary"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_share_game"
@@ -86,5 +84,34 @@
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
             android:foreground="?android:selectableItemBackground"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDisabledButton"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/keep_screen_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_size"
+            android:text="@string/pref_keep_screen_on"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_keep_screen_on_menu"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:drawableTint="@color/colorPrimary"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/interactive_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_size"
+            android:text="@string/pref_interactive_notification"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/default_text_size"
+            android:drawableStart="@drawable/ic_interactive_notification_menu"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:drawableTint="@color/colorPrimary"/>
 
 </LinearLayout>

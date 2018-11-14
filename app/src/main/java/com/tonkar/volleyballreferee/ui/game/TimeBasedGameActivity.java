@@ -170,9 +170,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             case R.id.action_game_action_menu:
                 showGameActionMenu();
                 return true;
-            case R.id.action_game_settings_menu:
-                showGameSettingsMenu();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -181,11 +178,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     private void showGameActionMenu() {
         GameActionMenu gameActionMenu = GameActionMenu.newInstance();
         gameActionMenu.show(getSupportFragmentManager(), "game_action_menu");
-    }
-
-    private void showGameSettingsMenu() {
-        GameSettingsMenu gameSettingsMenu = GameSettingsMenu.newInstance();
-        gameSettingsMenu.show(getSupportFragmentManager(), "game_settings_menu");
     }
 
     // UI Callbacks
