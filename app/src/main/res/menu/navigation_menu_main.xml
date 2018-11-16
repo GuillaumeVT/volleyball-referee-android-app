@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/action_home"
-                android:icon="@drawable/ic_home_menu"
+                android:icon="@drawable/ic_home"
                 android:title="@string/app_name"/>
         <item
                 android:id="@+id/action_purchase"
@@ -18,7 +18,7 @@
                 <group android:checkableBehavior="single">
                     <item
                             android:id="@+id/action_recorded_games"
-                            android:icon="@drawable/ic_recorded_games_menu"
+                            android:icon="@drawable/ic_volleyball"
                             android:title="@string/recorded_games"/>
                     <item
                             android:id="@+id/action_saved_rules"
@@ -26,7 +26,7 @@
                             android:title="@string/saved_rules_list"/>
                     <item
                             android:id="@+id/action_saved_teams"
-                            android:icon="@drawable/ic_saved_teams_menu"
+                            android:icon="@drawable/ic_saved_teams"
                             android:title="@string/saved_teams"/>
                 </group>
             </menu>
@@ -39,7 +39,7 @@
                 <group android:checkableBehavior="single">
                     <item
                             android:id="@+id/action_view_account"
-                            android:icon="@drawable/ic_account_menu"
+                            android:icon="@drawable/ic_account"
                             android:title="@string/view_online_account"
                             android:visible="false"/>
                     <item
@@ -74,7 +74,7 @@
 
         <item
                 android:id="@+id/action_facebook"
-                android:icon="@drawable/ic_facebook_menu"
+                android:icon="@drawable/ic_facebook"
                 android:title="@string/facebook"/>
     </group>
 </menu>

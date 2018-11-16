@@ -6,20 +6,17 @@
               android:padding="@dimen/default_margin_size">
 
     <ListView
-        android:id="@+id/timeout_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+            android:id="@+id/timeout_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <ListView
-        android:id="@+id/substitution_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+            android:id="@+id/substitution_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <ListView
-        android:id="@+id/sanction_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+            android:id="@+id/sanction_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

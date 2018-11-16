@@ -102,13 +102,13 @@ public class GameActionMenu extends BottomSheetDialogFragment {
             }
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                setIcon(navigateHomeText, R.drawable.ic_home_menu);
+                setIcon(navigateHomeText, R.drawable.ic_home);
                 setIcon(indexGameText, R.drawable.ic_private);
                 setIcon(shareGameText, R.drawable.ic_share_menu);
-                setIcon(tossCoinText, R.drawable.ic_coin_menu);
+                setIcon(tossCoinText, R.drawable.ic_coin);
                 setIcon(resetSetText, R.drawable.ic_reset_menu);
-                setIcon(keepScreenOnSwitch, R.drawable.ic_keep_screen_on_menu);
-                setIcon(interactiveNotificationSwitch, R.drawable.ic_interactive_notification_menu);
+                setIcon(keepScreenOnSwitch, R.drawable.ic_screen_on);
+                setIcon(interactiveNotificationSwitch, R.drawable.ic_notification);
             }
 
             colorIcon(context, navigateHomeText, R.color.colorPrimary);

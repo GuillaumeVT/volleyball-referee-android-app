@@ -62,7 +62,7 @@
                                 app:strokeWidth="1dp"
                                 android:textColor="@color/colorPrimary"
                                 app:iconTint="@color/colorPrimary"
-                                app:icon="@drawable/ic_account_menu" android:textAllCaps="false"/>
+                                app:icon="@drawable/ic_account" android:textAllCaps="false"/>
 
                     </LinearLayout>
 

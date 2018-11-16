@@ -78,7 +78,7 @@
                                     android:textColor="@android:color/white"
                                     android:theme="@style/ButtonTheme.Primary"
                                     app:backgroundTint="@color/colorPrimary"
-                                    app:icon="@drawable/ic_4x4"
+                                    app:icon="@drawable/ic_4x4p"
                                     app:iconTint="@android:color/white"/>
 
                             <com.google.android.material.button.MaterialButton
@@ -91,7 +91,7 @@
                                     android:textColor="@android:color/white"
                                     android:theme="@style/ButtonTheme.Primary"
                                     app:backgroundTint="@color/colorPrimary"
-                                    app:icon="@drawable/ic_volley_ball"
+                                    app:icon="@drawable/ic_volleyball"
                                     app:iconTint="@android:color/white"/>
 
                         </LinearLayout>

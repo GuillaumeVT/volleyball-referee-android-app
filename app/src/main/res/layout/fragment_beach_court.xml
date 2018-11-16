@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volley_ball"/>
+                app:srcCompat="@drawable/ic_volleyball"/>
 
             <RelativeLayout
                     android:layout_width="0dp"
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volley_ball"/>
+                app:srcCompat="@drawable/ic_volleyball"/>
 
             <RelativeLayout
                     android:layout_width="0dp"
@@ -154,7 +154,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volley_ball"/>
+                app:srcCompat="@drawable/ic_volleyball"/>
 
         </LinearLayout>
 
@@ -196,7 +196,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volley_ball"/>
+                app:srcCompat="@drawable/ic_volleyball"/>
 
         </LinearLayout>
 

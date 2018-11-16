@@ -49,9 +49,9 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
         if (PrefUtils.isSyncOn(this)) {
             if (mRecordedGamesService.isGameIndexed(mGameDate)) {
-                recordMenu.setIcon(R.drawable.ic_public);
+                recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
-                recordMenu.setIcon(R.drawable.ic_private);
+                recordMenu.setIcon(R.drawable.ic_private_menu);
             }
         } else {
             recordMenu.setVisible(false);

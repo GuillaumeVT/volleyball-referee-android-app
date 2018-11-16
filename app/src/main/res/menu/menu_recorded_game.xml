@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_index_game"
-        android:icon="@drawable/ic_public"
+        android:icon="@drawable/ic_public_menu"
         android:iconTint="@android:color/white"
         android:orderInCategory="1"
         android:title="@string/index_game"

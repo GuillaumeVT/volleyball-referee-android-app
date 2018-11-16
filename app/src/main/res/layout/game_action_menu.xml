@@ -15,7 +15,7 @@
             android:text="@string/navigate_home"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_home_menu"
+            android:drawableStart="@drawable/ic_home"
             android:drawableTint="@color/colorPrimary"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
@@ -34,7 +34,7 @@
             android:text="@string/index_game"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_private"
+            android:drawableStart="@drawable/ic_private_menu"
             android:drawablePadding="@dimen/big_margin_size"
             android:drawableTint="@color/colorPrimary"/>
 
@@ -60,7 +60,7 @@
             android:text="@string/toss_coin"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_coin_menu"
+            android:drawableStart="@drawable/ic_coin"
             android:drawableTint="@color/colorPrimary"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
@@ -98,7 +98,7 @@
             android:text="@string/pref_keep_screen_on"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_keep_screen_on_menu"
+            android:drawableStart="@drawable/ic_screen_on"
             android:drawablePadding="@dimen/big_margin_size"
             android:drawableTint="@color/colorPrimary"/>
 
@@ -110,7 +110,7 @@
             android:text="@string/pref_interactive_notification"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_interactive_notification_menu"
+            android:drawableStart="@drawable/ic_notification"
             android:drawablePadding="@dimen/big_margin_size"
             android:drawableTint="@color/colorPrimary"/>
 

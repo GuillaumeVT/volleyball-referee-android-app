@@ -7,7 +7,6 @@
             <size android:width="@dimen/sanction_size" android:height="@dimen/sanction_size"/>
         </shape>
     </item>
-    <item android:top="@dimen/tiny_margin_size" android:bottom="@dimen/tiny_margin_size" android:left="@dimen/tiny_margin_size" android:right="@dimen/tiny_margin_size">
-        <bitmap android:src="@drawable/ic_thumb_timeout" android:gravity="center"/>
-    </item>
+    <item android:top="@dimen/tiny_margin_size" android:bottom="@dimen/tiny_margin_size" android:left="@dimen/tiny_margin_size" android:right="@dimen/tiny_margin_size"
+          android:gravity="center" android:drawable="@drawable/ic_thumb_timeout" />
 </layer-list>

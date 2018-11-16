@@ -99,7 +99,7 @@
                         app:backgroundTint="@android:color/white"
                         app:fabCustomSize="@dimen/game_small_fab_size"
                         app:maxImageSize="@dimen/game_small_fab_icon_size"
-                        app:srcCompat="@drawable/ic_volley_ball"/>
+                        app:srcCompat="@drawable/ic_volleyball"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/right_team_service_button"
@@ -115,7 +115,7 @@
                         app:backgroundTint="@android:color/white"
                         app:fabCustomSize="@dimen/game_small_fab_size"
                         app:maxImageSize="@dimen/game_small_fab_icon_size"
-                        app:srcCompat="@drawable/ic_volley_ball"/>
+                        app:srcCompat="@drawable/ic_volleyball"/>
 
             </LinearLayout>
 

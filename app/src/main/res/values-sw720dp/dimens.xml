@@ -50,7 +50,7 @@
     <dimen name="fab_shift_default">32dp</dimen>
 
     <dimen name="form_button_size">70dp</dimen>
-    <dimen name="form_fab_icon_size">50dp</dimen>
+    <dimen name="form_fab_icon_size">40dp</dimen>
 
     <dimen name="elevation">2dp</dimen>
 
