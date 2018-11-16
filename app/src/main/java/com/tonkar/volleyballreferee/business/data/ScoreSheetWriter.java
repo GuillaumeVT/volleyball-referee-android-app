@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Environment;
 
 import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
@@ -805,7 +806,7 @@ public class ScoreSheetWriter {
     }
 
     private String toBase64(@DrawableRes int resource, int widthPixels, int heightPixels) {
-        Drawable drawable = ContextCompat.getDrawable(mContext, resource);
+        Drawable drawable = AppCompatResources.getDrawable(mContext, resource);
         Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels, heightPixels, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mutableBitmap);
         drawable.setBounds(0, 0, widthPixels, heightPixels);

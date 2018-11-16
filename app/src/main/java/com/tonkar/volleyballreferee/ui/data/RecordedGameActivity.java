@@ -8,6 +8,7 @@ import android.net.Uri;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import android.util.Log;
@@ -28,6 +29,10 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import java.io.File;
 
 public abstract class RecordedGameActivity extends AppCompatActivity {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     protected RecordedGamesService mRecordedGamesService;
     protected long                 mGameDate;

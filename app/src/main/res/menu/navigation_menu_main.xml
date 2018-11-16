@@ -22,7 +22,7 @@
                             android:title="@string/recorded_games"/>
                     <item
                             android:id="@+id/action_saved_rules"
-                            android:icon="@drawable/ic_rules_menu"
+                            android:icon="@drawable/ic_rules"
                             android:title="@string/saved_rules_list"/>
                     <item
                             android:id="@+id/action_saved_teams"
@@ -49,11 +49,11 @@
                             android:visible="false"/>
                     <item
                             android:id="@+id/action_view_live_games"
-                            android:icon="@drawable/ic_search_live_games_menu"
+                            android:icon="@drawable/ic_live"
                             android:title="@string/view_live_games"/>
                     <item
                             android:id="@+id/action_search_online_games"
-                            android:icon="@drawable/ic_search_online_games_menu"
+                            android:icon="@drawable/ic_search_online_games"
                             android:title="@string/search_online_games"/>
                 </group>
             </menu>

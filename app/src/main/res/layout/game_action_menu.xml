@@ -15,8 +15,6 @@
             android:text="@string/navigate_home"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_home"
-            android:drawableTint="@color/colorPrimary"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
             android:foreground="?android:selectableItemBackground"/>
@@ -34,9 +32,7 @@
             android:text="@string/index_game"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_private_menu"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:drawableTint="@color/colorPrimary"/>
+            android:drawablePadding="@dimen/big_margin_size"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_share_game"
@@ -46,8 +42,6 @@
             android:text="@string/share"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_share_menu"
-            android:drawableTint="@color/colorPrimary"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
             android:foreground="?android:selectableItemBackground"/>
@@ -60,8 +54,6 @@
             android:text="@string/toss_coin"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_coin"
-            android:drawableTint="@color/colorPrimary"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
             android:foreground="?android:selectableItemBackground"/>
@@ -79,8 +71,6 @@
             android:text="@string/reset_set"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_reset_menu"
-            android:drawableTint="@color/colorPrimary"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
             android:foreground="?android:selectableItemBackground"/>
@@ -98,9 +88,7 @@
             android:text="@string/pref_keep_screen_on"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_screen_on"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:drawableTint="@color/colorPrimary"/>
+            android:drawablePadding="@dimen/big_margin_size"/>
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/interactive_notification"
@@ -110,8 +98,6 @@
             android:text="@string/pref_interactive_notification"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/default_text_size"
-            android:drawableStart="@drawable/ic_notification"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:drawableTint="@color/colorPrimary"/>
+            android:drawablePadding="@dimen/big_margin_size"/>
 
 </LinearLayout>

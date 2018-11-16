@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -101,21 +100,21 @@ public class GameActionMenu extends BottomSheetDialogFragment {
                 shareGameText.setVisibility(View.GONE);
             }
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                setIcon(navigateHomeText, R.drawable.ic_home);
-                setIcon(indexGameText, R.drawable.ic_private);
-                setIcon(shareGameText, R.drawable.ic_share_menu);
-                setIcon(tossCoinText, R.drawable.ic_coin);
-                setIcon(resetSetText, R.drawable.ic_reset_menu);
-                setIcon(keepScreenOnSwitch, R.drawable.ic_screen_on);
-                setIcon(interactiveNotificationSwitch, R.drawable.ic_notification);
-            }
+            setIcon(navigateHomeText, R.drawable.ic_home);
+            setIcon(indexGameText, R.drawable.ic_private);
+            setIcon(shareGameText, R.drawable.ic_share);
+            setIcon(tossCoinText, R.drawable.ic_coin);
+            setIcon(resetSetText, R.drawable.ic_reset_set);
+            setIcon(keepScreenOnSwitch, R.drawable.ic_screen_on);
+            setIcon(interactiveNotificationSwitch, R.drawable.ic_notification);
 
             colorIcon(context, navigateHomeText, R.color.colorPrimary);
             colorIcon(context, indexGameText, R.color.colorPrimary);
             colorIcon(context, shareGameText, R.color.colorPrimary);
             colorIcon(context, tossCoinText, R.color.colorPrimary);
             colorIcon(context, resetSetText, R.color.colorPrimary);
+            colorIcon(context, keepScreenOnSwitch, R.color.colorPrimary);
+            colorIcon(context, interactiveNotificationSwitch, R.color.colorPrimary);
 
             navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGameService));
             indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());

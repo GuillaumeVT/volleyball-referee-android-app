@@ -314,7 +314,6 @@
             android:layout_marginEnd="@dimen/big_margin_size"
             android:layout_marginStart="@dimen/big_margin_size"
             android:layout_marginTop="@dimen/small_margin_size"
-            android:drawableStart="@drawable/ic_info"
             android:drawablePadding="@dimen/default_margin_size"
             android:drawableTint="@color/colorPrimary"
             android:textAppearance="@style/TextViewTheme"

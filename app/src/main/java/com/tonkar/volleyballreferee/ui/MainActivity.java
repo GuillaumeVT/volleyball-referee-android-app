@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -53,6 +54,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AuthenticationActivity implements AsyncGameRequestListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
