@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.SwitchCompat;
@@ -100,13 +99,13 @@ public class GameActionMenu extends BottomSheetDialogFragment {
                 shareGameText.setVisibility(View.GONE);
             }
 
-            setIcon(navigateHomeText, R.drawable.ic_home);
-            setIcon(indexGameText, R.drawable.ic_private);
-            setIcon(shareGameText, R.drawable.ic_share);
-            setIcon(tossCoinText, R.drawable.ic_coin);
-            setIcon(resetSetText, R.drawable.ic_reset_set);
-            setIcon(keepScreenOnSwitch, R.drawable.ic_screen_on);
-            setIcon(interactiveNotificationSwitch, R.drawable.ic_notification);
+            UiUtils.setDrawableStart(navigateHomeText, R.drawable.ic_home);
+            UiUtils.setDrawableStart(indexGameText, R.drawable.ic_private);
+            UiUtils.setDrawableStart(shareGameText, R.drawable.ic_share);
+            UiUtils.setDrawableStart(tossCoinText, R.drawable.ic_coin);
+            UiUtils.setDrawableStart(resetSetText, R.drawable.ic_reset_set);
+            UiUtils.setDrawableStart(keepScreenOnSwitch, R.drawable.ic_screen_on);
+            UiUtils.setDrawableStart(interactiveNotificationSwitch, R.drawable.ic_notification);
 
             colorIcon(context, navigateHomeText, R.color.colorPrimary);
             colorIcon(context, indexGameText, R.color.colorPrimary);
@@ -191,9 +190,5 @@ public class GameActionMenu extends BottomSheetDialogFragment {
                 drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN));
             }
         }
-    }
-
-    private void setIcon(TextView textView, @DrawableRes int drawableId) {
-        textView.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
     }
 }

@@ -22,9 +22,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import android.widget.ImageView;
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.preference.PreferenceManager;
 
@@ -433,6 +435,14 @@ public class UiUtils {
             case DELAY_PENALTY:
                 imageView.setImageResource(R.drawable.delay_penalty);
                 break;
+        }
+    }
+
+    public static void setDrawableStart(TextView textView, @DrawableRes int drawableId) {
+        if (TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_LTR) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
+        } else {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableId, 0);
         }
     }
 }

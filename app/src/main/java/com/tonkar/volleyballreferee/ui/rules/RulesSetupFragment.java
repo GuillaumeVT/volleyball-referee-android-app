@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.ui.rules;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +16,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.content.res.AppCompatResources;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -30,6 +28,7 @@ import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class RulesSetupFragment extends Fragment {
 
@@ -155,7 +154,7 @@ public class RulesSetupFragment extends Fragment {
         mSubstitutionsLimitationSpinner.setAdapter(mSubstitutionsLimitationAdapter);
 
         mSubstitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
-        mSubstitutionsLimitationDescription.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(getContext(), R.drawable.ic_info), null, null, null);
+        UiUtils.setDrawableStart(mSubstitutionsLimitationDescription, R.drawable.ic_info);
         for (Drawable drawable : mSubstitutionsLimitationDescription.getCompoundDrawables()) {
             if (drawable != null) {
                 drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
