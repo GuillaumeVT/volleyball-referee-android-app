@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.SwitchCompat;
@@ -107,13 +106,13 @@ public class GameActionMenu extends BottomSheetDialogFragment {
             UiUtils.setDrawableStart(keepScreenOnSwitch, R.drawable.ic_screen_on);
             UiUtils.setDrawableStart(interactiveNotificationSwitch, R.drawable.ic_notification);
 
-            colorIcon(context, navigateHomeText, R.color.colorPrimary);
-            colorIcon(context, indexGameText, R.color.colorPrimary);
-            colorIcon(context, shareGameText, R.color.colorPrimary);
-            colorIcon(context, tossCoinText, R.color.colorPrimary);
-            colorIcon(context, resetSetText, R.color.colorPrimary);
-            colorIcon(context, keepScreenOnSwitch, R.color.colorPrimary);
-            colorIcon(context, interactiveNotificationSwitch, R.color.colorPrimary);
+            colorIcon(context, navigateHomeText);
+            colorIcon(context, indexGameText);
+            colorIcon(context, shareGameText);
+            colorIcon(context, tossCoinText);
+            colorIcon(context, resetSetText);
+            colorIcon(context, keepScreenOnSwitch);
+            colorIcon(context, interactiveNotificationSwitch);
 
             navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGameService));
             indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
@@ -184,10 +183,10 @@ public class GameActionMenu extends BottomSheetDialogFragment {
         dismiss();
     }
 
-    private void colorIcon(Context context, TextView textView, @ColorRes int color) {
+    private void colorIcon(Context context, TextView textView) {
         for (Drawable drawable : textView.getCompoundDrawables()) {
             if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN));
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
             }
         }
     }
