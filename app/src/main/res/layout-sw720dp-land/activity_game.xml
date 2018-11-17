@@ -113,7 +113,7 @@
                             app:backgroundTint="@android:color/white"
                             app:fabCustomSize="@dimen/game_small_fab_size"
                             app:maxImageSize="@dimen/game_small_fab_icon_size"
-                            app:srcCompat="@drawable/ic_volleyball"/>
+                            app:srcCompat="@drawable/ic_service"/>
 
                 </LinearLayout>
 
@@ -144,7 +144,7 @@
                             app:backgroundTint="@android:color/white"
                             app:fabCustomSize="@dimen/game_small_fab_size"
                             app:maxImageSize="@dimen/game_small_fab_icon_size"
-                            app:srcCompat="@drawable/ic_volleyball"/>
+                            app:srcCompat="@drawable/ic_service"/>
 
                 </LinearLayout>
 

@@ -18,21 +18,28 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/beach_court_y_margin"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_service_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volleyball"/>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/left_team_service_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_service"/>
+
+            </LinearLayout>
 
             <RelativeLayout
                     android:layout_width="0dp"
@@ -67,14 +74,21 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_service_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volleyball"/>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/left_team_service_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_service"/>
+
+            </LinearLayout>
 
             <RelativeLayout
                     android:layout_width="0dp"
@@ -147,14 +161,21 @@
 
             </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_service_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volleyball"/>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/right_team_service_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_service"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -189,14 +210,21 @@
 
             </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_service_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_volleyball"/>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/right_team_service_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_service"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
