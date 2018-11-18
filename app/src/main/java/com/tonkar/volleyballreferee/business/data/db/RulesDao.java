@@ -10,7 +10,7 @@ import androidx.room.Query;
 @Dao
 public interface RulesDao {
 
-    @Query("SELECT content FROM rules")
+    @Query("SELECT content FROM rules ORDER BY name ASC")
     List<String> getAllContents();
 
     @Query("SELECT content FROM rules WHERE name = :name")

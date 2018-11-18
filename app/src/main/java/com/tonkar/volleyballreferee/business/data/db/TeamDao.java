@@ -10,13 +10,13 @@ import androidx.room.Query;
 @Dao
 public interface TeamDao {
 
-    @Query("SELECT content FROM teams")
+    @Query("SELECT content FROM teams ORDER BY name ASC")
     List<String> getAllContents();
 
-    @Query("SELECT content FROM teams WHERE kind = :kind")
+    @Query("SELECT content FROM teams WHERE kind = :kind ORDER BY name ASC")
     List<String> findContentByKind(String kind);
 
-    @Query("SELECT name FROM teams WHERE gender = :gender AND kind = :kind")
+    @Query("SELECT name FROM teams WHERE gender = :gender AND kind = :kind ORDER BY name ASC")
     List<String> findNamesByGenderAndKind(String gender, String kind);
 
     @Query("SELECT content FROM teams WHERE name = :name AND gender = :gender AND kind = :kind")

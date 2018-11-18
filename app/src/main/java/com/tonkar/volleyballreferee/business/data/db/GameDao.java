@@ -10,16 +10,16 @@ import androidx.room.Query;
 @Dao
 public interface GameDao {
 
-    @Query("SELECT content FROM games")
+    @Query("SELECT content FROM games ORDER BY date DESC")
     List<String> getAllContents();
 
     @Query("SELECT content FROM games WHERE date = :date")
     String findContentByDate(Long date);
 
-    @Query("SELECT DISTINCT league FROM games")
+    @Query("SELECT DISTINCT league FROM games ORDER BY league ASC")
     List<String> getLeagues();
 
-    @Query("SELECT DISTINCT division FROM games")
+    @Query("SELECT DISTINCT division FROM games ORDER BY division ASC")
     List<String> getDivisions();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
