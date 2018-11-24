@@ -13,6 +13,7 @@ import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
 import com.tonkar.volleyballreferee.business.data.db.FullGameEntity;
 import com.tonkar.volleyballreferee.business.data.db.GameEntity;
 import com.tonkar.volleyballreferee.business.data.db.SyncEntity;
+import com.tonkar.volleyballreferee.business.web.Authentication;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -925,7 +926,16 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     private void syncGames(List<GameDescription> remoteGameList, DataSynchronizationListener listener) {
+        String userId = PrefUtils.getAuthentication(mContext).getUserId();
         List<RecordedGameService> localGameList = getRecordedGameServiceList();
+
+        for (RecordedGameService localGame : localGameList) {
+            RecordedGame recordedGame = (RecordedGame) localGame;
+            if (recordedGame.getUserId().equals(Authentication.VBR_USER_ID)) {
+                recordedGame.setUserId(userId);
+                insertRecordedGameIntoDb(recordedGame);
+            }
+        }
 
         for (RecordedGameService localGame : localGameList) {
             boolean foundRemoteVersion = false;

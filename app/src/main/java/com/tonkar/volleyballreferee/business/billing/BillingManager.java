@@ -11,6 +11,8 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.tonkar.volleyballreferee.business.PrefUtils;
+import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
+import com.tonkar.volleyballreferee.business.data.db.SyncEntity;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingListener;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
@@ -127,6 +129,16 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     private void handlePurchase(Purchase purchase) {
         if (purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
             mPurchasedSkus.put(WEB_PREMIUM, true);
+            if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
+                // The web premium was just purchased
+                new Thread() {
+                    public void run() {
+                        AppDatabase.getInstance(mActivity).syncDao().deleteByType(SyncEntity.RULES_ENTITY);
+                        AppDatabase.getInstance(mActivity).syncDao().deleteByType(SyncEntity.TEAM_ENTITY);
+                        AppDatabase.getInstance(mActivity).syncDao().deleteByType(SyncEntity.GAME_ENTITY);
+                    }
+                }.start();
+            }
             PrefUtils.purchaseWebPremium(mActivity, true);
         }
     }

@@ -227,7 +227,15 @@ public class SavedRules implements SavedRulesService {
     // Web
 
     private void syncRules(List<Rules> remoteRulesList) {
+        String userId = PrefUtils.getAuthentication(mContext).getUserId();
         List<Rules> localRulesList = getSavedRules();
+
+        for (Rules localRules : localRulesList) {
+            if (localRules.getUserId().equals(Authentication.VBR_USER_ID)) {
+                localRules.setUserId(userId);
+                insertRulesIntoDb(localRules);
+            }
+        }
 
         for (Rules localRules : localRulesList) {
             boolean foundRemoteVersion = false;

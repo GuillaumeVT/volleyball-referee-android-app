@@ -318,7 +318,15 @@ public class SavedTeams implements SavedTeamsService {
     // Web
 
     private void syncTeams(List<RecordedTeam> remoteTeamList) {
+        String userId = PrefUtils.getAuthentication(mContext).getUserId();
         List<RecordedTeam> localTeamList = getSavedTeamList();
+
+        for (RecordedTeam localTeam : localTeamList) {
+            if (localTeam.getUserId().equals(Authentication.VBR_USER_ID)) {
+                localTeam.setUserId(userId);
+                insertTeamIntoDb(localTeam);
+            }
+        }
 
         for (RecordedTeam localTeam : localTeamList) {
             boolean foundRemoteVersion = false;
