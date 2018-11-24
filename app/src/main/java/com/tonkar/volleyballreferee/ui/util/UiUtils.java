@@ -124,17 +124,16 @@ public class UiUtils {
         int textColor = getTextColor(context, color);
         button.setTextColor(textColor);
         button.setBackgroundTintList(ColorStateList.valueOf(color));
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            button.getBackground().mutate().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
+        }
         if (button.getIcon() != null) {
             button.setIconTint(ColorStateList.valueOf(textColor));
         }
     }
 
     public static void colorTeamText(Context context, int color, TextView text) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setBackgroundTintList(text, ColorStateList.valueOf(color));
-        } else {
-            text.getBackground().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
-        }
+        ViewCompat.setBackgroundTintList(text, ColorStateList.valueOf(color));
         text.setTextColor(getTextColor(context, color));
     }
 
@@ -392,11 +391,7 @@ public class UiUtils {
         textView.setText(text);
 
         int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryLight);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
-        } else {
-            textView.getBackground().setColorFilter(new PorterDuffColorFilter(backgroundColor, PorterDuff.Mode.SRC));
-        }
+        ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
         textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
         Toast toast = new Toast(context.getApplicationContext());
