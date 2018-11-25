@@ -148,10 +148,14 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             mCountDownTimer.cancel();
             mCountDownTimer = null;
         }
-        mGameService.removeGeneralListener(this);
-        mGameService.removeScoreListener(this);
-        mGameService.removeTeamListener(this);
-        mRecordedGamesService.disconnectGameRecorder(isFinishing());
+        if (mGameService != null) {
+            mGameService.removeGeneralListener(this);
+            mGameService.removeScoreListener(this);
+            mGameService.removeTeamListener(this);
+        }
+        if (mRecordedGamesService != null) {
+            mRecordedGamesService.disconnectGameRecorder(isFinishing());
+        }
     }
 
     @Override

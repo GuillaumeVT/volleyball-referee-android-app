@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -89,6 +90,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
         }
 
+        setResumeGameCardVisibility();
+
         MaterialButton scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
 
@@ -164,9 +167,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
-        MenuItem importantMessageItem = menu.findItem(R.id.action_resume_menu);
-        importantMessageItem.setVisible(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame());
-
         final MenuItem messageItem = menu.findItem(R.id.action_message_menu);
         initMessageMenuVisibility(messageItem);
 
@@ -179,10 +179,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_resume_menu:
-                Log.i(Tags.GAME_UI, "Resume game");
-                resumeCurrentGameWithDialog(null);
-                return true;
             case R.id.action_message_menu:
                 Log.i(Tags.WEB, "VBR Message");
                 showMessage();
@@ -198,12 +194,18 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     }
 
     private void initButtonOnClickListeners() {
+        findViewById(R.id.resume_game_button).setOnClickListener(button -> resumeCurrentGame(null));
         findViewById(R.id.start_indoor_6x6_game_button).setOnClickListener(button -> startIndoorGame(null));
         findViewById(R.id.start_indoor_4x4_game_button).setOnClickListener(button -> startIndoor4x4Game(null));
         findViewById(R.id.start_score_based_game_button).setOnClickListener(button -> startScoreBasedGame(null));
         findViewById(R.id.start_beach_game_button).setOnClickListener(button -> startBeachGame(null));
         findViewById(R.id.start_time_based_game_button).setOnClickListener(button -> startTimeBasedGame(null));
         findViewById(R.id.start_scheduled_code_game_button).setOnClickListener(button -> startScheduledGameFromCode(null));
+    }
+
+    public void resumeCurrentGame(View view) {
+        Log.i(Tags.GAME_UI, "Resume game");
+        resumeCurrentGameWithDialog(null);
     }
 
     public void startIndoorGame(View view) {
@@ -287,7 +289,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                         Log.i(Tags.SAVED_GAMES, "Delete current game");
                         ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteCurrentGame();
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
-                        invalidateOptionsMenu();
+                        setResumeGameCardVisibility();
                     }
 
                     @Override
@@ -307,8 +309,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     }
 
                     @Override
-                    public void onNeutralButtonClicked() {
-                    }
+                    public void onNeutralButtonClicked() {}
                 });
             }
         }
@@ -465,5 +466,10 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 public void onNeutralButtonClicked() {}
             });
         }
+    }
+
+    private void setResumeGameCardVisibility() {
+        CardView resumeGameCard = findViewById(R.id.resume_game_card);
+        resumeGameCard.setVisibility(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame() ? View.VISIBLE : View.GONE);
     }
 }

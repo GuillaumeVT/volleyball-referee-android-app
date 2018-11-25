@@ -27,6 +27,30 @@
                     android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
+                        android:id="@+id/resume_game_card"
+                        style="@style/CardView.Light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_margin_size"
+                        app:cardBackgroundColor="@color/colorBackgroundCardview">
+
+                    <com.google.android.material.button.MaterialButton
+                            android:id="@+id/resume_game_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_margin_size"
+                            android:onClick="resumeCurrentGame"
+                            android:text="@string/resume_game_title"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/ButtonTheme.Primary"
+                            app:backgroundTint="@color/colorPlayerIn"
+                            app:icon="@drawable/ic_resume"
+                            app:iconTint="@android:color/white"
+                            android:layout_gravity="center"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                         style="@style/CardView.Light"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

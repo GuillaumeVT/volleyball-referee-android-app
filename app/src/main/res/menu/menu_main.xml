@@ -17,11 +17,4 @@
         android:title="@string/app_name"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_resume_menu"
-        android:contentDescription="@string/resume_game_title"
-        android:icon="@drawable/ic_important_message_menu"
-        android:orderInCategory="3"
-        android:title="@string/resume_game_title"
-        app:showAsAction="always"/>
 </menu>
