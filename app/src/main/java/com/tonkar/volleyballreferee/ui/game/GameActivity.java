@@ -210,18 +210,31 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (mGameService != null) {
             mGameService.removeGeneralListener(this);
             mGameService.removeScoreListener(this);
             mGameService.removeTimeoutListener(this);
             mGameService.removeTeamListener(this);
             mGameService.removeSanctionListener(this);
+
+            if (mRecordedGamesService != null) {
+                mRecordedGamesService.disconnectGameRecorder(isFinishing());
+            }
         }
-        if (mRecordedGamesService != null) {
-            mRecordedGamesService.disconnectGameRecorder(isFinishing());
-        }
+
         deleteToolbarCountdown();
     }
 

@@ -152,9 +152,10 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             mGameService.removeGeneralListener(this);
             mGameService.removeScoreListener(this);
             mGameService.removeTeamListener(this);
-        }
-        if (mRecordedGamesService != null) {
-            mRecordedGamesService.disconnectGameRecorder(isFinishing());
+
+            if (mRecordedGamesService != null) {
+                mRecordedGamesService.disconnectGameRecorder(isFinishing());
+            }
         }
     }
 
