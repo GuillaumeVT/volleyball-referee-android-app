@@ -8,21 +8,22 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
 
-public class TeamsFragment extends Fragment {
+public class TeamsFragment extends Fragment implements RecordedGameServiceHandler {
+
+    private RecordedGameService mRecordedGameService;
 
     public TeamsFragment() {}
 
-    public static TeamsFragment newInstance(long gameDate) {
+    public static TeamsFragment newInstance() {
         TeamsFragment fragment = new TeamsFragment();
         Bundle args = new Bundle();
-        args.putLong("game_date", gameDate);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,18 +33,19 @@ public class TeamsFragment extends Fragment {
         Log.i(Tags.SAVED_GAMES, "Create teams fragment");
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 
-        long gameDate = getArguments().getLong("game_date");
-        BaseTeamService teamService = ServicesProvider.getInstance().getRecordedGamesService(getActivity().getApplicationContext()).getRecordedGameService(gameDate);
-
         GridView homeTeamPlayersList = view.findViewById(R.id.home_team_players_list);
-        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), teamService, TeamType.HOME);
+        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mRecordedGameService, TeamType.HOME);
         homeTeamPlayersList.setAdapter(homeTeamPlayersListAdapter);
 
         GridView guestTeamPlayersList = view.findViewById(R.id.guest_team_players_list);
-        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), teamService, TeamType.GUEST);
+        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mRecordedGameService, TeamType.GUEST);
         guestTeamPlayersList.setAdapter(guestTeamPlayersListAdapter);
 
         return view;
     }
 
+    @Override
+    public void setRecordedGameService(RecordedGameService recordedGameService) {
+        mRecordedGameService = recordedGameService;
+    }
 }

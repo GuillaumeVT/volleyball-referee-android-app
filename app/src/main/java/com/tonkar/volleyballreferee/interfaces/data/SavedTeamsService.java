@@ -22,21 +22,23 @@ public interface SavedTeamsService {
 
     RecordedTeam getSavedTeam(GameType gameType, String teamName, GenderType genderType);
 
-    void createTeam(GameType gameType);
+    RecordedTeam readTeam(String json);
 
-    void editTeam(GameType gameType, String teamName, GenderType genderType);
+    String writeTeam(RecordedTeam team);
 
-    BaseTeamService getCurrentTeam();
+    BaseTeamService createTeam(GameType gameType);
 
-    void saveCurrentTeam();
-
-    void cancelCurrentTeam();
+    void saveTeam(BaseTeamService team);
 
     void deleteSavedTeam(GameType gameType, String teamName, GenderType genderType);
 
     void deleteAllSavedTeams();
 
     void createAndSaveTeamFrom(GameType gameType, BaseTeamService teamService, TeamType teamType);
+
+    RecordedTeam copyTeam(BaseTeamService teamService);
+
+    BaseTeamService copyTeam(RecordedTeam team);
 
     void copyTeam(RecordedTeam source, BaseTeamService dest, TeamType teamType);
 

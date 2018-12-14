@@ -8,7 +8,6 @@ import com.android.volley.Request;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
 import com.tonkar.volleyballreferee.business.data.db.FullGameEntity;
 import com.tonkar.volleyballreferee.business.data.db.GameEntity;
@@ -76,16 +75,25 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void connectGameRecorder() {
-        Log.i(Tags.SAVED_GAMES, "Connect the game recorder");
+    public void createCurrentGame(GameService gameService) {
+        mGameService = gameService;
 
         if (hasSetupGame()) {
             deleteSetupGame();
         }
 
+        createCurrentGame();
+        saveCurrentGame();
+    }
+
+    @Override
+    public void connectGameRecorder(GameService gameService) {
+        Log.i(Tags.SAVED_GAMES, "Connect the game recorder");
+
+        mGameService = gameService;
+
         mBatteryReceiver.register(mContext);
 
-        mGameService = ServicesProvider.getInstance().getGameService();
         mGameService.addGeneralListener(this);
         mGameService.addScoreListener(this);
         mGameService.addTeamListener(this);

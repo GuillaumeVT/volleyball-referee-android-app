@@ -17,9 +17,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesListAdapter;
@@ -30,7 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-public class RulesSetupFragment extends Fragment {
+public class RulesSetupFragment extends Fragment implements RulesServiceHandler {
 
     private Rules mRules;
 
@@ -78,11 +80,11 @@ public class RulesSetupFragment extends Fragment {
         return newInstance(true, true);
     }
 
-    public static RulesSetupFragment newInstance(boolean isGameContext, boolean editable) {
+    public static RulesSetupFragment newInstance(boolean isGameContext, boolean create) {
         RulesSetupFragment fragment = new RulesSetupFragment();
         Bundle args = new Bundle();
         args.putBoolean("is_game", isGameContext);
-        args.putBoolean("editable", editable);
+        args.putBoolean("create", create);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,21 +95,12 @@ public class RulesSetupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rules_setup, container, false);
 
         final boolean isGameContext = getArguments().getBoolean("is_game");
-        final boolean editable = getArguments().getBoolean("editable");
-
-        if (isGameContext) {
-            if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
-                ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
-            }
-            mRules = ServicesProvider.getInstance().getGeneralService().getRules();
-        } else {
-            mRules = ServicesProvider.getInstance().getSavedRulesService(getActivity().getApplicationContext()).getCurrentRules();
-        }
+        final boolean create = getArguments().getBoolean("create");
 
         mScrollView = view.findViewById(R.id.rules_setup_scroll);
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
-        mRulesNameInput.setEnabled(editable);
+        mRulesNameInput.setEnabled(create);
 
         mSetsPerGameSpinner = view.findViewById(R.id.rules_sets_per_game);
         mSetsPerGameAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.sets_per_game_entries), getResources().getStringArray(R.array.sets_per_game_values));
@@ -182,8 +175,10 @@ public class RulesSetupFragment extends Fragment {
         initValues();
 
         if (isGameContext) {
+            SavedRulesService savedRulesService = new SavedRules(getContext());
+
             mRulesNameInput.setThreshold(2);
-            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedRulesService(getActivity().getApplicationContext()).getSavedRules()));
+            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), savedRulesService.getSavedRules()));
             mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 Rules rules = (Rules) mRulesNameInput.getAdapter().getItem(index);
                 mRulesNameInput.setText(rules.getName());
@@ -408,5 +403,10 @@ public class RulesSetupFragment extends Fragment {
         } else if (getActivity() instanceof SavedRulesActivity) {
             ((SavedRulesActivity) getActivity()).computeSaveItemVisibility();
         }
+    }
+
+    @Override
+    public void setRules(Rules rules) {
+        mRules = rules;
     }
 }

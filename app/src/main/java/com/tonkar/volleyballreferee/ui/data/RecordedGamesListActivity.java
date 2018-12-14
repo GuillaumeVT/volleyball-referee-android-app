@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
@@ -56,7 +56,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateRecordedGamesList);
 
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
+        mRecordedGamesService = new RecordedGames(this);
 
         List<RecordedGameService> recordedGameServiceList = mRecordedGamesService.getRecordedGameServiceList();
         // Inverse list to have most recent games on top of the list

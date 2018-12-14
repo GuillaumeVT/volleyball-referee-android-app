@@ -42,8 +42,7 @@ import java.util.Map;
 
 public class SavedTeams implements SavedTeamsService {
 
-    private final Context     mContext;
-    private       WrappedTeam mCurrentTeam;
+    private final Context mContext;
 
     public SavedTeams(Context context) {
         mContext = context;
@@ -107,34 +106,15 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     @Override
-    public void createTeam(GameType gameType) {
-        mCurrentTeam = createWrappedTeam(gameType);
+    public BaseTeamService createTeam(GameType gameType) {
+        return createWrappedTeam(gameType);
     }
 
     @Override
-    public void editTeam(GameType gameType, String teamName, GenderType genderType) {
-        RecordedTeam savedTeam = getSavedTeam(gameType, teamName, genderType);
-        mCurrentTeam = createWrappedTeam(gameType);
-        copyTeam(savedTeam, mCurrentTeam, TeamType.HOME);
-    }
-
-    @Override
-    public BaseTeamService getCurrentTeam() {
-        return mCurrentTeam;
-    }
-
-    @Override
-    public void saveCurrentTeam() {
-        RecordedTeam savedTeam = new RecordedTeam();
-        copyTeam(mCurrentTeam, savedTeam, TeamType.HOME);
+    public void saveTeam(BaseTeamService team) {
+        RecordedTeam savedTeam = copyTeam(team);
         insertTeamIntoDb(savedTeam);
         pushTeamOnline(savedTeam);
-        mCurrentTeam = null;
-    }
-
-    @Override
-    public void cancelCurrentTeam() {
-        mCurrentTeam = null;
     }
 
     @Override
@@ -143,7 +123,6 @@ public class SavedTeams implements SavedTeamsService {
             public void run() {
                 AppDatabase.getInstance(mContext).teamDao().deleteByNameAndGenderAndKind(teamName, genderType.toString(), gameType.toString());
                 deleteTeamOnline(gameType, teamName, genderType);
-                mCurrentTeam = null;
             }
         }.start();
     }
@@ -162,10 +141,24 @@ public class SavedTeams implements SavedTeamsService {
     public void createAndSaveTeamFrom(GameType gameType, BaseTeamService teamService, TeamType teamType) {
         if (teamService.getTeamName(teamType).length() > 1
                 && AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGenderType(teamType).toString(), gameType.toString()) == 0) {
-            createTeam(gameType);
-            copyTeam(teamService, mCurrentTeam, teamType);
-            saveCurrentTeam();
+            BaseTeamService team = createTeam(gameType);
+            copyTeam(teamService, team, teamType);
+            saveTeam(team);
         }
+    }
+
+    @Override
+    public RecordedTeam copyTeam(BaseTeamService teamService) {
+        RecordedTeam team = new RecordedTeam();
+        copyTeam(teamService, team, TeamType.HOME);
+        return team;
+    }
+
+    @Override
+    public BaseTeamService copyTeam(RecordedTeam team) {
+        BaseTeamService teamService = createTeam(team.getGameType());
+        copyTeam(team, teamService, TeamType.HOME);
+        return teamService;
     }
 
     @Override
@@ -285,7 +278,8 @@ public class SavedTeams implements SavedTeamsService {
         }
     }
 
-    private RecordedTeam readTeam(String json) {
+    @Override
+    public RecordedTeam readTeam(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_TEAM_TYPE);
     }
 
@@ -311,7 +305,8 @@ public class SavedTeams implements SavedTeamsService {
         writer.close();
     }
 
-    private String writeTeam(RecordedTeam team) {
+    @Override
+    public String writeTeam(RecordedTeam team) {
         return JsonIOUtils.GSON.toJson(team, JsonIOUtils.RECORDED_TEAM_TYPE);
     }
 

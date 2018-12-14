@@ -15,17 +15,15 @@ public interface SavedRulesService {
 
     Rules getSavedRules(String rulesName);
 
-    void createRules();
+    Rules readRules(String json);
 
-    void createRules(GameType gameType);
+    String writeRules(Rules rules);
 
-    void editRules(String rulesName);
+    Rules createRules();
 
-    Rules getCurrentRules();
+    Rules createRules(GameType gameType);
 
-    void saveCurrentRules();
-
-    void cancelCurrentRules();
+    void saveRules(Rules rules);
 
     void deleteSavedRules(String rulesName);
 

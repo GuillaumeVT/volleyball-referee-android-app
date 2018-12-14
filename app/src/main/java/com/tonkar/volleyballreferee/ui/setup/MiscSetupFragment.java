@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,18 +10,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GeneralService;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 
 import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
 
-public class MiscSetupFragment extends Fragment {
+public class MiscSetupFragment extends Fragment implements GameServiceHandler {
 
-    public MiscSetupFragment() {
-    }
+    private GeneralService mGeneralService;
+
+    public MiscSetupFragment() {}
 
     public static MiscSetupFragment newInstance() {
         MiscSetupFragment fragment = new MiscSetupFragment();
@@ -36,15 +40,11 @@ public class MiscSetupFragment extends Fragment {
         Log.i(Tags.SETUP_UI, "Create misc setup fragment");
         View view = inflater.inflate(R.layout.fragment_misc_setup, container, false);
 
-        Context applicationContext = getActivity().getApplicationContext();
-
-        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreGameServiceForSetup(applicationContext);
-        }
+        RecordedGamesService recordedGamesService = new RecordedGames(getContext());
 
         final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(applicationContext).getRecordedLeagues()));
+        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedLeagues()));
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -53,18 +53,18 @@ public class MiscSetupFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update league name");
-                ServicesProvider.getInstance().getGeneralService().setLeagueName(s.toString());
+                mGeneralService.setLeagueName(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        leagueNameInput.setText(ServicesProvider.getInstance().getGeneralService().getLeagueName());
+        leagueNameInput.setText(mGeneralService.getLeagueName());
 
         final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(applicationContext).getRecordedDivisions()));
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,16 +73,20 @@ public class MiscSetupFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division name");
-                ServicesProvider.getInstance().getGeneralService().setDivisionName(s.toString());
+                mGeneralService.setDivisionName(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(ServicesProvider.getInstance().getGeneralService().getDivisionName());
+        divisionNameInput.setText(mGeneralService.getDivisionName());
 
         return view;
     }
 
+    @Override
+    public void setGameService(GameService gameService) {
+        mGeneralService = gameService;
+    }
 }

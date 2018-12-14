@@ -10,7 +10,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -21,15 +20,17 @@ import com.tonkar.volleyballreferee.ui.game.SubstitutionsListAdapter;
 import com.tonkar.volleyballreferee.ui.game.TimeoutsListAdapter;
 
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
 
-public class SetFragment extends Fragment {
+public class SetFragment extends Fragment implements RecordedGameServiceHandler {
+
+    private RecordedGameService mRecordedGameService;
 
     public SetFragment() {}
 
-    public static SetFragment newInstance(long gameDate, int setIndex) {
+    public static SetFragment newInstance(int setIndex) {
         SetFragment fragment = new SetFragment();
         Bundle args = new Bundle();
-        args.putLong("game_date", gameDate);
         args.putInt("set_index", setIndex);
         fragment.setArguments(args);
         return fragment;
@@ -40,73 +41,75 @@ public class SetFragment extends Fragment {
         Log.i(Tags.SAVED_GAMES, "Create set fragment");
         View view = inflater.inflate(R.layout.fragment_set, container, false);
 
-        long gameDate = getArguments().getLong("game_date");
         int setIndex = getArguments().getInt("set_index");
-        RecordedGameService gameService = ServicesProvider.getInstance().getRecordedGamesService(getActivity().getApplicationContext()).getRecordedGameService(gameDate);
 
         FrameLayout ladderLayout = view.findViewById(R.id.ladder_layout);
-        LadderListAdapter ladderListAdapter = new LadderListAdapter(inflater, gameService, gameService, gameService, gameService, false);
+        LadderListAdapter ladderListAdapter = new LadderListAdapter(inflater, mRecordedGameService, mRecordedGameService, mRecordedGameService, mRecordedGameService, false);
         ladderLayout.addView(ladderListAdapter.getView(setIndex, null, ladderLayout));
 
-        if (gameService.isStartingLineupConfirmed(setIndex)) {
+        if (mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
             GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
             final LineupAdapter homeTeamLineupAdapter;
-            if (GameType.INDOOR.equals(gameService.getGameType())) {
-                homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
+            if (GameType.INDOOR.equals(mRecordedGameService.getGameType())) {
+                homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mRecordedGameService, TeamType.HOME, setIndex);
             } else {
-                homeTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), gameService, TeamType.HOME, setIndex);
+                homeTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mRecordedGameService, TeamType.HOME, setIndex);
             }
             homeTeamLineup.setAdapter(homeTeamLineupAdapter);
 
             GridView guestTeamLineup = view.findViewById(R.id.guest_team_lineup);
             final LineupAdapter guestTeamLineupAdapter;
-            if (GameType.INDOOR.equals(gameService.getGameType())) {
-                guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
+            if (GameType.INDOOR.equals(mRecordedGameService.getGameType())) {
+                guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mRecordedGameService, TeamType.GUEST, setIndex);
             } else {
-                guestTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), gameService, TeamType.GUEST, setIndex);
+                guestTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mRecordedGameService, TeamType.GUEST, setIndex);
             }
             guestTeamLineup.setAdapter(guestTeamLineupAdapter);
         } else {
             view.findViewById(R.id.set_lineup_card).setVisibility(View.GONE);
         }
 
-        if (gameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty() && gameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
+        if (mRecordedGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty() && mRecordedGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
             view.findViewById(R.id.set_substitutions_card).setVisibility(View.GONE);
         } else {
             ListView homeTeamSubstitutions = view.findViewById(R.id.home_team_substitutions);
-            SubstitutionsListAdapter homeTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.HOME, setIndex);
+            SubstitutionsListAdapter homeTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mRecordedGameService, TeamType.HOME, setIndex);
             homeTeamSubstitutions.setAdapter(homeTeamSubstitutionsAdapter);
 
             ListView guestTeamSubstitutions = view.findViewById(R.id.guest_team_substitutions);
-            SubstitutionsListAdapter guestTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, gameService, TeamType.GUEST, setIndex);
+            SubstitutionsListAdapter guestTeamSubstitutionsAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mRecordedGameService, TeamType.GUEST, setIndex);
             guestTeamSubstitutions.setAdapter(guestTeamSubstitutionsAdapter);
         }
 
-        if (gameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() && gameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty()) {
+        if (mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() && mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty()) {
             view.findViewById(R.id.set_timeouts_card).setVisibility(View.GONE);
         } else {
             GridView homeTeamTimeouts = view.findViewById(R.id.home_team_timeouts);
-            TimeoutsListAdapter homeTeamTimeoutsAdapter = new TimeoutsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.HOME, setIndex);
+            TimeoutsListAdapter homeTeamTimeoutsAdapter = new TimeoutsListAdapter(getActivity(), inflater, mRecordedGameService, mRecordedGameService, TeamType.HOME, setIndex);
             homeTeamTimeouts.setAdapter(homeTeamTimeoutsAdapter);
 
             GridView guestTeamTimeouts = view.findViewById(R.id.guest_team_timeouts);
-            TimeoutsListAdapter guestTeamTimeoutsAdapter = new TimeoutsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.GUEST, setIndex);
+            TimeoutsListAdapter guestTeamTimeoutsAdapter = new TimeoutsListAdapter(getActivity(), inflater, mRecordedGameService, mRecordedGameService, TeamType.GUEST, setIndex);
             guestTeamTimeouts.setAdapter(guestTeamTimeoutsAdapter);
         }
 
-        if (gameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() && gameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty()) {
+        if (mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() && mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty()) {
             view.findViewById(R.id.set_sanctions_card).setVisibility(View.GONE);
         } else {
             ListView homeTeamSanctions = view.findViewById(R.id.home_team_sanctions);
-            SanctionsListAdapter homeTeamSanctionsAdapter = new SanctionsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.HOME, setIndex);
+            SanctionsListAdapter homeTeamSanctionsAdapter = new SanctionsListAdapter(getActivity(), inflater, mRecordedGameService, mRecordedGameService, TeamType.HOME, setIndex);
             homeTeamSanctions.setAdapter(homeTeamSanctionsAdapter);
 
             ListView guestTeamSanctions = view.findViewById(R.id.guest_team_sanctions);
-            SanctionsListAdapter guestTeamSanctionsAdapter = new SanctionsListAdapter(getActivity(), inflater, gameService, gameService, TeamType.GUEST, setIndex);
+            SanctionsListAdapter guestTeamSanctionsAdapter = new SanctionsListAdapter(getActivity(), inflater, mRecordedGameService, mRecordedGameService, TeamType.GUEST, setIndex);
             guestTeamSanctions.setAdapter(guestTeamSanctionsAdapter);
         }
 
         return view;
     }
 
+    @Override
+    public void setRecordedGameService(RecordedGameService recordedGameService) {
+        mRecordedGameService = recordedGameService;
+    }
 }

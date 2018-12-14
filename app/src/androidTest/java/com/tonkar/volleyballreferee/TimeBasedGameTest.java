@@ -5,10 +5,11 @@ import android.graphics.Color;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.TimeBasedGame;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -23,6 +24,8 @@ public class TimeBasedGameTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+
+    private RecordedGamesService mRecordedGamesService;
 
     @Test
     public void playGame_complete() {
@@ -40,7 +43,7 @@ public class TimeBasedGameTest {
 
         game.stop();
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(game.getGameDate());
+        RecordedGameService recordedGameService = mRecordedGamesService.getRecordedGameService(game.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -57,7 +60,8 @@ public class TimeBasedGameTest {
 
         game.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
+        mRecordedGamesService = new RecordedGames(mActivityRule.getActivity());
+        mRecordedGamesService.connectGameRecorder(game);
     }
 
 }

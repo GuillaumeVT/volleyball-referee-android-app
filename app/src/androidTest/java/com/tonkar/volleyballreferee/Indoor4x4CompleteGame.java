@@ -6,12 +6,13 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -30,6 +31,8 @@ public class Indoor4x4CompleteGame {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
+    private RecordedGamesService mRecordedGamesService;
+
     @Test
     public void playGame_complete() {
         Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
@@ -45,7 +48,7 @@ public class Indoor4x4CompleteGame {
         composeTeams(indoor4x4Game);
         playSet_complete(indoor4x4Game);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(indoor4x4Game.getGameDate());
+        RecordedGameService recordedGameService = mRecordedGamesService.getRecordedGameService(indoor4x4Game.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -70,7 +73,8 @@ public class Indoor4x4CompleteGame {
 
         indoor4x4Game.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
+        mRecordedGamesService = new RecordedGames(mActivityRule.getActivity());
+        mRecordedGamesService.connectGameRecorder(indoor4x4Game);
     }
 
     private void composeTeams(Indoor4x4Game indoor4x4Game) {

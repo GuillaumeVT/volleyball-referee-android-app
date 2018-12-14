@@ -24,13 +24,15 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
@@ -40,7 +42,7 @@ import com.tonkar.volleyballreferee.ui.setup.TeamsListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamSetupFragment extends Fragment {
+public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
     private LayoutInflater       mLayoutInflater;
     private TeamType             mTeamType;
@@ -54,20 +56,19 @@ public class TeamSetupFragment extends Fragment {
     private FloatingActionButton mGenderButton;
     private ScrollView           mScrollView;
 
-    public TeamSetupFragment() {
-    }
+    public TeamSetupFragment() {}
 
     public static TeamSetupFragment newInstance(TeamType teamType) {
         return newInstance(teamType, true, true);
     }
 
-    public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext, boolean editable) {
+    public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext, boolean create) {
         TeamSetupFragment fragment = new TeamSetupFragment();
 
         Bundle args = new Bundle();
         args.putString(TeamType.class.getName(), teamType.toString());
         args.putBoolean("is_game", isGameContext);
-        args.putBoolean("editable", editable);
+        args.putBoolean("create", create);
         args.putInt("number_of_shirts", 25);
         fragment.setArguments(args);
         return fragment;
@@ -82,22 +83,13 @@ public class TeamSetupFragment extends Fragment {
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
-        final boolean editable = getArguments().getBoolean("editable");
+        final boolean create = getArguments().getBoolean("create");
         final boolean isGameContext = getArguments().getBoolean("is_game");
 
         if (savedInstanceState == null) {
             mNumberOfShirts = getArguments().getInt("number_of_shirts");
         } else {
             mNumberOfShirts = savedInstanceState.getInt("number_of_shirts");
-        }
-
-        if (isGameContext) {
-            if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
-                ServicesProvider.getInstance().restoreGameServiceForSetup(getActivity().getApplicationContext());
-            }
-            mTeamService = ServicesProvider.getInstance().getTeamService();
-        } else {
-            mTeamService = ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getCurrentTeam();
         }
 
         mScrollView = view.findViewById(R.id.team_setup_scroll);
@@ -122,15 +114,17 @@ public class TeamSetupFragment extends Fragment {
         final String teamName = mTeamService.getTeamName(mTeamType);
 
         teamNameInput.setText(teamName);
-        teamNameInput.setEnabled(editable);
+        teamNameInput.setEnabled(create);
 
         if (isGameContext) {
+            SavedTeamsService savedTeamsService = new SavedTeams(getContext());
+
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getSavedTeamList(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getSavedTeamList(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 RecordedTeam team = (RecordedTeam) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(team.getName());
-                ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).copyTeam(team, mTeamService, mTeamType);
+                savedTeamsService.copyTeam(team, mTeamService, mTeamType);
 
                 teamColorSelected(mTeamService.getTeamColor(mTeamType));
                 updateGender(mTeamService.getGenderType(mTeamType));
@@ -168,7 +162,7 @@ public class TeamSetupFragment extends Fragment {
         teamNumbersGrid.setAdapter(mPlayerAdapter);
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            teamColorSelected(UiUtils.getRandomShirtColor(getActivity()));
+            teamColorSelected(UiUtils.getRandomShirtColor(getContext()));
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
@@ -204,7 +198,7 @@ public class TeamSetupFragment extends Fragment {
         }
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
-        mGenderButton.setEnabled(editable);
+        mGenderButton.setEnabled(create);
         updateGender(mTeamService.getGenderType(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
@@ -241,6 +235,11 @@ public class TeamSetupFragment extends Fragment {
         mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
         updateCaptain();
+    }
+
+    @Override
+    public void setTeamService(BaseTeamService teamService) {
+        mTeamService = teamService;
     }
 
     private class PlayerAdapter extends BaseAdapter {

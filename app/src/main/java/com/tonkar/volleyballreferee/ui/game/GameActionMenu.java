@@ -27,16 +27,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Random;
 
-public class GameActionMenu extends BottomSheetDialogFragment {
+public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, RecordedGamesServiceHandler {
 
     private Activity             mActivity;
     private GameService          mGameService;
@@ -60,8 +61,6 @@ public class GameActionMenu extends BottomSheetDialogFragment {
         Context context = inflater.getContext();
 
         mActivity = getActivity();
-        mGameService = ServicesProvider.getInstance().getGameService();
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(context);
 
         if (mActivity != null && mGameService != null && mRecordedGamesService != null) {
             mRandom = new Random();
@@ -189,5 +188,15 @@ public class GameActionMenu extends BottomSheetDialogFragment {
                 drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
             }
         }
+    }
+
+    @Override
+    public void setGameService(GameService gameService) {
+        mGameService = gameService;
+    }
+
+    @Override
+    public void setRecordedGamesService(RecordedGamesService recordedGamesService) {
+        mRecordedGamesService = recordedGamesService;
     }
 }

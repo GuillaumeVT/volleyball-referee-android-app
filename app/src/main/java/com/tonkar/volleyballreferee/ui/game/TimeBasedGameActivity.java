@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
@@ -24,7 +25,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -34,6 +35,8 @@ import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.SimpleDateFormat;
@@ -66,14 +69,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mRecordedGamesService = new RecordedGames(this);
+        mGameService = (TimeBasedGameService) mRecordedGamesService.loadCurrentGame();
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.GAME_UI, "Create time-based game activity");
         setContentView(R.layout.activity_time_based_game);
-
-        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-        }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean keepScreenOnSetting = sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false);
@@ -85,16 +87,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        mGameService = (TimeBasedGameService) ServicesProvider.getInstance().getGameService();
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
-
         if (mGameService == null || mRecordedGamesService == null) {
             UiUtils.navigateToHome(this);
         } else {
             mGameService.addGeneralListener(this);
             mGameService.addScoreListener(this);
             mGameService.addTeamListener(this);
-            mRecordedGamesService.connectGameRecorder();
+            mRecordedGamesService.connectGameRecorder(mGameService);
 
             mLeftTeamNameText = findViewById(R.id.left_team_name_text);
             mRightTeamNameText = findViewById(R.id.right_team_name_text);
@@ -403,4 +402,15 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         invalidateOptionsMenu();
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof GameServiceHandler) {
+            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            gameServiceHandler.setGameService(mGameService);
+        }
+        if (fragment instanceof RecordedGamesServiceHandler) {
+            RecordedGamesServiceHandler recordedGamesServiceHandler = (RecordedGamesServiceHandler) fragment;
+            recordedGamesServiceHandler.setRecordedGamesService(mRecordedGamesService);
+        }
+    }
 }

@@ -10,12 +10,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 
@@ -25,19 +27,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class SavedRulesActivity extends AppCompatActivity {
 
-    private SavedRulesService mSavedRulesService;
-    private Rules             mRules;
-    private MenuItem          mSaveItem;
+    private Rules    mRules;
+    private MenuItem mSaveItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SavedRulesService savedRulesService = new SavedRules(this);
+        mRules = savedRulesService.readRules(getIntent().getStringExtra("rules"));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_rules);
 
-        mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
-        mRules = mSavedRulesService.getCurrentRules();
-
-        boolean editable = getIntent().getBooleanExtra("editable", true);
+        boolean create = getIntent().getBooleanExtra("create", true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -48,7 +49,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, editable));
+        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, create));
         fragmentTransaction.commit();
     }
 
@@ -87,8 +88,9 @@ public class SavedRulesActivity extends AppCompatActivity {
 
     private void saveRules() {
         Log.i(Tags.SAVED_RULES, "Save rules");
-        mSavedRulesService.getCurrentRules().setUserId(PrefUtils.getAuthentication(this).getUserId());
-        mSavedRulesService.saveCurrentRules();
+        mRules.setUserId(PrefUtils.getAuthentication(this).getUserId());
+        SavedRulesService savedRulesService = new SavedRules(this);
+        savedRulesService.saveRules(mRules);
         UiUtils.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -100,7 +102,8 @@ public class SavedRulesActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mSavedRulesService.deleteSavedRules(mRules.getName());
+            SavedRulesService savedRulesService = new SavedRules(this);
+            savedRulesService.deleteSavedRules(mRules.getName());
             UiUtils.makeText(SavedRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
@@ -116,7 +119,6 @@ public class SavedRulesActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.leave_rules_creation_title)).setMessage(getResources().getString(R.string.leave_rules_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mSavedRulesService.cancelCurrentRules();
             Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -137,4 +139,13 @@ public class SavedRulesActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof RulesServiceHandler) {
+            RulesServiceHandler rulesServiceHandler = (RulesServiceHandler) fragment;
+            rulesServiceHandler.setRules(mRules);
+        }
+    }
+
 }

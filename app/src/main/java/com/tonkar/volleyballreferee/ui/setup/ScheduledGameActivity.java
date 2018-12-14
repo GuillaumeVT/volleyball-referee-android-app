@@ -33,11 +33,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
-import com.tonkar.volleyballreferee.business.data.GameDescription;
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
+import com.tonkar.volleyballreferee.business.data.*;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
+import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.rules.Rules;
@@ -78,8 +79,6 @@ public class ScheduledGameActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-
         String gameDescriptionStr = getIntent().getStringExtra("game");
         mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
 
@@ -106,9 +105,10 @@ public class ScheduledGameActivity extends AppCompatActivity {
             fragment.show(getSupportFragmentManager(), "timePicker");
         });
 
+        RecordedGamesService recordedGamesService = new RecordedGames(this);
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getRecordedLeagues()));
+        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedLeagues()));
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -128,7 +128,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         final AutoCompleteTextView divisionNameInput = findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getRecordedDivisions()));
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -184,8 +184,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
             computeConfirmItemVisibility();
         });
 
+        SavedRulesService savedRulesService = new SavedRules(this);
         List<String> rulesNames = new ArrayList<>();
-        for (Rules rules : ServicesProvider.getInstance().getSavedRulesService(getApplicationContext()).getSavedRules()) {
+        for (Rules rules : savedRulesService.getSavedRules()) {
             rulesNames.add(rules.getName());
         }
 
@@ -278,8 +279,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
     }
 
     private void updateTeamSpinners(boolean changedGender) {
-        List<String> teamNames = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext()).getSavedTeamNameList(
-                mGameDescription.getGameType(), mGameDescription.getGenderType());
+        SavedTeamsService savedTeamsService = new SavedTeams(this);
+        List<String> teamNames = savedTeamsService.getSavedTeamNameList(mGameDescription.getGameType(), mGameDescription.getGenderType());
 
         mTeamAdapter = new ArrayAdapter<>(this, R.layout.rule_spinner, teamNames);
         mTeamAdapter.setDropDownViewResource(R.layout.rule_entry);
@@ -347,7 +348,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void confirmSetup() {
         Log.i(Tags.SCHEDULE_UI, "Validate schedule");
-        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).scheduleUserGameOnline(mGameDescription,
+        RecordedGamesService recordedGamesService = new RecordedGames(this);
+        recordedGamesService.scheduleUserGameOnline(mGameDescription,
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {
@@ -373,7 +375,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         private ScheduledGameActivity mActivity;
 
-        public void setScheduledGameActivity(ScheduledGameActivity activity) {
+        void setScheduledGameActivity(ScheduledGameActivity activity) {
             mActivity = activity;
         }
 
@@ -394,7 +396,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         private ScheduledGameActivity mActivity;
 
-        public void setScheduledGameActivity(ScheduledGameActivity activity) {
+        void setScheduledGameActivity(ScheduledGameActivity activity) {
             mActivity = activity;
         }
 

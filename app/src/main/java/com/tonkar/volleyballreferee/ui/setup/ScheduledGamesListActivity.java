@@ -13,15 +13,16 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
@@ -34,6 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ScheduledGamesListActivity extends NavigationActivity implements AsyncGameRequestListener {
 
+    private RecordedGamesService      mRecordedGamesService;
     private SwipeRefreshLayout        mSyncLayout;
     private ScheduledGamesListAdapter mScheduledGamesListAdapter;
     private boolean                   mIsFabOpen;
@@ -53,14 +55,14 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mRecordedGamesService = new RecordedGames(this);
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SCHEDULE_UI, "Create scheduled games list activity");
         setContentView(R.layout.activity_scheduled_games_list);
 
         initNavigationMenu();
-
-        ServicesProvider.getInstance().restoreGameService(getApplicationContext());
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateScheduledGamesList);
@@ -72,7 +74,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
             GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                mRecordedGamesService.getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
             }
         });
 
@@ -141,7 +143,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private void updateScheduledGamesList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getUserScheduledGames(this);
+            mRecordedGamesService.getUserScheduledGames(this);
         }
     }
 
@@ -156,8 +158,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
             switch (recordedGameService.getMatchStatus()) {
                 case SCHEDULED:
+                    mRecordedGamesService.saveSetupGame(gameService);
                     AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("schedule_game_edit");
-
                     if (alertDialogFragment == null) {
                         alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.user_scheduled_games_title), getResources().getString(R.string.scheduled_game_question),
                                 getResources().getString(R.string.no), getResources().getString(R.string.yes), getResources().getString(android.R.string.cancel));
@@ -168,6 +170,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
                     break;
                 case LIVE:
                     gameService.restoreGame(recordedGameService);
+                    mRecordedGamesService.createCurrentGame(gameService);
                     final Intent gameIntent = new Intent(this, GameActivity.class);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -206,7 +209,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     }
 
     private void restoreEditScheduledGameDialog() {
-        GameService gameService = ServicesProvider.getInstance().getGameService();
+        GameService gameService = mRecordedGamesService.loadSetupGame();
         AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("schedule_game_edit");
 
         if (gameService == null && alertDialogFragment != null) {
@@ -223,6 +226,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
                 public void onNegativeButtonClicked() {
                     Log.i(Tags.SCHEDULE_UI, "Start scheduled game immediately");
                     gameService.startMatch();
+                    mRecordedGamesService.createCurrentGame(gameService);
                     final Intent gameIntent = new Intent(ScheduledGamesListActivity.this, GameActivity.class);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -233,6 +237,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
                 @Override
                 public void onPositiveButtonClicked() {
                     Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
+                    mRecordedGamesService.saveSetupGame(gameService);
                     final Intent setupIntent;
                     if (gameService.getGameType().equals(GameType.BEACH)) {
                         setupIntent = new Intent(ScheduledGamesListActivity.this, QuickGameSetupActivity.class);

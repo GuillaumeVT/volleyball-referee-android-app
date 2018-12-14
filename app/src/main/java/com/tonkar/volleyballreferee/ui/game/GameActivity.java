@@ -31,7 +31,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -46,6 +46,8 @@ import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -81,14 +83,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mRecordedGamesService = new RecordedGames(this);
+        mGameService = mRecordedGamesService.loadCurrentGame();
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.GAME_UI, "Create game activity");
         setContentView(R.layout.activity_game);
-
-        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-        }
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean keepScreenOnSetting = sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false);
@@ -107,9 +108,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             startToolbarCountDown(duration);
         }
 
-        mGameService = ServicesProvider.getInstance().getGameService();
-        mRecordedGamesService = ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext());
-
         if (mGameService == null || mRecordedGamesService == null) {
             UiUtils.navigateToHome(this);
         } else {
@@ -118,7 +116,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             mGameService.addTimeoutListener(this);
             mGameService.addTeamListener(this);
             mGameService.addSanctionListener(this);
-            mRecordedGamesService.connectGameRecorder();
+            mRecordedGamesService.connectGameRecorder(mGameService);
 
             mLeftTeamNameText = findViewById(R.id.left_team_name_text);
             mRightTeamNameText = findViewById(R.id.right_team_name_text);
@@ -695,11 +693,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 }
         );
 
-        if (!ServicesProvider.getInstance().getGameService().getRules().areTeamTimeoutsEnabled()) {
+        if (!mGameService.getRules().areTeamTimeoutsEnabled()) {
             gameNavigation.getMenu().removeItem(R.id.timeouts_tab);
         }
 
-        if (!ServicesProvider.getInstance().getGameService().getRules().areSanctionsEnabled()
+        if (!mGameService.getRules().areSanctionsEnabled()
                 || UsageType.POINTS_SCOREBOARD.equals(mGameService.getUsageType())) {
             gameNavigation.getMenu().removeItem(R.id.sanctions_tab);
         }
@@ -735,6 +733,18 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
+        }
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof GameServiceHandler) {
+            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            gameServiceHandler.setGameService(mGameService);
+        }
+        if (fragment instanceof RecordedGamesServiceHandler) {
+            RecordedGamesServiceHandler recordedGamesServiceHandler = (RecordedGamesServiceHandler) fragment;
+            recordedGamesServiceHandler.setRecordedGamesService(mRecordedGamesService);
         }
     }
 }

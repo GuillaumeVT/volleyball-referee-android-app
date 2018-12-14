@@ -20,16 +20,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
 
-public class QuickTeamSetupFragment extends Fragment {
+public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
     private TeamType             mTeamType;
     private BaseTeamService      mTeamService;
@@ -37,14 +37,13 @@ public class QuickTeamSetupFragment extends Fragment {
     private MaterialButton       mCaptainButton;
     private FloatingActionButton mGenderButton;
 
-    public QuickTeamSetupFragment() {
-    }
+    public QuickTeamSetupFragment() {}
 
-    public static QuickTeamSetupFragment newInstance(TeamType teamType, boolean editable) {
+    public static QuickTeamSetupFragment newInstance(TeamType teamType, boolean create) {
         QuickTeamSetupFragment fragment = new QuickTeamSetupFragment();
         Bundle args = new Bundle();
         args.putString(TeamType.class.getName(), teamType.toString());
-        args.putBoolean("editable", editable);
+        args.putBoolean("create", create);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,9 +56,7 @@ public class QuickTeamSetupFragment extends Fragment {
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
-        final boolean editable = getArguments().getBoolean("editable");
-
-        mTeamService = ServicesProvider.getInstance().getSavedTeamsService(getActivity().getApplicationContext()).getCurrentTeam();
+        final boolean create = getArguments().getBoolean("create");
 
         final TextInputEditText teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
@@ -77,7 +74,7 @@ public class QuickTeamSetupFragment extends Fragment {
         final String teamName = mTeamService.getTeamName(mTeamType);
 
         teamNameInput.setText(teamName);
-        teamNameInput.setEnabled(editable);
+        teamNameInput.setEnabled(create);
         teamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -101,7 +98,7 @@ public class QuickTeamSetupFragment extends Fragment {
         });
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            teamColorSelected(UiUtils.getRandomShirtColor(getActivity()));
+            teamColorSelected(UiUtils.getRandomShirtColor(getContext()));
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
@@ -111,7 +108,7 @@ public class QuickTeamSetupFragment extends Fragment {
         });
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
-        mGenderButton.setEnabled(editable);
+        mGenderButton.setEnabled(create);
         updateGender(mTeamService.getGenderType(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
@@ -196,5 +193,10 @@ public class QuickTeamSetupFragment extends Fragment {
         if (getActivity() instanceof SavedTeamActivity) {
             ((SavedTeamActivity) getActivity()).computeSaveItemVisibility();
         }
+    }
+
+    @Override
+    public void setTeamService(BaseTeamService teamService) {
+        mTeamService = teamService;
     }
 }

@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import androidx.test.filters.LargeTest;
@@ -8,12 +7,13 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
@@ -34,6 +34,8 @@ public class BrazilFranceIndoorGame {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+
+    private RecordedGamesService mRecordedGamesService;
 
     @Test
     public void playGame_complete() {
@@ -56,7 +58,7 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet5(indoorGame);
         playSet5_complete(indoorGame);
 
-        RecordedGameService recordedGameService = ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).getRecordedGameService(indoorGame.getGameDate());
+        RecordedGameService recordedGameService = mRecordedGamesService.getRecordedGameService(indoorGame.getGameDate());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
     }
 
@@ -125,12 +127,10 @@ public class BrazilFranceIndoorGame {
             e.printStackTrace();
         }
 
-        Context applicationContext = mActivityRule.getActivity().getApplicationContext();
-
         for (int index = 0; index < 200; index++) {
             Log.i("VBR-Test", "playGame_io index #" + index);
-            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).saveCurrentGame();
-            GameService gameService = ServicesProvider.getInstance().getRecordedGamesService(applicationContext).loadCurrentGame();
+            mRecordedGamesService.saveCurrentGame();
+            GameService gameService = mRecordedGamesService.loadCurrentGame();
             assertNotEquals(null, gameService);
             assertEquals(indoorGame, gameService);
         }
@@ -190,7 +190,8 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.startMatch();
 
-        ServicesProvider.getInstance().getRecordedGamesService(mActivityRule.getActivity().getApplicationContext()).connectGameRecorder();
+        mRecordedGamesService = new RecordedGames(mActivityRule.getActivity());
+        mRecordedGamesService.connectGameRecorder(indoorGame);
     }
 
     private void composeTeamsSet1(IndoorGame indoorGame) {

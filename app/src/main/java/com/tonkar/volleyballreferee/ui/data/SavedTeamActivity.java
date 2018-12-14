@@ -11,12 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.QuickTeamSetupFragment;
 import com.tonkar.volleyballreferee.ui.team.TeamSetupFragment;
@@ -28,37 +29,36 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class SavedTeamActivity extends AppCompatActivity {
 
-    private SavedTeamsService mSavedTeamsService;
-    private BaseTeamService   mTeamService;
-    private MenuItem          mSaveItem;
+    private BaseTeamService mTeamService;
+    private MenuItem        mSaveItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SavedTeamsService savedTeamsService = new SavedTeams(this);
+        mTeamService = savedTeamsService.copyTeam(savedTeamsService.readTeam(getIntent().getStringExtra("team")));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_team);
 
         String gameTypeStr = getIntent().getStringExtra("kind");
         GameType gameType = GameType.valueOf(gameTypeStr);
 
-        boolean editable = getIntent().getBooleanExtra("editable", true);
+        boolean create = getIntent().getBooleanExtra("create", true);
 
         Fragment fragment = null;
 
         switch (gameType) {
             case INDOOR:
             case INDOOR_4X4:
-                fragment = TeamSetupFragment.newInstance(TeamType.HOME, false, editable);
+                fragment = TeamSetupFragment.newInstance(TeamType.HOME, false, create);
                 break;
             case BEACH:
-                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME, editable);
+                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME, create);
                 break;
             case TIME:
             default:
                 break;
         }
-
-        mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
-        mTeamService = mSavedTeamsService.getCurrentTeam();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -108,7 +108,8 @@ public class SavedTeamActivity extends AppCompatActivity {
 
     private void saveTeam() {
         Log.i(Tags.SAVED_TEAMS, "Save team");
-        mSavedTeamsService.saveCurrentTeam();
+        SavedTeamsService savedTeamsService = new SavedTeams(this);
+        savedTeamsService.saveTeam(mTeamService);
         UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -120,7 +121,8 @@ public class SavedTeamActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mSavedTeamsService.deleteSavedTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGenderType());
+            SavedTeamsService savedTeamsService = new SavedTeams(this);
+            savedTeamsService.deleteSavedTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGenderType());
             UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
@@ -136,7 +138,6 @@ public class SavedTeamActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.leave_team_creation_title)).setMessage(getResources().getString(R.string.leave_team_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mSavedTeamsService.cancelCurrentTeam();
             Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -157,6 +158,14 @@ public class SavedTeamActivity extends AppCompatActivity {
                 Log.i(Tags.SAVED_TEAMS, "Save button is visible");
                 mSaveItem.setVisible(true);
             }
+        }
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof BaseTeamServiceHandler) {
+            BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
+            baseTeamServiceHandler.setTeamService(mTeamService);
         }
     }
 }

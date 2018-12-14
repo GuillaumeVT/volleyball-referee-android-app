@@ -8,7 +8,9 @@ import java.util.Set;
 
 public interface RecordedGamesService {
 
-    void connectGameRecorder();
+    void createCurrentGame(GameService gameService);
+
+    void connectGameRecorder(GameService gameService);
 
     void disconnectGameRecorder(boolean exiting);
 

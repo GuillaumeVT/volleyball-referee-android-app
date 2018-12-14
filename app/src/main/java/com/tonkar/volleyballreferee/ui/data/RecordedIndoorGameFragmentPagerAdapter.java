@@ -24,11 +24,11 @@ public class RecordedIndoorGameFragmentPagerAdapter extends FragmentStatePagerAd
 
         mRecordedGameService = recordedGameService;
         mContext = context;
-        mTeamsFragment = TeamsFragment.newInstance(mRecordedGameService.getGameDate());
+        mTeamsFragment = TeamsFragment.newInstance();
         mSetFragments = new ArrayList<>();
 
         for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
-            SetFragment setFragment = SetFragment.newInstance(mRecordedGameService.getGameDate(), setIndex);
+            SetFragment setFragment = SetFragment.newInstance(setIndex);
             mSetFragments.add(setFragment);
         }
     }

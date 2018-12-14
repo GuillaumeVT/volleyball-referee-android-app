@@ -37,7 +37,6 @@ import java.util.Map;
 public class SavedRules implements SavedRulesService {
 
     private final Context mContext;
-    private       Rules   mCurrentRules;
 
     public SavedRules(Context context) {
         mContext = context;
@@ -62,53 +61,42 @@ public class SavedRules implements SavedRulesService {
     }
 
     @Override
-    public void createRules() {
-        mCurrentRules = Rules.defaultUniversalRules();
-        mCurrentRules.setName("");
-        mCurrentRules.setDate(System.currentTimeMillis());
+    public Rules createRules() {
+        Rules rules = Rules.defaultUniversalRules();
+        rules.setName("");
+        rules.setDate(System.currentTimeMillis());
+        return rules;
     }
 
     @Override
-    public void createRules(GameType gameType) {
+    public Rules createRules(GameType gameType) {
+        final Rules rules;
+
         switch (gameType) {
             case INDOOR:
-                mCurrentRules = Rules.officialIndoorRules();
+                rules = Rules.officialIndoorRules();
                 break;
             case INDOOR_4X4:
-                mCurrentRules = Rules.defaultIndoor4x4Rules();
+                rules = Rules.defaultIndoor4x4Rules();
                 break;
             case BEACH:
-                mCurrentRules = Rules.officialBeachRules();
+                rules = Rules.officialBeachRules();
                 break;
             default:
-                mCurrentRules = Rules.defaultUniversalRules();
+                rules = Rules.defaultUniversalRules();
                 break;
         }
-        mCurrentRules.setName("");
-        mCurrentRules.setDate(System.currentTimeMillis());
+        rules.setName("");
+        rules.setDate(System.currentTimeMillis());
+
+        return rules;
     }
 
     @Override
-    public void editRules(String rulesName) {
-        mCurrentRules = getSavedRules(rulesName);
-    }
-
-    @Override
-    public Rules getCurrentRules() {
-        return mCurrentRules;
-    }
-
-    @Override
-    public void saveCurrentRules() {
-        mCurrentRules.setDate(System.currentTimeMillis());
-        insertRulesIntoDb(mCurrentRules);
-        pushRulesOnline(mCurrentRules);
-        mCurrentRules = null;
-    }
-
-    @Override
-    public void cancelCurrentRules() {
-        mCurrentRules = null;
+    public void saveRules(Rules rules) {
+        rules.setDate(System.currentTimeMillis());
+        insertRulesIntoDb(rules);
+        pushRulesOnline(rules);
     }
 
     @Override
@@ -117,7 +105,6 @@ public class SavedRules implements SavedRulesService {
             public void run() {
                 AppDatabase.getInstance(mContext).rulesDao().deleteByName(rulesName);
                 deleteRulesOnline(rulesName);
-                mCurrentRules = null;
             }
         }.start();
     }
@@ -140,9 +127,7 @@ public class SavedRules implements SavedRulesService {
                 && !rules.getName().equals(Rules.officialIndoorRules().getName())
                 && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())
                 && !rules.getName().equals(Rules.defaultUniversalRules().getName())) {
-            createRules();
-            getCurrentRules().setAll(rules);
-            saveCurrentRules();
+            saveRules(rules);
         }
     }
 
@@ -194,7 +179,8 @@ public class SavedRules implements SavedRulesService {
         }
     }
 
-    private Rules readRules(String json) {
+    @Override
+    public Rules readRules(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RULES_TYPE);
     }
 
@@ -220,7 +206,8 @@ public class SavedRules implements SavedRulesService {
         writer.close();
     }
 
-    private String writeRules(Rules rules) {
+    @Override
+    public String writeRules(Rules rules) {
         return JsonIOUtils.GSON.toJson(rules, JsonIOUtils.RULES_TYPE);
     }
 

@@ -7,26 +7,24 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CourtFragment extends Fragment implements TeamListener, SanctionListener {
+public abstract class CourtFragment extends Fragment implements TeamListener, SanctionListener, GameServiceHandler {
 
     protected       View                              mView;
-    protected       TeamService                       mTeamService;
-    protected       SanctionService                   mSanctionService;
+    protected       GameService                       mGameService;
     protected       TeamType                          mTeamOnLeftSide;
     protected       TeamType                          mTeamOnRightSide;
     protected final Map<PositionType, MaterialButton> mLeftTeamPositions;
@@ -45,9 +43,9 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (mTeamService != null && mSanctionService != null) {
-            mTeamService.removeTeamListener(this);
-            mSanctionService.removeSanctionListener(this);
+        if (mGameService != null) {
+            mGameService.removeTeamListener(this);
+            mGameService.removeSanctionListener(this);
             mLeftTeamPositions.clear();
             mRightTeamPositions.clear();
             mLeftTeamSanctionImages.clear();
@@ -57,14 +55,12 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
 
     protected void initView() {
         Log.i(Tags.GAME_UI, "Create court fragment");
-        mTeamService = ServicesProvider.getInstance().getTeamService();
-        mSanctionService = ServicesProvider.getInstance().getSanctionService();
 
-        if (mTeamService != null && mSanctionService != null) {
-            mTeamOnLeftSide = mTeamService.getTeamOnLeftSide();
-            mTeamOnRightSide = mTeamService.getTeamOnRightSide();
-            mTeamService.addTeamListener(this);
-            mSanctionService.addSanctionListener(this);
+        if (mGameService != null) {
+            mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
+            mTeamOnRightSide = mGameService.getTeamOnRightSide();
+            mGameService.addTeamListener(this);
+            mGameService.addSanctionListener(this);
         }
     }
 
@@ -91,13 +87,12 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     }
 
     protected void updateSanction(TeamType teamType, int number, ImageView sanctionImage) {
-        if (mSanctionService.hasSanctions(teamType, number)) {
-            SanctionType sanctionType = mSanctionService.getMostSeriousSanction(teamType, number);
+        if (mGameService.hasSanctions(teamType, number)) {
+            SanctionType sanctionType = mGameService.getMostSeriousSanction(teamType, number);
             UiUtils.setSanctionImage(sanctionImage, sanctionType);
             sanctionImage.setVisibility(View.VISIBLE);
         } else {
             sanctionImage.setVisibility(View.INVISIBLE);
         }
     }
-
 }

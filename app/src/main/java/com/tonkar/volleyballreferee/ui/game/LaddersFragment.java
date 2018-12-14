@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -21,8 +20,9 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
-public class LaddersFragment extends Fragment implements ScoreListener, TimeoutListener, TeamListener, SanctionListener {
+public class LaddersFragment extends Fragment implements ScoreListener, TimeoutListener, TeamListener, SanctionListener, GameServiceHandler {
 
     private LadderListAdapter mLadderListAdapter;
     private GameService       mGameService;
@@ -41,8 +41,6 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.SCORE, "Initialise scores fragment");
         View view = inflater.inflate(R.layout.fragment_scores, container, false);
-
-        mGameService = ServicesProvider.getInstance().getGameService();
 
         if (mGameService != null) {
             mGameService.addScoreListener(this);
@@ -120,5 +118,10 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         mLadderListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setGameService(GameService gameService) {
+        mGameService = gameService;
     }
 }

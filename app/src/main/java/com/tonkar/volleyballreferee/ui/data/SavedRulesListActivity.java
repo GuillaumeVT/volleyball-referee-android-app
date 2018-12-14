@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
@@ -50,6 +50,8 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mSavedRulesService = new SavedRules(this);
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SAVED_RULES, "Create rules list activity");
@@ -60,8 +62,6 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateSavedRulesList);
 
-        mSavedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
-
         List<Rules> savedRules = mSavedRulesService.getSavedRules();
 
         final ListView savedRulesList = findViewById(R.id.saved_rules_list);
@@ -70,12 +70,11 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
 
         savedRulesList.setOnItemClickListener((adapterView, view, i, l) -> {
             Rules rules = mSavedRulesListAdapter.getItem(i);
-            mSavedRulesService.editRules(rules.getName());
             Log.i(Tags.SAVED_RULES, String.format("Start activity to edit saved rules %s", rules.getName()));
 
             final Intent intent = new Intent(SavedRulesListActivity.this, SavedRulesActivity.class);
-            boolean editable = !PrefUtils.isSignedIn(SavedRulesListActivity.this);
-            intent.putExtra("editable", editable);
+            intent.putExtra("rules", mSavedRulesService.writeRules(rules));
+            intent.putExtra("create", false);
             startActivity(intent);
         });
 
@@ -99,29 +98,24 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
     }
 
     public void addIndoorRules(View view) {
-        mSavedRulesService.createRules(GameType.INDOOR);
         Log.i(Tags.SAVED_RULES, "Start activity to create new indoor rules");
-
-        final Intent intent = new Intent(this, SavedRulesActivity.class);
-        intent.putExtra("editable", true);
-        startActivity(intent);
+        addRules(GameType.INDOOR);
     }
 
     public void addIndoor4x4Rules(View view) {
-        mSavedRulesService.createRules(GameType.INDOOR_4X4);
         Log.i(Tags.SAVED_RULES, "Start activity to create new indoor 4x4 rules");
-
-        final Intent intent = new Intent(this, SavedRulesActivity.class);
-        intent.putExtra("editable", true);
-        startActivity(intent);
+        addRules(GameType.INDOOR_4X4);
     }
 
     public void addBeachRules(View view) {
-        mSavedRulesService.createRules(GameType.BEACH);
         Log.i(Tags.SAVED_RULES, "Start activity to create new beach rules");
+        addRules(GameType.BEACH);
+    }
 
+    private void addRules(GameType gameType) {
         final Intent intent = new Intent(this, SavedRulesActivity.class);
-        intent.putExtra("editable", true);
+        intent.putExtra("rules", mSavedRulesService.writeRules(mSavedRulesService.createRules(gameType)));
+        intent.putExtra("create", true);
         startActivity(intent);
     }
 

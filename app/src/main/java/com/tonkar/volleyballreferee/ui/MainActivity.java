@@ -31,17 +31,18 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.game.*;
 import com.tonkar.volleyballreferee.business.web.BooleanRequest;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
-import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.*;
 import com.tonkar.volleyballreferee.rules.Rules;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
@@ -62,6 +63,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
+    private RecordedGamesService mRecordedGamesService;
+
     @Override
     protected String getToolbarTitle() {
         return getString(R.string.app_name);
@@ -75,6 +78,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRecordedGamesService = new RecordedGames(this);
 
         Log.i(Tags.MAIN_UI, "Create main activity");
         setContentView(R.layout.activity_main);
@@ -96,28 +101,32 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
 
         Context applicationContext = getApplicationContext();
+        SavedTeamsService savedTeamsService = new SavedTeams(applicationContext);
+        SavedRulesService savedRulesService = new SavedRules(applicationContext);
 
-        ServicesProvider.getInstance().getSavedRulesService(applicationContext).migrateSavedRules();
-        ServicesProvider.getInstance().getSavedTeamsService(applicationContext).migrateSavedTeams();
-        ServicesProvider.getInstance().getRecordedGamesService(applicationContext).migrateRecordedGames();
+        savedRulesService.migrateSavedRules();
+        savedTeamsService.migrateSavedTeams();
+        mRecordedGamesService.migrateRecordedGames();
 
-        try {
-            ServicesProvider.getInstance().restoreGameService(getApplicationContext());
-        } catch (JsonSyntaxException e) {
-            Log.e(Tags.SAVED_GAMES, "Failed to read the recorded game because the JSON format was invalid", e);
-            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).deleteCurrentGame();
+        if (mRecordedGamesService.hasCurrentGame()) {
+            try {
+                mRecordedGamesService.loadCurrentGame();
+            } catch (JsonSyntaxException e) {
+                Log.e(Tags.SAVED_GAMES, "Failed to read the recorded game because the JSON format was invalid", e);
+                mRecordedGamesService.deleteCurrentGame();
+            }
         }
-        if (ServicesProvider.getInstance().getRecordedGamesService(applicationContext).hasSetupGame()) {
-            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).deleteSetupGame();
+        if (mRecordedGamesService.hasSetupGame()) {
+            mRecordedGamesService.deleteSetupGame();
         }
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final long currentTime = System.currentTimeMillis();
 
         if (sharedPreferences.getLong("last_full_sync", 0L) + 3600000L < currentTime) {
-            ServicesProvider.getInstance().getSavedRulesService(applicationContext).syncRulesOnline();
-            ServicesProvider.getInstance().getSavedTeamsService(applicationContext).syncTeamsOnline();
-            ServicesProvider.getInstance().getRecordedGamesService(applicationContext).syncGamesOnline();
+            savedRulesService.syncRulesOnline();
+            savedTeamsService.syncTeamsOnline();
+            mRecordedGamesService.syncGamesOnline();
             sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
         }
 
@@ -149,7 +158,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             }
         }
 
-        if (ServicesProvider.getInstance().getRecordedGamesService(applicationContext).hasCurrentGame()) {
+        if (mRecordedGamesService.hasCurrentGame()) {
             resumeCurrentGameWithDialog(savedInstanceState);
         }
 
@@ -210,7 +219,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
-        GameFactory.createIndoorGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+        IndoorGame game = GameFactory.createIndoorGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+        mRecordedGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
@@ -219,7 +229,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startBeachGame(View view) {
         Log.i(Tags.GAME_UI, "Start a beach game");
-        GameFactory.createBeachGame(System.currentTimeMillis(), 0L, Rules.officialBeachRules());
+        BeachGame game = GameFactory.createBeachGame(System.currentTimeMillis(), 0L, Rules.officialBeachRules());
+        mRecordedGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
@@ -228,7 +239,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startIndoor4x4Game(View view) {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
-        GameFactory.createIndoor4x4Game(System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
+        mRecordedGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
@@ -237,7 +249,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startTimeBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a time-based game");
-        GameFactory.createTimeBasedGame(System.currentTimeMillis(), 0L);
+        TimeBasedGame game = GameFactory.createTimeBasedGame(System.currentTimeMillis(), 0L);
+        mRecordedGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
@@ -246,7 +259,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startScoreBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a score-based game");
-        GameFactory.createPointBasedGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+        IndoorGame game = GameFactory.createPointBasedGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+        mRecordedGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
@@ -271,7 +285,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true);
         getIntent().removeExtra("show_resume_game");
 
-        if (ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame() && showResumeGameDialog) {
+        if (mRecordedGamesService.hasCurrentGame() && showResumeGameDialog) {
             AlertDialogFragment alertDialogFragment;
 
             if (savedInstanceState == null) {
@@ -287,7 +301,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     @Override
                     public void onNegativeButtonClicked() {
                         Log.i(Tags.SAVED_GAMES, "Delete current game");
-                        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteCurrentGame();
+                        mRecordedGamesService.deleteCurrentGame();
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
                         setResumeGameCardVisibility();
                     }
@@ -295,10 +309,12 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     @Override
                     public void onPositiveButtonClicked() {
                         Log.i(Tags.GAME_UI, "Start game activity and resume current game");
-                        if (ServicesProvider.getInstance().getGameService() == null) {
+                        GameService gameService = mRecordedGamesService.loadCurrentGame();
+
+                        if (gameService == null) {
                             UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
                         } else {
-                            if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+                            if (GameType.TIME.equals(gameService.getGameType())) {
                                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                                 startActivity(gameIntent);
                             } else {
@@ -360,7 +376,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 public void onPositiveButtonClicked(int code) {
                     if (code > 9999999) {
                         Log.i(Tags.GAME_UI, String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).getGameFromCode(code, MainActivity.this);
+                        mRecordedGamesService.getGameFromCode(code, MainActivity.this);
                     } else {
                         UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
                     }
@@ -377,8 +393,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
             switch (recordedGameService.getMatchStatus()) {
                 case SCHEDULED:
+                    mRecordedGamesService.saveSetupGame(gameService);
                     AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
-
                     if (alertDialogFragment == null) {
                         alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code), getResources().getString(R.string.scheduled_game_question),
                                 getResources().getString(R.string.no), getResources().getString(R.string.yes));
@@ -389,6 +405,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     break;
                 case LIVE:
                     gameService.restoreGame(recordedGameService);
+                    mRecordedGamesService.createCurrentGame(gameService);
                     final Intent gameIntent = new Intent(this, GameActivity.class);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -423,10 +440,10 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     }
 
     private void restoreEditScheduledGameFromCodeDialog() {
-        GameService gameService = ServicesProvider.getInstance().getGameService();
+        GameService gameService = mRecordedGamesService.loadSetupGame();
         AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
 
-        if ((ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame() || gameService == null) && alertDialogFragment != null) {
+        if ((mRecordedGamesService.hasCurrentGame() || gameService == null) && alertDialogFragment != null) {
             alertDialogFragment.dismiss();
         } else {
             setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
@@ -440,6 +457,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 public void onNegativeButtonClicked() {
                     Log.i(Tags.GAME_UI, "Start game from code immediately");
                     gameService.startMatch();
+                    mRecordedGamesService.createCurrentGame(gameService);
                     final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -450,6 +468,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 @Override
                 public void onPositiveButtonClicked() {
                     Log.i(Tags.SETUP_UI, "Edit game from code before starting");
+                    mRecordedGamesService.saveSetupGame(gameService);
                     final Intent setupIntent;
                     if (gameService.getGameType().equals(GameType.BEACH)) {
                         setupIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);
@@ -470,6 +489,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     private void setResumeGameCardVisibility() {
         CardView resumeGameCard = findViewById(R.id.resume_game_card);
-        resumeGameCard.setVisibility(ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasCurrentGame() ? View.VISIBLE : View.GONE);
+        resumeGameCard.setVisibility(mRecordedGamesService.hasCurrentGame() ? View.VISIBLE : View.GONE);
     }
 }

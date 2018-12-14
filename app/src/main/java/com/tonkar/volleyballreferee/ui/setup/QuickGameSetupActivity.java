@@ -12,14 +12,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
+import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.SavedRules;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamService;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -33,10 +36,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class QuickGameSetupActivity extends AppCompatActivity {
 
-    private MenuItem mConfirmItem;
+    private GameService mGameService;
+    private MenuItem    mConfirmItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RecordedGamesService recordedGamesService = new RecordedGames(this);
+        mGameService = recordedGamesService.loadSetupGame();
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SETUP_UI, "Create quick game setup activity");
@@ -50,10 +57,6 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        if (ServicesProvider.getInstance().isGameServiceUnavailable()) {
-            ServicesProvider.getInstance().restoreGameServiceForSetup(getApplicationContext());
-        }
-
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.quick_game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
 
@@ -63,7 +66,8 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).saveSetupGame(ServicesProvider.getInstance().getGameService());
+        RecordedGamesService recordedGamesService = new RecordedGames(this);
+        recordedGamesService.saveSetupGame(mGameService);
     }
 
     @Override
@@ -98,11 +102,8 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
     public void computeConfirmItemVisibility() {
         if (mConfirmItem != null) {
-            TeamService teamService = ServicesProvider.getInstance().getTeamService();
-            Rules rules = ServicesProvider.getInstance().getGeneralService().getRules();
-
-            if (teamService.getTeamName(TeamType.HOME).isEmpty() || teamService.getTeamName(TeamType.GUEST).isEmpty()
-                    || rules.getName().length() == 0) {
+            if (mGameService.getTeamName(TeamType.HOME).isEmpty() || mGameService.getTeamName(TeamType.GUEST).isEmpty()
+                    || mGameService.getRules().getName().length() == 0) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mConfirmItem.setVisible(false);
             } else {
@@ -114,9 +115,11 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
     public void confirmSetup() {
         Log.i(Tags.SETUP_UI, "Validate setup");
-        ServicesProvider.getInstance().getGeneralService().startMatch();
+        mGameService.startMatch();
+        RecordedGamesService recordedGamesService = new RecordedGames(this);
+        recordedGamesService.createCurrentGame(mGameService);
 
-        if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+        if (GameType.TIME.equals(mGameService.getGameType())) {
             Log.i(Tags.SETUP_UI, "Start time-based game activity");
             final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -124,7 +127,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
         } else {
-            if (GameType.BEACH.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+            if (GameType.BEACH.equals(mGameService.getGameType())) {
                 saveTeams();
             }
             saveRules();
@@ -138,16 +141,15 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveTeams() {
-        SavedTeamsService savedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
-        BaseTeamService teamService = ServicesProvider.getInstance().getTeamService();
-        GameType gameType = teamService.getTeamsKind();
-        savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.HOME);
-        savedTeamsService.createAndSaveTeamFrom(gameType, teamService, TeamType.GUEST);
+        SavedTeamsService savedTeamsService = new SavedTeams(this);
+        GameType gameType = mGameService.getTeamsKind();
+        savedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.HOME);
+        savedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.GUEST);
     }
 
     private void saveRules() {
-        SavedRulesService savedRulesService = ServicesProvider.getInstance().getSavedRulesService(getApplicationContext());
-        savedRulesService.createAndSaveRulesFrom(ServicesProvider.getInstance().getGeneralService().getRules());
+        SavedRulesService rulesService = new SavedRules(this);
+        rulesService.createAndSaveRulesFrom(mGameService.getRules());
     }
 
     private void cancelSetup() {
@@ -156,8 +158,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            if (ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).hasSetupGame()) {
-                ServicesProvider.getInstance().getRecordedGamesService(getApplicationContext()).deleteSetupGame();
+            RecordedGamesService recordedGamesService = new RecordedGames(this);
+            if (recordedGamesService.hasSetupGame()) {
+                recordedGamesService.deleteSetupGame();
             }
             UiUtils.navigateToHome(QuickGameSetupActivity.this, false);
         });
@@ -176,7 +179,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                             fragment = QuickGameSetupFragment.newInstance();
                             break;
                         case R.id.rules_tab:
-                            if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+                            if (GameType.TIME.equals(mGameService.getGameType())) {
                                 fragment = null;
                             } else {
                                 fragment = RulesSetupFragment.newInstance();
@@ -198,8 +201,20 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameSetupNavigation.setSelectedItemId(R.id.teams_tab);
         }
 
-        if (GameType.TIME.equals(ServicesProvider.getInstance().getGeneralService().getGameType())) {
+        if (GameType.TIME.equals(mGameService.getGameType())) {
             gameSetupNavigation.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof GameServiceHandler) {
+            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            gameServiceHandler.setGameService(mGameService);
+        }
+        if (fragment instanceof RulesServiceHandler) {
+            RulesServiceHandler rulesServiceHandler = (RulesServiceHandler) fragment;
+            rulesServiceHandler.setRules(mGameService.getRules());
         }
     }
 

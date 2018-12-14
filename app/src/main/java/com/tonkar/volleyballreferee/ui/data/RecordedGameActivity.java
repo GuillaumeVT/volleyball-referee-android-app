@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
@@ -24,6 +25,7 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.File;
@@ -36,6 +38,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
     protected RecordedGamesService mRecordedGamesService;
     protected long                 mGameDate;
+    protected RecordedGameService  mRecordedGameService;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,4 +153,11 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         return builder.toString();
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof RecordedGameServiceHandler) {
+            RecordedGameServiceHandler recordedGameServiceHandler = (RecordedGameServiceHandler) fragment;
+            recordedGameServiceHandler.setRecordedGameService(mRecordedGameService);
+        }
+    }
 }

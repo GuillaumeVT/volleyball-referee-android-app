@@ -13,12 +13,13 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -50,6 +51,8 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mSavedTeamsService = new SavedTeams(this);
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.SAVED_TEAMS, "Create teams list activity");
@@ -60,8 +63,6 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateSavedTeamsList);
 
-        mSavedTeamsService = ServicesProvider.getInstance().getSavedTeamsService(getApplicationContext());
-
         List<RecordedTeam> teams = mSavedTeamsService.getSavedTeamList();
 
         final ListView savedTeamsList = findViewById(R.id.saved_teams_list);
@@ -70,13 +71,12 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
         savedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
             RecordedTeam team = mSavedTeamsListAdapter.getItem(i);
-            mSavedTeamsService.editTeam(team.getGameType(), team.getName(), team.getGenderType());
             Log.i(Tags.SAVED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
 
             final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
+            intent.putExtra("team", mSavedTeamsService.writeTeam(team));
             intent.putExtra("kind", team.getGameType().toString());
-            boolean editable = !PrefUtils.isSignedIn(SavedTeamsListActivity.this);
-            intent.putExtra("editable", editable);
+            intent.putExtra("create", false);
             startActivity(intent);
         });
 
@@ -115,12 +115,13 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
     }
 
     private void addTeam(GameType gameType) {
-        mSavedTeamsService.createTeam(gameType);
         Log.i(Tags.SAVED_TEAMS, "Start activity to create new team");
+        BaseTeamService teamService = mSavedTeamsService.createTeam(gameType);
 
         final Intent intent = new Intent(this, SavedTeamActivity.class);
+        intent.putExtra("team", mSavedTeamsService.writeTeam(mSavedTeamsService.copyTeam(teamService)));
         intent.putExtra("kind", gameType.toString());
-        intent.putExtra("editable", true);
+        intent.putExtra("create", true);
         startActivity(intent);
     }
 

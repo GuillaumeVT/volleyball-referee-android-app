@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.business.game;
 
 import android.util.Log;
 
-import com.tonkar.volleyballreferee.business.ServicesProvider;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
@@ -13,16 +12,12 @@ public class GameFactory {
 
     public static IndoorGame createIndoorGame(final long gameDate, final long gameSchedule, final Rules rules) {
         Log.i(Tags.FACTORY, "Create indoor game rules");
-        IndoorGame game = new IndoorGame(gameDate, gameSchedule, rules);
-        ServicesProvider.getInstance().initGameService(game);
-        return game;
+        return new IndoorGame(gameDate, gameSchedule, rules);
     }
 
     public static BeachGame createBeachGame(final long gameDate, final long gameSchedule, final Rules rules) {
         Log.i(Tags.FACTORY, "Create beach game");
-        BeachGame game = new BeachGame(gameDate, gameSchedule, rules);
-        ServicesProvider.getInstance().initGameService(game);
-        return game;
+        return new BeachGame(gameDate, gameSchedule, rules);
     }
 
     public static IndoorGame createPointBasedGame(final long gameDate, final long gameSchedule, final Rules rules) {
@@ -34,16 +29,12 @@ public class GameFactory {
 
     public static TimeBasedGame createTimeBasedGame(final long gameDate, final long gameSchedule) {
         Log.i(Tags.FACTORY, "Create time-based game");
-        TimeBasedGame game = new TimeBasedGame(gameDate, gameSchedule);
-        ServicesProvider.getInstance().initGameService(game);
-        return game;
+        return new TimeBasedGame(gameDate, gameSchedule);
     }
 
     public static Indoor4x4Game createIndoor4x4Game(final long gameDate, final long gameSchedule, final Rules rules) {
         Log.i(Tags.FACTORY, "Create indoor 4x4 game");
-        Indoor4x4Game game = new Indoor4x4Game(gameDate, gameSchedule, rules);
-        ServicesProvider.getInstance().initGameService(game);
-        return game;
+        return new Indoor4x4Game(gameDate, gameSchedule, rules);
     }
 
     public static GameService createGame(RecordedGameService recordedGameService) {
