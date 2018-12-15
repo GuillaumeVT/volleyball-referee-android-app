@@ -178,9 +178,9 @@ public class IndoorCourtFragment extends CourtFragment {
         final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
         final Map<PositionType, ImageView> teamSanctionImages = getTeamSanctionImages(teamType);
 
-        for (final MaterialButton button : teamPositions.values()) {
-            button.setText("!");
-            UiUtils.styleBaseTeamButton(mView.getContext(), mIndoorTeamService, teamType, button);
+        for (final Map.Entry<PositionType, MaterialButton> teamPosition : teamPositions.entrySet()) {
+            teamPosition.getValue().setText(UiUtils.getPositionTitle(mView.getContext(), teamPosition.getKey()));
+            UiUtils.styleBaseTeamButton(mView.getContext(), mIndoorTeamService, teamType, teamPosition.getValue());
         }
 
         for (final ImageView imageView : teamSanctionImages.values()) {
