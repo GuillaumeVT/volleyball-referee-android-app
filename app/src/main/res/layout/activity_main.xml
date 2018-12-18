@@ -102,7 +102,7 @@
                                     android:textColor="@android:color/white"
                                     android:theme="@style/ButtonTheme.Primary"
                                     app:backgroundTint="@color/colorPrimary"
-                                    app:icon="@drawable/ic_4x4p"
+                                    app:icon="@drawable/ic_4x4"
                                     app:iconTint="@android:color/white"/>
 
                             <com.google.android.material.button.MaterialButton

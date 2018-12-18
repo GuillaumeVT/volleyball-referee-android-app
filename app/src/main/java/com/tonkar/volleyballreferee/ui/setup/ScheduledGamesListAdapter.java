@@ -119,7 +119,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
 
         switch (gameDescription.getGameType()) {
             case INDOOR_4X4:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4p);
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
                 viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:

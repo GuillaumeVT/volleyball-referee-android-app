@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.text.TextUtilsCompat;
@@ -48,12 +49,9 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.web.WebUtils;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
+import com.tonkar.volleyballreferee.interfaces.*;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -439,5 +437,28 @@ public class UiUtils {
         } else {
             textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableId, 0);
         }
+    }
+
+    public static void updateToolbarLogo(Toolbar toolbar, GameType gameType, UsageType usageType) {
+        ImageView imageView = toolbar.findViewById(R.id.toolbar_logo);
+        switch (gameType) {
+            case INDOOR:
+                if (UsageType.NORMAL.equals(usageType)) {
+                    imageView.setImageResource(R.drawable.ic_6x6);
+                } else {
+                    imageView.setImageResource(R.drawable.ic_volleyball);
+                }
+                break;
+            case INDOOR_4X4:
+                imageView.setImageResource(R.drawable.ic_4x4);
+                break;
+            case BEACH:
+                imageView.setImageResource(R.drawable.ic_sun);
+                break;
+            case TIME:
+                imageView.setImageResource(R.drawable.ic_time_based);
+                break;
+        }
+        imageView.setVisibility(View.VISIBLE);
     }
 }

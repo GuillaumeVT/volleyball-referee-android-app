@@ -9,4 +9,13 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:popupTheme="@style/Theme.MaterialComponents.Light"
-        app:titleTextAppearance="@style/ToolbarTextTheme"/>
+        app:titleTextAppearance="@style/ToolbarTextTheme">
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/toolbar_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            app:srcCompat="@mipmap/ic_launcher_round" android:visibility="gone" app:tint="@android:color/white"
+            android:scaleType="fitCenter" android:adjustViewBounds="true"/>
+
+</androidx.appcompat.widget.Toolbar>

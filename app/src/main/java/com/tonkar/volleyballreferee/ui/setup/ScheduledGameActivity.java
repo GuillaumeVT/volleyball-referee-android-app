@@ -71,16 +71,17 @@ public class ScheduledGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduled_game);
 
+        String gameDescriptionStr = getIntent().getStringExtra("game");
+        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
+        UiUtils.updateToolbarLogo(toolbar, mGameDescription.getGameType(), mGameDescription.getUsageType());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        String gameDescriptionStr = getIntent().getStringExtra("game");
-        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
 
         mDateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
         mDateFormatter.setTimeZone(TimeZone.getDefault());

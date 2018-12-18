@@ -102,7 +102,7 @@ public class SavedTeamsListAdapter extends ArrayAdapter<RecordedTeam> {
 
         switch (team.getGameType()) {
             case INDOOR_4X4:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4p);
+                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
                 viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:

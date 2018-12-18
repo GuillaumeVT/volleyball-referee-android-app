@@ -64,7 +64,7 @@
                     app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_4x4p"/>
+                    app:srcCompat="@drawable/ic_4x4"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_beach_rules_button"
