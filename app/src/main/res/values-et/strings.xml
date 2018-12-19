@@ -240,6 +240,7 @@
         <item>1-geimiline mäng</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 võistkonna vaheaega geimis</item>
         <item>2 võistkonna vaheaega geimis</item>
         <item>1 võistkonna vaheaeg geimis</item>
         <item>Ilma võistkonna vaheajata</item>

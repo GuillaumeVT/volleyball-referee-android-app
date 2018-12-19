@@ -83,7 +83,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         }
 
         createCurrentGame();
-        saveCurrentGame();
+        saveCurrentGame(true);
     }
 
     @Override
@@ -182,12 +182,16 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         return readCurrentGame(jsonGame);
     }
 
-    @Override
-    public synchronized void saveCurrentGame() {
+    private synchronized void saveCurrentGame(boolean sync) {
         updateCurrentGame();
         if (!mGameService.isMatchCompleted()) {
-            insertCurrentGameIntoDb(sCurrentGame, mGameService);
+            insertCurrentGameIntoDb(sCurrentGame, mGameService, sync);
         }
+    }
+
+    @Override
+    public synchronized void saveCurrentGame() {
+        saveCurrentGame(false);
     }
 
     @Override
@@ -214,7 +218,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     @Override
     public void saveSetupGame(GameService gameService) {
-        insertCurrentGameIntoDb(sSetupGame, gameService);
+        insertCurrentGameIntoDb(sSetupGame, gameService, true);
     }
 
     @Override
@@ -571,14 +575,20 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     // Write current game
 
-    private void insertCurrentGameIntoDb(final String type, GameService gameService) {
+    private void insertCurrentGameIntoDb(final String type, GameService gameService, boolean sync) {
         final String json = writeCurrentGame(gameService);
-        new Thread() {
-            public void run() {
-                FullGameEntity fullGameEntity = new FullGameEntity(type, json);
-                AppDatabase.getInstance(mContext).fullGameDao().insert(fullGameEntity);
-            }
-        }.start();
+
+        if (sync) {
+            FullGameEntity fullGameEntity = new FullGameEntity(type, json);
+            AppDatabase.getInstance(mContext).fullGameDao().insert(fullGameEntity);
+        } else {
+            new Thread() {
+                public void run() {
+                    FullGameEntity fullGameEntity = new FullGameEntity(type, json);
+                    AppDatabase.getInstance(mContext).fullGameDao().insert(fullGameEntity);
+                }
+            }.start();
+        }
     }
 
     private String writeCurrentGame(GameService gameService) {

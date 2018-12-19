@@ -35,8 +35,6 @@
     <string name="purchase_web_premium_summary">\n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك. \n\u2022 استمتع بمساحة تخزين غير محدودة لبياناتك وجودة البث الأفضل لمبارياتك المباشرة. \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا. \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم. \n\u2022 إستفد تلقائيًا من ميزات الويب الجديدة المستقبلية.</string>
 
     <!-- User activity -->
-    <string name="facebook_app_id" translatable="false">2086514551632301</string>
-    <string name="server_client_id" translatable="false">802590775795-kdff0cnflla62jr2dj0pleqbiv05q97l.apps.googleusercontent.com</string>
     <string name="user_sign_in_why_title">لماذا يجب علي تسجيل الدخول؟</string>
     <string name="user_sign_in_why_message">في حالة بث مبارياتك عبر الإنترنت ، قد تكون مهتمًا بتسجيل الدخول.\n\nعن طريق تسجيل الدخول ، سوف تكسب السيطرة الكاملة على المباريات الخاصة بك على https://www.volleyball-referee.com/user\n\nمن هذه الصفحة ، يمكنك إنشاء وإدارة القوانين والفرق والمباريات والبطولات الخاصة بك. يمكن بعد ذلك تنظيم الألعاب المجدولة على التطبيق الخاص بك أو على تطبيق شخص آخر عن طريق توفير رمز لعبة فريد للحكم.</string>
     <string name="user_sign_in_privacy_title">هل هو آمن؟</string>
@@ -236,7 +234,8 @@
         <item>مبارة من شوط اواحد</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
-        <item>وقتي مستقطع للفريق كل شوط</item>
+        <item>وقت مستقطع ثلاثة للفريق كل شوط</item>
+        <item>وقت مستقطع اثنان للفريق كل شوط</item>
         <item>وقت مستقطع واحد للفريق كل شوط</item>
         <item>عدم وجود وقت مستقطع للفريق كل شوط</item>
     </string-array>

@@ -240,6 +240,7 @@
         <item>Partido de 1 set</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 tiempos muertos por set</item>
         <item>2 tiempos muertos por set</item>
         <item>1 tiempo muerto por set</item>
         <item>Sin tiempos muertos</item>

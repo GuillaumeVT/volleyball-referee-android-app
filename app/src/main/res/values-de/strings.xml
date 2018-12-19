@@ -240,6 +240,7 @@
         <item>Spiel aus einem Satz</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 Mannschaftsauszeiten pro Satz</item>
         <item>2 Mannschaftsauszeiten pro Satz</item>
         <item>1 Mannschaftsauszeit pro Satz</item>
         <item>Keine Mannschaftsauszeit pro Satz</item>

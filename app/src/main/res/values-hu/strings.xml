@@ -241,6 +241,7 @@
         <item>1 játszmás mérkőzések</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 időkérés játszmánként</item>
         <item>2 időkérés játszmánként</item>
         <item>1 időkérés játszmánként</item>
         <item>0 időkérés játszmánként</item>

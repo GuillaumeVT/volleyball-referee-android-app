@@ -240,6 +240,7 @@
         <item>Match en 1 set</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 temps morts d\'équipe par set</item>
         <item>2 temps morts d\'équipe par set</item>
         <item>1 temps mort d\'équipe par set</item>
         <item>Aucun temps mort d\'équipe par set</item>

@@ -240,6 +240,7 @@
         <item>Mecz 1 setowy</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 przerwy na zadanie na set</item>
         <item>2 przerwy na zadanie na set</item>
         <item>1 przerwa na zadanie na set</item>
         <item>Brak przerw na zadanie w secie</item>

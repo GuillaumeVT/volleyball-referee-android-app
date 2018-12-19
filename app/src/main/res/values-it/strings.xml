@@ -240,6 +240,7 @@
         <item>Partita in 1 set</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 tempi di riposo per set</item>
         <item>2 tempi di riposo per set</item>
         <item>1 tempo di riposo per set</item>
         <item>Nessun tempo di riposo per set</item>

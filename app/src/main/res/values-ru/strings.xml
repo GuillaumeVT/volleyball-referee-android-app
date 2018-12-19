@@ -240,6 +240,7 @@
         <item>Матч из 1 партии</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 командных перерыва в партии</item>
         <item>2 командных перерыва в партии</item>
         <item>1 командный перерыв в партии</item>
         <item>Нет командных перерывов</item>

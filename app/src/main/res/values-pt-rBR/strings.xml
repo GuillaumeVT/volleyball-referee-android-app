@@ -240,6 +240,7 @@
         <item>Partida de 1 set</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
+        <item>3 tempos por set</item>
         <item>2 tempos por set</item>
         <item>1 tempo por set</item>
         <item>Nenhum tempo por set</item>
