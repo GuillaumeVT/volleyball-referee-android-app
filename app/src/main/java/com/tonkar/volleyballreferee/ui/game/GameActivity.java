@@ -125,7 +125,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
             mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
             mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
-            initButtonOnClickListeners();
 
             mLeftTeamSetsText = findViewById(R.id.left_team_set_text);
             mRightTeamSetsText = findViewById(R.id.right_team_set_text);
@@ -278,11 +277,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     // UI Callbacks
-
-    private void initButtonOnClickListeners() {
-        mLeftTeamScoreButton.setOnClickListener(button -> increaseLeftScore(null));
-        mRightTeamScoreButton.setOnClickListener(button -> increaseRightScore(null));
-    }
 
     public void swapTeams(View view) {
         Log.i(Tags.GAME_UI, "Swap teams");

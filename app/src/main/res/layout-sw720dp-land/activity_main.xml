@@ -50,7 +50,7 @@
                                 android:onClick="resumeCurrentGame"
                                 android:text="@string/resume_game_title"
                                 android:textColor="@android:color/white"
-                                android:theme="@style/ButtonTheme.Primary"
+                                style="@style/VbrButton"
                                 app:backgroundTint="@color/colorPlayerIn"
                                 app:icon="@drawable/ic_resume"
                                 app:iconTint="@android:color/white"
@@ -95,7 +95,7 @@
                                         android:onClick="startIndoorGame"
                                         android:text="@string/new_volleyball_game"
                                         android:textColor="@android:color/white"
-                                        android:theme="@style/ButtonTheme.Primary"
+                                        style="@style/VbrButton"
                                         app:backgroundTint="@color/colorPrimary"
                                         app:icon="@drawable/ic_6x6"
                                         app:iconTint="@android:color/white"/>
@@ -108,7 +108,7 @@
                                         android:onClick="startIndoor4x4Game"
                                         android:text="@string/new_volleyball_game"
                                         android:textColor="@android:color/white"
-                                        android:theme="@style/ButtonTheme.Primary"
+                                        style="@style/VbrButton"
                                         app:backgroundTint="@color/colorPrimary"
                                         app:icon="@drawable/ic_4x4"
                                         app:iconTint="@android:color/white"/>
@@ -121,7 +121,7 @@
                                         android:onClick="startScoreBasedGame"
                                         android:text="@string/new_score_based_game"
                                         android:textColor="@android:color/white"
-                                        android:theme="@style/ButtonTheme.Primary"
+                                        style="@style/VbrButton"
                                         app:backgroundTint="@color/colorPrimary"
                                         app:icon="@drawable/ic_volleyball"
                                         app:iconTint="@android:color/white"/>
@@ -179,7 +179,7 @@
                                         android:onClick="startBeachGame"
                                         android:text="@string/new_beach_volleyball_game"
                                         android:textColor="@color/colorPrimaryText"
-                                        android:theme="@style/ButtonTheme.Primary"
+                                        style="@style/VbrButton"
                                         app:backgroundTint="@color/colorBeach"
                                         app:icon="@drawable/ic_sun"
                                         app:iconTint="@color/colorPrimaryText"/>
@@ -227,7 +227,7 @@
                                         android:onClick="startTimeBasedGame"
                                         android:text="@string/new_time_based_game"
                                         android:textColor="@android:color/white"
-                                        android:theme="@style/ButtonTheme.Primary"
+                                        style="@style/VbrButton"
                                         app:backgroundTint="@color/colorPrimaryText"
                                         app:icon="@drawable/ic_time_based"
                                         app:iconTint="@android:color/white"/>
@@ -240,7 +240,7 @@
                                         android:onClick="startScheduledGameFromCode"
                                         android:text="@string/new_scheduled_game_from_code"
                                         android:textColor="@android:color/white"
-                                        android:theme="@style/ButtonTheme.Primary"
+                                        style="@style/VbrButton"
                                         app:backgroundTint="@color/colorWeb"
                                         app:icon="@drawable/ic_scheduled_code"
                                         app:iconTint="@android:color/white"/>

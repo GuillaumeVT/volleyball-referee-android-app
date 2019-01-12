@@ -60,7 +60,7 @@
                         android:layout_margin="@dimen/default_margin_size"
                         android:textSize="@dimen/court_position_size"
                         app:cornerRadius="@dimen/form_button_radius"
-                        android:theme="@style/ButtonTheme.Team" />
+                        style="@style/VbrButton" />
 
             </RelativeLayout>
 
@@ -109,7 +109,7 @@
                         android:layout_margin="@dimen/default_margin_size"
                         android:textSize="@dimen/court_position_size"
                         app:cornerRadius="@dimen/form_button_radius"
-                        android:theme="@style/ButtonTheme.Team" />
+                        style="@style/VbrButton" />
 
             </RelativeLayout>
 
@@ -157,7 +157,7 @@
                         android:layout_margin="@dimen/default_margin_size"
                         android:textSize="@dimen/court_position_size"
                         app:cornerRadius="@dimen/form_button_radius"
-                        android:theme="@style/ButtonTheme.Team" />
+                        style="@style/VbrButton" />
 
             </RelativeLayout>
 
@@ -206,7 +206,7 @@
                         android:layout_margin="@dimen/default_margin_size"
                         android:textSize="@dimen/court_position_size"
                         app:cornerRadius="@dimen/form_button_radius"
-                        android:theme="@style/ButtonTheme.Team" />
+                        style="@style/VbrButton" />
 
             </RelativeLayout>
 

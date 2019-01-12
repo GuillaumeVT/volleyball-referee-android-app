@@ -21,21 +21,22 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
-    <style name="ButtonTheme" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="VbrButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="ButtonTheme.Primary">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="colorButtonNormal">@drawable/button_color</item>
-        <item name="colorAccent">@drawable/button_color</item>
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
-    <style name="ButtonTheme.Team" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="colorButtonNormal">@android:color/holo_red_light</item>
-        <item name="colorAccent">@android:color/holo_red_light</item>
+    <style name="VbrFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/colorPrimary</item>
+        <item name="backgroundTint">@android:color/white</item>
+    </style>
+
+    <style name="VbrPlusFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@android:color/white</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="srcCompat">@android:drawable/ic_input_add</item>
     </style>
 
     <style name="TextViewTheme" parent="TextAppearance.AppCompat.Headline">

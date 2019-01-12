@@ -8,4 +8,4 @@
     android:layout_gravity="center"
     android:textSize="@dimen/default_text_size"
     app:cornerRadius="@dimen/form_button_radius"
-    android:theme="@style/ButtonTheme.Team"/>
+    style="@style/VbrButton"/>

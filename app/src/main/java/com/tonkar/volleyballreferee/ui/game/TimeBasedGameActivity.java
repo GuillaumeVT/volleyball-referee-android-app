@@ -102,7 +102,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
             mLeftTeamScoreButton = findViewById(R.id.left_team_score_button);
             mRightTeamScoreButton = findViewById(R.id.right_team_score_button);
-            initButtonOnClickListeners();
 
             mLeftTeamServiceButton = findViewById(R.id.left_team_service_button);
             mRightTeamServiceButton = findViewById(R.id.right_team_service_button);
@@ -190,11 +189,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     // UI Callbacks
-
-    private void initButtonOnClickListeners() {
-        mLeftTeamScoreButton.setOnClickListener(button -> increaseLeftScore(null));
-        mRightTeamScoreButton.setOnClickListener(button -> increaseRightScore(null));
-    }
 
     public void swapTeams(View view) {
         Log.i(Tags.GAME_UI, "Swap teams");

@@ -224,8 +224,7 @@ public class IndoorCourtFragment extends CourtFragment {
         if (alertDialogFragment != null) {
             alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
                 @Override
-                public void onNegativeButtonClicked() {
-                }
+                public void onNegativeButtonClicked() {}
 
                 @Override
                 public void onPositiveButtonClicked() {
@@ -235,8 +234,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 }
 
                 @Override
-                public void onNeutralButtonClicked() {
-                }
+                public void onNeutralButtonClicked() {}
             });
         }
     }

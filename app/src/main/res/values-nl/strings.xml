@@ -286,10 +286,10 @@
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
         <item>Onbeperkt</item>
-        <item>5 serveert</item>
-        <item>4 serveert</item>
-        <item>3 serveert</item>
-        <item>2 serveert</item>
+        <item>5 opslagen</item>
+        <item>4 opslagen</item>
+        <item>3 opslagen</item>
+        <item>2 opslagen</item>
     </string-array>
 
 </resources>

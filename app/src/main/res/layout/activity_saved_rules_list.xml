@@ -84,6 +84,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_rules_button"
+                    style="@style/VbrPlusFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -91,11 +92,8 @@
                     android:layout_margin="@dimen/fab_shift_default"
                     android:clickable="true"
                     android:focusable="true"
-                    android:tint="@android:color/white"
-                    app:backgroundTint="@color/colorPrimary"
                     app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@android:drawable/ic_input_add"/>
+                    app:maxImageSize="@dimen/form_fab_icon_size"/>
 
         </RelativeLayout>
 

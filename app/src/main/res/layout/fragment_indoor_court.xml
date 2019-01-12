@@ -39,7 +39,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -89,7 +89,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -123,7 +123,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -148,7 +148,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -173,7 +173,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -206,7 +206,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -231,7 +231,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -256,7 +256,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -290,7 +290,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -315,7 +315,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 
@@ -340,7 +340,7 @@
                     android:layout_marginTop="@dimen/indoor_court_y_margin"
                     android:textSize="@dimen/court_position_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
         </RelativeLayout>
 

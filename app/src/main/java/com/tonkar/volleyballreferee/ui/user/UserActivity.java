@@ -39,14 +39,6 @@ public class UserActivity extends AuthenticationActivity {
 
         TextView userIdText = findViewById(R.id.user_id_text);
         userIdText.setText(String.format(Locale.getDefault(), getResources().getString(R.string.user_signed_in), PrefUtils.getAuthentication(this).getUserId()));
-
-        initButtonOnClickListeners();
-    }
-
-    private void initButtonOnClickListeners() {
-        findViewById(R.id.goto_account_button).setOnClickListener(button -> goToOnlineAccount(null));
-        findViewById(R.id.start_scheduled_list_game_button).setOnClickListener(button -> goToScheduledGames(null));
-        findViewById(R.id.sign_out_button).setOnClickListener(button -> signOut(null));
     }
 
     public void goToScheduledGames(View view) {

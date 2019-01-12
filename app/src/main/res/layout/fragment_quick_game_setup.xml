@@ -46,10 +46,10 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/home_team_color_button"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
-                    android:adjustViewBounds="true"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_shirt_color" />
@@ -93,7 +93,7 @@
                     android:layout_marginTop="@dimen/small_margin_size"
                     android:textSize="@dimen/default_text_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
             </LinearLayout>
 
@@ -133,10 +133,10 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/guest_team_color_button"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
-                    android:adjustViewBounds="true"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_shirt_color" />
@@ -181,7 +181,7 @@
                     android:layout_marginTop="@dimen/small_margin_size"
                     android:textSize="@dimen/default_text_size"
                     app:cornerRadius="@dimen/form_button_radius"
-                    android:theme="@style/ButtonTheme.Team" />
+                    style="@style/VbrButton" />
 
             </LinearLayout>
 
@@ -207,10 +207,10 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/switch_gender_button"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
-                    android:adjustViewBounds="true"
                     android:contentDescription="@string/gender_description"
                     app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/form_button_size"

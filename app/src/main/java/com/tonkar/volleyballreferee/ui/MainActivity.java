@@ -88,8 +88,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         initNavigationMenu();
 
-        initButtonOnClickListeners();
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             MaterialButton beachButton = findViewById(R.id.start_beach_game_button);
             beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
@@ -200,16 +198,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void initButtonOnClickListeners() {
-        findViewById(R.id.resume_game_button).setOnClickListener(button -> resumeCurrentGame(null));
-        findViewById(R.id.start_indoor_6x6_game_button).setOnClickListener(button -> startIndoorGame(null));
-        findViewById(R.id.start_indoor_4x4_game_button).setOnClickListener(button -> startIndoor4x4Game(null));
-        findViewById(R.id.start_score_based_game_button).setOnClickListener(button -> startScoreBasedGame(null));
-        findViewById(R.id.start_beach_game_button).setOnClickListener(button -> startBeachGame(null));
-        findViewById(R.id.start_time_based_game_button).setOnClickListener(button -> startTimeBasedGame(null));
-        findViewById(R.id.start_scheduled_code_game_button).setOnClickListener(button -> startScheduledGameFromCode(null));
     }
 
     public void resumeCurrentGame(View view) {

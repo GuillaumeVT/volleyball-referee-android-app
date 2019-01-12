@@ -35,15 +35,13 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/swap_teams_button"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
                     android:layout_weight="1"
-                    android:adjustViewBounds="true"
                     android:contentDescription="@string/switch_sides_description"
                     android:onClick="swapTeams"
-                    android:tint="@color/colorPrimary"
-                    app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
                     app:srcCompat="@drawable/ic_swap"/>
@@ -75,7 +73,7 @@
                     android:layout_weight="2"
                     android:onClick="increaseLeftScore"
                     android:textSize="@dimen/score_point_size"
-                    android:theme="@style/ButtonTheme.Team"/>
+                    style="@style/VbrButton"/>
 
             <RelativeLayout
                     android:layout_width="0dp"
@@ -84,16 +82,14 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/left_team_service_button"
+                        style="@style/VbrFab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/small_margin_size"
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
-                        android:adjustViewBounds="true"
                         android:contentDescription="@string/swap_first_service"
                         android:onClick="swapFirstService"
-                        android:tint="@color/colorPrimary"
-                        app:backgroundTint="@android:color/white"
                         app:fabCustomSize="@dimen/game_small_fab_size"
                         app:maxImageSize="@dimen/game_small_fab_icon_size"
                         app:srcCompat="@drawable/ic_service"/>
@@ -107,16 +103,14 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/right_team_service_button"
+                        style="@style/VbrFab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/small_margin_size"
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
-                        android:adjustViewBounds="true"
                         android:contentDescription="@string/swap_first_service"
                         android:onClick="swapFirstService"
-                        android:tint="@color/colorPrimary"
-                        app:backgroundTint="@android:color/white"
                         app:fabCustomSize="@dimen/game_small_fab_size"
                         app:maxImageSize="@dimen/game_small_fab_icon_size"
                         app:srcCompat="@drawable/ic_service"/>
@@ -130,7 +124,7 @@
                     android:layout_weight="2"
                     android:onClick="increaseRightScore"
                     android:textSize="@dimen/score_point_size"
-                    android:theme="@style/ButtonTheme.Team"/>
+                    style="@style/VbrButton"/>
 
         </LinearLayout>
 
@@ -143,14 +137,12 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/score_remove_button"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
-                    android:adjustViewBounds="true"
                     android:contentDescription="@string/remove_point_description"
                     android:onClick="removeLastPoint"
-                    android:tint="@color/colorPrimary"
-                    app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
                     app:srcCompat="@drawable/ic_score_revert"/>
