@@ -57,7 +57,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         Log.i(Tags.MAIN_UI, "Home");
-                        UiUtils.navigateToHome(this, false);
+                        UiUtils.navigateToHome(this);
                         break;
                     case R.id.action_purchase:
                         Log.i(Tags.BILLING, "Purchase");

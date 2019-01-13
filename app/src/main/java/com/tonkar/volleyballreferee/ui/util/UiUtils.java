@@ -247,28 +247,24 @@ public class UiUtils {
     }
 
     public static void navigateToHome(Activity activity) {
-        navigateToHome(activity, true);
-    }
-
-    public static void navigateToHome(Activity activity, boolean showResumeGameDialog) {
         Intent intent = new Intent(activity, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("show_resume_game", showResumeGameDialog);
+        intent.putExtra("show_resume_game", false);
         activity.startActivity(intent);
     }
 
     public static void navigateToHomeWithDialog(Activity activity, GameService gameService) {
         Log.i(Tags.GAME_UI, "Navigate to home");
         if (gameService.isMatchCompleted()) {
-            UiUtils.navigateToHome(activity, false);
+            UiUtils.navigateToHome(activity);
         } else if (GameType.TIME.equals(gameService.getGameType())) {
             TimeBasedGameService timeBasedGameService = (TimeBasedGameService) gameService;
             if (timeBasedGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
                 builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
-                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity, false));
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity));
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
                 AlertDialog alertDialog = builder.show();
@@ -279,7 +275,7 @@ public class UiUtils {
                 builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     Log.i(Tags.GAME_UI, "User accepts to stop");
                     timeBasedGameService.stop();
-                    UiUtils.navigateToHome(activity, false);
+                    UiUtils.navigateToHome(activity);
                 });
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to stop"));
                 AlertDialog alertDialog = builder.show();
@@ -288,7 +284,7 @@ public class UiUtils {
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
             builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
-            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity, false));
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity));
             builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
             AlertDialog alertDialog = builder.show();

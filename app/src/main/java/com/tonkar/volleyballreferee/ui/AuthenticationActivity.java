@@ -172,14 +172,14 @@ public abstract class AuthenticationActivity extends NavigationActivity {
         PrefUtils.signOut(this);
         if (!andSignInAgain) {
             UiUtils.makeText(this, getResources().getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToHome(this, false);
+            UiUtils.navigateToHome(this);
         }
     }
 
     public void signedIn(Authentication authentication) {
         PrefUtils.signIn(this, authentication);
         UiUtils.makeText(this, String.format(getResources().getString(R.string.user_signed_in), Authentication.Provider.GOOGLE.equals(authentication.getProvider()) ? "Google" : "Facebook"), Toast.LENGTH_LONG).show();
-        UiUtils.navigateToHome(this, false);
+        UiUtils.navigateToHome(this);
     }
 
 }

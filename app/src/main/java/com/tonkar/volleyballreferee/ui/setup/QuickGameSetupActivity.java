@@ -163,7 +163,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             if (recordedGamesService.hasSetupGame()) {
                 recordedGamesService.deleteSetupGame();
             }
-            UiUtils.navigateToHome(QuickGameSetupActivity.this, false);
+            UiUtils.navigateToHome(QuickGameSetupActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 

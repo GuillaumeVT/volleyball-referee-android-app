@@ -157,7 +157,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         }
 
         if (mRecordedGamesService.hasCurrentGame()) {
-            resumeCurrentGameWithDialog(savedInstanceState);
+            resumeCurrentGameWithDialog();
         }
 
         if (savedInstanceState != null) {
@@ -202,7 +202,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void resumeCurrentGame(View view) {
         Log.i(Tags.GAME_UI, "Resume game");
-        resumeCurrentGameWithDialog(null);
+        resumeCurrentGame();
     }
 
     public void startIndoorGame(View view) {
@@ -269,52 +269,51 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         setScheduledGameFromCodeListener(dialogFragment);
     }
 
-    private void resumeCurrentGameWithDialog(Bundle savedInstanceState) {
-        boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true);
+    private void resumeCurrentGameWithDialog() {
+        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("current_game");
+        boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true) || alertDialogFragment != null;
         getIntent().removeExtra("show_resume_game");
 
         if (mRecordedGamesService.hasCurrentGame() && showResumeGameDialog) {
-            AlertDialogFragment alertDialogFragment;
-
-            if (savedInstanceState == null) {
+            if (alertDialogFragment == null) {
                 alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_question),
                         getResources().getString(R.string.delete), getResources().getString(R.string.resume), getResources().getString(R.string.ignore));
                 alertDialogFragment.show(getSupportFragmentManager(), "current_game");
-            } else {
-                alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("current_game");
             }
 
-            if (alertDialogFragment != null) {
-                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                    @Override
-                    public void onNegativeButtonClicked() {
-                        Log.i(Tags.SAVED_GAMES, "Delete current game");
-                        mRecordedGamesService.deleteCurrentGame();
-                        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
-                        setResumeGameCardVisibility();
-                    }
+            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                @Override
+                public void onNegativeButtonClicked() {
+                    Log.i(Tags.SAVED_GAMES, "Delete current game");
+                    mRecordedGamesService.deleteCurrentGame();
+                    UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
+                    setResumeGameCardVisibility();
+                }
 
-                    @Override
-                    public void onPositiveButtonClicked() {
-                        Log.i(Tags.GAME_UI, "Start game activity and resume current game");
-                        GameService gameService = mRecordedGamesService.loadCurrentGame();
+                @Override
+                public void onPositiveButtonClicked() {
+                    resumeCurrentGame();
+                }
 
-                        if (gameService == null) {
-                            UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
-                        } else {
-                            if (GameType.TIME.equals(gameService.getGameType())) {
-                                final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
-                                startActivity(gameIntent);
-                            } else {
-                                final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                                startActivity(gameIntent);
-                            }
-                        }
-                    }
+                @Override
+                public void onNeutralButtonClicked() {}
+            });
+        }
+    }
 
-                    @Override
-                    public void onNeutralButtonClicked() {}
-                });
+    private void resumeCurrentGame() {
+        Log.i(Tags.GAME_UI, "Start game activity and resume current game");
+        GameService gameService = mRecordedGamesService.loadCurrentGame();
+
+        if (gameService == null) {
+            UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
+        } else {
+            if (GameType.TIME.equals(gameService.getGameType())) {
+                final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
+                startActivity(gameIntent);
+            } else {
+                final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(gameIntent);
             }
         }
     }
