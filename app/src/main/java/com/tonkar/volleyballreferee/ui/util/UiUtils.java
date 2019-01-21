@@ -251,7 +251,6 @@ public class UiUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("show_resume_game", false);
         activity.startActivity(intent);
     }
 
@@ -384,7 +383,7 @@ public class UiUtils {
         TextView textView = layout.findViewById(R.id.toast_text);
         textView.setText(text);
 
-        int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryLight);
+        int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryVariant);
         ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
         textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 

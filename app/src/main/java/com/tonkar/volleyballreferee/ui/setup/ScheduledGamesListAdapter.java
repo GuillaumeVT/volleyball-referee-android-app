@@ -120,7 +120,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
         switch (gameDescription.getGameType()) {
             case INDOOR_4X4:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
@@ -128,12 +128,12 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
                 break;
             case TIME:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_time_based);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorTime), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
                 break;
         }
 

@@ -95,7 +95,7 @@ public class LadderEventsDialog {
             }
 
             imageView.setImageResource(R.drawable.ic_timeout);
-            imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+            imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
 
             return imageView;
         }

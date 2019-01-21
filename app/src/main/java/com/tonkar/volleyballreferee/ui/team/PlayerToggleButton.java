@@ -39,7 +39,7 @@ public class PlayerToggleButton extends MaterialButton {
         mBackgroundColor = ContextCompat.getColor(context, R.color.colorDisabledButton);
         mTextColor = ContextCompat.getColor(context, R.color.colorDisabledText);
         mCheckedBackgroundColor = ContextCompat.getColor(context, R.color.colorPrimary);
-        mCheckedTextColor = ContextCompat.getColor(context, R.color.colorEnabledText);
+        mCheckedTextColor = ContextCompat.getColor(context, R.color.colorOnPrimary);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.default_text_size));
         color();
 

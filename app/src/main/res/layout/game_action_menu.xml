@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
             android:text="@string/index_game"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"/>
 
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
             android:text="@string/pref_keep_screen_on"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"/>
 
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
             android:text="@string/pref_interactive_notification"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"/>
 

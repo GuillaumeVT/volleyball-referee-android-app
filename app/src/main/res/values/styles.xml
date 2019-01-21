@@ -3,12 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/colorBackgroundMain</item>
-        <item name="android:windowBackground">@color/colorBackgroundMain</item>
-        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
-        <item name="android:textColorPrimaryInverse">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:textColorPrimary">@color/colorOnSurface</item>
+        <item name="android:textColorPrimaryInverse">@color/colorOnPrimary</item>
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
@@ -29,19 +30,19 @@
     <style name="VbrFab" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="android:adjustViewBounds">true</item>
         <item name="android:tint">@color/colorPrimary</item>
-        <item name="backgroundTint">@android:color/white</item>
+        <item name="backgroundTint">@color/colorOnPrimary</item>
     </style>
 
     <style name="VbrPlusFab" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="android:adjustViewBounds">true</item>
-        <item name="android:tint">@android:color/white</item>
-        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:tint">@color/colorOnSecondary</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
         <item name="srcCompat">@android:drawable/ic_input_add</item>
     </style>
 
     <style name="TextViewTheme" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="colorControlHighlight">@color/colorPrimaryLight</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="colorControlHighlight">@color/colorPrimaryVariant</item>
     </style>
 
     <style name="ToolbarTextTheme" parent="TextAppearance.AppCompat.Medium">
@@ -57,8 +58,8 @@
     <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/default_text_size</item>
-        <item name="android:colorBackground">@color/colorBackgroundMain</item>
-        <item name="android:windowBackground">@color/colorBackgroundMain</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
     </style>
 
     <style name="NumberPickerTheme" parent="AppTheme">

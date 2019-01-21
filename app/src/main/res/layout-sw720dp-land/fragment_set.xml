@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorBackgroundCardview">
+            app:cardBackgroundColor="@color/colorSurface">
 
             <FrameLayout
                 android:id="@+id/ladder_layout"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
                 android:layout_weight="2"
-                app:cardBackgroundColor="@color/colorBackgroundCardview">
+                app:cardBackgroundColor="@color/colorSurface">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
                 android:layout_weight="3"
-                app:cardBackgroundColor="@color/colorBackgroundCardview">
+                app:cardBackgroundColor="@color/colorSurface">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
                 android:layout_weight="3"
-                app:cardBackgroundColor="@color/colorBackgroundCardview">
+                app:cardBackgroundColor="@color/colorSurface">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
                 android:layout_weight="4"
-                app:cardBackgroundColor="@color/colorBackgroundCardview">
+                app:cardBackgroundColor="@color/colorSurface">
 
                 <LinearLayout
                     android:layout_width="match_parent"

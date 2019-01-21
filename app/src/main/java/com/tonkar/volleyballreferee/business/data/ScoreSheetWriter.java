@@ -855,8 +855,8 @@ public class ScoreSheetWriter {
                 "      font-size: 12px !important;\n" +
                 "    }\n" +
                 "    .vbr-body {\n" +
-                String.format("      color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorPrimaryText))) +
-                String.format("      background-color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorBackgroundMain))) +
+                String.format("      color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnBackground))) +
+                String.format("      background-color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorBackground))) +
                 "      width: 21cm;\n" +
                 "      max-width: 21cm;\n" +
                 "      margin-left: auto;\n" +
@@ -889,7 +889,7 @@ public class ScoreSheetWriter {
                 String.format("      background-color: %s;\n", guestLiberoBackgroundColor) +
                 "    }\n" +
                 "    .div-card {\n" +
-                String.format("      background-color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorBackgroundCardview))) +
+                String.format("      background-color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorSurface))) +
                 "      padding: 8px;\n" +
                 "      margin: 8px;\n" +
                 "      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n" +
@@ -991,7 +991,7 @@ public class ScoreSheetWriter {
                 "      padding: 4px;\n" +
                 "    }\n" +
                 "    .bordered-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorPrimaryText))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnSurface))) +
                 "      min-width: 25px;\n" +
                 "      text-align: center;\n" +
                 "      padding: 4px;\n" +
@@ -999,7 +999,7 @@ public class ScoreSheetWriter {
                 "      margin-bottom: -1px;\n" +
                 "    }\n" +
                 "    .set-anchor {\n" +
-                String.format("      color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorPrimaryText))) +
+                String.format("      color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnSurface))) +
                 "    }\n" +
                 "    .badge {\n" +
                 "      min-width: 25px;\n" +
@@ -1021,7 +1021,7 @@ public class ScoreSheetWriter {
                 "      min-width: 34px;\n" +
                 "    }\n" +
                 "    .border {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorPrimaryText))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnSurface))) +
                 "      margin-right: -1px;\n" +
                 "      margin-bottom: -1px;\n" +
                 "    }\n" +

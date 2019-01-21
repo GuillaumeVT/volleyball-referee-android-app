@@ -90,7 +90,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             MaterialButton beachButton = findViewById(R.id.start_beach_game_button);
-            beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryText), PorterDuff.Mode.SRC_IN));
+            beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
         }
 
         setResumeGameCardVisibility();
@@ -154,10 +154,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     public void onNeutralButtonClicked() {}
                 });
             }
-        }
-
-        if (mRecordedGamesService.hasCurrentGame()) {
-            resumeCurrentGameWithDialog();
         }
 
         if (savedInstanceState != null) {
@@ -267,38 +263,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         }
 
         setScheduledGameFromCodeListener(dialogFragment);
-    }
-
-    private void resumeCurrentGameWithDialog() {
-        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("current_game");
-        boolean showResumeGameDialog = getIntent().getBooleanExtra("show_resume_game", true) || alertDialogFragment != null;
-        getIntent().removeExtra("show_resume_game");
-
-        if (mRecordedGamesService.hasCurrentGame() && showResumeGameDialog) {
-            if (alertDialogFragment == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.resume_game_title), getResources().getString(R.string.resume_game_question),
-                        getResources().getString(R.string.delete), getResources().getString(R.string.resume), getResources().getString(R.string.ignore));
-                alertDialogFragment.show(getSupportFragmentManager(), "current_game");
-            }
-
-            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                @Override
-                public void onNegativeButtonClicked() {
-                    Log.i(Tags.SAVED_GAMES, "Delete current game");
-                    mRecordedGamesService.deleteCurrentGame();
-                    UiUtils.makeText(MainActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
-                    setResumeGameCardVisibility();
-                }
-
-                @Override
-                public void onPositiveButtonClicked() {
-                    resumeCurrentGame();
-                }
-
-                @Override
-                public void onNeutralButtonClicked() {}
-            });
-        }
     }
 
     private void resumeCurrentGame() {

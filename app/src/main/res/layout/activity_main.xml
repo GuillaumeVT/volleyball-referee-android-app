@@ -32,7 +32,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin_size"
-                        app:cardBackgroundColor="@color/colorBackgroundCardview">
+                        app:cardBackgroundColor="@color/colorSurface">
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/resume_game_button"
@@ -55,7 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin_size"
-                        app:cardBackgroundColor="@color/colorBackgroundCardview">
+                        app:cardBackgroundColor="@color/colorSurface">
 
                     <LinearLayout
                             android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                                     android:text="@string/new_volleyball_game"
                                     android:textColor="@android:color/white"
                                     style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorPrimary"
+                                    app:backgroundTint="@color/colorIndoor"
                                     app:icon="@drawable/ic_6x6"
                                     app:iconTint="@android:color/white"/>
 
@@ -101,7 +101,7 @@
                                     android:text="@string/new_volleyball_game"
                                     android:textColor="@android:color/white"
                                     style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorPrimary"
+                                    app:backgroundTint="@color/colorIndoor"
                                     app:icon="@drawable/ic_4x4"
                                     app:iconTint="@android:color/white"/>
 
@@ -114,7 +114,7 @@
                                     android:text="@string/new_score_based_game"
                                     android:textColor="@android:color/white"
                                     style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorPrimary"
+                                    app:backgroundTint="@color/colorIndoor"
                                     app:icon="@drawable/ic_volleyball"
                                     app:iconTint="@android:color/white"/>
 
@@ -129,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin_size"
-                        app:cardBackgroundColor="@color/colorBackgroundCardview">
+                        app:cardBackgroundColor="@color/colorSurface">
 
                     <LinearLayout
                             android:layout_width="match_parent"
@@ -161,11 +161,11 @@
                                     android:layout_margin="@dimen/small_margin_size"
                                     android:onClick="startBeachGame"
                                     android:text="@string/new_beach_volleyball_game"
-                                    android:textColor="@color/colorPrimaryText"
+                                    android:textColor="@color/colorOnSurface"
                                     style="@style/VbrButton"
                                     app:backgroundTint="@color/colorBeach"
                                     app:icon="@drawable/ic_sun"
-                                    app:iconTint="@color/colorPrimaryText"/>
+                                    app:iconTint="@color/colorOnSurface"/>
 
                         </LinearLayout>
 
@@ -178,7 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin_size"
-                        app:cardBackgroundColor="@color/colorBackgroundCardview">
+                        app:cardBackgroundColor="@color/colorSurface">
 
                     <LinearLayout
                             android:layout_width="match_parent"
@@ -211,7 +211,7 @@
                                     android:text="@string/new_time_based_game"
                                     android:textColor="@android:color/white"
                                     style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorPrimaryText"
+                                    app:backgroundTint="@color/colorOnSurface"
                                     app:icon="@drawable/ic_time_based"
                                     app:iconTint="@android:color/white"/>
 
