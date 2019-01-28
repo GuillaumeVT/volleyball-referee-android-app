@@ -804,12 +804,13 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void scheduleUserGameOnline(GameDescription gameDescription, final DataSynchronizationListener listener) {
+    public void scheduleUserGameOnline(GameDescription gameDescription, final boolean create, final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             try {
                 final byte[] bytes = gameDescriptionToByteArray(gameDescription);
 
-                JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, WebUtils.USER_GAME_API_URL, bytes, PrefUtils.getAuthentication(mContext),
+                int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
+                JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, WebUtils.USER_GAME_API_URL, bytes, PrefUtils.getAuthentication(mContext),
                         response -> {
                             if (listener != null) {
                                 listener.onSynchronizationSucceeded();
@@ -831,6 +832,32 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     listener.onSynchronizationFailed();
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelUserGameOnline(long id, DataSynchronizationListener listener) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", String.valueOf(id));
+        String parameters = JsonStringRequest.getParameters(params);
+
+        if (PrefUtils.isSyncOn(mContext)) {
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {
+                        if (listener != null) {
+                            listener.onSynchronizationSucceeded();
+                        }
+                    },
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while canceling the scheduled game", error.networkResponse.statusCode));
+                        }
+                        if (listener != null) {
+                            listener.onSynchronizationFailed();
+                        }
+                    }
+            );
+            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }
 

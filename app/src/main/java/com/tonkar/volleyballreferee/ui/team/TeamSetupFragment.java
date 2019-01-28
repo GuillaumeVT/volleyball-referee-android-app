@@ -528,7 +528,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeConfirmItemVisibility();
+            ((GameSetupActivity) getActivity()).computeStartItemVisibility();
         } else if (getActivity() instanceof SavedTeamActivity) {
             ((SavedTeamActivity) getActivity()).computeSaveItemVisibility();
         }

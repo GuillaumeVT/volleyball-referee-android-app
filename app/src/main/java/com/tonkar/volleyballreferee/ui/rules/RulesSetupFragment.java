@@ -399,7 +399,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeConfirmItemVisibility();
+            ((GameSetupActivity) getActivity()).computeStartItemVisibility();
         } else if (getActivity() instanceof SavedRulesActivity) {
             ((SavedRulesActivity) getActivity()).computeSaveItemVisibility();
         }

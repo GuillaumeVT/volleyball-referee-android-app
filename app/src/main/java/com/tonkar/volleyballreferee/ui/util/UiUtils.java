@@ -19,6 +19,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 
 import android.widget.ImageView;
@@ -57,6 +58,7 @@ import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
+import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -297,6 +299,17 @@ public class UiUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
+    }
+
+    public static void navigateToRecordedGameAfterDelay(Activity activity, long delay) {
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            Intent intent = new Intent(activity, RecordedGamesListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.startActivity(intent);
+        }, delay);
     }
 
     public static void animate(Context context, final View view) {

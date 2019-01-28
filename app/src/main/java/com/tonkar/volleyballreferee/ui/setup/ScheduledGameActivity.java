@@ -64,15 +64,19 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private Spinner              mHomeTeamSpinner;
     private Spinner              mGuestTeamSpinner;
     private ArrayAdapter<String> mTeamAdapter;
-    private MenuItem             mConfirmItem;
+    private MenuItem             mSaveItem;
+    private MenuItem             mDeleteItem;
+    private boolean              mCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String gameDescriptionStr = getIntent().getStringExtra("game");
+        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduled_game);
 
-        String gameDescriptionStr = getIntent().getStringExtra("game");
-        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
+        mCreate = getIntent().getBooleanExtra("create", true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -182,7 +186,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
             GenderType genderType = mGameDescription.getGenderType().next();
             updateGender(genderType);
             updateTeamSpinners(true);
-            computeConfirmItemVisibility();
+            computeItemsVisibility();
         });
 
         SavedRulesService savedRulesService = new SavedRules(this);
@@ -230,7 +234,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         refereeNameInput.setText(mGameDescription.getRefereeName());
 
-        computeConfirmItemVisibility();
+        computeItemsVisibility();
     }
 
     @Override
@@ -244,8 +248,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_scheduled_game, menu);
 
-        mConfirmItem = menu.findItem(R.id.action_confirm);
-        computeConfirmItemVisibility();
+        mSaveItem = menu.findItem(R.id.action_save);
+        mDeleteItem = menu.findItem(R.id.action_delete);
+        computeItemsVisibility();
 
         return true;
     }
@@ -253,8 +258,11 @@ public class ScheduledGameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_confirm:
-                confirmSetup();
+            case R.id.action_save:
+                scheduleGame();
+                return true;
+            case R.id.action_delete:
+                cancelGame();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -312,12 +320,12 @@ public class ScheduledGameActivity extends AppCompatActivity {
         } else {
             mGameDescription.setGuestTeamName(teamName);
         }
-        computeConfirmItemVisibility();
+        computeItemsVisibility();
     }
 
     private void updateRules(String rulesName) {
         mGameDescription.setRulesName(rulesName);
-        computeConfirmItemVisibility();
+        computeItemsVisibility();
     }
 
     public void updateDate(int year, int month, int day) {
@@ -335,22 +343,36 @@ public class ScheduledGameActivity extends AppCompatActivity {
         mTimeInputButton.setText(mTimeFormatter.format(mScheduleDate.getTime()));
     }
 
-    private void computeConfirmItemVisibility() {
-        if (mConfirmItem != null) {
-            if (mGameDescription.getHomeTeamName().isEmpty() || mGameDescription.getGuestTeamName().isEmpty() || mGameDescription.getRulesName().isEmpty()) {
-                Log.i(Tags.SCHEDULE_UI, "Confirm button is invisible");
-                mConfirmItem.setVisible(false);
-            } else {
-                Log.i(Tags.SCHEDULE_UI, "Confirm button is visible");
-                mConfirmItem.setVisible(true);
-            }
-        }
+    private void computeItemsVisibility() {
+        mDeleteItem.setVisible(!mCreate);
+        mSaveItem.setVisible(!mGameDescription.getHomeTeamName().isEmpty() && !mGameDescription.getGuestTeamName().isEmpty() && !mGameDescription.getRulesName().isEmpty());
     }
 
-    private void confirmSetup() {
-        Log.i(Tags.SCHEDULE_UI, "Validate schedule");
+    private void scheduleGame() {
+        Log.i(Tags.SCHEDULE_UI, "Schedule game");
         RecordedGamesService recordedGamesService = new RecordedGames(this);
-        recordedGamesService.scheduleUserGameOnline(mGameDescription,
+        recordedGamesService.scheduleUserGameOnline(mGameDescription, mCreate,
+                new DataSynchronizationListener() {
+                    @Override
+                    public void onSynchronizationSucceeded() {
+                        final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onSynchronizationFailed() {
+                        UiUtils.makeText(ScheduledGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void cancelGame() {
+        Log.i(Tags.SCHEDULE_UI, "Schedule game");
+        RecordedGamesService recordedGamesService = new RecordedGames(this);
+        recordedGamesService.cancelUserGameOnline(mGameDescription.getGameDate(),
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {

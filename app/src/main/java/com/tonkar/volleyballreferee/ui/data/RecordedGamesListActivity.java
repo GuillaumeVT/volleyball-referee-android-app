@@ -21,7 +21,6 @@ import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
@@ -59,8 +58,6 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
         mRecordedGamesService = new RecordedGames(this);
 
         List<RecordedGameService> recordedGameServiceList = mRecordedGamesService.getRecordedGameServiceList();
-        // Inverse list to have most recent games on top of the list
-        Collections.reverse(recordedGameServiceList);
 
         final ListView recordedGamesList = findViewById(R.id.recorded_games_list);
         mRecordedGamesListAdapter = new RecordedGamesListAdapter(this, getLayoutInflater(), recordedGameServiceList);

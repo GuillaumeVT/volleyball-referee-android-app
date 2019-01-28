@@ -60,5 +60,7 @@ public interface RecordedGamesService {
 
     void getUserScheduledGames(AsyncGameRequestListener listener);
     
-    void scheduleUserGameOnline(GameDescription gameDescription, DataSynchronizationListener listener);
+    void scheduleUserGameOnline(GameDescription gameDescription, boolean create, DataSynchronizationListener listener);
+
+    void cancelUserGameOnline(long id, DataSynchronizationListener listener);
 }

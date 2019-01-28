@@ -37,7 +37,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class GameSetupActivity extends AppCompatActivity {
 
     private GameService mGameService;
-    private MenuItem    mConfirmItem;
+    private MenuItem    mStartItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class GameSetupActivity extends AppCompatActivity {
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
         
-        computeConfirmItemVisibility();
+        computeStartItemVisibility();
     }
 
     @Override
@@ -81,8 +81,8 @@ public class GameSetupActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_game_setup, menu);
 
-        mConfirmItem = menu.findItem(R.id.action_confirm);
-        computeConfirmItemVisibility();
+        mStartItem = menu.findItem(R.id.action_start);
+        computeStartItemVisibility();
 
         return true;
     }
@@ -90,8 +90,8 @@ public class GameSetupActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_confirm:
-                confirmSetup();
+            case R.id.action_start:
+                startGame();
                 return true;
             case android.R.id.home:
                 cancelSetup();
@@ -101,23 +101,23 @@ public class GameSetupActivity extends AppCompatActivity {
         }
     }
 
-    public void computeConfirmItemVisibility() {
-        if (mConfirmItem != null) {
+    public void computeStartItemVisibility() {
+        if (mStartItem != null) {
             if (mGameService.getTeamName(TeamType.HOME).isEmpty() || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getTeamName(TeamType.GUEST).isEmpty() || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getCaptain(TeamType.HOME) < 1 || mGameService.getCaptain(TeamType.GUEST) < 1
                     || mGameService.getRules().getName().length() == 0) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
-                mConfirmItem.setVisible(false);
+                mStartItem.setVisible(false);
             } else {
                 Log.i(Tags.SETUP_UI, "Confirm button is visible");
-                mConfirmItem.setVisible(true);
+                mStartItem.setVisible(true);
             }
         }
     }
 
-    public void confirmSetup() {
-        Log.i(Tags.SETUP_UI, "Validate setup");
+    public void startGame() {
+        Log.i(Tags.SETUP_UI, "Start game");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.confirm_game_setup_question));

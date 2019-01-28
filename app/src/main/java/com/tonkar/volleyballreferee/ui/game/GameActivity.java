@@ -500,6 +500,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         deleteToolbarCountdown();
         deleteFragmentCountdown();
         UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
+        UiUtils.navigateToRecordedGameAfterDelay(this, 5000L);
     }
 
     @Override
@@ -741,4 +742,5 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             recordedGamesServiceHandler.setRecordedGamesService(mRecordedGamesService);
         }
     }
+
 }

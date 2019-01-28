@@ -18,6 +18,7 @@ import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
@@ -74,8 +75,30 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
             GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getGameType())) {
+                if (GameStatus.SCHEDULED.equals(gameDescription.getMatchStatus())) {
+                    switch (gameDescription.getGameType()) {
+                        case INDOOR:
+                            scheduleIndoorGame(gameDescription, false);
+                            break;
+                        case INDOOR_4X4:
+                            scheduleIndoor4x4Game(gameDescription, false);
+                            break;
+                        case BEACH:
+                            scheduleBeachGame(gameDescription, false);
+                            break;
+                    }
+                } else {
+                    mRecordedGamesService.getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                }
+            }
+        });
+
+        scheduledGamesList.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
+            if (!GameType.TIME.equals(gameDescription.getGameType())) {
                 mRecordedGamesService.getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
             }
+            return true;
         });
 
         updateScheduledGamesList();
@@ -258,28 +281,40 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     public void scheduleIndoorGame(View view) {
         GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor game");
-
-        final Intent intent = new Intent(this, ScheduledGameActivity.class);
-        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
-        startActivity(intent);
+        scheduleIndoorGame(gameDescription, true);
     }
 
     public void scheduleIndoor4x4Game(View view) {
         GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor 4x4 game");
-
-        final Intent intent = new Intent(this, ScheduledGameActivity.class);
-        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
-        startActivity(intent);
+        scheduleIndoor4x4Game(gameDescription, true);
     }
 
     public void scheduleBeachGame(View view) {
         GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new beach game");
+        scheduleBeachGame(gameDescription, true);
+    }
 
+    private void scheduleIndoorGame(GameDescription gameDescription, boolean create) {
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor game");
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        intent.putExtra("create", create);
+        startActivity(intent);
+    }
+
+    private void scheduleIndoor4x4Game(GameDescription gameDescription, boolean create) {
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor 4x4 game");
+        final Intent intent = new Intent(this, ScheduledGameActivity.class);
+        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        intent.putExtra("create", create);
+        startActivity(intent);
+    }
+
+    private void scheduleBeachGame(GameDescription gameDescription, boolean create) {
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new beach game");
+        final Intent intent = new Intent(this, ScheduledGameActivity.class);
+        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        intent.putExtra("create", create);
         startActivity(intent);
     }
 

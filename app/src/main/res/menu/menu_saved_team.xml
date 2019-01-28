@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_save_team"
-        android:icon="@drawable/ic_confirm_menu"
+        android:icon="@drawable/ic_save_menu"
         android:iconTint="@android:color/white"
         android:orderInCategory="1"
         android:title="@string/save_team"
