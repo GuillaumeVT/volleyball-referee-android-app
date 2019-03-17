@@ -682,6 +682,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                     }
 
                     final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    UiUtils.animateNavigationView(transaction);
                     transaction.replace(R.id.game_container, fragment).commit();
 
                     return true;

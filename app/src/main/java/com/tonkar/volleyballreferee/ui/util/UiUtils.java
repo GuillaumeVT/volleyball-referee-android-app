@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import android.util.Log;
@@ -292,6 +293,10 @@ public class UiUtils {
 
     public static void animateCreate(Activity activity) {
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public static void animateNavigationView(FragmentTransaction transaction) {
+        transaction.setCustomAnimations(R.anim.push_down_in, R.anim.push_down_out);
     }
 
     public static void playNotificationSound(Context context) {

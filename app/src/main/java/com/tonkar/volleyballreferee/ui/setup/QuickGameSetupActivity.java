@@ -195,6 +195,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                     }
 
                     final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    UiUtils.animateNavigationView(transaction);
                     transaction.replace(R.id.quick_game_setup_container, fragment).commit();
 
                     return true;

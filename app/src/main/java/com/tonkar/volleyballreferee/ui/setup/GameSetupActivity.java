@@ -194,6 +194,7 @@ public class GameSetupActivity extends AppCompatActivity {
                     }
 
                     final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    UiUtils.animateNavigationView(transaction);
                     transaction.replace(R.id.game_setup_container, fragment).commit();
 
                     return true;
