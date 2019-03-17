@@ -78,7 +78,7 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {}
 
     @Override
-    public void onTeamRotated(TeamType teamType) {}
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {

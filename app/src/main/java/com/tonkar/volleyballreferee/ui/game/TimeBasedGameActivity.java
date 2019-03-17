@@ -303,7 +303,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {}
 
     @Override
-    public void onTeamRotated(TeamType teamType) {}
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {

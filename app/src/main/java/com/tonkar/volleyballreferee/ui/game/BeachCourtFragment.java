@@ -113,7 +113,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {}
 
     @Override
-    public void onTeamRotated(TeamType teamType) {
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {
         updateAll();
     }
 

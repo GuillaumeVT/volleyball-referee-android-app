@@ -77,6 +77,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
 
             intent.putExtra("game_date", recordedGameService.getGameDate());
             startActivity(intent);
+            UiUtils.animateForward(this);
         });
 
         updateRecordedGamesList();

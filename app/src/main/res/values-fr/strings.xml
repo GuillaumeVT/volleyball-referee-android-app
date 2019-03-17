@@ -7,14 +7,12 @@
     <string name="new_score_based_game">Panneau de score</string>
     <string name="new_time_based_game">En temps</string>
     <string name="new_scheduled_game_from_code">Avec code</string>
-    <string name="permission_title">À propos des autorisations</string>
-    <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
-    <string name="resume_game_title">Reprendre le match</string>
-    <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le reprendre ou le supprimer?</string>
+    <string name="resume_game_title">Continuer le match</string>
+    <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le continuer ou le supprimer?</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="resume">Reprendre</string>
+    <string name="resume">Continuer</string>
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
@@ -133,6 +131,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Supprimer le match</string>
+    <string name="reschedule_match">Re-programmer le match</string>
+    <string name="edit_start_match">Éditer puis démarrer le match</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">@string/resume_game_title</string>
 
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>

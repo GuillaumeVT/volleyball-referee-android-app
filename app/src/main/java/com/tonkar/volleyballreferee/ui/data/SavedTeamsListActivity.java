@@ -78,6 +78,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
             intent.putExtra("kind", team.getGameType().toString());
             intent.putExtra("create", false);
             startActivity(intent);
+            UiUtils.animateForward(this);
         });
 
         mIsFabOpen = false;
@@ -123,6 +124,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         intent.putExtra("kind", gameType.toString());
         intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateCreate(this);
     }
 
     @Override

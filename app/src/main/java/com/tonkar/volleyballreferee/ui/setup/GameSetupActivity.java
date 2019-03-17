@@ -58,8 +58,9 @@ public class GameSetupActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        final boolean create = getIntent().getBooleanExtra("create", true);
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.game_setup_nav);
-        initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
+        initGameSetupNavigation(gameSetupNavigation, savedInstanceState, create);
         
         computeStartItemVisibility();
     }
@@ -133,6 +134,7 @@ public class GameSetupActivity extends AppCompatActivity {
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
+            UiUtils.animateCreate(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -169,19 +171,19 @@ public class GameSetupActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
-    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
+    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
         gameSetupNavigation.setOnNavigationItemSelectedListener(item -> {
                     final Fragment fragment;
 
                     switch (item.getItemId()) {
                         case R.id.home_team_tab:
-                            fragment = TeamSetupFragment.newInstance(TeamType.HOME);
+                            fragment = TeamSetupFragment.newInstance(TeamType.HOME, true, create);
                             break;
                         case R.id.guest_team_tab:
-                            fragment = TeamSetupFragment.newInstance(TeamType.GUEST);
+                            fragment = TeamSetupFragment.newInstance(TeamType.GUEST, true, create);
                             break;
                         case R.id.rules_tab:
-                            fragment = RulesSetupFragment.newInstance();
+                            fragment = RulesSetupFragment.newInstance(true, create);
                             break;
                         case R.id.misc_tab:
                             fragment = MiscSetupFragment.newInstance();

@@ -19,9 +19,6 @@ import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.rules.Rules;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -132,41 +129,6 @@ public class SavedRules implements SavedRulesService {
     }
 
     // Read saved rules
-
-    @Override
-    public void migrateSavedRules() {
-        String filename = "device_saved_rules.json";
-        File rulesFile = mContext.getFileStreamPath(filename);
-
-        if (rulesFile != null && rulesFile.exists()) {
-            Log.i(Tags.SAVED_RULES, String.format("Migrate saved rules from %s", filename));
-
-            try {
-                FileInputStream inputStream = mContext.openFileInput(filename);
-                List<Rules> rulesList = readRulesStream(inputStream);
-                inputStream.close();
-
-                final List<RulesEntity> rulesEntities = new ArrayList<>();
-
-                for (Rules rules : rulesList) {
-                    rulesEntities.add(new RulesEntity(rules.getName(), writeRules(rules)));
-                }
-
-                new Thread() {
-                    public void run() {
-                        AppDatabase.getInstance(mContext).rulesDao().insertAll(rulesEntities);
-                        syncRulesOnline();
-                    }
-                }.start();
-
-                mContext.deleteFile(filename);
-            } catch (FileNotFoundException e) {
-                Log.i(Tags.SAVED_RULES, String.format("%s saved rules file does not exist", filename));
-            } catch (JsonParseException | IOException e) {
-                Log.e(Tags.SAVED_RULES, "Exception while reading rules", e);
-            }
-        }
-    }
 
     @Override
     public boolean hasSavedRules() {

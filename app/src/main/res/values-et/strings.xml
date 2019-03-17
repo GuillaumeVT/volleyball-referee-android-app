@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Seisu tabloo</string>
     <string name="new_time_based_game">Ajaline piirang</string>
     <string name="new_scheduled_game_from_code">Sisesta kood</string>
-    <string name="permission_title">Õigused</string>
-    <string name="permission_message">Antud rakendusele on vajalik andmete salvestamine antud seadmel selleks, et saaks tulemusi jagada.</string>
     <string name="resume_game_title">Jätka mängu</string>
     <string name="resume_game_question">Rakenduses salvestatud lõpetamata mäng. Kas te soovite antud mängu jätkata või kustutada?</string>
     <string name="resume_game_error">Mängu jätkamine pole võimalik.</string>
@@ -133,6 +131,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Kustuta mängu</string>
+    <string name="reschedule_match">Mänguaja ümbertõstmine</string>
+    <string name="edit_start_match">Muuda ja pärast alusta mänguga</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">@string/resume_game_title</string>
 
     <!-- Settings activity -->
     <string name="settings">Seaded</string>

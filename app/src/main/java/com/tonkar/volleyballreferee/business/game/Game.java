@@ -685,13 +685,13 @@ public abstract class Game extends BaseGame {
     void rotateToNextPositions(TeamType teamType) {
         Log.i(Tags.TEAM, String.format("Rotate all players of %s team to next position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToNextPositions();
-        notifyTeamRotated(teamType);
+        notifyTeamRotated(teamType, true);
     }
 
     void rotateToPreviousPositions(TeamType teamType) {
         Log.i(Tags.TEAM, String.format("Rotate all players of %s team to previous position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToPreviousPositions();
-        notifyTeamRotated(teamType);
+        notifyTeamRotated(teamType, false);
     }
 
     void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
@@ -708,10 +708,10 @@ public abstract class Game extends BaseGame {
         }
     }
 
-    void notifyTeamRotated(TeamType teamType) {
+    void notifyTeamRotated(TeamType teamType, boolean clockwise) {
         Log.i(Tags.TEAM, String.format("%s team rotated", teamType.toString()));
         for (final TeamListener listener : mTeamListeners) {
-            listener.onTeamRotated(teamType);
+            listener.onTeamRotated(teamType, clockwise);
         }
     }
 

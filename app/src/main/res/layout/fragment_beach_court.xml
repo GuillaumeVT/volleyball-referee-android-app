@@ -1,233 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/beach_court"
-              android:baselineAligned="false"
-              android:gravity="center"
-              android:orientation="horizontal"
-              android:weightSum="3">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:paddingEnd="@dimen/court_x_padding"
+                                                   android:paddingStart="@dimen/court_x_padding"
+                                                   android:background="@drawable/beach_court">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/beach_court_x_margin"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <LinearLayout
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/beach_court_y_margin"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:id="@+id/guideline_vertical_left_1"
+            app:layout_constraintGuide_percent="0.1"/>
 
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/left_team_service_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_service"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/left_team_sanction_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"/>
-
-                <com.google.android.material.button.MaterialButton
-                        android:id="@+id/left_team_position_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_size"
-                        android:textSize="@dimen/court_position_size"
-                        app:cornerRadius="@dimen/form_button_radius"
-                        style="@style/VbrButton" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/beach_court_y_margin"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:id="@+id/guideline_vertical_left_2"
+            app:layout_constraintGuide_percent="0.33"/>
 
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/left_team_service_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_service"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/left_team_sanction_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"/>
-
-                <com.google.android.material.button.MaterialButton
-                        android:id="@+id/left_team_position_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_size"
-                        android:textSize="@dimen/court_position_size"
-                        app:cornerRadius="@dimen/form_button_radius"
-                        style="@style/VbrButton" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/beach_court_x_margin"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <LinearLayout
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/beach_court_y_margin"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:id="@+id/guideline_vertical_right_1"
+            app:layout_constraintGuide_percent="0.9"/>
 
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/right_team_sanction_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"/>
-
-                <com.google.android.material.button.MaterialButton
-                        android:id="@+id/right_team_position_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_size"
-                        android:textSize="@dimen/court_position_size"
-                        app:cornerRadius="@dimen/form_button_radius"
-                        style="@style/VbrButton" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/right_team_service_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_service"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/beach_court_y_margin"
-            android:gravity="center"
+            android:id="@+id/guideline_vertical_right_2"
+            app:layout_constraintGuide_percent="0.66"/>
+
+    <androidx.constraintlayout.widget.Guideline
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline_horizontal_top"
+            app:layout_constraintGuide_percent="0.33"/>
 
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2">
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline_horizontal_bottom"
+            app:layout_constraintGuide_percent="0.66"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/right_team_sanction_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"/>
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/beach_court_y_padding"
+            android:paddingBottom="@dimen/beach_court_y_padding"
+            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left_2"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_top"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top"
+            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left_1"
+            app:layout_constrainedWidth="true">
 
-                <com.google.android.material.button.MaterialButton
-                        android:id="@+id/right_team_position_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_size"
-                        android:textSize="@dimen/court_position_size"
-                        app:cornerRadius="@dimen/form_button_radius"
-                        style="@style/VbrButton" />
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
 
-            </RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/left_team_position_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/position_2_title"
+                android:layout_margin="@dimen/default_margin_size"
+                android:textSize="@dimen/court_position_size"
+                app:cornerRadius="@dimen/form_button_radius"
+                style="@style/VbrButton" />
 
-            <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
+    </RelativeLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/right_team_service_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_service"/>
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/beach_court_y_padding"
+            android:paddingTop="@dimen/beach_court_y_padding"
+            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left_2"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_bottom"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom"
+            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left_1"
+            app:layout_constrainedWidth="true">
 
-            </LinearLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
 
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/left_team_position_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/position_1_title"
+                android:layout_margin="@dimen/default_margin_size"
+                android:textSize="@dimen/court_position_size"
+                app:cornerRadius="@dimen/form_button_radius"
+                style="@style/VbrButton" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/beach_court_y_padding"
+            android:paddingTop="@dimen/beach_court_y_padding"
+            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right_2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right_1"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_bottom"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom"
+            app:layout_constrainedWidth="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/right_team_position_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/position_2_title"
+                android:layout_margin="@dimen/default_margin_size"
+                android:textSize="@dimen/court_position_size"
+                app:cornerRadius="@dimen/form_button_radius"
+                style="@style/VbrButton" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/beach_court_y_padding"
+            android:paddingBottom="@dimen/beach_court_y_padding"
+            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right_2"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_top"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top"
+            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right_1"
+            app:layout_constrainedWidth="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/right_team_position_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/position_1_title"
+                android:layout_margin="@dimen/default_margin_size"
+                android:textSize="@dimen/court_position_size"
+                app:cornerRadius="@dimen/form_button_radius"
+                style="@style/VbrButton" />
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/left_team_service_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_service"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left_1"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_top"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top"
+            app:layout_constrainedWidth="true"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/left_team_service_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_service"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left_1"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_bottom"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom"
+            app:layout_constrainedWidth="true"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/right_team_service_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_service"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right_1"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_top"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top"
+            app:layout_constrainedWidth="true"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/right_team_service_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_service"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right_1"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_bottom"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom"
+            app:layout_constrainedWidth="true"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

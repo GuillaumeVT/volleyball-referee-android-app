@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 public class Indoor4x4CourtFragment extends IndoorCourtFragment {
 
@@ -64,5 +65,37 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
         }
 
         return mView;
+    }
+
+    @Override
+    protected void rotateAnimation(TeamType teamType, boolean clockwise) {
+        View layoutPosition1 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_1) : mView.findViewById(R.id.right_team_layout_1);
+        View layoutPosition2 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_2) : mView.findViewById(R.id.right_team_layout_2);
+        View layoutPosition3 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_3) : mView.findViewById(R.id.right_team_layout_3);
+        View layoutPosition4 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_4) : mView.findViewById(R.id.right_team_layout_4);
+
+        if (clockwise) {
+            layoutPosition1.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
+            layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
+            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() -> {
+                getFragmentManager()
+                        .beginTransaction()
+                        .detach(Indoor4x4CourtFragment.this)
+                        .attach(Indoor4x4CourtFragment.this)
+                        .commit();
+            }).start();
+        } else {
+            layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
+            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
+            layoutPosition4.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() -> {
+                getFragmentManager()
+                        .beginTransaction()
+                        .detach(Indoor4x4CourtFragment.this)
+                        .attach(Indoor4x4CourtFragment.this)
+                        .commit();
+            }).start();
+        }
     }
 }

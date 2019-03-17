@@ -57,32 +57,37 @@ public abstract class NavigationActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         Log.i(Tags.MAIN_UI, "Home");
-                        UiUtils.navigateToHome(this);
+                        UiUtils.navigateToHome(this, R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case R.id.action_purchase:
                         Log.i(Tags.BILLING, "Purchase");
                         Intent intent = new Intent(this, PurchasesListActivity.class);
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_saved_rules:
                         Log.i(Tags.SAVED_RULES, "Saved Rules");
                         intent = new Intent(this, SavedRulesListActivity.class);
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_settings:
                         Log.i(Tags.SETTINGS, "Settings");
                         intent = new Intent(this, SettingsActivity.class);
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_recorded_games:
                         Log.i(Tags.SAVED_GAMES, "Recorded games");
                         intent = new Intent(this, RecordedGamesListActivity.class);
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_saved_teams:
                         Log.i(Tags.SAVED_TEAMS, "Saved teams");
                         intent = new Intent(this, SavedTeamsListActivity.class);
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_view_account:
                         Log.i(Tags.MAIN_UI, "Home");
@@ -95,6 +100,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                                 intent = new Intent(this, UserSignInActivity.class);
                             }
                             startActivity(intent);
+                            UiUtils.animateForward(this);
                         }
                         break;
                     case R.id.action_view_scheduled_games:
@@ -108,17 +114,20 @@ public abstract class NavigationActivity extends AppCompatActivity {
                                 intent = new Intent(this, UserSignInActivity.class);
                             }
                             startActivity(intent);
+                            UiUtils.animateForward(this);
                         }
                         break;
                     case R.id.action_view_live_games:
                         Log.i(Tags.WEB, "Live games");
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_search_online_games:
                         Log.i(Tags.WEB, "Search online games");
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
                         startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_facebook:
                         Log.i(Tags.WEB, "Facebook");
@@ -126,10 +135,18 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         try {
                             browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
                             startActivity(browserIntent);
+                            UiUtils.animateForward(this);
                         } catch (ActivityNotFoundException e) {
                             browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
                             startActivity(browserIntent);
+                            UiUtils.animateForward(this);
                         }
+                        break;
+                    case R.id.action_credits:
+                        Log.i(Tags.MAIN_UI, "Credits");
+                        intent = new Intent(this, CreditsActivity.class);
+                        startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                 }
             }

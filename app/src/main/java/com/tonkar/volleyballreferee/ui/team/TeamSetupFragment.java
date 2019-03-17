@@ -58,10 +58,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     public TeamSetupFragment() {}
 
-    public static TeamSetupFragment newInstance(TeamType teamType) {
-        return newInstance(teamType, true, true);
-    }
-
     public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext, boolean create) {
         TeamSetupFragment fragment = new TeamSetupFragment();
 
@@ -70,6 +66,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         args.putBoolean("is_game", isGameContext);
         args.putBoolean("create", create);
         args.putInt("number_of_shirts", 25);
+
         fragment.setArguments(args);
         return fragment;
     }

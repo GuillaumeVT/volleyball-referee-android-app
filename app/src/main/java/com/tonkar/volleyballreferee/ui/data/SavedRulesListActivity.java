@@ -76,6 +76,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
             intent.putExtra("rules", mSavedRulesService.writeRules(rules));
             intent.putExtra("create", false);
             startActivity(intent);
+            UiUtils.animateForward(this);
         });
 
         mIsFabOpen = false;
@@ -117,6 +118,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         intent.putExtra("rules", mSavedRulesService.writeRules(mSavedRulesService.createRules(gameType)));
         intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateCreate(this);
     }
 
     @Override

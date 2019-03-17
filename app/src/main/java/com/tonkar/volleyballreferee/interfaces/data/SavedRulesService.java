@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface SavedRulesService {
 
-    void migrateSavedRules();
-
     boolean hasSavedRules();
 
     List<Rules> getSavedRules();

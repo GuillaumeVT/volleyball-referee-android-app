@@ -95,6 +95,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        UiUtils.animateCreate(this);
     }
 
     private void deleteRules() {
@@ -109,6 +110,7 @@ public class SavedRulesActivity extends AppCompatActivity {
             Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -122,6 +124,7 @@ public class SavedRulesActivity extends AppCompatActivity {
             Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();

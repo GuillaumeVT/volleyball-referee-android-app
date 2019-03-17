@@ -344,8 +344,10 @@ public class ScheduledGameActivity extends AppCompatActivity {
     }
 
     private void computeItemsVisibility() {
-        mDeleteItem.setVisible(!mCreate);
-        mSaveItem.setVisible(!mGameDescription.getHomeTeamName().isEmpty() && !mGameDescription.getGuestTeamName().isEmpty() && !mGameDescription.getRulesName().isEmpty());
+        if (mDeleteItem != null && mSaveItem != null) {
+            mDeleteItem.setVisible(!mCreate);
+            mSaveItem.setVisible(!mGameDescription.getHomeTeamName().isEmpty() && !mGameDescription.getGuestTeamName().isEmpty() && !mGameDescription.getRulesName().isEmpty());
+        }
     }
 
     private void scheduleGame() {
@@ -360,6 +362,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        UiUtils.animateCreate(ScheduledGameActivity.this);
                     }
 
                     @Override
@@ -381,6 +384,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        UiUtils.animateBackward(ScheduledGameActivity.this);
                     }
 
                     @Override

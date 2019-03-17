@@ -83,7 +83,7 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
     }
 
     @Override
-    public void onTeamRotated(TeamType teamType) {}
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
     public void setGameService(GameService gameService) {

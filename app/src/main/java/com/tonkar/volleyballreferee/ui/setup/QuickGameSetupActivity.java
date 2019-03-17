@@ -58,8 +58,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        final boolean create = getIntent().getBooleanExtra("create", true);
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.quick_game_setup_nav);
-        initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
+        initGameSetupNavigation(gameSetupNavigation, savedInstanceState, create);
 
         computeStartItemVisibility();
     }
@@ -127,6 +128,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
+            UiUtils.animateCreate(this);
         } else {
             if (GameType.BEACH.equals(mGameService.getGameType())) {
                 saveTeams();
@@ -138,6 +140,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(gameIntent);
+            UiUtils.animateCreate(this);
         }
     }
 
@@ -171,19 +174,19 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
-    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
+    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
         gameSetupNavigation.setOnNavigationItemSelectedListener(item -> {
                     final Fragment fragment;
 
                     switch (item.getItemId()) {
                         case R.id.teams_tab:
-                            fragment = QuickGameSetupFragment.newInstance();
+                            fragment = QuickGameSetupFragment.newInstance(create);
                             break;
                         case R.id.rules_tab:
                             if (GameType.TIME.equals(mGameService.getGameType())) {
                                 fragment = null;
                             } else {
-                                fragment = RulesSetupFragment.newInstance();
+                                fragment = RulesSetupFragment.newInstance(true, create);
                             }
                             break;
                         default:

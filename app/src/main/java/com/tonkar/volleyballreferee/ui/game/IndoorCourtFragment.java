@@ -149,14 +149,14 @@ public class IndoorCourtFragment extends CourtFragment {
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         super.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
 
-        onTeamRotated(mTeamOnLeftSide);
-        onTeamRotated(mTeamOnRightSide);
+        update(mTeamOnLeftSide);
+        update(mTeamOnRightSide);
     }
 
     @Override
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
         if (PositionType.BENCH.equals(positionType)) {
-            onTeamRotated(teamType);
+            update(teamType);
         } else {
             updatePosition(teamType, number, getTeamPositions(teamType).get(positionType));
             updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
@@ -167,14 +167,55 @@ public class IndoorCourtFragment extends CourtFragment {
         if (ActionOriginType.USER.equals(actionOriginType)) {
             confirmStartingLineup();
 
-            if (!mIndoorTeamService.hasRemainingSubstitutions(teamType) && !mIndoorTeamService.isLibero(teamType, number)) {
+            if (mIndoorTeamService.isStartingLineupConfirmed() && !mIndoorTeamService.hasRemainingSubstitutions(teamType) && !mIndoorTeamService.isLibero(teamType, number)) {
                 UiUtils.showNotification(getContext(), String.format(getResources().getString(R.string.all_substitutions_used), mIndoorTeamService.getTeamName(teamType)));
             }
         }
     }
 
     @Override
-    public void onTeamRotated(TeamType teamType) {
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {
+        rotateAnimation(teamType, clockwise);
+    }
+
+    protected void rotateAnimation(TeamType teamType, boolean clockwise) {
+        View layoutPosition1 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_1) : mView.findViewById(R.id.right_team_layout_1);
+        View layoutPosition2 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_2) : mView.findViewById(R.id.right_team_layout_2);
+        View layoutPosition3 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_3) : mView.findViewById(R.id.right_team_layout_3);
+        View layoutPosition4 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_4) : mView.findViewById(R.id.right_team_layout_4);
+        View layoutPosition5 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_5) : mView.findViewById(R.id.right_team_layout_5);
+        View layoutPosition6 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_6) : mView.findViewById(R.id.right_team_layout_6);
+
+        if (clockwise) {
+            layoutPosition1.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
+            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition5.getX()).y(layoutPosition5.getY()).setDuration(500L).start();
+            layoutPosition5.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
+            layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
+            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() -> {
+                getFragmentManager()
+                        .beginTransaction()
+                        .detach(IndoorCourtFragment.this)
+                        .attach(IndoorCourtFragment.this)
+                        .commit();
+            }).start();
+        } else {
+            layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
+            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
+            layoutPosition4.animate().setStartDelay(0L).x(layoutPosition5.getX()).y(layoutPosition5.getY()).setDuration(500L).start();
+            layoutPosition5.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
+            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() -> {
+                getFragmentManager()
+                        .beginTransaction()
+                        .detach(IndoorCourtFragment.this)
+                        .attach(IndoorCourtFragment.this)
+                        .commit();
+            }).start();
+        }
+    }
+
+    private void update(TeamType teamType) {
         final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
         final Map<PositionType, ImageView> teamSanctionImages = getTeamSanctionImages(teamType);
 
@@ -209,9 +250,11 @@ public class IndoorCourtFragment extends CourtFragment {
             if (alertDialogFragment == null) {
                 alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
                         getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
+                setStartingLineupDialogListener(alertDialogFragment);
                 alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
+            } else {
+                setStartingLineupDialogListener(alertDialogFragment);
             }
-            setStartingLineupDialogListener(alertDialogFragment);
         }
     }
 
@@ -255,7 +298,7 @@ public class IndoorCourtFragment extends CourtFragment {
         if (mIndoorTeamService.isStartingLineupConfirmed()) {
             if (mIndoorTeamService.isCaptain(teamType, number)) {
                 // the captain is back on court, refresh the team
-                onTeamRotated(teamType);
+                update(teamType);
             } else if (!mIndoorTeamService.hasActingCaptainOnCourt(teamType)) {
                 // there is no captain on court, request one
                 showCaptainSelectionDialog(teamType);
@@ -271,7 +314,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
                 mIndoorTeamService.setActingCaptain(teamType, selectedNumber);
                 // refresh the team with the new captain
-                onTeamRotated(teamType);
+                update(teamType);
             }
         };
         playerSelectionDialog.show();

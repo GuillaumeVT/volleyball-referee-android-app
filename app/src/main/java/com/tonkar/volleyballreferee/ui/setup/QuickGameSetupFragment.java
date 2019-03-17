@@ -23,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.RecordedTeam;
-import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -31,7 +30,6 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -55,8 +53,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     public QuickGameSetupFragment() {}
 
-    public static QuickGameSetupFragment newInstance() {
-        return new QuickGameSetupFragment();
+    public static QuickGameSetupFragment newInstance(boolean create) {
+        QuickGameSetupFragment fragment = new QuickGameSetupFragment();
+
+        Bundle args = new Bundle();
+        args.putBoolean("create", create);
+
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -64,9 +68,10 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         Log.i(Tags.SETUP_UI, "Create game setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_game_setup, container, false);
 
+        final boolean create = getArguments().getBoolean("create");
+
         final RecordedGamesService recordedGamesService = new RecordedGames(getContext());
         final SavedTeamsService savedTeamsService = new SavedTeams(getContext());
-        final SavedRulesService savedRulesService = new SavedRules(getContext());
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
         updateGender(mGameService.getGenderType());
@@ -75,6 +80,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             GenderType genderType = mGameService.getGenderType().next();
             updateGender(genderType);
         });
+        mGenderButton.setEnabled(create);
 
         mHomeTeamCaptainButton = view.findViewById(R.id.home_team_captain_number_button);
         mGuestTeamCaptainButton = view.findViewById(R.id.guest_team_captain_number_button);
@@ -133,6 +139,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void afterTextChanged(Editable s) {}
         });
+        homeTeamNameInput.setEnabled(create);
 
         final ClearableTextInputAutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
@@ -149,6 +156,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void afterTextChanged(Editable s) {}
         });
+        guestTeamNameInput.setEnabled(create);
 
         mHomeTeamColorButton = view.findViewById(R.id.home_team_color_button);
         mHomeTeamColorButton.setOnClickListener(button -> {

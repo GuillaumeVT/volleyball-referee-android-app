@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface SavedTeamsService {
 
-    void migrateSavedTeams();
-
     boolean hasSavedTeams();
 
     List<RecordedTeam> getSavedTeamList();

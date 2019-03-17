@@ -73,8 +73,22 @@
         </item>
 
         <item
-                android:id="@+id/action_facebook"
-                android:icon="@drawable/ic_facebook"
-                android:title="@string/facebook"/>
+                android:id="@+id/misc_group"
+                android:title="@string/misc_tab">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                            android:id="@+id/action_facebook"
+                            android:icon="@drawable/ic_facebook"
+                            android:title="@string/facebook"/>
+
+                    <item
+                            android:id="@+id/action_credits"
+                            android:icon="@drawable/ic_info"
+                            android:title="@string/credit_title"/>
+                </group>
+            </menu>
+        </item>
+
     </group>
 </menu>

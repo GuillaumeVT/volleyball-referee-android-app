@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Marcador</string>
     <string name="new_time_based_game">Jogo por tempo</string>
     <string name="new_scheduled_game_from_code">A partir do Código</string>
-    <string name="permission_title">Permissões</string>
-    <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para partilhar resultados dos jogos.</string>
     <string name="resume_game_title">Continuar jogo</string>
     <string name="resume_game_question">Essa aplicação encontrou um jogo a decorrer. Gostaria de continuar ou apagar esse jogo?</string>
     <string name="resume_game_error">O jogo não pode ser retomado.</string>
@@ -133,6 +131,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Apagar o jogo</string>
+    <string name="reschedule_match">Reagendar o jogo</string>
+    <string name="edit_start_match">Editar e de seguida iniciar o jogo</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">Continuar o jogo</string>
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>

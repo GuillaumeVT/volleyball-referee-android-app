@@ -40,9 +40,6 @@ import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -133,6 +130,11 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         }
 
         return games;
+    }
+
+    @Override
+    public RecordedGameService getCurrentRecordedGameService() {
+        return mRecordedGame;
     }
 
     @Override
@@ -384,7 +386,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void onTeamRotated(TeamType teamType) {
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {
         saveCurrentGame();
         pushCurrentSetOnline();
     }
@@ -596,46 +598,6 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     // Read recorded games
-
-    @Override
-    public void migrateRecordedGames() {
-        String currentFilename = "current_game.json";
-        mContext.deleteFile(currentFilename);
-        String setupFilename = "setup_game.json";
-        mContext.deleteFile(setupFilename);
-
-        String filename = "device_games_history.json";
-        File gamesFile = mContext.getFileStreamPath(filename);
-
-        if (gamesFile != null && gamesFile.exists()) {
-            Log.i(Tags.SAVED_GAMES, String.format("Migrate recorded games from %s", gamesFile));
-
-            try {
-                FileInputStream inputStream = mContext.openFileInput(filename);
-                List<RecordedGame> games = readRecordedGamesStream(inputStream);
-                inputStream.close();
-
-                final List<GameEntity> gameEntities = new ArrayList<>();
-
-                for (RecordedGame game : games) {
-                    gameEntities.add(new GameEntity(game.getGameDate(), game.getLeagueName(), game.getDivisionName(), writeRecordedGame(game)));
-                }
-
-                new Thread() {
-                    public void run() {
-                        AppDatabase.getInstance(mContext).gameDao().insertAll(gameEntities);
-                        syncGamesOnline();
-                    }
-                }.start();
-
-                mContext.deleteFile(filename);
-            } catch (FileNotFoundException e) {
-                Log.i(Tags.SAVED_GAMES, String.format("%s recorded games file does not exist", filename));
-            } catch (JsonParseException | IOException e) {
-                Log.e(Tags.SAVED_GAMES, "Exception while reading games", e);
-            }
-        }
-    }
 
     @Override
     public boolean hasRecordedGames() {

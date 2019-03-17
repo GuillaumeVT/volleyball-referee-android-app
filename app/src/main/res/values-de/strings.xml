@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Anzeigetafel</string>
     <string name="new_time_based_game">Zeitbasiert</string>
     <string name="new_scheduled_game_from_code">Mit Code</string>
-    <string name="permission_title">Berechtigungen</string>
-    <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
     <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
     <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>
@@ -133,6 +131,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Spiel löschen</string>
+    <string name="reschedule_match">Spiel neu planen</string>
+    <string name="edit_start_match">Spiel anpassen und starten</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">@string/resume_game_title</string>
 
     <!-- Settings activity -->
     <string name="settings">Einstellungen</string>

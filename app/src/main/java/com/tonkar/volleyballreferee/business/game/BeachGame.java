@@ -79,7 +79,7 @@ public class BeachGame extends Game implements BeachTeamService {
     public void swapPlayers(TeamType teamType) {
         if (isFirstTimeServing(teamType)) {
             currentSet().getTeamComposition(teamType).rotateToNextPositions();
-            notifyTeamRotated(teamType);
+            notifyTeamRotated(teamType, true);
         }
     }
 

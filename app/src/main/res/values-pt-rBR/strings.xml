@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Placar</string>
     <string name="new_time_based_game">Partida por tempo</string>
     <string name="new_scheduled_game_from_code">Utilizar código</string>
-    <string name="permission_title">Permissões</string>
-    <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>
@@ -133,6 +131,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Excluir a partida</string>
+    <string name="reschedule_match">Reagendar a partida</string>
+    <string name="edit_start_match">Editar e Iniciar a partida</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">@string/resume_game_title</string>
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>

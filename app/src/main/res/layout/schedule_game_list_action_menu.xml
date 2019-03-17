@@ -8,11 +8,11 @@
               android:gravity="start">
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/action_navigate_home"
+            android:id="@+id/action_reschedule_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/navigate_home"
+            android:text="@string/reschedule_match"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
@@ -20,26 +20,17 @@
             android:foreground="?android:selectableItemBackground"/>
 
     <View
+            android:id="@+id/reschedule_match_separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorDisabledButton"/>
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/action_index_game"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/index_game"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"/>
-
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/action_share_game"
+            android:id="@+id/action_start_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/share"
+            android:text="@string/start_match"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
@@ -47,11 +38,11 @@
             android:foreground="?android:selectableItemBackground"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/action_toss_coin"
+            android:id="@+id/action_edit_start_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/toss_coin"
+            android:text="@string/edit_start_match"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
@@ -64,40 +55,15 @@
             android:background="@color/colorDisabledButton"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/action_reset_set"
+            android:id="@+id/action_delete_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/reset_set"
+            android:text="@string/delete_match"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
             android:foreground="?android:selectableItemBackground"/>
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDisabledButton"/>
-
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/keep_screen_on"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/pref_keep_screen_on"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"/>
-
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/interactive_notification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/pref_interactive_notification"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"/>
 
 </LinearLayout>

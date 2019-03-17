@@ -8,5 +8,5 @@ public interface TeamListener {
 
     void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType);
 
-    void onTeamRotated(TeamType teamType);
+    void onTeamRotated(TeamType teamType, boolean clockwise);
 }

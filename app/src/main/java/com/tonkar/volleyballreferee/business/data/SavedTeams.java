@@ -25,9 +25,6 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -231,41 +228,6 @@ public class SavedTeams implements SavedTeamsService {
     }
 
     // Read saved teams
-
-    @Override
-    public void migrateSavedTeams() {
-        String filename = "device_saved_teams.json";
-        File teamsFile = mContext.getFileStreamPath(filename);
-
-        if (teamsFile != null && teamsFile.exists()) {
-            Log.i(Tags.SAVED_TEAMS, String.format("Migrate saved teams from %s", filename));
-
-            try {
-                FileInputStream inputStream = mContext.openFileInput(filename);
-                List<RecordedTeam> teams = readTeamsStream(inputStream);
-                inputStream.close();
-
-                final List<TeamEntity> teamEntities = new ArrayList<>();
-
-                for (RecordedTeam team : teams) {
-                    teamEntities.add(new TeamEntity(team.getName(), team.getGenderType().toString(), team.getGameType().toString(), writeTeam(team)));
-                }
-
-                new Thread() {
-                    public void run() {
-                        AppDatabase.getInstance(mContext).teamDao().insertAll(teamEntities);
-                        syncTeamsOnline();
-                    }
-                }.start();
-
-                mContext.deleteFile(filename);
-            } catch (FileNotFoundException e) {
-                Log.i(Tags.SAVED_TEAMS, String.format("%s saved teams file does not exist", filename));
-            } catch (JsonParseException | IOException e) {
-                Log.e(Tags.SAVED_TEAMS, "Exception while reading teams", e);
-            }
-        }
-    }
 
     @Override
     public boolean hasSavedTeams() {

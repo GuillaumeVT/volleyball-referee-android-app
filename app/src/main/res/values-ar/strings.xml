@@ -7,8 +7,6 @@
     <string name="new_score_based_game">لوحة النتائج</string>
     <string name="new_time_based_game">محدد الوقت</string>
     <string name="new_scheduled_game_from_code">من الرمز</string>
-    <string name="permission_title">حول صلاحيات التطبيق</string>
-    <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
     <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في استئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
@@ -127,6 +125,13 @@
     <string name="position_4_title">4</string>
     <string name="position_5_title">5</string>
     <string name="position_6_title">6</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">حذف المباراة</string>
+    <string name="reschedule_match">إعادة جدولة المباراة</string>
+    <string name="edit_start_match">عدل ثم إبدأ المباراة</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">@string/resume_game_title</string>
 
     <!-- Settings activity -->
     <string name="settings">الإعدادات</string>

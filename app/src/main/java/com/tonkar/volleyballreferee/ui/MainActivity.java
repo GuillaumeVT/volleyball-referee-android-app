@@ -1,17 +1,14 @@
 package com.tonkar.volleyballreferee.ui;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -61,8 +58,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
-
     private RecordedGamesService mRecordedGamesService;
 
     @Override
@@ -102,10 +97,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         SavedTeamsService savedTeamsService = new SavedTeams(applicationContext);
         SavedRulesService savedRulesService = new SavedRules(applicationContext);
 
-        savedRulesService.migrateSavedRules();
-        savedTeamsService.migrateSavedTeams();
-        mRecordedGamesService.migrateRecordedGames();
-
         if (mRecordedGamesService.hasCurrentGame()) {
             try {
                 mRecordedGamesService.loadCurrentGame();
@@ -126,34 +117,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             savedTeamsService.syncTeamsOnline();
             mRecordedGamesService.syncGamesOnline();
             sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            AlertDialogFragment alertDialogFragment;
-
-            if (savedInstanceState == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.permission_title), getResources().getString(R.string.permission_message),
-                        getResources().getString(android.R.string.ok));
-                alertDialogFragment.show(getSupportFragmentManager(), "permission");
-            }
-            else {
-                alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("permission");
-            }
-
-            if (alertDialogFragment != null) {
-                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                    @Override
-                    public void onNegativeButtonClicked() {
-                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_STORAGE);
-                    }
-
-                    @Override
-                    public void onPositiveButtonClicked() {}
-
-                    @Override
-                    public void onNeutralButtonClicked() {}
-                });
-            }
         }
 
         if (savedInstanceState != null) {
@@ -190,6 +153,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 Log.i(Tags.BILLING, "Purchase");
                 Intent intent = new Intent(this, PurchasesListActivity.class);
                 startActivity(intent);
+                UiUtils.animateForward(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -208,7 +172,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
+        intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void startBeachGame(View view) {
@@ -218,7 +184,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
+        intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void startIndoor4x4Game(View view) {
@@ -228,7 +196,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
+        intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void startTimeBasedGame(View view) {
@@ -238,7 +208,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
+        intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void startScoreBasedGame(View view) {
@@ -248,7 +220,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
+        intent.putExtra("create", true);
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void startScheduledGameFromCode(View view) {
@@ -275,9 +249,11 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             if (GameType.TIME.equals(gameService.getGameType())) {
                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                 startActivity(gameIntent);
+                UiUtils.animateCreate(this);
             } else {
                 final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(gameIntent);
+                UiUtils.animateCreate(this);
             }
         }
     }
@@ -349,10 +325,11 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     if (alertDialogFragment == null) {
                         alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code), getResources().getString(R.string.scheduled_game_question),
                                 getResources().getString(R.string.no), getResources().getString(R.string.yes));
+                        setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
                         alertDialogFragment.show(getSupportFragmentManager(), "game_code_edit");
+                    } else {
+                        setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
                     }
-
-                    setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
                     break;
                 case LIVE:
                     gameService.restoreGame(recordedGameService);
@@ -362,6 +339,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(gameIntent);
+                    UiUtils.animateCreate(this);
                     break;
                 default:
                     break;
@@ -414,6 +392,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(gameIntent);
+                    UiUtils.animateCreate(MainActivity.this);
                 }
 
                 @Override
@@ -426,10 +405,12 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     } else {
                         setupIntent = new Intent(MainActivity.this, GameSetupActivity.class);
                     }
+                    setupIntent.putExtra("create", false);
                     setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(setupIntent);
+                    UiUtils.animateForward(MainActivity.this);
                 }
 
                 @Override

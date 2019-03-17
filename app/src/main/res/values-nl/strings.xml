@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Scorebord</string>
     <string name="new_time_based_game">Tijdgebaseerd</string>
     <string name="new_scheduled_game_from_code">Vanuit code</string>
-    <string name="permission_title">Over rechten</string>
-    <string name="permission_message">Deze applicatie heeft de opslagrechten nodig om de resultaten van de wedstrijd te delen.</string>
     <string name="resume_game_title">Spel hervatten</string>
     <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u dit te hervatten of te verwijderen?</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>
@@ -133,6 +131,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Verwijder de wedstrijd</string>
+    <string name="reschedule_match">Verander de wedstrijd</string>
+    <string name="edit_start_match">Bewerk en start de wedstrijd</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">Hervat de wedstrijd</string>
 
     <!-- Settings activity -->
     <string name="settings">Instellingen</string>

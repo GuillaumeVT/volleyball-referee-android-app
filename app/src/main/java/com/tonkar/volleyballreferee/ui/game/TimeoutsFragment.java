@@ -77,7 +77,7 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {}
 
     @Override
-    public void onTeamRotated(TeamType teamType) {}
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
     public void onTimeoutUpdated(TeamType teamType, int maxCount, int newCount) {}

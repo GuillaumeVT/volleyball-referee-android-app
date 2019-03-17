@@ -13,6 +13,7 @@ import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.AuthenticationActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
 
@@ -45,12 +46,14 @@ public class UserActivity extends AuthenticationActivity {
         Log.i(Tags.WEB, "Go to scheduled games");
         final Intent intent = new Intent(this, ScheduledGamesListActivity.class);
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void goToOnlineAccount(View view) {
         Log.i(Tags.WEB, "View online account");
         final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.USER_URL));
         startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     public void signOut(View view) {

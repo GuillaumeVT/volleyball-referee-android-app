@@ -113,7 +113,7 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     }
 
     @Override
-    public void onTeamRotated(TeamType teamType) {}
+    public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {

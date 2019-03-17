@@ -36,10 +36,9 @@
 
     <dimen name="main_image_height">120dp</dimen>
 
-    <dimen name="indoor_court_y_margin">8dp</dimen>
-    <dimen name="beach_court_x_margin">24dp</dimen>
-    <dimen name="beach_court_y_margin">16dp</dimen>
-    <dimen name="indoor_court_x_padding">16dp</dimen>
+    <dimen name="indoor_court_y_margin">32dp</dimen>
+    <dimen name="beach_court_y_padding">32dp</dimen>
+    <dimen name="court_x_padding">16dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>

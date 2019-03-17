@@ -153,7 +153,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
         if (mGameService.isMatchCompleted()) {
             UiUtils.shareRecordedGame(mActivity, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
         } else {
-            UiUtils.shareGame(mActivity, mActivity.getWindow(), mGameService);
+            UiUtils.shareRecordedGame(mActivity, mRecordedGamesService.getCurrentRecordedGameService());
         }
         dismiss();
     }

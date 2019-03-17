@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -18,11 +17,10 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 
 import android.widget.ImageView;
+import androidx.annotation.AnimRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -36,7 +34,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -61,7 +58,6 @@ import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Locale;
 import java.util.Random;
@@ -169,51 +165,6 @@ public class UiUtils {
         }
     }
 
-    public static void shareGame(Context context, Window window, GameService gameService) {
-        Log.i(Tags.UTILS_UI, "Share screen");
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            View rootView = window.getDecorView().findViewById(android.R.id.content);
-            View screenView = rootView.getRootView();
-            screenView.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
-            screenView.setDrawingCacheEnabled(false);
-
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-            File filedir = new File(Environment.getExternalStorageDirectory(),"Screenshots");
-            filedir.mkdirs();
-
-            String title = String.format(Locale.getDefault(), "%s_%s_%d", gameService.getTeamName(TeamType.HOME), gameService.getTeamName(TeamType.GUEST), System.currentTimeMillis());
-            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, null);
-            if (path == null) {
-                UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
-            } else {
-                Uri bitmapUri = Uri.parse(path);
-
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("image/*");
-
-                String summary = gameService.getGameSummary();
-                if (PrefUtils.isPrefDataSyncEnabled(context)) {
-                    summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, gameService.getGameDate());
-                }
-
-                intent.putExtra(Intent.EXTRA_TEXT, summary);
-                intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
-                try {
-                    context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
-                } catch (ActivityNotFoundException e) {
-                    Log.e(Tags.UTILS_UI, "Exception while sharing", e);
-                    UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
-                }
-            }
-        } else {
-            Log.w(Tags.UTILS_UI, "No permission to share");
-        }
-    }
-
     public static void shareRecordedGame(Context context, RecordedGameService recordedGameService) {
         Log.i(Tags.UTILS_UI, "Share recorded game");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -248,12 +199,17 @@ public class UiUtils {
         }
     }
 
-    public static void navigateToHome(Activity activity) {
+    public static void navigateToHome(Activity activity, @AnimRes int animIn, @AnimRes int animOut) {
         Intent intent = new Intent(activity, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
+        activity.overridePendingTransition(animIn, animOut);
+    }
+
+    public static void navigateToHome(Activity activity) {
+        navigateToHome(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     public static void navigateToHomeWithDialog(Activity activity, GameService gameService) {
@@ -299,6 +255,7 @@ public class UiUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
+        UiUtils.animateForward(activity);
     }
 
     public static void navigateToRecordedGameAfterDelay(Activity activity, long delay) {
@@ -309,6 +266,7 @@ public class UiUtils {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             activity.startActivity(intent);
+            UiUtils.animateForward(activity);
         }, delay);
     }
 
@@ -322,6 +280,18 @@ public class UiUtils {
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.bounce_view);
         animation.setInterpolator(new BounceInterpolator());
         view.startAnimation(animation);
+    }
+
+    public static void animateForward(Activity activity) {
+        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public static void animateBackward(Activity activity) {
+        activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    public static void animateCreate(Activity activity) {
+        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public static void playNotificationSound(Context context) {

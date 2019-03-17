@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Tablica wyników</string>
     <string name="new_time_based_game">Rozpocznij grę na czas</string>
     <string name="new_scheduled_game_from_code">Użyj kodu</string>
-    <string name="permission_title">O uprawnieniach</string>
-    <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
     <string name="resume_game_title">Wznów gre</string>
     <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ja wznowić czy usunąć?</string>
     <string name="resume_game_error">Gra nie może zostać wznowiona.</string>

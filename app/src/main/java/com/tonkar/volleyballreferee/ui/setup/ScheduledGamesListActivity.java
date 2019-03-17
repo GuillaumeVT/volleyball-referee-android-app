@@ -16,17 +16,12 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.GameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
-import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
-import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
-import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
@@ -75,30 +70,16 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
             GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                if (GameStatus.SCHEDULED.equals(gameDescription.getMatchStatus())) {
-                    switch (gameDescription.getGameType()) {
-                        case INDOOR:
-                            scheduleIndoorGame(gameDescription, false);
-                            break;
-                        case INDOOR_4X4:
-                            scheduleIndoor4x4Game(gameDescription, false);
-                            break;
-                        case BEACH:
-                            scheduleBeachGame(gameDescription, false);
-                            break;
-                    }
-                } else {
-                    mRecordedGamesService.getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
+                switch (gameDescription.getMatchStatus()) {
+                    case SCHEDULED:
+                    case LIVE:
+                        ScheduleGameListActionMenu scheduleGameListActionMenu = ScheduleGameListActionMenu.newInstance(gameDescription);
+                        scheduleGameListActionMenu.show(getSupportFragmentManager(), "schedule_game_list_action_menu");
+                        break;
+                    default:
+                        break;
                 }
             }
-        });
-
-        scheduledGamesList.setOnItemLongClickListener((adapterView, view, i, l) -> {
-            GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
-            if (!GameType.TIME.equals(gameDescription.getGameType())) {
-                mRecordedGamesService.getUserGame(gameDescription.getGameDate(), ScheduledGamesListActivity.this);
-            }
-            return true;
         });
 
         updateScheduledGamesList();
@@ -118,10 +99,6 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
                 showFABMenu();
             }
         });
-
-        if (savedInstanceState != null) {
-            restoreEditScheduledGameDialog();
-        }
     }
 
     @Override
@@ -174,38 +151,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {}
 
     @Override
-    public void onUserGameReceived(RecordedGameService recordedGameService) {
-        if (recordedGameService != null) {
-            final GameService gameService = GameFactory.createGame(recordedGameService);
-            Log.i(Tags.SCHEDULE_UI, "Start game activity after receiving game");
-
-            switch (recordedGameService.getMatchStatus()) {
-                case SCHEDULED:
-                    mRecordedGamesService.saveSetupGame(gameService);
-                    AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("schedule_game_edit");
-                    if (alertDialogFragment == null) {
-                        alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.user_scheduled_games_title), getResources().getString(R.string.scheduled_game_question),
-                                getResources().getString(R.string.no), getResources().getString(R.string.yes), getResources().getString(android.R.string.cancel));
-                        alertDialogFragment.show(getSupportFragmentManager(), "schedule_game_edit");
-                    }
-
-                    setEditScheduledGameListener(alertDialogFragment, gameService);
-                    break;
-                case LIVE:
-                    gameService.restoreGame(recordedGameService);
-                    mRecordedGamesService.createCurrentGame(gameService);
-                    final Intent gameIntent = new Intent(this, GameActivity.class);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
-                    break;
-                default:
-                    break;
-            }
-        }
-        mSyncLayout.setRefreshing(false);
-    }
+    public void onUserGameReceived(RecordedGameService recordedGameService) {}
 
     @Override
     public void onUserGameListReceived(List<GameDescription> gameDescriptionList) {
@@ -231,91 +177,28 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         UiUtils.makeText(this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
     }
 
-    private void restoreEditScheduledGameDialog() {
-        GameService gameService = mRecordedGamesService.loadSetupGame();
-        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("schedule_game_edit");
-
-        if (gameService == null && alertDialogFragment != null) {
-            alertDialogFragment.dismiss();
-        } else {
-            setEditScheduledGameListener(alertDialogFragment, gameService);
-        }
-    }
-
-    private void setEditScheduledGameListener(AlertDialogFragment alertDialogFragment, final GameService gameService) {
-        if (alertDialogFragment != null) {
-            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                @Override
-                public void onNegativeButtonClicked() {
-                    Log.i(Tags.SCHEDULE_UI, "Start scheduled game immediately");
-                    gameService.startMatch();
-                    mRecordedGamesService.createCurrentGame(gameService);
-                    final Intent gameIntent = new Intent(ScheduledGamesListActivity.this, GameActivity.class);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
-                }
-
-                @Override
-                public void onPositiveButtonClicked() {
-                    Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
-                    mRecordedGamesService.saveSetupGame(gameService);
-                    final Intent setupIntent;
-                    if (gameService.getGameType().equals(GameType.BEACH)) {
-                        setupIntent = new Intent(ScheduledGamesListActivity.this, QuickGameSetupActivity.class);
-                    } else {
-                        setupIntent = new Intent(ScheduledGamesListActivity.this, GameSetupActivity.class);
-                    }
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(setupIntent);
-                }
-
-                @Override
-                public void onNeutralButtonClicked() {}
-            });
-        }
-    }
-
     public void scheduleIndoorGame(View view) {
         GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        scheduleIndoorGame(gameDescription, true);
+        scheduleGame(gameDescription, true);
     }
 
     public void scheduleIndoor4x4Game(View view) {
         GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        scheduleIndoor4x4Game(gameDescription, true);
+        scheduleGame(gameDescription, true);
     }
 
     public void scheduleBeachGame(View view) {
         GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
-        scheduleBeachGame(gameDescription, true);
+        scheduleGame(gameDescription, true);
     }
 
-    private void scheduleIndoorGame(GameDescription gameDescription, boolean create) {
-        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor game");
+    private void scheduleGame(GameDescription gameDescription, boolean create) {
+        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule game");
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
         intent.putExtra("create", create);
         startActivity(intent);
-    }
-
-    private void scheduleIndoor4x4Game(GameDescription gameDescription, boolean create) {
-        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new indoor 4x4 game");
-        final Intent intent = new Intent(this, ScheduledGameActivity.class);
-        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
-        intent.putExtra("create", create);
-        startActivity(intent);
-    }
-
-    private void scheduleBeachGame(GameDescription gameDescription, boolean create) {
-        Log.i(Tags.SCHEDULE_UI, "Start activity to schedule new beach game");
-        final Intent intent = new Intent(this, ScheduledGameActivity.class);
-        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
-        intent.putExtra("create", create);
-        startActivity(intent);
+        UiUtils.animateCreate(this);
     }
 
     private void showFABMenu(){

@@ -130,6 +130,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             Intent intent = new Intent(RecordedGameActivity.this, RecordedGamesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();

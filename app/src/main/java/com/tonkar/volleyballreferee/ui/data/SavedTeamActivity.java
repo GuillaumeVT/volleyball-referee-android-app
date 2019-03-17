@@ -116,6 +116,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        UiUtils.animateCreate(this);
     }
 
     private void deleteTeam() {
@@ -130,6 +131,7 @@ public class SavedTeamActivity extends AppCompatActivity {
             Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -143,6 +145,7 @@ public class SavedTeamActivity extends AppCompatActivity {
             Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();

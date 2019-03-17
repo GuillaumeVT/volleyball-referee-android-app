@@ -7,8 +7,6 @@
     <string name="new_score_based_game">Scoreboard</string>
     <string name="new_time_based_game">Time-based</string>
     <string name="new_scheduled_game_from_code">From code</string>
-    <string name="permission_title">About permissions</string>
-    <string name="permission_message">This application needs the storage permissions in order to share the match results.</string>
     <string name="resume_game_title">Resume match</string>
     <string name="resume_game_question">The application found a match in progress. Do you wish to resume it or to delete it?</string>
     <string name="resume_game_error">The match could not be resumed.</string>
@@ -135,6 +133,13 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Delete the match</string>
+    <string name="reschedule_match">Reschedule the match</string>
+    <string name="edit_start_match">Edit and then start the match</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">Resume the match</string>
 
     <!-- Settings activity -->
     <string name="settings">Settings</string>
@@ -293,6 +298,12 @@
         <item>3 serves</item>
         <item>2 serves</item>
     </string-array>
+
+    <!-- Credits activity -->
+    <string name="credit_title" translatable="false">About the VBR Team</string>
+    <string name="credit_designers" translatable="false">Volleyball Referee is designed and developped by Guillaume VT and Polina P as a hobby project.\nYou can contact us at vbr.app.team@gmail.com.</string>
+    <string name="credit_translators_intro" translatable="false">Our translations are made by voluntary referees and players. A huge thanks to them all:</string>
+    <string name="credit_translators" translatable="false"> <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>
 
     <string-array name="points_per_set_values" translatable="false">
         <item>30</item>

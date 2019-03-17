@@ -14,11 +14,11 @@ public interface RecordedGamesService {
 
     void disconnectGameRecorder(boolean exiting);
 
-    void migrateRecordedGames();
-
     boolean hasRecordedGames();
 
     List<RecordedGameService> getRecordedGameServiceList();
+
+    RecordedGameService getCurrentRecordedGameService();
 
     RecordedGameService getRecordedGameService(long gameDate);
 
