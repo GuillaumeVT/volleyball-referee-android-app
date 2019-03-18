@@ -132,6 +132,13 @@
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
 
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Usuń mecz</string>
+    <string name="reschedule_match">Przełóż mecz</string>
+    <string name="edit_start_match">Edytuj, a następnie rozpocznij mecz</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">Wznów mecz</string>
+
     <!-- Settings activity -->
     <string name="settings">Ustawienia</string>
     <string name="pref_referee_name">Mója nazwa użytkownika \'Volleyball Referee\'</string>
