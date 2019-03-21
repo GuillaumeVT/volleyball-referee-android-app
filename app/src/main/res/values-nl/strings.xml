@@ -21,7 +21,7 @@
     <string name="configuration_group">Configuratie</string>
     <string name="view_live_games">Bekijk live wedstrijden online</string>
     <string name="search_online_games">Zoek wedstrijden online</string>
-    <string name="view_online_account">Mijn account</string>
+    <string name="my_account">Mijn account</string>
     <string name="scheduled_game_question">Wilt u de ploegen bewerken voordat u de wedstrijd start?</string>
     <string name="game_code_hint">Wedstrijd code</string>
     <string name="invalid_game_code">Ongeldig wedstrijdnummer</string>
@@ -47,8 +47,6 @@
     <string name="user_signed_out">Afgemeld</string>
     <string name="user_sign_in_error">Fout tijdens aanmelden met %s</string>
     <string name="user_scheduled_games_title">Mijn geplande wedstrijden</string>
-    <string name="user_scheduled_games_message">Blader, selecteer en leidt je geplande wedstrijden op https://www.volleyball-referee.com/user</string>
-    <string name="sign_out">Afmelden</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Wedstrijd instellen</string>

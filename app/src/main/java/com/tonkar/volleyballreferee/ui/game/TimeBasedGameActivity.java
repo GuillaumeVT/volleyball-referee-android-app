@@ -272,6 +272,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     @Override
+    public void onStartingLineupSubmitted() {}
+
+    @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
         mTeamOnRightSide = rightTeamType;

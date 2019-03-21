@@ -21,7 +21,7 @@
     <string name="configuration_group">Configuration</string>
     <string name="view_live_games">Suivre les matchs en direct</string>
     <string name="search_online_games">Chercher des matchs en ligne</string>
-    <string name="view_online_account">Mon compte</string>
+    <string name="my_account">Mon compte</string>
     <string name="scheduled_game_question">Voulez-vous éditer le match avant de le démarrer?</string>
     <string name="game_code_hint">Code du match</string>
     <string name="invalid_game_code">Code du match invalide</string>
@@ -47,8 +47,6 @@
     <string name="user_signed_out">Déconnecté</string>
     <string name="user_sign_in_error">Erreur lors de la connexion à %s</string>
     <string name="user_scheduled_games_title">Mes matchs programmés</string>
-    <string name="user_scheduled_games_message">Parcourez, séléctionnez et arbitrez vos matchs programmés sur https://www.volleyball-referee.com/user</string>
-    <string name="sign_out">Me déconnecter</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configuration du match</string>

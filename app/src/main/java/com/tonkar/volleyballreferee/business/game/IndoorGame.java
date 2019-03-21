@@ -131,6 +131,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
     public void confirmStartingLineup() {
         getIndoorTeamComposition(TeamType.HOME).confirmStartingLineup();
         getIndoorTeamComposition(TeamType.GUEST).confirmStartingLineup();
+        notifyStartingLineupSubmitted();
     }
 
     @Override

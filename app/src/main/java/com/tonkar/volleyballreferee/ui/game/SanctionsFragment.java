@@ -67,6 +67,9 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     }
 
     @Override
+    public void onStartingLineupSubmitted() {}
+
+    @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mLeftTeamSanctionsListAdapter.setTeamType(leftTeamType);
         mRightTeamSanctionsListAdapter.setTeamType(rightTeamType);

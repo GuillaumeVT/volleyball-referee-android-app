@@ -23,7 +23,6 @@ import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
 import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
-import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -88,20 +87,6 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         intent = new Intent(this, SavedTeamsListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_view_account:
-                        Log.i(Tags.MAIN_UI, "Home");
-                        if (PrefUtils.isWebPremiumPurchased(this)) {
-                            if (PrefUtils.isSignedIn(this)) {
-                                Log.i(Tags.WEB, "User account");
-                                intent = new Intent(this, UserActivity.class);
-                            } else {
-                                Log.i(Tags.WEB, "User sign in");
-                                intent = new Intent(this, UserSignInActivity.class);
-                            }
-                            startActivity(intent);
-                            UiUtils.animateForward(this);
-                        }
                         break;
                     case R.id.action_view_scheduled_games:
                         if (PrefUtils.isWebPremiumPurchased(this)) {
@@ -192,15 +177,12 @@ public abstract class NavigationActivity extends AppCompatActivity {
 
     private void computeItemsVisibility(NavigationView navigationView) {
         if (PrefUtils.isWebPremiumPurchased(this)) {
-            navigationView.getMenu().findItem(R.id.action_view_account).setVisible(true);
-
             if (PrefUtils.isSignedIn(this)) {
                 navigationView.getMenu().findItem(R.id.action_view_scheduled_games).setVisible(true);
             } else {
                 navigationView.getMenu().findItem(R.id.action_view_scheduled_games).setVisible(false);
             }
         } else {
-            navigationView.getMenu().findItem(R.id.action_view_account).setVisible(false);
             navigationView.getMenu().findItem(R.id.action_view_scheduled_games).setVisible(false);
         }
     }

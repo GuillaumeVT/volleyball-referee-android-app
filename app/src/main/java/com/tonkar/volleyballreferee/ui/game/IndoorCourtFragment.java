@@ -28,6 +28,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     protected IndoorTeamService mIndoorTeamService;
     protected LayoutInflater    mLayoutInflater;
+    private   boolean           mOneStartingLineupDialog;
 
     public IndoorCourtFragment() {
         super();
@@ -44,6 +45,8 @@ public class IndoorCourtFragment extends CourtFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.GAME_UI, "Create indoor court view");
         mView = inflater.inflate(R.layout.fragment_indoor_court, container, false);
+
+        mOneStartingLineupDialog = false;
 
         initView();
 
@@ -78,14 +81,10 @@ public class IndoorCourtFragment extends CourtFragment {
             addSanctionImageOnRightSide(PositionType.POSITION_5, mView.findViewById(R.id.right_team_sanction_5));
             addSanctionImageOnRightSide(PositionType.POSITION_6, mView.findViewById(R.id.right_team_sanction_6));
 
-            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
-
             initLeftTeamListeners();
             initRightTeamListeners();
 
-            if (savedInstanceState != null) {
-                restoreStartingLineupDialog();
-            }
+            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
         }
 
         return mView;
@@ -248,38 +247,38 @@ public class IndoorCourtFragment extends CourtFragment {
                 && mIndoorTeamService.getPlayersOnCourt(TeamType.GUEST).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()) {
             AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
-                        getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
-                setStartingLineupDialogListener(alertDialogFragment);
-                alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
+                if (!mOneStartingLineupDialog) {
+                    alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
+                            getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
+                    setStartingLineupDialogListener(alertDialogFragment);
+                    alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
+                    mOneStartingLineupDialog = true;
+                }
             } else {
+                mOneStartingLineupDialog = true;
                 setStartingLineupDialogListener(alertDialogFragment);
             }
         }
     }
 
-    protected void restoreStartingLineupDialog() {
-        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
-        setStartingLineupDialogListener(alertDialogFragment);
-    }
-
     private void setStartingLineupDialogListener(final AlertDialogFragment alertDialogFragment) {
-        if (alertDialogFragment != null) {
-            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                @Override
-                public void onNegativeButtonClicked() {}
+        alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+            @Override
+            public void onNegativeButtonClicked() {
+                mOneStartingLineupDialog = false;
+            }
 
-                @Override
-                public void onPositiveButtonClicked() {
-                    mIndoorTeamService.confirmStartingLineup();
-                    checkCaptain(TeamType.HOME, -1);
-                    checkCaptain(TeamType.GUEST, -1);
-                }
+            @Override
+            public void onPositiveButtonClicked() {
+                mIndoorTeamService.confirmStartingLineup();
+                checkCaptain(TeamType.HOME, -1);
+                checkCaptain(TeamType.GUEST, -1);
+                mOneStartingLineupDialog = false;
+            }
 
-                @Override
-                public void onNeutralButtonClicked() {}
-            });
-        }
+            @Override
+            public void onNeutralButtonClicked() {}
+        });
     }
 
     protected void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {

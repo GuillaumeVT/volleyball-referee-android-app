@@ -21,7 +21,7 @@
     <string name="configuration_group">Seaded</string>
     <string name="view_live_games">Vaata online-mänge</string>
     <string name="search_online_games">Otsi online-mänge</string>
-    <string name="view_online_account">Minu konto</string>
+    <string name="my_account">Minu konto</string>
     <string name="scheduled_game_question">Kas muudan võistkondade koosseisu ja reegleid enne mängu algust?</string>
     <string name="game_code_hint">Mängu kood</string>
     <string name="invalid_game_code">Mängu vale kood</string>
@@ -47,8 +47,6 @@
     <string name="user_signed_out">Väljas</string>
     <string name="user_sign_in_error">Võrguühenduse viga %s</string>
     <string name="user_scheduled_games_title">Minu planeeritud mängud</string>
-    <string name="user_scheduled_games_message">Valige nimekirjast ning vilistage Teie planeeritud mänge veebilehel https://www.volleyball-referee.com/user</string>
-    <string name="sign_out">Välju</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Mängu seaded</string>

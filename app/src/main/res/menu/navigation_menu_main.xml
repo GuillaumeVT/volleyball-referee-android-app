@@ -38,11 +38,6 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                            android:id="@+id/action_view_account"
-                            android:icon="@drawable/ic_account"
-                            android:title="@string/view_online_account"
-                            android:visible="false"/>
-                    <item
                             android:id="@+id/action_view_scheduled_games"
                             android:icon="@drawable/ic_scheduled_list"
                             android:title="@string/user_scheduled_games_title"

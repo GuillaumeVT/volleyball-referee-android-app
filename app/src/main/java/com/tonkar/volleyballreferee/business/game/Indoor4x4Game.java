@@ -125,6 +125,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     public void confirmStartingLineup() {
         getIndoorTeamComposition(TeamType.HOME).confirmStartingLineup();
         getIndoorTeamComposition(TeamType.GUEST).confirmStartingLineup();
+        notifyStartingLineupSubmitted();
     }
 
     @Override

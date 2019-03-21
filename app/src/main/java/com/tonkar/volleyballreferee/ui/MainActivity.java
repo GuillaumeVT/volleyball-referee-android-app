@@ -139,6 +139,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         final MenuItem purchaseItem = menu.findItem(R.id.action_purchase_menu);
         computePurchaseItemVisibility(purchaseItem);
 
+        final MenuItem accountItem = menu.findItem(R.id.action_account_menu);
+        accountItem.setVisible(PrefUtils.canSync(this));
+
         return true;
     }
 
@@ -154,6 +157,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                 Intent intent = new Intent(this, PurchasesListActivity.class);
                 startActivity(intent);
                 UiUtils.animateForward(this);
+                return true;
+            case R.id.action_account_menu:
+                showAccount();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -263,8 +269,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         if (PrefUtils.canRequest(this)) {
             String url = WebUtils.HAS_MESSAGE_API_URL;
-            BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url, messageItem::setVisible, error -> messageItem.setVisible(false)
-            );
+            BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url, messageItem::setVisible, error -> messageItem.setVisible(false));
             WebUtils.getInstance().getRequestQueue(this).add(booleanRequest);
         }
     }
@@ -285,6 +290,16 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     }, error -> {}
             );
             WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
+        }
+    }
+
+    private void showAccount() {
+        if (PrefUtils.canSync(this)) {
+            String account = String.format(Locale.getDefault(), getResources().getString(R.string.user_signed_in), PrefUtils.getAuthentication(this).getUserId());
+            Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, account, Snackbar.LENGTH_INDEFINITE);
+            infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
+            infoSnackbar.setAction("Close", view -> {});
+            infoSnackbar.show();
         }
     }
 

@@ -13,12 +13,12 @@ public class UserSignInActivity extends AuthenticationActivity {
 
     @Override
     protected String getToolbarTitle() {
-        return getString(R.string.view_online_account);
+        return "";
     }
 
     @Override
     protected int getCheckedItem() {
-        return R.id.action_view_account;
+        return 0;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class UserSignInActivity extends AuthenticationActivity {
 
         Log.i(Tags.WEB, "Create user sign in activity");
 
-        initNavigationMenu();
+        setTitle(getString(R.string.my_account));
 
         SignInButton googleSignInButton = findViewById(R.id.google_sign_in_button);
         googleSignInButton.setOnClickListener(button -> googleSignIn());

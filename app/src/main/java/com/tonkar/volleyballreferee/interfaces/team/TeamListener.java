@@ -4,6 +4,8 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 
 public interface TeamListener {
 
+    void onStartingLineupSubmitted();
+
     void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType);
 
     void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType);

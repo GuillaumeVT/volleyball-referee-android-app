@@ -701,6 +701,13 @@ public abstract class Game extends BaseGame {
         }
     }
 
+    void notifyStartingLineupSubmitted() {
+        Log.i(Tags.TEAM, "Submit the starting lineup");
+        for (final TeamListener listener : mTeamListeners) {
+            listener.onStartingLineupSubmitted();
+        }
+    }
+
     private void notifyTeamsSwapped(final TeamType leftTeamType, final TeamType rightTeamType, final ActionOriginType actionOriginType) {
         Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
         for (final TeamListener listener : mTeamListeners) {

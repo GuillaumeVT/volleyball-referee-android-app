@@ -21,7 +21,7 @@
     <string name="configuration_group">Configuración</string>
     <string name="view_live_games">Ver partidos en directo</string>
     <string name="search_online_games">Buscar partidos</string>
-    <string name="view_online_account">Mi cuenta</string>
+    <string name="my_account">Mi cuenta</string>
     <string name="scheduled_game_question">¿Deseas editar el partido antes de comenzar?</string>
     <string name="game_code_hint">Código de partido</string>
     <string name="invalid_game_code">Código de partido inválido</string>
@@ -47,8 +47,6 @@
     <string name="user_signed_out">Sesión terminada</string>
     <string name="user_sign_in_error">Error al iniciar sesión como %s</string>
     <string name="user_scheduled_games_title">Mis partidos planificados</string>
-    <string name="user_scheduled_games_message">Navega, selecciona y arbitra tus partidos planificados en https://www.volleyball-referee.com/user</string>
-    <string name="sign_out">Salir</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configurar partido</string>

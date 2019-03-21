@@ -86,6 +86,9 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         mTeamOnRightSide = rightTeamType;
     }
 
+    @Override
+    public void onStartingLineupSubmitted() {}
+
     protected void updateSanction(TeamType teamType, int number, ImageView sanctionImage) {
         if (mGameService.hasSanctions(teamType, number)) {
             SanctionType sanctionType = mGameService.getMostSeriousSanction(teamType, number);

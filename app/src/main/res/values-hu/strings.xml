@@ -22,7 +22,7 @@
     <string name="configuration_group">Beállítások</string>
     <string name="view_live_games">Élő mérközések megtekintése online</string>
     <string name="search_online_games">Online mérkőzések keresése</string>
-    <string name="view_online_account">Fiókom</string>
+    <string name="my_account">Fiókom</string>
     <string name="scheduled_game_question">Akarod módosítani a mérkőzés beállításait mielőtt elindítod?</string>
     <string name="game_code_hint">Mérkőzés kód</string>
     <string name="invalid_game_code">Helytelen mérkőzés kód</string>
@@ -48,8 +48,6 @@
     <string name="user_signed_out">Kilépve</string>
     <string name="user_sign_in_error">Hiba történt belépés közben (%s)</string>
     <string name="user_scheduled_games_title">Időzített mérkőzéseim</string>
-    <string name="user_scheduled_games_message">A https://www.volleyball-referee.com/user oldalon megtalálod az időzített mérkőzéseid. Keress közöttük és indíts közvetítést.</string>
-    <string name="sign_out">Kijelentkezés</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Csapatok beállítása</string>

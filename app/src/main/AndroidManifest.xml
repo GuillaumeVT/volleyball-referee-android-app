@@ -63,11 +63,8 @@
             android:name=".ui.user.UserSignInActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.user.UserActivity"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity
             android:name=".ui.setup.ScheduledGamesListActivity"
-            android:parentActivityName=".ui.user.UserActivity" />
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.setup.ScheduledGameActivity"
             android:parentActivityName=".ui.setup.ScheduledGamesListActivity" />
@@ -75,8 +72,8 @@
             android:name=".ui.billing.PurchasesListActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-                android:name=".ui.CreditsActivity"
-                android:parentActivityName=".ui.MainActivity" />
+            android:name=".ui.CreditsActivity"
+            android:parentActivityName=".ui.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

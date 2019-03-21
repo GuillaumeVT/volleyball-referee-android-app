@@ -54,14 +54,10 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
             addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
             addSanctionImageOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_sanction_4));
 
-            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
-
             initLeftTeamListeners();
             initRightTeamListeners();
 
-            if (savedInstanceState != null) {
-                restoreStartingLineupDialog();
-            }
+            onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
         }
 
         return mView;

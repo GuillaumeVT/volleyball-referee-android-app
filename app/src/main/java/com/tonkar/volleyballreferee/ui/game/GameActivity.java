@@ -379,6 +379,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     // Listeners
 
     @Override
+    public void onStartingLineupSubmitted() {}
+
+    @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
         mTeamOnRightSide = rightTeamType;

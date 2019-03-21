@@ -375,6 +375,12 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
+    public void onStartingLineupSubmitted() {
+        saveCurrentGame();
+        pushCurrentGameOnline();
+    }
+
+    @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         saveCurrentGame();
     }
