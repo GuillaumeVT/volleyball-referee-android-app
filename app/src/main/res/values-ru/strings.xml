@@ -7,6 +7,8 @@
     <string name="new_score_based_game">Счётное табло</string>
     <string name="new_time_based_game">Ограничение по времени</string>
     <string name="new_scheduled_game_from_code">Ввести код</string>
+    <string name="permission_title">Разрешения</string>
+    <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён неоконченный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume_game_error">Невозможно возобновить матч.</string>

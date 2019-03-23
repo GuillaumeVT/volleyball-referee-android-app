@@ -7,6 +7,8 @@
     <string name="new_score_based_game">Anzeigetafel</string>
     <string name="new_time_based_game">Zeitbasiert</string>
     <string name="new_scheduled_game_from_code">Mit Code</string>
+    <string name="permission_title">Berechtigungen</string>
+    <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
     <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
     <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>

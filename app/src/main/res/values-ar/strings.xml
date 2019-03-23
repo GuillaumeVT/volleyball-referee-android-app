@@ -7,6 +7,8 @@
     <string name="new_score_based_game">لوحة النتائج</string>
     <string name="new_time_based_game">محدد الوقت</string>
     <string name="new_scheduled_game_from_code">من الرمز</string>
+    <string name="permission_title">حول صلاحيات التطبيق</string>
+    <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
     <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في استئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>

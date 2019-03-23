@@ -7,6 +7,8 @@
     <string name="new_score_based_game">Scorebord</string>
     <string name="new_time_based_game">Tijdgebaseerd</string>
     <string name="new_scheduled_game_from_code">Vanuit code</string>
+    <string name="permission_title">Over rechten</string>
+    <string name="permission_message">Deze applicatie heeft de opslagrechten nodig om de resultaten van de wedstrijd te delen.</string>
     <string name="resume_game_title">Spel hervatten</string>
     <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u dit te hervatten of te verwijderen?</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>

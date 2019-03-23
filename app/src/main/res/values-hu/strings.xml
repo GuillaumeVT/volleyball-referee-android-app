@@ -8,6 +8,8 @@
     <string name="new_score_based_game">Eredménytábla</string>
     <string name="new_time_based_game">Időalapú</string>
     <string name="new_scheduled_game_from_code">Mérkőzés kód alapján</string>
+    <string name="permission_title">App jogosultságok</string>
+    <string name="permission_message">Tárhely jogosultság szükséges a mérkőzés eredmények megosztásához.</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
     <string name="resume_game_error">A mérkőzés nem folytatható.</string>

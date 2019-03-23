@@ -1,14 +1,17 @@
 package com.tonkar.volleyballreferee.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -57,6 +60,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
     private RecordedGamesService mRecordedGamesService;
 
@@ -117,6 +122,34 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             savedTeamsService.syncTeamsOnline();
             mRecordedGamesService.syncGamesOnline();
             sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            AlertDialogFragment alertDialogFragment;
+
+            if (savedInstanceState == null) {
+                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.permission_title), getResources().getString(R.string.permission_message),
+                        getResources().getString(android.R.string.ok));
+                alertDialogFragment.show(getSupportFragmentManager(), "permission");
+            }
+            else {
+                alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("permission");
+            }
+
+            if (alertDialogFragment != null) {
+                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
+                    @Override
+                    public void onNegativeButtonClicked() {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_STORAGE);
+                    }
+
+                    @Override
+                    public void onPositiveButtonClicked() {}
+
+                    @Override
+                    public void onNeutralButtonClicked() {}
+                });
+            }
         }
 
         if (savedInstanceState != null) {
