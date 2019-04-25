@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.GameDescription;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -68,7 +68,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         scheduledGamesList.setAdapter(mScheduledGamesListAdapter);
 
         scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
-            GameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
+            ApiGameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getGameType())) {
                 switch (gameDescription.getMatchStatus()) {
                     case SCHEDULED:
@@ -154,7 +154,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     public void onUserGameReceived(RecordedGameService recordedGameService) {}
 
     @Override
-    public void onUserGameListReceived(List<GameDescription> gameDescriptionList) {
+    public void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList) {
         mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
         mSyncLayout.setRefreshing(false);
     }
@@ -178,21 +178,21 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     }
 
     public void scheduleIndoorGame(View view) {
-        GameDescription gameDescription = new GameDescription(GameType.INDOOR, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
+        ApiGameDescription gameDescription = new ApiGameDescription(GameType.INDOOR, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
         scheduleGame(gameDescription, true);
     }
 
     public void scheduleIndoor4x4Game(View view) {
-        GameDescription gameDescription = new GameDescription(GameType.INDOOR_4X4, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
+        ApiGameDescription gameDescription = new ApiGameDescription(GameType.INDOOR_4X4, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
         scheduleGame(gameDescription, true);
     }
 
     public void scheduleBeachGame(View view) {
-        GameDescription gameDescription = new GameDescription(GameType.BEACH, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
+        ApiGameDescription gameDescription = new ApiGameDescription(GameType.BEACH, PrefUtils.getAuthentication(this).getUserId(), PrefUtils.getPrefRefereeName(this));
         scheduleGame(gameDescription, true);
     }
 
-    private void scheduleGame(GameDescription gameDescription, boolean create) {
+    private void scheduleGame(ApiGameDescription gameDescription, boolean create) {
         Log.i(Tags.SCHEDULE_UI, "Start activity to schedule game");
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));

@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee.business;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.tonkar.volleyballreferee.business.web.Authentication;
-import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.api.ApiUtils;
 
 import androidx.preference.PreferenceManager;
 
@@ -84,7 +84,7 @@ public class PrefUtils {
     }
 
     public static boolean canRequest(Context context) {
-        return isPrefDataSyncEnabled(context) && WebUtils.isConnectedToInternet(context);
+        return isPrefDataSyncEnabled(context) && ApiUtils.isConnectedToInternet(context);
     }
 
     public static boolean canSync(Context context) {

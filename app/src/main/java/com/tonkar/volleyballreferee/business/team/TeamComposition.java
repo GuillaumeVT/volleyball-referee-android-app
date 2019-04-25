@@ -118,10 +118,6 @@ public abstract class TeamComposition {
         }
     }
 
-    private String getClassType() {
-        return mClassType;
-    }
-
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
@@ -130,7 +126,7 @@ public abstract class TeamComposition {
             result = true;
         } else if (obj instanceof TeamComposition) {
             TeamComposition other = (TeamComposition) obj;
-            result = (this.getClassType().equals(other.getClassType())) && (this.getTeamDefinition().equals(other.getTeamDefinition()));
+            result = mClassType.equals(other.mClassType) && mTeamDefinition.equals(other.mTeamDefinition);
         }
 
         return result;

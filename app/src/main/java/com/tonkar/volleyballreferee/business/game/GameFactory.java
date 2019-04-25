@@ -6,7 +6,7 @@ import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 public class GameFactory {
 
@@ -23,7 +23,7 @@ public class GameFactory {
     public static IndoorGame createPointBasedGame(final long gameDate, final long gameSchedule, final Rules rules) {
         Log.i(Tags.FACTORY, "Create score-based game");
         IndoorGame game = createIndoorGame(gameDate, gameSchedule, rules);
-        game.setUsageType(UsageType.POINTS_SCOREBOARD);
+        game.setUsage(UsageType.POINTS_SCOREBOARD);
         return game;
     }
 
@@ -41,10 +41,10 @@ public class GameFactory {
         Log.i(Tags.FACTORY, "Create game from web");
         GameService gameService = null;
 
-        switch (recordedGameService.getGameType()) {
+        switch (recordedGameService.getKind()) {
             case INDOOR:
                 IndoorGame indoorGame = createIndoorGame(recordedGameService.getGameDate(), recordedGameService.getGameSchedule(), recordedGameService.getRules());
-                indoorGame.setUsageType(recordedGameService.getUsageType());
+                indoorGame.setUsage(recordedGameService.getUsage());
                 indoorGame.setIndexed(recordedGameService.isIndexed());
                 indoorGame.setLeagueName(recordedGameService.getLeagueName());
                 indoorGame.setDivisionName(recordedGameService.getDivisionName());
@@ -61,7 +61,7 @@ public class GameFactory {
                 break;
             case INDOOR_4X4:
                 Indoor4x4Game indoor4x4Game = createIndoor4x4Game(recordedGameService.getGameDate(), recordedGameService.getGameSchedule(), recordedGameService.getRules());
-                indoor4x4Game.setUsageType(recordedGameService.getUsageType());
+                indoor4x4Game.setUsage(recordedGameService.getUsage());
                 indoor4x4Game.setIndexed(recordedGameService.isIndexed());
                 indoor4x4Game.setLeagueName(recordedGameService.getLeagueName());
                 indoor4x4Game.setDivisionName(recordedGameService.getDivisionName());

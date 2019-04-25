@@ -1,24 +1,36 @@
 package com.tonkar.volleyballreferee.interfaces;
 
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 public interface BaseGeneralService {
 
-    GameType getGameType();
+    GameType getKind();
 
-    long getGameDate();
+    String geId();
 
-    long getGameSchedule();
+    String getCreatedBy();
+
+    long getCreatedAt();
+
+    long getUpdatedAt();
+
+    long getScheduledAt();
+
+    String getRefereedBy();
+
+    String getRefereeName();
 
     GameStatus getMatchStatus();
 
     boolean isMatchCompleted();
 
-    UsageType getUsageType();
+    UsageType getUsage();
 
-    void setUsageType(UsageType usageType);
+    void setUsage(UsageType usage);
 
     Rules getRules();
+
+    String getLeague(); // TODO
 
     String getLeagueName();
 

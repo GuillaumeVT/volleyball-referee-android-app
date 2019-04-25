@@ -5,7 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.FixMethodOrder;
@@ -90,8 +90,8 @@ public class SavedRulesIOTest {
         SavedRulesService savedRulesService = new SavedRules(mActivityRule.getActivity().getApplicationContext());
 
         List<Rules> expectedList = new ArrayList<>();
-        expectedList.add(savedRulesService.getSavedRules("Test Rules 1"));
-        expectedList.add(savedRulesService.getSavedRules("Test Rules 2"));
+        expectedList.add(savedRulesService.getRules("Test Rules 1"));
+        expectedList.add(savedRulesService.getRules("Test Rules 2"));
 
         List<Rules> actualList = new ArrayList<>();
 
@@ -112,6 +112,6 @@ public class SavedRulesIOTest {
     @Test
     public void clear() {
         SavedRulesService savedRulesService = new SavedRules(mActivityRule.getActivity().getApplicationContext());
-        savedRulesService.deleteAllSavedRules();
+        savedRulesService.deleteAllRules();
     }
 }

@@ -5,7 +5,7 @@ import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.List;

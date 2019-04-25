@@ -64,7 +64,7 @@ public class ScoreSheetWriter {
 
             String filename = String.format(Locale.getDefault(), "%s_%s_%s.html", homeTeam, guestTeam, date);
             ScoreSheetWriter scoreSheetWriter = new ScoreSheetWriter(context, recordedGameService, filename);
-            switch (recordedGameService.getGameType()) {
+            switch (recordedGameService.getKind()) {
                 case INDOOR:
                     scoreSheetWriter.writeRecordedIndoorGame();
                     break;
@@ -115,7 +115,7 @@ public class ScoreSheetWriter {
     private void writeRecordedIndoorGame() {
         mBody.appendChild(createRecordedGameHeader());
 
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+        if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())) {
             mBody.appendChild(createRecordedTeams());
         }
 
@@ -125,7 +125,7 @@ public class ScoreSheetWriter {
             cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
             cardDiv.appendChild(createRecordedIndoorSetHeader(setIndex));
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
                 Element teamDiv = new Element("div");
                 teamDiv.addClass("div-flex-row");
                 teamDiv.appendChild(createRecordedStartingLineup(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
@@ -141,13 +141,13 @@ public class ScoreSheetWriter {
             Element timeoutAndSanctionDiv = new Element("div");
             timeoutAndSanctionDiv.addClass("div-flex-row");
 
-            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsageType()))
+            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsage()))
                     && mRecordedGameService.getRules().areTeamTimeoutsEnabled()
                     && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
             }
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())
                     && mRecordedGameService.getRules().areSanctionsEnabled()
                     && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
@@ -594,7 +594,7 @@ public class ScoreSheetWriter {
     private void writeRecordedIndoor4x4Game() {
         mBody.appendChild(createRecordedGameHeader());
 
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())) {
+        if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())) {
             mBody.appendChild(createRecordedTeams());
         }
 
@@ -604,7 +604,7 @@ public class ScoreSheetWriter {
             cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
             cardDiv.appendChild(createRecordedIndoorSetHeader(setIndex));
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
                 Element teamDiv = new Element("div");
                 teamDiv.addClass("div-flex-row");
                 teamDiv.appendChild(createRecordedStartingLineup4x4(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
@@ -620,13 +620,13 @@ public class ScoreSheetWriter {
             Element timeoutAndSanctionDiv = new Element("div");
             timeoutAndSanctionDiv.addClass("div-flex-row");
 
-            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsageType()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsageType()))
+            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsage()))
                     && mRecordedGameService.getRules().areTeamTimeoutsEnabled()
                     && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
             }
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsageType())
+            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())
                     && mRecordedGameService.getRules().areSanctionsEnabled()
                     && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));

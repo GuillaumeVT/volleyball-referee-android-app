@@ -1,42 +1,28 @@
 package com.tonkar.volleyballreferee.business.team;
 
-import android.graphics.Color;
 import android.util.Log;
 
-import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class BeachTeamDefinition extends TeamDefinition {
 
-    @SerializedName("captain")
-    private int mCaptain;
-
-    public BeachTeamDefinition(final TeamType teamType) {
-        super(GameType.BEACH, teamType);
+    public BeachTeamDefinition(final String createdBy, final TeamType teamType) {
+        super(createdBy, GameType.BEACH, teamType);
 
         addPlayer(1);
         addPlayer(2);
-
-        mCaptain = 1;
     }
 
     // For GSON Deserialization
     public BeachTeamDefinition() {
-        this(TeamType.HOME);
+        this("", TeamType.HOME);
     }
-
-    @Override
-    public int getLiberoColor() {
-        return Color.parseColor(TeamDefinition.DEFAULT_COLOR);
-    }
-
-    @Override
-    public void setLiberoColor(int color) {}
 
     @Override
     public boolean isLibero(int number) {
@@ -55,31 +41,27 @@ public class BeachTeamDefinition extends TeamDefinition {
     public void removeLibero(int number) {}
 
     @Override
-    public Set<Integer> getLiberos() {
-        return new HashSet<>();
-    }
-
-    @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
-            mCaptain = number;
+            super.setCaptain(number);
         }
     }
 
     @Override
-    public int getCaptain() {
-        return mCaptain;
-    }
-
-    @Override
     public boolean isCaptain(int number) {
-        return number == mCaptain;
+        return number == getCaptain();
     }
 
     @Override
     public Set<Integer> getPossibleCaptains() {
-        return getPlayers();
+        Set<Integer> possibleCaptains = new TreeSet<>();
+
+        for (ApiPlayer player : getPlayers()) {
+            possibleCaptains.add(player.getNum());
+        }
+
+        return possibleCaptains;
     }
 
     @Override
@@ -90,7 +72,7 @@ public class BeachTeamDefinition extends TeamDefinition {
             result = true;
         } else if (obj instanceof BeachTeamDefinition) {
             BeachTeamDefinition other = (BeachTeamDefinition) obj;
-            result = super.equals(other) && (this.getCaptain() == other.getCaptain());
+            result = super.equals(other);
         }
 
         return result;

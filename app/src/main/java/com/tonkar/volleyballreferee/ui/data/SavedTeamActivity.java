@@ -125,7 +125,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             SavedTeamsService savedTeamsService = new SavedTeams(this);
-            savedTeamsService.deleteSavedTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGenderType());
+            savedTeamsService.deleteTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGender());
             UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);

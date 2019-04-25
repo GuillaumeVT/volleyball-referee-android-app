@@ -24,7 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -117,14 +117,14 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             SavedTeamsService savedTeamsService = new SavedTeams(getContext());
 
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getSavedTeamList(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getListTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                RecordedTeam team = (RecordedTeam) teamNameInput.getAdapter().getItem(index);
+                ApiTeam team = (ApiTeam) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(team.getName());
                 savedTeamsService.copyTeam(team, mTeamService, mTeamType);
 
                 teamColorSelected(mTeamService.getTeamColor(mTeamType));
-                updateGender(mTeamService.getGenderType(mTeamType));
+                updateGender(mTeamService.getGender(mTeamType));
                 mPlayerAdapter.notifyDataSetChanged();
                 captainUpdated(mTeamType, mTeamService.getCaptain(mTeamType));
                 if (manageLiberos()) {
@@ -196,10 +196,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
         mGenderButton.setEnabled(create);
-        updateGender(mTeamService.getGenderType(mTeamType));
+        updateGender(mTeamService.getGender(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
-            GenderType genderType = mTeamService.getGenderType(mTeamType).next();
+            GenderType genderType = mTeamService.getGender(mTeamType).next();
             updateGender(genderType);
         });
 
@@ -505,7 +505,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void updateGender(GenderType genderType) {
         Context context = getContext();
-        mTeamService.setGenderType(mTeamType, genderType);
+        mTeamService.setGender(mTeamType, genderType);
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:

@@ -22,7 +22,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -74,10 +74,10 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         final SavedTeamsService savedTeamsService = new SavedTeams(getContext());
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
-        updateGender(mGameService.getGenderType());
+        updateGender(mGameService.getGender());
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
-            GenderType genderType = mGameService.getGenderType().next();
+            GenderType genderType = mGameService.getGender().next();
             updateGender(genderType);
         });
         mGenderButton.setEnabled(create);
@@ -194,7 +194,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         NumberPicker matchDurationPicker = view.findViewById(R.id.match_duration_picker);
         TextView matchDurationText = view.findViewById(R.id.match_duration_text);
 
-        if (GameType.TIME.equals(mGameService.getGameType())) {
+        if (GameType.TIME.equals(mGameService.getKind())) {
             final TimeBasedGameService timeBasedGameService = (TimeBasedGameService) mGameService;
             matchDurationPicker.setWrapSelectorWheel(false);
             matchDurationPicker.setMinValue(10);
@@ -207,7 +207,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             matchDurationText.setVisibility(View.GONE);
         }
 
-        if (GameType.BEACH.equals(mGameService.getGameType())) {
+        if (GameType.BEACH.equals(mGameService.getKind())) {
             updateCaptain(TeamType.HOME);
             mHomeTeamCaptainButton.setOnClickListener(button -> {
                 UiUtils.animate(getContext(), mHomeTeamCaptainButton);
@@ -220,17 +220,17 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 switchCaptain(TeamType.GUEST);
             });
 
-            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getSavedTeamList(GameType.BEACH));
+            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getListTeams(GameType.BEACH));
 
             homeTeamNameInput.setAdapter(mTeamsListAdapter);
             homeTeamNameInput.setThreshold(2);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                RecordedTeam team = mTeamsListAdapter.getItem(index);
+                ApiTeam team = mTeamsListAdapter.getItem(index);
                 homeTeamNameInput.setText(team.getName());
                 savedTeamsService.copyTeam(team, mGameService, TeamType.HOME);
 
                 teamColorSelected(TeamType.HOME, mGameService.getTeamColor(TeamType.HOME));
-                updateGender(mGameService.getGenderType(TeamType.HOME));
+                updateGender(mGameService.getGender(TeamType.HOME));
                 updateCaptain(TeamType.HOME);
                 computeConfirmItemVisibility();
             });
@@ -238,12 +238,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             guestTeamNameInput.setAdapter(mTeamsListAdapter);
             guestTeamNameInput.setThreshold(2);
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                RecordedTeam team = mTeamsListAdapter.getItem(index);
+                ApiTeam team = mTeamsListAdapter.getItem(index);
                 guestTeamNameInput.setText(team.getName());
                 savedTeamsService.copyTeam(team, mGameService, TeamType.GUEST);
 
                 teamColorSelected(TeamType.GUEST, mGameService.getTeamColor(TeamType.GUEST));
-                updateGender(mGameService.getGenderType(TeamType.GUEST));
+                updateGender(mGameService.getGender(TeamType.GUEST));
                 updateCaptain(TeamType.GUEST);
                 computeConfirmItemVisibility();
             });
@@ -289,7 +289,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     private void updateGender(GenderType genderType) {
         Context context = getContext();
-        mGameService.setGenderType(genderType);
+        mGameService.setGender(genderType);
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:

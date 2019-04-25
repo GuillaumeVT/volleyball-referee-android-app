@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces.data;
 
-import com.tonkar.volleyballreferee.business.data.GameDescription;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface AsyncGameRequestListener {
 
     void onUserGameReceived(RecordedGameService recordedGameService);
 
-    void onUserGameListReceived(List<GameDescription> gameDescriptionList);
+    void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList);
 
     void onNotFound();
 

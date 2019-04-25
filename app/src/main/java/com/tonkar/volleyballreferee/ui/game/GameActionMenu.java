@@ -83,7 +83,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 resetSetText.setVisibility(View.GONE);
                 keepScreenOnSwitch.setVisibility(View.GONE);
                 interactiveNotificationSwitch.setVisibility(View.GONE);
-            } else if (GameType.TIME.equals(mGameService.getGameType())) {
+            } else if (GameType.TIME.equals(mGameService.getKind())) {
                 resetSetText.setVisibility(View.GONE);
             }
 

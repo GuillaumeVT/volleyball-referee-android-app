@@ -11,6 +11,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.game.BaseGame;
 import com.tonkar.volleyballreferee.business.game.Set;
 import com.tonkar.volleyballreferee.business.team.Player;
@@ -20,23 +21,29 @@ import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.SubstitutionsLimitation;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
 public class JsonIOUtils {
 
-    public static final Type CURRENT_GAME_TYPE          = new TypeToken<BaseGame>() {}.getType();
-    public static final Type RECORDED_GAME_LIST_TYPE    = new TypeToken<List<RecordedGame>>() {}.getType();
-    public static final Type RECORDED_GAME_TYPE         = new TypeToken<RecordedGame>() {}.getType();
-    public static final Type RECORDED_SET_TYPE          = new TypeToken<RecordedSet>() {}.getType();
-    public static final Type RECORDED_TEAM_LIST_TYPE    = new TypeToken<List<RecordedTeam>>() {}.getType();
-    public static final Type RECORDED_TEAM_TYPE         = new TypeToken<RecordedTeam>() {}.getType();
-    public static final Type RULES_LIST_TYPE            = new TypeToken<List<Rules>>() {}.getType();
-    public static final Type RULES_TYPE                 = new TypeToken<Rules>() {}.getType();
-    public static final Type GAME_DESCRIPTION_TYPE      = new TypeToken<GameDescription>() {}.getType();
-    public static final Type GAME_DESCRIPTION_LIST_TYPE = new TypeToken<List<GameDescription>>() {}.getType();
+    public static final Type CURRENT_GAME_TYPE           = new TypeToken<BaseGame>() {}.getType();
+    public static final Type RECORDED_GAME_LIST_TYPE     = new TypeToken<List<RecordedGame>>() {}.getType();
+    public static final Type RECORDED_GAME_TYPE          = new TypeToken<RecordedGame>() {}.getType();
+    public static final Type SET_TYPE                    = new TypeToken<ApiSet>() {}.getType();
+    public static final Type TEAM_LIST_TYPE              = new TypeToken<List<ApiTeam>>() {}.getType();
+    public static final Type TEAM_TYPE                   = new TypeToken<ApiTeam>() {}.getType();
+    public static final Type RULES_LIST_TYPE             = new TypeToken<List<ApiRules>>() {}.getType();
+    public static final Type RULES_TYPE                  = new TypeToken<ApiRules>() {}.getType();
+    public static final Type GAME_DESCRIPTION_TYPE       = new TypeToken<ApiGameDescription>() {}.getType();
+    public static final Type GAME_DESCRIPTION_LIST_TYPE  = new TypeToken<List<ApiGameDescription>>() {}.getType();
+    public static final Type TEAM_DESCRIPTION_TYPE       = new TypeToken<ApiTeamDescription>() {}.getType();
+    public static final Type TEAM_DESCRIPTION_LIST_TYPE  = new TypeToken<List<ApiTeamDescription>>() {}.getType();
+    public static final Type RULES_DESCRIPTION_TYPE      = new TypeToken<ApiRulesDescription>() {}.getType();
+    public static final Type RULES_DESCRIPTION_LIST_TYPE = new TypeToken<List<ApiRulesDescription>>() {}.getType();
+    public static final Type LEAGUE_TYPE                 = new TypeToken<ApiLeague>() {}.getType();
+    public static final Type LEAGUE_LIST_TYPE            = new TypeToken<List<ApiLeague>>() {}.getType();
 
     public static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(BaseGame.class, new InheritanceDeserializer<BaseGame>())

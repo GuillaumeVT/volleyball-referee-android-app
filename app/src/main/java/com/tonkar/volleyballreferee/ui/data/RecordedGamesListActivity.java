@@ -69,7 +69,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
 
             final Intent intent;
 
-            if ((GameType.INDOOR.equals(recordedGameService.getGameType()) || GameType.INDOOR_4X4.equals(recordedGameService.getGameType())) && UsageType.NORMAL.equals(recordedGameService.getUsageType())) {
+            if ((GameType.INDOOR.equals(recordedGameService.getKind()) || GameType.INDOOR_4X4.equals(recordedGameService.getKind())) && UsageType.NORMAL.equals(recordedGameService.getUsage())) {
                 intent = new Intent(RecordedGamesListActivity.this, RecordedIndoorGameActivity.class);
             } else {
                 intent = new Intent(RecordedGamesListActivity.this, RecordedBeachGameActivity.class);

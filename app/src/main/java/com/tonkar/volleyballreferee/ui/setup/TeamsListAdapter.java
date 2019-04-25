@@ -13,21 +13,21 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class TeamsListAdapter extends ArrayAdapter<RecordedTeam> {
+public class TeamsListAdapter extends ArrayAdapter<ApiTeam> {
 
-    private final LayoutInflater     mLayoutInflater;
-    private final List<RecordedTeam> mSavedTeamsList;
-    private final List<RecordedTeam> mFilteredSavedTeamsList;
-    private final NameFilter         mNameFilter;
+    private final LayoutInflater mLayoutInflater;
+    private final List<ApiTeam>  mSavedTeamsList;
+    private final List<ApiTeam>  mFilteredSavedTeamsList;
+    private final NameFilter     mNameFilter;
 
-    public TeamsListAdapter(Context context, LayoutInflater layoutInflater, List<RecordedTeam> savedTeamsList) {
+    public TeamsListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeam> savedTeamsList) {
         super(context, R.layout.autocomplete_list_item, savedTeamsList);
         mLayoutInflater = layoutInflater;
         mSavedTeamsList = savedTeamsList;
@@ -42,7 +42,7 @@ public class TeamsListAdapter extends ArrayAdapter<RecordedTeam> {
     }
 
     @Override
-    public RecordedTeam getItem(int index) {
+    public ApiTeam getItem(int index) {
         return mFilteredSavedTeamsList.get(index);
     }
 
@@ -61,7 +61,7 @@ public class TeamsListAdapter extends ArrayAdapter<RecordedTeam> {
             teamTextView = (TextView) view;
         }
 
-        RecordedTeam team = mFilteredSavedTeamsList.get(index);
+        ApiTeam team = mFilteredSavedTeamsList.get(index);
         teamTextView.setText(team.getName());
 
         switch (team.getGenderType()) {
@@ -112,9 +112,9 @@ public class TeamsListAdapter extends ArrayAdapter<RecordedTeam> {
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<RecordedTeam> matchValues = new ArrayList<>();
+                List<ApiTeam> matchValues = new ArrayList<>();
 
-                for (RecordedTeam team : mSavedTeamsList) {
+                for (ApiTeam team : mSavedTeamsList) {
                     if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(team);
                     }
@@ -133,7 +133,7 @@ public class TeamsListAdapter extends ArrayAdapter<RecordedTeam> {
 
             if (results.values != null) {
                 mFilteredSavedTeamsList.clear();
-                mFilteredSavedTeamsList.addAll((Collection<? extends RecordedTeam>) results.values);
+                mFilteredSavedTeamsList.addAll((Collection<? extends ApiTeam>) results.values);
             }
 
             if (results.count > 0) {

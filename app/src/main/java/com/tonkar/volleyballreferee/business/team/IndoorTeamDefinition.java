@@ -1,9 +1,8 @@
 package com.tonkar.volleyballreferee.business.team;
 
-import android.graphics.Color;
 import android.util.Log;
 
-import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -13,24 +12,13 @@ import java.util.TreeSet;
 
 public class IndoorTeamDefinition extends TeamDefinition {
 
-    @SerializedName("liberoColor")
-    private       String       mLiberoColor;
-    @SerializedName("liberos")
-    private final Set<Integer> mLiberos;
-    @SerializedName("captain")
-    private       int          mCaptain;
-
-    public IndoorTeamDefinition(final GameType gameType, final TeamType teamType) {
-        super(gameType, teamType);
-
-        mLiberoColor = DEFAULT_COLOR;
-        mLiberos = new TreeSet<>();
-        mCaptain = -1;
+    public IndoorTeamDefinition(final String createdBy, final GameType gameType, final TeamType teamType) {
+        super(createdBy, gameType, teamType);
     }
 
     // For GSON Deserialization
     public IndoorTeamDefinition() {
-        this(GameType.INDOOR, TeamType.HOME);
+        this("", GameType.INDOOR, TeamType.HOME);
     }
 
     @Override
@@ -39,30 +27,20 @@ public class IndoorTeamDefinition extends TeamDefinition {
             removeLibero(number);
         }
         if (isCaptain(number)) {
-            mCaptain = -1;
+            super.setCaptain(-1);
         }
         super.removePlayer(number);
     }
 
     @Override
-    public int getLiberoColor() {
-        return Color.parseColor(mLiberoColor);
-    }
-
-    @Override
-    public void setLiberoColor(int color) {
-        mLiberoColor = colorIntToHtml(color);
-    }
-
-    @Override
     public boolean isLibero(int number) {
-        return mLiberos.contains(number);
+        return getLiberos().contains(new ApiPlayer(number, ""));
     }
 
     @Override
     public boolean canAddLibero() {
         int numberOfPlayers = getNumberOfPlayers();
-        int numberOfLiberos = mLiberos.size();
+        int numberOfLiberos = getLiberos().size();
         boolean can;
 
         if (numberOfPlayers < 7) {
@@ -80,7 +58,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void addLibero(final int number) {
         if (canAddLibero() && hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Add player #%d as libero of %s team", number, getTeamType().toString()));
-            mLiberos.add(number);
+            getLiberos().add(new ApiPlayer(number, ""));
         }
     }
 
@@ -88,40 +66,30 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void removeLibero(final int number) {
         if (hasPlayer(number) && isLibero(number)) {
             Log.i(Tags.TEAM, String.format("Remove player #%d as libero from %s team", number, getTeamType().toString()));
-            mLiberos.remove(number);
+            getLiberos().remove(new ApiPlayer(number, ""));
         }
-    }
-
-    @Override
-    public Set<Integer> getLiberos() {
-        return new TreeSet<>(mLiberos);
     }
 
     @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
-            mCaptain = number;
+            super.setCaptain(number);
         }
     }
 
     @Override
-    public int getCaptain() {
-        return mCaptain;
-    }
-
-    @Override
     public boolean isCaptain(int number) {
-        return number == mCaptain;
+        return number == getCaptain();
     }
 
     @Override
     public Set<Integer> getPossibleCaptains() {
         Set<Integer> possibleCaptains = new TreeSet<>();
 
-        for (int number : getPlayers()) {
-            if (!isLibero(number)) {
-                possibleCaptains.add(number);
+        for (ApiPlayer player : getPlayers()) {
+            if (!isLibero(player.getNum())) {
+                possibleCaptains.add(player.getNum());
             }
         }
 
@@ -136,10 +104,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
             result = true;
         } else if (obj instanceof IndoorTeamDefinition) {
             IndoorTeamDefinition other = (IndoorTeamDefinition) obj;
-            result = super.equals(other)
-                    && (this.getLiberoColor() == other.getLiberoColor())
-                    && (this.getLiberos().equals(other.getLiberos()))
-                    && (this.getCaptain() == other.getCaptain());
+            result = super.equals(other);
         }
 
         return result;

@@ -18,7 +18,7 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -137,7 +137,7 @@ public class BrazilFranceIndoorGame {
     }
 
     private void defineTeams(IndoorGame indoorGame) {
-        indoorGame.setGenderType(GenderType.GENTS);
+        indoorGame.setGender(GenderType.GENTS);
 
         indoorGame.setLeagueName("FIVB Volleyball World League 2017");
         indoorGame.setDivisionName("Final");

@@ -1,35 +1,41 @@
 package com.tonkar.volleyballreferee.interfaces.data;
 
+import com.tonkar.volleyballreferee.api.ApiRules;
+import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.util.List;
 
 public interface SavedRulesService {
 
-    boolean hasSavedRules();
+    boolean hasRules();
 
-    List<Rules> getSavedRules();
+    List<ApiRulesDescription> listRules();
 
-    Rules getSavedRules(String rulesName);
+    List<ApiRulesDescription> listRules(GameType kind);
 
-    Rules readRules(String json);
+    List<String> listRulesNames(GameType kind);
 
-    String writeRules(Rules rules);
+    ApiRules getRules(String id);
 
-    Rules createRules();
+    ApiRules getRules(GameType kind, String rulesName);
 
-    Rules createRules(GameType gameType);
+    ApiRules readRules(String json);
+
+    String writeRules(ApiRules rules);
+
+    Rules createRules(GameType kind);
 
     void saveRules(Rules rules);
 
-    void deleteSavedRules(String rulesName);
+    void deleteRules(String id);
 
-    void deleteAllSavedRules();
+    void deleteAllRules();
 
     void createAndSaveRulesFrom(Rules rules);
 
-    void syncRulesOnline();
+    void syncRules();
 
-    void syncRulesOnline(DataSynchronizationListener listener);
+    void syncRules(DataSynchronizationListener listener);
 }

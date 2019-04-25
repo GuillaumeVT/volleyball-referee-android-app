@@ -34,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.*;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
@@ -41,7 +42,7 @@ import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
@@ -54,7 +55,7 @@ import java.util.TimeZone;
 
 public class ScheduledGameActivity extends AppCompatActivity {
 
-    private GameDescription      mGameDescription;
+    private ApiGameDescription   mGameDescription;
     private DateFormat           mDateFormatter;
     private DateFormat           mTimeFormatter;
     private Calendar             mScheduleDate;
@@ -191,7 +192,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         SavedRulesService savedRulesService = new SavedRules(this);
         List<String> rulesNames = new ArrayList<>();
-        for (Rules rules : savedRulesService.getSavedRules()) {
+        for (Rules rules : savedRulesService.listRules()) {
             rulesNames.add(rules.getName());
         }
 
@@ -289,7 +290,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void updateTeamSpinners(boolean changedGender) {
         SavedTeamsService savedTeamsService = new SavedTeams(this);
-        List<String> teamNames = savedTeamsService.getSavedTeamNameList(mGameDescription.getGameType(), mGameDescription.getGenderType());
+        List<String> teamNames = savedTeamsService.listSavedTeamName(mGameDescription.getGameType(), mGameDescription.getGenderType());
 
         mTeamAdapter = new ArrayAdapter<>(this, R.layout.rule_spinner, teamNames);
         mTeamAdapter.setDropDownViewResource(R.layout.rule_entry);

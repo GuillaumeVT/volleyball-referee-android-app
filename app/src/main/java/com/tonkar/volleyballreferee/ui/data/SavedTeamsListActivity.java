@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -63,19 +63,19 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateSavedTeamsList);
 
-        List<RecordedTeam> teams = mSavedTeamsService.getSavedTeamList();
+        List<ApiTeam> teams = mSavedTeamsService.getListTeams();
 
         final ListView savedTeamsList = findViewById(R.id.saved_teams_list);
         mSavedTeamsListAdapter = new SavedTeamsListAdapter(this, getLayoutInflater(), teams);
         savedTeamsList.setAdapter(mSavedTeamsListAdapter);
 
         savedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
-            RecordedTeam team = mSavedTeamsListAdapter.getItem(i);
+            ApiTeam team = mSavedTeamsListAdapter.getItem(i);
             Log.i(Tags.SAVED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
 
             final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
             intent.putExtra("team", mSavedTeamsService.writeTeam(team));
-            intent.putExtra("kind", team.getGameType().toString());
+            intent.putExtra("kind", team.getKind().toString());
             intent.putExtra("create", false);
             startActivity(intent);
             UiUtils.animateForward(this);
@@ -133,7 +133,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         inflater.inflate(R.menu.menu_saved_teams, menu);
 
         MenuItem deleteAllTeamsItem = menu.findItem(R.id.action_delete_teams);
-        deleteAllTeamsItem.setVisible(mSavedTeamsService.hasSavedTeams());
+        deleteAllTeamsItem.setVisible(mSavedTeamsService.hasTeams());
 
         MenuItem searchTeamsItem = menu.findItem(R.id.action_search_teams);
         SearchView searchTeamsView = (SearchView) searchTeamsItem.getActionView();
@@ -180,7 +180,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_teams)).setMessage(getResources().getString(R.string.delete_teams_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mSavedTeamsService.deleteAllSavedTeams();
+            mSavedTeamsService.deleteAllTeams();
             UiUtils.makeText(SavedTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(SavedTeamsListActivity.this);
         });
@@ -221,13 +221,13 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
     private void updateSavedTeamsList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            mSavedTeamsService.syncTeamsOnline(this);
+            mSavedTeamsService.syncTeams(this);
         }
     }
 
     @Override
     public void onSynchronizationSucceeded() {
-        mSavedTeamsListAdapter.updateSavedTeamsList(mSavedTeamsService.getSavedTeamList());
+        mSavedTeamsListAdapter.updateSavedTeamsList(mSavedTeamsService.getListTeams());
         mSyncLayout.setRefreshing(false);
     }
 

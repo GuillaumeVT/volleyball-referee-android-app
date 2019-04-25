@@ -109,10 +109,10 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
         mGenderButton.setEnabled(create);
-        updateGender(mTeamService.getGenderType(mTeamType));
+        updateGender(mTeamService.getGender(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
-            GenderType genderType = mTeamService.getGenderType(mTeamType).next();
+            GenderType genderType = mTeamService.getGender(mTeamType).next();
             updateGender(genderType);
         });
 
@@ -171,7 +171,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     private void updateGender(GenderType genderType) {
         Context context = getContext();
-        mTeamService.setGenderType(mTeamType, genderType);
+        mTeamService.setGender(mTeamType, genderType);
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:

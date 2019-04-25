@@ -16,7 +16,7 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -37,7 +37,7 @@ public class PointsScoreBoardGameTest {
     @Test
     public void playGame_complete() {
         IndoorGame game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
-        game.setUsageType(UsageType.POINTS_SCOREBOARD);
+        game.setUsage(UsageType.POINTS_SCOREBOARD);
 
         defineTeams(game);
         playSet(game);
@@ -64,7 +64,7 @@ public class PointsScoreBoardGameTest {
     }
 
     private void defineTeams(IndoorGame game) {
-        game.setGenderType(GenderType.LADIES);
+        game.setGender(GenderType.LADIES);
 
         game.setTeamName(TeamType.HOME, "Team A");
         game.setTeamName(TeamType.GUEST, "Team B");

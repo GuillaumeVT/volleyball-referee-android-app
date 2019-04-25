@@ -9,7 +9,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.Collection;

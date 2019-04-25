@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.40.0'
     implementation 'com.android.billingclient:billing:1.1'
     implementation 'org.jsoup:jsoup:1.11.3'
+    compileOnly 'org.projectlombok:lombok:1.18.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:rules:1.1.1'

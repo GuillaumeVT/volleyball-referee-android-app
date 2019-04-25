@@ -6,18 +6,15 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
 import com.tonkar.volleyballreferee.business.data.db.RulesEntity;
-import com.tonkar.volleyballreferee.business.data.db.SyncEntity;
-import com.tonkar.volleyballreferee.business.web.Authentication;
-import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
-import com.tonkar.volleyballreferee.business.web.WebUtils;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class SavedRules implements SavedRulesService {
 
@@ -40,29 +33,30 @@ public class SavedRules implements SavedRulesService {
     }
 
     @Override
-    public List<Rules> getSavedRules() {
-        List<String> jsonRulesList = AppDatabase.getInstance(mContext).rulesDao().getAllContents();
-        List<Rules> rulesList = new ArrayList<>();
-
-        for (String jsonRules : jsonRulesList) {
-            rulesList.add(readRules(jsonRules));
-        }
-
-        return rulesList;
+    public List<ApiRulesDescription> listRules() {
+        return AppDatabase.getInstance(mContext).rulesDao().listRules();
     }
 
     @Override
-    public Rules getSavedRules(String rulesName) {
-        String jsonRules = AppDatabase.getInstance(mContext).rulesDao().findContentByName(rulesName);
+    public List<ApiRulesDescription> listRules(GameType kind) {
+        return AppDatabase.getInstance(mContext).rulesDao().listRulesByKind(kind.toString());
+    }
+
+    @Override
+    public List<String> listRulesNames(GameType kind) {
+        return AppDatabase.getInstance(mContext).rulesDao().listNamesByKind(kind.toString());
+    }
+
+    @Override
+    public ApiRules getRules(String id) {
+        String jsonRules = AppDatabase.getInstance(mContext).rulesDao().findContentById(id);
         return readRules(jsonRules);
     }
 
     @Override
-    public Rules createRules() {
-        Rules rules = Rules.defaultUniversalRules();
-        rules.setName("");
-        rules.setDate(System.currentTimeMillis());
-        return rules;
+    public ApiRules getRules(GameType kind, String rulesName) {
+        String jsonRules = AppDatabase.getInstance(mContext).rulesDao().findContentByNameAndKind(rulesName, kind.toString());
+        return readRules(jsonRules);
     }
 
     @Override
@@ -80,50 +74,53 @@ public class SavedRules implements SavedRulesService {
                 rules = Rules.officialBeachRules();
                 break;
             default:
-                rules = Rules.defaultUniversalRules();
+                rules = Rules.officialIndoorRules();
                 break;
         }
+
+        rules.setId(UUID.randomUUID().toString());
+        rules.setCreatedBy(PrefUtils.getAuthentication(mContext).getUserId());
+        rules.setCreatedAt(System.currentTimeMillis());
+        rules.setUpdatedAt(System.currentTimeMillis());
         rules.setName("");
-        rules.setDate(System.currentTimeMillis());
 
         return rules;
     }
 
     @Override
     public void saveRules(Rules rules) {
-        rules.setDate(System.currentTimeMillis());
-        insertRulesIntoDb(rules);
-        pushRulesOnline(rules);
+        rules.setUpdatedAt(System.currentTimeMillis());
+        insertRulesIntoDb(rules, false);
+        pushRulesToServer(rules);
     }
 
     @Override
-    public void deleteSavedRules(final String rulesName) {
+    public void deleteRules(final String id) {
         new Thread() {
             public void run() {
-                AppDatabase.getInstance(mContext).rulesDao().deleteByName(rulesName);
-                deleteRulesOnline(rulesName);
+                AppDatabase.getInstance(mContext).rulesDao().deleteById(id);
+                deleteRulesOnServer(id);
             }
         }.start();
     }
 
     @Override
-    public void deleteAllSavedRules() {
+    public void deleteAllRules() {
         new Thread() {
             public void run() {
                 AppDatabase.getInstance(mContext).rulesDao().deleteAll();
-                deleteAllRulesOnline();
+                deleteAllRulesServer();
             }
         }.start();
     }
 
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
-        if (rules.getName().length() > 0
-                && AppDatabase.getInstance(mContext).rulesDao().countByName(rules.getName()) == 0
+        if (rules.getName().trim().length() > 1
+                && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind().toString()) == 0
                 && !rules.getName().equals(Rules.officialBeachRules().getName())
                 && !rules.getName().equals(Rules.officialIndoorRules().getName())
-                && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())
-                && !rules.getName().equals(Rules.defaultUniversalRules().getName())) {
+                && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())) {
             saveRules(rules);
         }
     }
@@ -131,7 +128,7 @@ public class SavedRules implements SavedRulesService {
     // Read saved rules
 
     @Override
-    public boolean hasSavedRules() {
+    public boolean hasRules() {
         return AppDatabase.getInstance(mContext).rulesDao().count() > 0;
     }
 
@@ -142,21 +139,29 @@ public class SavedRules implements SavedRulesService {
     }
 
     @Override
-    public Rules readRules(String json) {
+    public ApiRules readRules(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RULES_TYPE);
     }
 
-    private List<Rules> readRulesList(String json) {
-        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RULES_LIST_TYPE);
+    private List<ApiRulesDescription> readRulesList(String json) {
+        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RULES_DESCRIPTION_LIST_TYPE);
     }
 
     // Write saved rules
 
-    private void insertRulesIntoDb(final Rules rules) {
+    private void insertRulesIntoDb(final ApiRules apiRules, boolean synced) {
         new Thread() {
             public void run() {
-                String json = writeRules(rules);
-                RulesEntity rulesEntity = new RulesEntity(rules.getName(), json);
+                String json = writeRules(apiRules);
+                RulesEntity rulesEntity = new RulesEntity();
+                rulesEntity.setId(apiRules.getId());
+                rulesEntity.setCreatedBy(apiRules.getCreatedBy());
+                rulesEntity.setCreatedAt(apiRules.getCreatedAt());
+                rulesEntity.setUpdatedAt(apiRules.getUpdatedAt());
+                rulesEntity.setKind(apiRules.getKind());
+                rulesEntity.setName(apiRules.getName());
+                rulesEntity.setSynced(synced);
+                rulesEntity.setContent(json);
                 AppDatabase.getInstance(mContext).rulesDao().insert(rulesEntity);
             }
         }.start();
@@ -169,87 +174,24 @@ public class SavedRules implements SavedRulesService {
     }
 
     @Override
-    public String writeRules(Rules rules) {
+    public String writeRules(ApiRules rules) {
         return JsonIOUtils.GSON.toJson(rules, JsonIOUtils.RULES_TYPE);
     }
 
     // Web
 
-    private void syncRules(List<Rules> remoteRulesList) {
-        String userId = PrefUtils.getAuthentication(mContext).getUserId();
-        List<Rules> localRulesList = getSavedRules();
-
-        for (Rules localRules : localRulesList) {
-            if (localRules.getUserId().equals(Authentication.VBR_USER_ID)) {
-                localRules.setUserId(userId);
-                insertRulesIntoDb(localRules);
-            }
-        }
-
-        for (Rules localRules : localRulesList) {
-            boolean foundRemoteVersion = false;
-
-            for (Rules remoteRules : remoteRulesList) {
-                if (localRules.getName().equals(remoteRules.getName())) {
-                    foundRemoteVersion = true;
-
-                    if (localRules.getDate() < remoteRules.getDate()) {
-                        localRules.setAll(remoteRules);
-                        insertRulesIntoDb(localRules);
-                    } else if (localRules.getDate() > remoteRules.getDate()) {
-                        pushRulesOnline(localRules);
-                    }
-                }
-            }
-
-            if (!foundRemoteVersion) {
-                if (isSynced(localRules.getName())) {
-                    // if the rules were synced, then they were deleted from the server and they must be deleted locally
-                    deleteSavedRules(localRules.getName());
-                } else {
-                    // if the rules were not synced, then they are missing from the server because sending them must have failed, so send them again
-                    pushRulesOnline(localRules);
-                }
-            }
-        }
-
-        for (Rules remoteRules : remoteRulesList) {
-            boolean foundLocalVersion = false;
-
-            for (Rules localRules : localRulesList) {
-                if (localRules.getName().equals(remoteRules.getName())) {
-                    foundLocalVersion = true;
-                }
-            }
-
-            if (!foundLocalVersion) {
-                if (isSynced(remoteRules.getName())) {
-                    // if the rules were synced, then sending the deletion to the server must have failed, so send the deletion again
-                    deleteRulesOnline(remoteRules.getName());
-                } else {
-                    // if the rules were not synced, then they were added on the server and they must be added locally
-                    insertRulesIntoDb(remoteRules);
-                    pushRulesOnline(remoteRules);
-                }
-            }
-        }
+    @Override
+    public void syncRules() {
+        syncRules(null);
     }
 
     @Override
-    public void syncRulesOnline() {
-        syncRulesOnline(null);
-    }
-
-    @Override
-    public void syncRulesOnline(final DataSynchronizationListener listener) {
+    public void syncRules(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
-                        List<Rules> rulesList = readRulesList(response);
-                        syncRules(rulesList);
-                        if (listener != null){
-                            listener.onSynchronizationSucceeded();
-                        }
+                        List<ApiRulesDescription> rulesList = readRulesList(response);
+                        syncRules(rulesList, listener);
                     },
                     error -> {
                         if (error.networkResponse != null) {
@@ -260,7 +202,7 @@ public class SavedRules implements SavedRulesService {
                         }
                     }
             );
-            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();
@@ -268,25 +210,109 @@ public class SavedRules implements SavedRulesService {
         }
     }
 
-    private void pushRulesOnline(final Rules rules) {
+    private void syncRules(List<ApiRulesDescription> remoteRulesList, DataSynchronizationListener listener) {
+        String userId = PrefUtils.getAuthentication(mContext).getUserId();
+        List<ApiRulesDescription> localRulesList = listRules();
+        Queue<ApiRulesDescription> remoteRulesToDownload = new LinkedList<>();
+
+        // User purchased web services, write his user id
+        for (ApiRulesDescription localRules : localRulesList) {
+            if (localRules.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
+                ApiRules rules = getRules(localRules.getId());
+                rules.setCreatedBy(userId);
+                insertRulesIntoDb(rules, false);
+            }
+        }
+
+        for (ApiRulesDescription localRules : localRulesList) {
+            boolean foundRemoteVersion = false;
+
+            for (ApiRulesDescription remoteRules : remoteRulesList) {
+                if (localRules.getId().equals(remoteRules.getId())) {
+                    foundRemoteVersion = true;
+
+                    if (localRules.getUpdatedAt() < remoteRules.getUpdatedAt()) {
+                        remoteRulesToDownload.add(remoteRules);
+                    } else if (localRules.getUpdatedAt() > remoteRules.getUpdatedAt()) {
+                        ApiRules rules = getRules(localRules.getId());
+                        pushRulesToServer(rules);
+                    }
+                }
+            }
+
+            if (!foundRemoteVersion) {
+                if (localRules.isSynced()) {
+                    // if the rules were synced, then they were deleted from the server and they must be deleted locally
+                    deleteRules(localRules.getId());
+                } else {
+                    // if the rules were not synced, then they are missing from the server because sending them must have failed, so send them again
+                    ApiRules rules = getRules(localRules.getId());
+                    pushRulesToServer(rules);
+                }
+            }
+        }
+
+        for (ApiRulesDescription remoteRules : remoteRulesList) {
+            boolean foundLocalVersion = false;
+
+            for (ApiRulesDescription localRules : localRulesList) {
+                if (localRules.getId().equals(remoteRules.getId())) {
+                    foundLocalVersion = true;
+                }
+            }
+
+            if (!foundLocalVersion) {
+                remoteRulesToDownload.add(remoteRules);
+            }
+        }
+
+        downloadRulesRecursive(remoteRulesToDownload, listener);
+    }
+
+    private void downloadRulesRecursive(final Queue<ApiRulesDescription> remoteRules, final DataSynchronizationListener listener) {
+        if (remoteRules.isEmpty()) {
+            if (listener != null) {
+                listener.onSynchronizationSucceeded();
+            }
+        } else {
+            ApiRulesDescription remoteRule = remoteRules.poll();
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.RULE_API_URL, remoteRule.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {
+                        ApiRules rules = readRules(response);
+                        insertRulesIntoDb(rules, true);
+                        downloadRulesRecursive(remoteRules, listener);
+                    },
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
+                        }
+                        if (listener != null){
+                            listener.onSynchronizationFailed();
+                        }
+                    }
+            );
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        }
+    }
+
+    private void pushRulesToServer(final ApiRules rules) {
         if (PrefUtils.isSyncOn(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
-            rules.setUserId(authentication.getUserId());
             final byte[] bytes = writeRules(rules).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, WebUtils.USER_RULES_API_URL, bytes, authentication,
-                    response -> insertSyncIntoDb(rules.getName()),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.RULES_API_URL, bytes, authentication,
+                    response -> insertRulesIntoDb(rules, true),
                     error -> {
                         if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, WebUtils.USER_RULES_API_URL, bytes, authentication,
-                                    response -> insertSyncIntoDb(rules.getName()),
+                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.RULES_API_URL, bytes, authentication,
+                                    response -> insertRulesIntoDb(rules, true),
                                     error2 -> {
                                         if (error2.networkResponse != null) {
                                             Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error2.networkResponse.statusCode));
                                         }
                                     }
                             );
-                            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
+                            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
                         } else {
                             if (error.networkResponse != null) {
                                 Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
@@ -294,47 +320,35 @@ public class SavedRules implements SavedRulesService {
                         }
                     }
             );
-            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }
 
-    private void deleteRulesOnline(final String rulesName) {
+    private void deleteRulesOnServer(final String id) {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("name", rulesName);
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createRulesItem(rulesName), SyncEntity.RULES_ENTITY),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.RULE_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {},
                     error -> {
                         if (error.networkResponse != null) {
                             Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
                         }
                     }
             );
-            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }
 
-    private void deleteAllRulesOnline() {
+    private void deleteAllRulesServer() {
         if (PrefUtils.isSyncOn(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, WebUtils.USER_RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.RULES_ENTITY),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {},
                     error -> {
                         if (error.networkResponse != null) {
                             Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
                         }
                     }
             );
-            WebUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
-    }
-
-    private boolean isSynced(String rulesName) {
-        return AppDatabase.getInstance(mContext).syncDao().countByItemAndType(SyncEntity.createRulesItem(rulesName), SyncEntity.RULES_ENTITY) > 0;
-    }
-
-    private void insertSyncIntoDb(final String rulesName) {
-        AppDatabase.getInstance(mContext).syncDao().insert(SyncEntity.createRulesSyncEntity(rulesName));
     }
 }

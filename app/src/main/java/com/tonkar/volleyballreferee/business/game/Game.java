@@ -19,7 +19,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
@@ -162,7 +162,7 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public GameType getGameType() {
+    public GameType getKind() {
         return mGameType;
     }
 
@@ -198,8 +198,8 @@ public abstract class Game extends BaseGame {
     @Override
     public void startMatch() {
         mRules.printRules();
-        GenderType homeGender = getGenderType(TeamType.HOME);
-        GenderType guestGender = getGenderType(TeamType.GUEST);
+        GenderType homeGender = getGender(TeamType.HOME);
+        GenderType guestGender = getGender(TeamType.GUEST);
 
         if (homeGender.equals(guestGender)) {
             mGenderType = homeGender;
@@ -590,24 +590,24 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public GenderType getGenderType() {
+    public GenderType getGender() {
         return mGenderType;
     }
 
     @Override
-    public GenderType getGenderType(TeamType teamType) {
+    public GenderType getGender(TeamType teamType) {
         return getTeamDefinition(teamType).getGenderType();
     }
 
     @Override
-    public void setGenderType(GenderType genderType) {
+    public void setGender(GenderType genderType) {
         mGenderType = genderType;
-        setGenderType(TeamType.HOME, genderType);
-        setGenderType(TeamType.GUEST, genderType);
+        setGender(TeamType.HOME, genderType);
+        setGender(TeamType.GUEST, genderType);
     }
 
     @Override
-    public void setGenderType(TeamType teamType, GenderType genderType) {
+    public void setGender(TeamType teamType, GenderType genderType) {
         getTeamDefinition(teamType).setGenderType(genderType);
     }
 
@@ -678,7 +678,7 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public UsageType getUsageType() {
+    public UsageType getUsage() {
         return mUsageType;
     }
 
@@ -960,7 +960,7 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public void setUsageType(UsageType usageType) {
+    public void setUsage(UsageType usageType) {
         mUsageType = usageType;
     }
 
@@ -997,7 +997,7 @@ public abstract class Game extends BaseGame {
     public void restoreTeams(RecordedGameService recordedGameService) {
         setTeamName(TeamType.HOME, recordedGameService.getTeamName(TeamType.HOME));
         setTeamColor(TeamType.HOME, recordedGameService.getTeamColor(TeamType.HOME));
-        setGenderType(TeamType.HOME, recordedGameService.getGenderType(TeamType.HOME));
+        setGender(TeamType.HOME, recordedGameService.getGender(TeamType.HOME));
 
         for (int number : recordedGameService.getPlayers(TeamType.HOME))  {
             addPlayer(TeamType.HOME, number);
@@ -1005,7 +1005,7 @@ public abstract class Game extends BaseGame {
 
         setTeamName(TeamType.GUEST, recordedGameService.getTeamName(TeamType.GUEST));
         setTeamColor(TeamType.GUEST, recordedGameService.getTeamColor(TeamType.GUEST));
-        setGenderType(TeamType.GUEST, recordedGameService.getGenderType(TeamType.GUEST));
+        setGender(TeamType.GUEST, recordedGameService.getGender(TeamType.GUEST));
 
         for (int number : recordedGameService.getPlayers(TeamType.GUEST))  {
             addPlayer(TeamType.GUEST, number);
@@ -1021,10 +1021,10 @@ public abstract class Game extends BaseGame {
         } else if (obj instanceof Game) {
             Game other = (Game) obj;
             result = super.equals(other)
-                    && (this.getUsageType().equals(other.getUsageType()))
-                    && (this.getGameType().equals(other.getGameType()))
+                    && (this.getUsage().equals(other.getUsage()))
+                    && (this.getKind().equals(other.getKind()))
                     && (this.getGameDate() == other.getGameDate())
-                    && (this.getGenderType().equals(other.getGenderType()))
+                    && (this.getGender().equals(other.getGender()))
                     && (this.getRules().equals(other.getRules()))
                     && (this.getLeagueName().equals(other.getLeagueName()))
                     && (this.getDivisionName().equals(other.getDivisionName()))

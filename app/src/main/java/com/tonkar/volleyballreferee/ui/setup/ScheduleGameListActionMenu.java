@@ -21,7 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.GameDescription;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -41,10 +41,10 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     private Activity             mActivity;
     private RecordedGamesService mRecordedGamesService;
-    private GameDescription      mGameDescription;
+    private ApiGameDescription   mGameDescription;
     private boolean              mConfigureBeforeStart;
 
-    public static ScheduleGameListActionMenu newInstance(GameDescription gameDescription) {
+    public static ScheduleGameListActionMenu newInstance(ApiGameDescription gameDescription) {
         ScheduleGameListActionMenu fragment = new ScheduleGameListActionMenu();
         Bundle args = new Bundle();
         args.putString("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
@@ -174,7 +174,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                         Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
                         mRecordedGamesService.saveSetupGame(gameService);
                         final Intent setupIntent;
-                        if (gameService.getGameType().equals(GameType.BEACH)) {
+                        if (gameService.getKind().equals(GameType.BEACH)) {
                             setupIntent = new Intent(mActivity, QuickGameSetupActivity.class);
                         } else {
                             setupIntent = new Intent(mActivity, GameSetupActivity.class);
@@ -215,7 +215,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     }
 
     @Override
-    public void onUserGameListReceived(List<GameDescription> gameDescriptionList) {}
+    public void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList) {}
 
     @Override
     public void onNotFound() {

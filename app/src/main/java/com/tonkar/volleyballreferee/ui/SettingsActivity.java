@@ -42,8 +42,8 @@ public class SettingsActivity extends NavigationActivity {
         mPreferencesListener = (prefs, key) -> {
             switch (key) {
                 case PrefUtils.PREF_SYNC_DATA:
-                    new SavedRules(this).syncRulesOnline();
-                    new SavedTeams(this).syncTeamsOnline();
+                    new SavedRules(this).syncRules();
+                    new SavedTeams(this).syncTeams();
                     new RecordedGames(this).syncGamesOnline();
                     break;
                 default:

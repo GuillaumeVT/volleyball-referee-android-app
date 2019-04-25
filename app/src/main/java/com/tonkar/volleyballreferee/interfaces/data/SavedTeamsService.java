@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.interfaces.data;
 
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.api.ApiTeam;
+import com.tonkar.volleyballreferee.api.ApiTeamDescription;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -10,39 +11,41 @@ import java.util.List;
 
 public interface SavedTeamsService {
 
-    boolean hasSavedTeams();
+    boolean hasTeams();
 
-    List<RecordedTeam> getSavedTeamList();
+    List<ApiTeamDescription> getListTeams();
 
-    List<RecordedTeam> getSavedTeamList(GameType gameType);
+    List<ApiTeamDescription> getListTeams(GameType kind);
 
-    List<String> getSavedTeamNameList(GameType gameType, GenderType genderType);
+    List<String> listSavedTeamName(GameType kind, GenderType genderType);
 
-    RecordedTeam getSavedTeam(GameType gameType, String teamName, GenderType genderType);
+    ApiTeam getTeam(String id);
 
-    RecordedTeam readTeam(String json);
+    ApiTeam getTeam(GameType kind, String teamName, GenderType gender);
 
-    String writeTeam(RecordedTeam team);
+    ApiTeam readTeam(String json);
 
-    BaseTeamService createTeam(GameType gameType);
+    String writeTeam(ApiTeam team);
+
+    BaseTeamService createTeam(GameType kind);
 
     void saveTeam(BaseTeamService team);
 
-    void deleteSavedTeam(GameType gameType, String teamName, GenderType genderType);
+    void deleteTeam(String id);
 
-    void deleteAllSavedTeams();
+    void deleteAllTeams();
 
-    void createAndSaveTeamFrom(GameType gameType, BaseTeamService teamService, TeamType teamType);
+    void createAndSaveTeamFrom(GameType kind, BaseTeamService teamService, TeamType teamType);
 
-    RecordedTeam copyTeam(BaseTeamService teamService);
+    ApiTeam copyTeam(BaseTeamService teamService);
 
-    BaseTeamService copyTeam(RecordedTeam team);
+    BaseTeamService copyTeam(ApiTeam team);
 
-    void copyTeam(RecordedTeam source, BaseTeamService dest, TeamType teamType);
+    void copyTeam(ApiTeam source, BaseTeamService dest, TeamType teamType);
 
-    void copyTeam(BaseTeamService source, RecordedTeam dest, TeamType teamType);
+    void copyTeam(BaseTeamService source, ApiTeam dest, TeamType teamType);
 
-    void syncTeamsOnline();
+    void syncTeams();
 
-    void syncTeamsOnline(DataSynchronizationListener listener);
+    void syncTeams(DataSynchronizationListener listener);
 }

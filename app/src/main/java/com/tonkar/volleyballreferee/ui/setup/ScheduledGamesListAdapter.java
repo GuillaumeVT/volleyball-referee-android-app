@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.GameDescription;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
+public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> {
 
     static class ViewHolder {
         TextView  summaryText;
@@ -33,11 +33,11 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
         TextView  leagueText;
     }
 
-    private final LayoutInflater        mLayoutInflater;
-    private final List<GameDescription> mGameDescriptionList;
-    private final List<GameDescription> mFilteredGameDescriptionList;
-    private final DateFormat            mFormatter;
-    private final NamesFilter           mNamesFilter;
+    private final LayoutInflater           mLayoutInflater;
+    private final List<ApiGameDescription> mGameDescriptionList;
+    private final List<ApiGameDescription> mFilteredGameDescriptionList;
+    private final DateFormat               mFormatter;
+    private final NamesFilter              mNamesFilter;
 
     ScheduledGamesListAdapter(LayoutInflater layoutInflater) {
         super(layoutInflater.getContext(), R.layout.scheduled_games_list_item);
@@ -49,7 +49,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
         mNamesFilter = new NamesFilter();
     }
 
-    public void updateGameDescriptionList(List<GameDescription> gameDescriptionList) {
+    public void updateGameDescriptionList(List<ApiGameDescription> gameDescriptionList) {
         mGameDescriptionList.clear();
         mFilteredGameDescriptionList.clear();
         mGameDescriptionList.addAll(gameDescriptionList);
@@ -63,7 +63,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
     }
 
     @Override
-    public GameDescription getItem(int index) {
+    public ApiGameDescription getItem(int index) {
         return mFilteredGameDescriptionList.get(index);
     }
 
@@ -92,13 +92,13 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
             viewHolder = (ViewHolder) gameView.getTag();
         }
 
-        GameDescription gameDescription = mFilteredGameDescriptionList.get(index);
+        ApiGameDescription gameDescription = mFilteredGameDescriptionList.get(index);
         updateGameDescription(viewHolder, gameDescription);
 
         return gameView;
     }
 
-    private void updateGameDescription(ViewHolder viewHolder, GameDescription gameDescription) {
+    private void updateGameDescription(ViewHolder viewHolder, ApiGameDescription gameDescription) {
         viewHolder.summaryText.setText(String.format(Locale.getDefault(),"%s\t\t - \t\t%s", gameDescription.getHomeTeamName(), gameDescription.getGuestTeamName()));
         viewHolder.dateText.setText(mFormatter.format(new Date(gameDescription.getGameSchedule())));
 
@@ -171,9 +171,9 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<GameDescription> matchValues = new ArrayList<>();
+                List<ApiGameDescription> matchValues = new ArrayList<>();
 
-                for (GameDescription gameDescription : mGameDescriptionList) {
+                for (ApiGameDescription gameDescription : mGameDescriptionList) {
                     if (lowerCaseText.isEmpty()
                             || gameDescription.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
                             || gameDescription.getGuestTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
@@ -194,7 +194,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<GameDescription> {
             mFilteredGameDescriptionList.clear();
 
             if (results.values != null) {
-                mFilteredGameDescriptionList.addAll((Collection<? extends GameDescription>) results.values);
+                mFilteredGameDescriptionList.addAll((Collection<? extends ApiGameDescription>) results.values);
             }
 
             if (results.count > 0) {

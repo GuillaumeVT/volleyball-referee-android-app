@@ -16,7 +16,7 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
@@ -104,7 +104,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             SavedRulesService savedRulesService = new SavedRules(this);
-            savedRulesService.deleteSavedRules(mRules.getName());
+            savedRulesService.deleteRules(mRules.getName());
             UiUtils.makeText(SavedRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);

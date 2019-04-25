@@ -51,7 +51,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        UiUtils.updateToolbarLogo(toolbar, mGameService.getGameType(), mGameService.getUsageType());
+        UiUtils.updateToolbarLogo(toolbar, mGameService.getKind(), mGameService.getUsage());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -121,7 +121,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         RecordedGamesService recordedGamesService = new RecordedGames(this);
         recordedGamesService.createCurrentGame(mGameService);
 
-        if (GameType.TIME.equals(mGameService.getGameType())) {
+        if (GameType.TIME.equals(mGameService.getKind())) {
             Log.i(Tags.SETUP_UI, "Start time-based game activity");
             final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -130,7 +130,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             startActivity(gameIntent);
             UiUtils.animateCreate(this);
         } else {
-            if (GameType.BEACH.equals(mGameService.getGameType())) {
+            if (GameType.BEACH.equals(mGameService.getKind())) {
                 saveTeams();
             }
             saveRules();
@@ -183,7 +183,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                             fragment = QuickGameSetupFragment.newInstance(create);
                             break;
                         case R.id.rules_tab:
-                            if (GameType.TIME.equals(mGameService.getGameType())) {
+                            if (GameType.TIME.equals(mGameService.getKind())) {
                                 fragment = null;
                             } else {
                                 fragment = RulesSetupFragment.newInstance(true, create);
@@ -206,7 +206,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameSetupNavigation.setSelectedItemId(R.id.teams_tab);
         }
 
-        if (GameType.TIME.equals(mGameService.getGameType())) {
+        if (GameType.TIME.equals(mGameService.getKind())) {
             gameSetupNavigation.setVisibility(View.GONE);
         }
     }

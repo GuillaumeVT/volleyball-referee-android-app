@@ -51,7 +51,7 @@ public class GameSetupActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        UiUtils.updateToolbarLogo(toolbar, mGameService.getGameType(), mGameService.getUsageType());
+        UiUtils.updateToolbarLogo(toolbar, mGameService.getKind(), mGameService.getUsage());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

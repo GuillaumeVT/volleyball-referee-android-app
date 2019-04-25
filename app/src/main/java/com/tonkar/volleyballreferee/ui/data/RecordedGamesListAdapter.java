@@ -120,7 +120,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
         }
         viewHolder.scoreText.setText(builder.toString());
 
-        switch (recordedGameService.getGenderType()) {
+        switch (recordedGameService.getGender()) {
             case MIXED:
                 viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
                 viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
@@ -135,7 +135,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<RecordedGameService> 
                 break;
         }
 
-        switch (recordedGameService.getGameType()) {
+        switch (recordedGameService.getKind()) {
             case INDOOR_4X4:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
                 viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));

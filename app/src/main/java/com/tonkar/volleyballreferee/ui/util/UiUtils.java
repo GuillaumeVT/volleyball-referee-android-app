@@ -47,7 +47,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
-import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.api.ApiUtils;
 import com.tonkar.volleyballreferee.interfaces.*;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
@@ -181,7 +181,7 @@ public class UiUtils {
 
                 String summary = recordedGameService.getGameSummary();
                 if (PrefUtils.isPrefDataSyncEnabled(context)) {
-                    summary = summary + "\n" + String.format(Locale.getDefault(), WebUtils.VIEW_URL, recordedGameService.getGameDate());
+                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.VIEW_URL, recordedGameService.getGameDate());
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);
@@ -217,7 +217,7 @@ public class UiUtils {
         Log.i(Tags.GAME_UI, "Navigate to home");
         if (gameService.isMatchCompleted()) {
             UiUtils.navigateToHome(activity);
-        } else if (GameType.TIME.equals(gameService.getGameType())) {
+        } else if (GameType.TIME.equals(gameService.getKind())) {
             TimeBasedGameService timeBasedGameService = (TimeBasedGameService) gameService;
             if (timeBasedGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);

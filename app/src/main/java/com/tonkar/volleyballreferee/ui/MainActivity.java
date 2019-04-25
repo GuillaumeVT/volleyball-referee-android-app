@@ -36,14 +36,14 @@ import com.tonkar.volleyballreferee.business.data.SavedRules;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.business.game.*;
 import com.tonkar.volleyballreferee.business.web.BooleanRequest;
-import com.tonkar.volleyballreferee.business.data.GameDescription;
-import com.tonkar.volleyballreferee.business.web.JsonStringRequest;
-import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
+import com.tonkar.volleyballreferee.api.JsonStringRequest;
+import com.tonkar.volleyballreferee.api.ApiUtils;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.*;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
@@ -117,9 +117,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final long currentTime = System.currentTimeMillis();
 
-        if (sharedPreferences.getLong("last_full_sync", 0L) + 3600000L < currentTime) {
-            savedRulesService.syncRulesOnline();
-            savedTeamsService.syncTeamsOnline();
+        if (sharedPreferences.getLong("last_full_sync", 0L) + 7200000L < currentTime) {
+            savedRulesService.syncRules();
+            savedTeamsService.syncTeams();
             mRecordedGamesService.syncGamesOnline();
             sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
         }
@@ -285,7 +285,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         if (gameService == null) {
             UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
         } else {
-            if (GameType.TIME.equals(gameService.getGameType())) {
+            if (GameType.TIME.equals(gameService.getKind())) {
                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                 startActivity(gameIntent);
                 UiUtils.animateCreate(this);
@@ -301,15 +301,15 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         messageItem.setVisible(false);
 
         if (PrefUtils.canRequest(this)) {
-            String url = WebUtils.HAS_MESSAGE_API_URL;
+            String url = ApiUtils.HAS_MESSAGE_API_URL;
             BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url, messageItem::setVisible, error -> messageItem.setVisible(false));
-            WebUtils.getInstance().getRequestQueue(this).add(booleanRequest);
+            ApiUtils.getInstance().getRequestQueue(this).add(booleanRequest);
         }
     }
 
     private void showMessage() {
         if (PrefUtils.canRequest(this)) {
-            String url = WebUtils.MESSAGE_API_URL;
+            String url = ApiUtils.MESSAGE_API_URL;
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
                     response -> {
                         if (response != null) {
@@ -322,7 +322,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                         }
                     }, error -> {}
             );
-            WebUtils.getInstance().getRequestQueue(this).add(stringRequest);
+            ApiUtils.getInstance().getRequestQueue(this).add(stringRequest);
         }
     }
 
@@ -399,7 +399,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     public void onUserGameReceived(RecordedGameService recordedGameService) {}
 
     @Override
-    public void onUserGameListReceived(List<GameDescription> gameDescriptionList) {}
+    public void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList) {}
 
     @Override
     public void onNotFound() {
@@ -448,7 +448,7 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
                     Log.i(Tags.SETUP_UI, "Edit game from code before starting");
                     mRecordedGamesService.saveSetupGame(gameService);
                     final Intent setupIntent;
-                    if (gameService.getGameType().equals(GameType.BEACH)) {
+                    if (gameService.getKind().equals(GameType.BEACH)) {
                         setupIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);
                     } else {
                         setupIntent = new Intent(MainActivity.this, GameSetupActivity.class);

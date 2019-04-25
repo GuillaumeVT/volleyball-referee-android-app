@@ -3,45 +3,21 @@ package com.tonkar.volleyballreferee.business.data.db;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+import com.tonkar.volleyballreferee.api.ApiRulesDescription;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(tableName = "rules")
-public class RulesEntity {
-
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "name")
-    private String mName;
+@Getter @Setter
+public class RulesEntity extends ApiRulesDescription {
 
     @NonNull
     @ColumnInfo(name = "content")
-    private String mContent;
+    private String content;
 
     public RulesEntity() {
-        mName = "";
-        mContent = "";
+        super();
+        content = "";
     }
 
-    @Ignore
-    public RulesEntity(@NonNull String name, @NonNull String content) {
-        mName = name;
-        mContent = content;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
-    }
-
-    public String getContent() {
-        return mContent;
-    }
-
-    public void setContent(String content) {
-        this.mContent = content;
-    }
 }

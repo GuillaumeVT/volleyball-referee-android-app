@@ -1,17 +1,16 @@
 package com.tonkar.volleyballreferee.business.data;
 
+import com.tonkar.volleyballreferee.api.ApiCourt;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class WrappedTeam implements BaseTeamService {
 
@@ -26,8 +25,48 @@ public class WrappedTeam implements BaseTeamService {
     }
 
     @Override
+    public String getTeamId(TeamType teamType) {
+        return mTeamDefinition.getId();
+    }
+
+    @Override
+    public void setTeamId(TeamType teamType, String id) {
+        mTeamDefinition.setId(id);
+    }
+
+    @Override
+    public String getCreatedBy(TeamType teamType) {
+        return mTeamDefinition.getCreatedBy();
+    }
+
+    @Override
+    public void setCreatedBy(TeamType teamType, String userId) {
+        mTeamDefinition.setCreatedBy(userId);
+    }
+
+    @Override
+    public long getCreatedAt(TeamType teamType) {
+        return mTeamDefinition.getCreatedAt();
+    }
+
+    @Override
+    public void setCreatedAt(TeamType teamType, long createdAt) {
+        mTeamDefinition.setCreatedAt(createdAt);
+    }
+
+    @Override
+    public long getUpdatedAt(TeamType teamType) {
+        return mTeamDefinition.getUpdatedAt();
+    }
+
+    @Override
+    public void setUpdatedAt(TeamType teamType, long updatedAt) {
+        mTeamDefinition.setUpdatedAt(updatedAt);
+    }
+
+    @Override
     public GameType getTeamsKind() {
-        return mTeamDefinition.getGameType();
+        return mTeamDefinition.getKind();
     }
 
     @Override
@@ -37,7 +76,7 @@ public class WrappedTeam implements BaseTeamService {
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        return mTeamDefinition.getColor();
+        return mTeamDefinition.getColorInt();
     }
 
     @Override
@@ -47,7 +86,7 @@ public class WrappedTeam implements BaseTeamService {
 
     @Override
     public void setTeamColor(TeamType teamType, int color) {
-        mTeamDefinition.setColor(color);
+        mTeamDefinition.setColorInt(color);
     }
 
     @Override
@@ -71,28 +110,28 @@ public class WrappedTeam implements BaseTeamService {
     }
 
     @Override
-    public Set<Integer> getPlayers(TeamType teamType) {
-        return mTeamDefinition.getPlayers();
+    public Set<ApiPlayer> getPlayers(TeamType teamType) {
+        return new TreeSet<>(mTeamDefinition.getPlayers());
     }
 
     @Override
-    public GenderType getGenderType() {
-        return mTeamDefinition.getGenderType();
+    public GenderType getGender() {
+        return mTeamDefinition.getGender();
     }
 
     @Override
-    public GenderType getGenderType(TeamType teamType) {
-        return mTeamDefinition.getGenderType();
+    public GenderType getGender(TeamType teamType) {
+        return mTeamDefinition.getGender();
     }
 
     @Override
-    public void setGenderType(GenderType genderType) {
-        mTeamDefinition.setGenderType(genderType);
+    public void setGender(GenderType gender) {
+        mTeamDefinition.setGender(gender);
     }
 
     @Override
-    public void setGenderType(TeamType teamType, GenderType genderType) {
-        mTeamDefinition.setGenderType(genderType);
+    public void setGender(TeamType teamType, GenderType gender) {
+        mTeamDefinition.setGender(gender);
     }
 
     @Override
@@ -102,12 +141,12 @@ public class WrappedTeam implements BaseTeamService {
 
     @Override
     public int getLiberoColor(TeamType teamType) {
-        return mTeamDefinition.getLiberoColor();
+        return mTeamDefinition.getLiberoColorInt();
     }
 
     @Override
     public void setLiberoColor(TeamType teamType, int color) {
-        mTeamDefinition.setLiberoColor(color);
+        mTeamDefinition.setLiberoColorInt(color);
     }
 
     @Override
@@ -131,17 +170,17 @@ public class WrappedTeam implements BaseTeamService {
     }
 
     @Override
-    public Set<Integer> getLiberos(TeamType teamType) {
-        return mTeamDefinition.getLiberos();
+    public Set<ApiPlayer> getLiberos(TeamType teamType) {
+        return new TreeSet<>(mTeamDefinition.getLiberos());
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
@@ -156,8 +195,8 @@ public class WrappedTeam implements BaseTeamService {
     }
 
     @Override
-    public Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
-        return new TreeSet<>();
+    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
+        return null;
     }
 
     @Override
@@ -202,7 +241,7 @@ public class WrappedTeam implements BaseTeamService {
                     && (this.getTeamColor(null) == other.getTeamColor(null))
                     && (this.getLiberoColor(null) == other.getLiberoColor(null))
                     && (this.getCaptain(null) == other.getCaptain(null))
-                    && (this.getGenderType().equals(other.getGenderType()))
+                    && (this.getGender().equals(other.getGender()))
                     && (this.getPlayers(null).equals(other.getPlayers(null)))
                     && (this.getLiberos(null).equals(other.getLiberos(null)));
         }

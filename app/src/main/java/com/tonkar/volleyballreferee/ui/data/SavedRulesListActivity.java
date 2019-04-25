@@ -18,7 +18,7 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -62,7 +62,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateSavedRulesList);
 
-        List<Rules> savedRules = mSavedRulesService.getSavedRules();
+        List<Rules> savedRules = mSavedRulesService.listRules();
 
         final ListView savedRulesList = findViewById(R.id.saved_rules_list);
         mSavedRulesListAdapter = new SavedRulesListAdapter(this, getLayoutInflater(), savedRules);
@@ -127,7 +127,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         inflater.inflate(R.menu.menu_saved_rules_list, menu);
 
         MenuItem deleteAllRulesItem = menu.findItem(R.id.action_delete_rules);
-        deleteAllRulesItem.setVisible(mSavedRulesService.hasSavedRules());
+        deleteAllRulesItem.setVisible(mSavedRulesService.hasRules());
 
         MenuItem searchRulesItem = menu.findItem(R.id.action_search_rules);
         SearchView searchRulesView = (SearchView) searchRulesItem.getActionView();
@@ -174,7 +174,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_all_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mSavedRulesService.deleteAllSavedRules();
+            mSavedRulesService.deleteAllRules();
             UiUtils.makeText(SavedRulesListActivity.this, getResources().getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(SavedRulesListActivity.this);
         });
@@ -215,13 +215,13 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
     private void updateSavedRulesList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            mSavedRulesService.syncRulesOnline(this);
+            mSavedRulesService.syncRules(this);
         }
     }
 
     @Override
     public void onSynchronizationSucceeded() {
-        mSavedRulesListAdapter.updateSavedRulesList(mSavedRulesService.getSavedRules());
+        mSavedRulesListAdapter.updateSavedRulesList(mSavedRulesService.listRules());
         mSyncLayout.setRefreshing(false);
     }
 

@@ -1,11 +1,30 @@
 package com.tonkar.volleyballreferee.interfaces.team;
 
+import com.tonkar.volleyballreferee.api.ApiCourt;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 
 import java.util.List;
 import java.util.Set;
 
 public interface BaseTeamService {
+
+    String getTeamId(TeamType teamType);
+
+    void setTeamId(TeamType teamType, String id);
+
+    String getCreatedBy(TeamType teamType);
+
+    void setCreatedBy(TeamType teamType, String userId);
+
+    long getCreatedAt(TeamType teamType);
+
+    void setCreatedAt(TeamType teamType, long createdAt);
+
+    long getUpdatedAt(TeamType teamType);
+
+    void setUpdatedAt(TeamType teamType, long updatedAt);
 
     GameType getTeamsKind();
 
@@ -25,15 +44,15 @@ public interface BaseTeamService {
 
     int getNumberOfPlayers(TeamType teamType);
 
-    Set<Integer> getPlayers(TeamType teamType);
+    Set<ApiPlayer> getPlayers(TeamType teamType);
 
-    GenderType getGenderType();
+    GenderType getGender();
 
-    GenderType getGenderType(TeamType teamType);
+    GenderType getGender(TeamType teamType);
 
-    void setGenderType(GenderType genderType);
+    void setGender(GenderType gender);
 
-    void setGenderType(TeamType teamType, GenderType genderType);
+    void setGender(TeamType teamType, GenderType gender);
 
     int getExpectedNumberOfPlayersOnCourt();
 
@@ -49,17 +68,17 @@ public interface BaseTeamService {
 
     boolean canAddLibero(TeamType teamType);
 
-    Set<Integer> getLiberos(TeamType teamType);
+    Set<ApiPlayer> getLiberos(TeamType teamType);
 
-    List<Substitution> getSubstitutions(TeamType teamType);
+    List<ApiSubstitution> getSubstitutions(TeamType teamType);
 
-    List<Substitution> getSubstitutions(TeamType teamType, int setIndex);
+    List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex);
 
     boolean isStartingLineupConfirmed();
 
     boolean isStartingLineupConfirmed(int setIndex);
 
-    Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex);
+    ApiCourt getStartingLineup(TeamType teamType, int setIndex);
 
     PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex);
 

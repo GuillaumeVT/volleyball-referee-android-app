@@ -6,21 +6,16 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 
 @Dao
 public interface GameDao {
 
-    @Query("SELECT content FROM games ORDER BY date DESC")
-    List<String> getAllContents();
+    @Query("SELECT id, createdBy, createdAt, updatedAt, synced, scheduledAt, kind, gender, public, leagueName, divisionName, homeTeamName, guestTeamName, homeSets, guestSets, score FROM games ORDER BY scheduledAt DESC")
+    List<ApiGameDescription> listGames();
 
-    @Query("SELECT content FROM games WHERE date = :date")
-    String findContentByDate(Long date);
-
-    @Query("SELECT DISTINCT league FROM games ORDER BY league ASC")
-    List<String> getLeagues();
-
-    @Query("SELECT DISTINCT division FROM games ORDER BY division ASC")
-    List<String> getDivisions();
+    @Query("SELECT content FROM games WHERE id = :id")
+    String findContentById(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<GameEntity> gameEntities);
@@ -31,8 +26,8 @@ public interface GameDao {
     @Query("DELETE FROM games")
     void deleteAll();
 
-    @Query("DELETE FROM games WHERE date = :date")
-    void deleteByDate(Long date);
+    @Query("DELETE FROM games WHERE id = :id")
+    void deleteById(String id);
 
     @Query("SELECT COUNT(*) FROM games")
     int count();

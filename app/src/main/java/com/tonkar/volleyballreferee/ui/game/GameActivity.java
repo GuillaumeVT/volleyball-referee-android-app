@@ -188,7 +188,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 mRightTeamTimeoutLayout.setVisibility(View.GONE);
             }
 
-            if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsageType())) {
+            if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsage())) {
                 mLeftTeamCardsButton.hide();
                 mRightTeamCardsButton.hide();
             }
@@ -422,7 +422,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         UiUtils.animateBounce(this, mRightTeamCardsButton);
 
         if (mGameService.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            if (GameType.BEACH.equals(mGameService.getGameType())) {
+            if (GameType.BEACH.equals(mGameService.getKind())) {
                 UiUtils.showNotification(this, getResources().getString(R.string.switch_sides));
                 UiUtils.playNotificationSound(this);
             } else {
@@ -656,7 +656,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
                     switch (item.getItemId()) {
                         case R.id.court_position_tab:
-                            switch (mGameService.getGameType()) {
+                            switch (mGameService.getKind()) {
                                 case INDOOR_4X4:
                                     fragment = Indoor4x4CourtFragment.newInstance();
                                     break;
@@ -697,15 +697,15 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         }
 
         if (!mGameService.getRules().areSanctionsEnabled()
-                || UsageType.POINTS_SCOREBOARD.equals(mGameService.getUsageType())) {
+                || UsageType.POINTS_SCOREBOARD.equals(mGameService.getUsage())) {
             gameNavigation.getMenu().removeItem(R.id.sanctions_tab);
         }
 
-        if (GameType.BEACH.equals(mGameService.getGameType())) {
+        if (GameType.BEACH.equals(mGameService.getKind())) {
             gameNavigation.getMenu().removeItem(R.id.substitutions_tab);
         }
 
-        if (UsageType.NORMAL.equals(mGameService.getUsageType())) {
+        if (UsageType.NORMAL.equals(mGameService.getUsage())) {
             if (savedInstanceState == null) {
                 gameNavigation.setSelectedItemId(R.id.court_position_tab);
             }

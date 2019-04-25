@@ -50,7 +50,7 @@ public class SetFragment extends Fragment implements RecordedGameServiceHandler 
         if (mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
             GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
             final LineupAdapter homeTeamLineupAdapter;
-            if (GameType.INDOOR.equals(mRecordedGameService.getGameType())) {
+            if (GameType.INDOOR.equals(mRecordedGameService.getKind())) {
                 homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mRecordedGameService, TeamType.HOME, setIndex);
             } else {
                 homeTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mRecordedGameService, TeamType.HOME, setIndex);
@@ -59,7 +59,7 @@ public class SetFragment extends Fragment implements RecordedGameServiceHandler 
 
             GridView guestTeamLineup = view.findViewById(R.id.guest_team_lineup);
             final LineupAdapter guestTeamLineupAdapter;
-            if (GameType.INDOOR.equals(mRecordedGameService.getGameType())) {
+            if (GameType.INDOOR.equals(mRecordedGameService.getKind())) {
                 guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mRecordedGameService, TeamType.GUEST, setIndex);
             } else {
                 guestTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mRecordedGameService, TeamType.GUEST, setIndex);

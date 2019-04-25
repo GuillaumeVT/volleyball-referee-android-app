@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.billing.BillingManager;
-import com.tonkar.volleyballreferee.business.web.WebUtils;
+import com.tonkar.volleyballreferee.api.ApiUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
@@ -104,13 +104,13 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         break;
                     case R.id.action_view_live_games:
                         Log.i(Tags.WEB, "Live games");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.LIVE_URL));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.LIVE_URL));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
                     case R.id.action_search_online_games:
                         Log.i(Tags.WEB, "Search online games");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WebUtils.SEARCH_URL));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.SEARCH_URL));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;

@@ -3,71 +3,21 @@ package com.tonkar.volleyballreferee.business.data.db;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
+import com.tonkar.volleyballreferee.api.ApiTeamDescription;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity(tableName = "teams", primaryKeys = {"name", "gender", "kind"})
-public class TeamEntity {
-
-    @NonNull
-    @ColumnInfo(name = "name")
-    private String mName;
-
-    @NonNull
-    @ColumnInfo(name = "gender")
-    private String mGender;
-
-    @NonNull
-    @ColumnInfo(name = "kind")
-    private String mKind;
+@Entity(tableName = "teams")
+@Getter @Setter
+public class TeamEntity extends ApiTeamDescription {
 
     @NonNull
     @ColumnInfo(name = "content")
-    private String mContent;
+    private String content;
 
     public TeamEntity() {
-        mName = "";
-        mGender = "";
-        mKind = "";
-        mContent = "";
+        super();
+        content = "";
     }
 
-    @Ignore
-    public TeamEntity(@NonNull String name, @NonNull String gender, @NonNull String kind, @NonNull String content) {
-        mName = name;
-        mGender = gender;
-        mKind = kind;
-        mContent = content;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
-    }
-
-    public String getGender() {
-        return mGender;
-    }
-
-    public void setGender(String gender) {
-        this.mGender = gender;
-    }
-
-    public String getKind() {
-        return mKind;
-    }
-
-    public void setKind(String kind) {
-        this.mKind = kind;
-    }
-
-    public String getContent() {
-        return mContent;
-    }
-
-    public void setContent(String content) {
-        this.mContent = content;
-    }
 }

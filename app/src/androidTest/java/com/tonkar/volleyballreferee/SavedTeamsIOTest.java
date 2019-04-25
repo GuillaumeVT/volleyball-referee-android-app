@@ -5,7 +5,7 @@ import android.graphics.Color;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.business.data.SavedTeams;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
@@ -64,7 +64,7 @@ public class SavedTeamsIOTest {
         teamService.addLibero(TeamType.HOME, 8);
 
         teamService.setCaptain(TeamType.HOME, 1);
-        teamService.setGenderType(TeamType.HOME, GenderType.GENTS);
+        teamService.setGender(TeamType.HOME, GenderType.GENTS);
 
         savedTeamsService.saveTeam(teamService);
 
@@ -92,7 +92,7 @@ public class SavedTeamsIOTest {
         teamService.addLibero(TeamType.HOME, 20);
 
         teamService.setCaptain(TeamType.HOME, 6);
-        teamService.setGenderType(TeamType.HOME, GenderType.GENTS);
+        teamService.setGender(TeamType.HOME, GenderType.GENTS);
 
         savedTeamsService.saveTeam(teamService);
     }
@@ -101,10 +101,10 @@ public class SavedTeamsIOTest {
     public void writeThenRead() {
         SavedTeamsService savedTeamsService = new SavedTeams(mActivityRule.getActivity().getApplicationContext());
 
-        List<RecordedTeam> expectedList = new ArrayList<>();
-        expectedList.add(savedTeamsService.getSavedTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
-        expectedList.add(savedTeamsService.getSavedTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
-        List<RecordedTeam> actualList = new ArrayList<>();
+        List<ApiTeam> expectedList = new ArrayList<>();
+        expectedList.add(savedTeamsService.getTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
+        expectedList.add(savedTeamsService.getTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
+        List<ApiTeam> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {

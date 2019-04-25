@@ -1,7 +1,8 @@
 package com.tonkar.volleyballreferee.business.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.api.ApiTeam;
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
@@ -12,7 +13,7 @@ import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +46,9 @@ public class RecordedGame implements RecordedGameService {
     @SerializedName("division")
     private String            mDivisionName;
     @SerializedName("hTeam")
-    private RecordedTeam      mHomeTeam;
+    private ApiTeam           mHomeTeam;
     @SerializedName("gTeam")
-    private RecordedTeam      mGuestTeam;
+    private ApiTeam           mGuestTeam;
     @SerializedName("hSets")
     private int               mHomeSets;
     @SerializedName("gSets")
@@ -73,8 +74,8 @@ public class RecordedGame implements RecordedGameService {
         mRefereeName = "";
         mLeagueName = "";
         mDivisionName = "";
-        mHomeTeam = new RecordedTeam();
-        mGuestTeam = new RecordedTeam();
+        mHomeTeam = new ApiTeam();
+        mGuestTeam = new ApiTeam();
         mHomeSets = 0;
         mGuestSets = 0;
         mSets = new ArrayList<>();
@@ -92,8 +93,8 @@ public class RecordedGame implements RecordedGameService {
         return mSets.size() -1;
     }
 
-    public RecordedTeam getTeam(TeamType teamType) {
-        RecordedTeam team;
+    public ApiTeam getTeam(TeamType teamType) {
+        ApiTeam team;
 
         if (TeamType.HOME.equals(teamType)) {
             team = mHomeTeam;
@@ -117,7 +118,7 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
-    public GameType getGameType() {
+    public GameType getKind() {
         return mGameType;
     }
 
@@ -229,12 +230,12 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
-    public UsageType getUsageType() {
+    public UsageType getUsage() {
         return mUsageType;
     }
 
     @Override
-    public void setUsageType(UsageType usageType) {
+    public void setUsage(UsageType usageType) {
         mUsageType = usageType;
     }
 
@@ -337,22 +338,22 @@ public class RecordedGame implements RecordedGameService {
     }
 
     @Override
-    public GenderType getGenderType() {
+    public GenderType getGender() {
         return mGenderType;
     }
 
     @Override
-    public GenderType getGenderType(TeamType teamType) {
+    public GenderType getGender(TeamType teamType) {
         return getTeam(teamType).getGenderType();
     }
 
     @Override
-    public void setGenderType(GenderType genderType) {
+    public void setGender(GenderType genderType) {
         mGenderType = genderType;
     }
 
     @Override
-    public void setGenderType(TeamType teamType, GenderType genderType) {
+    public void setGender(TeamType teamType, GenderType genderType) {
         getTeam(teamType).setGenderType(genderType);
     }
 
@@ -626,9 +627,9 @@ public class RecordedGame implements RecordedGameService {
             result = this.getUserId().equals(other.getUserId())
                     && (this.getGameDate() == other.getGameDate())
                     && (this.getGameSchedule() == other.getGameSchedule())
-                    && this.getGameType().equals(other.getGameType())
-                    && (this.getGenderType().equals(other.getGenderType()))
-                    && (this.getUsageType().equals(other.getUsageType()))
+                    && this.getKind().equals(other.getKind())
+                    && (this.getGender().equals(other.getGender()))
+                    && (this.getUsage().equals(other.getUsage()))
                     && (this.isMatchCompleted() == other.isMatchCompleted())
                     && (this.isIndexed() == other.isIndexed())
                     && (this.getRefereeName().equals(other.getRefereeName()))

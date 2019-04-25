@@ -7,8 +7,8 @@ import com.tonkar.volleyballreferee.business.data.RecordedGame;
 import com.tonkar.volleyballreferee.business.data.RecordedGames;
 import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.data.RecordedSet;
-import com.tonkar.volleyballreferee.business.data.RecordedTeam;
-import com.tonkar.volleyballreferee.business.web.Authentication;
+import com.tonkar.volleyballreferee.api.ApiTeam;
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
@@ -17,7 +17,7 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,7 +83,7 @@ public class RecordedGamesIOTest {
         recordedGame.setGameType(GameType.INDOOR);
         recordedGame.setGameDate(123456L);
         recordedGame.setGameSchedule(65432L);
-        recordedGame.setGenderType(GenderType.LADIES);
+        recordedGame.setGender(GenderType.LADIES);
         recordedGame.setRules(Rules.officialIndoorRules());
         recordedGame.setLeagueName("VBR League");
         recordedGame.setDivisionName("VBR Division");
@@ -92,7 +92,7 @@ public class RecordedGamesIOTest {
         recordedGame.setSets(TeamType.HOME, 0);
         recordedGame.setSets(TeamType.GUEST, 2);
 
-        RecordedTeam team1 = recordedGame.getTeam(TeamType.HOME);
+        ApiTeam team1 = recordedGame.getTeam(TeamType.HOME);
         team1.setName("Team 1");
         team1.setColor(Color.parseColor("#123456"));
         team1.setLiberoColor(Color.parseColor("#ffffff"));
@@ -103,7 +103,7 @@ public class RecordedGamesIOTest {
         team1.setGameType(GameType.INDOOR);
         team1.setDate(4869434L);
 
-        RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
+        ApiTeam team2 = recordedGame.getTeam(TeamType.GUEST);
         team2.setName("Team 2");
         team2.setColor(Color.parseColor("#a1b2c3"));
         team2.setLiberoColor(Color.parseColor("#000000"));
@@ -187,7 +187,7 @@ public class RecordedGamesIOTest {
         recordedGame.setGameType(GameType.BEACH);
         recordedGame.setGameDate(646516L);
         recordedGame.setGameSchedule(764578L);
-        recordedGame.setGenderType(GenderType.GENTS);
+        recordedGame.setGender(GenderType.GENTS);
         recordedGame.setMatchStatus(GameStatus.SCHEDULED);
         recordedGame.setRules(Rules.officialBeachRules());
         recordedGame.setLeagueName("VBR Beach League");
@@ -196,7 +196,7 @@ public class RecordedGamesIOTest {
         recordedGame.setSets(TeamType.HOME, 1);
         recordedGame.setSets(TeamType.GUEST, 0);
 
-        RecordedTeam team1 = recordedGame.getTeam(TeamType.HOME);
+        ApiTeam team1 = recordedGame.getTeam(TeamType.HOME);
         team1.setName("Player A / Player B");
         team1.setColor(Color.parseColor("#1234ab"));
         Collections.addAll(team1.getPlayers(), 1, 2);
@@ -204,7 +204,7 @@ public class RecordedGamesIOTest {
         team1.setGameType(GameType.BEACH);
         team1.setDate(660339L);
 
-        RecordedTeam team2 = recordedGame.getTeam(TeamType.GUEST);
+        ApiTeam team2 = recordedGame.getTeam(TeamType.GUEST);
         team2.setName("Player C / Player D");
         team2.setColor(Color.parseColor("#efa1c3"));
         Collections.addAll(team2.getPlayers(), 1, 2);

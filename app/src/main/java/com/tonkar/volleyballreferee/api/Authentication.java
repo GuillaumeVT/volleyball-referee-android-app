@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.business.web;
+package com.tonkar.volleyballreferee.api;
 
 public class Authentication {
 

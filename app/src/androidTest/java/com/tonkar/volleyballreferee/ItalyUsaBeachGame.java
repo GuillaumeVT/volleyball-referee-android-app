@@ -16,7 +16,7 @@ import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.rules.Rules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
 import org.junit.Rule;
@@ -82,7 +82,7 @@ public class ItalyUsaBeachGame {
     }
 
     private void defineTeams(BeachGame beachGame) {
-        beachGame.setGenderType(GenderType.GENTS);
+        beachGame.setGender(GenderType.GENTS);
         beachGame.setLeagueName("FIVB Beach Volleyball World Championship 2017");
         beachGame.setDivisionName("Final");
         beachGame.setTeamName(TeamType.HOME, "USA");
