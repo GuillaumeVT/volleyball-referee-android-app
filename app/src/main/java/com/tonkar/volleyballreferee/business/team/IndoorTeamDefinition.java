@@ -34,7 +34,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
 
     @Override
     public boolean isLibero(int number) {
-        return getLiberos().contains(new ApiPlayer(number, ""));
+        return getLiberos().contains(new ApiPlayer(number));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void addLibero(final int number) {
         if (canAddLibero() && hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Add player #%d as libero of %s team", number, getTeamType().toString()));
-            getLiberos().add(new ApiPlayer(number, ""));
+            getLiberos().add(new ApiPlayer(number));
         }
     }
 
@@ -66,7 +66,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void removeLibero(final int number) {
         if (hasPlayer(number) && isLibero(number)) {
             Log.i(Tags.TEAM, String.format("Remove player #%d as libero from %s team", number, getTeamType().toString()));
-            getLiberos().remove(new ApiPlayer(number, ""));
+            getLiberos().remove(new ApiPlayer(number));
         }
     }
 

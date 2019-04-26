@@ -9,7 +9,7 @@ import android.widget.GridView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import androidx.fragment.app.Fragment;
@@ -17,7 +17,7 @@ import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
 
 public class TeamsFragment extends Fragment implements RecordedGameServiceHandler {
 
-    private RecordedGameService mRecordedGameService;
+    private StoredGameService mStoredGameService;
 
     public TeamsFragment() {}
 
@@ -30,22 +30,22 @@ public class TeamsFragment extends Fragment implements RecordedGameServiceHandle
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(Tags.SAVED_GAMES, "Create teams fragment");
+        Log.i(Tags.STORED_GAMES, "Create teams fragment");
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 
         GridView homeTeamPlayersList = view.findViewById(R.id.home_team_players_list);
-        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mRecordedGameService, TeamType.HOME);
+        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mStoredGameService, TeamType.HOME);
         homeTeamPlayersList.setAdapter(homeTeamPlayersListAdapter);
 
         GridView guestTeamPlayersList = view.findViewById(R.id.guest_team_players_list);
-        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mRecordedGameService, TeamType.GUEST);
+        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mStoredGameService, TeamType.GUEST);
         guestTeamPlayersList.setAdapter(guestTeamPlayersListAdapter);
 
         return view;
     }
 
     @Override
-    public void setRecordedGameService(RecordedGameService recordedGameService) {
-        mRecordedGameService = recordedGameService;
+    public void setRecordedGameService(StoredGameService storedGameService) {
+        mStoredGameService = storedGameService;
     }
 }

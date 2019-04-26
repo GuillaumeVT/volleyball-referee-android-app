@@ -13,7 +13,7 @@ import com.tonkar.volleyballreferee.business.data.db.RulesEntity;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.io.IOException;
@@ -24,11 +24,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.util.*;
 
-public class SavedRules implements SavedRulesService {
+public class StoredRules implements StoredRulesService {
 
     private final Context mContext;
 
-    public SavedRules(Context context) {
+    public StoredRules(Context context) {
         mContext = context;
     }
 
@@ -195,7 +195,7 @@ public class SavedRules implements SavedRulesService {
                     },
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
                         }
                         if (listener != null){
                             listener.onSynchronizationFailed();
@@ -284,7 +284,7 @@ public class SavedRules implements SavedRulesService {
                     },
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
                         }
                         if (listener != null){
                             listener.onSynchronizationFailed();
@@ -308,14 +308,14 @@ public class SavedRules implements SavedRulesService {
                                     response -> insertRulesIntoDb(rules, true),
                                     error2 -> {
                                         if (error2.networkResponse != null) {
-                                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error2.networkResponse.statusCode));
+                                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error2.networkResponse.statusCode));
                                         }
                                     }
                             );
                             ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
                         } else {
                             if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
+                                Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -330,7 +330,7 @@ public class SavedRules implements SavedRulesService {
                     response -> {},
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -344,7 +344,7 @@ public class SavedRules implements SavedRulesService {
                     response -> {},
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
                         }
                     }
             );

@@ -25,11 +25,11 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
@@ -50,7 +50,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     private TimeBasedGameService mGameService;
-    private RecordedGamesService mRecordedGamesService;
+    private StoredGamesService   mStoredGamesService;
     private TeamType             mTeamOnLeftSide;
     private TeamType             mTeamOnRightSide;
     private TextView             mLeftTeamNameText;
@@ -69,8 +69,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mRecordedGamesService = new RecordedGames(this);
-        mGameService = (TimeBasedGameService) mRecordedGamesService.loadCurrentGame();
+        mStoredGamesService = new StoredGames(this);
+        mGameService = (TimeBasedGameService) mStoredGamesService.loadCurrentGame();
 
         super.onCreate(savedInstanceState);
 
@@ -87,13 +87,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        if (mGameService == null || mRecordedGamesService == null) {
+        if (mGameService == null || mStoredGamesService == null) {
             UiUtils.navigateToHome(this);
         } else {
             mGameService.addGeneralListener(this);
             mGameService.addScoreListener(this);
             mGameService.addTeamListener(this);
-            mRecordedGamesService.connectGameRecorder(mGameService);
+            mStoredGamesService.connectGameRecorder(mGameService);
 
             mLeftTeamNameText = findViewById(R.id.left_team_name_text);
             mRightTeamNameText = findViewById(R.id.right_team_name_text);
@@ -151,8 +151,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             mGameService.removeScoreListener(this);
             mGameService.removeTeamListener(this);
 
-            if (mRecordedGamesService != null) {
-                mRecordedGamesService.disconnectGameRecorder(isFinishing());
+            if (mStoredGamesService != null) {
+                mStoredGamesService.disconnectGameRecorder(isFinishing());
             }
         }
     }
@@ -408,7 +408,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         }
         if (fragment instanceof RecordedGamesServiceHandler) {
             RecordedGamesServiceHandler recordedGamesServiceHandler = (RecordedGamesServiceHandler) fragment;
-            recordedGamesServiceHandler.setRecordedGamesService(mRecordedGamesService);
+            recordedGamesServiceHandler.setRecordedGamesService(mStoredGamesService);
         }
     }
 

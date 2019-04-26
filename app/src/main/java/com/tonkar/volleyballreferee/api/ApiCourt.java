@@ -1,12 +1,12 @@
 package com.tonkar.volleyballreferee.api;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode
+@Getter @Setter @EqualsAndHashCode
 public class ApiCourt {
 
     @SerializedName("p1")
@@ -22,4 +22,68 @@ public class ApiCourt {
     @SerializedName("p6")
     private int p6;
 
+    public ApiCourt() {
+        this.p1 = -1;
+        this.p2 = -1;
+        this.p3 = -1;
+        this.p4 = -1;
+        this.p5 = -1;
+        this.p6 = -1;
+    }
+
+    public boolean isFilled() {
+        return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0 && p5 >= 0 && p6 >= 0;
+    }
+
+    public PositionType getPositionOf(int number) {
+        PositionType positionType;
+
+        if (number == p1) {
+            positionType = PositionType.POSITION_1;
+        } else if (number == p2) {
+            positionType = PositionType.POSITION_2;
+        } else if (number == p3) {
+            positionType = PositionType.POSITION_3;
+        } else if (number == p4) {
+            positionType = PositionType.POSITION_4;
+        } else if (number == p5) {
+            positionType = PositionType.POSITION_5;
+        } else if (number == p6) {
+            positionType = PositionType.POSITION_6;
+        } else {
+            positionType = PositionType.BENCH;
+        }
+
+        return positionType;
+    }
+
+    public int getPlayerAt(PositionType positionType) {
+        int number;
+
+        switch (positionType) {
+            case POSITION_1:
+                number = p1;
+                break;
+            case POSITION_2:
+                number = p2;
+                break;
+            case POSITION_3:
+                number = p3;
+                break;
+            case POSITION_4:
+                number = p4;
+                break;
+            case POSITION_5:
+                number = p5;
+                break;
+            case POSITION_6:
+                number = p6;
+                break;
+            default:
+                number = -1;
+                break;
+        }
+
+        return number;
+    }
 }

@@ -8,7 +8,7 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -994,20 +994,20 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public void restoreTeams(RecordedGameService recordedGameService) {
-        setTeamName(TeamType.HOME, recordedGameService.getTeamName(TeamType.HOME));
-        setTeamColor(TeamType.HOME, recordedGameService.getTeamColor(TeamType.HOME));
-        setGender(TeamType.HOME, recordedGameService.getGender(TeamType.HOME));
+    public void restoreTeams(StoredGameService storedGameService) {
+        setTeamName(TeamType.HOME, storedGameService.getTeamName(TeamType.HOME));
+        setTeamColor(TeamType.HOME, storedGameService.getTeamColor(TeamType.HOME));
+        setGender(TeamType.HOME, storedGameService.getGender(TeamType.HOME));
 
-        for (int number : recordedGameService.getPlayers(TeamType.HOME))  {
+        for (int number : storedGameService.getPlayers(TeamType.HOME))  {
             addPlayer(TeamType.HOME, number);
         }
 
-        setTeamName(TeamType.GUEST, recordedGameService.getTeamName(TeamType.GUEST));
-        setTeamColor(TeamType.GUEST, recordedGameService.getTeamColor(TeamType.GUEST));
-        setGender(TeamType.GUEST, recordedGameService.getGender(TeamType.GUEST));
+        setTeamName(TeamType.GUEST, storedGameService.getTeamName(TeamType.GUEST));
+        setTeamColor(TeamType.GUEST, storedGameService.getTeamColor(TeamType.GUEST));
+        setGender(TeamType.GUEST, storedGameService.getGender(TeamType.GUEST));
 
-        for (int number : recordedGameService.getPlayers(TeamType.GUEST))  {
+        for (int number : storedGameService.getPlayers(TeamType.GUEST))  {
             addPlayer(TeamType.GUEST, number);
         }
     }

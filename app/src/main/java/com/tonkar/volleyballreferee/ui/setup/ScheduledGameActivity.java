@@ -37,9 +37,9 @@ import com.tonkar.volleyballreferee.business.data.*;
 import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.business.rules.Rules;
@@ -111,10 +111,10 @@ public class ScheduledGameActivity extends AppCompatActivity {
             fragment.show(getSupportFragmentManager(), "timePicker");
         });
 
-        RecordedGamesService recordedGamesService = new RecordedGames(this);
+        StoredGamesService storedGamesService = new StoredGames(this);
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedLeagues()));
+        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(storedGamesService.getRecordedLeagues()));
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,7 +134,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         final AutoCompleteTextView divisionNameInput = findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedDivisions()));
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(storedGamesService.getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -190,9 +190,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
             computeItemsVisibility();
         });
 
-        SavedRulesService savedRulesService = new SavedRules(this);
+        StoredRulesService storedRulesService = new StoredRules(this);
         List<String> rulesNames = new ArrayList<>();
-        for (Rules rules : savedRulesService.listRules()) {
+        for (Rules rules : storedRulesService.listRules()) {
             rulesNames.add(rules.getName());
         }
 
@@ -289,8 +289,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
     }
 
     private void updateTeamSpinners(boolean changedGender) {
-        SavedTeamsService savedTeamsService = new SavedTeams(this);
-        List<String> teamNames = savedTeamsService.listSavedTeamName(mGameDescription.getGameType(), mGameDescription.getGenderType());
+        StoredTeamsService storedTeamsService = new StoredTeams(this);
+        List<String> teamNames = storedTeamsService.listSavedTeamName(mGameDescription.getGameType(), mGameDescription.getGenderType());
 
         mTeamAdapter = new ArrayAdapter<>(this, R.layout.rule_spinner, teamNames);
         mTeamAdapter.setDropDownViewResource(R.layout.rule_entry);
@@ -353,8 +353,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void scheduleGame() {
         Log.i(Tags.SCHEDULE_UI, "Schedule game");
-        RecordedGamesService recordedGamesService = new RecordedGames(this);
-        recordedGamesService.scheduleUserGameOnline(mGameDescription, mCreate,
+        StoredGamesService storedGamesService = new StoredGames(this);
+        storedGamesService.scheduleGame(mGameDescription, mCreate,
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {
@@ -375,8 +375,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void cancelGame() {
         Log.i(Tags.SCHEDULE_UI, "Schedule game");
-        RecordedGamesService recordedGamesService = new RecordedGames(this);
-        recordedGamesService.cancelUserGameOnline(mGameDescription.getGameDate(),
+        StoredGamesService storedGamesService = new StoredGames(this);
+        storedGamesService.cancelGame(mGameDescription.getGameDate(),
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {

@@ -15,12 +15,12 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -31,7 +31,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ScheduledGamesListActivity extends NavigationActivity implements AsyncGameRequestListener {
 
-    private RecordedGamesService      mRecordedGamesService;
+    private StoredGamesService        mStoredGamesService;
     private SwipeRefreshLayout        mSyncLayout;
     private ScheduledGamesListAdapter mScheduledGamesListAdapter;
     private boolean                   mIsFabOpen;
@@ -51,7 +51,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mRecordedGamesService = new RecordedGames(this);
+        mStoredGamesService = new StoredGames(this);
 
         super.onCreate(savedInstanceState);
 
@@ -143,18 +143,18 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private void updateScheduledGamesList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            mRecordedGamesService.getUserScheduledGames(this);
+            mStoredGamesService.downloadAvailableGames(this);
         }
     }
 
     @Override
-    public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {}
+    public void onRecordedGameReceivedFromCode(StoredGameService storedGameService) {}
 
     @Override
-    public void onUserGameReceived(RecordedGameService recordedGameService) {}
+    public void onGameReceived(StoredGameService storedGameService) {}
 
     @Override
-    public void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList) {
+    public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {
         mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
         mSyncLayout.setRefreshing(false);
     }

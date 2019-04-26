@@ -14,6 +14,8 @@ public interface BaseGeneralService {
 
     long getUpdatedAt();
 
+    void setUpdatedAt(long updatedAt);
+
     long getScheduledAt();
 
     String getRefereedBy();
@@ -30,7 +32,9 @@ public interface BaseGeneralService {
 
     Rules getRules();
 
-    String getLeague(); // TODO
+    String getLeagueId();
+
+    void setLeagueId(String id);
 
     String getLeagueName();
 

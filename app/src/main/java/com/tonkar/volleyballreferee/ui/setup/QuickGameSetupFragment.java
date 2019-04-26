@@ -21,16 +21,16 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.api.ApiTeam;
-import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
@@ -70,8 +70,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         final boolean create = getArguments().getBoolean("create");
 
-        final RecordedGamesService recordedGamesService = new RecordedGames(getContext());
-        final SavedTeamsService savedTeamsService = new SavedTeams(getContext());
+        final StoredGamesService storedGamesService = new StoredGames(getContext());
+        final StoredTeamsService storedTeamsService = new StoredTeams(getContext());
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
         updateGender(mGameService.getGender());
@@ -87,7 +87,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        List<String> leagueNames = new ArrayList<>(recordedGamesService.getRecordedLeagues());
+        List<String> leagueNames = new ArrayList<>(storedGamesService.getRecordedLeagues());
         ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, leagueNames);
         leagueNameInput.setAdapter(leagueNameAdapter);
         leagueNameInput.addTextChangedListener(new TextWatcher() {
@@ -106,7 +106,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(recordedGamesService.getRecordedDivisions()));
+        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedGamesService.getRecordedDivisions()));
         divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -220,14 +220,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 switchCaptain(TeamType.GUEST);
             });
 
-            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getListTeams(GameType.BEACH));
+            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(GameType.BEACH));
 
             homeTeamNameInput.setAdapter(mTeamsListAdapter);
             homeTeamNameInput.setThreshold(2);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeam team = mTeamsListAdapter.getItem(index);
                 homeTeamNameInput.setText(team.getName());
-                savedTeamsService.copyTeam(team, mGameService, TeamType.HOME);
+                storedTeamsService.copyTeam(team, mGameService, TeamType.HOME);
 
                 teamColorSelected(TeamType.HOME, mGameService.getTeamColor(TeamType.HOME));
                 updateGender(mGameService.getGender(TeamType.HOME));
@@ -240,7 +240,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeam team = mTeamsListAdapter.getItem(index);
                 guestTeamNameInput.setText(team.getName());
-                savedTeamsService.copyTeam(team, mGameService, TeamType.GUEST);
+                storedTeamsService.copyTeam(team, mGameService, TeamType.GUEST);
 
                 teamColorSelected(TeamType.GUEST, mGameService.getTeamColor(TeamType.GUEST));
                 updateGender(mGameService.getGender(TeamType.GUEST));

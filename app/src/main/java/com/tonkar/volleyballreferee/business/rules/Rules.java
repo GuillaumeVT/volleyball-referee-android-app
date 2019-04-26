@@ -89,7 +89,7 @@ public class Rules extends ApiRules {
         checkSubstitutions();
     }
 
-    public void setAll(Rules rules) {
+    public void setAll(ApiRules rules) {
         setId(rules.getId());
         setCreatedBy(rules.getCreatedBy());
         setCreatedAt(rules.getCreatedAt());

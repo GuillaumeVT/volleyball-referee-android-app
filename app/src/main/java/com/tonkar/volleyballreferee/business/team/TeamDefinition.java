@@ -38,16 +38,16 @@ public abstract class TeamDefinition extends ApiTeam {
 
     public void addPlayer(final int number) {
         Log.i(Tags.TEAM, String.format("Add player #%d to %s team", number, mTeamType.toString()));
-        getPlayers().add(new ApiPlayer(number, ""));
+        getPlayers().add(new ApiPlayer(number));
     }
 
     public void removePlayer(final int number) {
         Log.i(Tags.TEAM, String.format("Remove player #%d from %s team", number, mTeamType.toString()));
-        getPlayers().remove(new ApiPlayer(number, ""));
+        getPlayers().remove(new ApiPlayer(number));
     }
 
     public boolean hasPlayer(final int number) {
-        return getPlayers().contains(new ApiPlayer(number, ""));
+        return getPlayers().contains(new ApiPlayer(number));
     }
 
     public int getExpectedNumberOfPlayersOnCourt() {

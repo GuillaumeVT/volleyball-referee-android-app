@@ -19,7 +19,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -46,25 +46,25 @@ import java.util.TimeZone;
 
 public class ScoreSheetWriter {
 
-    private final Context             mContext;
-    private final RecordedGameService mRecordedGameService;
-    private       Document            mDocument;
-    private       Element             mBody;
+    private final Context           mContext;
+    private final StoredGameService mStoredGameService;
+    private       Document          mDocument;
+    private       Element           mBody;
 
-    public static File writeRecordedGame(Context context, RecordedGameService recordedGameService) {
+    public static File writeRecordedGame(Context context, StoredGameService storedGameService) {
         File file;
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy", Locale.getDefault());
             formatter.setTimeZone(TimeZone.getDefault());
-            String date = formatter.format(new Date(recordedGameService.getGameSchedule()));
+            String date = formatter.format(new Date(storedGameService.getGameSchedule()));
 
-            String homeTeam = recordedGameService.getTeamName(TeamType.HOME);
-            String guestTeam = recordedGameService.getTeamName(TeamType.GUEST);
+            String homeTeam = storedGameService.getTeamName(TeamType.HOME);
+            String guestTeam = storedGameService.getTeamName(TeamType.GUEST);
 
             String filename = String.format(Locale.getDefault(), "%s_%s_%s.html", homeTeam, guestTeam, date);
-            ScoreSheetWriter scoreSheetWriter = new ScoreSheetWriter(context, recordedGameService, filename);
-            switch (recordedGameService.getKind()) {
+            ScoreSheetWriter scoreSheetWriter = new ScoreSheetWriter(context, storedGameService, filename);
+            switch (storedGameService.getKind()) {
                 case INDOOR:
                     scoreSheetWriter.writeRecordedIndoorGame();
                     break;
@@ -86,9 +86,9 @@ public class ScoreSheetWriter {
         return file;
     }
 
-    private ScoreSheetWriter(Context context, RecordedGameService recordedGameService, String filename) {
+    private ScoreSheetWriter(Context context, StoredGameService storedGameService, String filename) {
         mContext = context;
-        mRecordedGameService = recordedGameService;
+        mStoredGameService = storedGameService;
         mDocument = Jsoup.parse(htmlSkeleton(filename), "UTF-8");
         mBody = mDocument.body();
     }
@@ -115,23 +115,23 @@ public class ScoreSheetWriter {
     private void writeRecordedIndoorGame() {
         mBody.appendChild(createRecordedGameHeader());
 
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())) {
+        if (UsageType.NORMAL.equals(mStoredGameService.getUsage())) {
             mBody.appendChild(createRecordedTeams());
         }
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
             Element cardDiv = new Element("div");
             cardDiv.addClass("div-card").addClass("spacing-before");
             cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
             cardDiv.appendChild(createRecordedIndoorSetHeader(setIndex));
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
+            if (UsageType.NORMAL.equals(mStoredGameService.getUsage()) && mStoredGameService.isStartingLineupConfirmed(setIndex)) {
                 Element teamDiv = new Element("div");
                 teamDiv.addClass("div-flex-row");
                 teamDiv.appendChild(createRecordedStartingLineup(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
 
-                if (!mRecordedGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
-                        || !mRecordedGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
+                if (!mStoredGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
+                        || !mStoredGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
                     teamDiv.appendChild(createRecordedSubstitutions(setIndex));
                 }
 
@@ -141,15 +141,15 @@ public class ScoreSheetWriter {
             Element timeoutAndSanctionDiv = new Element("div");
             timeoutAndSanctionDiv.addClass("div-flex-row");
 
-            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsage()))
-                    && mRecordedGameService.getRules().areTeamTimeoutsEnabled()
-                    && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+            if ((UsageType.NORMAL.equals(mStoredGameService.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mStoredGameService.getUsage()))
+                    && mStoredGameService.getRules().areTeamTimeoutsEnabled()
+                    && (!mStoredGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mStoredGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
             }
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())
-                    && mRecordedGameService.getRules().areSanctionsEnabled()
-                    && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+            if (UsageType.NORMAL.equals(mStoredGameService.getUsage())
+                    && mStoredGameService.getRules().areSanctionsEnabled()
+                    && (!mStoredGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
             }
 
@@ -167,8 +167,8 @@ public class ScoreSheetWriter {
         Element infoDiv = new Element("div");
         infoDiv.addClass("div-grid-info");
 
-        String league = mRecordedGameService.getLeagueName();
-        String division = mRecordedGameService.getDivisionName();
+        String league = mStoredGameService.getLeagueName();
+        String division = mStoredGameService.getDivisionName();
         if (!league.isEmpty() && !division.isEmpty()) {
             league = league + " / " + division;
         }
@@ -177,7 +177,7 @@ public class ScoreSheetWriter {
 
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         formatter.setTimeZone(TimeZone.getDefault());
-        infoDiv.appendChild(createCellSpan(formatter.format(new Date(mRecordedGameService.getGameSchedule())), true, false));
+        infoDiv.appendChild(createCellSpan(formatter.format(new Date(mStoredGameService.getGameSchedule())), true, false));
 
         final String referee = PrefUtils.getPrefRefereeName(mContext);
         if (!referee.isEmpty()) {
@@ -189,14 +189,14 @@ public class ScoreSheetWriter {
         Element homeSetInfoDiv = new Element("div");
         homeSetInfoDiv.addClass("div-grid-sets-info");
 
-        Element homeTeamNameSpan = createCellSpan(mRecordedGameService.getTeamName(TeamType.HOME), true, false);
+        Element homeTeamNameSpan = createCellSpan(mStoredGameService.getTeamName(TeamType.HOME), true, false);
         homeTeamNameSpan.addClass("vbr-home-team");
         homeSetInfoDiv.appendChild(homeTeamNameSpan);
 
-        homeSetInfoDiv.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getSets(TeamType.HOME)), true, false));
+        homeSetInfoDiv.appendChild(createCellSpan(String.valueOf(mStoredGameService.getSets(TeamType.HOME)), true, false));
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
-            homeSetInfoDiv.appendChild(createSetCellAnchor(String.valueOf(mRecordedGameService.getPoints(TeamType.HOME, setIndex)), setIndex));
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
+            homeSetInfoDiv.appendChild(createSetCellAnchor(String.valueOf(mStoredGameService.getPoints(TeamType.HOME, setIndex)), setIndex));
         }
 
         cardDiv.appendChild(homeSetInfoDiv);
@@ -204,14 +204,14 @@ public class ScoreSheetWriter {
         Element guestSetInfoDiv = new Element("div");
         guestSetInfoDiv.addClass("div-grid-sets-info");
 
-        Element guestTeamNameSpan = createCellSpan(mRecordedGameService.getTeamName(TeamType.GUEST), true, false);
+        Element guestTeamNameSpan = createCellSpan(mStoredGameService.getTeamName(TeamType.GUEST), true, false);
         guestTeamNameSpan.addClass("vbr-guest-team");
         guestSetInfoDiv.appendChild(guestTeamNameSpan);
 
-        guestSetInfoDiv.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getSets(TeamType.GUEST)), true, false));
+        guestSetInfoDiv.appendChild(createCellSpan(String.valueOf(mStoredGameService.getSets(TeamType.GUEST)), true, false));
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
-            guestSetInfoDiv.appendChild(createSetCellAnchor(String.valueOf(mRecordedGameService.getPoints(TeamType.GUEST, setIndex)), setIndex));
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
+            guestSetInfoDiv.appendChild(createSetCellAnchor(String.valueOf(mStoredGameService.getPoints(TeamType.GUEST, setIndex)), setIndex));
         }
 
         cardDiv.appendChild(guestSetInfoDiv);
@@ -237,8 +237,8 @@ public class ScoreSheetWriter {
         Element teamDiv = new Element("div");
         teamDiv.addClass("div-grid-team");
 
-        for (int player : mRecordedGameService.getPlayers(teamType)) {
-            teamDiv.appendChild(createPlayerSpan(teamType, player, mRecordedGameService.isLibero(teamType, player)));
+        for (int player : mStoredGameService.getPlayers(teamType)) {
+            teamDiv.appendChild(createPlayerSpan(teamType, player, mStoredGameService.isLibero(teamType, player)));
         }
 
         return teamDiv;
@@ -280,7 +280,7 @@ public class ScoreSheetWriter {
         if (isLibero) {
             playerSpan.addClass(TeamType.HOME.equals(teamType) ? "vbr-home-libero" : "vbr-guest-libero");
         } else {
-            if (mRecordedGameService.getCaptain(teamType) == player) {
+            if (mStoredGameService.getCaptain(teamType) == player) {
                 playerSpan.addClass(TeamType.HOME.equals(teamType) ? "vbr-home-captain" : "vbr-guest-captain");
             } else {
                 playerSpan.addClass(TeamType.HOME.equals(teamType) ? "vbr-home-team" : "vbr-guest-team");
@@ -300,13 +300,13 @@ public class ScoreSheetWriter {
         setInfoLine2Div.addClass("div-grid-set-info");
 
         Element indexSpan = createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_number), (setIndex + 1)), true, false);
-        indexSpan.addClass((mRecordedGameService.getPoints(TeamType.HOME, setIndex) > mRecordedGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
+        indexSpan.addClass((mStoredGameService.getPoints(TeamType.HOME, setIndex) > mStoredGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
         setInfoLine1Div.appendChild(indexSpan);
 
-        int duration = (int) Math.ceil(mRecordedGameService.getSetDuration(setIndex) / 60000.0);
+        int duration = (int) Math.ceil(mStoredGameService.getSetDuration(setIndex) / 60000.0);
         setInfoLine2Div.appendChild(createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_duration), duration), true, false));
 
-        List<TeamType> ladder = mRecordedGameService.getPointsLadder(setIndex);
+        List<TeamType> ladder = mStoredGameService.getPointsLadder(setIndex);
         int hScore1 = 0, hScore2 = 0, gScore1 = 0, gScore2 = 0;
         int hScore = 0, gScore = 0;
         boolean partial1Reached = false, partial2Reached = false;
@@ -329,14 +329,14 @@ public class ScoreSheetWriter {
             }
         }
 
-        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.HOME, setIndex)), true, false));
+        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mStoredGameService.getPoints(TeamType.HOME, setIndex)), true, false));
         setInfoLine1Div.appendChild(createCellSpan(String.valueOf(hScore1), true, false));
 
         if (hScore2 > 0 && gScore2 > 0) {
             setInfoLine1Div.appendChild(createCellSpan(String.valueOf(hScore2), true, false));
         }
 
-        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
+        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mStoredGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
         setInfoLine2Div.appendChild(createCellSpan(String.valueOf(gScore1), true, false));
 
         if (gScore2 > 0 && gScore2 > 0) {
@@ -370,17 +370,17 @@ public class ScoreSheetWriter {
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_3_title), false, false));
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_2_title), false, false));
 
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_4, setIndex), false));
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false));
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_4, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false));
 
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_5_title), false, false));
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_6_title), false, false));
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_1_title), false, false));
 
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_5, setIndex), false));
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_6, setIndex), false));
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_5, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_6, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false));
 
         return lineupDiv;
     }
@@ -404,7 +404,7 @@ public class ScoreSheetWriter {
        Element substitutionsDiv = new Element("div");
        substitutionsDiv.addClass("div-flex-column");
 
-        for (Substitution substitution : mRecordedGameService.getSubstitutions(teamType, setIndex)) {
+        for (Substitution substitution : mStoredGameService.getSubstitutions(teamType, setIndex)) {
             substitutionsDiv.appendChild(createSubstitutionDiv(teamType, substitution));
         }
 
@@ -445,7 +445,7 @@ public class ScoreSheetWriter {
         Element timeoutsDiv = new Element("div");
         timeoutsDiv.addClass("div-flex-column");
 
-        for (Timeout timeout : mRecordedGameService.getCalledTimeouts(teamType, setIndex)) {
+        for (Timeout timeout : mStoredGameService.getCalledTimeouts(teamType, setIndex)) {
             timeoutsDiv.appendChild(createTimeoutDiv(teamType, timeout));
         }
 
@@ -460,7 +460,7 @@ public class ScoreSheetWriter {
                 TeamType.HOME.equals(teamType) ? timeout.getHomeTeamPoints() : timeout.getGuestTeamPoints(),
                 TeamType.HOME.equals(teamType) ? timeout.getGuestTeamPoints() : timeout.getHomeTeamPoints());
 
-        timeoutDiv.appendChild(createPlayerSpan(teamType, -1, false).addClass(getTimeoutImageClass(mRecordedGameService.getTeamColor(teamType))));
+        timeoutDiv.appendChild(createPlayerSpan(teamType, -1, false).addClass(getTimeoutImageClass(mStoredGameService.getTeamColor(teamType))));
         timeoutDiv.appendChild(createCellSpan(score, false, false));
 
         return timeoutDiv;
@@ -498,7 +498,7 @@ public class ScoreSheetWriter {
         Element sanctionsDiv = new Element("div");
         sanctionsDiv.addClass("div-flex-column");
 
-        for (Sanction sanction : mRecordedGameService.getGivenSanctions(teamType, setIndex)) {
+        for (Sanction sanction : mStoredGameService.getGivenSanctions(teamType, setIndex)) {
             sanctionsDiv.appendChild(createSanctionDiv(teamType, sanction));
         }
 
@@ -516,7 +516,7 @@ public class ScoreSheetWriter {
                 TeamType.HOME.equals(teamType) ? sanction.getGuestTeamPoints() : sanction.getHomeTeamPoints());
 
         sanctionDiv.appendChild(new Element("div").addClass(getSanctionImageClass(sanction.getSanctionType())));
-        sanctionDiv.appendChild(createPlayerSpan(teamType, player, mRecordedGameService.isLibero(teamType, player)));
+        sanctionDiv.appendChild(createPlayerSpan(teamType, player, mStoredGameService.isLibero(teamType, player)));
         sanctionDiv.appendChild(createCellSpan(score, false, false));
 
         return sanctionDiv;
@@ -561,7 +561,7 @@ public class ScoreSheetWriter {
         Element ladderDiv = new Element("div");
         ladderDiv.addClass("div-flex-row");
 
-        for (TeamType teamType : mRecordedGameService.getPointsLadder(setIndex)) {
+        for (TeamType teamType : mStoredGameService.getPointsLadder(setIndex)) {
             if (TeamType.HOME.equals(teamType)) {
                 homeScore++;
                 ladderDiv.appendChild(createLadderItem(teamType, homeScore));
@@ -594,23 +594,23 @@ public class ScoreSheetWriter {
     private void writeRecordedIndoor4x4Game() {
         mBody.appendChild(createRecordedGameHeader());
 
-        if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())) {
+        if (UsageType.NORMAL.equals(mStoredGameService.getUsage())) {
             mBody.appendChild(createRecordedTeams());
         }
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
             Element cardDiv = new Element("div");
             cardDiv.addClass("div-card").addClass("spacing-before");
             cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
             cardDiv.appendChild(createRecordedIndoorSetHeader(setIndex));
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage()) && mRecordedGameService.isStartingLineupConfirmed(setIndex)) {
+            if (UsageType.NORMAL.equals(mStoredGameService.getUsage()) && mStoredGameService.isStartingLineupConfirmed(setIndex)) {
                 Element teamDiv = new Element("div");
                 teamDiv.addClass("div-flex-row");
                 teamDiv.appendChild(createRecordedStartingLineup4x4(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
 
-                if (!mRecordedGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
-                        || !mRecordedGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
+                if (!mStoredGameService.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
+                        || !mStoredGameService.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
                     teamDiv.appendChild(createRecordedSubstitutions(setIndex));
                 }
 
@@ -620,15 +620,15 @@ public class ScoreSheetWriter {
             Element timeoutAndSanctionDiv = new Element("div");
             timeoutAndSanctionDiv.addClass("div-flex-row");
 
-            if ((UsageType.NORMAL.equals(mRecordedGameService.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mRecordedGameService.getUsage()))
-                    && mRecordedGameService.getRules().areTeamTimeoutsEnabled()
-                    && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+            if ((UsageType.NORMAL.equals(mStoredGameService.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mStoredGameService.getUsage()))
+                    && mStoredGameService.getRules().areTeamTimeoutsEnabled()
+                    && (!mStoredGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mStoredGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
             }
 
-            if (UsageType.NORMAL.equals(mRecordedGameService.getUsage())
-                    && mRecordedGameService.getRules().areSanctionsEnabled()
-                    && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+            if (UsageType.NORMAL.equals(mStoredGameService.getUsage())
+                    && mStoredGameService.getRules().areSanctionsEnabled()
+                    && (!mStoredGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
             }
 
@@ -660,16 +660,16 @@ public class ScoreSheetWriter {
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_3_title), false, false));
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_2_title), false, false));
 
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_4, setIndex), false));
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false));
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_4, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false));
 
         lineupDiv.appendChild(createEmptyDiv());
         lineupDiv.appendChild(createCellSpan(mContext.getResources().getString(R.string.position_1_title), false, false));
         lineupDiv.appendChild(createEmptyDiv());
 
         lineupDiv.appendChild(createEmptyDiv());
-        lineupDiv.appendChild(createPlayerSpan(teamType, mRecordedGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false));
+        lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGameService.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false));
         lineupDiv.appendChild(createEmptyDiv());
 
         return lineupDiv;
@@ -679,7 +679,7 @@ public class ScoreSheetWriter {
         mBody.appendChild(createRecordedGameHeader());
         mBody.appendChild(createRecordedTeams());
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
             Element cardDiv = new Element("div");
             cardDiv.addClass("div-card").addClass("spacing-before");
             cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
@@ -688,13 +688,13 @@ public class ScoreSheetWriter {
             Element timeoutAndSanctionDiv = new Element("div");
             timeoutAndSanctionDiv.addClass("div-flex-row");
 
-            if (mRecordedGameService.getRules().areTeamTimeoutsEnabled()
-                    && (!mRecordedGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+            if (mStoredGameService.getRules().areTeamTimeoutsEnabled()
+                    && (!mStoredGameService.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mStoredGameService.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
             }
 
-            if (mRecordedGameService.getRules().areSanctionsEnabled()
-                    && (!mRecordedGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mRecordedGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+            if (mStoredGameService.getRules().areSanctionsEnabled()
+                    && (!mStoredGameService.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGameService.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createRecordedSanctions(setIndex));
             }
 
@@ -715,13 +715,13 @@ public class ScoreSheetWriter {
         setInfoLine2Div.addClass("div-grid-set-info");
 
         Element indexSpan = createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_number), (setIndex + 1)), true, false);
-        indexSpan.addClass((mRecordedGameService.getPoints(TeamType.HOME, setIndex) > mRecordedGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
+        indexSpan.addClass((mStoredGameService.getPoints(TeamType.HOME, setIndex) > mStoredGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
         setInfoLine1Div.appendChild(indexSpan);
 
-        int duration = (int) Math.ceil(mRecordedGameService.getSetDuration(setIndex) / 60000.0);
+        int duration = (int) Math.ceil(mStoredGameService.getSetDuration(setIndex) / 60000.0);
         setInfoLine2Div.appendChild(createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_duration), duration), true, false));
 
-        List<TeamType> ladder = mRecordedGameService.getPointsLadder(setIndex);
+        List<TeamType> ladder = mStoredGameService.getPointsLadder(setIndex);
         int hScore1 = 0, gScore1 = 0;
         int hScore = 0, gScore = 0;
 
@@ -738,13 +738,13 @@ public class ScoreSheetWriter {
             }
         }
 
-        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.HOME, setIndex)), true, false));
+        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mStoredGameService.getPoints(TeamType.HOME, setIndex)), true, false));
 
         if (hScore1 > 0 && gScore1 > 0) {
             setInfoLine1Div.appendChild(createCellSpan(String.valueOf(hScore1), true, false));
         }
 
-        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
+        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mStoredGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
 
         if (hScore1 > 0 && gScore1 > 0) {
             setInfoLine2Div.appendChild(createCellSpan(String.valueOf(gScore1), true, false));
@@ -759,7 +759,7 @@ public class ScoreSheetWriter {
     private void writeRecordedTimeGame() {
         mBody.appendChild(createRecordedGameHeader());
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
             Element cardDiv = new Element("div");
             cardDiv.addClass("div-card").addClass("spacing-before");
             cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
@@ -780,14 +780,14 @@ public class ScoreSheetWriter {
         setInfoLine2Div.addClass("div-grid-set-info");
 
         Element indexSpan = createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_number), (setIndex + 1)), true, false);
-        indexSpan.addClass((mRecordedGameService.getPoints(TeamType.HOME, setIndex) > mRecordedGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
+        indexSpan.addClass((mStoredGameService.getPoints(TeamType.HOME, setIndex) > mStoredGameService.getPoints(TeamType.GUEST, setIndex)) ? "vbr-home-team" : "vbr-guest-team");
         setInfoLine1Div.appendChild(indexSpan);
 
-        int duration = (int) Math.ceil(mRecordedGameService.getSetDuration(setIndex) / 60000.0);
+        int duration = (int) Math.ceil(mStoredGameService.getSetDuration(setIndex) / 60000.0);
         setInfoLine2Div.appendChild(createCellSpan(String.format(Locale.getDefault(), mContext.getResources().getString(R.string.set_duration), duration), true, false));
 
-        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.HOME, setIndex)), true, false));
-        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mRecordedGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
+        setInfoLine1Div.appendChild(createCellSpan(String.valueOf(mStoredGameService.getPoints(TeamType.HOME, setIndex)), true, false));
+        setInfoLine2Div.appendChild(createCellSpan(String.valueOf(mStoredGameService.getPoints(TeamType.GUEST, setIndex)), true, false));
 
         setInfoDiv.appendChild(setInfoLine1Div);
         setInfoDiv.appendChild(setInfoLine2Div);
@@ -823,8 +823,8 @@ public class ScoreSheetWriter {
     }
 
     private String htmlSkeleton(String title) {
-        int homeColor = mRecordedGameService.getTeamColor(TeamType.HOME);
-        int guestColor = mRecordedGameService.getTeamColor(TeamType.GUEST);
+        int homeColor = mStoredGameService.getTeamColor(TeamType.HOME);
+        int guestColor = mStoredGameService.getTeamColor(TeamType.GUEST);
 
         if (homeColor == guestColor) {
             guestColor = ContextCompat.getColor(mContext, R.color.colorReportDuplicate);
@@ -832,13 +832,13 @@ public class ScoreSheetWriter {
 
         String homeTeamBackgroundColor = colorIntToHtml(homeColor);
         String homeTeamColor = colorIntToHtml(UiUtils.getTextColor(mContext, homeColor));
-        String homeLiberoBackgroundColor = colorIntToHtml(mRecordedGameService.getLiberoColor(TeamType.HOME));
-        String homeLiberoColor = colorIntToHtml(UiUtils.getTextColor(mContext, mRecordedGameService.getLiberoColor(TeamType.HOME)));
+        String homeLiberoBackgroundColor = colorIntToHtml(mStoredGameService.getLiberoColor(TeamType.HOME));
+        String homeLiberoColor = colorIntToHtml(UiUtils.getTextColor(mContext, mStoredGameService.getLiberoColor(TeamType.HOME)));
 
         String guestTeamBackgroundColor = colorIntToHtml(guestColor);
         String guestTeamColor = colorIntToHtml(UiUtils.getTextColor(mContext, guestColor));
-        String guestLiberoBackgroundColor = colorIntToHtml(mRecordedGameService.getLiberoColor(TeamType.GUEST));
-        String guestLiberoColor = colorIntToHtml(UiUtils.getTextColor(mContext, mRecordedGameService.getLiberoColor(TeamType.GUEST)));
+        String guestLiberoBackgroundColor = colorIntToHtml(mStoredGameService.getLiberoColor(TeamType.GUEST));
+        String guestLiberoColor = colorIntToHtml(UiUtils.getTextColor(mContext, mStoredGameService.getLiberoColor(TeamType.GUEST)));
 
         return "<!doctype html>\n" +
                 "<html>\n" +

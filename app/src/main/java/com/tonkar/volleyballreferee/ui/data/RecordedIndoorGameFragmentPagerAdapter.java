@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.Context;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +14,20 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class RecordedIndoorGameFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final RecordedGameService mRecordedGameService;
-    private final Context             mContext;
-    private TeamsFragment             mTeamsFragment;
-    private final List<SetFragment>   mSetFragments;
+    private final StoredGameService mStoredGameService;
+    private final Context           mContext;
+    private       TeamsFragment     mTeamsFragment;
+    private final List<SetFragment> mSetFragments;
 
-    RecordedIndoorGameFragmentPagerAdapter(RecordedGameService recordedGameService, Context context, FragmentManager fm) {
+    RecordedIndoorGameFragmentPagerAdapter(StoredGameService storedGameService, Context context, FragmentManager fm) {
         super(fm);
 
-        mRecordedGameService = recordedGameService;
+        mStoredGameService = storedGameService;
         mContext = context;
         mTeamsFragment = TeamsFragment.newInstance();
         mSetFragments = new ArrayList<>();
 
-        for (int setIndex = 0; setIndex < mRecordedGameService.getNumberOfSets(); setIndex++) {
+        for (int setIndex = 0; setIndex < mStoredGameService.getNumberOfSets(); setIndex++) {
             SetFragment setFragment = SetFragment.newInstance(setIndex);
             mSetFragments.add(setFragment);
         }
@@ -35,7 +35,7 @@ public class RecordedIndoorGameFragmentPagerAdapter extends FragmentStatePagerAd
 
     @Override
     public int getCount() {
-        return 1 + mRecordedGameService.getNumberOfSets();
+        return 1 + mStoredGameService.getNumberOfSets();
     }
 
     @Override

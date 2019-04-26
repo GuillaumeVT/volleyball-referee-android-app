@@ -11,12 +11,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -35,8 +35,8 @@ public class SavedTeamActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SavedTeamsService savedTeamsService = new SavedTeams(this);
-        mTeamService = savedTeamsService.copyTeam(savedTeamsService.readTeam(getIntent().getStringExtra("team")));
+        StoredTeamsService storedTeamsService = new StoredTeams(this);
+        mTeamService = storedTeamsService.copyTeam(storedTeamsService.readTeam(getIntent().getStringExtra("team")));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_team);
@@ -110,8 +110,8 @@ public class SavedTeamActivity extends AppCompatActivity {
 
     private void saveTeam() {
         Log.i(Tags.SAVED_TEAMS, "Save team");
-        SavedTeamsService savedTeamsService = new SavedTeams(this);
-        savedTeamsService.saveTeam(mTeamService);
+        StoredTeamsService storedTeamsService = new StoredTeams(this);
+        storedTeamsService.saveTeam(mTeamService);
         UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -124,8 +124,8 @@ public class SavedTeamActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            SavedTeamsService savedTeamsService = new SavedTeams(this);
-            savedTeamsService.deleteTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGender());
+            StoredTeamsService storedTeamsService = new StoredTeams(this);
+            storedTeamsService.deleteTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGender());
             UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);

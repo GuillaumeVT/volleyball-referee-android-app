@@ -21,7 +21,6 @@ import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.SubstitutionsLimitation;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -29,8 +28,8 @@ import java.util.List;
 public class JsonIOUtils {
 
     public static final Type CURRENT_GAME_TYPE           = new TypeToken<BaseGame>() {}.getType();
-    public static final Type RECORDED_GAME_LIST_TYPE     = new TypeToken<List<RecordedGame>>() {}.getType();
-    public static final Type RECORDED_GAME_TYPE          = new TypeToken<RecordedGame>() {}.getType();
+    public static final Type RECORDED_GAME_LIST_TYPE     = new TypeToken<List<StoredGame>>() {}.getType();
+    public static final Type RECORDED_GAME_TYPE          = new TypeToken<StoredGame>() {}.getType();
     public static final Type SET_TYPE                    = new TypeToken<ApiSet>() {}.getType();
     public static final Type TEAM_LIST_TYPE              = new TypeToken<List<ApiTeam>>() {}.getType();
     public static final Type TEAM_TYPE                   = new TypeToken<ApiTeam>() {}.getType();

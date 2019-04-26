@@ -51,7 +51,7 @@ public class ApiSet {
     @SerializedName("remainingTime")
     private long                  remainingTime;
 
-    int getPoints(TeamType teamType) {
+    public int getPoints(TeamType teamType) {
         int points;
 
         if (TeamType.HOME.equals(teamType)) {
@@ -71,7 +71,7 @@ public class ApiSet {
         }
     }
 
-    int getTimeouts(TeamType teamType) {
+    public int getTimeouts(TeamType teamType) {
         int count;
 
         if (TeamType.HOME.equals(teamType)) {

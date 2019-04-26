@@ -19,7 +19,7 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import java.io.IOException;
@@ -33,11 +33,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
 
-public class SavedTeams implements SavedTeamsService {
+public class StoredTeams implements StoredTeamsService {
 
     private final Context mContext;
 
-    public SavedTeams(Context context) {
+    public StoredTeams(Context context) {
         mContext = context;
     }
 

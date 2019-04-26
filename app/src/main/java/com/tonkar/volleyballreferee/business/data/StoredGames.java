@@ -29,10 +29,10 @@ import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -58,17 +58,17 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class RecordedGames implements RecordedGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
+public class StoredGames implements StoredGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
     private static final String sCurrentGame = "current";
     private static final String sSetupGame   = "setup";
 
     private final Context         mContext;
     private       GameService     mGameService;
-    private       RecordedGame    mRecordedGame;
+    private       StoredGame      mStoredGame;
     private final BatteryReceiver mBatteryReceiver;
 
-    public RecordedGames(Context context) {
+    public StoredGames(Context context) {
         mContext = context;
         mBatteryReceiver = new BatteryReceiver();
     }
@@ -87,7 +87,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     @Override
     public void connectGameRecorder(GameService gameService) {
-        Log.i(Tags.SAVED_GAMES, "Connect the game recorder");
+        Log.i(Tags.STORED_GAMES, "Connect the game recorder");
 
         mGameService = gameService;
 
@@ -106,7 +106,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     @Override
     public void disconnectGameRecorder(boolean exiting) {
-        Log.i(Tags.SAVED_GAMES, "Disconnect the game recorder");
+        Log.i(Tags.STORED_GAMES, "Disconnect the game recorder");
 
         if (exiting) {
             saveCurrentGame();
@@ -123,9 +123,9 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public List<RecordedGameService> getRecordedGameServiceList() {
+    public List<StoredGameService> listGames() {
         List<String> jsonGameList = AppDatabase.getInstance(mContext).gameDao().getAllContents();
-        List<RecordedGameService> games = new ArrayList<>();
+        List<StoredGameService> games = new ArrayList<>();
 
         for (String jsonGame : jsonGameList) {
             games.add(readRecordedGame(jsonGame));
@@ -135,12 +135,12 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public RecordedGameService getCurrentRecordedGameService() {
-        return mRecordedGame;
+    public StoredGameService getCurrentGame() {
+        return mStoredGame;
     }
 
     @Override
-    public RecordedGameService getRecordedGameService(long gameDate) {
+    public StoredGameService getGame(long gameDate) {
         String jsonGame = AppDatabase.getInstance(mContext).gameDao().findContentByDate(gameDate);
         return readRecordedGame(jsonGame);
     }
@@ -156,7 +156,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void deleteRecordedGame(final long gameDate) {
+    public void deleteGame(final long gameDate) {
         new Thread() {
             public void run() {
                 AppDatabase.getInstance(mContext).gameDao().deleteByDate(gameDate);
@@ -166,7 +166,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void deleteAllRecordedGames() {
+    public void deleteAllGames() {
         new Thread() {
             public void run() {
                 AppDatabase.getInstance(mContext).gameDao().deleteAll();
@@ -204,7 +204,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             public void run() {
                 AppDatabase.getInstance(mContext).fullGameDao().deleteByType(sCurrentGame);
                 deleteCurrentGameOnline();
-                mRecordedGame = null;
+                mStoredGame = null;
             }
         }.start();
     }
@@ -237,66 +237,66 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     @Override
     public boolean isGameIndexed(long gameDate) {
         boolean indexed = false;
-        RecordedGameService recordedGameService = getRecordedGameService(gameDate);
+        StoredGameService storedGameService = getGame(gameDate);
 
-        if (recordedGameService != null) {
-            indexed = recordedGameService.isIndexed();
+        if (storedGameService != null) {
+            indexed = storedGameService.isIndexed();
         }
         return indexed;
     }
 
     @Override
     public void toggleGameIndexed(long gameDate) {
-        RecordedGameService recordedGameService = getRecordedGameService(gameDate);
+        StoredGameService storedGameService = getGame(gameDate);
 
-        if (recordedGameService != null) {
-            recordedGameService.setIndexed(!recordedGameService.isIndexed());
-            pushGameOnline(recordedGameService);
-            insertRecordedGameIntoDb((RecordedGame) recordedGameService, false);
+        if (storedGameService != null) {
+            storedGameService.setIndexed(!storedGameService.isIndexed());
+            pushGameOnline(storedGameService);
+            insertRecordedGameIntoDb((StoredGame) storedGameService, false);
         }
     }
 
-    private void pushGameOnline(final RecordedGameService recordedGameService) {
-        if (mBatteryReceiver.canPushGameOnline() && PrefUtils.canRequest(mContext) && recordedGameService != null && isNotTestGame(recordedGameService)) {
-            RecordedGame recordedGame = (RecordedGame) recordedGameService;
+    private void pushGameOnline(final StoredGameService storedGameService) {
+        if (mBatteryReceiver.canPushGameOnline() && PrefUtils.canRequest(mContext) && storedGameService != null && isNotTestGame(storedGameService)) {
+            StoredGame recordedGame = (StoredGame) storedGameService;
             try {
                 final byte[] bytes = recordedGameToByteArray(recordedGame);
 
-                String url = String.format(Locale.getDefault(), ApiUtils.GAME_API_URL, recordedGameService.getGameDate());
+                String url = String.format(Locale.getDefault(), ApiUtils.GAME_API_URL, storedGameService.getGameDate());
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
-                        response -> insertSyncIntoDb(recordedGameService.getGameDate()),
+                        response -> insertSyncIntoDb(storedGameService.getGameDate()),
                         error -> {
                             if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
+                                Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading game", error.networkResponse.statusCode));
                             }
                         }
                 );
                 stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
             } catch (JsonParseException | IOException e) {
-                Log.e(Tags.SAVED_GAMES, "Exception while writing game", e);
+                Log.e(Tags.STORED_GAMES, "Exception while writing game", e);
             }
         }
     }
 
     private void pushCurrentGameOnline() {
-        pushGameOnline(mRecordedGame);
+        pushGameOnline(mStoredGame);
     }
 
     private void pushCurrentSetOnline() {
-        if (mBatteryReceiver.canPushSetOnline() && PrefUtils.isSyncOn(mContext) && mRecordedGame != null && isNotTestGame(mRecordedGame)) {
-            int setIndex = mRecordedGame.currentSetIndex();
-            RecordedSet recordedSet = mRecordedGame.getSets().get(setIndex);
+        if (mBatteryReceiver.canPushSetOnline() && PrefUtils.isSyncOn(mContext) && mStoredGame != null && isNotTestGame(mStoredGame)) {
+            int setIndex = mStoredGame.currentSetIndex();
+            RecordedSet recordedSet = mStoredGame.getSets().get(setIndex);
 
             try {
                 final byte[] bytes = recordedSetToByteArray(recordedSet);
 
-                String url = String.format(Locale.getDefault(), ApiUtils.SET_API_URL, mRecordedGame.getGameDate(), setIndex);
+                String url = String.format(Locale.getDefault(), ApiUtils.SET_API_URL, mStoredGame.getGameDate(), setIndex);
                 JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes,
                         response -> {},
                         error -> {
                             if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
+                                Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
                                 if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                                     pushCurrentGameOnline();
                                 }
@@ -305,7 +305,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 );
                 ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
             } catch (JsonParseException | IOException e) {
-                Log.e(Tags.SAVED_GAMES, "Exception while writing game", e);
+                Log.e(Tags.STORED_GAMES, "Exception while writing game", e);
             }
         }
     }
@@ -313,7 +313,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     private void deleteCurrentGameOnline() {
         if (PrefUtils.canRequest(mContext)) {
             // The match is not loaded in memory => need to read it to retrieve the date
-            if (mRecordedGame == null) {
+            if (mStoredGame == null) {
                 GameService gameService = loadCurrentGame();
                 if (gameService != null) {
                     String url = String.format(Locale.getDefault(), ApiUtils.GAME_API_URL, gameService.getGameDate());
@@ -321,20 +321,20 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                             response -> {},
                             error -> {
                                 if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                                    Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                                 }
                             }
                     );
                     ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
                 }
             } else { // The match is loaded in memory
-                if (!mRecordedGame.isMatchCompleted()) {
-                    String url = String.format(Locale.getDefault(), ApiUtils.GAME_API_URL, mRecordedGame.getGameDate());
+                if (!mStoredGame.isMatchCompleted()) {
+                    String url = String.format(Locale.getDefault(), ApiUtils.GAME_API_URL, mStoredGame.getGameDate());
                     JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, url, new byte[0],
                             response -> {},
                             error -> {
                                 if (error.networkResponse != null) {
-                                    Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                                    Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                                 }
                             }
                     );
@@ -346,8 +346,8 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     @Override
     public void onMatchCompleted(TeamType winner) {
-        if (mRecordedGame != null) {
-            insertRecordedGameIntoDb(mRecordedGame, true);
+        if (mStoredGame != null) {
+            insertRecordedGameIntoDb(mStoredGame, true);
         }
         pushCurrentGameOnline();
         deleteCurrentGame();
@@ -426,30 +426,30 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     private void createCurrentGame() {
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
 
-        mRecordedGame = new RecordedGame();
-        mRecordedGame.setUserId(userId);
-        mRecordedGame.setGameType(mGameService.getKind());
-        mRecordedGame.setGameDate(mGameService.getGameDate());
-        mRecordedGame.setGameSchedule(mGameService.getGameSchedule());
-        mRecordedGame.setGender(mGameService.getGender());
-        mRecordedGame.setUsage(mGameService.getUsage());
-        mRecordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
-        mRecordedGame.setLeagueName(mGameService.getLeagueName());
-        mRecordedGame.setDivisionName(mGameService.getDivisionName());
+        mStoredGame = new StoredGame();
+        mStoredGame.setUserId(userId);
+        mStoredGame.setGameType(mGameService.getKind());
+        mStoredGame.setGameDate(mGameService.getGameDate());
+        mStoredGame.setGameSchedule(mGameService.getGameSchedule());
+        mStoredGame.setGender(mGameService.getGender());
+        mStoredGame.setUsage(mGameService.getUsage());
+        mStoredGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
+        mStoredGame.setLeagueName(mGameService.getLeagueName());
+        mStoredGame.setDivisionName(mGameService.getDivisionName());
 
-        ApiTeam homeTeam = mRecordedGame.getTeam(TeamType.HOME);
+        ApiTeam homeTeam = mStoredGame.getTeam(TeamType.HOME);
         homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
         homeTeam.setColor(mGameService.getTeamColor(TeamType.HOME));
         homeTeam.setGenderType(mGameService.getGender(TeamType.HOME));
         homeTeam.setUserId(userId);
-        homeTeam.setGameType(mRecordedGame.getKind());
+        homeTeam.setGameType(mStoredGame.getKind());
 
-        ApiTeam guestTeam = mRecordedGame.getTeam(TeamType.GUEST);
+        ApiTeam guestTeam = mStoredGame.getTeam(TeamType.GUEST);
         guestTeam.setName(mGameService.getTeamName(TeamType.GUEST));
         guestTeam.setColor(mGameService.getTeamColor(TeamType.GUEST));
         guestTeam.setGenderType(mGameService.getGender(TeamType.GUEST));
         guestTeam.setUserId(userId);
-        guestTeam.setGameType(mRecordedGame.getKind());
+        guestTeam.setGameType(mStoredGame.getKind());
 
         homeTeam.setLiberoColor(mGameService.getLiberoColor(TeamType.HOME));
         guestTeam.setLiberoColor(mGameService.getLiberoColor(TeamType.GUEST));
@@ -472,21 +472,21 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         homeTeam.setCaptain(mGameService.getCaptain(TeamType.HOME));
         guestTeam.setCaptain(mGameService.getCaptain(TeamType.GUEST));
 
-        mRecordedGame.setRules(mGameService.getRules());
-        mRecordedGame.getRules().setUserId(userId);
+        mStoredGame.setRules(mGameService.getRules());
+        mStoredGame.getRules().setUserId(userId);
 
         updateCurrentGame();
     }
 
     private void updateCurrentGame() {
-        if (mRecordedGame != null) {
-            mRecordedGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
-            mRecordedGame.setMatchStatus(mGameService.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
-            mRecordedGame.setIndexed(mGameService.isIndexed());
-            mRecordedGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
-            mRecordedGame.setSets(TeamType.GUEST, mGameService.getSets(TeamType.GUEST));
+        if (mStoredGame != null) {
+            mStoredGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
+            mStoredGame.setMatchStatus(mGameService.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
+            mStoredGame.setIndexed(mGameService.isIndexed());
+            mStoredGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
+            mStoredGame.setSets(TeamType.GUEST, mGameService.getSets(TeamType.GUEST));
 
-            mRecordedGame.getSets().clear();
+            mStoredGame.getSets().clear();
 
             for (int setIndex = 0 ; setIndex < mGameService.getNumberOfSets(); setIndex++) {
                 RecordedSet set = new RecordedSet();
@@ -522,7 +522,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     set.getCalledTimeouts(TeamType.GUEST).add(to);
                 }
 
-                if (GameType.TIME.equals(mRecordedGame.getKind()) && mGameService instanceof TimeBasedGameService) {
+                if (GameType.TIME.equals(mStoredGame.getKind()) && mGameService instanceof TimeBasedGameService) {
                     TimeBasedGameService timeBasedGameService = (TimeBasedGameService) mGameService;
                     set.setRemainingTime(timeBasedGameService.getRemainingTime(setIndex));
                 }
@@ -558,21 +558,21 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     set.setActingCaptain(TeamType.GUEST, indoorTeamService.getActingCaptain(TeamType.GUEST, setIndex));
                 }
 
-                mRecordedGame.getSets().add(set);
+                mStoredGame.getSets().add(set);
             }
 
-            mRecordedGame.getGivenSanctions(TeamType.HOME).clear();
+            mStoredGame.getGivenSanctions(TeamType.HOME).clear();
 
             for (Sanction sanction : mGameService.getGivenSanctions(TeamType.HOME)) {
                 Sanction sanct = new Sanction(sanction.getPlayer(), sanction.getSanctionType(), sanction.getSetIndex(), sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints());
-                mRecordedGame.getGivenSanctions(TeamType.HOME).add(sanct);
+                mStoredGame.getGivenSanctions(TeamType.HOME).add(sanct);
             }
 
-            mRecordedGame.getGivenSanctions(TeamType.GUEST).clear();
+            mStoredGame.getGivenSanctions(TeamType.GUEST).clear();
 
             for (Sanction sanction : mGameService.getGivenSanctions(TeamType.GUEST)) {
                 Sanction sanct = new Sanction(sanction.getPlayer(), sanction.getSanctionType(), sanction.getSetIndex(), sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints());
-                mRecordedGame.getGivenSanctions(TeamType.GUEST).add(sanct);
+                mStoredGame.getGivenSanctions(TeamType.GUEST).add(sanct);
             }
         }
     }
@@ -608,29 +608,29 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     // Read recorded games
 
     @Override
-    public boolean hasRecordedGames() {
+    public boolean hasGames() {
         return AppDatabase.getInstance(mContext).gameDao().count() > 0;
     }
 
-    public static List<RecordedGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
+    public static List<StoredGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_GAME_LIST_TYPE);
         }
     }
 
-    public static RecordedGame byteArrayToRecordedGame(byte[] bytes) throws IOException, JsonParseException {
+    public static StoredGame byteArrayToRecordedGame(byte[] bytes) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(bytes)))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RECORDED_GAME_TYPE);
         }
     }
 
-    private RecordedGame readRecordedGame(String json) {
+    private StoredGame readRecordedGame(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.RECORDED_GAME_TYPE);
     }
 
     // Write recorded games
 
-    private void insertRecordedGameIntoDb(final RecordedGame recordedGame, boolean sync) {
+    private void insertRecordedGameIntoDb(final StoredGame recordedGame, boolean sync) {
         if (sync) {
             insertRecordedGameIntoDb(recordedGame);
         } else {
@@ -642,23 +642,23 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         }
     }
 
-    private void insertRecordedGameIntoDb(final RecordedGame recordedGame) {
+    private void insertRecordedGameIntoDb(final StoredGame recordedGame) {
         String json = writeRecordedGame(recordedGame);
         GameEntity gameEntity = new GameEntity(recordedGame.getGameDate(), recordedGame.getLeagueName(), recordedGame.getDivisionName(), json);
         AppDatabase.getInstance(mContext).gameDao().insert(gameEntity);
     }
 
-    private String writeRecordedGame(RecordedGame recordedGame) {
+    private String writeRecordedGame(StoredGame recordedGame) {
         return JsonIOUtils.GSON.toJson(recordedGame, JsonIOUtils.RECORDED_GAME_TYPE);
     }
 
-    public static void writeRecordedGamesStream(OutputStream outputStream, List<RecordedGame> recordedGames) throws JsonParseException, IOException {
+    public static void writeRecordedGamesStream(OutputStream outputStream, List<StoredGame> recordedGames) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         JsonIOUtils.GSON.toJson(recordedGames, JsonIOUtils.RECORDED_GAME_LIST_TYPE, writer);
         writer.close();
     }
 
-    public static byte[] recordedGameToByteArray(RecordedGame recordedGame) throws JsonParseException, IOException {
+    public static byte[] recordedGameToByteArray(StoredGame recordedGame) throws JsonParseException, IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
@@ -688,10 +688,10 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
         JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
                 response -> {
-                    RecordedGame recordedGame = readRecordedGame(response);
+                    StoredGame recordedGame = readRecordedGame(response);
 
                     if (recordedGame == null) {
-                        Log.e(Tags.SAVED_GAMES, "Failed to deserialize a game from code or to notify the listener");
+                        Log.e(Tags.STORED_GAMES, "Failed to deserialize a game from code or to notify the listener");
                         listener.onInternalError();
                     } else {
                         listener.onRecordedGameReceivedFromCode(recordedGame);
@@ -699,7 +699,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 },
                 error -> {
                     if (error.networkResponse != null) {
-                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
+                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
                         if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                             listener.onNotFound();
                         } else {
@@ -721,20 +721,20 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
         JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
                 response -> {
-                    RecordedGame recordedGame = readRecordedGame(response);
+                    StoredGame recordedGame = readRecordedGame(response);
 
                     if (recordedGame == null) {
-                        Log.e(Tags.SAVED_GAMES, "Failed to deserialize a user game or to notify the listener");
+                        Log.e(Tags.STORED_GAMES, "Failed to deserialize a user game or to notify the listener");
                         listener.onInternalError();
                     } else {
                         if (listener != null) {
-                            listener.onUserGameReceived(recordedGame);
+                            listener.onGameReceived(recordedGame);
                         }
                     }
                 },
                 error -> {
                     if (error.networkResponse != null) {
-                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
+                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
                         if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                             listener.onNotFound();
                         } else {
@@ -749,23 +749,23 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void getUserScheduledGames(final AsyncGameRequestListener listener) {
+    public void downloadAvailableGames(final AsyncGameRequestListener listener) {
         JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USER_SCHEDULED_GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                 response -> {
                     List<ApiGameDescription> gameDescriptionList = readGameDescriptionList(response);
 
                     if (gameDescriptionList == null) {
-                        Log.e(Tags.SAVED_GAMES, "Failed to deserialize a user scheduled game list or to notify the listener");
+                        Log.e(Tags.STORED_GAMES, "Failed to deserialize a user scheduled game list or to notify the listener");
                         listener.onInternalError();
                     } else {
                         if (listener != null) {
-                            listener.onUserGameListReceived(gameDescriptionList);
+                            listener.onAvailableGamesReceived(gameDescriptionList);
                         }
                     }
                 },
                 error -> {
                     if (error.networkResponse != null) {
-                        Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
+                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
                     }
                     listener.onError();
                 }
@@ -774,7 +774,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void scheduleUserGameOnline(ApiGameDescription gameDescription, final boolean create, final DataSynchronizationListener listener) {
+    public void scheduleGame(ApiGameDescription gameDescription, final boolean create, final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             try {
                 final byte[] bytes = gameDescriptionToByteArray(gameDescription);
@@ -788,7 +788,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                         },
                         error -> {
                             if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
+                                Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
                             }
                             if (listener != null) {
                                 listener.onSynchronizationFailed();
@@ -797,7 +797,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                 );
                 ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
             } catch (JsonParseException | IOException e) {
-                Log.e(Tags.SAVED_GAMES, "Exception while writing game description", e);
+                Log.e(Tags.STORED_GAMES, "Exception while writing game description", e);
                 if (listener != null) {
                     listener.onSynchronizationFailed();
                 }
@@ -806,7 +806,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void cancelUserGameOnline(long id, DataSynchronizationListener listener) {
+    public void cancelGame(long id, DataSynchronizationListener listener) {
         Map<String, String> params = new HashMap<>();
         params.put("id", String.valueOf(id));
         String parameters = JsonStringRequest.getParameters(params);
@@ -820,7 +820,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     },
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while canceling the scheduled game", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while canceling the scheduled game", error.networkResponse.statusCode));
                         }
                         if (listener != null) {
                             listener.onSynchronizationFailed();
@@ -846,13 +846,13 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     // Read game descriptions
 
     private List<ApiGameDescription> readGameDescriptionList(String json) {
-        Log.i(Tags.SAVED_GAMES, "Read game description list");
+        Log.i(Tags.STORED_GAMES, "Read game description list");
         List<ApiGameDescription> gameDescriptionList = new ArrayList<>();
 
         try {
             gameDescriptionList = JsonIOUtils.GSON.fromJson(json, JsonIOUtils.GAME_DESCRIPTION_LIST_TYPE);
         } catch (JsonParseException e) {
-            Log.e(Tags.SAVED_GAMES, "Exception while reading game description list", e);
+            Log.e(Tags.STORED_GAMES, "Exception while reading game description list", e);
         }
 
         return gameDescriptionList;
@@ -868,7 +868,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     response -> AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY),
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -882,7 +882,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     response -> AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.GAME_ENTITY),
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while all deleting games", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while all deleting games", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -896,14 +896,14 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
         if (PrefUtils.canRequest(mContext)) {
             if (indexed) {
-                Log.d(Tags.SAVED_GAMES, "Making the game public");
+                Log.d(Tags.STORED_GAMES, "Making the game public");
                 pushCurrentGameOnline();
             } else {
                 if (PrefUtils.canSync(mContext)) {
-                    Log.d(Tags.SAVED_GAMES, "Making the game private");
+                    Log.d(Tags.STORED_GAMES, "Making the game private");
                     pushCurrentGameOnline();
                 } else {
-                    Log.d(Tags.SAVED_GAMES, "Deleting the private game");
+                    Log.d(Tags.STORED_GAMES, "Deleting the private game");
                     deleteCurrentGameOnline();
                 }
             }
@@ -911,12 +911,12 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
     }
 
     @Override
-    public void syncGamesOnline() {
-        syncGamesOnline(null);
+    public void syncGames() {
+        syncGames(null);
     }
 
     @Override
-    public void syncGamesOnline(final DataSynchronizationListener listener) {
+    public void syncGames(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USER_COMPLETED_GAMES_API_URL, new byte[0],  PrefUtils.getAuthentication(mContext),
                     response -> {
@@ -925,7 +925,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
                     },
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", error.networkResponse.statusCode));
                         }
                         if (listener != null){
                             listener.onSynchronizationFailed();
@@ -942,17 +942,17 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
 
     private void syncGames(List<ApiGameDescription> remoteGameList, DataSynchronizationListener listener) {
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
-        List<RecordedGameService> localGameList = getRecordedGameServiceList();
+        List<StoredGameService> localGameList = listGames();
 
-        for (RecordedGameService localGame : localGameList) {
-            RecordedGame recordedGame = (RecordedGame) localGame;
+        for (StoredGameService localGame : localGameList) {
+            StoredGame recordedGame = (StoredGame) localGame;
             if (recordedGame.getUserId().equals(Authentication.VBR_USER_ID)) {
                 recordedGame.setUserId(userId);
                 insertRecordedGameIntoDb(recordedGame);
             }
         }
 
-        for (RecordedGameService localGame : localGameList) {
+        for (StoredGameService localGame : localGameList) {
             boolean foundRemoteVersion = false;
 
             for (ApiGameDescription remoteGame : remoteGameList) {
@@ -964,7 +964,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             if (!foundRemoteVersion) {
                 if (isSynced(localGame.getGameDate())) {
                     // if the game was synced, then it was deleted from the server and it must be deleted locally
-                    deleteRecordedGame(localGame.getGameDate());
+                    deleteGame(localGame.getGameDate());
                 } else {
                     // if the game was not synced, then it is missing from the server because sending it must have failed, so send it again
                     pushGameOnline(localGame);
@@ -977,7 +977,7 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         for (ApiGameDescription remoteGame : remoteGameList) {
             boolean foundLocalVersion = false;
 
-            for (RecordedGameService localGame : localGameList) {
+            for (StoredGameService localGame : localGameList) {
                 if (localGame.getGameDate() == remoteGame.getGameDate()) {
                     foundLocalVersion = true;
                 }
@@ -1006,17 +1006,17 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
             ApiGameDescription remoteGame = remoteGames.poll();
             getUserGame(remoteGame.getGameDate(), new AsyncGameRequestListener() {
                 @Override
-                public void onUserGameReceived(RecordedGameService recordedGameService) {
-                    insertRecordedGameIntoDb((RecordedGame) recordedGameService, false);
-                    insertSyncIntoDb(recordedGameService.getGameDate());
+                public void onGameReceived(StoredGameService storedGameService) {
+                    insertRecordedGameIntoDb((StoredGame) storedGameService, false);
+                    insertSyncIntoDb(storedGameService.getGameDate());
                     downloadUserGamesRecursive(remoteGames, listener);
                 }
 
                 @Override
-                public void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService) {}
+                public void onRecordedGameReceivedFromCode(StoredGameService storedGameService) {}
 
                 @Override
-                public void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList) {}
+                public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {}
 
                 @Override
                 public void onNotFound() {
@@ -1042,8 +1042,8 @@ public class RecordedGames implements RecordedGamesService, GeneralListener, Sco
         }
     }
 
-    private boolean isNotTestGame(RecordedGameService recordedGameService) {
-        return recordedGameService.getTeamName(TeamType.HOME).length() > 1 && recordedGameService.getTeamName(TeamType.GUEST).length() > 1;
+    private boolean isNotTestGame(StoredGameService storedGameService) {
+        return storedGameService.getTeamName(TeamType.HOME).length() > 1 && storedGameService.getTeamName(TeamType.GUEST).length() > 1;
     }
 
     private boolean isSynced(long gameDate) {

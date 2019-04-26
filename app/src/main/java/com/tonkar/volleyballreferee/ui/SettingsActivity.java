@@ -7,9 +7,9 @@ import android.util.Log;
 import androidx.annotation.IdRes;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
-import com.tonkar.volleyballreferee.business.data.SavedRules;
-import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
+import com.tonkar.volleyballreferee.business.data.StoredRules;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 
 import androidx.preference.PreferenceManager;
@@ -42,9 +42,9 @@ public class SettingsActivity extends NavigationActivity {
         mPreferencesListener = (prefs, key) -> {
             switch (key) {
                 case PrefUtils.PREF_SYNC_DATA:
-                    new SavedRules(this).syncRules();
-                    new SavedTeams(this).syncTeams();
-                    new RecordedGames(this).syncGamesOnline();
+                    new StoredRules(this).syncRules();
+                    new StoredTeams(this).syncTeams();
+                    new StoredGames(this).syncGames();
                     break;
                 default:
                     break;

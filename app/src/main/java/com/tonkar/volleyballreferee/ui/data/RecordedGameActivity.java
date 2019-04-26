@@ -22,8 +22,8 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -36,9 +36,9 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    protected RecordedGamesService mRecordedGamesService;
-    protected long                 mGameDate;
-    protected RecordedGameService  mRecordedGameService;
+    protected StoredGamesService mStoredGamesService;
+    protected long               mGameDate;
+    protected StoredGameService  mStoredGameService;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,7 +56,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
 
         if (PrefUtils.isSyncOn(this)) {
-            if (mRecordedGamesService.isGameIndexed(mGameDate)) {
+            if (mStoredGamesService.isGameIndexed(mGameDate)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
                 recordMenu.setIcon(R.drawable.ic_private_menu);
@@ -89,16 +89,16 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     }
 
     private void toggleGameIndexed() {
-        Log.i(Tags.SAVED_GAMES, "Toggle game indexed");
+        Log.i(Tags.STORED_GAMES, "Toggle game indexed");
         if (PrefUtils.isSyncOn(this)) {
-            mRecordedGamesService.toggleGameIndexed(mGameDate);
+            mStoredGamesService.toggleGameIndexed(mGameDate);
             invalidateOptionsMenu();
         }
     }
 
     private void generateScoreSheet() {
-        Log.i(Tags.SAVED_GAMES, "Generate score sheet");
-        File file = ScoreSheetWriter.writeRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
+        Log.i(Tags.STORED_GAMES, "Generate score sheet");
+        File file = ScoreSheetWriter.writeRecordedGame(this, mStoredGamesService.getGame(mGameDate));
         if (file == null) {
             UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
         } else {
@@ -113,18 +113,18 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Log.e(Tags.SAVED_GAMES, "Exception while showing report", e);
+                Log.e(Tags.STORED_GAMES, "Exception while showing report", e);
                 UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
             }
         }
     }
 
     private void deleteGame() {
-        Log.i(Tags.SAVED_GAMES, "Delete game");
+        Log.i(Tags.STORED_GAMES, "Delete game");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_game)).setMessage(getResources().getString(R.string.delete_game_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mRecordedGamesService.deleteRecordedGame(mGameDate);
+            mStoredGamesService.deleteGame(mGameDate);
             UiUtils.makeText(RecordedGameActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(RecordedGameActivity.this, RecordedGamesListActivity.class);
@@ -138,16 +138,16 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     }
 
     private void shareGame() {
-        Log.i(Tags.SAVED_GAMES, "Share game");
-        UiUtils.shareRecordedGame(this, mRecordedGamesService.getRecordedGameService(mGameDate));
+        Log.i(Tags.STORED_GAMES, "Share game");
+        UiUtils.shareRecordedGame(this, mStoredGamesService.getGame(mGameDate));
     }
 
-    protected String buildScore(RecordedGameService recordedGameService) {
+    protected String buildScore(StoredGameService storedGameService) {
         StringBuilder builder = new StringBuilder();
         builder.append("\t\t");
-        for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
-            int homePoints = recordedGameService.getPoints(TeamType.HOME, setIndex);
-            int guestPoints = recordedGameService.getPoints(TeamType.GUEST, setIndex);
+        for (int setIndex = 0; setIndex < storedGameService.getNumberOfSets(); setIndex++) {
+            int homePoints = storedGameService.getPoints(TeamType.HOME, setIndex);
+            int guestPoints = storedGameService.getPoints(TeamType.GUEST, setIndex);
             builder.append(UiUtils.formatScoreFromLocale(homePoints, guestPoints, false)).append("\t\t");
         }
 
@@ -158,7 +158,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     public void onAttachFragment(Fragment fragment) {
         if (fragment instanceof RecordedGameServiceHandler) {
             RecordedGameServiceHandler recordedGameServiceHandler = (RecordedGameServiceHandler) fragment;
-            recordedGameServiceHandler.setRecordedGameService(mRecordedGameService);
+            recordedGameServiceHandler.setRecordedGameService(mStoredGameService);
         }
     }
 }

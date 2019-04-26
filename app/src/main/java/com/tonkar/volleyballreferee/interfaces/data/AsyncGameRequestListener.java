@@ -6,11 +6,9 @@ import java.util.List;
 
 public interface AsyncGameRequestListener {
 
-    void onRecordedGameReceivedFromCode(RecordedGameService recordedGameService);
+    void onGameReceived(StoredGameService storedGameService);
 
-    void onUserGameReceived(RecordedGameService recordedGameService);
-
-    void onUserGameListReceived(List<ApiGameDescription> gameDescriptionList);
+    void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList);
 
     void onNotFound();
 

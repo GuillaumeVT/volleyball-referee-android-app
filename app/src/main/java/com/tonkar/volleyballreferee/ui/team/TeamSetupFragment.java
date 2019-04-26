@@ -25,10 +25,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiTeam;
-import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -114,14 +114,14 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         teamNameInput.setEnabled(create);
 
         if (isGameContext) {
-            SavedTeamsService savedTeamsService = new SavedTeams(getContext());
+            StoredTeamsService storedTeamsService = new StoredTeams(getContext());
 
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), savedTeamsService.getListTeams(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeam team = (ApiTeam) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(team.getName());
-                savedTeamsService.copyTeam(team, mTeamService, mTeamType);
+                storedTeamsService.copyTeam(team, mTeamService, mTeamType);
 
                 teamColorSelected(mTeamService.getTeamColor(mTeamType));
                 updateGender(mTeamService.getGender(mTeamType));

@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces;
 
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionService;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamService;
@@ -10,6 +10,6 @@ public interface GameService extends GeneralService, ScoreService, TeamService, 
 
     boolean areNotificationsEnabled();
 
-    void restoreGame(RecordedGameService recordedGameService);
+    void restoreGame(StoredGameService storedGameService);
 
 }

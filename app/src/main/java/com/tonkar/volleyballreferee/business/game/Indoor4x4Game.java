@@ -6,7 +6,7 @@ import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
@@ -346,94 +346,94 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     }
 
     @Override
-    public void restoreTeams(RecordedGameService recordedGameService) {
-        super.restoreTeams(recordedGameService);
+    public void restoreTeams(StoredGameService storedGameService) {
+        super.restoreTeams(storedGameService);
 
-        setLiberoColor(TeamType.HOME, recordedGameService.getLiberoColor(TeamType.HOME));
+        setLiberoColor(TeamType.HOME, storedGameService.getLiberoColor(TeamType.HOME));
 
-        for (int number : recordedGameService.getLiberos(TeamType.HOME))  {
+        for (int number : storedGameService.getLiberos(TeamType.HOME))  {
             addPlayer(TeamType.HOME, number);
             addLibero(TeamType.HOME, number);
         }
 
-        setCaptain(TeamType.HOME, recordedGameService.getCaptain(TeamType.HOME));
+        setCaptain(TeamType.HOME, storedGameService.getCaptain(TeamType.HOME));
 
-        setLiberoColor(TeamType.GUEST, recordedGameService.getLiberoColor(TeamType.GUEST));
+        setLiberoColor(TeamType.GUEST, storedGameService.getLiberoColor(TeamType.GUEST));
 
-        for (int number : recordedGameService.getLiberos(TeamType.GUEST))  {
+        for (int number : storedGameService.getLiberos(TeamType.GUEST))  {
             addPlayer(TeamType.GUEST, number);
             addLibero(TeamType.GUEST, number);
         }
 
-        setCaptain(TeamType.GUEST, recordedGameService.getCaptain(TeamType.GUEST));
+        setCaptain(TeamType.GUEST, storedGameService.getCaptain(TeamType.GUEST));
     }
 
     @Override
-    public void restoreGame(RecordedGameService recordedGameService) {
-        if (GameStatus.LIVE.equals(recordedGameService.getMatchStatus())) {
+    public void restoreGame(StoredGameService storedGameService) {
+        if (GameStatus.LIVE.equals(storedGameService.getMatchStatus())) {
             startMatch();
 
-            for (int setIndex = 0; setIndex < recordedGameService.getNumberOfSets(); setIndex++) {
-                List<TeamType> pointsLadder = recordedGameService.getPointsLadder(setIndex);
-                boolean isStartingLineupConfirmed = recordedGameService.isStartingLineupConfirmed();
+            for (int setIndex = 0; setIndex < storedGameService.getNumberOfSets(); setIndex++) {
+                List<TeamType> pointsLadder = storedGameService.getPointsLadder(setIndex);
+                boolean isStartingLineupConfirmed = storedGameService.isStartingLineupConfirmed();
 
                 if (isStartingLineupConfirmed) {
-                    java.util.Set<Integer> homePlayers = recordedGameService.getPlayersInStartingLineup(TeamType.HOME, setIndex);
+                    java.util.Set<Integer> homePlayers = storedGameService.getPlayersInStartingLineup(TeamType.HOME, setIndex);
                     for (int player : homePlayers) {
-                        PositionType positionType = recordedGameService.getPlayerPositionInStartingLineup(TeamType.HOME, player, setIndex);
+                        PositionType positionType = storedGameService.getPlayerPositionInStartingLineup(TeamType.HOME, player, setIndex);
                         substitutePlayer(TeamType.HOME, player, positionType, ActionOriginType.USER);
                     }
 
-                    java.util.Set<Integer> guestPlayers = recordedGameService.getPlayersInStartingLineup(TeamType.GUEST, setIndex);
+                    java.util.Set<Integer> guestPlayers = storedGameService.getPlayersInStartingLineup(TeamType.GUEST, setIndex);
                     for (int player : guestPlayers) {
-                        PositionType positionType = recordedGameService.getPlayerPositionInStartingLineup(TeamType.GUEST, player, setIndex);
+                        PositionType positionType = storedGameService.getPlayerPositionInStartingLineup(TeamType.GUEST, player, setIndex);
                         substitutePlayer(TeamType.GUEST, player, positionType, ActionOriginType.USER);
                     }
 
                     confirmStartingLineup();
                 }
 
-                getSet(setIndex).setServingTeamAtStart(recordedGameService.getFirstServingTeam(setIndex));
+                getSet(setIndex).setServingTeamAtStart(storedGameService.getFirstServingTeam(setIndex));
 
                 for (int pointsIndex = 0; pointsIndex < pointsLadder.size(); pointsIndex++) {
                     int homePoints = getPoints(TeamType.HOME, setIndex);
                     int guestPoints = getPoints(TeamType.GUEST, setIndex);
 
-                    List<Timeout> homeTimeouts = recordedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    List<Timeout> homeTimeouts = storedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
                     for (Timeout timeout : homeTimeouts) {
                         callTimeout(TeamType.HOME);
                     }
 
-                    List<Timeout> guestTimeouts = recordedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    List<Timeout> guestTimeouts = storedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
                     for (Timeout timeout : guestTimeouts) {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<Substitution> homeSubstitutions = recordedGameService.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    List<Substitution> homeSubstitutions = storedGameService.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
                     for (Substitution substitution : homeSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.HOME, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.HOME, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<Substitution> guestSubstitutions = recordedGameService.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    List<Substitution> guestSubstitutions = storedGameService.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
                     for (Substitution substitution : guestSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.GUEST, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.GUEST, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<Sanction> homeSanctions = recordedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    List<Sanction> homeSanctions = storedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
                     for (Sanction sanction : homeSanctions) {
                         giveSanction(TeamType.HOME, sanction.getSanctionType(), sanction.getPlayer());
                     }
 
-                    List<Sanction> guestSanctions = recordedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    List<Sanction> guestSanctions = storedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
                     for (Sanction sanction : guestSanctions) {
                         giveSanction(TeamType.GUEST, sanction.getSanctionType(), sanction.getPlayer());
                     }
 
                     if (pointsIndex == pointsLadder.size() - 1) {
-                        setActingCaptain(TeamType.HOME, recordedGameService.getActingCaptain(TeamType.HOME, setIndex));
-                        setActingCaptain(TeamType.GUEST, recordedGameService.getActingCaptain(TeamType.GUEST, setIndex));
+                        setActingCaptain(TeamType.HOME, storedGameService.getActingCaptain(TeamType.HOME, setIndex));
+                        setActingCaptain(TeamType.GUEST, storedGameService.getActingCaptain(TeamType.GUEST, setIndex));
                     }
 
                     addPoint(pointsLadder.get(pointsIndex));

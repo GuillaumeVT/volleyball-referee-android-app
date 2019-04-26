@@ -18,7 +18,6 @@ public class ApiUtils {
     public static String MESSAGES_API_URL = BASE_URL + "/public/messages";
 
     public static String LEAGUES_API_URL = BASE_URL + "/leagues";
-    public static String LEAGUE_API_URL  = BASE_URL + "/leagues/%s";
 
     public static String RULES_API_URL = BASE_URL + "/rules";
     public static String RULE_API_URL  = BASE_URL + "/rules/%s";

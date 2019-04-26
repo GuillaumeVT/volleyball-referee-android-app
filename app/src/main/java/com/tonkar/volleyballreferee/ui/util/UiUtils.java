@@ -52,7 +52,7 @@ import com.tonkar.volleyballreferee.interfaces.*;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
@@ -166,10 +166,10 @@ public class UiUtils {
         }
     }
 
-    public static void shareRecordedGame(Context context, RecordedGameService recordedGameService) {
+    public static void shareRecordedGame(Context context, StoredGameService storedGameService) {
         Log.i(Tags.UTILS_UI, "Share recorded game");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            File file = ScoreSheetWriter.writeRecordedGame(context, recordedGameService);
+            File file = ScoreSheetWriter.writeRecordedGame(context, storedGameService);
             if (file == null) {
                 UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
@@ -179,9 +179,9 @@ public class UiUtils {
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getResources().getString(R.string.app_name), file.getName()));
 
-                String summary = recordedGameService.getGameSummary();
+                String summary = storedGameService.getGameSummary();
                 if (PrefUtils.isPrefDataSyncEnabled(context)) {
-                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.VIEW_URL, recordedGameService.getGameDate());
+                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.VIEW_URL, storedGameService.getGameDate());
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);

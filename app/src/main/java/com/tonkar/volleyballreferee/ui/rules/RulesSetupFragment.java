@@ -17,9 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.SavedRules;
+import com.tonkar.volleyballreferee.business.data.StoredRules;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
@@ -175,10 +175,10 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         initValues();
 
         if (isGameContext) {
-            SavedRulesService savedRulesService = new SavedRules(getContext());
+            StoredRulesService storedRulesService = new StoredRules(getContext());
 
             mRulesNameInput.setThreshold(2);
-            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), savedRulesService.listRules()));
+            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules()));
             mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 Rules rules = (Rules) mRulesNameInput.getAdapter().getItem(index);
                 mRulesNameInput.setText(rules.getName());

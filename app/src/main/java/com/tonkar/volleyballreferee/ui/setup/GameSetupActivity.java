@@ -11,15 +11,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
-import com.tonkar.volleyballreferee.business.data.SavedRules;
-import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
+import com.tonkar.volleyballreferee.business.data.StoredRules;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
@@ -41,8 +41,8 @@ public class GameSetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RecordedGamesService recordedGamesService = new RecordedGames(this);
-        mGameService = recordedGamesService.loadSetupGame();
+        StoredGamesService storedGamesService = new StoredGames(this);
+        mGameService = storedGamesService.loadSetupGame();
 
         super.onCreate(savedInstanceState);
 
@@ -68,8 +68,8 @@ public class GameSetupActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        RecordedGamesService recordedGamesService = new RecordedGames(this);
-        recordedGamesService.saveSetupGame(mGameService);
+        StoredGamesService storedGamesService = new StoredGames(this);
+        storedGamesService.saveSetupGame(mGameService);
     }
 
     @Override
@@ -126,8 +126,8 @@ public class GameSetupActivity extends AppCompatActivity {
             saveTeams();
             saveRules();
             mGameService.startMatch();
-            RecordedGamesService recordedGamesService = new RecordedGames(this);
-            recordedGamesService.createCurrentGame(mGameService);
+            StoredGamesService storedGamesService = new StoredGames(this);
+            storedGamesService.createCurrentGame(mGameService);
             Log.i(Tags.SETUP_UI, "Start game activity");
             final Intent gameIntent = new Intent(GameSetupActivity.this, GameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -142,14 +142,14 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     private void saveTeams() {
-        SavedTeamsService savedTeamsService = new SavedTeams(this);
+        StoredTeamsService storedTeamsService = new StoredTeams(this);
         GameType gameType = mGameService.getTeamsKind();
-        savedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.HOME);
-        savedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.GUEST);
+        storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.HOME);
+        storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.GUEST);
     }
 
     private void saveRules() {
-        SavedRulesService rulesService = new SavedRules(this);
+        StoredRulesService rulesService = new StoredRules(this);
         rulesService.createAndSaveRulesFrom(mGameService.getRules());
     }
 
@@ -159,9 +159,9 @@ public class GameSetupActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            RecordedGamesService recordedGamesService = new RecordedGames(this);
-            if (recordedGamesService.hasSetupGame()) {
-                recordedGamesService.deleteSetupGame();
+            StoredGamesService storedGamesService = new StoredGames(this);
+            if (storedGamesService.hasSetupGame()) {
+                storedGamesService.deleteSetupGame();
             }
             UiUtils.navigateToHome(GameSetupActivity.this);
         });

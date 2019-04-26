@@ -11,12 +11,12 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -29,7 +29,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class RecordedGamesListActivity extends NavigationActivity implements DataSynchronizationListener {
 
-    private RecordedGamesService     mRecordedGamesService;
+    private StoredGamesService       mStoredGamesService;
     private RecordedGamesListAdapter mRecordedGamesListAdapter;
     private SwipeRefreshLayout       mSyncLayout;
 
@@ -47,7 +47,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.SAVED_GAMES, "Create recorded games list activity");
+        Log.i(Tags.STORED_GAMES, "Create recorded games list activity");
         setContentView(R.layout.activity_recorded_games_list);
 
         initNavigationMenu();
@@ -55,27 +55,27 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateRecordedGamesList);
 
-        mRecordedGamesService = new RecordedGames(this);
+        mStoredGamesService = new StoredGames(this);
 
-        List<RecordedGameService> recordedGameServiceList = mRecordedGamesService.getRecordedGameServiceList();
+        List<StoredGameService> storedGameServiceList = mStoredGamesService.listGames();
 
         final ListView recordedGamesList = findViewById(R.id.recorded_games_list);
-        mRecordedGamesListAdapter = new RecordedGamesListAdapter(this, getLayoutInflater(), recordedGameServiceList);
+        mRecordedGamesListAdapter = new RecordedGamesListAdapter(this, getLayoutInflater(), storedGameServiceList);
         recordedGamesList.setAdapter(mRecordedGamesListAdapter);
 
         recordedGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
-            RecordedGameService recordedGameService = mRecordedGamesListAdapter.getItem(i);
-            Log.i(Tags.SAVED_GAMES, String.format("Start activity to display recorded game %s", recordedGameService.getGameSummary()));
+            StoredGameService storedGameService = mRecordedGamesListAdapter.getItem(i);
+            Log.i(Tags.STORED_GAMES, String.format("Start activity to display recorded game %s", storedGameService.getGameSummary()));
 
             final Intent intent;
 
-            if ((GameType.INDOOR.equals(recordedGameService.getKind()) || GameType.INDOOR_4X4.equals(recordedGameService.getKind())) && UsageType.NORMAL.equals(recordedGameService.getUsage())) {
+            if ((GameType.INDOOR.equals(storedGameService.getKind()) || GameType.INDOOR_4X4.equals(storedGameService.getKind())) && UsageType.NORMAL.equals(storedGameService.getUsage())) {
                 intent = new Intent(RecordedGamesListActivity.this, RecordedIndoorGameActivity.class);
             } else {
                 intent = new Intent(RecordedGamesListActivity.this, RecordedBeachGameActivity.class);
             }
 
-            intent.putExtra("game_date", recordedGameService.getGameDate());
+            intent.putExtra("game_date", storedGameService.getGameDate());
             startActivity(intent);
             UiUtils.animateForward(this);
         });
@@ -89,7 +89,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
         inflater.inflate(R.menu.menu_recorded_games, menu);
 
         MenuItem deleteAllGamesItem = menu.findItem(R.id.action_delete_games);
-        deleteAllGamesItem.setVisible(mRecordedGamesService.hasRecordedGames());
+        deleteAllGamesItem.setVisible(mStoredGamesService.hasGames());
 
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();
@@ -132,11 +132,11 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
     }
 
     private void deleteAllGames() {
-        Log.i(Tags.SAVED_GAMES, "Delete all games");
+        Log.i(Tags.STORED_GAMES, "Delete all games");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_games)).setMessage(getResources().getString(R.string.delete_games_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mRecordedGamesService.deleteAllRecordedGames();
+            mStoredGamesService.deleteAllGames();
             UiUtils.makeText(RecordedGamesListActivity.this, getResources().getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(RecordedGamesListActivity.this);
         });
@@ -148,13 +148,13 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
     private void updateRecordedGamesList() {
         if (PrefUtils.isSyncOn(this)) {
             mSyncLayout.setRefreshing(true);
-            mRecordedGamesService.syncGamesOnline(this);
+            mStoredGamesService.syncGames(this);
         }
     }
 
     @Override
     public void onSynchronizationSucceeded() {
-        mRecordedGamesListAdapter.updateRecordedGamesList(mRecordedGamesService.getRecordedGameServiceList());
+        mRecordedGamesListAdapter.updateRecordedGamesList(mStoredGamesService.listGames());
         mSyncLayout.setRefreshing(false);
     }
 

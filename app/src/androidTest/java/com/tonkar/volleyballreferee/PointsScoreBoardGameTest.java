@@ -6,14 +6,14 @@ import android.util.Log;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGameService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.business.rules.Rules;
@@ -32,7 +32,7 @@ public class PointsScoreBoardGameTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private RecordedGamesService mRecordedGamesService;
+    private StoredGamesService mStoredGamesService;
 
     @Test
     public void playGame_complete() {
@@ -51,16 +51,16 @@ public class PointsScoreBoardGameTest {
 
         for (int index = 0; index < 5; index++) {
             Log.i("VBR-Test", "playGame_complete index #" + index);
-            mRecordedGamesService.saveCurrentGame();
-            GameService gameService = mRecordedGamesService.loadCurrentGame();
+            mStoredGamesService.saveCurrentGame();
+            GameService gameService = mStoredGamesService.loadCurrentGame();
             assertNotEquals(null, gameService);
             assertEquals(game, gameService);
         }
 
         playSet(game);
 
-        RecordedGameService recordedGameService = mRecordedGamesService.getRecordedGameService(game.getGameDate());
-        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), recordedGameService);
+        StoredGameService storedGameService = mStoredGamesService.getGame(game.getGameDate());
+        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
     }
 
     private void defineTeams(IndoorGame game) {
@@ -73,8 +73,8 @@ public class PointsScoreBoardGameTest {
 
         game.startMatch();
 
-        mRecordedGamesService = new RecordedGames(mActivityRule.getActivity());
-        mRecordedGamesService.connectGameRecorder(game);
+        mStoredGamesService = new StoredGames(mActivityRule.getActivity());
+        mStoredGamesService.connectGameRecorder(game);
     }
 
     private void playSet(IndoorGame indoorGame) {

@@ -7,7 +7,7 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.util.List;
 
-public interface SavedRulesService {
+public interface StoredRulesService {
 
     boolean hasRules();
 

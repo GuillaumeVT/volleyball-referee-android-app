@@ -1,9 +1,9 @@
 package com.tonkar.volleyballreferee.ui.interfaces;
 
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 
 public interface RecordedGamesServiceHandler {
 
-    void setRecordedGamesService(RecordedGamesService recordedGamesService);
+    void setRecordedGamesService(StoredGamesService storedGamesService);
 
 }

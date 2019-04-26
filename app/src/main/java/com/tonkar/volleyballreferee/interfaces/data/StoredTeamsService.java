@@ -9,7 +9,7 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 
 import java.util.List;
 
-public interface SavedTeamsService {
+public interface StoredTeamsService {
 
     boolean hasTeams();
 

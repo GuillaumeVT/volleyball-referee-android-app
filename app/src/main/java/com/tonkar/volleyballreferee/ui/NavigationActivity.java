@@ -65,7 +65,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         UiUtils.animateForward(this);
                         break;
                     case R.id.action_saved_rules:
-                        Log.i(Tags.SAVED_RULES, "Saved Rules");
+                        Log.i(Tags.STORED_RULES, "Saved Rules");
                         intent = new Intent(this, SavedRulesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
@@ -77,7 +77,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         UiUtils.animateForward(this);
                         break;
                     case R.id.action_recorded_games:
-                        Log.i(Tags.SAVED_GAMES, "Recorded games");
+                        Log.i(Tags.STORED_GAMES, "Recorded games");
                         intent = new Intent(this, RecordedGamesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);

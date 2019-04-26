@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee;
 import android.graphics.Color;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.data.RecordedGame;
-import com.tonkar.volleyballreferee.business.data.RecordedGames;
+import com.tonkar.volleyballreferee.business.data.StoredGame;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.RecordedPlayer;
 import com.tonkar.volleyballreferee.business.data.RecordedSet;
 import com.tonkar.volleyballreferee.api.ApiTeam;
@@ -37,16 +37,16 @@ public class RecordedGamesIOTest {
 
     @Test
     public void writeThenRead_all() {
-        List<RecordedGame> expectedList = new ArrayList<>();
+        List<StoredGame> expectedList = new ArrayList<>();
         expectedList.add(someRecordedGame1());
         expectedList.add(someRecordedGame2());
-        List<RecordedGame> actualList = new ArrayList<>();
+        List<StoredGame> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            RecordedGames.writeRecordedGamesStream(outputStream, expectedList);
+            StoredGames.writeRecordedGamesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = RecordedGames.readRecordedGamesStream(inputStream);
+            actualList = StoredGames.readRecordedGamesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,27 +58,27 @@ public class RecordedGamesIOTest {
 
     @Test
     public void writeThenRead_one() {
-        RecordedGame recordedGame1 = someRecordedGame1();
+        StoredGame recordedGame1 = someRecordedGame1();
         try {
-            byte[] bytes1 = RecordedGames.recordedGameToByteArray(recordedGame1);
-            RecordedGame readGame1 = RecordedGames.byteArrayToRecordedGame(bytes1);
+            byte[] bytes1 = StoredGames.recordedGameToByteArray(recordedGame1);
+            StoredGame readGame1 = StoredGames.byteArrayToRecordedGame(bytes1);
             assertEquals(recordedGame1, readGame1);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        RecordedGame recordedGame2 = someRecordedGame2();
+        StoredGame recordedGame2 = someRecordedGame2();
         try {
-            byte[] bytes2 = RecordedGames.recordedGameToByteArray(recordedGame2);
-            RecordedGame readGame2 = RecordedGames.byteArrayToRecordedGame(bytes2);
+            byte[] bytes2 = StoredGames.recordedGameToByteArray(recordedGame2);
+            StoredGame readGame2 = StoredGames.byteArrayToRecordedGame(bytes2);
             assertEquals(recordedGame2, readGame2);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private RecordedGame someRecordedGame1() {
-        RecordedGame recordedGame = new RecordedGame();
+    private StoredGame someRecordedGame1() {
+        StoredGame recordedGame = new StoredGame();
         recordedGame.setUserId(Authentication.VBR_USER_ID);
         recordedGame.setGameType(GameType.INDOOR);
         recordedGame.setGameDate(123456L);
@@ -181,8 +181,8 @@ public class RecordedGamesIOTest {
         return recordedGame;
     }
 
-    private RecordedGame someRecordedGame2() {
-        RecordedGame recordedGame = new RecordedGame();
+    private StoredGame someRecordedGame2() {
+        StoredGame recordedGame = new StoredGame();
         recordedGame.setUserId(Authentication.VBR_USER_ID);
         recordedGame.setGameType(GameType.BEACH);
         recordedGame.setGameDate(646516L);

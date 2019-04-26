@@ -3,8 +3,8 @@ package com.tonkar.volleyballreferee;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.business.data.SavedRules;
-import com.tonkar.volleyballreferee.interfaces.data.SavedRulesService;
+import com.tonkar.volleyballreferee.business.data.StoredRules;
+import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
@@ -32,9 +32,9 @@ public class SavedRulesIOTest {
 
     @Test
     public void save() {
-        SavedRulesService savedRulesService = new SavedRules(mActivityRule.getActivity().getApplicationContext());
+        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
 
-        Rules rules = savedRulesService.createRules();
+        Rules rules = storedRulesService.createRules();
         rules.setName("Test Rules 1");
         rules.setUserId("66bgghvgh55@google");
         rules.setDate(34567654L);
@@ -57,9 +57,9 @@ public class SavedRulesIOTest {
         rules.setBeachCourtSwitchFrequencyTieBreak(1);
         rules.setCustomConsecutiveServesPerPlayer(77);
 
-        savedRulesService.saveRules(rules);
+        storedRulesService.saveRules(rules);
 
-        rules = savedRulesService.createRules();
+        rules = storedRulesService.createRules();
         rules.setName("Test Rules 2");
         rules.setUserId("byg765bvg66v@facebook");
         rules.setDate(494030L);
@@ -82,24 +82,24 @@ public class SavedRulesIOTest {
         rules.setBeachCourtSwitchFrequencyTieBreak(9);
         rules.setCustomConsecutiveServesPerPlayer(10);
 
-        savedRulesService.saveRules(rules);
+        storedRulesService.saveRules(rules);
     }
 
     @Test
     public void writeThenRead() {
-        SavedRulesService savedRulesService = new SavedRules(mActivityRule.getActivity().getApplicationContext());
+        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
 
         List<Rules> expectedList = new ArrayList<>();
-        expectedList.add(savedRulesService.getRules("Test Rules 1"));
-        expectedList.add(savedRulesService.getRules("Test Rules 2"));
+        expectedList.add(storedRulesService.getRules("Test Rules 1"));
+        expectedList.add(storedRulesService.getRules("Test Rules 2"));
 
         List<Rules> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            SavedRules.writeRulesStream(outputStream, expectedList);
+            StoredRules.writeRulesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = SavedRules.readRulesStream(inputStream);
+            actualList = StoredRules.readRulesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,7 +111,7 @@ public class SavedRulesIOTest {
 
     @Test
     public void clear() {
-        SavedRulesService savedRulesService = new SavedRules(mActivityRule.getActivity().getApplicationContext());
-        savedRulesService.deleteAllRules();
+        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
+        storedRulesService.deleteAllRules();
     }
 }

@@ -6,9 +6,9 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.api.ApiTeam;
-import com.tonkar.volleyballreferee.business.data.SavedTeams;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.SavedTeamsService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -38,9 +38,9 @@ public class SavedTeamsIOTest {
 
     @Test
     public void save() {
-        SavedTeamsService savedTeamsService = new SavedTeams(mActivityRule.getActivity().getApplicationContext());
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity().getApplicationContext());
 
-        BaseTeamService teamService = savedTeamsService.createTeam(GameType.INDOOR);
+        BaseTeamService teamService = storedTeamsService.createTeam(GameType.INDOOR);
         teamService.setTeamName(TeamType.HOME, "BRAZIL");
         teamService.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
         teamService.setLiberoColor(TeamType.HOME, Color.parseColor("#034694"));
@@ -66,9 +66,9 @@ public class SavedTeamsIOTest {
         teamService.setCaptain(TeamType.HOME, 1);
         teamService.setGender(TeamType.HOME, GenderType.GENTS);
 
-        savedTeamsService.saveTeam(teamService);
+        storedTeamsService.saveTeam(teamService);
 
-        teamService = savedTeamsService.createTeam(GameType.INDOOR);
+        teamService = storedTeamsService.createTeam(GameType.INDOOR);
         teamService.setTeamName(TeamType.HOME, "FRANCE");
         teamService.setTeamColor(TeamType.HOME, Color.parseColor("#034694"));
         teamService.setLiberoColor(TeamType.HOME, Color.parseColor("#bc0019"));
@@ -94,23 +94,23 @@ public class SavedTeamsIOTest {
         teamService.setCaptain(TeamType.HOME, 6);
         teamService.setGender(TeamType.HOME, GenderType.GENTS);
 
-        savedTeamsService.saveTeam(teamService);
+        storedTeamsService.saveTeam(teamService);
     }
 
     @Test
     public void writeThenRead() {
-        SavedTeamsService savedTeamsService = new SavedTeams(mActivityRule.getActivity().getApplicationContext());
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity().getApplicationContext());
 
         List<ApiTeam> expectedList = new ArrayList<>();
-        expectedList.add(savedTeamsService.getTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
-        expectedList.add(savedTeamsService.getTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
+        expectedList.add(storedTeamsService.getTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
+        expectedList.add(storedTeamsService.getTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
         List<ApiTeam> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            SavedTeams.writeTeamsStream(outputStream, expectedList);
+            StoredTeams.writeTeamsStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = SavedTeams.readTeamsStream(inputStream);
+            actualList = StoredTeams.readTeamsStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -30,7 +30,7 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.RecordedGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -39,10 +39,10 @@ import java.util.Random;
 
 public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, RecordedGamesServiceHandler {
 
-    private Activity             mActivity;
-    private GameService          mGameService;
-    private RecordedGamesService mRecordedGamesService;
-    private Random               mRandom;
+    private Activity           mActivity;
+    private GameService        mGameService;
+    private StoredGamesService mStoredGamesService;
+    private Random             mRandom;
 
     public static GameActionMenu newInstance() {
         GameActionMenu fragment = new GameActionMenu();
@@ -62,7 +62,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
         mActivity = getActivity();
 
-        if (mActivity != null && mGameService != null && mRecordedGamesService != null) {
+        if (mActivity != null && mGameService != null && mStoredGamesService != null) {
             mRandom = new Random();
             final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
@@ -151,9 +151,9 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     private void share() {
         Log.i(Tags.GAME_UI, "Share game");
         if (mGameService.isMatchCompleted()) {
-            UiUtils.shareRecordedGame(mActivity, mRecordedGamesService.getRecordedGameService(mGameService.getGameDate()));
+            UiUtils.shareRecordedGame(mActivity, mStoredGamesService.getGame(mGameService.getGameDate()));
         } else {
-            UiUtils.shareRecordedGame(mActivity, mRecordedGamesService.getCurrentRecordedGameService());
+            UiUtils.shareRecordedGame(mActivity, mStoredGamesService.getCurrentGame());
         }
         dismiss();
     }
@@ -196,7 +196,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     }
 
     @Override
-    public void setRecordedGamesService(RecordedGamesService recordedGamesService) {
-        mRecordedGamesService = recordedGamesService;
+    public void setRecordedGamesService(StoredGamesService storedGamesService) {
+        mStoredGamesService = storedGamesService;
     }
 }

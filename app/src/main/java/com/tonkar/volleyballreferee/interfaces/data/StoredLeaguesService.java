@@ -5,7 +5,7 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 
 import java.util.List;
 
-public interface SavedLeaguesService {
+public interface StoredLeaguesService {
 
     List<ApiLeague> listLeagues();
 

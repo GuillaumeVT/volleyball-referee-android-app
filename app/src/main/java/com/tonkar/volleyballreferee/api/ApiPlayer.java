@@ -11,6 +11,10 @@ public class ApiPlayer implements Comparable<ApiPlayer> {
     @SerializedName("name")
     private String name;
 
+    public ApiPlayer(int num) {
+        this(num, "");
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
