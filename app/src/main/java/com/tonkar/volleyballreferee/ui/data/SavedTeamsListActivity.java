@@ -55,7 +55,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.SAVED_TEAMS, "Create teams list activity");
+        Log.i(Tags.STORED_TEAMS, "Create teams list activity");
         setContentView(R.layout.activity_saved_teams_list);
 
         initNavigationMenu();
@@ -71,7 +71,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
         savedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
             ApiTeam team = mSavedTeamsListAdapter.getItem(i);
-            Log.i(Tags.SAVED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
+            Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
 
             final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
             intent.putExtra("team", mStoredTeamsService.writeTeam(team));
@@ -116,7 +116,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
     }
 
     private void addTeam(GameType gameType) {
-        Log.i(Tags.SAVED_TEAMS, "Start activity to create new team");
+        Log.i(Tags.STORED_TEAMS, "Start activity to create new team");
         BaseTeamService teamService = mStoredTeamsService.createTeam(gameType);
 
         final Intent intent = new Intent(this, SavedTeamActivity.class);
@@ -176,7 +176,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
     }
 
     private void deleteAllTeams() {
-        Log.i(Tags.SAVED_TEAMS, "Delete all teams");
+        Log.i(Tags.STORED_TEAMS, "Delete all teams");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_teams)).setMessage(getResources().getString(R.string.delete_teams_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {

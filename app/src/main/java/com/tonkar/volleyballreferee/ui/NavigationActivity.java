@@ -83,7 +83,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         UiUtils.animateForward(this);
                         break;
                     case R.id.action_saved_teams:
-                        Log.i(Tags.SAVED_TEAMS, "Saved teams");
+                        Log.i(Tags.STORED_TEAMS, "Saved teams");
                         intent = new Intent(this, SavedTeamsListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);

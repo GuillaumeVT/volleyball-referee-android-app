@@ -109,7 +109,7 @@ public class SavedTeamActivity extends AppCompatActivity {
     }
 
     private void saveTeam() {
-        Log.i(Tags.SAVED_TEAMS, "Save team");
+        Log.i(Tags.STORED_TEAMS, "Save team");
         StoredTeamsService storedTeamsService = new StoredTeams(this);
         storedTeamsService.saveTeam(mTeamService);
         UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
@@ -120,7 +120,7 @@ public class SavedTeamActivity extends AppCompatActivity {
     }
 
     private void deleteTeam() {
-        Log.i(Tags.SAVED_TEAMS, "Delete team");
+        Log.i(Tags.STORED_TEAMS, "Delete team");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
@@ -157,10 +157,10 @@ public class SavedTeamActivity extends AppCompatActivity {
             if (mTeamService.getTeamName(null).isEmpty()
                     || mTeamService.getNumberOfPlayers(null) < mTeamService.getExpectedNumberOfPlayersOnCourt()
                     || mTeamService.getCaptain(null) < 1) {
-                Log.i(Tags.SAVED_TEAMS, "Save button is invisible");
+                Log.i(Tags.STORED_TEAMS, "Save button is invisible");
                 mSaveItem.setVisible(false);
             } else {
-                Log.i(Tags.SAVED_TEAMS, "Save button is visible");
+                Log.i(Tags.STORED_TEAMS, "Save button is visible");
                 mSaveItem.setVisible(true);
             }
         }

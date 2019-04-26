@@ -17,6 +17,9 @@ public interface GameDao {
     @Query("SELECT content FROM games WHERE id = :id")
     String findContentById(String id);
 
+    @Query("SELECT public FROM games WHERE id = :id")
+    boolean isGameIndexed(String id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<GameEntity> gameEntities);
 

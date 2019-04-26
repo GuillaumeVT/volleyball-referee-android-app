@@ -298,7 +298,7 @@ public class StoredTeams implements StoredTeamsService {
                     },
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
                         }
                         if (listener != null){
                             listener.onSynchronizationFailed();
@@ -387,7 +387,7 @@ public class StoredTeams implements StoredTeamsService {
                     },
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
                         }
                         if (listener != null){
                             listener.onSynchronizationFailed();
@@ -411,14 +411,14 @@ public class StoredTeams implements StoredTeamsService {
                                     response -> insertTeamIntoDb(team, true),
                                     error2 -> {
                                         if (error2.networkResponse != null) {
-                                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error2.networkResponse.statusCode));
+                                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error2.networkResponse.statusCode));
                                         }
                                     }
                             );
                             ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
                         } else {
                             if (error.networkResponse != null) {
-                                Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
+                                Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
                             }
                         }
                     }
@@ -433,7 +433,7 @@ public class StoredTeams implements StoredTeamsService {
                     response -> {},
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
                         }
                     }
             );
@@ -447,7 +447,7 @@ public class StoredTeams implements StoredTeamsService {
                     response -> {},
                     error -> {
                         if (error.networkResponse != null) {
-                            Log.e(Tags.SAVED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
+                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
                         }
                     }
             );
