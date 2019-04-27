@@ -6,11 +6,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(tableName = "full_games")
-@NoArgsConstructor @AllArgsConstructor @Getter @Setter
+@AllArgsConstructor @Getter @Setter
 public class FullGameEntity {
 
     @PrimaryKey
@@ -21,5 +20,10 @@ public class FullGameEntity {
     @NonNull
     @ColumnInfo(name = "content")
     private String content;
+
+    public FullGameEntity() {
+        this.type = "";
+        this.content = "";
+    }
 
 }

@@ -44,9 +44,9 @@ public class RecordedGamesIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            StoredGames.writeRecordedGamesStream(outputStream, expectedList);
+            StoredGames.writeStoredGamesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = StoredGames.readRecordedGamesStream(inputStream);
+            actualList = StoredGames.readStoredGamesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,8 +60,8 @@ public class RecordedGamesIOTest {
     public void writeThenRead_one() {
         StoredGame recordedGame1 = someRecordedGame1();
         try {
-            byte[] bytes1 = StoredGames.recordedGameToByteArray(recordedGame1);
-            StoredGame readGame1 = StoredGames.byteArrayToRecordedGame(bytes1);
+            byte[] bytes1 = StoredGames.storedGameToByteArray(recordedGame1);
+            StoredGame readGame1 = StoredGames.byteArrayToStoredGame(bytes1);
             assertEquals(recordedGame1, readGame1);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,8 +69,8 @@ public class RecordedGamesIOTest {
 
         StoredGame recordedGame2 = someRecordedGame2();
         try {
-            byte[] bytes2 = StoredGames.recordedGameToByteArray(recordedGame2);
-            StoredGame readGame2 = StoredGames.byteArrayToRecordedGame(bytes2);
+            byte[] bytes2 = StoredGames.storedGameToByteArray(recordedGame2);
+            StoredGame readGame2 = StoredGames.byteArrayToStoredGame(bytes2);
             assertEquals(recordedGame2, readGame2);
         } catch (IOException e) {
             e.printStackTrace();

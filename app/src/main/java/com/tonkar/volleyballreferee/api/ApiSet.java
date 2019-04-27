@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode
+@Getter @Setter @EqualsAndHashCode
 public class ApiSet {
 
     @SerializedName("duration")
@@ -50,6 +50,18 @@ public class ApiSet {
     private List<ApiTimeout>      guestCalledTimeouts;
     @SerializedName("remainingTime")
     private long                  remainingTime;
+
+    public ApiSet() {
+        this.ladder = new ArrayList<>();
+        this.homeCurrentPlayers = new ApiCourt();
+        this.guestCurrentPlayers = new ApiCourt();
+        this.homeStartingPlayers = new ApiCourt();
+        this.guestStartingPlayers = new ApiCourt();
+        this.homeSubstitutions = new ArrayList<>();
+        this.guestSubstitutions = new ArrayList<>();
+        this.homeCalledTimeouts = new ArrayList<>();
+        this.guestCalledTimeouts = new ArrayList<>();
+    }
 
     public int getPoints(TeamType teamType) {
         int points;

@@ -62,6 +62,8 @@ public class ApiGame {
     private List<ApiSanction> guestCards;
     @SerializedName("rules")
     private ApiRules          rules;
+    @SerializedName("score")
+    private String            score;
 
     public ApiGame() {
         id = UUID.randomUUID().toString();

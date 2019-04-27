@@ -19,6 +19,9 @@ public class StoredGame extends ApiGame implements StoredGameService {
 
     public StoredGame() {
         super();
+        setHomeTeam(new ApiTeam());
+        setGuestTeam(new ApiTeam());
+        setRules(new ApiRules());
     }
 
     @Override

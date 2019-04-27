@@ -2,12 +2,9 @@ package com.tonkar.volleyballreferee.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter @EqualsAndHashCode
 public class ApiSanction {
 
     @SerializedName("card")

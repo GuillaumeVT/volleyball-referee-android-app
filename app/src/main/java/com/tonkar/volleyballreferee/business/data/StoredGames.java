@@ -314,60 +314,58 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         mStoredGame.setUsage(mGameService.getUsage());
         mStoredGame.setStatus(mGameService.getMatchStatus());
         mStoredGame.setIndexed(mGameService.isIndexed());
-
-        mStoredGame.setGameType(mGameService.getKind());
-        mStoredGame.setGameDate(mGameService.getGameDate());
-        mStoredGame.setGameSchedule(mGameService.getGameSchedule());
-        mStoredGame.setGender(mGameService.getGender());
-        mStoredGame.setUsage(mGameService.getUsage());
-        mStoredGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
+        mStoredGame.setLeagueId(mGameService.getLeagueId());
         mStoredGame.setLeagueName(mGameService.getLeagueName());
         mStoredGame.setDivisionName(mGameService.getDivisionName());
 
         ApiTeam homeTeam = mStoredGame.getTeam(TeamType.HOME);
+        homeTeam.setId(mGameService.getTeamId(TeamType.HOME));
+        homeTeam.setCreatedBy(mGameService.getCreatedBy(TeamType.HOME));
+        homeTeam.setCreatedAt(mGameService.getCreatedAt(TeamType.HOME));
+        homeTeam.setUpdatedAt(mGameService.getUpdatedAt(TeamType.HOME));
+        homeTeam.setKind(mGameService.getTeamsKind());
+        homeTeam.setGender(mGameService.getGender(TeamType.HOME));
         homeTeam.setName(mGameService.getTeamName(TeamType.HOME));
-        homeTeam.setColor(mGameService.getTeamColor(TeamType.HOME));
-        homeTeam.setGenderType(mGameService.getGender(TeamType.HOME));
-        homeTeam.setUserId(userId);
-        homeTeam.setGameType(mStoredGame.getKind());
+        homeTeam.setColorInt(mGameService.getTeamColor(TeamType.HOME));
+        homeTeam.setLiberoColorInt(mGameService.getLiberoColor(TeamType.HOME));
+        homeTeam.setCaptain(mGameService.getCaptain(TeamType.HOME));
+
+        for (ApiPlayer player : mGameService.getPlayers(TeamType.HOME)) {
+            if (mGameService.isLibero(TeamType.HOME, player.getNum())) {
+                homeTeam.getLiberos().add(player);
+            } else {
+                homeTeam.getPlayers().add(player);
+            }
+        }
 
         ApiTeam guestTeam = mStoredGame.getTeam(TeamType.GUEST);
+        guestTeam.setId(mGameService.getTeamId(TeamType.GUEST));
+        guestTeam.setCreatedBy(mGameService.getCreatedBy(TeamType.GUEST));
+        guestTeam.setCreatedAt(mGameService.getCreatedAt(TeamType.GUEST));
+        guestTeam.setUpdatedAt(mGameService.getUpdatedAt(TeamType.GUEST));
+        guestTeam.setKind(mGameService.getTeamsKind());
+        guestTeam.setGender(mGameService.getGender(TeamType.GUEST));
         guestTeam.setName(mGameService.getTeamName(TeamType.GUEST));
-        guestTeam.setColor(mGameService.getTeamColor(TeamType.GUEST));
-        guestTeam.setGenderType(mGameService.getGender(TeamType.GUEST));
-        guestTeam.setUserId(userId);
-        guestTeam.setGameType(mStoredGame.getKind());
-
-        homeTeam.setLiberoColor(mGameService.getLiberoColor(TeamType.HOME));
-        guestTeam.setLiberoColor(mGameService.getLiberoColor(TeamType.GUEST));
-
-        for (int number : mGameService.getPlayers(TeamType.HOME)) {
-            if (mGameService.isLibero(TeamType.HOME, number)) {
-                homeTeam.getLiberos().add(number);
-            } else {
-                homeTeam.getPlayers().add(number);
-            }
-        }
-        for (int number : mGameService.getPlayers(TeamType.GUEST)) {
-            if (mGameService.isLibero(TeamType.GUEST, number)) {
-                guestTeam.getLiberos().add(number);
-            } else {
-                guestTeam.getPlayers().add(number);
-            }
-        }
-
-        homeTeam.setCaptain(mGameService.getCaptain(TeamType.HOME));
+        guestTeam.setColorInt(mGameService.getTeamColor(TeamType.GUEST));
+        guestTeam.setLiberoColorInt(mGameService.getLiberoColor(TeamType.GUEST));
         guestTeam.setCaptain(mGameService.getCaptain(TeamType.GUEST));
 
-        mStoredGame.setRules(mGameService.getRules());
-        mStoredGame.getRules().setUserId(userId);
+        for (ApiPlayer player : mGameService.getPlayers(TeamType.GUEST)) {
+            if (mGameService.isLibero(TeamType.GUEST, player.getNum())) {
+                guestTeam.getLiberos().add(player);
+            } else {
+                guestTeam.getPlayers().add(player);
+            }
+        }
+
+        mStoredGame.getRules().setAll(mGameService.getRules());
 
         updateCurrentGame();
     }
 
     private void updateCurrentGame() {
         if (mStoredGame != null) {
-            mStoredGame.setRefereeName(PrefUtils.getPrefRefereeName(mContext));
+            mStoredGame.setUpdatedAt(System.currentTimeMillis());
             mStoredGame.setMatchStatus(mGameService.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
             mStoredGame.setIndexed(mGameService.isIndexed());
             mStoredGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
@@ -376,37 +374,41 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
             mStoredGame.getSets().clear();
 
             for (int setIndex = 0 ; setIndex < mGameService.getNumberOfSets(); setIndex++) {
-                RecordedSet set = new RecordedSet();
+                ApiSet set = new ApiSet();
 
                 set.setDuration(mGameService.getSetDuration(setIndex));
-                set.getPointsLadder().addAll(mGameService.getPointsLadder(setIndex));
-                set.setServingTeam(mGameService.getServingTeam(setIndex));
-                set.setFirstServingTeam(mGameService.getFirstServingTeam(setIndex));
+                set.getLadder().addAll(mGameService.getPointsLadder(setIndex));
+                set.setServing(mGameService.getServingTeam(setIndex));
+                set.setFirstServing(mGameService.getFirstServingTeam(setIndex));
 
                 set.setPoints(TeamType.HOME, mGameService.getPoints(TeamType.HOME, setIndex));
                 set.setTimeouts(TeamType.HOME, mGameService.getRemainingTimeouts(TeamType.HOME, setIndex));
-                for (int number : mGameService.getPlayersOnCourt(TeamType.HOME, setIndex)) {
-                    RecordedPlayer player = new RecordedPlayer();
-                    player.setNumber(number);
-                    player.setPositionType(mGameService.getPlayerPosition(TeamType.HOME, number, setIndex));
-                    set.getCurrentPlayers(TeamType.HOME).add(player);
-                }
-                for (Timeout timeout : mGameService.getCalledTimeouts(TeamType.HOME, setIndex)) {
-                    Timeout to = new Timeout(timeout.getHomeTeamPoints(), timeout.getGuestTeamPoints());
-                    set.getCalledTimeouts(TeamType.HOME).add(to);
+
+                ApiCourt homeCurrentPlayers = set.getCurrentPlayers(TeamType.HOME);
+                homeCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1, setIndex));
+                homeCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_2, setIndex));
+                homeCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_3, setIndex));
+                homeCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_4, setIndex));
+                homeCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_5, setIndex));
+                homeCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_6, setIndex));
+
+                for (ApiTimeout timeout : mGameService.getCalledTimeouts(TeamType.HOME, setIndex)) {
+                    set.getCalledTimeouts(TeamType.HOME).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
                 }
 
                 set.setPoints(TeamType.GUEST, mGameService.getPoints(TeamType.GUEST, setIndex));
                 set.setTimeouts(TeamType.GUEST, mGameService.getRemainingTimeouts(TeamType.GUEST, setIndex));
-                for (int number : mGameService.getPlayersOnCourt(TeamType.GUEST, setIndex)) {
-                    RecordedPlayer player = new RecordedPlayer();
-                    player.setNumber(number);
-                    player.setPositionType(mGameService.getPlayerPosition(TeamType.GUEST, number, setIndex));
-                    set.getCurrentPlayers(TeamType.GUEST).add(player);
-                }
-                for (Timeout timeout : mGameService.getCalledTimeouts(TeamType.GUEST, setIndex)) {
-                    Timeout to = new Timeout(timeout.getHomeTeamPoints(), timeout.getGuestTeamPoints());
-                    set.getCalledTimeouts(TeamType.GUEST).add(to);
+
+                ApiCourt guestCurrentPlayers = set.getCurrentPlayers(TeamType.GUEST);
+                guestCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_1, setIndex));
+                guestCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_2, setIndex));
+                guestCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_3, setIndex));
+                guestCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_4, setIndex));
+                guestCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_5, setIndex));
+                guestCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+
+                for (ApiTimeout timeout : mGameService.getCalledTimeouts(TeamType.GUEST, setIndex)) {
+                    set.getCalledTimeouts(TeamType.GUEST).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
                 }
 
                 if (GameType.TIME.equals(mStoredGame.getKind()) && mGameService instanceof TimeBasedGameService) {
@@ -417,28 +419,28 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                 if (mGameService instanceof IndoorTeamService) {
                     IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
 
-                    for (int number : indoorTeamService.getPlayersInStartingLineup(TeamType.HOME, setIndex)) {
-                        RecordedPlayer player = new RecordedPlayer();
-                        player.setNumber(number);
-                        player.setPositionType(indoorTeamService.getPlayerPositionInStartingLineup(TeamType.HOME, number, setIndex));
-                        set.getStartingPlayers(TeamType.HOME).add(player);
+                    ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
+                    homeStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_1, setIndex));
+                    homeStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_2, setIndex));
+                    homeStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_3, setIndex));
+                    homeStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_4, setIndex));
+                    homeStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_5, setIndex));
+                    homeStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_6, setIndex));
+
+                    for (ApiSubstitution substitution : indoorTeamService.getSubstitutions(TeamType.HOME, setIndex)) {
+                        set.getSubstitutions(TeamType.HOME).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
-                    for (Substitution substitution : indoorTeamService.getSubstitutions(TeamType.HOME, setIndex)) {
-                        Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomeTeamPoints(), substitution.getGuestTeamPoints());
-                        set.getSubstitutions(TeamType.HOME).add(sub);
-                    }
+                    ApiCourt guestStartingPlayers = set.getStartingPlayers(TeamType.GUEST);
+                    guestStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_1, setIndex));
+                    guestStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_2, setIndex));
+                    guestStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_3, setIndex));
+                    guestStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_4, setIndex));
+                    guestStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_5, setIndex));
+                    guestStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_6, setIndex));
 
-                    for (int number : indoorTeamService.getPlayersInStartingLineup(TeamType.GUEST, setIndex)) {
-                        RecordedPlayer player = new RecordedPlayer();
-                        player.setNumber(number);
-                        player.setPositionType(indoorTeamService.getPlayerPositionInStartingLineup(TeamType.GUEST, number, setIndex));
-                        set.getStartingPlayers(TeamType.GUEST).add(player);
-                    }
-
-                    for (Substitution substitution : indoorTeamService.getSubstitutions(TeamType.GUEST, setIndex)) {
-                        Substitution sub = new Substitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomeTeamPoints(), substitution.getGuestTeamPoints());
-                        set.getSubstitutions(TeamType.GUEST).add(sub);
+                    for (ApiSubstitution substitution : indoorTeamService.getSubstitutions(TeamType.GUEST, setIndex)) {
+                        set.getSubstitutions(TeamType.GUEST).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
                     set.setActingCaptain(TeamType.HOME, indoorTeamService.getActingCaptain(TeamType.HOME, setIndex));
@@ -450,16 +452,14 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
             mStoredGame.getGivenSanctions(TeamType.HOME).clear();
 
-            for (Sanction sanction : mGameService.getGivenSanctions(TeamType.HOME)) {
-                Sanction sanct = new Sanction(sanction.getPlayer(), sanction.getSanctionType(), sanction.getSetIndex(), sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints());
-                mStoredGame.getGivenSanctions(TeamType.HOME).add(sanct);
+            for (ApiSanction sanction : mGameService.getGivenSanctions(TeamType.HOME)) {
+                mStoredGame.getGivenSanctions(TeamType.HOME).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
             }
 
             mStoredGame.getGivenSanctions(TeamType.GUEST).clear();
 
-            for (Sanction sanction : mGameService.getGivenSanctions(TeamType.GUEST)) {
-                Sanction sanct = new Sanction(sanction.getPlayer(), sanction.getSanctionType(), sanction.getSetIndex(), sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints());
-                mStoredGame.getGivenSanctions(TeamType.GUEST).add(sanct);
+            for (ApiSanction sanction : mGameService.getGivenSanctions(TeamType.GUEST)) {
+                mStoredGame.getGivenSanctions(TeamType.GUEST).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
             }
         }
     }
@@ -473,15 +473,14 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     // Write current game
 
     private void insertCurrentGameIntoDb(final String type, GameService gameService, boolean syncInsertion) {
-        final String json = writeCurrentGame(gameService);
+        String json = writeCurrentGame(gameService);
+        final FullGameEntity fullGameEntity = new FullGameEntity(type, json);
 
         if (syncInsertion) {
-            FullGameEntity fullGameEntity = new FullGameEntity(type, json);
             AppDatabase.getInstance(mContext).fullGameDao().insert(fullGameEntity);
         } else {
             new Thread() {
                 public void run() {
-                    FullGameEntity fullGameEntity = new FullGameEntity(type, json);
                     AppDatabase.getInstance(mContext).fullGameDao().insert(fullGameEntity);
                 }
             }.start();
@@ -499,13 +498,13 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return AppDatabase.getInstance(mContext).gameDao().count() > 0;
     }
 
-    public static List<StoredGame> readRecordedGamesStream(InputStream inputStream) throws IOException, JsonParseException {
+    public static List<StoredGame> readStoredGamesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.GAME_LIST_TYPE);
         }
     }
 
-    public static StoredGame byteArrayToRecordedGame(byte[] bytes) throws IOException, JsonParseException {
+    public static StoredGame byteArrayToStoredGame(byte[] bytes) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(bytes)))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.GAME_TYPE);
         }
@@ -528,10 +527,45 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
             }.start();
         }
     }
+    private String buildScore(ApiGame game) {
+        StringBuilder scoreBuilder = new StringBuilder();
 
-    private void insertGameIntoDb(final ApiGame game, boolean synced) {
-        String json = writeGame(recordedGame);
-        GameEntity gameEntity = new GameEntity(recordedGame.getGameDate(), recordedGame.getLeagueName(), recordedGame.getDivisionName(), json);
+        for (ApiSet set : game.getSets()) {
+            scoreBuilder.append(String.format(Locale.getDefault(), "%d-%d\t\t", set.getHomePoints(), set.getGuestPoints()));
+        }
+
+        return scoreBuilder.toString().trim();
+    }
+
+    private void insertGameIntoDb(final ApiGame apiGame, boolean synced) {
+        apiGame.setScore(buildScore(apiGame));
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.setId(apiGame.getId());
+        gameEntity.setCreatedBy(apiGame.getCreatedBy());
+        gameEntity.setCreatedAt(apiGame.getCreatedAt());
+        gameEntity.setUpdatedAt(apiGame.getUpdatedAt());
+        gameEntity.setScheduledAt(apiGame.getScheduledAt());
+        gameEntity.setRefereedBy(apiGame.getRefereedBy());
+        gameEntity.setRefereeName(apiGame.getRefereeName());
+        gameEntity.setKind(apiGame.getKind());
+        gameEntity.setGender(apiGame.getGender());
+        gameEntity.setSynced(synced);
+        gameEntity.setStatus(apiGame.getStatus());
+        gameEntity.setUsage(apiGame.getUsage());
+        gameEntity.setIndexed(apiGame.isIndexed());
+        gameEntity.setLeagueId(apiGame.getLeagueId());
+        gameEntity.setLeagueName(apiGame.getLeagueName());
+        gameEntity.setDivisionName(apiGame.getDivisionName());
+        gameEntity.setHomeTeamId(apiGame.getHomeTeam().getId());
+        gameEntity.setHomeTeamName(apiGame.getHomeTeam().getName());
+        gameEntity.setGuestTeamId(apiGame.getGuestTeam().getId());
+        gameEntity.setGuestTeamName(apiGame.getGuestTeam().getName());
+        gameEntity.setHomeSets(apiGame.getHomeSets());
+        gameEntity.setGuestSets(apiGame.getGuestSets());
+        gameEntity.setRulesId(apiGame.getRules().getId());
+        gameEntity.setRulesName(apiGame.getRules().getName());
+        gameEntity.setScore(apiGame.getScore());
+        gameEntity.setContent(writeGame(apiGame));
         AppDatabase.getInstance(mContext).gameDao().insert(gameEntity);
     }
 
@@ -543,13 +577,13 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return JsonIOUtils.GSON.toJson(set, JsonIOUtils.SET_TYPE);
     }
 
-    public static void writeRecordedGamesStream(OutputStream outputStream, List<StoredGame> recordedGames) throws JsonParseException, IOException {
+    public static void writeStoredGamesStream(OutputStream outputStream, List<StoredGame> recordedGames) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         JsonIOUtils.GSON.toJson(recordedGames, JsonIOUtils.GAME_LIST_TYPE, writer);
         writer.close();
     }
 
-    public static byte[] recordedGameToByteArray(StoredGame recordedGame) throws JsonParseException, IOException {
+    public static byte[] storedGameToByteArray(StoredGame recordedGame) throws JsonParseException, IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
