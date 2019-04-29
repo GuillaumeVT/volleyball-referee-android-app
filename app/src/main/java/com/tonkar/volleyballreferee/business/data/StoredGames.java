@@ -33,20 +33,13 @@ import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class StoredGames implements StoredGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
@@ -216,8 +209,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
         if (storedGameService != null) {
             storedGameService.setIndexed(!storedGameService.isIndexed());
-            pushGameToServer(storedGameService);
-            insertGameIntoDb((StoredGame) storedGameService, false);
+            setIndexedOnServer(storedGameService);
+            insertGameIntoDb((StoredGame) storedGameService, false, true);
         }
     }
 
@@ -302,7 +295,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
     private void createCurrentGame() {
         mStoredGame = new StoredGame();
-        mStoredGame.setId(mGameService.geId());
+        mStoredGame.setId(mGameService.getId());
         mStoredGame.setCreatedBy(mGameService.getCreatedBy());
         mStoredGame.setCreatedAt(mGameService.getCreatedAt());
         mStoredGame.setUpdatedAt(mGameService.getUpdatedAt());
@@ -365,7 +358,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
     private void updateCurrentGame() {
         if (mStoredGame != null) {
-            mStoredGame.setUpdatedAt(System.currentTimeMillis());
+            mStoredGame.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
             mStoredGame.setMatchStatus(mGameService.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
             mStoredGame.setIndexed(mGameService.isIndexed());
             mStoredGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
@@ -385,12 +378,18 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                 set.setTimeouts(TeamType.HOME, mGameService.getRemainingTimeouts(TeamType.HOME, setIndex));
 
                 ApiCourt homeCurrentPlayers = set.getCurrentPlayers(TeamType.HOME);
-                homeCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1, setIndex));
-                homeCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_2, setIndex));
-                homeCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_3, setIndex));
-                homeCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_4, setIndex));
-                homeCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_5, setIndex));
-                homeCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_6, setIndex));
+                if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                    homeCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1, setIndex));
+                    homeCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_2, setIndex));
+                }
+                if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                    homeCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_3, setIndex));
+                    homeCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_4, setIndex));
+                }
+                if (GameType.INDOOR.equals(mGameService.getKind())) {
+                    homeCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_5, setIndex));
+                    homeCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_6, setIndex));
+                }
 
                 for (ApiTimeout timeout : mGameService.getCalledTimeouts(TeamType.HOME, setIndex)) {
                     set.getCalledTimeouts(TeamType.HOME).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
@@ -400,12 +399,18 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                 set.setTimeouts(TeamType.GUEST, mGameService.getRemainingTimeouts(TeamType.GUEST, setIndex));
 
                 ApiCourt guestCurrentPlayers = set.getCurrentPlayers(TeamType.GUEST);
-                guestCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_1, setIndex));
-                guestCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_2, setIndex));
-                guestCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_3, setIndex));
-                guestCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_4, setIndex));
-                guestCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_5, setIndex));
-                guestCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+                if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                    guestCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_1, setIndex));
+                    guestCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_2, setIndex));
+                }
+                if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                    guestCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_3, setIndex));
+                    guestCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_4, setIndex));
+                }
+                if (GameType.INDOOR.equals(mGameService.getKind())) {
+                    guestCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_5, setIndex));
+                    guestCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+                }
 
                 for (ApiTimeout timeout : mGameService.getCalledTimeouts(TeamType.GUEST, setIndex)) {
                     set.getCalledTimeouts(TeamType.GUEST).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
@@ -420,24 +425,36 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                     IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
 
                     ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
-                    homeStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_1, setIndex));
-                    homeStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_2, setIndex));
-                    homeStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_3, setIndex));
-                    homeStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_4, setIndex));
-                    homeStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_5, setIndex));
-                    homeStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_6, setIndex));
+                    if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                        homeStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_1, setIndex));
+                        homeStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_2, setIndex));
+                    }
+                    if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                        homeStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_3, setIndex));
+                        homeStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_4, setIndex));
+                    }
+                    if (GameType.INDOOR.equals(mGameService.getKind())) {
+                        homeStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_5, setIndex));
+                        homeStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_6, setIndex));
+                    }
 
                     for (ApiSubstitution substitution : indoorTeamService.getSubstitutions(TeamType.HOME, setIndex)) {
                         set.getSubstitutions(TeamType.HOME).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
                     ApiCourt guestStartingPlayers = set.getStartingPlayers(TeamType.GUEST);
-                    guestStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_1, setIndex));
-                    guestStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_2, setIndex));
-                    guestStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_3, setIndex));
-                    guestStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_4, setIndex));
-                    guestStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_5, setIndex));
-                    guestStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+                    if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                        guestStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_1, setIndex));
+                        guestStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_2, setIndex));
+                    }
+                    if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
+                        guestStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_3, setIndex));
+                        guestStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_4, setIndex));
+                    }
+                    if (GameType.INDOOR.equals(mGameService.getKind())) {
+                        guestStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_5, setIndex));
+                        guestStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+                    }
 
                     for (ApiSubstitution substitution : indoorTeamService.getSubstitutions(TeamType.GUEST, setIndex)) {
                         set.getSubstitutions(TeamType.GUEST).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
@@ -491,7 +508,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return JsonIOUtils.GSON.toJson(gameService, JsonIOUtils.CURRENT_GAME_TYPE);
     }
 
-    // Read recorded games
+    // Read stored games
 
     @Override
     public boolean hasGames() {
@@ -514,19 +531,44 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.GAME_TYPE);
     }
 
-    // Write recorded games
+    // Write stored games
 
-    private void insertGameIntoDb(final StoredGame recordedGame, boolean synced, boolean syncInsertion) {
+    private void insertGameIntoDb(final ApiGame apiGame, boolean synced, boolean syncInsertion) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                apiGame.setScore(buildScore(apiGame));
+                GameEntity gameEntity = new GameEntity();
+                gameEntity.setId(apiGame.getId());
+                gameEntity.setCreatedBy(apiGame.getCreatedBy());
+                gameEntity.setCreatedAt(apiGame.getCreatedAt());
+                gameEntity.setUpdatedAt(apiGame.getUpdatedAt());
+                gameEntity.setScheduledAt(apiGame.getScheduledAt());
+                gameEntity.setRefereedBy(apiGame.getRefereedBy());
+                gameEntity.setRefereeName(apiGame.getRefereeName());
+                gameEntity.setKind(apiGame.getKind());
+                gameEntity.setGender(apiGame.getGender());
+                gameEntity.setSynced(synced);
+                gameEntity.setIndexed(apiGame.isIndexed());
+                gameEntity.setLeagueName(apiGame.getLeagueName());
+                gameEntity.setDivisionName(apiGame.getDivisionName());
+                gameEntity.setHomeTeamName(apiGame.getHomeTeam().getName());
+                gameEntity.setGuestTeamName(apiGame.getGuestTeam().getName());
+                gameEntity.setHomeSets(apiGame.getHomeSets());
+                gameEntity.setGuestSets(apiGame.getGuestSets());
+                gameEntity.setScore(apiGame.getScore());
+                gameEntity.setContent(writeGame(apiGame));
+                AppDatabase.getInstance(mContext).gameDao().insert(gameEntity);
+            }
+        };
+
         if (syncInsertion) {
-            insertGameIntoDb(recordedGame, synced);
+            runnable.run();
         } else {
-            new Thread() {
-                public void run() {
-                    insertGameIntoDb(recordedGame, synced);
-                }
-            }.start();
+            new Thread(runnable).start();
         }
     }
+
     private String buildScore(ApiGame game) {
         StringBuilder scoreBuilder = new StringBuilder();
 
@@ -537,38 +579,6 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return scoreBuilder.toString().trim();
     }
 
-    private void insertGameIntoDb(final ApiGame apiGame, boolean synced) {
-        apiGame.setScore(buildScore(apiGame));
-        GameEntity gameEntity = new GameEntity();
-        gameEntity.setId(apiGame.getId());
-        gameEntity.setCreatedBy(apiGame.getCreatedBy());
-        gameEntity.setCreatedAt(apiGame.getCreatedAt());
-        gameEntity.setUpdatedAt(apiGame.getUpdatedAt());
-        gameEntity.setScheduledAt(apiGame.getScheduledAt());
-        gameEntity.setRefereedBy(apiGame.getRefereedBy());
-        gameEntity.setRefereeName(apiGame.getRefereeName());
-        gameEntity.setKind(apiGame.getKind());
-        gameEntity.setGender(apiGame.getGender());
-        gameEntity.setSynced(synced);
-        gameEntity.setStatus(apiGame.getStatus());
-        gameEntity.setUsage(apiGame.getUsage());
-        gameEntity.setIndexed(apiGame.isIndexed());
-        gameEntity.setLeagueId(apiGame.getLeagueId());
-        gameEntity.setLeagueName(apiGame.getLeagueName());
-        gameEntity.setDivisionName(apiGame.getDivisionName());
-        gameEntity.setHomeTeamId(apiGame.getHomeTeam().getId());
-        gameEntity.setHomeTeamName(apiGame.getHomeTeam().getName());
-        gameEntity.setGuestTeamId(apiGame.getGuestTeam().getId());
-        gameEntity.setGuestTeamName(apiGame.getGuestTeam().getName());
-        gameEntity.setHomeSets(apiGame.getHomeSets());
-        gameEntity.setGuestSets(apiGame.getGuestSets());
-        gameEntity.setRulesId(apiGame.getRules().getId());
-        gameEntity.setRulesName(apiGame.getRules().getName());
-        gameEntity.setScore(apiGame.getScore());
-        gameEntity.setContent(writeGame(apiGame));
-        AppDatabase.getInstance(mContext).gameDao().insert(gameEntity);
-    }
-
     private String writeGame(ApiGame game) {
         return JsonIOUtils.GSON.toJson(game, JsonIOUtils.GAME_TYPE);
     }
@@ -577,172 +587,115 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return JsonIOUtils.GSON.toJson(set, JsonIOUtils.SET_TYPE);
     }
 
-    public static void writeStoredGamesStream(OutputStream outputStream, List<StoredGame> recordedGames) throws JsonParseException, IOException {
+    public static void writeStoredGamesStream(OutputStream outputStream, List<StoredGame> storedGames) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-        JsonIOUtils.GSON.toJson(recordedGames, JsonIOUtils.GAME_LIST_TYPE, writer);
+        JsonIOUtils.GSON.toJson(storedGames, JsonIOUtils.GAME_LIST_TYPE, writer);
         writer.close();
     }
 
-    public static byte[] storedGameToByteArray(StoredGame recordedGame) throws JsonParseException, IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-        JsonIOUtils.GSON.toJson(recordedGame, JsonIOUtils.GAME_TYPE, writer);
-        writer.close();
-
-        outputStream.close();
-
-        return outputStream.toByteArray();
+    public static byte[] storedGameToByteArray(StoredGame game) throws JsonParseException {
+        return JsonIOUtils.GSON.toJson(game, JsonIOUtils.GAME_TYPE).getBytes();
     }
 
-    private byte[] recordedSetToByteArray(RecordedSet recordedSet) throws JsonParseException, IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-        JsonIOUtils.GSON.toJson(recordedSet, JsonIOUtils.RECORDED_SET_TYPE, writer);
-        writer.close();
-
-        outputStream.close();
-
-        return outputStream.toByteArray();
+    private byte[] storedSetToByteArray(ApiSet set) throws JsonParseException {
+        return JsonIOUtils.GSON.toJson(set, JsonIOUtils.SET_TYPE).getBytes();
     }
 
     @Override
-    public void getGameFromCode(final int code, final AsyncGameRequestListener listener) {
-        String url = String.format(Locale.getDefault(), ApiUtils.GAME_CODE_API_URL, code);
+    public void downloadGame(final String id, final AsyncGameRequestListener listener) {
+        if (PrefUtils.isSyncOn(mContext)) {
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.GAME_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {
+                        StoredGame storedGame = readGame(response);
 
-        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
-                response -> {
-                    StoredGame recordedGame = readGame(response);
-
-                    if (recordedGame == null) {
-                        Log.e(Tags.STORED_GAMES, "Failed to deserialize a game from code or to notify the listener");
-                        listener.onInternalError();
-                    } else {
-                        listener.onRecordedGameReceivedFromCode(recordedGame);
-                    }
-                },
-                error -> {
-                    if (error.networkResponse != null) {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting a game from code", error.networkResponse.statusCode));
-                        if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            listener.onNotFound();
+                        if (storedGame == null) {
+                            Log.e(Tags.STORED_GAMES, "Failed to deserialize game or to notify the listener");
+                            listener.onInternalError();
+                        } else {
+                            if (listener != null) {
+                                listener.onGameReceived(storedGame);
+                            }
+                        }
+                    },
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting game", error.networkResponse.statusCode));
+                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                listener.onNotFound();
+                            } else {
+                                listener.onError();
+                            }
                         } else {
                             listener.onError();
                         }
-                    } else {
-                        listener.onError();
                     }
-                }
-        );
-        ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
-    }
-
-    @Override
-    public void getUserGame(final long id, final AsyncGameRequestListener listener) {
-        Map<String, String> params = new HashMap<>();
-        params.put("id", String.valueOf(id));
-        String parameters = JsonStringRequest.getParameters(params);
-
-        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                response -> {
-                    StoredGame recordedGame = readGame(response);
-
-                    if (recordedGame == null) {
-                        Log.e(Tags.STORED_GAMES, "Failed to deserialize a user game or to notify the listener");
-                        listener.onInternalError();
-                    } else {
-                        if (listener != null) {
-                            listener.onGameReceived(recordedGame);
-                        }
-                    }
-                },
-                error -> {
-                    if (error.networkResponse != null) {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user game", error.networkResponse.statusCode));
-                        if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            listener.onNotFound();
-                        } else {
-                            listener.onError();
-                        }
-                    } else {
-                        listener.onError();
-                    }
-                }
-        );
-        ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            );
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        } else {
+            listener.onError();
+        }
     }
 
     @Override
     public void downloadAvailableGames(final AsyncGameRequestListener listener) {
-        JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USER_SCHEDULED_GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                response -> {
-                    List<ApiGameDescription> gameDescriptionList = readGameDescriptionList(response);
+        if (PrefUtils.isSyncOn(mContext)) {
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.AVAILABLE_GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {
+                        List<ApiGameDescription> games = readGames(response);
 
-                    if (gameDescriptionList == null) {
-                        Log.e(Tags.STORED_GAMES, "Failed to deserialize a user scheduled game list or to notify the listener");
-                        listener.onInternalError();
-                    } else {
+                        if (games == null) {
+                            Log.e(Tags.STORED_GAMES, "Failed to deserialize available games or to notify the listener");
+                            listener.onInternalError();
+                        } else {
+                            if (listener != null) {
+                                listener.onAvailableGamesReceived(games);
+                            }
+                        }
+                    },
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting available games list", error.networkResponse.statusCode));
+                        }
                         if (listener != null) {
-                            listener.onAvailableGamesReceived(gameDescriptionList);
+                            listener.onError();
                         }
                     }
-                },
-                error -> {
-                    if (error.networkResponse != null) {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting a user scheduled game list", error.networkResponse.statusCode));
-                    }
-                    listener.onError();
-                }
-        );
-        ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+            );
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        } else {
+            listener.onError();
+        }
     }
 
     @Override
     public void scheduleGame(ApiGameDescription gameDescription, final boolean create, final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
-            try {
-                final byte[] bytes = gameDescriptionToByteArray(gameDescription);
+            final byte[] bytes = writeGameDescription(gameDescription).getBytes();
 
-                int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
-                JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, ApiUtils.USER_GAME_API_URL, bytes, PrefUtils.getAuthentication(mContext),
-                        response -> {
-                            if (listener != null) {
-                                listener.onSynchronizationSucceeded();
-                            }
-                        },
-                        error -> {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
-                            }
-                            if (listener != null) {
-                                listener.onSynchronizationFailed();
-                            }
+            int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
+            JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, ApiUtils.GAMES_API_URL, bytes, PrefUtils.getAuthentication(mContext),
+                    response -> {
+                        if (listener != null) {
+                            listener.onSynchronizationSucceeded();
                         }
-                );
-                ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
-            } catch (JsonParseException | IOException e) {
-                Log.e(Tags.STORED_GAMES, "Exception while writing game description", e);
-                if (listener != null) {
-                    listener.onSynchronizationFailed();
-                }
-            }
+                    },
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", error.networkResponse.statusCode));
+                        }
+                        if (listener != null) {
+                            listener.onSynchronizationFailed();
+                        }
+                    }
+            );
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }
 
     @Override
     public void cancelGame(String id, DataSynchronizationListener listener) {
-
-    }
-
-    @Override
-    public void cancelGame(long id, DataSynchronizationListener listener) {
-        Map<String, String> params = new HashMap<>();
-        params.put("id", String.valueOf(id));
-        String parameters = JsonStringRequest.getParameters(params);
-
         if (PrefUtils.isSyncOn(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.GAME_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
                         if (listener != null) {
                             listener.onSynchronizationSucceeded();
@@ -761,41 +714,20 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         }
     }
 
-    private byte[] gameDescriptionToByteArray(ApiGameDescription gameDescription) throws JsonParseException, IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-        JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE, writer);
-        writer.close();
-
-        outputStream.close();
-
-        return outputStream.toByteArray();
+    private String writeGameDescription(ApiGameDescription game) {
+        return JsonIOUtils.GSON.toJson(game, JsonIOUtils.GAME_DESCRIPTION_TYPE);
     }
 
     // Read game descriptions
 
-    private List<ApiGameDescription> readGameDescriptionList(String json) {
-        Log.i(Tags.STORED_GAMES, "Read game description list");
-        List<ApiGameDescription> gameDescriptionList = new ArrayList<>();
-
-        try {
-            gameDescriptionList = JsonIOUtils.GSON.fromJson(json, JsonIOUtils.GAME_DESCRIPTION_LIST_TYPE);
-        } catch (JsonParseException e) {
-            Log.e(Tags.STORED_GAMES, "Exception while reading game description list", e);
-        }
-
-        return gameDescriptionList;
+    private List<ApiGameDescription> readGames(String json) {
+        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.GAME_DESCRIPTION_LIST_TYPE);
     }
 
-    private void deleteGameOnServer(final long gameDate) {
+    private void deleteGameOnServer(final String id) {
         if (PrefUtils.isSyncOn(mContext)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("id", String.valueOf(gameDate));
-            String parameters = JsonStringRequest.getParameters(params);
-
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.USER_GAME_API_URL + parameters, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.GAME_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {},
                     error -> {
                         if (error.networkResponse != null) {
                             Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while deleting game", error.networkResponse.statusCode));
@@ -808,8 +740,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
     private void deleteAllGamesOnServer() {
         if (PrefUtils.isSyncOn(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.USER_GAME_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> AppDatabase.getInstance(mContext).syncDao().deleteByType(SyncEntity.GAME_ENTITY),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {},
                     error -> {
                         if (error.networkResponse != null) {
                             Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while all deleting games", error.networkResponse.statusCode));
@@ -830,23 +762,23 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     }
 
     private void pushGameToServer(final StoredGameService storedGameService) {
-        if (mBatteryReceiver.canPushGameOnline() && PrefUtils.isSyncOn(mContext) && storedGameService != null && isNotTestGame(storedGameService)) {
+        if (mBatteryReceiver.canPushGameToServer() && PrefUtils.isSyncOn(mContext) && storedGameService != null && isNotTestGame(storedGameService)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             ApiGame game = (ApiGame) storedGameService;
             final byte[] bytes = writeGame(game).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.GAMES_API_URL, bytes, authentication,
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.FULL_GAME_API_URL, bytes, authentication,
                     response -> {
                         if (GameStatus.COMPLETED.equals(game.getStatus())) {
-                            insertGameIntoDb(game, true);
+                            insertGameIntoDb(game, true, false);
                         }
                     },
                     error -> {
                         if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.GAMES_API_URL, bytes, authentication,
+                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.FULL_GAME_API_URL, bytes, authentication,
                                     response -> {
                                         if (GameStatus.COMPLETED.equals(game.getStatus())) {
-                                            insertGameIntoDb(game, true);
+                                            insertGameIntoDb(game, true, false);
                                         }
                                     },
                                     error2 -> {
@@ -864,7 +796,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                         }
                     }
             );
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT))
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }
@@ -874,18 +806,37 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     }
 
     private void pushCurrentSetToServer() {
-        if (mBatteryReceiver.canPushSetOnline() && PrefUtils.isSyncOn(mContext) && mStoredGame != null && isNotTestGame(mStoredGame)) {
-            final Authentication authentication = PrefUtils.getAuthentication(mContext);
+        if (mBatteryReceiver.canPushSetToServer() && PrefUtils.isSyncOn(mContext) && mStoredGame != null && isNotTestGame(mStoredGame)) {
             int setIndex = mStoredGame.currentSetIndex();
             ApiSet set = mStoredGame.getSets().get(setIndex);
             final byte[] bytes = writeSet(set).getBytes();
 
-            String url = String.format(Locale.getDefault(), ApiUtils.GAME_SET_API_URL, mStoredGame.getId(), setIndex);
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, url, bytes, authentication,
+            String url = String.format(ApiUtils.GAME_SET_API_URL, mStoredGame.getId(), setIndex);
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PATCH, url, bytes, PrefUtils.getAuthentication(mContext),
                     response -> {},
                     error -> {
                         if (error.networkResponse != null) {
                             Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while uploading set", error.networkResponse.statusCode));
+                            if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
+                                pushCurrentGameToServer();
+                            }
+                        }
+                    }
+            );
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+        }
+    }
+
+    private void setIndexedOnServer(StoredGameService storedGameService) {
+        if (PrefUtils.isSyncOn(mContext) && storedGameService != null) {
+            final Authentication authentication = PrefUtils.getAuthentication(mContext);
+
+            String url = String.format(ApiUtils.GAME_INDEXED_API_URL, storedGameService.getId(), storedGameService.isIndexed());
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PATCH, url, new byte[0], authentication,
+                    response -> {},
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while indexing game", error.networkResponse.statusCode));
                             if (HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                                 pushCurrentGameToServer();
                             }
@@ -904,9 +855,9 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     @Override
     public void syncGames(final DataSynchronizationListener listener) {
         if (PrefUtils.isSyncOn(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USER_COMPLETED_GAMES_API_URL, new byte[0],  PrefUtils.getAuthentication(mContext),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.COMPLETED_GAMES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
-                        List<ApiGameDescription> gameList = readGameDescriptionList(response);
+                        List<ApiGameDescription> gameList = readGames(response);
                         syncGames(gameList, listener);
                     },
                     error -> {
@@ -926,122 +877,100 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         }
     }
 
-    @Override
-    public void downloadGame(String id, AsyncGameRequestListener listener) {
-
-    }
-
     private void syncGames(List<ApiGameDescription> remoteGameList, DataSynchronizationListener listener) {
-        String userId = PrefUtils.getAuthentication(mContext).getUserId();
-        List<StoredGameService> localGameList = listGames();
+        Authentication authentication = PrefUtils.getAuthentication(mContext);
+        List<ApiGameDescription> localGameList = listGames();
+        Queue<ApiGameDescription> remoteGamesToDownload = new LinkedList<>();
+        boolean afterPurchase = false;
 
-        for (StoredGameService localGame : localGameList) {
-            StoredGame recordedGame = (StoredGame) localGame;
-            if (recordedGame.getUserId().equals(Authentication.VBR_USER_ID)) {
-                recordedGame.setUserId(userId);
-                insertGameIntoDb(recordedGame);
+        // User purchased web services, write his user id
+        for (ApiGameDescription localGame : localGameList) {
+            if (localGame.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
+                StoredGame game = (StoredGame) getGame(localGame.getId());
+                game.setCreatedBy(authentication.getUserId());
+                game.setRefereedBy(authentication.getUserId());
+                game.setRefereeName(authentication.getUserPseudo());
+                insertGameIntoDb(game, false, true);
+                afterPurchase = true;
             }
         }
 
-        for (StoredGameService localGame : localGameList) {
+        if (afterPurchase) {
+            localGameList = listGames();
+        }
+
+        for (ApiGameDescription localGame : localGameList) {
             boolean foundRemoteVersion = false;
 
             for (ApiGameDescription remoteGame : remoteGameList) {
-                if (remoteGame.getGameDate() == localGame.getGameDate()) {
+                if (localGame.getId().equals(remoteGame.getId())) {
                     foundRemoteVersion = true;
+
+                    if (localGame.getUpdatedAt() < remoteGame.getUpdatedAt()) {
+                        remoteGamesToDownload.add(remoteGame);
+                    } else if (localGame.getUpdatedAt() > remoteGame.getUpdatedAt()) {
+                        StoredGame game = (StoredGame) getGame(localGame.getId());
+                        pushGameToServer(game);
+                    }
                 }
             }
 
             if (!foundRemoteVersion) {
-                if (isSynced(localGame.getGameDate())) {
+                if (localGame.isSynced()) {
                     // if the game was synced, then it was deleted from the server and it must be deleted locally
-                    deleteGame(localGame.getGameDate());
+                    deleteGame(localGame.getId());
                 } else {
                     // if the game was not synced, then it is missing from the server because sending it must have failed, so send it again
-                    pushGameToServer(localGame);
+                    StoredGame game = (StoredGame) getGame(localGame.getId());
+                    pushGameToServer(game);
                 }
             }
         }
 
-        Queue<ApiGameDescription> missingRemoteGames = new LinkedList<>();
-
         for (ApiGameDescription remoteGame : remoteGameList) {
             boolean foundLocalVersion = false;
 
-            for (StoredGameService localGame : localGameList) {
-                if (localGame.getGameDate() == remoteGame.getGameDate()) {
+            for (ApiGameDescription localGame : localGameList) {
+                if (localGame.getId().equals(remoteGame.getId())) {
                     foundLocalVersion = true;
                 }
             }
 
             if (!foundLocalVersion) {
-                if (isSynced(remoteGame.getGameDate())) {
-                    // if the game was synced, then sending the deletion to the server must have failed, so send the deletion again
-                    deleteGameOnServer(remoteGame.getGameDate());
-                } else {
-                    // if the game was not synced, then it was added on the server and it must be added locally
-                    missingRemoteGames.add(remoteGame);
-                }
+                remoteGamesToDownload.add(remoteGame);
             }
         }
 
-        downloadUserGamesRecursive(missingRemoteGames, listener);
+        downloadGamesRecursive(remoteGamesToDownload, listener);
     }
 
-    private void downloadUserGamesRecursive(final Queue<ApiGameDescription> remoteGames, final DataSynchronizationListener listener) {
+    private void downloadGamesRecursive(final Queue<ApiGameDescription> remoteGames, final DataSynchronizationListener listener) {
         if (remoteGames.isEmpty()) {
             if (listener != null) {
                 listener.onSynchronizationSucceeded();
             }
         } else {
             ApiGameDescription remoteGame = remoteGames.poll();
-            getUserGame(remoteGame.getGameDate(), new AsyncGameRequestListener() {
-                @Override
-                public void onGameReceived(StoredGameService storedGameService) {
-                    insertGameIntoDb((StoredGame) storedGameService, false);
-                    insertSyncIntoDb(storedGameService.getGameDate());
-                    downloadUserGamesRecursive(remoteGames, listener);
-                }
-
-                @Override
-                public void onRecordedGameReceivedFromCode(StoredGameService storedGameService) {}
-
-                @Override
-                public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {}
-
-                @Override
-                public void onNotFound() {
-                    if (listener != null) {
-                        listener.onSynchronizationFailed();
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.GAME_API_URL, remoteGame.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
+                    response -> {
+                        ApiGame game = readGame(response);
+                        insertGameIntoDb(game, true, false);
+                        downloadGamesRecursive(remoteGames, listener);
+                    },
+                    error -> {
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", error.networkResponse.statusCode));
+                        }
+                        if (listener != null){
+                            listener.onSynchronizationFailed();
+                        }
                     }
-                }
-
-                @Override
-                public void onInternalError() {
-                    if (listener != null) {
-                        listener.onSynchronizationFailed();
-                    }
-                }
-
-                @Override
-                public void onError() {
-                    if (listener != null) {
-                        listener.onSynchronizationFailed();
-                    }
-                }
-            });
+            );
+            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }
 
     private boolean isNotTestGame(StoredGameService storedGameService) {
         return storedGameService.getTeamName(TeamType.HOME).length() > 1 && storedGameService.getTeamName(TeamType.GUEST).length() > 1;
-    }
-
-    private boolean isSynced(long gameDate) {
-        return AppDatabase.getInstance(mContext).syncDao().countByItemAndType(SyncEntity.createGameItem(gameDate), SyncEntity.GAME_ENTITY) > 0;
-    }
-
-    private void insertSyncIntoDb(long gameDate) {
-        AppDatabase.getInstance(mContext).syncDao().insert(SyncEntity.createGameSyncEntity(gameDate));
     }
 }

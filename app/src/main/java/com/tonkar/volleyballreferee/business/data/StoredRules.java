@@ -78,10 +78,12 @@ public class StoredRules implements StoredRulesService {
                 break;
         }
 
+        long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
+
         rules.setId(UUID.randomUUID().toString());
         rules.setCreatedBy(PrefUtils.getAuthentication(mContext).getUserId());
-        rules.setCreatedAt(System.currentTimeMillis());
-        rules.setUpdatedAt(System.currentTimeMillis());
+        rules.setCreatedAt(utcTime);
+        rules.setUpdatedAt(utcTime);
         rules.setName("");
 
         return rules;
@@ -89,8 +91,8 @@ public class StoredRules implements StoredRulesService {
 
     @Override
     public void saveRules(Rules rules) {
-        rules.setUpdatedAt(System.currentTimeMillis());
-        insertRulesIntoDb(rules, false);
+        rules.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
+        insertRulesIntoDb(rules, false, false);
         pushRulesToServer(rules);
     }
 
@@ -149,8 +151,9 @@ public class StoredRules implements StoredRulesService {
 
     // Write saved rules
 
-    private void insertRulesIntoDb(final ApiRules apiRules, boolean synced) {
-        new Thread() {
+    private void insertRulesIntoDb(final ApiRules apiRules, boolean synced, boolean syncInsertion) {
+        Runnable runnable = new Runnable() {
+            @Override
             public void run() {
                 String json = writeRules(apiRules);
                 RulesEntity rulesEntity = new RulesEntity();
@@ -164,7 +167,13 @@ public class StoredRules implements StoredRulesService {
                 rulesEntity.setContent(json);
                 AppDatabase.getInstance(mContext).rulesDao().insert(rulesEntity);
             }
-        }.start();
+        };
+
+        if (syncInsertion) {
+            runnable.run();
+        } else {
+            new Thread(runnable).start();
+        }
     }
 
     public static void writeRulesStream(OutputStream outputStream, List<Rules> rules) throws JsonParseException, IOException {
@@ -214,14 +223,20 @@ public class StoredRules implements StoredRulesService {
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
         List<ApiRulesDescription> localRulesList = listRules();
         Queue<ApiRulesDescription> remoteRulesToDownload = new LinkedList<>();
+        boolean afterPurchase = false;
 
         // User purchased web services, write his user id
         for (ApiRulesDescription localRules : localRulesList) {
             if (localRules.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
                 ApiRules rules = getRules(localRules.getId());
                 rules.setCreatedBy(userId);
-                insertRulesIntoDb(rules, false);
+                insertRulesIntoDb(rules, false, true);
+                afterPurchase = true;
             }
+        }
+
+        if(afterPurchase) {
+            localRulesList = listRules();
         }
 
         for (ApiRulesDescription localRules : localRulesList) {
@@ -279,7 +294,7 @@ public class StoredRules implements StoredRulesService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.RULE_API_URL, remoteRule.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
                         ApiRules rules = readRules(response);
-                        insertRulesIntoDb(rules, true);
+                        insertRulesIntoDb(rules, true, false);
                         downloadRulesRecursive(remoteRules, listener);
                     },
                     error -> {
@@ -301,11 +316,11 @@ public class StoredRules implements StoredRulesService {
             final byte[] bytes = writeRules(rules).getBytes();
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.RULES_API_URL, bytes, authentication,
-                    response -> insertRulesIntoDb(rules, true),
+                    response -> insertRulesIntoDb(rules, true, false),
                     error -> {
                         if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                             JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.RULES_API_URL, bytes, authentication,
-                                    response -> insertRulesIntoDb(rules, true),
+                                    response -> insertRulesIntoDb(rules, true, false),
                                     error2 -> {
                                         if (error2.networkResponse != null) {
                                             Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error2.networkResponse.statusCode));

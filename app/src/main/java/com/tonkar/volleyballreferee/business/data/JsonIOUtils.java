@@ -37,12 +37,12 @@ public class JsonIOUtils {
     public static final Type RULES_TYPE                  = new TypeToken<ApiRules>() {}.getType();
     public static final Type GAME_DESCRIPTION_TYPE       = new TypeToken<ApiGameDescription>() {}.getType();
     public static final Type GAME_DESCRIPTION_LIST_TYPE  = new TypeToken<List<ApiGameDescription>>() {}.getType();
-    public static final Type TEAM_DESCRIPTION_TYPE       = new TypeToken<ApiTeamDescription>() {}.getType();
     public static final Type TEAM_DESCRIPTION_LIST_TYPE  = new TypeToken<List<ApiTeamDescription>>() {}.getType();
-    public static final Type RULES_DESCRIPTION_TYPE      = new TypeToken<ApiRulesDescription>() {}.getType();
     public static final Type RULES_DESCRIPTION_LIST_TYPE = new TypeToken<List<ApiRulesDescription>>() {}.getType();
     public static final Type LEAGUE_TYPE                 = new TypeToken<ApiLeague>() {}.getType();
     public static final Type LEAGUE_LIST_TYPE            = new TypeToken<List<ApiLeague>>() {}.getType();
+    public static final Type USER_TYPE                   = new TypeToken<ApiUser>() {}.getType();
+    public static final Type FRIEND_REQUEST_LIST_TYPE    = new TypeToken<List<ApiFriendRequest>>() {}.getType();
 
     public static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(BaseGame.class, new InheritanceDeserializer<BaseGame>())

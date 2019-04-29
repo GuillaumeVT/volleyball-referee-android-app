@@ -28,10 +28,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Queue;
+import java.util.*;
 
 public class StoredTeams implements StoredTeamsService {
 
@@ -99,8 +96,8 @@ public class StoredTeams implements StoredTeamsService {
     @Override
     public void saveTeam(BaseTeamService team) {
         ApiTeam savedTeam = copyTeam(team);
-        savedTeam.setUpdatedAt(System.currentTimeMillis());
-        insertTeamIntoDb(savedTeam, false);
+        savedTeam.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
+        insertTeamIntoDb(savedTeam, false, false);
         pushTeamToServer(savedTeam);
     }
 
@@ -246,13 +243,14 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     private List<ApiTeamDescription> readTeams(String json) {
-        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.TEAM_LIST_TYPE);
+        return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.TEAM_DESCRIPTION_LIST_TYPE);
     }
 
     // Write saved teams
 
-    private void insertTeamIntoDb(final ApiTeam apiTeam, boolean synced) {
-        new Thread() {
+    private void insertTeamIntoDb(final ApiTeam apiTeam, boolean synced, boolean syncInsertion) {
+        Runnable runnable = new Runnable() {
+            @Override
             public void run() {
                 String json = writeTeam(apiTeam);
                 TeamEntity teamEntity = new TeamEntity();
@@ -267,7 +265,13 @@ public class StoredTeams implements StoredTeamsService {
                 teamEntity.setContent(json);
                 AppDatabase.getInstance(mContext).teamDao().insert(teamEntity);
             }
-        }.start();
+        };
+
+        if (syncInsertion) {
+            runnable.run();
+        } else {
+            new Thread(runnable).start();
+        }
     }
 
     public static void writeTeamsStream(OutputStream outputStream, List<ApiTeam> teams) throws JsonParseException, IOException {
@@ -317,14 +321,20 @@ public class StoredTeams implements StoredTeamsService {
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
         List<ApiTeamDescription> localTeamList = getListTeams();
         Queue<ApiTeamDescription> remoteTeamsToDownload = new LinkedList<>();
+        boolean afterPurchase = false;
 
         // User purchased web services, write his user id
         for (ApiTeamDescription localTeam : localTeamList) {
             if (localTeam.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
                 ApiTeam team = getTeam(localTeam.getId());
                 team.setCreatedBy(userId);
-                insertTeamIntoDb(team, false);
+                insertTeamIntoDb(team, false, true);
+                afterPurchase = true;
             }
+        }
+
+        if (afterPurchase) {
+            localTeamList = getListTeams();
         }
 
         for (ApiTeamDescription localTeam : localTeamList) {
@@ -382,7 +392,7 @@ public class StoredTeams implements StoredTeamsService {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.TEAM_API_URL, remoteTeam.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
                         ApiTeam team = readTeam(response);
-                        insertTeamIntoDb(team, true);
+                        insertTeamIntoDb(team, true, false);
                         downloadTeamsRecursive(remoteTeams, listener);
                     },
                     error -> {
@@ -404,11 +414,11 @@ public class StoredTeams implements StoredTeamsService {
             final byte[] bytes = writeTeam(team).getBytes();
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.TEAMS_API_URL, bytes, authentication,
-                    response -> insertTeamIntoDb(team, true),
+                    response -> insertTeamIntoDb(team, true, false),
                     error -> {
                         if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
                             JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.TEAMS_API_URL, bytes, authentication,
-                                    response -> insertTeamIntoDb(team, true),
+                                    response -> insertTeamIntoDb(team, true, false),
                                     error2 -> {
                                         if (error2.networkResponse != null) {
                                             Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error2.networkResponse.statusCode));

@@ -2,7 +2,9 @@ package com.tonkar.volleyballreferee.business.team;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public abstract class Player {
 
     @SerializedName("classType")
@@ -33,25 +35,5 @@ public abstract class Player {
     public abstract void turnToNextPosition();
 
     public abstract void turnToPreviousPosition();
-
-    private String getClassType() {
-        return mClassType;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj == this) {
-            result = true;
-        } else if (obj instanceof Player) {
-            Player other = (Player) obj;
-            result = (this.getClassType().equals(other.getClassType()))
-                    && (this.getNumber() == other.getNumber())
-                    && (this.getPosition().equals(other.getPosition()));
-        }
-
-        return result;
-    }
 
 }

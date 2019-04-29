@@ -44,11 +44,11 @@ public class BatteryReceiver extends BroadcastReceiver {
         mCharging = (status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL);
     }
 
-    public boolean canPushGameOnline() {
+    public boolean canPushGameToServer() {
         return mPercentage >= 20 || mCharging;
     }
 
-    public boolean canPushSetOnline() {
-        return mPercentage >= 30 || mCharging;
+    public boolean canPushSetToServer() {
+        return mPercentage >= 25 || mCharging;
     }
 }

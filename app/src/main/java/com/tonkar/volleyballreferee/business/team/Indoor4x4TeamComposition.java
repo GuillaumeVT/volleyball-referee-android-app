@@ -3,9 +3,10 @@ package com.tonkar.volleyballreferee.business.team;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,7 +27,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     @SerializedName("substitutions")
     private final Map<Integer, Integer> mSubstitutions;
     @SerializedName("fullSubstitutions")
-    private final List<Substitution>    mFullSubstitutions;
+    private final List<ApiSubstitution> mFullSubstitutions;
     @SerializedName("actingCaptain")
     private       int                   mActingCaptain;
     @SerializedName("forbiddenSub1")
@@ -78,7 +79,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         if (isStartingLineupConfirmed()) {
             Log.i(Tags.TEAM, "Actual substitution");
             mSubstitutions.put(newNumber, oldNumber);
-            mFullSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
+            mFullSubstitutions.add(new ApiSubstitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
             // A captain on the bench can no longer be acting captain
             if (indoorTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
@@ -165,16 +166,16 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     private List<Integer> getPlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
-        for (int number : indoorTeamDefinition().getPlayers()) {
-            if (PositionType.BENCH.equals(getPlayerPosition(number))) {
-                players.add(number);
+        for (ApiPlayer player : indoorTeamDefinition().getPlayers()) {
+            if (PositionType.BENCH.equals(getPlayerPosition(player.getNum()))) {
+                players.add(player.getNum());
             }
         }
 
         return players;
     }
 
-    public List<Substitution> getSubstitutions() {
+    public List<ApiSubstitution> getSubstitutions() {
         return new ArrayList<>(mFullSubstitutions);
     }
 

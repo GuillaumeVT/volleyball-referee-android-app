@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.business.team;
 
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.team.SubstitutionsLimitation;
 
 import java.util.HashSet;
@@ -14,10 +14,10 @@ public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
     }
 
     @Override
-    public boolean isInvolvedInPastSubstitution(List<Substitution> substitutions, int number) {
+    public boolean isInvolvedInPastSubstitution(List<ApiSubstitution> substitutions, int number) {
         boolean involved = false;
 
-        for (Substitution substitution : substitutions) {
+        for (ApiSubstitution substitution : substitutions) {
             if (substitution.getPlayerIn() == number || substitution.getPlayerOut() == number) {
                 involved = true;
             }
@@ -27,11 +27,11 @@ public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
     }
 
     @Override
-    public boolean canSubstitute(List<Substitution> substitutions, int number) {
+    public boolean canSubstitute(List<ApiSubstitution> substitutions, int number) {
         // A player can only do one return trip in each set
         int count = 0;
 
-        for (Substitution substitution : substitutions) {
+        for (ApiSubstitution substitution : substitutions) {
             if (substitution.getPlayerIn() == number || substitution.getPlayerOut() == number) {
                 count++;
             }
@@ -41,10 +41,10 @@ public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
     }
 
     @Override
-    public Set<Integer> getSubstitutePlayers(List<Substitution> substitutions, int number, List<Integer> freePlayersOnBench) {
+    public Set<Integer> getSubstitutePlayers(List<ApiSubstitution> substitutions, int number, List<Integer> freePlayersOnBench) {
         Set<Integer> substituteNumbers = new HashSet<>();
 
-        for (Substitution substitution : substitutions) {
+        for (ApiSubstitution substitution : substitutions) {
             if (substitution.getPlayerIn() == number) {
                 substituteNumbers.add(substitution.getPlayerOut());
             } else if (substitution.getPlayerOut() == number) {

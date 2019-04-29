@@ -25,12 +25,13 @@ public class ApiUtils {
     public static String TEAMS_API_URL = BASE_URL + "/teams";
     public static String TEAM_API_URL  = BASE_URL + "/teams/%s";
 
-    public static String GAMES_API_URL          = BASE_URL + "/games";
-    public static String GAME_API_URL           = BASE_URL + "/games/%s";
-    public static String GAME_SET_API_URL       = BASE_URL + "/games/%s/set/%d";
-    public static String FULL_GAME_API_URL      = BASE_URL + "/games/full";
-    public static String AVAILABLE_GAME_API_URL = BASE_URL + "/games/available";
-    public static String COMPLETED_GAME_API_URL = BASE_URL + "/games/completed";
+    public static String GAMES_API_URL           = BASE_URL + "/games";
+    public static String GAME_API_URL            = BASE_URL + "/games/%s";
+    public static String GAME_SET_API_URL        = BASE_URL + "/games/%s/set/%d";
+    public static String GAME_INDEXED_API_URL    = BASE_URL + "/games/%s/indexed/%b";
+    public static String FULL_GAME_API_URL       = BASE_URL + "/games/full";
+    public static String AVAILABLE_GAMES_API_URL = BASE_URL + "/games/available";
+    public static String COMPLETED_GAMES_API_URL = BASE_URL + "/games/completed";
 
     public static String USERS_API_URL            = BASE_URL + "/users";
     public static String USER_API_URL             = BASE_URL + "/users/%s";

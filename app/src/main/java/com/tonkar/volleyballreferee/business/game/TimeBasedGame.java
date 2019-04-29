@@ -4,6 +4,10 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiCourt;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.api.ApiTimeout;
 import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -12,40 +16,44 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
-    @SerializedName("gameDate")
-    private final long           mGameDate;
-    @SerializedName("gameSchedule")
-    private       long           mGameSchedule;
-    @SerializedName("genderType")
-    private       GenderType     mGenderType;
+    @SerializedName("id")
+    private       String         mId;
+    @SerializedName("createdBy")
+    private       String         mCreatedBy;
+    @SerializedName("createdAt")
+    private       long           mCreatedAt;
+    @SerializedName("updatedAt")
+    private       long           mUpdatedAt;
+    @SerializedName("scheduledAt")
+    private       long           mScheduledAt;
+    @SerializedName("refereedBy")
+    private       String         mRefereedBy;
+    @SerializedName("refereeName")
+    private       String         mRefereeName;
+    @SerializedName("gender")
+    private       GenderType     mGender;
     @SerializedName("gameStatus")
     private       GameStatus     mGameStatus;
     @SerializedName("indexed")
     private       boolean        mIndexed;
+    @SerializedName("leagueId")
+    private       String         mLeagueId;
     @SerializedName("leagueName")
     private       String         mLeagueName;
     @SerializedName("divisionName")
@@ -79,17 +87,21 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private transient java.util.Set<ScoreListener>   mScoreListeners;
     private transient java.util.Set<TeamListener>    mTeamListeners;
 
-    TimeBasedGame(final long gameDate, final long gameSchedule) {
+    TimeBasedGame(String id, String createdBy, long createdAt, long scheduledAt) {
         super();
-        mGameDate = gameDate;
-        mGameSchedule = gameSchedule;
-        mGenderType = GenderType.MIXED;
+        mId = id;
+        mCreatedBy = createdBy;
+        mCreatedAt = createdAt;
+        mUpdatedAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
+        mScheduledAt = scheduledAt;
+        mGender = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mIndexed = true;
+        mLeagueId = "";
         mLeagueName = "";
         mDivisionName = "";
-        mHomeTeam = new EmptyTeamDefinition(TeamType.HOME);
-        mGuestTeam = new EmptyTeamDefinition(TeamType.GUEST);
+        mHomeTeam = new EmptyTeamDefinition(createdBy, TeamType.HOME);
+        mGuestTeam = new EmptyTeamDefinition(createdBy, TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
         mTeamOnRightSide = TeamType.GUEST;
 
@@ -108,7 +120,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     // For GSON Deserialization
     public TimeBasedGame() {
-        this(0L, 0L);
+        this("", "", 0L, 0L);
     }
 
     @Override
@@ -166,6 +178,71 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     public void removeSanctionListener(SanctionListener listener) {}
 
     @Override
+    public String getId() {
+        return mId;
+    }
+
+    @Override
+    public String getCreatedBy() {
+        return mCreatedBy;
+    }
+
+    @Override
+    public long getCreatedAt() {
+        return mCreatedAt;
+    }
+
+    @Override
+    public long getUpdatedAt() {
+        return mUpdatedAt;
+    }
+
+    @Override
+    public void setUpdatedAt(long updatedAt) {
+        mUpdatedAt = updatedAt;
+    }
+
+    @Override
+    public long getScheduledAt() {
+        return mScheduledAt;
+    }
+
+    @Override
+    public String getRefereedBy() {
+        return mRefereedBy;
+    }
+
+    @Override
+    public void setRefereedBy(String refereedBy) {
+        mRefereedBy = refereedBy;
+    }
+
+    @Override
+    public String getRefereeName() {
+        return mRefereeName;
+    }
+
+    @Override
+    public void setRefereeName(String refereeName) {
+        mRefereeName = refereeName;
+    }
+
+    @Override
+    public GameType getKind() {
+        return GameType.TIME;
+    }
+
+    @Override
+    public String getLeagueId() {
+        return mLeagueId;
+    }
+
+    @Override
+    public void setLeagueId(String id) {
+        mLeagueId = id;
+    }
+
+    @Override
     public String getLeagueName() {
         return mLeagueName;
     }
@@ -200,6 +277,46 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public String getTeamId(TeamType teamType) {
+        return getTeamDefinition(teamType).getId();
+    }
+
+    @Override
+    public void setTeamId(TeamType teamType, String id) {
+        getTeamDefinition(teamType).setId(id);
+    }
+
+    @Override
+    public String getCreatedBy(TeamType teamType) {
+        return getTeamDefinition(teamType).getCreatedBy();
+    }
+
+    @Override
+    public void setCreatedBy(TeamType teamType, String createdBy) {
+        getTeamDefinition(teamType).setCreatedBy(createdBy);
+    }
+
+    @Override
+    public long getCreatedAt(TeamType teamType) {
+        return getTeamDefinition(teamType).getCreatedAt();
+    }
+
+    @Override
+    public void setCreatedAt(TeamType teamType, long createdAt) {
+        getTeamDefinition(teamType).setCreatedAt(createdAt);
+    }
+
+    @Override
+    public long getUpdatedAt(TeamType teamType) {
+        return getTeamDefinition(teamType).getUpdatedAt();
+    }
+
+    @Override
+    public void setUpdatedAt(TeamType teamType, long updatedAt) {
+        getTeamDefinition(teamType).setUpdatedAt(updatedAt);
+    }
+
+    @Override
     public GameType getTeamsKind() {
         return GameType.TIME;
     }
@@ -211,7 +328,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        return getTeamDefinition(teamType).getColor();
+        return getTeamDefinition(teamType).getColorInt();
     }
 
     @Override
@@ -221,7 +338,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public void setTeamColor(TeamType teamType, int color) {
-        getTeamDefinition(teamType).setColor(color);
+        getTeamDefinition(teamType).setColorInt(color);
     }
 
     @Override
@@ -241,30 +358,30 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public java.util.Set<Integer> getPlayers(TeamType teamType) {
+    public java.util.Set<ApiPlayer> getPlayers(TeamType teamType) {
         return new TreeSet<>();
     }
 
     @Override
     public GenderType getGender() {
-        return mGenderType;
+        return mGender;
     }
 
     @Override
     public GenderType getGender(TeamType teamType) {
-        return getTeamDefinition(teamType).getGenderType();
+        return getTeamDefinition(teamType).getGender();
     }
 
     @Override
-    public void setGender(GenderType genderType) {
-        mGenderType = genderType;
-        setGender(TeamType.HOME, genderType);
-        setGender(TeamType.GUEST, genderType);
+    public void setGender(GenderType gender) {
+        mGender = gender;
+        setGender(TeamType.HOME, gender);
+        setGender(TeamType.GUEST, gender);
     }
 
     @Override
-    public void setGender(TeamType teamType, GenderType genderType) {
-        getTeamDefinition(teamType).setGenderType(genderType);
+    public void setGender(TeamType teamType, GenderType gender) {
+        getTeamDefinition(teamType).setGender(gender);
     }
 
     @Override
@@ -297,17 +414,17 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public java.util.Set<Integer> getLiberos(TeamType teamType) {
+    public java.util.Set<ApiPlayer> getLiberos(TeamType teamType) {
         return new HashSet<>();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
@@ -322,18 +439,18 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public java.util.Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
-        return new HashSet<>();
+    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
+        return new ApiCourt();
     }
 
     @Override
     public PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex) {
-        return null;
+        return PositionType.BENCH;
     }
 
     @Override
     public int getPlayerAtPositionInStartingLineup(TeamType teamType, PositionType positionType, int setIndex) {
-        return 0;
+        return -1;
     }
 
     @Override
@@ -341,7 +458,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public int getCaptain(TeamType teamType) {
-        return 0;
+        return -1;
     }
 
     @Override
@@ -371,28 +488,13 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public List<Timeout> getCalledTimeouts(TeamType teamType) {
+    public List<ApiTimeout> getCalledTimeouts(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<Timeout> getCalledTimeouts(TeamType teamType, int setIndex) {
+    public List<ApiTimeout> getCalledTimeouts(TeamType teamType, int setIndex) {
         return new ArrayList<>();
-    }
-
-    @Override
-    public GameType getKind() {
-        return GameType.TIME;
-    }
-
-    @Override
-    public long getGameDate() {
-        return mGameDate;
-    }
-
-    @Override
-    public long getGameSchedule() {
-        return mGameSchedule;
     }
 
     @Override
@@ -754,7 +856,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {}
 
     @Override
-    public Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
+    public java.util.Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
         return new HashSet<>();
     }
 

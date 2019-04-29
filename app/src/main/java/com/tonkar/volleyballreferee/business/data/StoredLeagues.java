@@ -49,26 +49,28 @@ public class StoredLeagues implements StoredLeaguesService {
 
     @Override
     public void createAndSaveLeagueFrom(GameType kind, String leagueName, String divisionName) {
+        long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
+
         if (leagueName.trim().length() > 1 && AppDatabase.getInstance(mContext).leagueDao().countByNameAndKind(leagueName, kind.toString()) == 0) {
             ApiLeague league = getLeague(kind, leagueName);
             if (divisionName != null && divisionName.trim().length() > 1 && !league.getDivisions().contains(divisionName.trim())) {
                 league.getDivisions().add(divisionName);
-                league.setUpdatedAt(System.currentTimeMillis());
-                insertLeagueIntoDb(league, false);
+                league.setUpdatedAt(utcTime);
+                insertLeagueIntoDb(league, false, false);
             }
         } else {
             ApiLeague league = new ApiLeague();
             league.setId(UUID.randomUUID().toString());
             league.setCreatedBy(PrefUtils.getAuthentication(mContext).getUserId());
-            league.setCreatedAt(System.currentTimeMillis());
-            league.setUpdatedAt(System.currentTimeMillis());
+            league.setCreatedAt(utcTime);
+            league.setUpdatedAt(utcTime);
             league.setKind(kind);
             league.setName(leagueName);
             league.setDivisions(new ArrayList<>());
             if (divisionName != null && divisionName.trim().length() > 1) {
                 league.getDivisions().add(divisionName);
             }
-            insertLeagueIntoDb(league, false);
+            insertLeagueIntoDb(league, false, false);
         }
     }
 
@@ -89,8 +91,9 @@ public class StoredLeagues implements StoredLeaguesService {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.LEAGUE_LIST_TYPE);
     }
 
-    private void insertLeagueIntoDb(final ApiLeague apiLeague, boolean synced) {
-        new Thread() {
+    private void insertLeagueIntoDb(final ApiLeague apiLeague, boolean synced, boolean syncInsertion) {
+        Runnable runnable = new Runnable() {
+            @Override
             public void run() {
                 String json = writeLeague(apiLeague);
                 LeagueEntity leagueEntity = new LeagueEntity();
@@ -104,7 +107,13 @@ public class StoredLeagues implements StoredLeaguesService {
                 leagueEntity.setContent(json);
                 AppDatabase.getInstance(mContext).leagueDao().insert(leagueEntity);
             }
-        }.start();
+        };
+
+        if (syncInsertion) {
+            runnable.run();
+        } else {
+            new Thread(runnable).start();
+        }
     }
 
     private void deleteLeagueFromDb(final String id) {
@@ -148,13 +157,19 @@ public class StoredLeagues implements StoredLeaguesService {
     private void syncLeagues(List<ApiLeague> remoteLeagueList, DataSynchronizationListener listener) {
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
         List<ApiLeague> localLeagueList = listLeagues();
+        boolean afterPurchase = false;
 
         // User purchased web services, write his user id
         for (ApiLeague localLeague : localLeagueList) {
             if (localLeague.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
                 localLeague.setCreatedBy(userId);
-                insertLeagueIntoDb(localLeague, false);
+                insertLeagueIntoDb(localLeague, false, true);
+                afterPurchase = true;
             }
+        }
+
+        if (afterPurchase) {
+            localLeagueList = listLeagues();
         }
 
         for (ApiLeague localLeague : localLeagueList) {
@@ -163,7 +178,7 @@ public class StoredLeagues implements StoredLeaguesService {
             for (ApiLeague remoteLeague : remoteLeagueList) {
                 if (localLeague.getId().equals(remoteLeague.getId())) {
                     foundRemoteVersion = true;
-                    insertLeagueIntoDb(remoteLeague, true);
+                    insertLeagueIntoDb(remoteLeague, true, true);
                 }
             }
 
@@ -188,7 +203,7 @@ public class StoredLeagues implements StoredLeaguesService {
             }
 
             if (!foundLocalVersion) {
-                insertLeagueIntoDb(remoteLeague, true);
+                insertLeagueIntoDb(remoteLeague, true, true);
             }
         }
 
@@ -199,11 +214,10 @@ public class StoredLeagues implements StoredLeaguesService {
 
     private void pushLeagueToServer(final ApiLeague league) {
         if (PrefUtils.isSyncOn(mContext)) {
-            final Authentication authentication = PrefUtils.getAuthentication(mContext);
             final byte[] bytes = writeLeague(league).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.LEAGUES_API_URL, bytes, authentication,
-                    response -> insertLeagueIntoDb(league, true),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.LEAGUES_API_URL, bytes, PrefUtils.getAuthentication(mContext),
+                    response -> insertLeagueIntoDb(league, true, false),
                     error -> {
                         if (error.networkResponse != null) {
                             Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while creating league", error.networkResponse.statusCode));

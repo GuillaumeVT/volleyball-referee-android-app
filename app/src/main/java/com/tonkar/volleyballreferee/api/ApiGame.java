@@ -68,9 +68,9 @@ public class ApiGame {
     public ApiGame() {
         id = UUID.randomUUID().toString();
         createdBy = Authentication.VBR_USER_ID;
-        createdAt = System.currentTimeMillis();
-        updatedAt = System.currentTimeMillis();
-        scheduledAt = System.currentTimeMillis();
+        createdAt = 0L;
+        updatedAt = 0L;
+        scheduledAt = 0L;
         refereedBy = Authentication.VBR_USER_ID;
         refereeName = "";
         kind = GameType.INDOOR;

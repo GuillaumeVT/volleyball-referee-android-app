@@ -3,9 +3,10 @@ package com.tonkar.volleyballreferee.business.team;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.SubstitutionsLimitation;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 
@@ -28,7 +29,7 @@ public class IndoorTeamComposition extends TeamComposition {
     @SerializedName("maxSubstitutionsPerSet")
     private final int                     mMaxSubstitutionsPerSet;
     @SerializedName("substitutions")
-    private final List<Substitution>      mSubstitutions;
+    private final List<ApiSubstitution>   mSubstitutions;
     @SerializedName("actingLibero")
     private       int                     mActingLibero;
     @SerializedName("middleBlockers")
@@ -112,7 +113,7 @@ public class IndoorTeamComposition extends TeamComposition {
                 mWaitingMiddleBlocker = -1;
             } else {
                 Log.i(Tags.TEAM, "Actual substitution");
-                mSubstitutions.add(new Substitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
+                mSubstitutions.add(new ApiSubstitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
                 if (isMiddleBlocker(oldNumber)) {
                     Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, indoorTeamDefinition().getTeamType().toString()));
@@ -196,7 +197,9 @@ public class IndoorTeamComposition extends TeamComposition {
                 }
                 // If no libero is on the court, they can replace the player if he is at the back
                 if (!hasLiberoOnCourt() && positionType.isAtTheBack()) {
-                    availablePlayers.addAll(indoorTeamDefinition().getLiberos());
+                    for (ApiPlayer player : indoorTeamDefinition().getLiberos()) {
+                        availablePlayers.add(player.getNum());
+                    }
                 }
             }
         } else {
@@ -239,9 +242,9 @@ public class IndoorTeamComposition extends TeamComposition {
     private List<Integer> getFreePlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
-        for (int number : indoorTeamDefinition().getPlayers()) {
-            if (PositionType.BENCH.equals(getPlayerPosition(number)) && !isInvolvedInPastSubstitution(number) && !indoorTeamDefinition().isLibero(number)) {
-                players.add(number);
+        for (ApiPlayer player : indoorTeamDefinition().getPlayers()) {
+            if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(player.getNum()) && !indoorTeamDefinition().isLibero(player.getNum())) {
+                players.add(player.getNum());
             }
         }
 
@@ -251,8 +254,8 @@ public class IndoorTeamComposition extends TeamComposition {
     private boolean hasLiberoOnCourt() {
         boolean result = false;
 
-        for (int number : indoorTeamDefinition().getLiberos()) {
-            if (!PositionType.BENCH.equals(getPlayerPosition(number))) {
+        for (ApiPlayer player : indoorTeamDefinition().getLiberos()) {
+            if (!PositionType.BENCH.equals(getPlayerPosition(player.getNum()))) {
                 result = true;
             }
         }
@@ -271,9 +274,9 @@ public class IndoorTeamComposition extends TeamComposition {
     private int getSecondLibero() {
         int secondLibero = -1;
 
-        for (int number : indoorTeamDefinition().getLiberos()) {
-            if (number != mActingLibero) {
-                secondLibero = number;
+        for (ApiPlayer player : indoorTeamDefinition().getLiberos()) {
+            if (player.getNum() != mActingLibero) {
+                secondLibero = player.getNum();
             }
         }
 
@@ -329,7 +332,7 @@ public class IndoorTeamComposition extends TeamComposition {
         return liberoNumber;
     }
 
-    public List<Substitution> getSubstitutions() {
+    public List<ApiSubstitution> getSubstitutions() {
         return new ArrayList<>(mSubstitutions);
     }
 

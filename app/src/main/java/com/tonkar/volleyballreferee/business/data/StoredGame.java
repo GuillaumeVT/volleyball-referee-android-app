@@ -38,11 +38,6 @@ public class StoredGame extends ApiGame implements StoredGameService {
     }
 
     @Override
-    public String geId() {
-        return super.getId();
-    }
-
-    @Override
     public int getNumberOfSets() {
         return getSets().size();
     }
@@ -144,7 +139,7 @@ public class StoredGame extends ApiGame implements StoredGameService {
     }
 
     @Override
-    public void setCreatedBy(TeamType teamType, String userId) {}
+    public void setCreatedBy(TeamType teamType, String createdBy) {}
 
     @Override
     public long getCreatedAt(TeamType teamType) {

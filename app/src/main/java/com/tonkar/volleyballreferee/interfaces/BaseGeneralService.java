@@ -6,7 +6,7 @@ public interface BaseGeneralService {
 
     GameType getKind();
 
-    String geId();
+    String getId();
 
     String getCreatedBy();
 
@@ -20,7 +20,11 @@ public interface BaseGeneralService {
 
     String getRefereedBy();
 
+    void setRefereedBy(String refereedBy);
+
     String getRefereeName();
+
+    void setRefereeName(String refereeName);
 
     GameStatus getMatchStatus();
 

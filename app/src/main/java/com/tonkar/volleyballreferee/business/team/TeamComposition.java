@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.business.team;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 
@@ -25,8 +26,8 @@ public abstract class TeamComposition {
         mTeamDefinition = teamDefinition;
         mPlayers = new LinkedHashMap<>();
 
-        for (int number : mTeamDefinition.getPlayers()) {
-            mPlayers.put(number, createPlayer(number));
+        for (ApiPlayer player : mTeamDefinition.getPlayers()) {
+            mPlayers.put(player.getNum(), createPlayer(player.getNum()));
         }
     }
 

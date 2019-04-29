@@ -3,20 +3,19 @@ package com.tonkar.volleyballreferee.business.game;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiSanction;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GeneralListener;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.business.rules.Rules;
@@ -30,42 +29,54 @@ import java.util.Locale;
 
 public abstract class Game extends BaseGame {
 
-    @SerializedName("usageType")
-    private       UsageType      mUsageType;
-    @SerializedName("gameType")
-    private final GameType       mGameType;
-    @SerializedName("gameDate")
-    private final long           mGameDate;
-    @SerializedName("gameSchedule")
-    private       long           mGameSchedule;
-    @SerializedName("genderType")
-    private       GenderType     mGenderType;
-    @SerializedName("rules")
-    private final Rules          mRules;
-    @SerializedName("gameStatus")
-    private       GameStatus     mGameStatus;
+    @SerializedName("id")
+    private       String            mId;
+    @SerializedName("createdBy")
+    private       String            mCreatedBy;
+    @SerializedName("createdAt")
+    private       long              mCreatedAt;
+    @SerializedName("updatedAt")
+    private       long              mUpdatedAt;
+    @SerializedName("scheduledAt")
+    private       long              mScheduledAt;
+    @SerializedName("refereedBy")
+    private       String            mRefereedBy;
+    @SerializedName("refereeName")
+    private       String            mRefereeName;
+    @SerializedName("kind")
+    private       GameType          mKind;
+    @SerializedName("gender")
+    private       GenderType        mGender;
+    @SerializedName("usage")
+    private       UsageType         mUsage;
+    @SerializedName("status")
+    private       GameStatus        mGameStatus;
     @SerializedName("indexed")
-    private       boolean        mIndexed;
+    private       boolean           mIndexed;
+    @SerializedName("rules")
+    private final Rules             mRules;
+    @SerializedName("leagueId")
+    private       String            mLeagueId;
     @SerializedName("leagueName")
-    private       String         mLeagueName;
+    private       String            mLeagueName;
     @SerializedName("divisionName")
-    private       String         mDivisionName;
+    private       String            mDivisionName;
     @SerializedName("homeTeam")
-    private final TeamDefinition mHomeTeam;
+    private final TeamDefinition    mHomeTeam;
     @SerializedName("guestTeam")
-    private final TeamDefinition mGuestTeam;
+    private final TeamDefinition    mGuestTeam;
     @SerializedName("teamOnLeftSide")
-    private       TeamType       mTeamOnLeftSide;
+    private       TeamType          mTeamOnLeftSide;
     @SerializedName("teamOnRightSide")
-    private       TeamType       mTeamOnRightSide;
+    private       TeamType          mTeamOnRightSide;
     @SerializedName("sets")
-    private final List<Set>      mSets;
+    private final List<Set>         mSets;
     @SerializedName("servingTeamAtStart")
-    private       TeamType       mServingTeamAtStart;
+    private       TeamType          mServingTeamAtStart;
     @SerializedName("homeTeamCards")
-    private final List<Sanction> mHomeTeamSanctions;
+    private final List<ApiSanction> mHomeTeamSanctions;
     @SerializedName("guestTeamCards")
-    private final List<Sanction> mGuestTeamSanctions;
+    private final List<ApiSanction> mGuestTeamSanctions;
 
     private transient boolean mEnableNotifications;
 
@@ -75,10 +86,10 @@ public abstract class Game extends BaseGame {
     private transient java.util.Set<TeamListener>     mTeamListeners;
     private transient java.util.Set<SanctionListener> mSanctionListeners;
 
-    protected Game(final GameType gameType, final long gameDate, final long gameSchedule, final Rules rules) {
+    protected Game(final GameType kind, final long gameDate, final long gameSchedule, final Rules rules) {
         super();
         mUsageType = UsageType.NORMAL;
-        mGameType = gameType;
+        mGameType = kind;
         mGameDate = gameDate;
         mGameSchedule = gameSchedule;
         mRules = rules;
@@ -157,13 +168,18 @@ public abstract class Game extends BaseGame {
     // General
 
     @Override
+    public String getId() {
+        return mId;
+    }
+
+    @Override
     public Rules getRules() {
         return mRules;
     }
 
     @Override
     public GameType getKind() {
-        return mGameType;
+        return mKind;
     }
 
     @Override

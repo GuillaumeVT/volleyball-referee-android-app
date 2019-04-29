@@ -21,23 +21,30 @@ public class Authentication {
     }
 
     private final String   mUserId;
+    private final String   mUserPseudo;
     private final String   mToken;
     private final Provider mProvider;
 
-    private Authentication(String socialId, Provider provider, String token) {
+    private Authentication(String socialId, Provider provider, String pseudo, String token) {
         mUserId = userIdOf(socialId, provider);
+        mUserPseudo = pseudo;
         mToken = token;
         mProvider = provider;
     }
 
-    private Authentication(String userId, String token) {
+    private Authentication(String userId, String pseudo, String token) {
         mUserId = userId;
+        mUserPseudo = pseudo;
         mToken = token;
         mProvider = providerOf(userId);
     }
 
     public String getUserId() {
         return mUserId;
+    }
+
+    public String getUserPseudo() {
+        return mUserPseudo;
     }
 
     public String getToken() {
@@ -72,11 +79,11 @@ public class Authentication {
         return userId.contains(Provider.FACEBOOK.toString());
     }
 
-    public static Authentication of(String socialId, Provider provider, String token) {
-        return new Authentication(socialId, provider, token);
+    public static Authentication of(String socialId, Provider provider, String pseudo, String token) {
+        return new Authentication(socialId, provider, pseudo, token);
     }
 
-    public static Authentication of(String userId, String token) {
-        return new Authentication(userId, token);
+    public static Authentication of(String userId, String pseudo, String token) {
+        return new Authentication(userId, pseudo, token);
     }
 }

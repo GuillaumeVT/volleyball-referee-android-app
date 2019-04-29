@@ -9,11 +9,11 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
+import java.util.Calendar;
 import java.util.Set;
+import java.util.TimeZone;
 
 public abstract class TeamDefinition extends ApiTeam {
-
-    public static final String DEFAULT_COLOR = "#633303";
 
     @SerializedName("classType")
     private       String   mClassType;
@@ -26,6 +26,9 @@ public abstract class TeamDefinition extends ApiTeam {
         mTeamType = teamType;
         setCreatedBy(createdBy);
         setKind(gameType);
+        long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
+        setCreatedAt(utcTime);
+        setUpdatedAt(utcTime);
     }
 
     public TeamType getTeamType() {

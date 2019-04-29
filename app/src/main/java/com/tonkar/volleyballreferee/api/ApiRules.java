@@ -65,8 +65,8 @@ public class ApiRules {
     public ApiRules() {
         id = UUID.randomUUID().toString();
         createdBy = Authentication.VBR_USER_ID;
-        createdAt = System.currentTimeMillis();
-        updatedAt = System.currentTimeMillis();
+        createdAt = 0L;
+        updatedAt = 0L;
         kind = GameType.INDOOR;
         name = "";
         setsPerGame = 0;

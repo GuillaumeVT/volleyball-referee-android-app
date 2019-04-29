@@ -16,7 +16,7 @@ public interface BaseTeamService {
 
     String getCreatedBy(TeamType teamType);
 
-    void setCreatedBy(TeamType teamType, String userId);
+    void setCreatedBy(TeamType teamType, String createdBy);
 
     long getCreatedAt(TeamType teamType);
 

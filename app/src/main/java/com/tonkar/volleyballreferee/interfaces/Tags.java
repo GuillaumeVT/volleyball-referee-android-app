@@ -9,6 +9,7 @@ public class Tags {
     public static final String STORED_RULES   = "V-StoredRules";
     public static final String STORED_TEAMS   = "V-StoredTeams";
     public static final String STORED_LEAGUES = "V-StoredLeagues";
+    public static final String STORED_USER    = "V-StoredUser";
     public static final String SCORE_SHEET    = "V-ScoreSheet";
     public static final String SCORE          = "V-Score";
     public static final String TEAM           = "V-Team";
