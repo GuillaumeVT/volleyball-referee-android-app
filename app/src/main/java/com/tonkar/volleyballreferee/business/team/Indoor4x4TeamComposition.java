@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.business.team;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiCourt;
 import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -21,7 +22,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     @SerializedName("startingLineupConfirmed")
     private       boolean               mStartingLineupConfirmed;
     @SerializedName("startingLineup")
-    private final Map<Integer, Player>  mStartingLineup;
+    private final ApiCourt              mStartingLineup;
     @SerializedName("maxSubstitutionsPerSet")
     private final int                   mMaxSubstitutionsPerSet;
     @SerializedName("substitutions")
@@ -39,7 +40,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         super(teamDefinition);
 
         mStartingLineupConfirmed = false;
-        mStartingLineup = new LinkedHashMap<>();
+        mStartingLineup = new ApiCourt();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
         mSubstitutions = new LinkedHashMap<>();
         mFullSubstitutions = new ArrayList<>();
@@ -97,11 +98,8 @@ public class Indoor4x4TeamComposition extends TeamComposition {
 
     public void confirmStartingLineup() {
         mStartingLineupConfirmed = true;
-
-        for (int number : getPlayersOnCourt()) {
-            Player player = createPlayer(number);
-            player.setPosition(getPlayerPosition(number));
-            mStartingLineup.put(number, player);
+        for (PositionType position : PositionType.listPositions(getTeamDefinition().getKind())) {
+            mStartingLineup.setPlayerAt(getPlayerAtPosition(position), position);
         }
 
         if (!PositionType.BENCH.equals(getPlayerPosition(indoorTeamDefinition().getCaptain()))) {
@@ -179,23 +177,16 @@ public class Indoor4x4TeamComposition extends TeamComposition {
         return new ArrayList<>(mFullSubstitutions);
     }
 
-    public Set<Integer> getPlayersInStartingLineup() {
-        return mStartingLineup.keySet();
+    public ApiCourt getStartingLineup() {
+        return mStartingLineup;
     }
 
     public PositionType getPlayerPositionInStartingLineup(int number) {
-        return mStartingLineup.get(number).getPosition();
+        return mStartingLineup.getPositionOf(number);
     }
 
     public int getPlayerAtPositionInStartingLineup(PositionType positionType) {
-        int number = -1;
-
-        for (Player player : mStartingLineup.values()) {
-            if (positionType.equals(player.getPosition())) {
-                number = player.getNumber();
-            }
-        }
-        return number;
+        return mStartingLineup.getPlayerAt(positionType);
     }
 
     public int getActingCaptain() {

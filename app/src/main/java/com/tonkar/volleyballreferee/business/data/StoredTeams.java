@@ -66,22 +66,24 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     private WrappedTeam createWrappedTeam(GameType kind) {
+        String id = UUID.randomUUID().toString();
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
+
         TeamDefinition teamDefinition;
 
         switch (kind) {
             case INDOOR:
-                teamDefinition = new IndoorTeamDefinition(userId, kind, TeamType.HOME);
+                teamDefinition = new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
                 break;
             case INDOOR_4X4:
-                teamDefinition = new IndoorTeamDefinition(userId, kind, TeamType.HOME);
+                teamDefinition = new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
                 break;
             case BEACH:
-                teamDefinition = new BeachTeamDefinition(userId, TeamType.HOME);
+                teamDefinition = new BeachTeamDefinition(id, userId, TeamType.HOME);
                 break;
             case TIME:
             default:
-                teamDefinition = new EmptyTeamDefinition(userId, TeamType.HOME);
+                teamDefinition = new EmptyTeamDefinition(id, userId, TeamType.HOME);
                 break;
         }
 
@@ -328,6 +330,7 @@ public class StoredTeams implements StoredTeamsService {
             if (localTeam.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
                 ApiTeam team = getTeam(localTeam.getId());
                 team.setCreatedBy(userId);
+                team.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 insertTeamIntoDb(team, false, true);
                 afterPurchase = true;
             }

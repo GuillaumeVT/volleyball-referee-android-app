@@ -20,15 +20,17 @@ public abstract class TeamDefinition extends ApiTeam {
     @SerializedName("team")
     private final TeamType mTeamType;
 
-    public TeamDefinition(final String createdBy, final GameType gameType, final TeamType teamType) {
+    public TeamDefinition(GameType kind, String id, String createdBy, TeamType teamType) {
         super();
         mClassType = getClass().getName();
         mTeamType = teamType;
+        setKind(kind);
+        setId(id);
         setCreatedBy(createdBy);
-        setKind(gameType);
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
         setCreatedAt(utcTime);
         setUpdatedAt(utcTime);
+        setName("");
     }
 
     public TeamType getTeamType() {

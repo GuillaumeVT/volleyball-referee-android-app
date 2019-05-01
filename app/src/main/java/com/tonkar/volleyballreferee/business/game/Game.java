@@ -3,7 +3,9 @@ package com.tonkar.volleyballreferee.business.game;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.api.ApiSanction;
+import com.tonkar.volleyballreferee.api.ApiTimeout;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
@@ -22,19 +24,16 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public abstract class Game extends BaseGame {
 
     @SerializedName("id")
-    private       String            mId;
+    private final String            mId;
     @SerializedName("createdBy")
-    private       String            mCreatedBy;
+    private final String            mCreatedBy;
     @SerializedName("createdAt")
-    private       long              mCreatedAt;
+    private final long              mCreatedAt;
     @SerializedName("updatedAt")
     private       long              mUpdatedAt;
     @SerializedName("scheduledAt")
@@ -44,7 +43,7 @@ public abstract class Game extends BaseGame {
     @SerializedName("refereeName")
     private       String            mRefereeName;
     @SerializedName("kind")
-    private       GameType          mKind;
+    private final GameType          mKind;
     @SerializedName("gender")
     private       GenderType        mGender;
     @SerializedName("usage")
@@ -86,16 +85,22 @@ public abstract class Game extends BaseGame {
     private transient java.util.Set<TeamListener>     mTeamListeners;
     private transient java.util.Set<SanctionListener> mSanctionListeners;
 
-    protected Game(final GameType kind, final long gameDate, final long gameSchedule, final Rules rules) {
+    protected Game(GameType kind, String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         super();
-        mUsageType = UsageType.NORMAL;
-        mGameType = kind;
-        mGameDate = gameDate;
-        mGameSchedule = gameSchedule;
-        mRules = rules;
-        mGenderType = GenderType.MIXED;
+        mId = id;
+        mCreatedBy = createdBy;
+        mCreatedAt = createdAt;
+        mUpdatedAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
+        mScheduledAt = scheduledAt;
+        mRefereedBy = createdBy;
+        mRefereeName = refereeName;
+        mKind = kind;
+        mGender = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
+        mUsage = UsageType.NORMAL;
+        mRules = rules;
         mIndexed = true;
+        mLeagueId = "";
         mLeagueName = "";
         mDivisionName = "";
         mHomeTeam = createTeamDefinition(TeamType.HOME);
@@ -173,8 +178,48 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public Rules getRules() {
-        return mRules;
+    public String getCreatedBy() {
+        return mCreatedBy;
+    }
+
+    @Override
+    public long getCreatedAt() {
+        return mCreatedAt;
+    }
+
+    @Override
+    public long getUpdatedAt() {
+        return mUpdatedAt;
+    }
+
+    @Override
+    public void setUpdatedAt(long updatedAt) {
+        mUpdatedAt = updatedAt;
+    }
+
+    @Override
+    public long getScheduledAt() {
+        return mScheduledAt;
+    }
+
+    @Override
+    public String getRefereedBy() {
+        return mRefereedBy;
+    }
+
+    @Override
+    public void setRefereedBy(String refereedBy) {
+        mRefereedBy = refereedBy;
+    }
+
+    @Override
+    public String getRefereeName() {
+        return mRefereeName;
+    }
+
+    @Override
+    public void setRefereeName(String refereeName) {
+        mRefereeName = refereeName;
     }
 
     @Override
@@ -183,18 +228,53 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public long getGameDate() {
-        return mGameDate;
-    }
-
-    @Override
-    public long getGameSchedule() {
-        return mGameSchedule;
-    }
-
-    @Override
     public GameStatus getMatchStatus() {
         return mGameStatus;
+    }
+
+    @Override
+    public UsageType getUsage() {
+        return mUsage;
+    }
+
+    @Override
+    public void setUsage(UsageType usage) {
+        mUsage = usage;
+    }
+
+    @Override
+    public String getLeagueId() {
+        return mLeagueId;
+    }
+
+    @Override
+    public void setLeagueId(String id) {
+        mLeagueId = id;
+    }
+
+    @Override
+    public String getLeagueName() {
+        return mLeagueName;
+    }
+
+    @Override
+    public void setLeagueName(String name) {
+        mLeagueName = name;
+    }
+
+    @Override
+    public String getDivisionName() {
+        return mDivisionName;
+    }
+
+    @Override
+    public void setDivisionName(String name) {
+        mDivisionName = name;
+    }
+
+    @Override
+    public Rules getRules() {
+        return mRules;
     }
 
     @Override
@@ -218,14 +298,16 @@ public abstract class Game extends BaseGame {
         GenderType guestGender = getGender(TeamType.GUEST);
 
         if (homeGender.equals(guestGender)) {
-            mGenderType = homeGender;
+            mGender = homeGender;
         } else {
-            mGenderType = GenderType.MIXED;
+            mGender = GenderType.MIXED;
         }
 
-        if (mGameSchedule == 0L) {
-            mGameSchedule = System.currentTimeMillis();
+        if (mScheduledAt== 0L) {
+            mScheduledAt = System.currentTimeMillis();
         }
+
+        mUpdatedAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
         mSets.add(createSet(mRules, mRules.getPointsPerSet(), mServingTeamAtStart));
         mGameStatus = GameStatus.LIVE;
@@ -424,7 +506,7 @@ public abstract class Game extends BaseGame {
                 swapServiceAtStart();
             }
 
-            if (mRules.areGameIntervalsEnabled()) {
+            if (mRules.isGameIntervals()) {
                 notifyGameIntervalReached();
             }
 
@@ -527,26 +609,6 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public String getLeagueName() {
-        return mLeagueName;
-    }
-
-    @Override
-    public void setLeagueName(String name) {
-        mLeagueName = name;
-    }
-
-    @Override
-    public String getDivisionName() {
-        return mDivisionName;
-    }
-
-    @Override
-    public void setDivisionName(String name) {
-        mDivisionName = name;
-    }
-
-    @Override
     public boolean isIndexed() {
         return mIndexed;
     }
@@ -561,8 +623,48 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public String getTeamId(TeamType teamType) {
+        return getTeamDefinition(teamType).getId();
+    }
+
+    @Override
+    public void setTeamId(TeamType teamType, String id) {
+        getTeamDefinition(teamType).setId(id);
+    }
+
+    @Override
+    public String getCreatedBy(TeamType teamType) {
+        return getTeamDefinition(teamType).getCreatedBy();
+    }
+
+    @Override
+    public void setCreatedBy(TeamType teamType, String createdBy) {
+        getTeamDefinition(teamType).setCreatedBy(createdBy);
+    }
+
+    @Override
+    public long getCreatedAt(TeamType teamType) {
+        return getTeamDefinition(teamType).getCreatedAt();
+    }
+
+    @Override
+    public void setCreatedAt(TeamType teamType, long createdAt) {
+        getTeamDefinition(teamType).setCreatedAt(createdAt);
+    }
+
+    @Override
+    public long getUpdatedAt(TeamType teamType) {
+        return getTeamDefinition(teamType).getUpdatedAt();
+    }
+
+    @Override
+    public void setUpdatedAt(TeamType teamType, long updatedAt) {
+        getTeamDefinition(teamType).setUpdatedAt(updatedAt);
+    }
+
+    @Override
     public GameType getTeamsKind() {
-        return mGameType;
+        return mKind;
     }
 
     @Override
@@ -577,12 +679,12 @@ public abstract class Game extends BaseGame {
 
     @Override
     public int getTeamColor(TeamType teamType) {
-        return getTeamDefinition(teamType).getColor();
+        return getTeamDefinition(teamType).getColorInt();
     }
 
     @Override
     public void setTeamColor(TeamType teamType, int color) {
-        getTeamDefinition(teamType).setColor(color);
+        getTeamDefinition(teamType).setColorInt(color);
     }
 
     @Override
@@ -601,30 +703,30 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public java.util.Set<Integer> getPlayers(TeamType teamType) {
-        return getTeamDefinition(teamType).getPlayers();
+    public java.util.Set<ApiPlayer> getPlayers(TeamType teamType) {
+        return new TreeSet<>(getTeamDefinition(teamType).getPlayers());
     }
 
     @Override
     public GenderType getGender() {
-        return mGenderType;
+        return mGender;
     }
 
     @Override
     public GenderType getGender(TeamType teamType) {
-        return getTeamDefinition(teamType).getGenderType();
+        return getTeamDefinition(teamType).getGender();
     }
 
     @Override
-    public void setGender(GenderType genderType) {
-        mGenderType = genderType;
-        setGender(TeamType.HOME, genderType);
-        setGender(TeamType.GUEST, genderType);
+    public void setGender(GenderType gender) {
+        mGender = gender;
+        setGender(TeamType.HOME, gender);
+        setGender(TeamType.GUEST, gender);
     }
 
     @Override
-    public void setGender(TeamType teamType, GenderType genderType) {
-        getTeamDefinition(teamType).setGenderType(genderType);
+    public void setGender(TeamType teamType, GenderType gender) {
+        getTeamDefinition(teamType).setGender(gender);
     }
 
     @Override
@@ -693,11 +795,6 @@ public abstract class Game extends BaseGame {
         return mTeamOnRightSide;
     }
 
-    @Override
-    public UsageType getUsage() {
-        return mUsageType;
-    }
-
     void rotateToNextPositions(TeamType teamType) {
         Log.i(Tags.TEAM, String.format("Rotate all players of %s team to next position", teamType.toString()));
         currentSet().getTeamComposition(teamType).rotateToNextPositions();
@@ -758,13 +855,13 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<Timeout> getCalledTimeouts(TeamType teamType) {
+    public List<ApiTimeout> getCalledTimeouts(TeamType teamType) {
         return currentSet().getCalledTimeouts(teamType);
     }
 
     @Override
-    public List<Timeout> getCalledTimeouts(TeamType teamType, int setIndex) {
-        List<Timeout> timeouts = new ArrayList<>();
+    public List<ApiTimeout> getCalledTimeouts(TeamType teamType, int setIndex) {
+        List<ApiTimeout> timeouts = new ArrayList<>();
         Set set = mSets.get(setIndex);
 
         if (set != null) {
@@ -778,7 +875,7 @@ public abstract class Game extends BaseGame {
     public void callTimeout(final TeamType teamType) {
         final int oldCount = currentSet().getRemainingTimeouts(teamType);
 
-        if (mRules.areTeamTimeoutsEnabled() && oldCount > 0) {
+        if (mRules.isTeamTimeouts() && oldCount > 0) {
             final int newCount = currentSet().removeTimeout(teamType);
 
             notifyTimeoutUpdated(teamType, mRules.getTeamTimeoutsPerSet(), newCount);
@@ -816,7 +913,7 @@ public abstract class Game extends BaseGame {
 
     @Override
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        Sanction sanction = new Sanction(number, sanctionType, currentSetIndex(), getPoints(TeamType.HOME), getPoints(TeamType.GUEST));
+        ApiSanction sanction = new ApiSanction(sanctionType, number, currentSetIndex(), getPoints(TeamType.HOME), getPoints(TeamType.GUEST));
         if (TeamType.HOME.equals(teamType)) {
             mHomeTeamSanctions.add(sanction);
         } else {
@@ -838,8 +935,8 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<Sanction> getGivenSanctions(TeamType teamType) {
-        List<Sanction> sanctions;
+    public List<ApiSanction> getGivenSanctions(TeamType teamType) {
+        List<ApiSanction> sanctions;
 
         if (TeamType.HOME.equals(teamType)) {
             sanctions = new ArrayList<>(mHomeTeamSanctions);
@@ -851,11 +948,11 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<Sanction> getGivenSanctions(TeamType teamType, int setIndex) {
-        List<Sanction> sanctionsForSet = new ArrayList<>();
+    public List<ApiSanction> getGivenSanctions(TeamType teamType, int setIndex) {
+        List<ApiSanction> sanctionsForSet = new ArrayList<>();
 
-        for (Sanction sanction : getGivenSanctions(teamType)) {
-            if (sanction.getSetIndex() == setIndex) {
+        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+            if (sanction.getSet() == setIndex) {
                 sanctionsForSet.add(sanction);
             }
         }
@@ -864,11 +961,11 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<Sanction> getSanctions(TeamType teamType, int number) {
-        List<Sanction> sanctionsForPlayer = new ArrayList<>();
+    public List<ApiSanction> getSanctions(TeamType teamType, int number) {
+        List<ApiSanction> sanctionsForPlayer = new ArrayList<>();
 
-        for (Sanction sanction : getGivenSanctions(teamType)) {
-            if (sanction.getPlayer() == number) {
+        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+            if (sanction.getNum() == number) {
                 sanctionsForPlayer.add(sanction);
             }
         }
@@ -885,14 +982,14 @@ public abstract class Game extends BaseGame {
     public java.util.Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
         java.util.Set<Integer> players = new HashSet<>();
 
-        List<Sanction> sanctionsForSet = getGivenSanctions(teamType);
+        List<ApiSanction> sanctionsForSet = getGivenSanctions(teamType);
         int currentSetIndex = currentSetIndex();
 
-        for (Sanction sanction : sanctionsForSet) {
-            if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getSanctionType())) {
-                players.add(sanction.getPlayer());
-            } else if (SanctionType.RED_EXPULSION.equals(sanction.getSanctionType()) && sanction.getSetIndex() == currentSetIndex) {
-                players.add(sanction.getPlayer());
+        for (ApiSanction sanction : sanctionsForSet) {
+            if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getCard())) {
+                players.add(sanction.getNum());
+            } else if (SanctionType.RED_EXPULSION.equals(sanction.getCard()) && sanction.getSet() == currentSetIndex) {
+                players.add(sanction.getNum());
             }
         }
 
@@ -902,11 +999,11 @@ public abstract class Game extends BaseGame {
     @Override
     public SanctionType getMostSeriousSanction(TeamType teamType, int number) {
         SanctionType sanctionType = SanctionType.YELLOW;
-        List<Sanction> sanctions = getSanctions(teamType, number);
+        List<ApiSanction> sanctions = getSanctions(teamType, number);
 
-        for (Sanction sanction: sanctions) {
-            if (sanction.getSanctionType().seriousness() > sanctionType.seriousness()) {
-                sanctionType = sanction.getSanctionType();
+        for (ApiSanction sanction: sanctions) {
+            if (sanction.getCard().seriousness() > sanctionType.seriousness()) {
+                sanctionType = sanction.getCard();
             }
         }
 
@@ -976,11 +1073,6 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public void setUsage(UsageType usageType) {
-        mUsageType = usageType;
-    }
-
-    @Override
     public boolean areNotificationsEnabled() {
         return mEnableNotifications;
     }
@@ -1011,20 +1103,28 @@ public abstract class Game extends BaseGame {
 
     @Override
     public void restoreTeams(StoredGameService storedGameService) {
+        setTeamId(TeamType.HOME, storedGameService.getTeamId(TeamType.HOME));
+        setCreatedBy(TeamType.HOME, storedGameService.getCreatedBy(TeamType.HOME));
+        setCreatedAt(TeamType.HOME, storedGameService.getCreatedAt(TeamType.HOME));
+        setUpdatedAt(TeamType.HOME, storedGameService.getUpdatedAt(TeamType.HOME));
         setTeamName(TeamType.HOME, storedGameService.getTeamName(TeamType.HOME));
         setTeamColor(TeamType.HOME, storedGameService.getTeamColor(TeamType.HOME));
         setGender(TeamType.HOME, storedGameService.getGender(TeamType.HOME));
 
-        for (int number : storedGameService.getPlayers(TeamType.HOME))  {
-            addPlayer(TeamType.HOME, number);
+        for (ApiPlayer player : storedGameService.getPlayers(TeamType.HOME))  {
+            addPlayer(TeamType.HOME, player.getNum());
         }
 
+        setTeamId(TeamType.GUEST, storedGameService.getTeamId(TeamType.GUEST));
+        setCreatedBy(TeamType.GUEST, storedGameService.getCreatedBy(TeamType.GUEST));
+        setCreatedAt(TeamType.GUEST, storedGameService.getCreatedAt(TeamType.GUEST));
+        setUpdatedAt(TeamType.GUEST, storedGameService.getUpdatedAt(TeamType.GUEST));
         setTeamName(TeamType.GUEST, storedGameService.getTeamName(TeamType.GUEST));
         setTeamColor(TeamType.GUEST, storedGameService.getTeamColor(TeamType.GUEST));
         setGender(TeamType.GUEST, storedGameService.getGender(TeamType.GUEST));
 
-        for (int number : storedGameService.getPlayers(TeamType.GUEST))  {
-            addPlayer(TeamType.GUEST, number);
+        for (ApiPlayer player : storedGameService.getPlayers(TeamType.GUEST))  {
+            addPlayer(TeamType.GUEST, player.getNum());
         }
     }
 
@@ -1039,7 +1139,7 @@ public abstract class Game extends BaseGame {
             result = super.equals(other)
                     && (this.getUsage().equals(other.getUsage()))
                     && (this.getKind().equals(other.getKind()))
-                    && (this.getGameDate() == other.getGameDate())
+                    && (this.getId().equals(other.getId()))
                     && (this.getGender().equals(other.getGender()))
                     && (this.getRules().equals(other.getRules()))
                     && (this.getLeagueName().equals(other.getLeagueName()))

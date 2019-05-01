@@ -4,10 +4,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.api.ApiCourt;
-import com.tonkar.volleyballreferee.api.ApiPlayer;
-import com.tonkar.volleyballreferee.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.api.ApiTimeout;
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.team.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -87,21 +84,23 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     private transient java.util.Set<ScoreListener>   mScoreListeners;
     private transient java.util.Set<TeamListener>    mTeamListeners;
 
-    TimeBasedGame(String id, String createdBy, long createdAt, long scheduledAt) {
+    TimeBasedGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt) {
         super();
         mId = id;
         mCreatedBy = createdBy;
         mCreatedAt = createdAt;
         mUpdatedAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
         mScheduledAt = scheduledAt;
+        mRefereedBy = createdBy;
+        mRefereeName = refereeName;
         mGender = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mIndexed = true;
         mLeagueId = "";
         mLeagueName = "";
         mDivisionName = "";
-        mHomeTeam = new EmptyTeamDefinition(createdBy, TeamType.HOME);
-        mGuestTeam = new EmptyTeamDefinition(createdBy, TeamType.GUEST);
+        mHomeTeam = new EmptyTeamDefinition(UUID.randomUUID().toString(), createdBy, TeamType.HOME);
+        mGuestTeam = new EmptyTeamDefinition(UUID.randomUUID().toString(), createdBy, TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
         mTeamOnRightSide = TeamType.GUEST;
 
@@ -120,7 +119,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     // For GSON Deserialization
     public TimeBasedGame() {
-        this("", "", 0L, 0L);
+        this("", "", "", 0L, 0L);
     }
 
     @Override
@@ -664,7 +663,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public Rules getRules() {
-        return Rules.defaultUniversalRules();
+        return new Rules();
     }
 
     @Override
@@ -866,17 +865,17 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
-    public List<Sanction> getGivenSanctions(TeamType teamType) {
+    public List<ApiSanction> getGivenSanctions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<Sanction> getGivenSanctions(TeamType teamType, int setIndex) {
+    public List<ApiSanction> getGivenSanctions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<Sanction> getSanctions(TeamType teamType, int number) {
+    public List<ApiSanction> getSanctions(TeamType teamType, int number) {
         return new ArrayList<>();
     }
 
@@ -899,13 +898,13 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         GenderType guestGender = getGender(TeamType.GUEST);
 
         if (homeGender.equals(guestGender)) {
-            mGenderType = homeGender;
+            mGender = homeGender;
         } else {
-            mGenderType = GenderType.MIXED;
+            mGender = GenderType.MIXED;
         }
 
-        if (mGameSchedule == 0L) {
-            mGameSchedule = System.currentTimeMillis();
+        if (mScheduledAt == 0L) {
+            mScheduledAt = System.currentTimeMillis();
         }
     }
 

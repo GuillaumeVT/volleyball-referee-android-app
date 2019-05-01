@@ -12,8 +12,8 @@ import java.util.TreeSet;
 
 public class BeachTeamDefinition extends TeamDefinition {
 
-    public BeachTeamDefinition(final String createdBy, final TeamType teamType) {
-        super(createdBy, GameType.BEACH, teamType);
+    public BeachTeamDefinition(String id, String createdBy, TeamType teamType) {
+        super(GameType.BEACH, id, createdBy, teamType);
 
         addPlayer(1);
         addPlayer(2);
@@ -21,7 +21,7 @@ public class BeachTeamDefinition extends TeamDefinition {
 
     // For GSON Deserialization
     public BeachTeamDefinition() {
-        this("", TeamType.HOME);
+        this("", "", TeamType.HOME);
     }
 
     @Override

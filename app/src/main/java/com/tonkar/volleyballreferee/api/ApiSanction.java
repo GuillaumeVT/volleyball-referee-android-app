@@ -10,7 +10,7 @@ public class ApiSanction {
     @SerializedName("card")
     private SanctionType card;
     @SerializedName("num")
-    private int          num;
+    private int          num; // 0-99 player, 100 coach, 200 team
     @SerializedName("set")
     private int          set;
     @SerializedName("homePoints")

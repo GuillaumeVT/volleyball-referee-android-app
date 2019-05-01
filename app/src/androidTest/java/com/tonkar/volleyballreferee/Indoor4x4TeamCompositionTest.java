@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,7 +24,7 @@ public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(GameType.INDOOR_4X4, TeamType.HOME), 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME), 4);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -34,7 +35,7 @@ public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void createPlayers() {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, TeamType.HOME);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME);
         int playerCount = 7;
 
         for (int index = 1; index <= playerCount; index++) {
@@ -52,7 +53,7 @@ public class Indoor4x4TeamCompositionTest {
     }
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, TeamType.GUEST);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);

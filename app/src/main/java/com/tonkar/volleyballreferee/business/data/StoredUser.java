@@ -27,7 +27,13 @@ public class StoredUser implements StoredUserService {
     @Override
     public void createUser(String userId, String pseudo, AsyncUserRequestListener listener) {
         if (PrefUtils.shouldCreateUser(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, String.format(ApiUtils.USER_API_URL, pseudo), new byte[0], PrefUtils.getAuthentication(mContext),
+            ApiUser user = new ApiUser();
+            user.setId(userId);
+            user.setPseudo(pseudo);
+            user.setFriends(new ArrayList<>());
+            final byte[] bytes = writeUser(user).getBytes();
+
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.USER_API_URL, bytes, PrefUtils.getAuthentication(mContext),
                     response -> {
                         PrefUtils.createUser(mContext, pseudo);
                         if (listener != null) {
@@ -212,6 +218,10 @@ public class StoredUser implements StoredUserService {
 
     private ApiUser readUser(String json) {
         return JsonIOUtils.GSON.fromJson(json, JsonIOUtils.USER_TYPE);
+    }
+
+    private String writeUser(ApiUser user) {
+        return JsonIOUtils.GSON.toJson(user, JsonIOUtils.USER_TYPE);
     }
 
     private List<ApiFriendRequest> readFriendRequests(String json) {

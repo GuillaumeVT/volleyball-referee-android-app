@@ -1,69 +1,154 @@
 package com.tonkar.volleyballreferee.interfaces.team;
 
+import com.tonkar.volleyballreferee.interfaces.GameType;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public enum PositionType {
 
     POSITION_1, POSITION_2, POSITION_3, POSITION_4, POSITION_5, POSITION_6, BENCH;
 
-    public PositionType previousPosition() {
-        final PositionType next;
-
-        switch (this) {
-            case POSITION_1:
-                next = POSITION_2;
-                break;
-            case POSITION_2:
-                next = POSITION_3;
-                break;
-            case POSITION_3:
-                next = POSITION_4;
-                break;
-            case POSITION_4:
-                next = POSITION_5;
-                break;
-            case POSITION_5:
-                next = POSITION_6;
-                break;
-            case POSITION_6:
-                next = POSITION_1;
-                break;
-            default:
-            case BENCH:
-                next = BENCH;
-                break;
-        }
-
-        return next;
-    }
-
-    public PositionType nextPosition() {
+    public PositionType previousPosition(GameType gameType) {
         final PositionType previous;
 
-        switch (this) {
-            case POSITION_1:
-                previous = POSITION_6;
-                break;
-            case POSITION_2:
-                previous = POSITION_1;
-                break;
-            case POSITION_3:
-                previous = POSITION_2;
-                break;
-            case POSITION_4:
-                previous = POSITION_3;
-                break;
-            case POSITION_5:
-                previous = POSITION_4;
-                break;
-            case POSITION_6:
-                previous = POSITION_5;
-                break;
-            default:
-            case BENCH:
-                previous = BENCH;
-                break;
+        if (GameType.INDOOR.equals(gameType)) {
+            switch (this) {
+                case POSITION_1:
+                    previous = POSITION_2;
+                    break;
+                case POSITION_2:
+                    previous = POSITION_3;
+                    break;
+                case POSITION_3:
+                    previous = POSITION_4;
+                    break;
+                case POSITION_4:
+                    previous = POSITION_5;
+                    break;
+                case POSITION_5:
+                    previous = POSITION_6;
+                    break;
+                case POSITION_6:
+                    previous = POSITION_1;
+                    break;
+                default:
+                case BENCH:
+                    previous = BENCH;
+                    break;
+            }
+        } else if (GameType.INDOOR_4X4.equals(gameType)) {
+            switch (this) {
+                case POSITION_1:
+                    previous = POSITION_2;
+                    break;
+                case POSITION_2:
+                    previous = POSITION_3;
+                    break;
+                case POSITION_3:
+                    previous = POSITION_4;
+                    break;
+                case POSITION_4:
+                    previous = POSITION_1;
+                    break;
+                case POSITION_5:
+                case POSITION_6:
+                case BENCH:
+                default:
+                    previous = BENCH;
+                    break;
+            }
+        } else {
+            switch (this) {
+                case POSITION_1:
+                    previous = POSITION_2;
+                    break;
+                case POSITION_2:
+                    previous = POSITION_1;
+                    break;
+                case POSITION_3:
+                case POSITION_4:
+                case POSITION_5:
+                case POSITION_6:
+                case BENCH:
+                default:
+                    previous = BENCH;
+                    break;
+            }
         }
 
         return previous;
+    }
+
+    public PositionType nextPosition(GameType gameType) {
+        final PositionType next;
+
+        if (GameType.INDOOR.equals(gameType)) {
+            switch (this) {
+                case POSITION_1:
+                    next = POSITION_6;
+                    break;
+                case POSITION_2:
+                    next = POSITION_1;
+                    break;
+                case POSITION_3:
+                    next = POSITION_2;
+                    break;
+                case POSITION_4:
+                    next = POSITION_3;
+                    break;
+                case POSITION_5:
+                    next = POSITION_4;
+                    break;
+                case POSITION_6:
+                    next = POSITION_5;
+                    break;
+                default:
+                case BENCH:
+                    next = BENCH;
+                    break;
+            }
+        } else if (GameType.INDOOR_4X4.equals(gameType)) {
+            switch (this) {
+                case POSITION_1:
+                    next = POSITION_4;
+                    break;
+                case POSITION_2:
+                    next = POSITION_1;
+                    break;
+                case POSITION_3:
+                    next = POSITION_2;
+                    break;
+                case POSITION_4:
+                    next = POSITION_3;
+                    break;
+                case POSITION_5:
+                case POSITION_6:
+                case BENCH:
+                default:
+                    next = BENCH;
+                    break;
+            }
+        } else {
+            switch (this) {
+                case POSITION_1:
+                    next = POSITION_2;
+                    break;
+                case POSITION_2:
+                    next = POSITION_1;
+                    break;
+                case POSITION_3:
+                case POSITION_4:
+                case POSITION_5:
+                case POSITION_6:
+                case BENCH:
+                default:
+                    next = BENCH;
+                    break;
+            }
+        }
+
+        return next;
     }
 
     public boolean isAtTheBack() {
@@ -187,5 +272,24 @@ public enum PositionType {
         }
 
         return positionType;
+    }
+
+    public static List<PositionType> listPositions(GameType gameType) {
+        List<PositionType> positions = new ArrayList<>();
+
+        if (GameType.BEACH.equals(gameType) || GameType.INDOOR.equals(gameType) || GameType.INDOOR_4X4.equals(gameType)) {
+            positions.add(PositionType.POSITION_1);
+            positions.add(PositionType.POSITION_2);
+        }
+        if (GameType.INDOOR.equals(gameType) || GameType.INDOOR_4X4.equals(gameType)) {
+            positions.add(PositionType.POSITION_3);
+            positions.add(PositionType.POSITION_4);
+        }
+        if (GameType.INDOOR.equals(gameType)) {
+            positions.add(PositionType.POSITION_5);
+            positions.add(PositionType.POSITION_6);
+        }
+
+        return positions;
     }
 }

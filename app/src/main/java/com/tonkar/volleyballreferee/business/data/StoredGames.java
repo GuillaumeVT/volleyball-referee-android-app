@@ -378,17 +378,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                 set.setTimeouts(TeamType.HOME, mGameService.getRemainingTimeouts(TeamType.HOME, setIndex));
 
                 ApiCourt homeCurrentPlayers = set.getCurrentPlayers(TeamType.HOME);
-                if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                    homeCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1, setIndex));
-                    homeCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_2, setIndex));
-                }
-                if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                    homeCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_3, setIndex));
-                    homeCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_4, setIndex));
-                }
-                if (GameType.INDOOR.equals(mGameService.getKind())) {
-                    homeCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_5, setIndex));
-                    homeCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_6, setIndex));
+                for (PositionType position : PositionType.listPositions(mGameService.getKind())) {
+                    homeCurrentPlayers.setPlayerAt(mGameService.getPlayerAtPosition(TeamType.HOME, position, setIndex), position);
                 }
 
                 for (ApiTimeout timeout : mGameService.getCalledTimeouts(TeamType.HOME, setIndex)) {
@@ -399,17 +390,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                 set.setTimeouts(TeamType.GUEST, mGameService.getRemainingTimeouts(TeamType.GUEST, setIndex));
 
                 ApiCourt guestCurrentPlayers = set.getCurrentPlayers(TeamType.GUEST);
-                if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                    guestCurrentPlayers.setP1(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_1, setIndex));
-                    guestCurrentPlayers.setP2(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_2, setIndex));
-                }
-                if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                    guestCurrentPlayers.setP3(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_3, setIndex));
-                    guestCurrentPlayers.setP4(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_4, setIndex));
-                }
-                if (GameType.INDOOR.equals(mGameService.getKind())) {
-                    guestCurrentPlayers.setP5(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_5, setIndex));
-                    guestCurrentPlayers.setP6(mGameService.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+                for (PositionType position : PositionType.listPositions(mGameService.getKind())) {
+                    guestCurrentPlayers.setPlayerAt(mGameService.getPlayerAtPosition(TeamType.GUEST, position, setIndex), position);
                 }
 
                 for (ApiTimeout timeout : mGameService.getCalledTimeouts(TeamType.GUEST, setIndex)) {
@@ -425,17 +407,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                     IndoorTeamService indoorTeamService = (IndoorTeamService) mGameService;
 
                     ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
-                    if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                        homeStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_1, setIndex));
-                        homeStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_2, setIndex));
-                    }
-                    if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                        homeStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_3, setIndex));
-                        homeStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_4, setIndex));
-                    }
-                    if (GameType.INDOOR.equals(mGameService.getKind())) {
-                        homeStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_5, setIndex));
-                        homeStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, PositionType.POSITION_6, setIndex));
+                    for (PositionType position : PositionType.listPositions(mGameService.getKind())) {
+                        homeStartingPlayers.setPlayerAt(mGameService.getPlayerAtPositionInStartingLineup(TeamType.HOME, position, setIndex), position);
                     }
 
                     for (ApiSubstitution substitution : indoorTeamService.getSubstitutions(TeamType.HOME, setIndex)) {
@@ -443,17 +416,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                     }
 
                     ApiCourt guestStartingPlayers = set.getStartingPlayers(TeamType.GUEST);
-                    if (GameType.BEACH.equals(mGameService.getKind()) || GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                        guestStartingPlayers.setP1(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_1, setIndex));
-                        guestStartingPlayers.setP2(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_2, setIndex));
-                    }
-                    if (GameType.INDOOR.equals(mGameService.getKind()) || GameType.INDOOR_4X4.equals(mGameService.getKind())) {
-                        guestStartingPlayers.setP3(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_3, setIndex));
-                        guestStartingPlayers.setP4(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_4, setIndex));
-                    }
-                    if (GameType.INDOOR.equals(mGameService.getKind())) {
-                        guestStartingPlayers.setP5(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_5, setIndex));
-                        guestStartingPlayers.setP6(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, PositionType.POSITION_6, setIndex));
+                    for (PositionType position : PositionType.listPositions(mGameService.getKind())) {
+                        guestStartingPlayers.setPlayerAt(mGameService.getPlayerAtPositionInStartingLineup(TeamType.GUEST, position, setIndex), position);
                     }
 
                     for (ApiSubstitution substitution : indoorTeamService.getSubstitutions(TeamType.GUEST, setIndex)) {
@@ -890,6 +854,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                 game.setCreatedBy(authentication.getUserId());
                 game.setRefereedBy(authentication.getUserId());
                 game.setRefereeName(authentication.getUserPseudo());
+                game.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 insertGameIntoDb(game, false, true);
                 afterPurchase = true;
             }

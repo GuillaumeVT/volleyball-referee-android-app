@@ -6,6 +6,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -24,6 +25,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
+
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class Indoor4x4CompleteGame {
@@ -35,7 +40,8 @@ public class Indoor4x4CompleteGame {
 
     @Test
     public void playGame_complete() {
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
         defineTeams(indoor4x4Game);
 
@@ -48,7 +54,7 @@ public class Indoor4x4CompleteGame {
         composeTeams(indoor4x4Game);
         playSet_complete(indoor4x4Game);
 
-        StoredGameService storedGameService = mStoredGamesService.getGame(indoor4x4Game.getGameDate());
+        StoredGameService storedGameService = mStoredGamesService.getGame(indoor4x4Game.getId());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
     }
 

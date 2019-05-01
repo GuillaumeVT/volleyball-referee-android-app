@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,7 +25,7 @@ public class IndoorTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(GameType.INDOOR, TeamType.HOME), Rules.FIVB_LIMITATION, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(GameType.INDOOR, UUID.randomUUID().toString(), "", TeamType.HOME), Rules.FIVB_LIMITATION, 6);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -35,7 +36,7 @@ public class IndoorTeamCompositionTest {
 
     @Test
     public void createPlayers() {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, TeamType.HOME);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, UUID.randomUUID().toString(), "", TeamType.HOME);
         int playerCount = 7;
 
         for (int index = 1; index <= playerCount; index++) {
@@ -78,7 +79,7 @@ public class IndoorTeamCompositionTest {
     }
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, TeamType.GUEST);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, UUID.randomUUID().toString(), "", TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);

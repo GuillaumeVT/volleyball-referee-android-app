@@ -5,12 +5,17 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -87,12 +92,15 @@ public class RuleConsecutiveServesTest {
     }
 
     private IndoorGame createGame(int consecutiveServes) {
-        Rules rules = new Rules(Authentication.VBR_USER_ID, "My rules", System.currentTimeMillis(),
+        Rules rules = new Rules(UUID.randomUUID().toString(), Authentication.VBR_USER_ID,
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
+                "My rules", GameType.INDOOR,
                 5, 25, true, 15, true, true,
                 true,2, 30,true, 60, true, 180,
                 Rules.FIVB_LIMITATION, 6, false, 0, 0, consecutiveServes);
 
-        IndoorGame game = new IndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), rules);
+        IndoorGame game = new IndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), rules);
 
         for (int index = 1; index <= 6; index++) {
             game.addPlayer(TeamType.HOME, index);

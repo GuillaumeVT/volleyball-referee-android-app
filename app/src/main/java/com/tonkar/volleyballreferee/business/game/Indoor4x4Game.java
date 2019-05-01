@@ -1,5 +1,7 @@
 package com.tonkar.volleyballreferee.business.game;
 
+import android.graphics.Color;
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.team.Indoor4x4TeamComposition;
 import com.tonkar.volleyballreferee.business.team.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
@@ -7,35 +9,28 @@ import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Indoor4x4Game extends Game implements IndoorTeamService {
 
-    public Indoor4x4Game(final long gameDate, final long gameSchedule, final Rules rules) {
-        super(GameType.INDOOR_4X4, gameDate, gameSchedule, rules);
+    public Indoor4x4Game(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
+        super(GameType.INDOOR_4X4, id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
     // For GSON Deserialization
     public Indoor4x4Game() {
-        this(0L, 0L, Rules.defaultUniversalRules());
+        this("", "", "", 0L, 0L, new Rules());
     }
 
     @Override
     protected TeamDefinition createTeamDefinition(TeamType teamType) {
-        return new IndoorTeamDefinition(GameType.INDOOR_4X4, teamType);
+        return new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), getCreatedBy(), teamType);
     }
 
     @Override
@@ -74,7 +69,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
             }
 
             // In indoor volley, there are two technical timeouts at 8 and 16 but not during tie break
-            if (getRules().areTechnicalTimeoutsEnabled()
+            if (getRules().isTechnicalTimeouts()
                     && !isTieBreakSet()
                     && currentSet().getLeadingTeam().equals(teamType)
                     && (leadingScore == 8 || leadingScore == 16)
@@ -193,17 +188,17 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     }
 
     @Override
-    public java.util.Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
-        java.util.Set<Integer> players = new TreeSet<>();
+    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
+        ApiCourt startingLineup = new ApiCourt();
 
         Set set = getSet(setIndex);
 
         if (set != null) {
             Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
-            players = indoorTeamComposition.getPlayersInStartingLineup();
+            startingLineup = indoorTeamComposition.getStartingLineup();
         }
 
-        return players;
+        return startingLineup;
     }
 
     @Override
@@ -236,7 +231,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
     @Override
     public int getLiberoColor(TeamType teamType) {
-        return getTeamDefinition(teamType).getLiberoColor();
+        return Color.parseColor(TeamDefinition.DEFAULT_COLOR);
     }
 
     @Override
@@ -259,18 +254,18 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     }
 
     @Override
-    public java.util.Set<Integer> getLiberos(TeamType teamType) {
-        return getTeamDefinition(teamType).getLiberos();
+    public java.util.Set<ApiPlayer> getLiberos(TeamType teamType) {
+        return new HashSet<>();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
         return getIndoorTeamComposition(teamType).getSubstitutions();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
-        List<Substitution> substitutions = new ArrayList<>();
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
+        List<ApiSubstitution> substitutions = new ArrayList<>();
 
         Set set = getSet(setIndex);
 
@@ -323,13 +318,13 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
 
         if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType) && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
-            java.util.Set<Integer> players = getTeamDefinition(teamType).getPlayers();
+            List<ApiPlayer> players = getTeamDefinition(teamType).getPlayers();
 
             // Remove the disqualified players
 
-            for (Sanction sanction : getGivenSanctions(teamType)) {
-                if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getSanctionType())) {
-                    players.remove(sanction.getPlayer());
+            for (ApiSanction sanction : getGivenSanctions(teamType)) {
+                if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getCard())) {
+                    players.remove(new ApiPlayer(sanction.getNum()));
                 }
             }
 
@@ -349,22 +344,10 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     public void restoreTeams(StoredGameService storedGameService) {
         super.restoreTeams(storedGameService);
 
-        setLiberoColor(TeamType.HOME, storedGameService.getLiberoColor(TeamType.HOME));
-
-        for (int number : storedGameService.getLiberos(TeamType.HOME))  {
-            addPlayer(TeamType.HOME, number);
-            addLibero(TeamType.HOME, number);
-        }
-
+        setLiberoColor(TeamType.HOME, Color.parseColor(TeamDefinition.DEFAULT_COLOR));
         setCaptain(TeamType.HOME, storedGameService.getCaptain(TeamType.HOME));
 
-        setLiberoColor(TeamType.GUEST, storedGameService.getLiberoColor(TeamType.GUEST));
-
-        for (int number : storedGameService.getLiberos(TeamType.GUEST))  {
-            addPlayer(TeamType.GUEST, number);
-            addLibero(TeamType.GUEST, number);
-        }
-
+        setLiberoColor(TeamType.GUEST, Color.parseColor(TeamDefinition.DEFAULT_COLOR));
         setCaptain(TeamType.GUEST, storedGameService.getCaptain(TeamType.GUEST));
     }
 
@@ -378,16 +361,12 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
                 boolean isStartingLineupConfirmed = storedGameService.isStartingLineupConfirmed();
 
                 if (isStartingLineupConfirmed) {
-                    java.util.Set<Integer> homePlayers = storedGameService.getPlayersInStartingLineup(TeamType.HOME, setIndex);
-                    for (int player : homePlayers) {
-                        PositionType positionType = storedGameService.getPlayerPositionInStartingLineup(TeamType.HOME, player, setIndex);
-                        substitutePlayer(TeamType.HOME, player, positionType, ActionOriginType.USER);
-                    }
+                    ApiCourt homeStartingLineup = storedGameService.getStartingLineup(TeamType.HOME, setIndex);
+                    ApiCourt guestStartingLineup = storedGameService.getStartingLineup(TeamType.GUEST, setIndex);
 
-                    java.util.Set<Integer> guestPlayers = storedGameService.getPlayersInStartingLineup(TeamType.GUEST, setIndex);
-                    for (int player : guestPlayers) {
-                        PositionType positionType = storedGameService.getPlayerPositionInStartingLineup(TeamType.GUEST, player, setIndex);
-                        substitutePlayer(TeamType.GUEST, player, positionType, ActionOriginType.USER);
+                    for (PositionType position : PositionType.listPositions(getKind())) {
+                        substitutePlayer(TeamType.HOME, homeStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
+                        substitutePlayer(TeamType.GUEST, guestStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
                     }
 
                     confirmStartingLineup();
@@ -399,36 +378,36 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
                     int homePoints = getPoints(TeamType.HOME, setIndex);
                     int guestPoints = getPoints(TeamType.GUEST, setIndex);
 
-                    List<Timeout> homeTimeouts = storedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (Timeout timeout : homeTimeouts) {
+                    List<ApiTimeout> homeTimeouts = storedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (ApiTimeout timeout : homeTimeouts) {
                         callTimeout(TeamType.HOME);
                     }
 
-                    List<Timeout> guestTimeouts = storedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (Timeout timeout : guestTimeouts) {
+                    List<ApiTimeout> guestTimeouts = storedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (ApiTimeout timeout : guestTimeouts) {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<Substitution> homeSubstitutions = storedGameService.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (Substitution substitution : homeSubstitutions) {
+                    List<ApiSubstitution> homeSubstitutions = storedGameService.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (ApiSubstitution substitution : homeSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.HOME, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.HOME, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<Substitution> guestSubstitutions = storedGameService.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (Substitution substitution : guestSubstitutions) {
+                    List<ApiSubstitution> guestSubstitutions = storedGameService.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (ApiSubstitution substitution : guestSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.GUEST, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.GUEST, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<Sanction> homeSanctions = storedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (Sanction sanction : homeSanctions) {
-                        giveSanction(TeamType.HOME, sanction.getSanctionType(), sanction.getPlayer());
+                    List<ApiSanction> homeSanctions = storedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (ApiSanction sanction : homeSanctions) {
+                        giveSanction(TeamType.HOME, sanction.getCard(), sanction.getNum());
                     }
 
-                    List<Sanction> guestSanctions = storedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (Sanction sanction : guestSanctions) {
-                        giveSanction(TeamType.GUEST, sanction.getSanctionType(), sanction.getPlayer());
+                    List<ApiSanction> guestSanctions = storedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (ApiSanction sanction : guestSanctions) {
+                        giveSanction(TeamType.GUEST, sanction.getCard(), sanction.getNum());
                     }
 
                     if (pointsIndex == pointsLadder.size() - 1) {

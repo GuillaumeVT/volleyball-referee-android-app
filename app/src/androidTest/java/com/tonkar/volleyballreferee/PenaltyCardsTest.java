@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
@@ -14,6 +15,10 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,18 +28,20 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_yellowCard() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         game.giveSanction(TeamType.HOME, SanctionType.YELLOW, -1);
 
         assertTrue(game.hasSanctions(TeamType.HOME, -1));
-        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
     }
 
     @Test
     public void beachGame_redCard() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -49,12 +56,13 @@ public class PenaltyCardsTest {
 
         assertTrue(game.hasSanctions(TeamType.HOME, 1));
         assertFalse(game.hasSanctions(TeamType.HOME, 5));
-        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
     }
 
     @Test
     public void beachGame_redExpulsionCard() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 2);
@@ -63,12 +71,13 @@ public class PenaltyCardsTest {
         assertEquals(0, game.getSets(TeamType.GUEST));
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 2));
-        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getCard());
     }
 
     @Test
     public void beachGame_redDisqualificationCard() {
-        GameService game = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, 1);
@@ -78,12 +87,13 @@ public class PenaltyCardsTest {
         assertTrue(game.isMatchCompleted());
 
         assertTrue(game.hasSanctions(TeamType.HOME, 1));
-        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
     }
 
     @Test
     public void indoorGame_yellowCard() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
@@ -97,13 +107,14 @@ public class PenaltyCardsTest {
 
         assertTrue(game.hasSanctions(TeamType.HOME, 3));
         assertFalse(game.hasSanctions(TeamType.HOME, 1));
-        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
-        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(1).getSanctionType());
+        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
+        assertEquals(SanctionType.YELLOW, game.getGivenSanctions(TeamType.HOME).get(1).getCard());
     }
 
     @Test
     public void indoorGame_redCard() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
@@ -124,7 +135,7 @@ public class PenaltyCardsTest {
 
         assertTrue(game.hasSanctions(TeamType.HOME, 1));
         assertFalse(game.hasSanctions(TeamType.HOME, 6));
-        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
 
         // coach
         game.giveSanction(TeamType.GUEST, SanctionType.RED, 0);
@@ -135,12 +146,13 @@ public class PenaltyCardsTest {
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 0));
         assertFalse(game.hasSanctions(TeamType.GUEST, 3));
-        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.RED, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
     }
 
     @Test
     public void indoorGame_redExpulsionCard() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         IndoorTeamService indoorTeamService = (IndoorTeamService) game;
 
         fillTeam(game, TeamType.HOME, 6);
@@ -157,7 +169,7 @@ public class PenaltyCardsTest {
         assertEquals(1, game.getSets(TeamType.GUEST));
 
         assertTrue(game.hasSanctions(TeamType.HOME, 6));
-        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
 
         // coach
         game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 0);
@@ -166,7 +178,7 @@ public class PenaltyCardsTest {
         assertEquals(1, game.getSets(TeamType.GUEST));
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 0));
-        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(0).getCard());
 
         fillCourt(indoorTeamService);
 
@@ -174,7 +186,7 @@ public class PenaltyCardsTest {
         indoorTeamService.substitutePlayer(TeamType.GUEST, 8, PositionType.POSITION_1, ActionOriginType.USER);
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 1));
-        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(1).getSanctionType());
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(1).getCard());
 
         game.giveSanction(TeamType.GUEST, SanctionType.RED_EXPULSION, 5);
 
@@ -182,12 +194,13 @@ public class PenaltyCardsTest {
         assertEquals(1, game.getSets(TeamType.GUEST));
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 5));
-        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(2).getSanctionType());
+        assertEquals(SanctionType.RED_EXPULSION, game.getGivenSanctions(TeamType.GUEST).get(2).getCard());
     }
 
     @Test
     public void indoorGame_redDisqualificationCard() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         IndoorTeamService indoorTeamService = (IndoorTeamService) game;
 
         fillTeam(game, TeamType.HOME, 6);
@@ -202,7 +215,7 @@ public class PenaltyCardsTest {
         game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, 0);
 
         assertTrue(game.hasSanctions(TeamType.HOME, 0));
-        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getSanctionType());
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.HOME).get(0).getCard());
 
         assertEquals(0, game.getSets(TeamType.HOME));
         assertEquals(0, game.getSets(TeamType.GUEST));
@@ -212,7 +225,7 @@ public class PenaltyCardsTest {
         indoorTeamService.substitutePlayer(TeamType.GUEST, 8, PositionType.POSITION_3, ActionOriginType.USER);
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 3));
-        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.GUEST).get(0).getSanctionType());
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.GUEST).get(0).getCard());
 
         game.giveSanction(TeamType.GUEST, SanctionType.RED_DISQUALIFICATION, 2);
 
@@ -221,7 +234,7 @@ public class PenaltyCardsTest {
         assertTrue(game.isMatchCompleted());
 
         assertTrue(game.hasSanctions(TeamType.GUEST, 2));
-        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.GUEST).get(1).getSanctionType());
+        assertEquals(SanctionType.RED_DISQUALIFICATION, game.getGivenSanctions(TeamType.GUEST).get(1).getCard());
     }
 
     private void fillTeam(GameService game, TeamType teamType, int numberOfPlayers) {

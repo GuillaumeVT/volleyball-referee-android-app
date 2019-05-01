@@ -3,7 +3,9 @@ package com.tonkar.volleyballreferee;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.ApiRules;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
@@ -25,7 +27,7 @@ import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SavedRulesIOTest {
+public class StoredRulesIOTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -34,52 +36,50 @@ public class SavedRulesIOTest {
     public void save() {
         StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
 
-        Rules rules = storedRulesService.createRules();
+        Rules rules = storedRulesService.createRules(GameType.INDOOR);
         rules.setName("Test Rules 1");
-        rules.setUserId("66bgghvgh55@google");
-        rules.setDate(34567654L);
+        rules.setCreatedBy("66bgghvgh55@google");
         rules.setSetsPerGame(15);
         rules.setPointsPerSet(22);
         rules.setTieBreakInLastSet(false);
         rules.setPointsInTieBreak(19);
         rules.setTwoPointsDifference(false);
-        rules.setSanctionsEnabled(true);
-        rules.setTeamTimeoutsEnabled(false);
+        rules.setSanctions(true);
+        rules.setTeamTimeouts(false);
         rules.setTeamTimeoutsPerSet(6);
         rules.setTeamTimeoutDuration(1234);
-        rules.setTechnicalTimeoutsEnabled(true);
+        rules.setTechnicalTimeouts(true);
         rules.setTechnicalTimeoutDuration(756);
-        rules.setGameIntervalsEnabled(true);
+        rules.setGameIntervals(true);
         rules.setGameIntervalDuration(532);
         rules.setTeamSubstitutionsPerSet(0);
-        rules.setBeachCourtSwitchesEnabled(false);
-        rules.setBeachCourtSwitchFrequency(6);
-        rules.setBeachCourtSwitchFrequencyTieBreak(1);
+        rules.setBeachCourtSwitches(false);
+        rules.setBeachCourtSwitchFreq(6);
+        rules.setBeachCourtSwitchFreqTieBreak(1);
         rules.setCustomConsecutiveServesPerPlayer(77);
 
         storedRulesService.saveRules(rules);
 
-        rules = storedRulesService.createRules();
+        rules = storedRulesService.createRules(GameType.BEACH);
         rules.setName("Test Rules 2");
-        rules.setUserId("byg765bvg66v@facebook");
-        rules.setDate(494030L);
+        rules.setCreatedBy("byg765bvg66v@facebook");
         rules.setSetsPerGame(1);
         rules.setPointsPerSet(99);
         rules.setTieBreakInLastSet(true);
         rules.setPointsInTieBreak(0);
         rules.setTwoPointsDifference(true);
-        rules.setSanctionsEnabled(false);
-        rules.setTeamTimeoutsEnabled(true);
+        rules.setSanctions(false);
+        rules.setTeamTimeouts(true);
         rules.setTeamTimeoutsPerSet(9);
         rules.setTeamTimeoutDuration(765);
-        rules.setTechnicalTimeoutsEnabled(false);
+        rules.setTechnicalTimeouts(false);
         rules.setTechnicalTimeoutDuration(40);
-        rules.setGameIntervalsEnabled(false);
+        rules.setGameIntervals(false);
         rules.setGameIntervalDuration(90);
         rules.setTeamSubstitutionsPerSet(2);
-        rules.setBeachCourtSwitchesEnabled(true);
-        rules.setBeachCourtSwitchFrequency(8);
-        rules.setBeachCourtSwitchFrequencyTieBreak(9);
+        rules.setBeachCourtSwitches(true);
+        rules.setBeachCourtSwitchFreq(8);
+        rules.setBeachCourtSwitchFreqTieBreak(9);
         rules.setCustomConsecutiveServesPerPlayer(10);
 
         storedRulesService.saveRules(rules);
@@ -89,11 +89,11 @@ public class SavedRulesIOTest {
     public void writeThenRead() {
         StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
 
-        List<Rules> expectedList = new ArrayList<>();
-        expectedList.add(storedRulesService.getRules("Test Rules 1"));
-        expectedList.add(storedRulesService.getRules("Test Rules 2"));
+        List<ApiRules> expectedList = new ArrayList<>();
+        expectedList.add(storedRulesService.getRules(GameType.INDOOR,"Test Rules 1"));
+        expectedList.add(storedRulesService.getRules(GameType.BEACH, "Test Rules 2"));
 
-        List<Rules> actualList = new ArrayList<>();
+        List<ApiRules> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {

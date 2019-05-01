@@ -8,13 +8,13 @@ import java.util.Set;
 
 public class EmptyTeamDefinition extends TeamDefinition {
 
-    public EmptyTeamDefinition(final String createdBy, final TeamType teamType) {
-        super(createdBy, GameType.TIME, teamType);
+    public EmptyTeamDefinition(String id, String createdBy, TeamType teamType) {
+        super(GameType.TIME, id, createdBy, teamType);
     }
 
     // For GSON Deserialization
     public EmptyTeamDefinition() {
-        this("", TeamType.HOME);
+        this("", "", TeamType.HOME);
     }
 
     @Override

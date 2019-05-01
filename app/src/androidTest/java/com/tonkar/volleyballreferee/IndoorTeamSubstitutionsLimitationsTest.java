@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Set;
+import java.util.UUID;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class IndoorTeamSubstitutionsLimitationsTest {
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, TeamType.GUEST);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR, UUID.randomUUID().toString(), "", TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);

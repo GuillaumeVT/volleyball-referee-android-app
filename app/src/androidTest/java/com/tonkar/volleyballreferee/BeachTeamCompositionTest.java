@@ -10,6 +10,8 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -20,7 +22,7 @@ public class BeachTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.GUEST));
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(UUID.randomUUID().toString(), "", TeamType.GUEST));
 
         assertEquals(2, team.getTeamDefinition().getNumberOfPlayers());
         assertTrue(team.getTeamDefinition().hasPlayer(1));
@@ -36,7 +38,7 @@ public class BeachTeamCompositionTest {
 
     @Test
     public void substitution_changePlayer() {
-        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(UUID.randomUUID().toString(), "", TeamType.HOME));
 
         assertTrue(team.substitutePlayer(1, PositionType.POSITION_2));
         assertEquals(PositionType.POSITION_2, team.getPlayerPosition(1));
@@ -49,7 +51,7 @@ public class BeachTeamCompositionTest {
 
     @Test
     public void substitution_abnormal() {
-        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(UUID.randomUUID().toString(), "", TeamType.HOME));
 
         assertFalse(team.substitutePlayer(5, PositionType.POSITION_1));
         assertFalse(team.substitutePlayer(1, PositionType.POSITION_5));
@@ -58,7 +60,7 @@ public class BeachTeamCompositionTest {
 
     @Test
     public void rotation_next() {
-        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(UUID.randomUUID().toString(), "", TeamType.HOME));
         team.substitutePlayer(1, PositionType.POSITION_2);
         team.substitutePlayer(2, PositionType.POSITION_1);
 
@@ -69,7 +71,7 @@ public class BeachTeamCompositionTest {
 
     @Test
     public void rotation_previous() {
-        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(TeamType.HOME));
+        BeachTeamComposition team = new BeachTeamComposition(new BeachTeamDefinition(UUID.randomUUID().toString(), "", TeamType.HOME));
         team.substitutePlayer(1, PositionType.POSITION_2);
         team.substitutePlayer(2, PositionType.POSITION_1);
 

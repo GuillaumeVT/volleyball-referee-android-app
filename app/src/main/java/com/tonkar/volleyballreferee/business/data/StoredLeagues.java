@@ -163,6 +163,7 @@ public class StoredLeagues implements StoredLeaguesService {
         for (ApiLeague localLeague : localLeagueList) {
             if (localLeague.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
                 localLeague.setCreatedBy(userId);
+                localLeague.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 insertLeagueIntoDb(localLeague, false, true);
                 afterPurchase = true;
             }

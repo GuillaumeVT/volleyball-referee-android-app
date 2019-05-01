@@ -7,6 +7,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
@@ -23,6 +24,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -37,20 +42,22 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
 
         playSet1_complete(beachGame);
         playSet2_complete(beachGame);
 
-        StoredGameService storedGameService = mStoredGamesService.getGame(beachGame.getGameDate());
+        StoredGameService storedGameService = mStoredGamesService.getGame(beachGame.getId());
         ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
     }
 
     @Test
     public void playGame_matchPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
 
@@ -74,7 +81,8 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
 

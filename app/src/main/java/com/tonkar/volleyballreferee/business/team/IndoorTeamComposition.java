@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.business.team;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiCourt;
 import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -12,9 +13,7 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,7 +22,7 @@ public class IndoorTeamComposition extends TeamComposition {
     @SerializedName("startingLineupConfirmed")
     private       boolean                 mStartingLineupConfirmed;
     @SerializedName("startingLineup")
-    private final Map<Integer, Player>    mStartingLineup;
+    private final ApiCourt                mStartingLineup;
     @SerializedName("substitutionsLimitation")
     private       SubstitutionsLimitation mSubstitutionsLimitation;
     @SerializedName("maxSubstitutionsPerSet")
@@ -43,7 +42,7 @@ public class IndoorTeamComposition extends TeamComposition {
         super(teamDefinition);
 
         mStartingLineupConfirmed = false;
-        mStartingLineup = new LinkedHashMap<>();
+        mStartingLineup = new ApiCourt();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
         mSubstitutions = new ArrayList<>();
         mActingLibero = -1;
@@ -138,11 +137,8 @@ public class IndoorTeamComposition extends TeamComposition {
 
     public void confirmStartingLineup() {
         mStartingLineupConfirmed = true;
-
-        for (int number : getPlayersOnCourt()) {
-            Player player = createPlayer(number);
-            player.setPosition(getPlayerPosition(number));
-            mStartingLineup.put(number, player);
+        for (PositionType position : PositionType.listPositions(getTeamDefinition().getKind())) {
+            mStartingLineup.setPlayerAt(getPlayerAtPosition(position), position);
         }
 
         if (!PositionType.BENCH.equals(getPlayerPosition(indoorTeamDefinition().getCaptain()))) {
@@ -336,23 +332,16 @@ public class IndoorTeamComposition extends TeamComposition {
         return new ArrayList<>(mSubstitutions);
     }
 
-    public Set<Integer> getPlayersInStartingLineup() {
-        return mStartingLineup.keySet();
+    public ApiCourt getStartingLineup() {
+        return mStartingLineup;
     }
 
     public PositionType getPlayerPositionInStartingLineup(int number) {
-        return mStartingLineup.get(number).getPosition();
+        return mStartingLineup.getPositionOf(number);
     }
 
     public int getPlayerAtPositionInStartingLineup(PositionType positionType) {
-        int number = -1;
-
-        for (Player player : mStartingLineup.values()) {
-            if (positionType.equals(player.getPosition())) {
-                number = player.getNumber();
-            }
-        }
-        return number;
+        return mStartingLineup.getPlayerAt(positionType);
     }
 
     public int getActingCaptain() {

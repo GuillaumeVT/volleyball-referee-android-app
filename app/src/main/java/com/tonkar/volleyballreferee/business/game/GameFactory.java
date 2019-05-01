@@ -10,31 +10,31 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 
 public class GameFactory {
 
-    public static IndoorGame createIndoorGame(final long gameDate, final long gameSchedule, final Rules rules) {
+    public static IndoorGame createIndoorGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         Log.i(Tags.FACTORY, "Create indoor game rules");
-        return new IndoorGame(gameDate, gameSchedule, rules);
+        return new IndoorGame(id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
-    public static BeachGame createBeachGame(final long gameDate, final long gameSchedule, final Rules rules) {
+    public static BeachGame createBeachGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         Log.i(Tags.FACTORY, "Create beach game");
-        return new BeachGame(gameDate, gameSchedule, rules);
+        return new BeachGame(id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
-    public static IndoorGame createPointBasedGame(final long gameDate, final long gameSchedule, final Rules rules) {
+    public static IndoorGame createPointBasedGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         Log.i(Tags.FACTORY, "Create score-based game");
-        IndoorGame game = createIndoorGame(gameDate, gameSchedule, rules);
+        IndoorGame game = createIndoorGame(id, createdBy, refereeName, createdAt, scheduledAt, rules);
         game.setUsage(UsageType.POINTS_SCOREBOARD);
         return game;
     }
 
-    public static TimeBasedGame createTimeBasedGame(final long gameDate, final long gameSchedule) {
+    public static TimeBasedGame createTimeBasedGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt) {
         Log.i(Tags.FACTORY, "Create time-based game");
-        return new TimeBasedGame(gameDate, gameSchedule);
+        return new TimeBasedGame(id, createdBy, refereeName, createdAt, scheduledAt);
     }
 
-    public static Indoor4x4Game createIndoor4x4Game(final long gameDate, final long gameSchedule, final Rules rules) {
+    public static Indoor4x4Game createIndoor4x4Game(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         Log.i(Tags.FACTORY, "Create indoor 4x4 game");
-        return new Indoor4x4Game(gameDate, gameSchedule, rules);
+        return new Indoor4x4Game(id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
     public static GameService createGame(StoredGameService storedGameService) {
@@ -43,26 +43,32 @@ public class GameFactory {
 
         switch (storedGameService.getKind()) {
             case INDOOR:
-                IndoorGame indoorGame = createIndoorGame(storedGameService.getGameDate(), storedGameService.getGameSchedule(), storedGameService.getRules());
+                IndoorGame indoorGame = createIndoorGame(storedGameService.getId(), storedGameService.getCreatedBy(), storedGameService.getRefereeName(),
+                        storedGameService.getCreatedAt(), storedGameService.getScheduledAt(), storedGameService.getRules());
                 indoorGame.setUsage(storedGameService.getUsage());
                 indoorGame.setIndexed(storedGameService.isIndexed());
+                indoorGame.setLeagueId(storedGameService.getLeagueId());
                 indoorGame.setLeagueName(storedGameService.getLeagueName());
                 indoorGame.setDivisionName(storedGameService.getDivisionName());
                 indoorGame.restoreTeams(storedGameService);
                 gameService = indoorGame;
                 break;
             case BEACH:
-                BeachGame beachGame = createBeachGame(storedGameService.getGameDate(), storedGameService.getGameSchedule(), storedGameService.getRules());
+                BeachGame beachGame = createBeachGame(storedGameService.getId(), storedGameService.getCreatedBy(), storedGameService.getRefereeName(),
+                        storedGameService.getCreatedAt(), storedGameService.getScheduledAt(), storedGameService.getRules());
                 beachGame.setIndexed(storedGameService.isIndexed());
+                beachGame.setLeagueId(storedGameService.getLeagueId());
                 beachGame.setLeagueName(storedGameService.getLeagueName());
                 beachGame.setDivisionName(storedGameService.getDivisionName());
                 beachGame.restoreTeams(storedGameService);
                 gameService = beachGame;
                 break;
             case INDOOR_4X4:
-                Indoor4x4Game indoor4x4Game = createIndoor4x4Game(storedGameService.getGameDate(), storedGameService.getGameSchedule(), storedGameService.getRules());
+                Indoor4x4Game indoor4x4Game = createIndoor4x4Game(storedGameService.getId(), storedGameService.getCreatedBy(), storedGameService.getRefereeName(),
+                        storedGameService.getCreatedAt(), storedGameService.getScheduledAt(), storedGameService.getRules());
                 indoor4x4Game.setUsage(storedGameService.getUsage());
                 indoor4x4Game.setIndexed(storedGameService.isIndexed());
+                indoor4x4Game.setLeagueId(storedGameService.getLeagueId());
                 indoor4x4Game.setLeagueName(storedGameService.getLeagueName());
                 indoor4x4Game.setDivisionName(storedGameService.getDivisionName());
                 indoor4x4Game.restoreTeams(storedGameService);

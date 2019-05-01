@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -9,6 +10,10 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,7 +23,8 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -34,7 +40,8 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -59,7 +66,8 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -86,7 +94,8 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createIndoorGame(System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        GameService game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {

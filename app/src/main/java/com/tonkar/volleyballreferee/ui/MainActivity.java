@@ -30,6 +30,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
@@ -54,6 +55,7 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class MainActivity extends AuthenticationActivity implements AsyncGameRequestListener {
 
@@ -206,7 +208,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
-        IndoorGame game = GameFactory.createIndoorGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");

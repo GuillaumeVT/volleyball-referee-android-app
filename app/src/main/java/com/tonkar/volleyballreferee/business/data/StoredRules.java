@@ -134,7 +134,7 @@ public class StoredRules implements StoredRulesService {
         return AppDatabase.getInstance(mContext).rulesDao().count() > 0;
     }
 
-    public static List<Rules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
+    public static List<ApiRules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
             return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.RULES_LIST_TYPE);
         }
@@ -176,7 +176,7 @@ public class StoredRules implements StoredRulesService {
         }
     }
 
-    public static void writeRulesStream(OutputStream outputStream, List<Rules> rules) throws JsonParseException, IOException {
+    public static void writeRulesStream(OutputStream outputStream, List<ApiRules> rules) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         JsonIOUtils.GSON.toJson(rules, JsonIOUtils.RULES_LIST_TYPE, writer);
         writer.close();
@@ -230,6 +230,7 @@ public class StoredRules implements StoredRulesService {
             if (localRules.getCreatedBy().equals(Authentication.VBR_USER_ID)) {
                 ApiRules rules = getRules(localRules.getId());
                 rules.setCreatedBy(userId);
+                rules.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 insertRulesIntoDb(rules, false, true);
                 afterPurchase = true;
             }

@@ -86,4 +86,29 @@ public class ApiCourt {
 
         return number;
     }
+
+    public void setPlayerAt(int number, PositionType positionType) {
+        switch (positionType) {
+            case POSITION_1:
+                setP1(number);
+                break;
+            case POSITION_2:
+                setP2(number);
+                break;
+            case POSITION_3:
+                setP3(number);
+                break;
+            case POSITION_4:
+                setP4(number);
+                break;
+            case POSITION_5:
+                setP5(number);
+                break;
+            case POSITION_6:
+                setP6(number);
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.business.team;
 
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 
 public class BeachPlayer extends Player {
 
@@ -15,20 +15,12 @@ public class BeachPlayer extends Player {
 
     @Override
     public void turnToNextPosition() {
-        turn();
+        setPosition(getPosition().nextPosition(GameType.BEACH));
     }
 
     @Override
     public void turnToPreviousPosition() {
-        turn();
-    }
-
-    private void turn() {
-        if (PositionType.POSITION_1.equals(getPosition())) {
-            setPosition(PositionType.POSITION_2);
-        } else if (PositionType.POSITION_2.equals(getPosition())) {
-            setPosition(PositionType.POSITION_1);
-        }
+        setPosition(getPosition().previousPosition(GameType.BEACH));
     }
 
 }

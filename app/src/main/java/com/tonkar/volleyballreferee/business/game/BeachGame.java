@@ -2,16 +2,14 @@ package com.tonkar.volleyballreferee.business.game;
 
 import android.graphics.Color;
 
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.team.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.BeachTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -20,21 +18,22 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 public class BeachGame extends Game implements BeachTeamService {
 
-    BeachGame(final long gameDate, final long gameSchedule, final Rules rules) {
-        super(GameType.BEACH, gameDate, gameSchedule, rules);
+    BeachGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
+        super(GameType.BEACH, id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
     // For GSON Deserialization
     public BeachGame() {
-        this(0L, 0L, Rules.defaultUniversalRules());
+        this("", "", "", 0L, 0L, new Rules());
     }
 
     @Override
     protected TeamDefinition createTeamDefinition(TeamType teamType) {
-        return new BeachTeamDefinition(teamType);
+        return new BeachTeamDefinition(UUID.randomUUID().toString(), getCreatedBy(), teamType);
     }
 
     @Override
@@ -48,15 +47,15 @@ public class BeachGame extends Game implements BeachTeamService {
 
         if (!currentSet().isSetCompleted()) {
             // In beach volley, the teams change sides every 7 points, or every 5 points during the tie break
-            int period = isTieBreakSet() ? getRules().getBeachCourtSwitchFrequencyTieBreak() : getRules().getBeachCourtSwitchFrequency();
+            int period = isTieBreakSet() ? getRules().getBeachCourtSwitchFreqTieBreak() : getRules().getBeachCourtSwitchFreq();
             int combinedScores = currentSet().getPoints(TeamType.HOME) + currentSet().getPoints(TeamType.GUEST);
 
-            if (getRules().areBeachCourtSwitchesEnabled() && combinedScores > 0 && (combinedScores % period) == 0) {
+            if (getRules().isBeachCourtSwitches() && combinedScores > 0 && (combinedScores % period) == 0) {
                 swapTeams(ActionOriginType.APPLICATION);
             }
 
             // In beach volley, there is one technical timeout when the combined score is 21 but not during tie break
-            if (getRules().areTechnicalTimeoutsEnabled() && !isTieBreakSet() && combinedScores == 21) {
+            if (getRules().isTechnicalTimeouts() && !isTieBreakSet() && combinedScores == 21) {
                 notifyTechnicalTimeoutReached();
             }
         }
@@ -67,10 +66,10 @@ public class BeachGame extends Game implements BeachTeamService {
         super.removeLastPoint();
 
         // In beach volley, the teams change sides every 7 points, or every 5 points during the tie break
-        int period = isTieBreakSet() ? getRules().getBeachCourtSwitchFrequencyTieBreak() : getRules().getBeachCourtSwitchFrequency();
+        int period = isTieBreakSet() ? getRules().getBeachCourtSwitchFreqTieBreak() : getRules().getBeachCourtSwitchFreq();
         int combinedScores = currentSet().getPoints(TeamType.HOME) + currentSet().getPoints(TeamType.GUEST);
 
-        if (getRules().areBeachCourtSwitchesEnabled() && combinedScores > 0 && (combinedScores % period) == (period - 1)) {
+        if (getRules().isBeachCourtSwitches() && combinedScores > 0 && (combinedScores % period) == (period - 1)) {
             swapTeams(ActionOriginType.APPLICATION);
         }
     }
@@ -141,17 +140,17 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    public java.util.Set<Integer> getLiberos(TeamType teamType) {
+    public java.util.Set<ApiPlayer> getLiberos(TeamType teamType) {
         return new HashSet<>();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<Substitution> getSubstitutions(TeamType teamType, int setIndex) {
+    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
@@ -166,8 +165,8 @@ public class BeachGame extends Game implements BeachTeamService {
     }
 
     @Override
-    public java.util.Set<Integer> getPlayersInStartingLineup(TeamType teamType, int setIndex) {
-        return new HashSet<>();
+    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
+        return new ApiCourt();
     }
 
     @Override
@@ -214,24 +213,24 @@ public class BeachGame extends Game implements BeachTeamService {
                     int homePoints = getPoints(TeamType.HOME, setIndex);
                     int guestPoints = getPoints(TeamType.GUEST, setIndex);
 
-                    List<Timeout> homeTimeouts = storedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (Timeout timeout : homeTimeouts) {
+                    List<ApiTimeout> homeTimeouts = storedGameService.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (ApiTimeout timeout : homeTimeouts) {
                         callTimeout(TeamType.HOME);
                     }
 
-                    List<Timeout> guestTimeouts = storedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (Timeout timeout : guestTimeouts) {
+                    List<ApiTimeout> guestTimeouts = storedGameService.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (ApiTimeout timeout : guestTimeouts) {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<Sanction> homeSanctions = storedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (Sanction sanction : homeSanctions) {
-                        giveSanction(TeamType.HOME, sanction.getSanctionType(), sanction.getPlayer());
+                    List<ApiSanction> homeSanctions = storedGameService.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (ApiSanction sanction : homeSanctions) {
+                        giveSanction(TeamType.HOME, sanction.getCard(), sanction.getNum());
                     }
 
-                    List<Sanction> guestSanctions = storedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (Sanction sanction : guestSanctions) {
-                        giveSanction(TeamType.GUEST, sanction.getSanctionType(), sanction.getPlayer());
+                    List<ApiSanction> guestSanctions = storedGameService.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (ApiSanction sanction : guestSanctions) {
+                        giveSanction(TeamType.GUEST, sanction.getCard(), sanction.getNum());
                     }
 
                     addPoint(scoringTeam);

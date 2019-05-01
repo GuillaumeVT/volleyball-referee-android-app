@@ -1,5 +1,7 @@
 package com.tonkar.volleyballreferee.business.team;
 
+import com.tonkar.volleyballreferee.interfaces.GameType;
+
 public class IndoorPlayer extends Player {
 
     public IndoorPlayer(final int number) {
@@ -13,12 +15,12 @@ public class IndoorPlayer extends Player {
 
     @Override
     public void turnToNextPosition() {
-        setPosition(getPosition().nextPosition());
+        setPosition(getPosition().nextPosition(GameType.INDOOR));
     }
 
     @Override
     public void turnToPreviousPosition() {
-        setPosition(getPosition().previousPosition());
+        setPosition(getPosition().previousPosition(GameType.INDOOR));
     }
 
 }

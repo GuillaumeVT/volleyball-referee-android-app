@@ -12,13 +12,13 @@ import java.util.TreeSet;
 
 public class IndoorTeamDefinition extends TeamDefinition {
 
-    public IndoorTeamDefinition(final String createdBy, final GameType gameType, final TeamType teamType) {
-        super(createdBy, gameType, teamType);
+    public IndoorTeamDefinition(GameType kind, String id, String createdBy, TeamType teamType) {
+        super(kind, id, createdBy, teamType);
     }
 
     // For GSON Deserialization
     public IndoorTeamDefinition() {
-        this("", GameType.INDOOR, TeamType.HOME);
+        this(GameType.INDOOR, "", "", TeamType.HOME);
     }
 
     @Override

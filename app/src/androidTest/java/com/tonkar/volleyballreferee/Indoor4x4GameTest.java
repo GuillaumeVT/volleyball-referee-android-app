@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -13,6 +14,10 @@ import com.tonkar.volleyballreferee.business.rules.Rules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +27,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        GameService game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -38,7 +44,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        GameService game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -63,7 +70,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        GameService game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -90,7 +98,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        GameService game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
         game.startMatch();
 
         for (int index = 0; index < game.getRules().getPointsPerSet(); index++) {
@@ -121,7 +130,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_defense() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);
@@ -159,7 +169,8 @@ public class Indoor4x4GameTest {
 
     @Test
     public void substitutePlayer_Pos1Server_attack() {
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
         for (int index = 1; index <= 8; index++) {
             game.addPlayer(TeamType.HOME, index);

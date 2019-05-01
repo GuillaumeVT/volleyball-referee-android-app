@@ -1,47 +1,49 @@
 package com.tonkar.volleyballreferee.business.game;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.api.ApiTimeout;
 import com.tonkar.volleyballreferee.business.team.TeamComposition;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.business.rules.Rules;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode
 public abstract class Set {
 
     @SerializedName("classType")
-    private       String          mClassType;
+    private       String           mClassType;
     @SerializedName("pointsToWinSet")
-    private final int             mPointsToWinSet;
+    private final int              mPointsToWinSet;
     @SerializedName("twoPointsDifference")
-    private final boolean         m2PointsDifference;
-    @SerializedName("homeTeamPoints")
-    private       int             mHomeTeamPoints;
-    @SerializedName("guestTeamPoints")
-    private       int             mGuestTeamPoints;
-    @SerializedName("homeTeamRemainingTimeouts")
-    private       int             mHomeTeamRemainingTimeouts;
-    @SerializedName("guestTeamRemainingTimeouts")
-    private       int             mGuestTeamRemainingTimeouts;
+    private final boolean          m2PointsDifference;
+    @SerializedName("homePoints")
+    private       int              mHomePoints;
+    @SerializedName("guestPoints")
+    private       int              mGuestPoints;
+    @SerializedName("homeRemainingTimeouts")
+    private       int              mHomeRemainingTimeouts;
+    @SerializedName("guestRemainingTimeouts")
+    private       int              mGuestRemainingTimeouts;
     @SerializedName("pointsLadder")
-    private final List<TeamType>  mPointsLadder;
+    private final List<TeamType>   mPointsLadder;
     @SerializedName("servingTeamAtStart")
-    private       TeamType        mServingTeamAtStart;
+    private       TeamType         mServingTeamAtStart;
     @SerializedName("startTime")
-    private       long            mStartTime;
+    private       long             mStartTime;
     @SerializedName("endTime")
-    private       long            mEndTime;
-    @SerializedName("homeTeamComposition")
-    private       TeamComposition mHomeTeamComposition;
-    @SerializedName("guestTeamComposition")
-    private       TeamComposition mGuestTeamComposition;
-    @SerializedName("homeTeamCalledTimeouts")
-    private final List<Timeout>   mHomeTeamCalledTimeouts;
-    @SerializedName("guestTeamCalledTimeouts")
-    private final List<Timeout>   mGuestTeamCalledTimeouts;
+    private       long             mEndTime;
+    @SerializedName("homeComposition")
+    private       TeamComposition  mHomeComposition;
+    @SerializedName("guestComposition")
+    private       TeamComposition  mGuestComposition;
+    @SerializedName("homeCalledTimeouts")
+    private final List<ApiTimeout> mHomeCalledTimeouts;
+    @SerializedName("guestCalledTimeouts")
+    private final List<ApiTimeout> mGuestCalledTimeouts;
 
     protected Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
         this(rules, pointsToWinSet, servingTeamAtStart, null, null);
@@ -53,61 +55,61 @@ public abstract class Set {
         m2PointsDifference = rules.isTwoPointsDifference();
 
         if (homeTeamDefinition != null && guestTeamDefinition != null) {
-            mHomeTeamComposition = createTeamComposition(rules, homeTeamDefinition);
-            mGuestTeamComposition = createTeamComposition(rules, guestTeamDefinition);
+            mHomeComposition = createTeamComposition(rules, homeTeamDefinition);
+            mGuestComposition = createTeamComposition(rules, guestTeamDefinition);
         }
 
-        mHomeTeamPoints = 0;
-        mGuestTeamPoints = 0;
+        mHomePoints = 0;
+        mGuestPoints = 0;
         mPointsLadder = new ArrayList<>();
 
-        mHomeTeamRemainingTimeouts = rules.getTeamTimeoutsPerSet();
-        mGuestTeamRemainingTimeouts = rules.getTeamTimeoutsPerSet();
+        mHomeRemainingTimeouts = rules.getTeamTimeoutsPerSet();
+        mGuestRemainingTimeouts = rules.getTeamTimeoutsPerSet();
 
         mServingTeamAtStart = servingTeamAtStart;
 
         mStartTime = 0L;
         mEndTime = 0L;
 
-        mHomeTeamCalledTimeouts = new ArrayList<>();
-        mGuestTeamCalledTimeouts = new ArrayList<>();
+        mHomeCalledTimeouts = new ArrayList<>();
+        mGuestCalledTimeouts = new ArrayList<>();
     }
 
     protected abstract TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition);
 
     String getSetSummary() {
-        return mHomeTeamPoints + "-" + mGuestTeamPoints;
+        return mHomePoints + "-" + mGuestPoints;
     }
 
     public boolean isSetCompleted() {
         // Set is complete when a team reaches the number of points to win (e.g. 25, 21, 15) or more, with a 2-points difference
-        return (mHomeTeamPoints >= mPointsToWinSet || mGuestTeamPoints >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 2);
+        return (mHomePoints >= mPointsToWinSet || mGuestPoints >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomePoints - mGuestPoints) >= 2);
     }
 
     public boolean isSetPoint() {
         // Set ball when a team will reach the number of points to win  with 1 point (e.g. 25, 21, 15) or more, with at least 1-point difference
-        return !isSetCompleted() && (mHomeTeamPoints+1 >= mPointsToWinSet || mGuestTeamPoints+1 >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomeTeamPoints - mGuestTeamPoints) >= 1);
+        return !isSetCompleted() && (mHomePoints +1 >= mPointsToWinSet || mGuestPoints +1 >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomePoints - mGuestPoints) >= 1);
     }
 
     public TeamType getLeadingTeam() {
-        return mGuestTeamPoints > mHomeTeamPoints ? TeamType.GUEST : TeamType.HOME;
+        return mGuestPoints > mHomePoints ? TeamType.GUEST : TeamType.HOME;
     }
 
     public int addPoint(final TeamType teamType) {
         int points = 0;
 
-        if (mHomeTeamPoints == 0 && mGuestTeamPoints == 0) {
+        if (mHomePoints == 0 && mGuestPoints == 0) {
             mStartTime = System.currentTimeMillis();
         }
 
         switch (teamType) {
             case HOME:
-                mHomeTeamPoints++;
-                points = mHomeTeamPoints;
+                mHomePoints++;
+                points = mHomePoints;
                 break;
             case GUEST:
-                mGuestTeamPoints++;
-                points = mGuestTeamPoints;
+                mGuestPoints++;
+                points = mGuestPoints;
                 break;
         }
 
@@ -131,10 +133,10 @@ public abstract class Set {
 
             switch (teamLosingOnePoint) {
                 case HOME:
-                    mHomeTeamPoints--;
+                    mHomePoints--;
                     break;
                 case GUEST:
-                    mGuestTeamPoints--;
+                    mGuestPoints--;
                     break;
             }
         }
@@ -147,10 +149,10 @@ public abstract class Set {
 
         switch (teamType) {
             case HOME:
-                points = mHomeTeamPoints;
+                points = mHomePoints;
                 break;
             case GUEST:
-                points = mGuestTeamPoints;
+                points = mGuestPoints;
                 break;
         }
 
@@ -166,25 +168,25 @@ public abstract class Set {
 
         switch (teamType) {
             case HOME:
-                timeouts = mHomeTeamRemainingTimeouts;
+                timeouts = mHomeRemainingTimeouts;
                 break;
             case GUEST:
-                timeouts = mGuestTeamRemainingTimeouts;
+                timeouts = mGuestRemainingTimeouts;
                 break;
         }
 
         return timeouts;
     }
 
-    List<Timeout> getCalledTimeouts(final TeamType teamType) {
-        List<Timeout> timeouts = new ArrayList<>();
+    List<ApiTimeout> getCalledTimeouts(final TeamType teamType) {
+        List<ApiTimeout> timeouts = new ArrayList<>();
 
         switch (teamType) {
             case HOME:
-                timeouts = new ArrayList<>(mHomeTeamCalledTimeouts);
+                timeouts = new ArrayList<>(mHomeCalledTimeouts);
                 break;
             case GUEST:
-                timeouts = new ArrayList<>(mGuestTeamCalledTimeouts);
+                timeouts = new ArrayList<>(mGuestCalledTimeouts);
                 break;
         }
 
@@ -196,14 +198,14 @@ public abstract class Set {
 
         switch (teamType) {
             case HOME:
-                mHomeTeamRemainingTimeouts--;
-                timeouts = mHomeTeamRemainingTimeouts;
-                mHomeTeamCalledTimeouts.add(new Timeout(mHomeTeamPoints, mGuestTeamPoints));
+                mHomeRemainingTimeouts--;
+                timeouts = mHomeRemainingTimeouts;
+                mHomeCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
                 break;
             case GUEST:
-                mGuestTeamRemainingTimeouts--;
-                timeouts = mGuestTeamRemainingTimeouts;
-                mGuestTeamCalledTimeouts.add(new Timeout(mHomeTeamPoints, mGuestTeamPoints));
+                mGuestRemainingTimeouts--;
+                timeouts = mGuestRemainingTimeouts;
+                mGuestCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
                 break;
         }
 
@@ -250,40 +252,12 @@ public abstract class Set {
         TeamComposition teamComposition;
 
         if (TeamType.HOME.equals(teamType)) {
-            teamComposition = mHomeTeamComposition;
+            teamComposition = mHomeComposition;
         } else {
-            teamComposition = mGuestTeamComposition;
+            teamComposition = mGuestComposition;
         }
 
         return teamComposition;
-    }
-
-    private String getClassType() {
-        return mClassType;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj == this) {
-            result = true;
-        } else if (obj instanceof Set) {
-            Set other = (Set) obj;
-            result = (this.getClassType().equals(other.getClassType()))
-                    && (this.getPoints(TeamType.HOME) == other.getPoints(TeamType.HOME))
-                    && (this.getPoints(TeamType.GUEST) == other.getPoints(TeamType.GUEST))
-                    && (this.getRemainingTimeouts(TeamType.HOME) == other.getRemainingTimeouts(TeamType.HOME))
-                    && (this.getRemainingTimeouts(TeamType.GUEST) == other.getRemainingTimeouts(TeamType.GUEST))
-                    && (this.getPointsLadder().equals(other.getPointsLadder()))
-                    && (this.getServingTeamAtStart().equals(other.getServingTeamAtStart()))
-                    && (this.getTeamComposition(TeamType.HOME).equals(other.getTeamComposition(TeamType.HOME)))
-                    && (this.getTeamComposition(TeamType.GUEST).equals(other.getTeamComposition(TeamType.GUEST)))
-                    && (this.getCalledTimeouts(TeamType.HOME).equals(other.getCalledTimeouts(TeamType.HOME)))
-                    && (this.getCalledTimeouts(TeamType.GUEST).equals(other.getCalledTimeouts(TeamType.GUEST)));
-        }
-
-        return result;
     }
 
 }
