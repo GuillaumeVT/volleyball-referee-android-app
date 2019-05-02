@@ -61,6 +61,7 @@ public class Indoor4x4CompleteGame {
     private void defineTeams(Indoor4x4Game indoor4x4Game) {
         indoor4x4Game.setGender(GenderType.GENTS);
 
+        indoor4x4Game.setLeagueId(UUID.randomUUID().toString());
         indoor4x4Game.setLeagueName("4x4");
         indoor4x4Game.setDivisionName("Division 1");
 

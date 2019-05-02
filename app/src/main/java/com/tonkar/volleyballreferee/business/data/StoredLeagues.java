@@ -3,6 +3,8 @@ package com.tonkar.volleyballreferee.business.data;
 import android.content.Context;
 import android.util.Log;
 import com.android.volley.Request;
+import com.google.gson.JsonParseException;
+import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.api.ApiLeague;
 import com.tonkar.volleyballreferee.api.ApiUtils;
 import com.tonkar.volleyballreferee.api.Authentication;
@@ -15,6 +17,7 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
 
+import java.io.*;
 import java.util.*;
 
 public class StoredLeagues implements StoredLeaguesService {
@@ -85,6 +88,18 @@ public class StoredLeagues implements StoredLeaguesService {
 
     private String writeLeague(ApiLeague league) {
         return JsonIOUtils.GSON.toJson(league, JsonIOUtils.LEAGUE_TYPE);
+    }
+
+    public static List<ApiLeague> readLeaguesStream(InputStream inputStream) throws IOException, JsonParseException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
+            return JsonIOUtils.GSON.fromJson(reader, JsonIOUtils.LEAGUE_LIST_TYPE);
+        }
+    }
+
+    public static void writeLeaguesStream(OutputStream outputStream, List<ApiLeague> leagues) throws JsonParseException, IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        JsonIOUtils.GSON.toJson(leagues, JsonIOUtils.LEAGUE_LIST_TYPE, writer);
+        writer.close();
     }
 
     private List<ApiLeague> readLeagueList(String json) {
