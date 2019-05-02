@@ -47,7 +47,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -741,9 +741,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGameService);
         }
-        if (fragment instanceof RecordedGamesServiceHandler) {
-            RecordedGamesServiceHandler recordedGamesServiceHandler = (RecordedGamesServiceHandler) fragment;
-            recordedGamesServiceHandler.setRecordedGamesService(mStoredGamesService);
+        if (fragment instanceof StoredGamesServiceHandler) {
+            StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
+            storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
         }
     }
 

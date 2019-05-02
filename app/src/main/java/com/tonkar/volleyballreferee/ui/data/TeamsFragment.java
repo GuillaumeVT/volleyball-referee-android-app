@@ -13,9 +13,9 @@ import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 
 import androidx.fragment.app.Fragment;
-import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.StoredGameServiceHandler;
 
-public class TeamsFragment extends Fragment implements RecordedGameServiceHandler {
+public class TeamsFragment extends Fragment implements StoredGameServiceHandler {
 
     private StoredGameService mStoredGameService;
 
@@ -45,7 +45,7 @@ public class TeamsFragment extends Fragment implements RecordedGameServiceHandle
     }
 
     @Override
-    public void setRecordedGameService(StoredGameService storedGameService) {
+    public void setStoredGameService(StoredGameService storedGameService) {
         mStoredGameService = storedGameService;
     }
 }

@@ -36,7 +36,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.SimpleDateFormat;
@@ -406,9 +406,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGameService);
         }
-        if (fragment instanceof RecordedGamesServiceHandler) {
-            RecordedGamesServiceHandler recordedGamesServiceHandler = (RecordedGamesServiceHandler) fragment;
-            recordedGamesServiceHandler.setRecordedGamesService(mStoredGamesService);
+        if (fragment instanceof StoredGamesServiceHandler) {
+            StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
+            storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
         }
     }
 

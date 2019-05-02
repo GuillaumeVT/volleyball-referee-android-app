@@ -25,7 +25,7 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.interfaces.RecordedGameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.StoredGameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.File;
@@ -156,9 +156,9 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        if (fragment instanceof RecordedGameServiceHandler) {
-            RecordedGameServiceHandler recordedGameServiceHandler = (RecordedGameServiceHandler) fragment;
-            recordedGameServiceHandler.setRecordedGameService(mStoredGameService);
+        if (fragment instanceof StoredGameServiceHandler) {
+            StoredGameServiceHandler storedGameServiceHandler = (StoredGameServiceHandler) fragment;
+            storedGameServiceHandler.setStoredGameService(mStoredGameService);
         }
     }
 }

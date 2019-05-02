@@ -32,12 +32,12 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RecordedGamesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Random;
 
-public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, RecordedGamesServiceHandler {
+public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, StoredGamesServiceHandler {
 
     private Activity           mActivity;
     private GameService        mGameService;
@@ -196,7 +196,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     }
 
     @Override
-    public void setRecordedGamesService(StoredGamesService storedGamesService) {
+    public void setStoredGamesService(StoredGamesService storedGamesService) {
         mStoredGamesService = storedGamesService;
     }
 }
