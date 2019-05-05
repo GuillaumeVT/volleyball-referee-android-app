@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class SavedTeamActivity extends AppCompatActivity {
+public class StoredTeamActivity extends AppCompatActivity {
 
     private BaseTeamService mTeamService;
     private MenuItem        mSaveItem;
@@ -39,7 +39,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         mTeamService = storedTeamsService.copyTeam(storedTeamsService.readTeam(getIntent().getStringExtra("team")));
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_team);
+        setContentView(R.layout.activity_stored_team);
 
         String gameTypeStr = getIntent().getStringExtra("kind");
         GameType gameType = GameType.valueOf(gameTypeStr);
@@ -78,7 +78,7 @@ public class SavedTeamActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_saved_team, menu);
+        inflater.inflate(R.menu.menu_stored_team, menu);
 
         mSaveItem = menu.findItem(R.id.action_save_team);
         computeSaveItemVisibility();
@@ -112,8 +112,8 @@ public class SavedTeamActivity extends AppCompatActivity {
         Log.i(Tags.STORED_TEAMS, "Save team");
         StoredTeamsService storedTeamsService = new StoredTeams(this);
         storedTeamsService.saveTeam(mTeamService);
-        UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
+        UiUtils.makeText(StoredTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         UiUtils.animateCreate(this);
@@ -125,10 +125,10 @@ public class SavedTeamActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             StoredTeamsService storedTeamsService = new StoredTeams(this);
-            storedTeamsService.deleteTeam(mTeamService.getTeamsKind(), mTeamService.getTeamName(null), mTeamService.getGender());
-            UiUtils.makeText(SavedTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
+            storedTeamsService.deleteTeam(mTeamService.getTeamId(null));
+            UiUtils.makeText(StoredTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
+            Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             UiUtils.animateBackward(this);
@@ -142,7 +142,7 @@ public class SavedTeamActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.leave_team_creation_title)).setMessage(getResources().getString(R.string.leave_team_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            Intent intent = new Intent(SavedTeamActivity.this, SavedTeamsListActivity.class);
+            Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             UiUtils.animateBackward(this);
@@ -154,7 +154,7 @@ public class SavedTeamActivity extends AppCompatActivity {
 
     public void computeSaveItemVisibility() {
         if (mSaveItem != null) {
-            if (mTeamService.getTeamName(null).isEmpty()
+            if (mTeamService.getTeamName(null).trim().length() < 1
                     || mTeamService.getNumberOfPlayers(null) < mTeamService.getExpectedNumberOfPlayersOnCourt()
                     || mTeamService.getCaptain(null) < 1) {
                 Log.i(Tags.STORED_TEAMS, "Save button is invisible");

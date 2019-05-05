@@ -12,13 +12,14 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiRules;
+import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
-import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -28,15 +29,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class SavedRulesListActivity extends NavigationActivity implements DataSynchronizationListener {
+public class StoredRulesListActivity extends NavigationActivity implements DataSynchronizationListener {
 
-    private StoredRulesService    mStoredRulesService;
-    private SavedRulesListAdapter mSavedRulesListAdapter;
-    private SwipeRefreshLayout    mSyncLayout;
-    private boolean               mIsFabOpen;
-    private FloatingActionButton  mAddIndoorRulesButton;
-    private FloatingActionButton  mAddIndoor4x4RulesButton;
-    private FloatingActionButton  mAddBeachRulesButton;
+    private StoredRulesService     mStoredRulesService;
+    private StoredRulesListAdapter mStoredRulesListAdapter;
+    private SwipeRefreshLayout     mSyncLayout;
+    private boolean                mIsFabOpen;
+    private FloatingActionButton   mAddIndoorRulesButton;
+    private FloatingActionButton   mAddIndoor4x4RulesButton;
+    private FloatingActionButton   mAddBeachRulesButton;
 
     @Override
     protected String getToolbarTitle() {
@@ -45,7 +46,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
 
     @Override
     protected int getCheckedItem() {
-        return R.id.action_saved_rules;
+        return R.id.action_stored_rules;
     }
 
     @Override
@@ -55,24 +56,25 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.STORED_RULES, "Create rules list activity");
-        setContentView(R.layout.activity_saved_rules_list);
+        setContentView(R.layout.activity_stored_rules_list);
 
         initNavigationMenu();
 
         mSyncLayout = findViewById(R.id.sync_layout);
-        mSyncLayout.setOnRefreshListener(this::updateSavedRulesList);
+        mSyncLayout.setOnRefreshListener(this::updateStoredRulesList);
 
-        List<Rules> savedRules = mStoredRulesService.listRules();
+        List<ApiRulesDescription> storedRules = mStoredRulesService.listRules();
 
-        final ListView savedRulesList = findViewById(R.id.saved_rules_list);
-        mSavedRulesListAdapter = new SavedRulesListAdapter(this, getLayoutInflater(), savedRules);
-        savedRulesList.setAdapter(mSavedRulesListAdapter);
+        final ListView storedRulesList = findViewById(R.id.stored_rules_list);
+        mStoredRulesListAdapter = new StoredRulesListAdapter(this, getLayoutInflater(), storedRules);
+        storedRulesList.setAdapter(mStoredRulesListAdapter);
 
-        savedRulesList.setOnItemClickListener((adapterView, view, i, l) -> {
-            Rules rules = mSavedRulesListAdapter.getItem(i);
-            Log.i(Tags.STORED_RULES, String.format("Start activity to edit saved rules %s", rules.getName()));
+        storedRulesList.setOnItemClickListener((adapterView, view, i, l) -> {
+            ApiRulesDescription rulesDescription = mStoredRulesListAdapter.getItem(i);
+            ApiRules rules = mStoredRulesService.getRules(rulesDescription.getId());
+            Log.i(Tags.STORED_RULES, String.format("Start activity to edit stored rules %s", rules.getName()));
 
-            final Intent intent = new Intent(SavedRulesListActivity.this, SavedRulesActivity.class);
+            final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesActivity.class);
             intent.putExtra("rules", mStoredRulesService.writeRules(rules));
             intent.putExtra("create", false);
             startActivity(intent);
@@ -95,7 +97,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
             }
         });
 
-        updateSavedRulesList();
+        updateStoredRulesList();
     }
 
     public void addIndoorRules(View view) {
@@ -114,7 +116,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
     }
 
     private void addRules(GameType gameType) {
-        final Intent intent = new Intent(this, SavedRulesActivity.class);
+        final Intent intent = new Intent(this, StoredRulesActivity.class);
         intent.putExtra("rules", mStoredRulesService.writeRules(mStoredRulesService.createRules(gameType)));
         intent.putExtra("create", true);
         startActivity(intent);
@@ -124,7 +126,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_saved_rules_list, menu);
+        inflater.inflate(R.menu.menu_stored_rules_list, menu);
 
         MenuItem deleteAllRulesItem = menu.findItem(R.id.action_delete_rules);
         deleteAllRulesItem.setVisible(mStoredRulesService.hasRules());
@@ -142,13 +144,13 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
 
             @Override
             public boolean onQueryTextChange(String searchQuery) {
-                mSavedRulesListAdapter.getFilter().filter(searchQuery.trim());
+                mStoredRulesListAdapter.getFilter().filter(searchQuery.trim());
                 return true;
             }
         });
 
         MenuItem syncItem = menu.findItem(R.id.action_sync);
-        syncItem.setVisible(PrefUtils.isSyncOn(this));
+        syncItem.setVisible(PrefUtils.canSync(this));
 
         return true;
     }
@@ -159,7 +161,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
             case R.id.action_search_rules:
                 return true;
             case R.id.action_sync:
-                updateSavedRulesList();
+                updateStoredRulesList();
                 return true;
             case R.id.action_delete_rules:
                 deleteAllRules();
@@ -175,8 +177,8 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_all_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredRulesService.deleteAllRules();
-            UiUtils.makeText(SavedRulesListActivity.this, getResources().getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToHome(SavedRulesListActivity.this);
+            UiUtils.makeText(StoredRulesListActivity.this, getResources().getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
+            UiUtils.navigateToHome(StoredRulesListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -212,8 +214,8 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
         }
     }
 
-    private void updateSavedRulesList() {
-        if (PrefUtils.isSyncOn(this)) {
+    private void updateStoredRulesList() {
+        if (PrefUtils.canSync(this)) {
             mSyncLayout.setRefreshing(true);
             mStoredRulesService.syncRules(this);
         }
@@ -221,7 +223,7 @@ public class SavedRulesListActivity extends NavigationActivity implements DataSy
 
     @Override
     public void onSynchronizationSucceeded() {
-        mSavedRulesListAdapter.updateSavedRulesList(mStoredRulesService.listRules());
+        mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
         mSyncLayout.setRefreshing(false);
     }
 

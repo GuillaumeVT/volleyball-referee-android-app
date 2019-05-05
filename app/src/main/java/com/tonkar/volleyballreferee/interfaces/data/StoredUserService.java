@@ -19,12 +19,12 @@ public interface StoredUserService {
 
     List<ApiFriend> listFriends();
 
-    void sendFriendRequest(String friendPseudo);
+    void sendFriendRequest(String friendPseudo, DataSynchronizationListener listener);
 
-    void acceptFriendRequest(ApiFriendRequest friendRequest);
+    void acceptFriendRequest(ApiFriendRequest friendRequest, DataSynchronizationListener listener);
 
-    void rejectFriendRequest(ApiFriendRequest friendRequest);
+    void rejectFriendRequest(ApiFriendRequest friendRequest, DataSynchronizationListener listener);
 
-    void removeFriend(String friendId);
+    void removeFriend(String friendId, DataSynchronizationListener listener);
 
 }

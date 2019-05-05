@@ -122,22 +122,43 @@
                                 android:orientation="horizontal"
                                 android:weightSum="2">
 
-                            <com.google.android.gms.common.SignInButton
+                            <com.google.android.material.button.MaterialButton
                                     android:id="@+id/google_sign_in_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:padding="@dimen/default_margin_size"
-                                    android:textSize="@dimen/default_text_size"/>
+                                    android:layout_margin="@dimen/default_margin_size"
+                                    android:text="@string/user_sign_in_google"
+                                    android:textColor="@android:color/white"
+                                    style="@style/VbrButton"
+                                    app:backgroundTint="@color/colorGoogle"
+                                    app:icon="@drawable/ic_google"
+                                    app:iconTint="@android:color/white"/>
 
-                            <com.facebook.login.widget.LoginButton
+                            <com.google.android.material.button.MaterialButton
                                     android:id="@+id/facebook_sign_in_button"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:layout_margin="@dimen/default_margin_size"
-                                    android:padding="@dimen/default_margin_size"
-                                    android:textSize="@dimen/default_text_size"
-                                    android:layout_weight="1"/>
+                                    android:text="@string/user_sign_in_facebook"
+                                    android:textColor="@android:color/white"
+                                    style="@style/VbrButton"
+                                    app:backgroundTint="@color/colorFacebook"
+                                    app:icon="@drawable/ic_facebook"
+                                    app:iconTint="@android:color/white"/>
+
+                            <com.google.android.gms.common.SignInButton
+                                    android:id="@+id/original_google_sign_in_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone"/>
+
+                            <com.facebook.login.widget.LoginButton
+                                    android:id="@+id/original_facebook_sign_in_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone"/>
                         </LinearLayout>
 
                     </LinearLayout>

@@ -18,12 +18,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiFriendRequest;
+import com.tonkar.volleyballreferee.api.ApiUser;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.business.data.StoredUser;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.data.AsyncUserRequestListener;
+import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import java.net.HttpURLConnection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 public abstract class AuthenticationActivity extends NavigationActivity {
 
@@ -45,7 +53,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
     }
 
     protected void checkAuthentication() {
-        if (PrefUtils.isSyncOn(this)) {
+        if (PrefUtils.isSignedIn(this)) {
             Log.i(Tags.WEB, "Check authentication");
 
             Authentication authentication = PrefUtils.getAuthentication(this);
@@ -69,7 +77,9 @@ public abstract class AuthenticationActivity extends NavigationActivity {
         mGoogleSignInClient.silentSignIn().addOnCompleteListener(this, task -> {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                PrefUtils.signIn(AuthenticationActivity.this, Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
+                String userPseudo = PrefUtils.getUserPseudo(AuthenticationActivity.this);
+                PrefUtils.signIn(AuthenticationActivity.this, Authentication.of(account.getId(), Authentication.Provider.GOOGLE, userPseudo, account.getIdToken()));
+                checkUserAvailability();
             } catch (ApiException e) {
                 googleSignOut(true);
             }
@@ -80,7 +90,9 @@ public abstract class AuthenticationActivity extends NavigationActivity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if (isLoggedIn) {
-            PrefUtils.signIn(this, Authentication.of(accessToken.getUserId(), Authentication.Provider.FACEBOOK, accessToken.getToken()));
+            String userPseudo = PrefUtils.getUserPseudo(AuthenticationActivity.this);
+            PrefUtils.signIn(this, Authentication.of(accessToken.getUserId(), Authentication.Provider.FACEBOOK, userPseudo, accessToken.getToken()));
+            checkUserAvailability();
         } else {
             facebookSignOut(true);
         }
@@ -106,10 +118,10 @@ public abstract class AuthenticationActivity extends NavigationActivity {
     private void onGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            signedIn(Authentication.of(account.getId(), Authentication.Provider.GOOGLE, account.getIdToken()));
+            signedIn(Authentication.of(account.getId(), Authentication.Provider.GOOGLE, "", account.getIdToken()));
         } catch (ApiException e) {
             Log.e(Tags.WEB, "Error during Google sign in", e);
-            UiUtils.makeText(this, String.format(getResources().getString(R.string.user_sign_in_error), "Google"), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, String.format(Locale.getDefault(), getString(R.string.user_sign_in_with_provider_error), "Google"), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -118,7 +130,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
         LoginManager.getInstance().registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                signedIn(Authentication.of(loginResult.getAccessToken().getUserId(), Authentication.Provider.FACEBOOK, loginResult.getAccessToken().getToken()));
+                signedIn(Authentication.of(loginResult.getAccessToken().getUserId(), Authentication.Provider.FACEBOOK, "", loginResult.getAccessToken().getToken()));
             }
 
             @Override
@@ -127,13 +139,13 @@ public abstract class AuthenticationActivity extends NavigationActivity {
             @Override
             public void onError(FacebookException exception) {
                 Log.e(Tags.WEB, "Error during Facebook sign in");
-                UiUtils.makeText(AuthenticationActivity.this, String.format(getResources().getString(R.string.user_sign_in_error), "Facebook"), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_sign_in_with_provider_error), "Facebook"), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     protected void signOut() {
-        if (PrefUtils.isSyncOn(this)) {
+        if (PrefUtils.canSync(this)) {
             Log.i(Tags.WEB, "Sign out");
 
             Authentication authentication = PrefUtils.getAuthentication(this);
@@ -178,8 +190,41 @@ public abstract class AuthenticationActivity extends NavigationActivity {
 
     public void signedIn(Authentication authentication) {
         PrefUtils.signIn(this, authentication);
-        UiUtils.makeText(this, String.format(getResources().getString(R.string.user_signed_in), Authentication.Provider.GOOGLE.equals(authentication.getProvider()) ? "Google" : "Facebook"), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_with_provider), Authentication.Provider.GOOGLE.equals(authentication.getProvider()) ? "Google" : "Facebook"), Toast.LENGTH_LONG).show();
+        checkUserAvailability();
         UiUtils.navigateToHome(this);
+    }
+
+    private void checkUserAvailability() {
+        if (PrefUtils.shouldCreateUser(this)) {
+            StoredUserService storedUserService = new StoredUser(this);
+            storedUserService.downloadUser(new AsyncUserRequestListener() {
+                @Override
+                public void onUserCreated() {}
+
+                @Override
+                public void onUserReceived(ApiUser user) {
+                    UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFriendRequestsReceived(List<ApiFriendRequest> friendRequests) {}
+
+                @Override
+                public void onError(int httpCode) {
+                    if (HttpURLConnection.HTTP_UNAUTHORIZED == httpCode) {
+                        PseudoInputDialogFragment dialogFragment = (PseudoInputDialogFragment) getSupportFragmentManager().findFragmentByTag("pseudo_dialog");
+
+                        if (dialogFragment == null) {
+                            dialogFragment = PseudoInputDialogFragment.newInstance();
+                            dialogFragment.show(getSupportFragmentManager(), "pseudo_dialog");
+                        }
+                    } else {
+                        UiUtils.makeText(AuthenticationActivity.this, getResources().getString(R.string.user_error), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
 
 }

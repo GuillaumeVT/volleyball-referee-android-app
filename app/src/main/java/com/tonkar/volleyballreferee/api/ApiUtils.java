@@ -10,14 +10,16 @@ import com.tonkar.volleyballreferee.BuildConfig;
 
 public class ApiUtils {
 
+    public static String VIEW_GAME = BuildConfig.SERVER_ADDRESS + "/view/game/%s";
+
     public static String BASE_URL = BuildConfig.SERVER_ADDRESS + "/api/v3";
 
-    public static String WEB_APP_HOME_URL = BASE_URL + "/home";
     public static String WEB_APP_LIVE_URL = BASE_URL + "/search/live";
 
     public static String MESSAGES_API_URL = BASE_URL + "/public/messages";
 
     public static String LEAGUES_API_URL = BASE_URL + "/leagues";
+    public static String LEAGUE_API_URL  = BASE_URL + "/leagues/%s";
 
     public static String RULES_API_URL = BASE_URL + "/rules";
     public static String RULE_API_URL  = BASE_URL + "/rules/%s";
@@ -44,8 +46,7 @@ public class ApiUtils {
     private static ApiUtils     sApiUtils;
     private        RequestQueue mRequestQueue;
 
-    private ApiUtils() {
-    }
+    private ApiUtils() {}
 
     public static ApiUtils getInstance() {
         if (sApiUtils == null) {

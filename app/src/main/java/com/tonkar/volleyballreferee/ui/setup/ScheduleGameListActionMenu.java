@@ -80,7 +80,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                 startGameText.setText(R.string.resume_match);
             }
 
-            UiUtils.setDrawableStart(rescheduleGameText, R.drawable.ic_scheduled_list);
+            UiUtils.setDrawableStart(rescheduleGameText, R.drawable.ic_schedule);
             UiUtils.setDrawableStart(startGameText, R.drawable.ic_play);
             UiUtils.setDrawableStart(editAndStartGameText, R.drawable.ic_edit_and_play);
             UiUtils.setDrawableStart(deleteGameText, R.drawable.ic_delete);

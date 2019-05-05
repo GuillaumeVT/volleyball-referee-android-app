@@ -24,7 +24,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiTeam;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
+import com.tonkar.volleyballreferee.api.ApiTeamDescription;
 import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -35,9 +36,9 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
+import com.tonkar.volleyballreferee.ui.data.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.setup.TeamsListAdapter;
+import com.tonkar.volleyballreferee.ui.setup.AutocompleteTeamListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,11 +118,11 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             StoredTeamsService storedTeamsService = new StoredTeams(getContext());
 
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new TeamsListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeam team = (ApiTeam) teamNameInput.getAdapter().getItem(index);
-                teamNameInput.setText(team.getName());
-                storedTeamsService.copyTeam(team, mTeamService, mTeamType);
+                ApiTeamDescription teamDescription = (ApiTeamDescription) teamNameInput.getAdapter().getItem(index);
+                teamNameInput.setText(teamDescription.getName());
+                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mTeamService, mTeamType);
 
                 teamColorSelected(mTeamService.getTeamColor(mTeamType));
                 updateGender(mTeamService.getGender(mTeamType));
@@ -147,7 +148,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
-                mTeamService.setTeamName(mTeamType, s.toString());
+                mTeamService.setTeamName(mTeamType, s.toString().trim());
                 computeConfirmItemVisibility();
             }
 
@@ -462,8 +463,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
-            final List<Integer> players = new ArrayList<>(mTeamService.getPlayers(mTeamType));
-            final int playerShirtNumber = players.get(position);
+            final List<ApiPlayer> players = new ArrayList<>(mTeamService.getPlayers(mTeamType));
+            final int playerShirtNumber = players.get(position).getNum();
             final PlayerToggleButton button;
 
             if (view == null) {
@@ -526,8 +527,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
             ((GameSetupActivity) getActivity()).computeStartItemVisibility();
-        } else if (getActivity() instanceof SavedTeamActivity) {
-            ((SavedTeamActivity) getActivity()).computeSaveItemVisibility();
+        } else if (getActivity() instanceof StoredTeamActivity) {
+            ((StoredTeamActivity) getActivity()).computeSaveItemVisibility();
         }
     }
 

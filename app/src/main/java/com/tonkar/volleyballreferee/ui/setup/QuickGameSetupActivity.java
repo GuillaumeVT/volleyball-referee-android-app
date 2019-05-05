@@ -21,8 +21,9 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
+import com.tonkar.volleyballreferee.ui.interfaces.BaseGeneralServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -104,8 +105,8 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
     public void computeStartItemVisibility() {
         if (mStartItem != null) {
-            if (mGameService.getTeamName(TeamType.HOME).isEmpty() || mGameService.getTeamName(TeamType.GUEST).isEmpty()
-                    || mGameService.getRules().getName().length() == 0) {
+            if (mGameService.getTeamName(TeamType.HOME).length() < 1 || mGameService.getTeamName(TeamType.GUEST).length() < 1
+                    || mGameService.getRules().getName().length() < 1) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mStartItem.setVisible(false);
             } else {
@@ -217,9 +218,13 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGameService);
         }
-        if (fragment instanceof RulesServiceHandler) {
-            RulesServiceHandler rulesServiceHandler = (RulesServiceHandler) fragment;
-            rulesServiceHandler.setRules(mGameService.getRules());
+        if (fragment instanceof RulesHandler) {
+            RulesHandler rulesHandler = (RulesHandler) fragment;
+            rulesHandler.setRules(mGameService.getRules());
+        }
+        if (fragment instanceof BaseGeneralServiceHandler) {
+            BaseGeneralServiceHandler generalServiceHandler = (BaseGeneralServiceHandler) fragment;
+            generalServiceHandler.setGeneralService(mGameService);
         }
     }
 

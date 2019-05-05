@@ -10,7 +10,6 @@ import androidx.preference.PreferenceManager;
 
 public class PrefUtils {
 
-    public static final  String PREF_SYNC_DATA                 = "pref_sync_data";
     public static final  String PREF_KEEP_SCREEN_ON            = "pref_keep_screen_on";
     public static final  String PREF_INTERACTIVE_NOTIFICATIONS = "pref_interactive_notification";
     private static final String PREF_USER_SIGNED_IN            = "pref_user_connected";
@@ -18,11 +17,6 @@ public class PrefUtils {
     private static final String PREF_USER_PSEUDO               = "pref_user_pseudo";
     private static final String PREF_USER_TOKEN                = "pref_user_token";
     private static final String PREF_PURCHASED_WEB_PREMUIM     = "pref_purchased_web_premium";
-
-    public static boolean isPrefDataSyncEnabled(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean(PREF_SYNC_DATA, true);
-    }
 
     public static void signIn(Context context, Authentication authentication) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -41,12 +35,12 @@ public class PrefUtils {
                 .edit()
                 .remove(PREF_USER_ID)
                 .remove(PREF_USER_TOKEN)
-                .putString(PREF_USER_PSEUDO, "")
+                .remove(PREF_USER_PSEUDO)
                 .putBoolean(PREF_USER_SIGNED_IN, false)
                 .apply();
     }
 
-    public static void createUser(Context context, String pseudo) {
+    public static void storeUserPseudo(Context context, String pseudo) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences
                 .edit()
@@ -80,13 +74,9 @@ public class PrefUtils {
         sharedPreferences.edit().putBoolean(PREF_PURCHASED_WEB_PREMUIM, purchased).apply();
     }
 
-    public static boolean isWebPremiumPurchased(Context context) {
+    private static boolean isWebPremiumPurchased(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(PREF_PURCHASED_WEB_PREMUIM, false);
-    }
-
-    public static boolean canRequest(Context context) {
-        return isPrefDataSyncEnabled(context) && ApiUtils.isConnectedToInternet(context);
     }
 
     private static boolean userExists(Context context) {
@@ -94,19 +84,20 @@ public class PrefUtils {
         return !"".equals(sharedPreferences.getString(PREF_USER_PSEUDO, ""));
     }
 
-    public static boolean canSync(Context context) {
-        return isWebPremiumPurchased(context) && isSignedIn(context) && userExists(context);
+    public static String getUserPseudo(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(PREF_USER_PSEUDO, "");
     }
 
-    public static boolean isSyncOn(Context context) {
-        return canRequest(context) && canSync(context);
+    public static boolean canSync(Context context) {
+        return isWebPremiumPurchased(context) && ApiUtils.isConnectedToInternet(context) && isSignedIn(context) && userExists(context);
     }
 
     public static boolean shouldSignIn(Context context) {
-        return canRequest(context) && isWebPremiumPurchased(context) && !isSignedIn(context);
+        return isWebPremiumPurchased(context) && ApiUtils.isConnectedToInternet(context) && !isSignedIn(context);
     }
 
     public static boolean shouldCreateUser(Context context) {
-        return canRequest(context) && isWebPremiumPurchased(context) && isSignedIn(context) && !userExists(context);
+        return isWebPremiumPurchased(context) && ApiUtils.isConnectedToInternet(context) && isSignedIn(context) && !userExists(context);
     }
 }

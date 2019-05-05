@@ -21,15 +21,16 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.api.ApiTeam;
+import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
+import com.tonkar.volleyballreferee.api.ApiTeamDescription;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
 import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -39,17 +40,17 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 public class QuickGameSetupFragment extends Fragment implements GameServiceHandler {
 
-    private GameService          mGameService;
-    private FloatingActionButton mGenderButton;
-    private FloatingActionButton mHomeTeamColorButton;
-    private FloatingActionButton mGuestTeamColorButton;
-    private MaterialButton       mHomeTeamCaptainButton;
-    private MaterialButton       mGuestTeamCaptainButton;
-    private TeamsListAdapter     mTeamsListAdapter;
+    private GameService                 mGameService;
+    private FloatingActionButton        mGenderButton;
+    private FloatingActionButton        mHomeTeamColorButton;
+    private FloatingActionButton        mGuestTeamColorButton;
+    private MaterialButton              mHomeTeamCaptainButton;
+    private MaterialButton              mGuestTeamCaptainButton;
+    private AutocompleteTeamListAdapter mAutocompleteTeamListAdapter;
 
     public QuickGameSetupFragment() {}
 
@@ -70,8 +71,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         final boolean create = getArguments().getBoolean("create");
 
-        final StoredGamesService storedGamesService = new StoredGames(getContext());
         final StoredTeamsService storedTeamsService = new StoredTeams(getContext());
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(getContext());
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
         updateGender(mGameService.getGender());
@@ -85,29 +86,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         mHomeTeamCaptainButton = view.findViewById(R.id.home_team_captain_number_button);
         mGuestTeamCaptainButton = view.findViewById(R.id.guest_team_captain_number_button);
 
-        final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
-        leagueNameInput.setThreshold(2);
-        List<String> leagueNames = new ArrayList<>(storedGamesService.getRecordedLeagues());
-        ArrayAdapter<String> leagueNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, leagueNames);
-        leagueNameInput.setAdapter(leagueNameAdapter);
-        leagueNameInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, "Update league name");
-                mGameService.setLeagueName(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
         final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
-        ArrayAdapter<String> divisionNameAdapter = new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedGamesService.getRecordedDivisions()));
-        divisionNameInput.setAdapter(divisionNameAdapter);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -123,6 +103,40 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         });
 
         divisionNameInput.setText(mGameService.getDivisionName());
+
+        final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        leagueNameInput.setThreshold(2);
+        leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGameService.getKind())));
+        leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
+            ApiLeagueDescription leagueDescription = (ApiLeagueDescription) leagueNameInput.getAdapter().getItem(index);
+            leagueNameInput.setText(leagueDescription.getName());
+            mGameService.setLeagueId(leagueDescription.getId());
+            mGameService.setLeagueName(leagueDescription.getName());
+            divisionNameInput.setText("");
+            divisionNameInput.setAdapter(new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
+            mGameService.setDivisionName("");
+        });
+
+        leagueNameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i(Tags.SETUP_UI, "Update league name");
+                // TODO check if triggerred when autocomplete
+                mGameService.setLeagueId(UUID.randomUUID().toString());
+                mGameService.setLeagueName(s.toString());
+                divisionNameInput.setAdapter(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        leagueNameInput.setText(mGameService.getLeagueName());
+
+        // TODO referee spinner
 
         final ClearableTextInputAutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
@@ -169,7 +183,6 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             selectTeamColor(TeamType.GUEST);
         });
 
-        leagueNameInput.setText(mGameService.getLeagueName());
         homeTeamNameInput.setText(mGameService.getTeamName(TeamType.HOME));
         guestTeamNameInput.setText(mGameService.getTeamName(TeamType.GUEST));
 
@@ -220,14 +233,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 switchCaptain(TeamType.GUEST);
             });
 
-            mTeamsListAdapter = new TeamsListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(GameType.BEACH));
+            mAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(GameType.BEACH));
 
-            homeTeamNameInput.setAdapter(mTeamsListAdapter);
+            homeTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
             homeTeamNameInput.setThreshold(2);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeam team = mTeamsListAdapter.getItem(index);
-                homeTeamNameInput.setText(team.getName());
-                storedTeamsService.copyTeam(team, mGameService, TeamType.HOME);
+                ApiTeamDescription teamDescription = mAutocompleteTeamListAdapter.getItem(index);
+                homeTeamNameInput.setText(teamDescription.getName());
+                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGameService, TeamType.HOME);
 
                 teamColorSelected(TeamType.HOME, mGameService.getTeamColor(TeamType.HOME));
                 updateGender(mGameService.getGender(TeamType.HOME));
@@ -235,12 +248,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 computeConfirmItemVisibility();
             });
 
-            guestTeamNameInput.setAdapter(mTeamsListAdapter);
+            guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
             guestTeamNameInput.setThreshold(2);
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeam team = mTeamsListAdapter.getItem(index);
-                guestTeamNameInput.setText(team.getName());
-                storedTeamsService.copyTeam(team, mGameService, TeamType.GUEST);
+                ApiTeamDescription teamDescription = mAutocompleteTeamListAdapter.getItem(index);
+                guestTeamNameInput.setText(teamDescription.getName());
+                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGameService, TeamType.GUEST);
 
                 teamColorSelected(TeamType.GUEST, mGameService.getTeamColor(TeamType.GUEST));
                 updateGender(mGameService.getGender(TeamType.GUEST));
@@ -248,7 +261,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 computeConfirmItemVisibility();
             });
 
-            guestTeamNameInput.setAdapter(mTeamsListAdapter);
+            guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
             guestTeamNameInput.setThreshold(2);
         } else {
             View teamCaptainLayout = view.findViewById(R.id.home_team_captain_layout);

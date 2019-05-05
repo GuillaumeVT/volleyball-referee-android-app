@@ -13,37 +13,37 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiTeam;
+import com.tonkar.volleyballreferee.api.ApiTeamDescription;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class TeamsListAdapter extends ArrayAdapter<ApiTeam> {
+public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription> {
 
-    private final LayoutInflater mLayoutInflater;
-    private final List<ApiTeam>  mSavedTeamsList;
-    private final List<ApiTeam>  mFilteredSavedTeamsList;
-    private final NameFilter     mNameFilter;
+    private final LayoutInflater           mLayoutInflater;
+    private final List<ApiTeamDescription> mStoredTeamsList;
+    private final List<ApiTeamDescription> mFilteredStoredTeamsList;
+    private final NameFilter               mNameFilter;
 
-    public TeamsListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeam> savedTeamsList) {
-        super(context, R.layout.autocomplete_list_item, savedTeamsList);
+    public AutocompleteTeamListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeamDescription> storedTeamsList) {
+        super(context, R.layout.autocomplete_list_item, storedTeamsList);
         mLayoutInflater = layoutInflater;
-        mSavedTeamsList = savedTeamsList;
-        mFilteredSavedTeamsList = new ArrayList<>();
-        mFilteredSavedTeamsList.addAll(mSavedTeamsList);
+        mStoredTeamsList = storedTeamsList;
+        mFilteredStoredTeamsList = new ArrayList<>();
+        mFilteredStoredTeamsList.addAll(mStoredTeamsList);
         mNameFilter = new NameFilter();
     }
 
     @Override
     public int getCount() {
-        return mFilteredSavedTeamsList.size();
+        return mFilteredStoredTeamsList.size();
     }
 
     @Override
-    public ApiTeam getItem(int index) {
-        return mFilteredSavedTeamsList.get(index);
+    public ApiTeamDescription getItem(int index) {
+        return mFilteredStoredTeamsList.get(index);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class TeamsListAdapter extends ArrayAdapter<ApiTeam> {
             teamTextView = (TextView) view;
         }
 
-        ApiTeam team = mFilteredSavedTeamsList.get(index);
+        ApiTeamDescription team = mFilteredStoredTeamsList.get(index);
         teamTextView.setText(team.getName());
 
-        switch (team.getGenderType()) {
+        switch (team.getGender()) {
             case MIXED:
                 teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_mixed, 0);
                 break;
@@ -78,7 +78,7 @@ public class TeamsListAdapter extends ArrayAdapter<ApiTeam> {
 
         for (Drawable drawable : teamTextView.getCompoundDrawables()) {
             if (drawable != null) {
-                switch (team.getGenderType()) {
+                switch (team.getGender()) {
                     case MIXED:
                         drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
                         break;
@@ -107,14 +107,14 @@ public class TeamsListAdapter extends ArrayAdapter<ApiTeam> {
             FilterResults results = new FilterResults();
 
             if (prefix == null || prefix.length() == 0) {
-                results.values = mSavedTeamsList;
-                results.count = mSavedTeamsList.size();
+                results.values = mStoredTeamsList;
+                results.count = mStoredTeamsList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiTeam> matchValues = new ArrayList<>();
+                List<ApiTeamDescription> matchValues = new ArrayList<>();
 
-                for (ApiTeam team : mSavedTeamsList) {
+                for (ApiTeamDescription team : mStoredTeamsList) {
                     if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(team);
                     }
@@ -129,11 +129,11 @@ public class TeamsListAdapter extends ArrayAdapter<ApiTeam> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mFilteredSavedTeamsList.clear();
+            mFilteredStoredTeamsList.clear();
 
             if (results.values != null) {
-                mFilteredSavedTeamsList.clear();
-                mFilteredSavedTeamsList.addAll((Collection<? extends ApiTeam>) results.values);
+                mFilteredStoredTeamsList.clear();
+                mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamDescription>) results.values);
             }
 
             if (results.count > 0) {

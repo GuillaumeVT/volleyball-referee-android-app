@@ -55,7 +55,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
 
-        if (PrefUtils.isSyncOn(this)) {
+        if (PrefUtils.canSync(this)) {
             if (mStoredGamesService.isGameIndexed(mGameDate)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
@@ -90,7 +90,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
     private void toggleGameIndexed() {
         Log.i(Tags.STORED_GAMES, "Toggle game indexed");
-        if (PrefUtils.isSyncOn(this)) {
+        if (PrefUtils.canSync(this)) {
             mStoredGamesService.toggleGameIndexed(mGameDate);
             invalidateOptionsMenu();
         }

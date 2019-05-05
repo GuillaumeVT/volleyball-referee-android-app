@@ -45,9 +45,9 @@
     <string name="user_sign_in_why_message">Als je je wedstrijden online streamt, ben je mogelijk  geïnteresseerd om in te loggen.\n\nAls je inlogt, krijg je volledige controle over je wedstrijden op https://www.volleyball-referee.com/user\n\nOp deze pagina, kan je je eigen regels, ploegen, wedstrijden en zelfs toernooien maken en beheren. De geplande wedstrijden kunnen vervolgens worden geleidt op uw app of op de app van iemand anders door de unieke wedstrijdcode aan de scheidsrechter te verstrekken.</string>
     <string name="user_sign_in_privacy_title">Is het veilig?</string>
     <string name="user_sign_in_privacy_message">Ja. Wanneer je aanmeldt, is de enige informatie die we uit uw profiel ophalen uw unieke sociale id die we gebruiken om u te identificeren.</string>
-    <string name="user_signed_in">Aangemeld met %s</string>
+    <string name="user_signed_in_with_provider">Aangemeld met %s</string>
     <string name="user_signed_out">Afgemeld</string>
-    <string name="user_sign_in_error">Fout tijdens aanmelden met %s</string>
+    <string name="user_sign_in_with_provider_error">Fout tijdens aanmelden met %s</string>
     <string name="user_scheduled_games_title">Mijn geplande wedstrijden</string>
 
     <!-- Setup activities -->

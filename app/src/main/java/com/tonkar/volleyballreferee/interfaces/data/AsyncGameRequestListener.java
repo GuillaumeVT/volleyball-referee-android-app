@@ -10,10 +10,6 @@ public interface AsyncGameRequestListener {
 
     void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList);
 
-    void onNotFound();
-
-    void onInternalError();
-
-    void onError();
+    void onError(int httpCode);
 
 }

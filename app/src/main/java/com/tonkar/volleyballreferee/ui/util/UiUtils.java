@@ -180,8 +180,8 @@ public class UiUtils {
                 intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getResources().getString(R.string.app_name), file.getName()));
 
                 String summary = storedGameService.getGameSummary();
-                if (PrefUtils.isPrefDataSyncEnabled(context)) {
-                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.VIEW_URL, storedGameService.getGameDate());
+                if (PrefUtils.canSync(context)) {
+                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.VIEW_GAME, storedGameService.getId());
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);

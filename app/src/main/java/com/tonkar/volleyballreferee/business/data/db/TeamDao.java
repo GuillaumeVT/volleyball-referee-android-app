@@ -27,9 +27,6 @@ public interface TeamDao {
     String findContentByNameAndGenderAndKind(String name, String gender, String kind);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<TeamEntity> teamEntities);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(TeamEntity teamEntity);
 
     @Query("DELETE FROM teams")

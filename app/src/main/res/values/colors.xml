@@ -24,6 +24,7 @@
     <color name="colorIndoor">#1f4294</color>
     <color name="colorBeach">#f2bb1a</color>
     <color name="colorTime">#de000000</color>
+    <color name="colorIndoor4x4">#2980b9</color>
     <color name="colorWeb">#2980b9</color>
     <color name="colorMixed">#006032</color>
     <color name="colorLadies">#c2185b</color>
@@ -31,5 +32,8 @@
     <color name="colorYellowCard">#f3bc07</color>
     <color name="colorRedCard">#bc0019</color>
     <color name="colorReportDuplicate">#d6d7d7</color>
+
+    <color name="colorGoogle">#db4a38</color>
+    <color name="colorFacebook">#4267a8</color>
 
 </resources>

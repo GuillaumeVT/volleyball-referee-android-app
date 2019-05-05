@@ -11,18 +11,16 @@
         android:layout_margin="@dimen/big_margin_size">
 
         <com.tonkar.volleyballreferee.ui.util.ClearableTextInputEditText
-            android:id="@+id/code_input"
+            android:id="@+id/pseudo_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_clear"
             android:ems="10"
-            android:hint="@string/game_code_hint"
-            android:inputType="number"
+            android:hint="@string/user_pseudo_hint"
+            android:inputType="textCapWords"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 </LinearLayout>

@@ -45,9 +45,9 @@
     <string name="user_sign_in_why_message">Se transmite os seus jogos ao vivo, deverá  registar-se.\n\nAo registar-se, ganha controlo total dos seus jogos em https://www.volleyball-referee.com/user\n\A partir desta página, poderá criar e gerir as suas próprias regras, equipas, jogos e até torneios. Os jogos agendados podem ser arbitrados na sua App ou na App de outra pessoa, providenciando o código único do jogo ao árbitro.</string>
     <string name="user_sign_in_privacy_title">É seguro?</string>
     <string name="user_sign_in_privacy_message">Sim. Quando se regista, a única informação que nós importamos do seu perfil é o identificador social único que usamos para o identificar.</string>
-    <string name="user_signed_in">Registado como %s</string>
+    <string name="user_signed_in_with_provider">Registado como %s</string>
     <string name="user_signed_out">Saiu do registo</string>
-    <string name="user_sign_in_error">Erro ao registar como %s</string>
+    <string name="user_sign_in_with_provider_error">Erro ao registar como %s</string>
     <string name="user_scheduled_games_title">Os meus jogos agendados</string>
 
     <!-- Setup activities -->

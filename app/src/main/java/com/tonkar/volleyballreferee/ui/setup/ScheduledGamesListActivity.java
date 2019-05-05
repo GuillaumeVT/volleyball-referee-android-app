@@ -46,7 +46,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     protected int getCheckedItem() {
-        return R.id.action_view_scheduled_games;
+        return R.id.action_available_games;
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     }
 
     private void updateScheduledGamesList() {
-        if (PrefUtils.isSyncOn(this)) {
+        if (PrefUtils.canSync(this)) {
             mSyncLayout.setRefreshing(true);
             mStoredGamesService.downloadAvailableGames(this);
         }

@@ -27,9 +27,6 @@ public interface RulesDao {
     String findContentByNameAndKind(String name, String kind);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<RulesEntity> rulesEntities);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(RulesEntity rulesEntity);
 
     @Query("DELETE FROM rules")

@@ -45,9 +45,9 @@
     <string name="user_sign_in_why_message">Antud funktsioon võib olla Teie jaoks huvitav, kui Te kavatsete näidata oma mänge online.\n\nÜhendades oma kasutajakonto kaudu, Te suudate hallata oma mänge veebilehel https://www.volleyball-referee.com/user\n\nTeie personaallehel te saate hallata omi reegleid, võistkondi ning mänge. Te saate samuti luua eraldi turniire. Planeeritud mänge saab kasutada nii Teie rakendusega, kui ka teise kohtuniku telefonis oleva Volleyball Referee rakendusega. . Selleks piisab ainult antud mängude unikaalse koodi edastamisest.</string>
     <string name="user_sign_in_privacy_title">Kas olete kindel?</string>
     <string name="user_sign_in_privacy_message">Jah. Ühenduse saamiseks on vajalik, et rakendus salvestaks unikaalse Teie profiili identifitseerimise koodi. See on vajalik Teie identifitseerimiseks.</string>
-    <string name="user_signed_in">Ühenduse loomine %s</string>
+    <string name="user_signed_in_with_provider">Ühenduse loomine %s</string>
     <string name="user_signed_out">Väljas</string>
-    <string name="user_sign_in_error">Võrguühenduse viga %s</string>
+    <string name="user_sign_in_with_provider_error">Võrguühenduse viga %s</string>
     <string name="user_scheduled_games_title">Minu planeeritud mängud</string>
 
     <!-- Setup activities -->

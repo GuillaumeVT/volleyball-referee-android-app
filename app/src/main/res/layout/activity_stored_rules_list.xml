@@ -6,7 +6,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity">
+        tools:context="com.tonkar.volleyballreferee.ui.data.StoredRulesListActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content">
 
                 <ListView
-                        android:id="@+id/saved_teams_list"
+                        android:id="@+id/stored_rules_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin_size"/>
@@ -35,7 +35,7 @@
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_6x6_team_button"
+                    android:id="@+id/add_indoor_rules_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -43,7 +43,7 @@
                     android:layout_margin="@dimen/fab_shift_default"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="addIndoorTeam"
+                    android:onClick="addIndoorRules"
                     android:tint="@color/colorIndoor"
                     app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/form_button_size"
@@ -51,7 +51,7 @@
                     app:srcCompat="@drawable/ic_6x6"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_4x4_team_button"
+                    android:id="@+id/add_indoor_4x4_rules_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -59,7 +59,7 @@
                     android:layout_margin="@dimen/fab_shift_default"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="addIndoor4x4Team"
+                    android:onClick="addIndoor4x4Rules"
                     android:tint="@color/colorIndoor"
                     app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/form_button_size"
@@ -67,7 +67,7 @@
                     app:srcCompat="@drawable/ic_4x4"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_beach_team_button"
+                    android:id="@+id/add_beach_rules_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -75,7 +75,7 @@
                     android:layout_margin="@dimen/fab_shift_default"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="addBeachTeam"
+                    android:onClick="addBeachRules"
                     android:tint="@color/colorBeach"
                     app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/form_button_size"
@@ -83,7 +83,7 @@
                     app:srcCompat="@drawable/ic_sun"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_team_button"
+                    android:id="@+id/add_rules_button"
                     style="@style/VbrPlusFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -12,44 +12,27 @@
                 android:title="@string/purchase"
                 android:visible="false"/>
         <item
-                android:id="@+id/local_data_group"
-                android:title="@string/local_data_group">
+                android:id="@+id/my_data_group"
+                android:title="@string/my_data_group">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                            android:id="@+id/action_recorded_games"
-                            android:icon="@drawable/ic_volleyball"
-                            android:title="@string/recorded_games"/>
-                    <item
-                            android:id="@+id/action_saved_rules"
-                            android:icon="@drawable/ic_rules"
-                            android:title="@string/saved_rules_list"/>
-                    <item
-                            android:id="@+id/action_saved_teams"
-                            android:icon="@drawable/ic_saved_teams"
-                            android:title="@string/saved_teams"/>
-                </group>
-            </menu>
-        </item>
-
-        <item
-                android:id="@+id/online_data_group"
-                android:title="@string/online_data_group">
-            <menu>
-                <group android:checkableBehavior="single">
-                    <item
-                            android:id="@+id/action_view_scheduled_games"
-                            android:icon="@drawable/ic_scheduled_list"
-                            android:title="@string/user_scheduled_games_title"
+                            android:id="@+id/action_available_games"
+                            android:icon="@drawable/ic_schedule"
+                            android:title="@string/available_games"
                             android:visible="false"/>
                     <item
-                            android:id="@+id/action_view_live_games"
-                            android:icon="@drawable/ic_live"
-                            android:title="@string/view_live_games"/>
+                            android:id="@+id/action_stored_games"
+                            android:icon="@drawable/ic_volleyball"
+                            android:title="@string/completed_games"/>
                     <item
-                            android:id="@+id/action_search_online_games"
-                            android:icon="@drawable/ic_search_online_games"
-                            android:title="@string/search_online_games"/>
+                            android:id="@+id/action_stored_rules"
+                            android:icon="@drawable/ic_rules"
+                            android:title="@string/rules"/>
+                    <item
+                            android:id="@+id/action_stored_teams"
+                            android:icon="@drawable/ic_teams"
+                            android:title="@string/teams"/>
                 </group>
             </menu>
         </item>
@@ -72,6 +55,10 @@
                 android:title="@string/misc_tab">
             <menu>
                 <group android:checkableBehavior="single">
+                    <item
+                            android:id="@+id/action_live_games_vbr_com"
+                            android:icon="@drawable/ic_live"
+                            android:title="@string/live_games_vbr_com"/>
                     <item
                             android:id="@+id/action_facebook"
                             android:icon="@drawable/ic_facebook"

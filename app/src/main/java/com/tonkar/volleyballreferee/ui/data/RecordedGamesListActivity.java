@@ -40,7 +40,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
 
     @Override
     protected int getCheckedItem() {
-        return R.id.action_recorded_games;
+        return R.id.action_stored_games;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
         });
 
         MenuItem syncItem = menu.findItem(R.id.action_sync);
-        syncItem.setVisible(PrefUtils.isSyncOn(this));
+        syncItem.setVisible(PrefUtils.canSync(this));
 
         return true;
     }
@@ -146,7 +146,7 @@ public class RecordedGamesListActivity extends NavigationActivity implements Dat
     }
 
     private void updateRecordedGamesList() {
-        if (PrefUtils.isSyncOn(this)) {
+        if (PrefUtils.canSync(this)) {
             mSyncLayout.setRefreshing(true);
             mStoredGamesService.syncGames(this);
         }

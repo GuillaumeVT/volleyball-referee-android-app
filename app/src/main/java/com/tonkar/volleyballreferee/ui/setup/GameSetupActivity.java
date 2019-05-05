@@ -21,8 +21,9 @@ import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.BaseGeneralServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
@@ -104,10 +105,10 @@ public class GameSetupActivity extends AppCompatActivity {
 
     public void computeStartItemVisibility() {
         if (mStartItem != null) {
-            if (mGameService.getTeamName(TeamType.HOME).isEmpty() || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
-                    || mGameService.getTeamName(TeamType.GUEST).isEmpty() || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
+            if (mGameService.getTeamName(TeamType.HOME).length() < 1 || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
+                    || mGameService.getTeamName(TeamType.GUEST).length() < 1 || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getCaptain(TeamType.HOME) < 1 || mGameService.getCaptain(TeamType.GUEST) < 1
-                    || mGameService.getRules().getName().length() == 0) {
+                    || mGameService.getRules().getName().length() < 1) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mStartItem.setVisible(false);
             } else {
@@ -208,9 +209,9 @@ public class GameSetupActivity extends AppCompatActivity {
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        if (fragment instanceof RulesServiceHandler) {
-            RulesServiceHandler rulesServiceHandler = (RulesServiceHandler) fragment;
-            rulesServiceHandler.setRules(mGameService.getRules());
+        if (fragment instanceof RulesHandler) {
+            RulesHandler rulesHandler = (RulesHandler) fragment;
+            rulesHandler.setRules(mGameService.getRules());
         }
         if (fragment instanceof BaseTeamServiceHandler) {
             BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
@@ -219,6 +220,10 @@ public class GameSetupActivity extends AppCompatActivity {
         if (fragment instanceof GameServiceHandler) {
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGameService);
+        }
+        if (fragment instanceof BaseGeneralServiceHandler) {
+            BaseGeneralServiceHandler generalServiceHandler = (BaseGeneralServiceHandler) fragment;
+            generalServiceHandler.setGeneralService(mGameService);
         }
     }
 }

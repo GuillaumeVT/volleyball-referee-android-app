@@ -126,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin_size"
-                    android:text="@string/home_team_hint"
+                    android:text="@string/home_team_tab"
                     android:textAppearance="@style/TextViewTheme"
                     android:textSize="@dimen/default_text_size"/>
 
@@ -141,7 +141,7 @@
                     android:textSize="@dimen/default_text_size"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/guest_team_name_title"
+                    android:id="@+id/guest_team_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin_size"
@@ -160,7 +160,7 @@
                     android:textSize="@dimen/default_text_size"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/rules_name_title"
+                    android:id="@+id/rules_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin_size"

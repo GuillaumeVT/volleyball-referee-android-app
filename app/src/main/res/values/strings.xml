@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Beach Volleyball</string>
     <string name="new_score_based_game">Scoreboard</string>
     <string name="new_time_based_game">Time-based</string>
-    <string name="new_scheduled_game_from_code">From code</string>
     <string name="permission_title">About permissions</string>
     <string name="permission_message">This application needs the storage permissions in order to share the match results.</string>
     <string name="resume_game_title">Resume match</string>
@@ -18,16 +17,16 @@
     <string name="delete">Delete</string>
     <string name="ignore">Ignore</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Local data</string>
-    <string name="online_data_group">Online data</string>
+    <string name="my_data_group">My data</string>
     <string name="configuration_group">Configuration</string>
-    <string name="view_live_games">View live matches</string>
-    <string name="search_online_games">Search matches</string>
+    <string name="completed_games">Completed matches</string>
+    <string name="available_games">Scheduled &amp; live matches</string>
+    <string name="teams">Teams</string>
+    <string name="rules">Rules</string>
+    <string name="live_games_vbr_com">Live matches on website</string>
     <string name="my_account">My account</string>
-    <string name="scheduled_game_question">Do you wish to edit the game before launching it?</string>
-    <string name="game_code_hint">Game code</string>
-    <string name="invalid_game_code">Invalid game code</string>
-    <string name="download_error_message">The match could not be downloaded</string>
+    <string name="news">News</string>
+    <string name="no_news">No news to display</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Purchase</string>
@@ -47,10 +46,20 @@
     <string name="user_sign_in_why_message">If you stream your games online, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. The scheduled games can then be refereed on your App or on someone else\'s App by providing the game unique code to the referee.</string>
     <string name="user_sign_in_privacy_title">Is it safe?</string>
     <string name="user_sign_in_privacy_message">Yes. When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
-    <string name="user_signed_in">Signed in with %s</string>
+    <string name="user_sign_in_google">Sign in with Google</string>
+    <string name="user_sign_in_facebook">Sign in with Facebook</string>
+    <string name="user_sign_out">Sign out</string>
+    <string name="user_signed_in_with_provider">Signed in with %s</string>
+    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
+    <string name="user_sign_in_with_provider_error">Error while signing in with %s</string>
     <string name="user_signed_out">Signed out</string>
-    <string name="user_sign_in_error">Error while signing in with %s</string>
-    <string name="user_scheduled_games_title">My scheduled games</string>
+    <string name="user_error">Error while retrieving user</string>
+    <string name="user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
+    <string name="create">Create</string>
+    <string name="user_pseudo_hint">Pseudonym</string>
+    <string name="user_exists_error">This pseudonym already exists</string>
+    <string name="user_creation_error">Error while creating the pseudonym</string>
+    <string name="minimum_size_error">Must have at least %d characters</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Setup game</string>
@@ -72,6 +81,7 @@
     <string name="misc_tab">Misc.</string>
     <string name="rules_tab">Rules</string>
     <string name="teams_tab">Teams</string>
+    <string name="referee">Referee</string>
     <string name="leave_game_setup_question">This match setup will be lost. Leave anyway?</string>
 
     <!-- Game activity -->
@@ -140,52 +150,48 @@
     <string name="edit_start_match">Edit and then start the match</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">Resume the match</string>
+    <string name="download_match_error">Error while downloading the match</string>
 
     <!-- Settings activity -->
     <string name="settings">Settings</string>
-    <string name="pref_referee_name">My \'Volleyball Referee\' alias</string>
-    <string name="pref_sync_data">Synchronize the data online</string>
     <string name="pref_keep_screen_on">Keep the screen on during games</string>
     <string name="pref_interactive_notification">Use interactive notifications</string>
 
     <string name="synchronize">Synchronize</string>
     <string name="sync_failed_message">Data synchronization failed</string>
 
-    <!-- Recorded games activity -->
-    <string name="recorded_games">Recorded games</string>
+    <!-- Stored games activity -->
     <string name="search_games">Search games</string>
     <string name="delete_games">Delete all games</string>
     <string name="delete_game">Delete game</string>
-    <string name="delete_games_question">Do you want to delete all the recorded games?</string>
-    <string name="delete_game_question">Do you want to delete this recorded game?</string>
+    <string name="delete_games_question">Do you want to delete all the games?</string>
+    <string name="delete_game_question">Do you want to delete this game?</string>
     <string name="deleted_game">Game was deleted</string>
     <string name="deleted_games">All games were deleted</string>
     <string name="players">Players</string>
     <string name="report_game">Generate game report</string>
     <string name="report_exception">Failed to generate or to display the game report</string>
 
-    <!-- Saved teams activity -->
-    <string name="saved_teams">Saved teams</string>
+    <!-- Stored teams activity -->
     <string name="search_teams">Search teams</string>
     <string name="delete_teams">Delete all teams</string>
     <string name="delete_team">Delete team</string>
     <string name="save_team">Save team</string>
-    <string name="delete_teams_question">Do you want to delete all the saved teams?</string>
-    <string name="delete_team_question">Do you want to delete this saved team?</string>
+    <string name="delete_teams_question">Do you want to delete all the teams?</string>
+    <string name="delete_team_question">Do you want to delete this team?</string>
     <string name="deleted_team">Team was deleted</string>
     <string name="saved_team">Team was saved</string>
     <string name="deleted_teams">All teams were deleted</string>
     <string name="leave_team_creation_title">Leaving team creation</string>
     <string name="leave_team_creation_question">This team will not be saved. Leave anyway?</string>
 
-    <!-- Rules activity -->
-    <string name="saved_rules_list">Saved rules</string>
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Delete all rules</string>
     <string name="delete_rules">Delete rules</string>
     <string name="save_rules">Save rules</string>
     <string name="search_rules">Search rules</string>
-    <string name="delete_all_rules_question">Do you want to delete all the saved rules?</string>
-    <string name="delete_rules_question">Do you want to delete these saved rules?</string>
+    <string name="delete_all_rules_question">Do you want to delete all the rules?</string>
+    <string name="delete_rules_question">Do you want to delete these rules?</string>
     <string name="deleted_rules">Rules were deleted</string>
     <string name="saved_rules">Rules were saved</string>
     <string name="deleted_all_rules">All rules were deleted</string>

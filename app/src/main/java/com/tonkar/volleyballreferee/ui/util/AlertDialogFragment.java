@@ -83,10 +83,6 @@ public class AlertDialogFragment extends DialogFragment {
         mAlertDialogListener = alertDialogListener;
     }
 
-    public boolean hasNoAlertDialogListener() {
-        return mAlertDialogListener == null;
-    }
-
     public interface AlertDialogListener {
 
         void onNegativeButtonClicked();

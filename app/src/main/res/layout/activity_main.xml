@@ -101,7 +101,7 @@
                                     android:text="@string/new_volleyball_game"
                                     android:textColor="@android:color/white"
                                     style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorIndoor"
+                                    app:backgroundTint="@color/colorIndoor4x4"
                                     app:icon="@drawable/ic_4x4"
                                     app:iconTint="@android:color/white"/>
 
@@ -213,19 +213,6 @@
                                     style="@style/VbrButton"
                                     app:backgroundTint="@color/colorOnSurface"
                                     app:icon="@drawable/ic_time_based"
-                                    app:iconTint="@android:color/white"/>
-
-                            <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/start_scheduled_code_game_button"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/small_margin_size"
-                                    android:onClick="startScheduledGameFromCode"
-                                    android:text="@string/new_scheduled_game_from_code"
-                                    android:textColor="@android:color/white"
-                                    style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorWeb"
-                                    app:icon="@drawable/ic_scheduled_code"
                                     app:iconTint="@android:color/white"/>
 
                         </LinearLayout>

@@ -125,7 +125,7 @@ public class StoredTeams implements StoredTeamsService {
 
     @Override
     public void createAndSaveTeamFrom(GameType kind, BaseTeamService teamService, TeamType teamType) {
-        if (teamService.getTeamName(teamType).trim().length() > 1
+        if (teamService.getTeamName(teamType).length() > 1
                 && AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGender(teamType).toString(), kind.toString()) == 0) {
             BaseTeamService team = createTeam(kind);
             copyTeam(teamService, team, teamType);
@@ -251,22 +251,19 @@ public class StoredTeams implements StoredTeamsService {
     // Write saved teams
 
     private void insertTeamIntoDb(final ApiTeam apiTeam, boolean synced, boolean syncInsertion) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                String json = writeTeam(apiTeam);
-                TeamEntity teamEntity = new TeamEntity();
-                teamEntity.setId(apiTeam.getId());
-                teamEntity.setCreatedBy(apiTeam.getCreatedBy());
-                teamEntity.setCreatedAt(apiTeam.getCreatedAt());
-                teamEntity.setUpdatedAt(apiTeam.getUpdatedAt());
-                teamEntity.setKind(apiTeam.getKind());
-                teamEntity.setGender(apiTeam.getGender());
-                teamEntity.setName(apiTeam.getName());
-                teamEntity.setSynced(synced);
-                teamEntity.setContent(json);
-                AppDatabase.getInstance(mContext).teamDao().insert(teamEntity);
-            }
+        Runnable runnable = () -> {
+            String json = writeTeam(apiTeam);
+            TeamEntity teamEntity = new TeamEntity();
+            teamEntity.setId(apiTeam.getId());
+            teamEntity.setCreatedBy(apiTeam.getCreatedBy());
+            teamEntity.setCreatedAt(apiTeam.getCreatedAt());
+            teamEntity.setUpdatedAt(apiTeam.getUpdatedAt());
+            teamEntity.setKind(apiTeam.getKind());
+            teamEntity.setGender(apiTeam.getGender());
+            teamEntity.setName(apiTeam.getName());
+            teamEntity.setSynced(synced);
+            teamEntity.setContent(json);
+            AppDatabase.getInstance(mContext).teamDao().insert(teamEntity);
         };
 
         if (syncInsertion) {
@@ -296,7 +293,7 @@ public class StoredTeams implements StoredTeamsService {
 
     @Override
     public void syncTeams(final DataSynchronizationListener listener) {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.TEAMS_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
                         List<ApiTeamDescription> teamList = readTeams(response);
@@ -412,7 +409,7 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     private void pushTeamToServer(final ApiTeam team) {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             final byte[] bytes = writeTeam(team).getBytes();
 
@@ -441,7 +438,7 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     private void deleteTeamOnServer(final String id) {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.TEAM_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {},
                     error -> {
@@ -455,7 +452,7 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     private void deleteAllTeamsOnServer() {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.TEAMS_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {},
                     error -> {

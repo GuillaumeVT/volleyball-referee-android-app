@@ -11,17 +11,19 @@
         android:visible="false"/>
 
     <item
-        android:id="@+id/action_message_menu"
-        android:icon="@drawable/ic_message_menu"
+        android:id="@+id/action_news_menu"
+        android:icon="@drawable/ic_info_menu"
         android:orderInCategory="2"
-        android:title="@string/app_name"
-        app:showAsAction="always"/>
+        android:title="@string/news"
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_account_menu"
         android:icon="@drawable/ic_account_menu"
         android:orderInCategory="3"
         android:title="@string/my_account"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:visible="false"/>
 
 </menu>

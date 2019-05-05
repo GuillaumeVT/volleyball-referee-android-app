@@ -21,9 +21,6 @@ public interface GameDao {
     boolean isGameIndexed(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<GameEntity> gameEntities);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(GameEntity gameEntity);
 
     @Query("DELETE FROM games")

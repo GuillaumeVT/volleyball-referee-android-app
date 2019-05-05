@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiTeamDescription;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.business.data.StoredTeams;
@@ -29,15 +30,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class SavedTeamsListActivity extends NavigationActivity implements DataSynchronizationListener {
+public class StoredTeamsListActivity extends NavigationActivity implements DataSynchronizationListener {
 
-    private StoredTeamsService    mStoredTeamsService;
-    private SavedTeamsListAdapter mSavedTeamsListAdapter;
-    private SwipeRefreshLayout    mSyncLayout;
-    private boolean               mIsFabOpen;
-    private FloatingActionButton  mAdd6x6TeamButton;
-    private FloatingActionButton  mAdd4x4TeamButton;
-    private FloatingActionButton  mAddBeachTeamButton;
+    private StoredTeamsService     mStoredTeamsService;
+    private StoredTeamsListAdapter mStoredTeamsListAdapter;
+    private SwipeRefreshLayout     mSyncLayout;
+    private boolean                mIsFabOpen;
+    private FloatingActionButton   mAdd6x6TeamButton;
+    private FloatingActionButton   mAdd4x4TeamButton;
+    private FloatingActionButton   mAddBeachTeamButton;
 
     @Override
     protected String getToolbarTitle() {
@@ -46,7 +47,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
     @Override
     protected int getCheckedItem() {
-        return R.id.action_saved_teams;
+        return R.id.action_stored_teams;
     }
 
     @Override
@@ -56,24 +57,25 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.STORED_TEAMS, "Create teams list activity");
-        setContentView(R.layout.activity_saved_teams_list);
+        setContentView(R.layout.activity_stored_teams_list);
 
         initNavigationMenu();
 
         mSyncLayout = findViewById(R.id.sync_layout);
-        mSyncLayout.setOnRefreshListener(this::updateSavedTeamsList);
+        mSyncLayout.setOnRefreshListener(this::updateStoredTeamsList);
 
-        List<ApiTeam> teams = mStoredTeamsService.getListTeams();
+        List<ApiTeamDescription> teams = mStoredTeamsService.getListTeams();
 
-        final ListView savedTeamsList = findViewById(R.id.saved_teams_list);
-        mSavedTeamsListAdapter = new SavedTeamsListAdapter(this, getLayoutInflater(), teams);
-        savedTeamsList.setAdapter(mSavedTeamsListAdapter);
+        final ListView storedTeamsList = findViewById(R.id.stored_teams_list);
+        mStoredTeamsListAdapter = new StoredTeamsListAdapter(this, getLayoutInflater(), teams);
+        storedTeamsList.setAdapter(mStoredTeamsListAdapter);
 
-        savedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
-            ApiTeam team = mSavedTeamsListAdapter.getItem(i);
-            Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit saved team %s", team.getName()));
+        storedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
+            ApiTeamDescription teamDescription = mStoredTeamsListAdapter.getItem(i);
+            ApiTeam team = mStoredTeamsService.getTeam(teamDescription.getId());
+            Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
 
-            final Intent intent = new Intent(SavedTeamsListActivity.this, SavedTeamActivity.class);
+            final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamActivity.class);
             intent.putExtra("team", mStoredTeamsService.writeTeam(team));
             intent.putExtra("kind", team.getKind().toString());
             intent.putExtra("create", false);
@@ -97,7 +99,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
             }
         });
 
-        updateSavedTeamsList();
+        updateStoredTeamsList();
     }
 
     public void addIndoorTeam(View view) {
@@ -119,7 +121,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         Log.i(Tags.STORED_TEAMS, "Start activity to create new team");
         BaseTeamService teamService = mStoredTeamsService.createTeam(gameType);
 
-        final Intent intent = new Intent(this, SavedTeamActivity.class);
+        final Intent intent = new Intent(this, StoredTeamActivity.class);
         intent.putExtra("team", mStoredTeamsService.writeTeam(mStoredTeamsService.copyTeam(teamService)));
         intent.putExtra("kind", gameType.toString());
         intent.putExtra("create", true);
@@ -130,7 +132,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_saved_teams, menu);
+        inflater.inflate(R.menu.menu_stored_teams, menu);
 
         MenuItem deleteAllTeamsItem = menu.findItem(R.id.action_delete_teams);
         deleteAllTeamsItem.setVisible(mStoredTeamsService.hasTeams());
@@ -148,13 +150,13 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
             @Override
             public boolean onQueryTextChange(String searchQuery) {
-                mSavedTeamsListAdapter.getFilter().filter(searchQuery.trim());
+                mStoredTeamsListAdapter.getFilter().filter(searchQuery.trim());
                 return true;
             }
         });
 
         MenuItem syncItem = menu.findItem(R.id.action_sync);
-        syncItem.setVisible(PrefUtils.isSyncOn(this));
+        syncItem.setVisible(PrefUtils.canSync(this));
 
         return true;
     }
@@ -165,7 +167,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
             case R.id.action_search_teams:
                 return true;
             case R.id.action_sync:
-                updateSavedTeamsList();
+                updateStoredTeamsList();
                 return true;
             case R.id.action_delete_teams:
                 deleteAllTeams();
@@ -181,8 +183,8 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         builder.setTitle(getResources().getString(R.string.delete_teams)).setMessage(getResources().getString(R.string.delete_teams_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredTeamsService.deleteAllTeams();
-            UiUtils.makeText(SavedTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToHome(SavedTeamsListActivity.this);
+            UiUtils.makeText(StoredTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
+            UiUtils.navigateToHome(StoredTeamsListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -218,8 +220,8 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
         }
     }
 
-    private void updateSavedTeamsList() {
-        if (PrefUtils.isSyncOn(this)) {
+    private void updateStoredTeamsList() {
+        if (PrefUtils.canSync(this)) {
             mSyncLayout.setRefreshing(true);
             mStoredTeamsService.syncTeams(this);
         }
@@ -227,7 +229,7 @@ public class SavedTeamsListActivity extends NavigationActivity implements DataSy
 
     @Override
     public void onSynchronizationSucceeded() {
-        mSavedTeamsListAdapter.updateSavedTeamsList(mStoredTeamsService.getListTeams());
+        mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.getListTeams());
         mSyncLayout.setRefreshing(false);
     }
 

@@ -118,7 +118,7 @@ public class StoredRules implements StoredRulesService {
 
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
-        if (rules.getName().trim().length() > 1
+        if (rules.getName().length() > 1
                 && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind().toString()) == 0
                 && !rules.getName().equals(Rules.officialBeachRules().getName())
                 && !rules.getName().equals(Rules.officialIndoorRules().getName())
@@ -152,21 +152,18 @@ public class StoredRules implements StoredRulesService {
     // Write saved rules
 
     private void insertRulesIntoDb(final ApiRules apiRules, boolean synced, boolean syncInsertion) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                String json = writeRules(apiRules);
-                RulesEntity rulesEntity = new RulesEntity();
-                rulesEntity.setId(apiRules.getId());
-                rulesEntity.setCreatedBy(apiRules.getCreatedBy());
-                rulesEntity.setCreatedAt(apiRules.getCreatedAt());
-                rulesEntity.setUpdatedAt(apiRules.getUpdatedAt());
-                rulesEntity.setKind(apiRules.getKind());
-                rulesEntity.setName(apiRules.getName());
-                rulesEntity.setSynced(synced);
-                rulesEntity.setContent(json);
-                AppDatabase.getInstance(mContext).rulesDao().insert(rulesEntity);
-            }
+        Runnable runnable = () -> {
+            String json = writeRules(apiRules);
+            RulesEntity rulesEntity = new RulesEntity();
+            rulesEntity.setId(apiRules.getId());
+            rulesEntity.setCreatedBy(apiRules.getCreatedBy());
+            rulesEntity.setCreatedAt(apiRules.getCreatedAt());
+            rulesEntity.setUpdatedAt(apiRules.getUpdatedAt());
+            rulesEntity.setKind(apiRules.getKind());
+            rulesEntity.setName(apiRules.getName());
+            rulesEntity.setSynced(synced);
+            rulesEntity.setContent(json);
+            AppDatabase.getInstance(mContext).rulesDao().insert(rulesEntity);
         };
 
         if (syncInsertion) {
@@ -196,7 +193,7 @@ public class StoredRules implements StoredRulesService {
 
     @Override
     public void syncRules(final DataSynchronizationListener listener) {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {
                         List<ApiRulesDescription> rulesList = readRulesList(response);
@@ -312,7 +309,7 @@ public class StoredRules implements StoredRulesService {
     }
 
     private void pushRulesToServer(final ApiRules rules) {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             final byte[] bytes = writeRules(rules).getBytes();
 
@@ -341,7 +338,7 @@ public class StoredRules implements StoredRulesService {
     }
 
     private void deleteRulesOnServer(final String id) {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.RULE_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {},
                     error -> {
@@ -355,7 +352,7 @@ public class StoredRules implements StoredRulesService {
     }
 
     private void deleteAllRulesServer() {
-        if (PrefUtils.isSyncOn(mContext)) {
+        if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
                     response -> {},
                     error -> {

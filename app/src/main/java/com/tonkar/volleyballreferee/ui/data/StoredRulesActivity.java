@@ -12,12 +12,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
+import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 
@@ -25,7 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-public class SavedRulesActivity extends AppCompatActivity {
+public class StoredRulesActivity extends AppCompatActivity {
 
     private Rules    mRules;
     private MenuItem mSaveItem;
@@ -33,10 +32,11 @@ public class SavedRulesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StoredRulesService storedRulesService = new StoredRules(this);
-        mRules = storedRulesService.readRules(getIntent().getStringExtra("rules"));
+        mRules = new Rules();
+        mRules.setAll(storedRulesService.readRules(getIntent().getStringExtra("rules")));
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_rules);
+        setContentView(R.layout.activity_stored_rules);
 
         boolean create = getIntent().getBooleanExtra("create", true);
 
@@ -56,7 +56,7 @@ public class SavedRulesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_saved_rules, menu);
+        inflater.inflate(R.menu.menu_stored_rules, menu);
 
         mSaveItem = menu.findItem(R.id.action_save_rules);
         computeSaveItemVisibility();
@@ -88,11 +88,10 @@ public class SavedRulesActivity extends AppCompatActivity {
 
     private void saveRules() {
         Log.i(Tags.STORED_RULES, "Save rules");
-        mRules.setUserId(PrefUtils.getAuthentication(this).getUserId());
         StoredRulesService storedRulesService = new StoredRules(this);
         storedRulesService.saveRules(mRules);
         UiUtils.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
+        Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         UiUtils.animateCreate(this);
@@ -104,10 +103,10 @@ public class SavedRulesActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             StoredRulesService storedRulesService = new StoredRules(this);
-            storedRulesService.deleteRules(mRules.getName());
-            UiUtils.makeText(SavedRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
+            storedRulesService.deleteRules(mRules.getId());
+            UiUtils.makeText(StoredRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
+            Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             UiUtils.animateBackward(this);
@@ -121,7 +120,7 @@ public class SavedRulesActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.leave_rules_creation_title)).setMessage(getResources().getString(R.string.leave_rules_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            Intent intent = new Intent(SavedRulesActivity.this, SavedRulesListActivity.class);
+            Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             UiUtils.animateBackward(this);
@@ -133,7 +132,7 @@ public class SavedRulesActivity extends AppCompatActivity {
 
     public void computeSaveItemVisibility() {
         if (mSaveItem != null) {
-            if (mRules.getName().length() > 0) {
+            if (mRules.getName().length() > 1) {
                 Log.i(Tags.STORED_RULES, "Save button is visible");
                 mSaveItem.setVisible(true);
             } else {
@@ -145,9 +144,9 @@ public class SavedRulesActivity extends AppCompatActivity {
 
     @Override
     public void onAttachFragment(Fragment fragment) {
-        if (fragment instanceof RulesServiceHandler) {
-            RulesServiceHandler rulesServiceHandler = (RulesServiceHandler) fragment;
-            rulesServiceHandler.setRules(mRules);
+        if (fragment instanceof RulesHandler) {
+            RulesHandler rulesHandler = (RulesHandler) fragment;
+            rulesHandler.setRules(mRules);
         }
     }
 

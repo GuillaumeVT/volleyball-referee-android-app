@@ -87,7 +87,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 resetSetText.setVisibility(View.GONE);
             }
 
-            if (PrefUtils.isSyncOn(context)) {
+            if (PrefUtils.canSync(context)) {
                 indexGameText.setChecked(mGameService.isIndexed());
             } else {
                 indexGameText.setVisibility(View.GONE);

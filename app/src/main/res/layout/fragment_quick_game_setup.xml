@@ -13,10 +13,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4" android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -100,10 +100,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4" android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -256,6 +256,29 @@
                 android:textSize="@dimen/default_text_size" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginTop="@dimen/big_margin_size"
+                android:text="@string/referee"
+                android:textAppearance="@style/TextViewTheme"
+                android:textSize="@dimen/default_text_size"/>
+
+        <Spinner
+                android:id="@+id/referee_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/big_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:prompt="@string/referee"
+                android:spinnerMode="dialog"
+                android:textColor="@color/colorDisabledText"
+                android:textSize="@dimen/default_text_size"/>
 
         <LinearLayout
             android:layout_width="match_parent"

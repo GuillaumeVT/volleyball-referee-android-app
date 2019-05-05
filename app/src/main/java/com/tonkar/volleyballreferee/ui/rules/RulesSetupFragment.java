@@ -17,14 +17,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
+import com.tonkar.volleyballreferee.ui.setup.AutocompleteRulesListAdapter;
 import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
-import com.tonkar.volleyballreferee.ui.data.SavedRulesActivity;
-import com.tonkar.volleyballreferee.ui.data.SavedRulesListAdapter;
+import com.tonkar.volleyballreferee.ui.data.StoredRulesActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 
 import androidx.appcompat.widget.SwitchCompat;
@@ -32,7 +34,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-public class RulesSetupFragment extends Fragment implements RulesServiceHandler {
+public class RulesSetupFragment extends Fragment implements RulesHandler {
 
     private Rules mRules;
 
@@ -73,8 +75,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
 
     private TextView mSubstitutionsLimitationDescription;
 
-    public RulesSetupFragment() {
-    }
+    public RulesSetupFragment() {}
 
     public static RulesSetupFragment newInstance() {
         return newInstance(true, true);
@@ -174,15 +175,29 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
 
         initValues();
 
+        View indoorSection = view.findViewById(R.id.indoor_rules_section);
+        View beachSection = view.findViewById(R.id.beach_game_image);
+
+        if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
+            indoorSection.setVisibility(View.VISIBLE);
+            beachSection.setVisibility(View.GONE);
+        } else if (GameType.BEACH.equals(mRules.getKind())) {
+            indoorSection.setVisibility(View.GONE);
+            beachSection.setVisibility(View.VISIBLE);
+        } else {
+            indoorSection.setVisibility(View.GONE);
+            beachSection.setVisibility(View.GONE);
+        }
+
         if (isGameContext) {
             StoredRulesService storedRulesService = new StoredRules(getContext());
 
             mRulesNameInput.setThreshold(2);
-            mRulesNameInput.setAdapter(new SavedRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules()));
+            mRulesNameInput.setAdapter(new AutocompleteRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules(mRules.getKind())));
             mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                Rules rules = (Rules) mRulesNameInput.getAdapter().getItem(index);
-                mRulesNameInput.setText(rules.getName());
-                mRules.setAll(rules);
+                ApiRulesDescription rulesDescription = (ApiRulesDescription) mRulesNameInput.getAdapter().getItem(index);
+                mRulesNameInput.setText(rulesDescription.getName());
+                mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
                 initValues();
                 mScrollView.post(() -> mScrollView.fullScroll(ScrollView.FOCUS_UP));
                 computeConfirmItemVisibility();
@@ -200,7 +215,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.RULES, "Update rules name");
-                mRules.setName(s.toString());
+                mRules.setName(s.toString().trim());
                 computeConfirmItemVisibility();
             }
 
@@ -245,10 +260,10 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
 
         mTwoPointsDifferenceSwitch.setOnCheckedChangeListener((button, isChecked) -> mRules.setTwoPointsDifference(isChecked));
 
-        mSanctionsSwitch.setOnCheckedChangeListener((button, isChecked) -> mRules.setSanctionsEnabled(isChecked));
+        mSanctionsSwitch.setOnCheckedChangeListener((button, isChecked) -> mRules.setSanctions(isChecked));
 
         mTeamTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-            mRules.setTeamTimeoutsEnabled(isChecked);
+            mRules.setTeamTimeouts(isChecked);
             mTeamTimeoutsPerSetSpinner.setEnabled(isChecked);
             mTeamTimeoutDurationSpinner.setEnabled(isChecked);
         });
@@ -274,7 +289,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         });
 
         mTechnicalTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-            mRules.setTechnicalTimeoutsEnabled(isChecked);
+            mRules.setTechnicalTimeouts(isChecked);
             mTechnicalTimeoutDurationSpinner.setEnabled(isChecked);
         });
 
@@ -289,7 +304,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         });
 
         mGameIntervalsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-            mRules.setGameIntervalsEnabled(isChecked);
+            mRules.setGameIntervals(isChecked);
             mGameIntervalDurationSpinner.setEnabled(isChecked);
         });
 
@@ -327,7 +342,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         });
 
         mCourtSwitchesSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-            mRules.setBeachCourtSwitchesEnabled(isChecked);
+            mRules.setBeachCourtSwitches(isChecked);
             mCourtSwitchFrequencySpinner.setEnabled(isChecked);
             mCourtSwitchFrequencyTieBreakSpinner.setEnabled(isChecked);
         });
@@ -335,7 +350,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         mCourtSwitchFrequencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setBeachCourtSwitchFrequency(mCourtSwitchFrequencyAdapter.getItem(index));
+                mRules.setBeachCourtSwitchFreq(mCourtSwitchFrequencyAdapter.getItem(index));
             }
 
             @Override
@@ -345,7 +360,7 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         mCourtSwitchFrequencyTieBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setBeachCourtSwitchFrequencyTieBreak(mCourtSwitchFrequencyTieBreakAdapter.getItem(index));
+                mRules.setBeachCourtSwitchFreqTieBreak(mCourtSwitchFrequencyTieBreakAdapter.getItem(index));
             }
 
             @Override
@@ -375,33 +390,33 @@ public class RulesSetupFragment extends Fragment implements RulesServiceHandler 
         mPointsInTieBreakSpinner.setSelection(mPointsInTieBreakAdapter.getPosition(mRules.getPointsInTieBreak()));
         mPointsInTieBreakSpinner.setEnabled(mRules.isTieBreakInLastSet());
         mTwoPointsDifferenceSwitch.setChecked(mRules.isTwoPointsDifference());
-        mSanctionsSwitch.setChecked(mRules.areSanctionsEnabled());
-        mTeamTimeoutsSwitch.setChecked(mRules.areTeamTimeoutsEnabled());
+        mSanctionsSwitch.setChecked(mRules.isSanctions());
+        mTeamTimeoutsSwitch.setChecked(mRules.isTeamTimeouts());
         mTeamTimeoutsPerSetSpinner.setSelection(mTeamTimeoutsPerSetAdapter.getPosition(mRules.getTeamTimeoutsPerSet()));
-        mTeamTimeoutsPerSetSpinner.setEnabled(mRules.areTeamTimeoutsEnabled());
+        mTeamTimeoutsPerSetSpinner.setEnabled(mRules.isTeamTimeouts());
         mTeamTimeoutDurationSpinner.setSelection(mTeamTimeoutDurationAdapter.getPosition(mRules.getTeamTimeoutDuration()));
-        mTeamTimeoutDurationSpinner.setEnabled(mRules.areTeamTimeoutsEnabled());
-        mTechnicalTimeoutsSwitch.setChecked(mRules.areTechnicalTimeoutsEnabled());
+        mTeamTimeoutDurationSpinner.setEnabled(mRules.isTeamTimeouts());
+        mTechnicalTimeoutsSwitch.setChecked(mRules.isTechnicalTimeouts());
         mTechnicalTimeoutDurationSpinner.setSelection(mTechnicalTimeoutDurationAdapter.getPosition(mRules.getTechnicalTimeoutDuration()));
-        mTechnicalTimeoutDurationSpinner.setEnabled(mRules.areTechnicalTimeoutsEnabled());
-        mGameIntervalsSwitch.setChecked(mRules.areGameIntervalsEnabled());
+        mTechnicalTimeoutDurationSpinner.setEnabled(mRules.isTechnicalTimeouts());
+        mGameIntervalsSwitch.setChecked(mRules.isGameIntervals());
         mGameIntervalDurationSpinner.setSelection(mGameIntervalDurationAdapter.getPosition(mRules.getGameIntervalDuration()));
-        mGameIntervalDurationSpinner.setEnabled(mRules.areGameIntervalsEnabled());
+        mGameIntervalDurationSpinner.setEnabled(mRules.isGameIntervals());
         mSubstitutionsLimitationSpinner.setSelection(mSubstitutionsLimitationAdapter.getPosition(mRules.getSubstitutionsLimitation()));
         mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
-        mCourtSwitchesSwitch.setChecked(mRules.areBeachCourtSwitchesEnabled());
-        mCourtSwitchFrequencySpinner.setSelection(mCourtSwitchFrequencyAdapter.getPosition(mRules.getBeachCourtSwitchFrequency()));
-        mCourtSwitchFrequencySpinner.setEnabled(mRules.areBeachCourtSwitchesEnabled());
-        mCourtSwitchFrequencyTieBreakSpinner.setSelection(mCourtSwitchFrequencyTieBreakAdapter.getPosition(mRules.getBeachCourtSwitchFrequencyTieBreak()));
-        mCourtSwitchFrequencyTieBreakSpinner.setEnabled(mRules.areBeachCourtSwitchesEnabled());
+        mCourtSwitchesSwitch.setChecked(mRules.isBeachCourtSwitches());
+        mCourtSwitchFrequencySpinner.setSelection(mCourtSwitchFrequencyAdapter.getPosition(mRules.getBeachCourtSwitchFreq()));
+        mCourtSwitchFrequencySpinner.setEnabled(mRules.isBeachCourtSwitches());
+        mCourtSwitchFrequencyTieBreakSpinner.setSelection(mCourtSwitchFrequencyTieBreakAdapter.getPosition(mRules.getBeachCourtSwitchFreqTieBreak()));
+        mCourtSwitchFrequencyTieBreakSpinner.setEnabled(mRules.isBeachCourtSwitches());
         mConsecutiveServesSpinner.setSelection(mConsecutiveServesAdapter.getPosition(mRules.getCustomConsecutiveServesPerPlayer()));
     }
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
             ((GameSetupActivity) getActivity()).computeStartItemVisibility();
-        } else if (getActivity() instanceof SavedRulesActivity) {
-            ((SavedRulesActivity) getActivity()).computeSaveItemVisibility();
+        } else if (getActivity() instanceof StoredRulesActivity) {
+            ((StoredRulesActivity) getActivity()).computeSaveItemVisibility();
         }
     }
 

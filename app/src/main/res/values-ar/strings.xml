@@ -39,9 +39,9 @@
     <string name="user_sign_in_why_message">في حالة بث مبارياتك عبر الإنترنت ، قد تكون مهتمًا بتسجيل الدخول.\n\nعن طريق تسجيل الدخول ، سوف تكسب السيطرة الكاملة على المباريات الخاصة بك على https://www.volleyball-referee.com/user\n\nمن هذه الصفحة ، يمكنك إنشاء وإدارة القوانين والفرق والمباريات والبطولات الخاصة بك. يمكن بعد ذلك تنظيم الألعاب المجدولة على التطبيق الخاص بك أو على تطبيق شخص آخر عن طريق توفير رمز لعبة فريد للحكم.</string>
     <string name="user_sign_in_privacy_title">هل هو آمن؟</string>
     <string name="user_sign_in_privacy_message">نعم فعلا. عند تسجيل الدخول ، فإن المعلومات الوحيدة التي نسترجعها من ملفك الشخصي هي معرفك الاجتماعي الفريد الذي نستخدمه لتحديد هويتك.</string>
-    <string name="user_signed_in">تم تسجيل الدخول باستخدام %s</string>
+    <string name="user_signed_in_with_provider">تم تسجيل الدخول باستخدام %s</string>
     <string name="user_signed_out">تسجيل الخروج</string>
-    <string name="user_sign_in_error">حدث خطأ أثناء تسجيل الدخول باستخدام %s</string>
+    <string name="user_sign_in_with_provider_error">حدث خطأ أثناء تسجيل الدخول باستخدام %s</string>
     <string name="user_scheduled_games_title">مبارياتي المجدولة</string>
 
     <!-- Setup activities -->

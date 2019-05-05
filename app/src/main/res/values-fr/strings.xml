@@ -45,9 +45,9 @@
     <string name="user_sign_in_why_message">Si vous diffusez vos matchs en ligne, se connecter pourrait vous intéresser.\n\nEn vous connectant, vous aurez le contrôle complet de vos matchs sur https://www.volleyball-referee.com/user\n\nDepuis cette page, vous pourrez également créer et gérer vos règles, équipes, matchs et même vos tournois. Les matchs programmés peuvent ensuite être arbitrés sur votre appli ou sur celle d\'un autre arbitre en lui fournissant le code unique de ce match.</string>
     <string name="user_sign_in_privacy_title">Est-ce sûr?</string>
     <string name="user_sign_in_privacy_message">Oui. Lorsque vous vous connectez, la seule information que nous récupérons est l\'identifiant de votre profil, dont nous nous servons pour vous identifier.</string>
-    <string name="user_signed_in">Connecté avec %s</string>
+    <string name="user_signed_in_with_provider">Connecté avec %s</string>
     <string name="user_signed_out">Déconnecté</string>
-    <string name="user_sign_in_error">Erreur lors de la connexion à %s</string>
+    <string name="user_sign_in_with_provider_error">Erreur lors de la connexion à %s</string>
     <string name="user_scheduled_games_title">Mes matchs programmés</string>
 
     <!-- Setup activities -->

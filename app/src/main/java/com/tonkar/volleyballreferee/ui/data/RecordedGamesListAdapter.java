@@ -54,7 +54,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
         mFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
         mNamesFilter = new NamesFilter();
-        mIsSyncOn = PrefUtils.isSyncOn(context);
+        mIsSyncOn = PrefUtils.canSync(context);
     }
 
     public void updateRecordedGamesList(List<StoredGameService> storedGameServiceList) {

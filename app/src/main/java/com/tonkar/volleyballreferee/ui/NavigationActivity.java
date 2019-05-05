@@ -20,10 +20,9 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
-import com.tonkar.volleyballreferee.ui.data.SavedRulesListActivity;
-import com.tonkar.volleyballreferee.ui.data.SavedTeamsListActivity;
+import com.tonkar.volleyballreferee.ui.data.StoredRulesListActivity;
+import com.tonkar.volleyballreferee.ui.data.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
-import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public abstract class NavigationActivity extends AppCompatActivity {
@@ -48,7 +47,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
 
-        computeItemsVisibility(navigationView);
+        computeAvailableGamesItemVisibility(navigationView);
         computePurchaseItemVisibility(navigationView.getMenu().findItem(R.id.action_purchase));
 
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -64,9 +63,9 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
-                    case R.id.action_saved_rules:
-                        Log.i(Tags.STORED_RULES, "Saved Rules");
-                        intent = new Intent(this, SavedRulesListActivity.class);
+                    case R.id.action_stored_rules:
+                        Log.i(Tags.STORED_RULES, "Stored Rules");
+                        intent = new Intent(this, StoredRulesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
@@ -76,41 +75,29 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
-                    case R.id.action_recorded_games:
-                        Log.i(Tags.STORED_GAMES, "Recorded games");
+                    case R.id.action_stored_games:
+                        Log.i(Tags.STORED_GAMES, "Stored games");
                         intent = new Intent(this, RecordedGamesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
-                    case R.id.action_saved_teams:
-                        Log.i(Tags.STORED_TEAMS, "Saved teams");
-                        intent = new Intent(this, SavedTeamsListActivity.class);
+                    case R.id.action_stored_teams:
+                        Log.i(Tags.STORED_TEAMS, "Stored teams");
+                        intent = new Intent(this, StoredTeamsListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
-                    case R.id.action_view_scheduled_games:
-                        if (PrefUtils.isWebPremiumPurchased(this)) {
-                            if (PrefUtils.isSignedIn(this)) {
-                                Log.i(Tags.SCHEDULE_UI, "Scheduled games");
-                                intent = new Intent(this, ScheduledGamesListActivity.class);
-                            } else {
-                                Log.i(Tags.WEB, "User sign in");
-                                UiUtils.navigateToUserSignIn(this);
-                                intent = new Intent(this, UserSignInActivity.class);
-                            }
+                    case R.id.action_available_games:
+                        if (PrefUtils.canSync(this)) {
+                            Log.i(Tags.SCHEDULE_UI, "Scheduled games");
+                            intent = new Intent(this, ScheduledGamesListActivity.class);
                             startActivity(intent);
                             UiUtils.animateForward(this);
                         }
                         break;
-                    case R.id.action_view_live_games:
-                        Log.i(Tags.WEB, "Live games");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.LIVE_URL));
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_search_online_games:
-                        Log.i(Tags.WEB, "Search online games");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.SEARCH_URL));
+                    case R.id.action_live_games_vbr_com:
+                        Log.i(Tags.WEB, "Live games on VBR.com");
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.WEB_APP_LIVE_URL));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
@@ -175,16 +162,8 @@ public abstract class NavigationActivity extends AppCompatActivity {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
-    private void computeItemsVisibility(NavigationView navigationView) {
-        if (PrefUtils.isWebPremiumPurchased(this)) {
-            if (PrefUtils.isSignedIn(this)) {
-                navigationView.getMenu().findItem(R.id.action_view_scheduled_games).setVisible(true);
-            } else {
-                navigationView.getMenu().findItem(R.id.action_view_scheduled_games).setVisible(false);
-            }
-        } else {
-            navigationView.getMenu().findItem(R.id.action_view_scheduled_games).setVisible(false);
-        }
+    private void computeAvailableGamesItemVisibility(NavigationView navigationView) {
+        navigationView.getMenu().findItem(R.id.action_available_games).setVisible(PrefUtils.canSync(this));
     }
 
     protected void computePurchaseItemVisibility(MenuItem item) {

@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
             android:layout_gravity="end"
-            android:onClick="goToScheduledGames"
             android:text="@string/purchase"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:strokeColor="@color/colorPrimary"

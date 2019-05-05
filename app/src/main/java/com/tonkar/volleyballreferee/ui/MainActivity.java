@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -22,24 +23,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.business.data.StoredRules;
-import com.tonkar.volleyballreferee.business.data.StoredTeams;
+import com.tonkar.volleyballreferee.business.data.*;
 import com.tonkar.volleyballreferee.business.game.*;
-import com.tonkar.volleyballreferee.business.web.BooleanRequest;
-import com.tonkar.volleyballreferee.api.ApiGameDescription;
-import com.tonkar.volleyballreferee.api.JsonStringRequest;
-import com.tonkar.volleyballreferee.api.ApiUtils;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -53,11 +46,10 @@ import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-public class MainActivity extends AuthenticationActivity implements AsyncGameRequestListener {
+public class MainActivity extends AuthenticationActivity {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -97,13 +89,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
         setResumeGameCardVisibility();
 
-        MaterialButton scheduledCodeButton = findViewById(R.id.start_scheduled_code_game_button);
-        scheduledCodeButton.setVisibility(PrefUtils.canRequest(this) ? View.VISIBLE : View.GONE);
-
-        Context applicationContext = getApplicationContext();
-        StoredTeamsService storedTeamsService = new StoredTeams(applicationContext);
-        StoredRulesService storedRulesService = new StoredRules(applicationContext);
-
         if (mStoredGamesService.hasCurrentGame()) {
             try {
                 mStoredGamesService.loadCurrentGame();
@@ -120,8 +105,11 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         final long currentTime = System.currentTimeMillis();
 
         if (sharedPreferences.getLong("last_full_sync", 0L) + 7200000L < currentTime) {
-            storedRulesService.syncRules();
-            storedTeamsService.syncTeams();
+            Context applicationContext = getApplicationContext();
+            new StoredUser(applicationContext).syncUser();
+            new StoredLeagues(applicationContext).syncLeagues();
+            new StoredRules(applicationContext).syncRules();
+            new StoredTeams(applicationContext).syncTeams();
             mStoredGamesService.syncGames();
             sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
         }
@@ -154,11 +142,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
             }
         }
 
-        if (savedInstanceState != null) {
-            restoreScheduledGameFromCodeDialog();
-            restoreEditScheduledGameFromCodeDialog();
-        }
-
         checkAuthentication();
     }
 
@@ -168,14 +151,14 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
-        final MenuItem messageItem = menu.findItem(R.id.action_message_menu);
-        initMessageMenuVisibility(messageItem);
+        final MenuItem messageItem = menu.findItem(R.id.action_news_menu);
+        messageItem.setVisible(ApiUtils.isConnectedToInternet(this));
 
         final MenuItem purchaseItem = menu.findItem(R.id.action_purchase_menu);
         computePurchaseItemVisibility(purchaseItem);
 
         final MenuItem accountItem = menu.findItem(R.id.action_account_menu);
-        accountItem.setVisible(PrefUtils.canSync(this));
+        accountItem.setVisible(PrefUtils.isSignedIn(this));
 
         return true;
     }
@@ -183,9 +166,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_message_menu:
-                Log.i(Tags.WEB, "VBR Message");
-                showMessage();
+            case R.id.action_news_menu:
+                Log.i(Tags.WEB, "VBR News");
+                fetchAndShowNews();
                 return true;
             case R.id.action_purchase_menu:
                 Log.i(Tags.BILLING, "Purchase");
@@ -208,7 +191,8 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(this);
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -221,7 +205,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startBeachGame(View view) {
         Log.i(Tags.GAME_UI, "Start a beach game");
-        BeachGame game = GameFactory.createBeachGame(System.currentTimeMillis(), 0L, Rules.officialBeachRules());
+        Authentication authentication = PrefUtils.getAuthentication(this);
+        BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+                System.currentTimeMillis(), 0L, Rules.officialBeachRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
@@ -233,7 +219,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startIndoor4x4Game(View view) {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
+        Authentication authentication = PrefUtils.getAuthentication(this);
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+                System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
@@ -245,7 +233,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startTimeBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a time-based game");
-        TimeBasedGame game = GameFactory.createTimeBasedGame(System.currentTimeMillis(), 0L);
+        Authentication authentication = PrefUtils.getAuthentication(this);
+        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+                System.currentTimeMillis(), 0L);
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
@@ -257,7 +247,9 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
 
     public void startScoreBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a score-based game");
-        IndoorGame game = GameFactory.createPointBasedGame(System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+        Authentication authentication = PrefUtils.getAuthentication(this);
+        IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+                System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
@@ -265,20 +257,6 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         intent.putExtra("create", true);
         startActivity(intent);
         UiUtils.animateForward(this);
-    }
-
-    public void startScheduledGameFromCode(View view) {
-        Log.i(Tags.GAME_UI, "Start a scheduled game from code");
-
-        CodeInputDialogFragment dialogFragment = (CodeInputDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code");
-
-        if (dialogFragment == null) {
-            dialogFragment = CodeInputDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code),
-                    getResources().getString(android.R.string.cancel), getResources().getString(android.R.string.ok));
-            dialogFragment.show(getSupportFragmentManager(), "game_code");
-        }
-
-        setScheduledGameFromCodeListener(dialogFragment);
     }
 
     private void resumeCurrentGame() {
@@ -300,173 +278,36 @@ public class MainActivity extends AuthenticationActivity implements AsyncGameReq
         }
     }
 
-    private void initMessageMenuVisibility(final MenuItem messageItem) {
-        messageItem.setVisible(false);
-
-        if (PrefUtils.canRequest(this)) {
-            String url = ApiUtils.HAS_MESSAGE_API_URL;
-            BooleanRequest booleanRequest = new BooleanRequest(Request.Method.GET, url, messageItem::setVisible, error -> messageItem.setVisible(false));
-            ApiUtils.getInstance().getRequestQueue(this).add(booleanRequest);
-        }
-    }
-
-    private void showMessage() {
-        if (PrefUtils.canRequest(this)) {
-            String url = ApiUtils.MESSAGE_API_URL;
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, url, new byte[0],
+    private void fetchAndShowNews() {
+        if (ApiUtils.isConnectedToInternet(this)) {
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.MESSAGES_API_URL, new byte[0],
                     response -> {
-                        if (response != null) {
-                            Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, response, Snackbar.LENGTH_INDEFINITE);
-                            TextView textView = infoSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
-                            textView.setMaxLines(3);
-                            infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
-                            infoSnackbar.setAction("Close", view -> {});
-                            infoSnackbar.show();
-                        }
-                    }, error -> {}
+                        ApiMessage message = JsonIOUtils.GSON.fromJson(response, JsonIOUtils.MESSAGE_TYPE);
+                        showNews(message.getMessage());
+                    },
+                    error -> showNews(getString(R.string.no_news))
             );
             ApiUtils.getInstance().getRequestQueue(this).add(stringRequest);
         }
     }
 
+    private void showNews(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+                .setTitle(R.string.news).setMessage(message)
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {});
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+    }
+
     private void showAccount() {
         if (PrefUtils.canSync(this)) {
-            String account = String.format(Locale.getDefault(), getResources().getString(R.string.user_signed_in), PrefUtils.getAuthentication(this).getUserId());
-            Snackbar infoSnackbar = Snackbar.make(mDrawerLayout, account, Snackbar.LENGTH_INDEFINITE);
-            infoSnackbar.setActionTextColor(getResources().getColor(R.color.colorBeach));
-            infoSnackbar.setAction("Close", view -> {});
-            infoSnackbar.show();
-        }
-    }
-
-    private void restoreScheduledGameFromCodeDialog() {
-        CodeInputDialogFragment dialogFragment = (CodeInputDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code");
-        setScheduledGameFromCodeListener(dialogFragment);
-    }
-
-    private void setScheduledGameFromCodeListener(CodeInputDialogFragment dialogFragment) {
-        if (dialogFragment != null) {
-            dialogFragment.setAlertDialogListener(new CodeInputDialogFragment.AlertDialogListener() {
-                @Override
-                public void onNegativeButtonClicked() {}
-
-                @Override
-                public void onPositiveButtonClicked(int code) {
-                    if (code > 9999999) {
-                        Log.i(Tags.GAME_UI, String.format(Locale.getDefault(), "Requesting game from code %d", code));
-                        mStoredGamesService.getGameFromCode(code, MainActivity.this);
-                    } else {
-                        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onRecordedGameReceivedFromCode(StoredGameService storedGameService) {
-        if (storedGameService != null) {
-            final GameService gameService = GameFactory.createGame(storedGameService);
-            Log.i(Tags.GAME_UI, "Start game activity after receiving code");
-
-            switch (storedGameService.getMatchStatus()) {
-                case SCHEDULED:
-                    mStoredGamesService.saveSetupGame(gameService);
-                    AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
-                    if (alertDialogFragment == null) {
-                        alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.new_scheduled_game_from_code), getResources().getString(R.string.scheduled_game_question),
-                                getResources().getString(R.string.no), getResources().getString(R.string.yes));
-                        setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
-                        alertDialogFragment.show(getSupportFragmentManager(), "game_code_edit");
-                    } else {
-                        setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
-                    }
-                    break;
-                case LIVE:
-                    gameService.restoreGame(storedGameService);
-                    mStoredGamesService.createCurrentGame(gameService);
-                    final Intent gameIntent = new Intent(this, GameActivity.class);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
-                    UiUtils.animateCreate(this);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void onGameReceived(StoredGameService storedGameService) {}
-
-    @Override
-    public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {}
-
-    @Override
-    public void onNotFound() {
-        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.invalid_game_code), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onInternalError() {
-        UiUtils.makeText(MainActivity.this, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onError() {
-        onInternalError();
-    }
-
-    private void restoreEditScheduledGameFromCodeDialog() {
-        GameService gameService = mStoredGamesService.loadSetupGame();
-        AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("game_code_edit");
-
-        if ((mStoredGamesService.hasCurrentGame() || gameService == null) && alertDialogFragment != null) {
-            alertDialogFragment.dismiss();
-        } else {
-            setEditScheduledGameFromCodeListener(alertDialogFragment, gameService);
-        }
-    }
-
-    private void setEditScheduledGameFromCodeListener(AlertDialogFragment alertDialogFragment, final GameService gameService) {
-        if (alertDialogFragment != null) {
-            alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                @Override
-                public void onNegativeButtonClicked() {
-                    Log.i(Tags.GAME_UI, "Start game from code immediately");
-                    gameService.startMatch();
-                    mStoredGamesService.createCurrentGame(gameService);
-                    final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
-                    UiUtils.animateCreate(MainActivity.this);
-                }
-
-                @Override
-                public void onPositiveButtonClicked() {
-                    Log.i(Tags.SETUP_UI, "Edit game from code before starting");
-                    mStoredGamesService.saveSetupGame(gameService);
-                    final Intent setupIntent;
-                    if (gameService.getKind().equals(GameType.BEACH)) {
-                        setupIntent = new Intent(MainActivity.this, QuickGameSetupActivity.class);
-                    } else {
-                        setupIntent = new Intent(MainActivity.this, GameSetupActivity.class);
-                    }
-                    setupIntent.putExtra("create", false);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(setupIntent);
-                    UiUtils.animateForward(MainActivity.this);
-                }
-
-                @Override
-                public void onNeutralButtonClicked() {}
-            });
+            Authentication authentication = PrefUtils.getAuthentication(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+                    .setMessage(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()))
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {})
+                    .setNegativeButton(R.string.user_sign_out, (dialog, which) -> signOut());
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         }
     }
 

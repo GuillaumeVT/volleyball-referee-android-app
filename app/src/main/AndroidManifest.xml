@@ -50,17 +50,17 @@
             android:name=".ui.data.RecordedBeachGameActivity"
             android:parentActivityName=".ui.data.RecordedGamesListActivity" />
         <activity
-            android:name=".ui.data.SavedTeamsListActivity"
+            android:name=".ui.data.StoredTeamsListActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.data.SavedTeamActivity"
-            android:parentActivityName=".ui.data.SavedTeamsListActivity" />
+            android:name=".ui.data.StoredTeamActivity"
+            android:parentActivityName=".ui.data.StoredTeamsListActivity" />
         <activity
-            android:name=".ui.data.SavedRulesListActivity"
+            android:name=".ui.data.StoredRulesListActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.data.SavedRulesActivity"
-            android:parentActivityName=".ui.data.SavedRulesListActivity" />
+            android:name=".ui.data.StoredRulesActivity"
+            android:parentActivityName=".ui.data.StoredRulesListActivity" />
         <activity
             android:name=".ui.user.UserSignInActivity"
             android:parentActivityName=".ui.MainActivity" />

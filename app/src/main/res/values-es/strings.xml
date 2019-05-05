@@ -45,9 +45,9 @@
     <string name="user_sign_in_why_message">Si emites tus partidos online, te interesa registarte.\n\nDe esta forma, tendrás control total de tus partidos en https://www.volleyball-referee.com/user\n\nDesde esta página podrás crear y administrar tus reglas, equipos, partidos e incluso torneos. Los partidos programados pueden ser arbitrados con la App, dándole el código del partido al árbitro.</string>
     <string name="user_sign_in_privacy_title">¿Es seguro?</string>
     <string name="user_sign_in_privacy_message">Sí. Cuando te registras, la única información que recabamos de tu perfil es un número único, que usamos para identificarte.</string>
-    <string name="user_signed_in">Registrado como %s</string>
+    <string name="user_signed_in_with_provider">Registrado como %s</string>
     <string name="user_signed_out">Sesión terminada</string>
-    <string name="user_sign_in_error">Error al iniciar sesión como %s</string>
+    <string name="user_sign_in_with_provider_error">Error al iniciar sesión como %s</string>
     <string name="user_scheduled_games_title">Mis partidos planificados</string>
 
     <!-- Setup activities -->

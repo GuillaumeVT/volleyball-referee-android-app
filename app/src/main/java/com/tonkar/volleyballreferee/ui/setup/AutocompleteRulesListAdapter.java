@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.ui.data;
+package com.tonkar.volleyballreferee.ui.setup;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,47 +7,38 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
-
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.rules.Rules;
+import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class SavedRulesListAdapter extends ArrayAdapter<Rules> {
+public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescription> {
 
-    private final LayoutInflater mLayoutInflater;
-    private final List<Rules>    mSavedRulesServiceList;
-    private final List<Rules>    mFilteredSavedRulesServiceList;
-    private final NameFilter     mNameFilter;
+    private final LayoutInflater            mLayoutInflater;
+    private final List<ApiRulesDescription> mStoredRulesList;
+    private final List<ApiRulesDescription> mFilteredStoredRulesList;
+    private final NameFilter                mNameFilter;
 
-    public SavedRulesListAdapter(Context context, LayoutInflater layoutInflater, List<Rules> savedRulesList) {
-        super(context, R.layout.autocomplete_list_item, savedRulesList);
+    public AutocompleteRulesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiRulesDescription> storedRulesList) {
+        super(context, R.layout.autocomplete_list_item, storedRulesList);
         mLayoutInflater = layoutInflater;
-        mSavedRulesServiceList = savedRulesList;
-        mFilteredSavedRulesServiceList = new ArrayList<>();
-        mFilteredSavedRulesServiceList.addAll(mSavedRulesServiceList);
+        mStoredRulesList = storedRulesList;
+        mFilteredStoredRulesList = new ArrayList<>();
+        mFilteredStoredRulesList.addAll(mStoredRulesList);
         mNameFilter = new NameFilter();
-    }
-
-    public void updateSavedRulesList(List<Rules> savedRulesList) {
-        mSavedRulesServiceList.clear();
-        mFilteredSavedRulesServiceList.clear();
-        mSavedRulesServiceList.addAll(savedRulesList);
-        mFilteredSavedRulesServiceList.addAll(savedRulesList);
-        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return mFilteredSavedRulesServiceList.size();
+        return mFilteredStoredRulesList.size();
     }
 
     @Override
-    public Rules getItem(int index) {
-        return mFilteredSavedRulesServiceList.get(index);
+    public ApiRulesDescription getItem(int index) {
+        return mFilteredStoredRulesList.get(index);
     }
 
     @Override
@@ -65,7 +56,7 @@ public class SavedRulesListAdapter extends ArrayAdapter<Rules> {
             rulesTextView = (TextView) view;
         }
 
-        Rules rules = mFilteredSavedRulesServiceList.get(index);
+        ApiRulesDescription rules = mFilteredStoredRulesList.get(index);
         rulesTextView.setText(rules.getName());
 
         return rulesTextView;
@@ -83,14 +74,14 @@ public class SavedRulesListAdapter extends ArrayAdapter<Rules> {
             FilterResults results = new FilterResults();
 
             if (prefix == null || prefix.length() == 0) {
-                results.values = mSavedRulesServiceList;
-                results.count = mSavedRulesServiceList.size();
+                results.values = mStoredRulesList;
+                results.count = mStoredRulesList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<Rules> matchValues = new ArrayList<>();
+                List<ApiRulesDescription> matchValues = new ArrayList<>();
 
-                for (Rules rules: mSavedRulesServiceList) {
+                for (ApiRulesDescription rules : mStoredRulesList) {
                     if (lowerCaseText.isEmpty() || rules.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(rules);
                     }
@@ -105,11 +96,11 @@ public class SavedRulesListAdapter extends ArrayAdapter<Rules> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mFilteredSavedRulesServiceList.clear();
+            mFilteredStoredRulesList.clear();
 
             if (results.values != null) {
-                mFilteredSavedRulesServiceList.clear();
-                mFilteredSavedRulesServiceList.addAll((Collection<Rules>) results.values);
+                mFilteredStoredRulesList.clear();
+                mFilteredStoredRulesList.addAll((Collection<? extends ApiRulesDescription>) results.values);
             }
 
             if (results.count > 0) {

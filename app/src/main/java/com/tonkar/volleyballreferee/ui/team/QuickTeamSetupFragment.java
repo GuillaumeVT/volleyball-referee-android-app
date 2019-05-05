@@ -27,7 +27,7 @@ import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import com.tonkar.volleyballreferee.ui.data.SavedTeamActivity;
+import com.tonkar.volleyballreferee.ui.data.StoredTeamActivity;
 
 public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
@@ -82,7 +82,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
-                mTeamService.setTeamName(mTeamType, s.toString());
+                mTeamService.setTeamName(mTeamType, s.toString().trim());
                 computeSaveItemVisibility();
             }
 
@@ -190,8 +190,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     }
 
     private void computeSaveItemVisibility() {
-        if (getActivity() instanceof SavedTeamActivity) {
-            ((SavedTeamActivity) getActivity()).computeSaveItemVisibility();
+        if (getActivity() instanceof StoredTeamActivity) {
+            ((StoredTeamActivity) getActivity()).computeSaveItemVisibility();
         }
     }
 

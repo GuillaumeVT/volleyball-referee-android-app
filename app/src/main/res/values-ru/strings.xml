@@ -45,9 +45,9 @@
     <string name="user_sign_in_why_message">Эта функция может быть для вас интересна, если вы транслируете матчи онлайн.\n\nПодключаясь через ваш аккаунт, вы можете контролировать ваши матчи на сайте https://www.volleyball-referee.com/user\n\nНа вашей персональной странице вы можете управлять вашими правилами, командами и матчами. Вы также можете создавать отдельные турниры. Запланированные матчи могут быть использованы либо вашим приложением, либо приложением любого другого судьи. Для этого достаточно просто передать уникальный код этих матчей.</string>
     <string name="user_sign_in_privacy_title">Уверены?</string>
     <string name="user_sign_in_privacy_message">Да. Для подключения единственной информацией, которую сохраняет приложение, является уникальный код-идентификатор вашего профиля. Он необходим для вашей идентификации.</string>
-    <string name="user_signed_in">Подключение с %s</string>
+    <string name="user_signed_in_with_provider">Подключение с %s</string>
     <string name="user_signed_out">Отключён</string>
-    <string name="user_sign_in_error">Ошибка соединения с %s</string>
+    <string name="user_sign_in_with_provider_error">Ошибка соединения с %s</string>
     <string name="user_scheduled_games_title">Мои запланированные матчи</string>
 
     <!-- Setup activities -->
