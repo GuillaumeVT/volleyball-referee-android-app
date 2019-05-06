@@ -264,7 +264,7 @@ public class MainActivity extends AuthenticationActivity {
         GameService gameService = mStoredGamesService.loadCurrentGame();
 
         if (gameService == null) {
-            UiUtils.makeText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
+            UiUtils.makeErrorText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
         } else {
             if (GameType.TIME.equals(gameService.getKind())) {
                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -73,7 +74,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.SETUP_UI, "Create team setup fragment");
         mLayoutInflater = inflater;
         View view = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
@@ -118,7 +119,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             StoredTeamsService storedTeamsService = new StoredTeams(getContext());
 
             teamNameInput.setThreshold(2);
-            teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.getListTeams(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.listTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeamDescription teamDescription = (ApiTeamDescription) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(teamDescription.getName());

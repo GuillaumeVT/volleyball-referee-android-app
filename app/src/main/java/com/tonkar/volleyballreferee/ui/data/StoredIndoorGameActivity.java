@@ -20,18 +20,18 @@ import java.util.TimeZone;
 
 import androidx.viewpager.widget.ViewPager;
 
-public class RecordedIndoorGameActivity extends RecordedGameActivity {
+public class StoredIndoorGameActivity extends StoredGameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mGameDate = getIntent().getLongExtra("game_date", 0L);
+        mGameId = getIntent().getStringExtra("game");
         mStoredGamesService = new StoredGames(this);
-        mStoredGameService = mStoredGamesService.getGame(mGameDate);
+        mStoredGameService = mStoredGamesService.getGame(mGameId);
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.STORED_GAMES, "Create recorded indoor game activity");
-        setContentView(R.layout.activity_recorded_indoor_game);
+        Log.i(Tags.STORED_GAMES, "Create stored indoor game activity");
+        setContentView(R.layout.activity_stored_indoor_game);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -51,7 +51,7 @@ public class RecordedIndoorGameActivity extends RecordedGameActivity {
         TextView guestTeamSets = findViewById(R.id.guest_team_set_text);
         TextView gameScore = findViewById(R.id.game_score);
 
-        gameDate.setText(formatter.format(new Date(mGameDate)));
+        gameDate.setText(formatter.format(new Date(mStoredGameService.getScheduledAt())));
         homeTeamName.setText(mStoredGameService.getTeamName(TeamType.HOME));
         guestTeamName.setText(mStoredGameService.getTeamName(TeamType.GUEST));
         homeTeamSets.setText(UiUtils.formatNumberFromLocale(mStoredGameService.getSets(TeamType.HOME)));
@@ -60,10 +60,10 @@ public class RecordedIndoorGameActivity extends RecordedGameActivity {
         UiUtils.colorTeamText(this, mStoredGameService.getTeamColor(TeamType.HOME), homeTeamSets);
         UiUtils.colorTeamText(this, mStoredGameService.getTeamColor(TeamType.GUEST), guestTeamSets);
 
-        gameScore.setText(buildScore(mStoredGameService));
+        gameScore.setText(mStoredGameService.getScore());
 
         final ViewPager indoorGamePager = findViewById(R.id.indoor_game_pager);
-        final RecordedIndoorGameFragmentPagerAdapter indoorGamePagerAdapter = new RecordedIndoorGameFragmentPagerAdapter(mStoredGameService, this, getSupportFragmentManager());
+        final StoredIndoorGameFragmentPagerAdapter indoorGamePagerAdapter = new StoredIndoorGameFragmentPagerAdapter(mStoredGameService, this, getSupportFragmentManager());
         indoorGamePager.setAdapter(indoorGamePagerAdapter);
 
         final TabLayout indoorGameTabs = findViewById(R.id.indoor_game_tabs);

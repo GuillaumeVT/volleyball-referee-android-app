@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -53,7 +54,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String gameDescriptionStr = getArguments().getString("game");
         mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
 
@@ -74,7 +75,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
             TextView editAndStartGameText = view.findViewById(R.id.action_edit_start_match);
             TextView deleteGameText = view.findViewById(R.id.action_delete_match);
 
-            if (GameStatus.LIVE.equals(mGameDescription.getMatchStatus())) {
+            if (GameStatus.LIVE.equals(mGameDescription.getStatus())) {
                 rescheduleGameText.setVisibility(View.GONE);
                 editAndStartGameText.setVisibility(View.GONE);
                 startGameText.setText(R.string.resume_match);
@@ -100,7 +101,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
         BottomSheetDialog bottomSheetDialog = (BottomSheetDialog)super.onCreateDialog(savedInstanceState);
         bottomSheetDialog.setOnShowListener(dialog -> {
             BottomSheetDialog tmpDialog = (BottomSheetDialog) dialog;
@@ -114,9 +115,9 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     private void rescheduleGame() {
         Log.i(Tags.SCHEDULE_UI, "Reschedule game");
-        if (!GameType.TIME.equals(mGameDescription.getGameType())) {
-            if (GameStatus.SCHEDULED.equals(mGameDescription.getMatchStatus())) {
-                switch (mGameDescription.getGameType()) {
+        if (!GameType.TIME.equals(mGameDescription.getKind())) {
+            if (GameStatus.SCHEDULED.equals(mGameDescription.getStatus())) {
+                switch (mGameDescription.getKind()) {
                     case INDOOR:
                     case INDOOR_4X4:
                     case BEACH:
@@ -135,18 +136,18 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     private void startGame() {
         Log.i(Tags.SCHEDULE_UI, "Start game");
         mConfigureBeforeStart = false;
-        mStoredGamesService.downloadGame(mGameDescription.getGameDate(),this);
+        mStoredGamesService.downloadGame(mGameDescription.getId(),this);
     }
 
     private void configureAndStartGame() {
         Log.i(Tags.SCHEDULE_UI, "Configure and start game");
         mConfigureBeforeStart = true;
-        mStoredGamesService.downloadGame(mGameDescription.getGameDate(),this);
+        mStoredGamesService.downloadGame(mGameDescription.getId(),this);
     }
 
     private void deleteGame() {
         Log.i(Tags.SCHEDULE_UI, "Delete game");
-        mStoredGamesService.deleteGame(mGameDescription.getGameDate());
+        mStoredGamesService.deleteGame(mGameDescription.getId());
         mActivity.recreate();
         dismiss();
     }
@@ -158,9 +159,6 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
             }
         }
     }
-
-    @Override
-    public void onRecordedGameReceivedFromCode(StoredGameService storedGameService) {}
 
     @Override
     public void onGameReceived(StoredGameService storedGameService) {
@@ -218,17 +216,8 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {}
 
     @Override
-    public void onNotFound() {
-        UiUtils.makeText(mActivity, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
+    public void onError(int httpCode) {
+        UiUtils.makeErrorText(mActivity, getResources().getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onInternalError() {
-        UiUtils.makeText(mActivity, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onError() {
-        UiUtils.makeText(mActivity, getResources().getString(R.string.download_error_message), Toast.LENGTH_LONG).show();
-    }
 }

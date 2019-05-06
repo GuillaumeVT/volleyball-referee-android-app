@@ -11,14 +11,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiSanction;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.api.ApiTimeout;
 import com.tonkar.volleyballreferee.interfaces.sanction.BaseSanctionService;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.score.BaseScoreService;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.timeout.BaseTimeoutService;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public View getView(int index, View view, ViewGroup parent) {
         View setView = view;
         final ViewHolder viewHolder;
 
@@ -164,9 +164,9 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addSubstitutions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (Substitution substitution : mBaseTeamService.getSubstitutions(teamType, setIndex)) {
-            int homePoints = substitution.getHomeTeamPoints();
-            int guestPoints = substitution.getGuestTeamPoints();
+        for (ApiSubstitution substitution : mBaseTeamService.getSubstitutions(teamType, setIndex)) {
+            int homePoints = substitution.getHomePoints();
+            int guestPoints = substitution.getGuestPoints();
 
             for (LadderItem ladderItem : ladderItems) {
                 if (ladderItem.getHomePoints() == homePoints && ladderItem.getGuestPoints() == guestPoints) {
@@ -177,9 +177,9 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addTimeouts(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (Timeout timeout : mBaseTimeoutService.getCalledTimeouts(teamType, setIndex)) {
-            int homePoints = timeout.getHomeTeamPoints();
-            int guestPoints = timeout.getGuestTeamPoints();
+        for (ApiTimeout timeout : mBaseTimeoutService.getCalledTimeouts(teamType, setIndex)) {
+            int homePoints = timeout.getHomePoints();
+            int guestPoints = timeout.getGuestPoints();
 
             for (LadderItem ladderItem : ladderItems) {
                 if (ladderItem.getHomePoints() == homePoints && ladderItem.getGuestPoints() == guestPoints) {
@@ -190,9 +190,9 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addSanctions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (Sanction sanction : mBaseSanctionService.getGivenSanctions(teamType, setIndex)) {
-            int homePoints = sanction.getHomeTeamPoints();
-            int guestPoints = sanction.getGuestTeamPoints();
+        for (ApiSanction sanction : mBaseSanctionService.getGivenSanctions(teamType, setIndex)) {
+            int homePoints = sanction.getHomePoints();
+            int guestPoints = sanction.getGuestPoints();
 
             for (LadderItem ladderItem : ladderItems) {
                 if (ladderItem.getHomePoints() == homePoints && ladderItem.getGuestPoints() == guestPoints) {

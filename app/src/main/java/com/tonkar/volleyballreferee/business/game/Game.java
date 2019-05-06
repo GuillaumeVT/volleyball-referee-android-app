@@ -23,6 +23,7 @@ import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.*;
 
@@ -1126,6 +1127,17 @@ public abstract class Game extends BaseGame {
         for (ApiPlayer player : storedGameService.getPlayers(TeamType.GUEST))  {
             addPlayer(TeamType.GUEST, player.getNum());
         }
+    }
+
+    @Override
+    public String getScore() {
+        StringBuilder scoreBuilder = new StringBuilder();
+
+        for (Set set : mSets) {
+            scoreBuilder.append(UiUtils.formatScoreFromLocale(set.getPoints(TeamType.HOME), set.getPoints(TeamType.GUEST), false)).append("\t\t");
+        }
+
+        return scoreBuilder.toString().trim();
     }
 
     @Override

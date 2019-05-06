@@ -55,7 +55,7 @@ public class Indoor4x4CompleteGame {
         playSet_complete(indoor4x4Game);
 
         StoredGameService storedGameService = mStoredGamesService.getGame(indoor4x4Game.getId());
-        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
+        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
     private void defineTeams(Indoor4x4Game indoor4x4Game) {

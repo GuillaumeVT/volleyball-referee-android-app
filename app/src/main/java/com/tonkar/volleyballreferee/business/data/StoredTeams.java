@@ -39,18 +39,18 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     @Override
-    public List<ApiTeamDescription> getListTeams() {
+    public List<ApiTeamDescription> listTeams() {
         return AppDatabase.getInstance(mContext).teamDao().listTeams();
     }
 
     @Override
-    public List<ApiTeamDescription> getListTeams(GameType kind) {
-        return AppDatabase.getInstance(mContext).teamDao().listTeamsByKind(kind.toString());
+    public List<ApiTeamDescription> listTeams(GameType kind) {
+        return AppDatabase.getInstance(mContext).teamDao().listTeamsByKind(kind);
     }
 
     @Override
-    public List<String> listSavedTeamName(GameType kind, GenderType genderType) {
-        return AppDatabase.getInstance(mContext).teamDao().listNamesByGenderAndKind(genderType.toString(), kind.toString());
+    public List<ApiTeamDescription> listTeams(GameType kind, GenderType genderType) {
+        return AppDatabase.getInstance(mContext).teamDao().listTeamsByGenderAndKind(genderType, kind);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class StoredTeams implements StoredTeamsService {
 
     @Override
     public ApiTeam getTeam(GameType kind, String teamName, GenderType genderType) {
-        String jsonTeam = AppDatabase.getInstance(mContext).teamDao().findContentByNameAndGenderAndKind(teamName, genderType.toString(), kind.toString());
+        String jsonTeam = AppDatabase.getInstance(mContext).teamDao().findContentByNameAndGenderAndKind(teamName, genderType, kind);
         return readTeam(jsonTeam);
     }
 
@@ -126,7 +126,7 @@ public class StoredTeams implements StoredTeamsService {
     @Override
     public void createAndSaveTeamFrom(GameType kind, BaseTeamService teamService, TeamType teamType) {
         if (teamService.getTeamName(teamType).length() > 1
-                && AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGender(teamType).toString(), kind.toString()) == 0) {
+                && AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGender(teamType), kind) == 0) {
             BaseTeamService team = createTeam(kind);
             copyTeam(teamService, team, teamType);
             saveTeam(team);
@@ -318,7 +318,7 @@ public class StoredTeams implements StoredTeamsService {
 
     private void syncTeams(List<ApiTeamDescription> remoteTeamList, DataSynchronizationListener listener) {
         String userId = PrefUtils.getAuthentication(mContext).getUserId();
-        List<ApiTeamDescription> localTeamList = getListTeams();
+        List<ApiTeamDescription> localTeamList = listTeams();
         Queue<ApiTeamDescription> remoteTeamsToDownload = new LinkedList<>();
         boolean afterPurchase = false;
 
@@ -334,7 +334,7 @@ public class StoredTeams implements StoredTeamsService {
         }
 
         if (afterPurchase) {
-            localTeamList = getListTeams();
+            localTeamList = listTeams();
         }
 
         for (ApiTeamDescription localTeam : localTeamList) {

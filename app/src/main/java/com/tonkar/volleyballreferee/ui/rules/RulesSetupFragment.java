@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
@@ -91,7 +92,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.RULES, "Create rules setup fragment");
         View view = inflater.inflate(R.layout.fragment_rules_setup, container, false);
 
@@ -176,7 +177,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         initValues();
 
         View indoorSection = view.findViewById(R.id.indoor_rules_section);
-        View beachSection = view.findViewById(R.id.beach_game_image);
+        View beachSection = view.findViewById(R.id.beach_rules_section);
 
         if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
             indoorSection.setVisibility(View.VISIBLE);

@@ -125,7 +125,7 @@
                     android:id="@+id/home_team_name_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
                     android:text="@string/home_team_tab"
                     android:textAppearance="@style/TextViewTheme"
                     android:textSize="@dimen/default_text_size"/>
@@ -144,7 +144,7 @@
                     android:id="@+id/guest_team_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
                     android:text="@string/guest_team_hint"
                     android:textAppearance="@style/TextViewTheme"
                     android:textSize="@dimen/default_text_size"/>
@@ -163,7 +163,7 @@
                     android:id="@+id/rules_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
                     android:text="@string/rules_name_hint"
                     android:textAppearance="@style/TextViewTheme"
                     android:textSize="@dimen/default_text_size"/>
@@ -172,28 +172,30 @@
                     android:id="@+id/rules_name_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_margin_size"
                     android:ems="10"
                     android:spinnerMode="dialog"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/default_text_size"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/referee_spinner_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/big_margin_size">
+                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:text="@string/referee"
+                    android:textAppearance="@style/TextViewTheme"
+                    android:textSize="@dimen/default_text_size"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/referee_name_input_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/pref_referee_name"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapWords"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/default_text_size"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                    android:id="@+id/referee_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:prompt="@string/referee"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/colorDisabledText"
+                    android:textSize="@dimen/default_text_size"/>
 
         </LinearLayout>
 

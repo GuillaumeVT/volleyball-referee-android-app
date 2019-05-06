@@ -593,6 +593,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     }
 
     @Override
+    public String getScore() {
+        return String.format(Locale.getDefault(), "%d-%d", mHomeTeamPoints, mGuestTeamPoints);
+    }
+
+    @Override
     public boolean isMatchCompleted() {
         return isMatchStarted() && isMatchStopped();
     }

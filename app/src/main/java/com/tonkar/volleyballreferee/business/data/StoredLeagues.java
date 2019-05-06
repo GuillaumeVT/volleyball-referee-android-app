@@ -32,7 +32,7 @@ public class StoredLeagues implements StoredLeaguesService {
 
     @Override
     public List<ApiLeagueDescription> listLeagues(GameType kind) {
-        return AppDatabase.getInstance(mContext).leagueDao().listLeaguesByKind(kind.toString());
+        return AppDatabase.getInstance(mContext).leagueDao().listLeaguesByKind(kind);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class StoredLeagues implements StoredLeaguesService {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
         if (leagueName.length() > 1
-                && AppDatabase.getInstance(mContext).leagueDao().countByNameAndKind(leagueName, kind.toString()) == 0) {
+                && AppDatabase.getInstance(mContext).leagueDao().countByNameAndKind(leagueName, kind) == 0) {
             ApiLeague league = new ApiLeague();
             league.setId(UUID.randomUUID().toString());
             league.setCreatedBy(PrefUtils.getAuthentication(mContext).getUserId());
@@ -81,8 +81,9 @@ public class StoredLeagues implements StoredLeaguesService {
         }
     }
 
-    private ApiLeague getLeague(GameType kind, String leagueName) {
-        String json = AppDatabase.getInstance(mContext).leagueDao().findContentByNameAndKind(leagueName, kind.toString());
+    @Override
+    public ApiLeague getLeague(GameType kind, String leagueName) {
+        String json = AppDatabase.getInstance(mContext).leagueDao().findContentByNameAndKind(leagueName, kind);
         return readLeague(json);
     }
 

@@ -7,18 +7,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiFriend;
 import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
+import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredLeagues;
+import com.tonkar.volleyballreferee.business.data.StoredUser;
 import com.tonkar.volleyballreferee.interfaces.BaseGeneralService;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseGeneralServiceHandler;
-import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import androidx.fragment.app.Fragment;
@@ -37,13 +46,14 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.SETUP_UI, "Create misc setup fragment");
         View view = inflater.inflate(R.layout.fragment_misc_setup, container, false);
 
         StoredLeaguesService storedLeaguesService = new StoredLeagues(getContext());
+        StoredUserService storedUserService = new StoredUser(getContext());
 
-        final ClearableTextInputAutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -51,7 +61,7 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, "Update division name");
+                Log.i(Tags.SETUP_UI, "Update division");
                 mGeneralService.setDivisionName(s.toString());
             }
 
@@ -61,7 +71,7 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
 
         divisionNameInput.setText(mGeneralService.getDivisionName());
 
-        final ClearableTextInputAutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGeneralService.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
@@ -80,8 +90,8 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, "Update league name");
-                // TODO check if triggerred when autocomplete
+                Log.i(Tags.SETUP_UI, "Update league");
+                // TODO check if triggered when autocomplete
                 mGeneralService.setLeagueId(UUID.randomUUID().toString());
                 mGeneralService.setLeagueName(s.toString());
                 divisionNameInput.setAdapter(null);
@@ -93,7 +103,44 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
 
         leagueNameInput.setText(mGeneralService.getLeagueName());
 
-        // TODO referee spinner
+        List<ApiFriend> referees = storedUserService.listReferees();
+
+        Spinner refereeSpinner = view.findViewById(R.id.referee_spinner);
+        if (PrefUtils.canSync(getContext())) {
+            NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<ApiFriend>(getContext(), inflater, referees) {
+                @Override
+                public String getName(ApiFriend referee) {
+                    return referee.getPseudo();
+                }
+
+                @Override
+                public String getId(ApiFriend referee) {
+                    return referee.getId();
+                }
+            };
+            refereeSpinner.setAdapter(refereeAdapter);
+            if (refereeAdapter.getCount() > 0) {
+                refereeSpinner.setSelection(refereeAdapter.getPositionFromId(mGeneralService.getRefereedBy()));
+            }
+            refereeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Log.i(Tags.SETUP_UI, "Update referee");
+                    ApiFriend referee = refereeAdapter.getItem(position);
+                    mGeneralService.setRefereedBy(referee.getId());
+                    mGeneralService.setRefereeName(referee.getPseudo());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    mGeneralService.setRefereedBy(Authentication.VBR_USER_ID);
+                    mGeneralService.setRefereeName("");
+                }
+            });
+        } else {
+            view.findViewById(R.id.referee_spinner_title).setVisibility(View.GONE);
+            refereeSpinner.setVisibility(View.GONE);
+        }
 
         return view;
     }

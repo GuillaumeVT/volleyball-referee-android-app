@@ -19,18 +19,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class RecordedBeachGameActivity extends RecordedGameActivity {
+public class StoredBeachGameActivity extends StoredGameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mGameDate = getIntent().getLongExtra("game_date", 0L);
+        mGameId = getIntent().getStringExtra("game");
         mStoredGamesService = new StoredGames(this);
-        mStoredGameService = mStoredGamesService.getGame(mGameDate);
+        mStoredGameService = mStoredGamesService.getGame(mGameId);
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.STORED_GAMES, "Create recorded beach game activity");
-        setContentView(R.layout.activity_recorded_beach_game);
+        Log.i(Tags.STORED_GAMES, "Create stored beach game activity");
+        setContentView(R.layout.activity_stored_beach_game);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -50,7 +50,7 @@ public class RecordedBeachGameActivity extends RecordedGameActivity {
         TextView guestTeamSets = findViewById(R.id.guest_team_set_text);
         TextView gameScore = findViewById(R.id.game_score);
 
-        gameDate.setText(formatter.format(new Date(mGameDate)));
+        gameDate.setText(formatter.format(new Date(mStoredGameService.getScheduledAt())));
         homeTeamName.setText(mStoredGameService.getTeamName(TeamType.HOME));
         guestTeamName.setText(mStoredGameService.getTeamName(TeamType.GUEST));
         homeTeamSets.setText(UiUtils.formatNumberFromLocale(mStoredGameService.getSets(TeamType.HOME)));
@@ -59,9 +59,9 @@ public class RecordedBeachGameActivity extends RecordedGameActivity {
         UiUtils.colorTeamText(this, mStoredGameService.getTeamColor(TeamType.HOME), homeTeamSets);
         UiUtils.colorTeamText(this, mStoredGameService.getTeamColor(TeamType.GUEST), guestTeamSets);
 
-        gameScore.setText(buildScore(mStoredGameService));
+        gameScore.setText(mStoredGameService.getScore());
 
-        ListView setsList = findViewById(R.id.recorded_game_set_list);
+        ListView setsList = findViewById(R.id.stored_game_set_list);
         LadderListAdapter ladderListAdapter = new LadderListAdapter(getLayoutInflater(), mStoredGameService, mStoredGameService, mStoredGameService, mStoredGameService, false);
         setsList.setAdapter(ladderListAdapter);
     }

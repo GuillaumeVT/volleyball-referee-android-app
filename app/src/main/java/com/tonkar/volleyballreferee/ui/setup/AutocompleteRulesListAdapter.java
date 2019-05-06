@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 
@@ -47,7 +48,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescripti
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         TextView rulesTextView;
 
         if (view == null) {
@@ -63,7 +64,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescripti
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNameFilter;
     }
 

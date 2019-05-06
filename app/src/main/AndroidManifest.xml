@@ -41,14 +41,14 @@
         <activity android:name=".ui.game.GameActivity" />
         <activity android:name=".ui.game.TimeBasedGameActivity" />
         <activity
-            android:name=".ui.data.RecordedGamesListActivity"
+            android:name=".ui.data.StoredGamesListActivity"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.data.RecordedIndoorGameActivity"
-            android:parentActivityName=".ui.data.RecordedGamesListActivity" />
+            android:name=".ui.data.StoredIndoorGameActivity"
+            android:parentActivityName=".ui.data.StoredGamesListActivity" />
         <activity
-            android:name=".ui.data.RecordedBeachGameActivity"
-            android:parentActivityName=".ui.data.RecordedGamesListActivity" />
+            android:name=".ui.data.StoredBeachGameActivity"
+            android:parentActivityName=".ui.data.StoredGamesListActivity" />
         <activity
             android:name=".ui.data.StoredTeamsListActivity"
             android:parentActivityName=".ui.MainActivity" />

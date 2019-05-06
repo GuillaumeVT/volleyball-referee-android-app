@@ -50,7 +50,7 @@ public class LineupAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public View getView(int index, View view, ViewGroup parent) {
         View positionView = view;
         final ViewHolder viewHolder;
 

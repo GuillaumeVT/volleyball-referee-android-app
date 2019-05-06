@@ -50,7 +50,7 @@ public class TimeBasedGameTest {
         game.stop();
 
         StoredGameService storedGameService = mStoredGamesService.getGame(game.getId());
-        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
+        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
     private void defineTeams(TimeBasedGame game) {

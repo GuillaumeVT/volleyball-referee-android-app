@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Beachvolleyball</string>
     <string name="new_score_based_game">Anzeigetafel</string>
     <string name="new_time_based_game">Zeitbasiert</string>
-    <string name="new_scheduled_game_from_code">Mit Code</string>
     <string name="permission_title">Berechtigungen</string>
     <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
@@ -18,16 +17,8 @@
     <string name="delete">Löschen</string>
     <string name="ignore">Ignorieren</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Lokal Daten</string>
-    <string name="online_data_group">Online Daten</string>
     <string name="configuration_group">Konfiguration</string>
-    <string name="view_live_games">Live-Spiele online ansehen</string>
-    <string name="search_online_games">Spiele online suchen</string>
     <string name="my_account">Mein Konto</string>
-    <string name="scheduled_game_question">Möchten Sie das Spiel vor dem Start bearbeiten?</string>
-    <string name="game_code_hint">Spielcode</string>
-    <string name="invalid_game_code">Ungültiger Spielcode</string>
-    <string name="download_error_message">Das Spiel konnte nicht heruntergeladen werden</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Kaufen</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Angemeldet mit %s</string>
     <string name="user_signed_out">Abgemeldet</string>
     <string name="user_sign_in_with_provider_error">Fehler bei der Anmeldung mit %s</string>
-    <string name="user_scheduled_games_title">Meine geplanten Spielen</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Spieleinstellungen</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Einstellungen</string>
-    <string name="pref_referee_name">Mein \'Volleyball Referee\' Pseudonym</string>
-    <string name="pref_sync_data">Synchronisieren Sie die Daten online</string>
     <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
     <string name="pref_interactive_notification">Verwenden Sie interaktive Benachrichtigungen</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Fehler bei der Datensynchronisation</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Gespeicherte Spiele</string>
     <string name="search_games">Spielsuche</string>
     <string name="delete_games">Lösche alle Spiele</string>
     <string name="delete_game">Lösche dieses Spiel</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Gespeicherte Mannschaften</string>
     <string name="search_teams">Mannschaftssuche</string>
     <string name="delete_teams">Alle Mannschaften löschen</string>
     <string name="delete_team">Diese Mannschaft löschen</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Diese Mannschaft wird nicht gespeichert. Trotzdem fortfahren?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Gespeicherte Regeln</string>
     <string name="delete_all_rules">Alle Regeln löschen</string>
     <string name="delete_rules">Diese Regeln löschen</string>
     <string name="save_rules">Regeln speichern</string>

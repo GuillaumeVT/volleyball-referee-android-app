@@ -2,13 +2,16 @@ package com.tonkar.volleyballreferee.api;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class ApiFriend {
 
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
     @SerializedName("id")

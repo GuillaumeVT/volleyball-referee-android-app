@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.data.RecordedBeachGameActivity">
+              tools:context="com.tonkar.volleyballreferee.ui.data.StoredIndoorGameActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -87,9 +88,21 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/small_text_size"/>
 
-    <ListView
-        android:id="@+id/recorded_game_set_list"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/indoor_game_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_size"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextAppearance="@style/DynamicTabText" />
+
+    <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                                         android:id="@+id/indoor_game_pager"
+                                        android:layout_width="match_parent"
+                                         android:layout_height="wrap_content"
+                                         android:layout_gravity="top|center"
+                                         android:layout_margin="@dimen/default_margin_size"/>
 
 </LinearLayout>

@@ -1,24 +1,24 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
+import com.tonkar.volleyballreferee.api.ApiSanction;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.api.ApiTimeout;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.timeout.Timeout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LadderItem {
+class LadderItem {
 
-    private       TeamType           mTeamType;
-    private       int                mHomePoints;
-    private       int                mGuestPoints;
-    private final List<Substitution> mHomeSubstitutions;
-    private final List<Substitution> mGuestSubstitutions;
-    private final List<Timeout>      mHomeTimeouts;
-    private final List<Timeout>      mGuestTimeouts;
-    private final List<Sanction>     mHomeSanctions;
-    private final List<Sanction>     mGuestSanctions;
+    private       TeamType              mTeamType;
+    private       int                   mHomePoints;
+    private       int                   mGuestPoints;
+    private final List<ApiSubstitution> mHomeSubstitutions;
+    private final List<ApiSubstitution> mGuestSubstitutions;
+    private final List<ApiTimeout>      mHomeTimeouts;
+    private final List<ApiTimeout>      mGuestTimeouts;
+    private final List<ApiSanction>     mHomeSanctions;
+    private final List<ApiSanction>     mGuestSanctions;
 
     LadderItem(TeamType teamType, int homePoints, int guestPoints) {
         mTeamType = teamType;
@@ -44,31 +44,31 @@ public class LadderItem {
         return mGuestPoints;
     }
 
-    List<Substitution> getHomeSubstitutions() {
+    List<ApiSubstitution> getHomeSubstitutions() {
         return mHomeSubstitutions;
     }
 
-    List<Substitution> getGuestSubstitutions() {
+    List<ApiSubstitution> getGuestSubstitutions() {
         return mGuestSubstitutions;
     }
 
-    List<Timeout> getHomeTimeouts() {
+    List<ApiTimeout> getHomeTimeouts() {
         return mHomeTimeouts;
     }
 
-    List<Timeout> getGuestTimeouts() {
+    List<ApiTimeout> getGuestTimeouts() {
         return mGuestTimeouts;
     }
 
-    List<Sanction> getHomeSanctions() {
+    List<ApiSanction> getHomeSanctions() {
         return mHomeSanctions;
     }
 
-    List<Sanction> getGuestSanctions() {
+    List<ApiSanction> getGuestSanctions() {
         return mGuestSanctions;
     }
 
-    void addSubstitution(TeamType teamType, Substitution substitution) {
+    void addSubstitution(TeamType teamType, ApiSubstitution substitution) {
         if (TeamType.HOME.equals(teamType)) {
             mHomeSubstitutions.add(substitution);
         } else {
@@ -76,7 +76,7 @@ public class LadderItem {
         }
     }
 
-    void addTimeout(TeamType teamType, Timeout timeout) {
+    void addTimeout(TeamType teamType, ApiTimeout timeout) {
         if (TeamType.HOME.equals(teamType)) {
             mHomeTimeouts.add(timeout);
         } else {
@@ -84,7 +84,7 @@ public class LadderItem {
         }
     }
 
-    void addSanction(TeamType teamType, Sanction sanction) {
+    void addSanction(TeamType teamType, ApiSanction sanction) {
         if (TeamType.HOME.equals(teamType)) {
             mHomeSanctions.add(sanction);
         } else {

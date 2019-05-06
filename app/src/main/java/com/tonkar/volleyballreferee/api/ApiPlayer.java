@@ -33,4 +33,5 @@ public class ApiPlayer implements Comparable<ApiPlayer> {
     public int compareTo(ApiPlayer other) {
         return Integer.compare(num, other.num);
     }
+
 }

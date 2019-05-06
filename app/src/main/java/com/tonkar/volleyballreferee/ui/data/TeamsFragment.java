@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
@@ -29,7 +30,7 @@ public class TeamsFragment extends Fragment implements StoredGameServiceHandler 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.STORED_GAMES, "Create teams fragment");
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 

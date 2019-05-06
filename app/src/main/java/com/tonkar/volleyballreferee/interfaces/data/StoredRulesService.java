@@ -15,8 +15,6 @@ public interface StoredRulesService {
 
     List<ApiRulesDescription> listRules(GameType kind);
 
-    List<String> listRulesNames(GameType kind);
-
     ApiRules getRules(String id);
 
     ApiRules getRules(GameType kind, String rulesName);

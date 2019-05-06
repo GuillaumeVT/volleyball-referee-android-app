@@ -52,7 +52,7 @@ public class BeachPlayerTest {
         player.setPosition(PositionType.POSITION_4);
 
         player.turnToNextPosition();
-        assertEquals(PositionType.POSITION_4, player.getPosition());
+        assertEquals(PositionType.BENCH, player.getPosition());
     }
 
 }

@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Siatkówka plazowa</string>
     <string name="new_score_based_game">Tablica wyników</string>
     <string name="new_time_based_game">Rozpocznij grę na czas</string>
-    <string name="new_scheduled_game_from_code">Użyj kodu</string>
     <string name="permission_title">O uprawnieniach</string>
     <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
     <string name="resume_game_title">Wznów gre</string>
@@ -18,16 +17,8 @@
     <string name="delete">Unsun</string>
     <string name="ignore">Ignoruj</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Dane Lokalne</string>
-    <string name="online_data_group">Dane Online</string>
     <string name="configuration_group">Konfiguracja</string>
-    <string name="view_live_games">Oglądaj mecze na żywo w Internecie</string>
-    <string name="search_online_games">Wyszukaj mecze online</string>
     <string name="my_account">Moje Konto</string>
-    <string name="scheduled_game_question">Czy chcesz edytować grę przed jej uruchomieniem?</string>
-    <string name="game_code_hint">Kod Gry</string>
-    <string name="invalid_game_code">Nieprawidłowy kod gry	</string>
-    <string name="download_error_message">Nie można pobrać meczu</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Zakup</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Zalogowano jako %s</string>
     <string name="user_signed_out">	Wylogowano</string>
     <string name="user_sign_in_with_provider_error">Wystąpił błąd podczas logowania jako %s</string>
-    <string name="user_scheduled_games_title">Moje zaplanowane mecze</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Skonfiguruj gra</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Ustawienia</string>
-    <string name="pref_referee_name">Mója nazwa użytkownika \'Volleyball Referee\'</string>
-    <string name="pref_sync_data">Zsynchronizuj dane online</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
     <string name="pref_interactive_notification">Użyj powiadomień interaktywnych</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Synchronizacja danych nie powiodła się</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Najnowsze mecze</string>
     <string name="search_games">Szukaj meczy</string>
     <string name="delete_games">Usun wszystkie mecze</string>
     <string name="delete_game">Usun mecz</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Nie udało się wygenerować ani wyświetlić raportu meczowego</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Zapisane zespoły</string>
     <string name="search_teams">Wyszukaj zespoły</string>
     <string name="delete_teams">Usuń wszystkie zespoły</string>
     <string name="delete_team">Usuń zespół</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Ten zespół nie zostanie zapisany, mimo to kontynuować?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Zapisane reguły</string>
     <string name="delete_all_rules">Usuń wszystkie reguły</string>
     <string name="delete_rules">Usuń reguły</string>
     <string name="save_rules">Zapisz reguły</string>

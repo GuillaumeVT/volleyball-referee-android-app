@@ -5,7 +5,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity">
+        tools:context="com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -21,10 +21,10 @@
                 android:id="@+id/sync_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity">
+                tools:context="com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity">
 
             <ListView
-                    android:id="@+id/recorded_games_list"
+                    android:id="@+id/stored_games_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 

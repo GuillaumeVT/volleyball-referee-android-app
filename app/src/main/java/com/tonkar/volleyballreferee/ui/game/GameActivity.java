@@ -154,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             UiUtils.fixFabCompatPadding(mRightTeamTimeoutButton);
             UiUtils.fixFabCompatPadding(mRightTeamCardsButton);
 
-            if (mGameService.getRules().areTeamTimeoutsEnabled()) {
+            if (mGameService.getRules().isTeamTimeouts()) {
                 for (int index = 0; index < mGameService.getRules().getTeamTimeoutsPerSet(); index++) {
                     final ImageView leftTimeout = new ImageView(this);
                     leftTimeout.setImageResource(R.drawable.timeout_shape);
@@ -188,7 +188,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 mRightTeamTimeoutLayout.setVisibility(View.GONE);
             }
 
-            if (!mGameService.getRules().areSanctionsEnabled() || !UsageType.NORMAL.equals(mGameService.getUsage())) {
+            if (!mGameService.getRules().isSanctions() || !UsageType.NORMAL.equals(mGameService.getUsage())) {
                 mLeftTeamCardsButton.hide();
                 mRightTeamCardsButton.hide();
             }
@@ -452,7 +452,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             int rightPointsCount = mGameService.getPoints(mTeamOnRightSide, index);
             builder.append(UiUtils.formatScoreFromLocale(leftPointsCount, rightPointsCount, false)).append("\t\t");
         }
-        mSetsText.setText(builder.toString());
+        mSetsText.setText(builder.toString().trim());
 
         if (mGameService.isMatchPoint()) {
             String text = getResources().getString(R.string.match_point);
@@ -503,7 +503,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         deleteToolbarCountdown();
         deleteFragmentCountdown();
         UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
-        UiUtils.navigateToRecordedGameAfterDelay(this, 5000L);
+        UiUtils.navigateToStoredGameAfterDelay(this, 5000L);
     }
 
     @Override
@@ -692,11 +692,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 }
         );
 
-        if (!mGameService.getRules().areTeamTimeoutsEnabled()) {
+        if (!mGameService.getRules().isTeamTimeouts()) {
             gameNavigation.getMenu().removeItem(R.id.timeouts_tab);
         }
 
-        if (!mGameService.getRules().areSanctionsEnabled()
+        if (!mGameService.getRules().isSanctions()
                 || UsageType.POINTS_SCOREBOARD.equals(mGameService.getUsage())) {
             gameNavigation.getMenu().removeItem(R.id.sanctions_tab);
         }

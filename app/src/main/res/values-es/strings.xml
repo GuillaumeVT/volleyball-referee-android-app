@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Voley-Playa</string>
     <string name="new_score_based_game">Marcador</string>
     <string name="new_time_based_game">Por tiempo</string>
-    <string name="new_scheduled_game_from_code">Con código</string>
     <string name="permission_title">Permisos</string>
     <string name="permission_message">Esta aplicación necesita permisos de almacenamiento para compartir los resultados de los partidos</string>
     <string name="resume_game_title">Continuar partido</string>
@@ -18,16 +17,8 @@
     <string name="delete">Borrar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Datos locales</string>
-    <string name="online_data_group">Datos online</string>
     <string name="configuration_group">Configuración</string>
-    <string name="view_live_games">Ver partidos en directo</string>
-    <string name="search_online_games">Buscar partidos</string>
     <string name="my_account">Mi cuenta</string>
-    <string name="scheduled_game_question">¿Deseas editar el partido antes de comenzar?</string>
-    <string name="game_code_hint">Código de partido</string>
-    <string name="invalid_game_code">Código de partido inválido</string>
-    <string name="download_error_message">No se ha podido descargar el partido</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Comprar</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Registrado como %s</string>
     <string name="user_signed_out">Sesión terminada</string>
     <string name="user_sign_in_with_provider_error">Error al iniciar sesión como %s</string>
-    <string name="user_scheduled_games_title">Mis partidos planificados</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configurar partido</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Ajustes</string>
-    <string name="pref_referee_name">Mi alias para \'Volleyball Referee\'</string>
-    <string name="pref_sync_data">Sincronizar tus datos online</string>
     <string name="pref_keep_screen_on">No apagar la pantalla durante los partidos</string>
     <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Fallo al sincronizar</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Partidos guardados</string>
     <string name="search_games">Buscar partidos</string>
     <string name="delete_games">Borrar todos los partidos</string>
     <string name="delete_game">Borrar partido</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Error al generar o mostrar el informe del partidos</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Equipos guardados</string>
     <string name="search_teams">Buscar equipos</string>
     <string name="delete_teams">Borrar todos los equipos</string>
     <string name="delete_team">Borrar equipo</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Este equipo no se guardará. ¿Salir de todos modos?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Reglas guardadas</string>
     <string name="delete_all_rules">Borrar todas las reglas</string>
     <string name="delete_rules">Borrar reglas</string>
     <string name="save_rules">Guardar reglas</string>

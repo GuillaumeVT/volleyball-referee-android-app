@@ -340,7 +340,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public void onMatchCompleted(final TeamType winner) {
         UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
-        UiUtils.navigateToRecordedGameAfterDelay(this, 5000L);
+        UiUtils.navigateToStoredGameAfterDelay(this, 5000L);
     }
 
     private void onRemainingTimeUpdated() {

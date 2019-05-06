@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.setup;
 
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiGameDescription;
+import com.tonkar.volleyballreferee.interfaces.GameStatus;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
         mNamesFilter = new NamesFilter();
     }
 
-    public void updateGameDescriptionList(List<ApiGameDescription> gameDescriptionList) {
+    void updateGameDescriptionList(List<ApiGameDescription> gameDescriptionList) {
         mGameDescriptionList.clear();
         mFilteredGameDescriptionList.clear();
         mGameDescriptionList.addAll(gameDescriptionList);
@@ -73,7 +75,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         View gameView = view;
         ViewHolder viewHolder;
 
@@ -100,9 +102,9 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
 
     private void updateGameDescription(ViewHolder viewHolder, ApiGameDescription gameDescription) {
         viewHolder.summaryText.setText(String.format(Locale.getDefault(),"%s\t\t - \t\t%s", gameDescription.getHomeTeamName(), gameDescription.getGuestTeamName()));
-        viewHolder.dateText.setText(mFormatter.format(new Date(gameDescription.getGameSchedule())));
+        viewHolder.dateText.setText(mFormatter.format(new Date(gameDescription.getScheduledAt())));
 
-        switch (gameDescription.getGenderType()) {
+        switch (gameDescription.getGender()) {
             case MIXED:
                 viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
                 viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
@@ -117,10 +119,10 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
                 break;
         }
 
-        switch (gameDescription.getGameType()) {
+        switch (gameDescription.getKind()) {
             case INDOOR_4X4:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
@@ -137,13 +139,10 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
                 break;
         }
 
-        switch (gameDescription.getMatchStatus()) {
-            case LIVE:
-                viewHolder.statusImage.setVisibility(View.VISIBLE);
-                break;
-            default:
-                viewHolder.statusImage.setVisibility(View.GONE);
-                break;
+        if (GameStatus.LIVE.equals(gameDescription.getStatus())) {
+            viewHolder.statusImage.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.statusImage.setVisibility(View.GONE);
         }
 
         if (gameDescription.getLeagueName().isEmpty() || gameDescription.getDivisionName().isEmpty()) {
@@ -155,7 +154,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNamesFilter;
     }
 

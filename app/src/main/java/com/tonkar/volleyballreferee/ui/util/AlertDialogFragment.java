@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.ui.util;
 import android.app.Dialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 
 import androidx.appcompat.app.AlertDialog;
@@ -46,7 +47,7 @@ public class AlertDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
         String title = getArguments().getString("title");
         String message = getArguments().getString("message");
 

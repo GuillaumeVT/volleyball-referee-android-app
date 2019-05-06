@@ -42,7 +42,9 @@ public class StoredLeaguesIOTest {
     public void writeThenRead() {
         StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity().getApplicationContext());
 
-        List<ApiLeague> expectedList = new ArrayList<>(storedLeaguesService.listLeagues());
+        List<ApiLeague> expectedList = new ArrayList<>();
+        expectedList.add(storedLeaguesService.getLeague(GameType.INDOOR, "Test League"));
+        expectedList.add(storedLeaguesService.getLeague(GameType.INDOOR, "Test League Bis"));
         List<ApiLeague> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

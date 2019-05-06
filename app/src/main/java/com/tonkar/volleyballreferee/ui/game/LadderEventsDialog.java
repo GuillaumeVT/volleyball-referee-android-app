@@ -15,9 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
+import com.tonkar.volleyballreferee.api.ApiSanction;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -87,7 +87,7 @@ public class LadderEventsDialog {
         }
 
         @Override
-        public View getView(int index, View view, ViewGroup viewGroup) {
+        public View getView(int index, View view, ViewGroup parent) {
             ImageView imageView = (ImageView) view;
 
             if (imageView == null) {
@@ -103,9 +103,9 @@ public class LadderEventsDialog {
 
     private class SubstitutionsListAdapter extends BaseAdapter {
 
-        private List<Substitution> mSubstitutions;
+        private List<ApiSubstitution> mSubstitutions;
 
-        private SubstitutionsListAdapter(List<Substitution> substitutions) {
+        private SubstitutionsListAdapter(List<ApiSubstitution> substitutions) {
             mSubstitutions = substitutions;
         }
 
@@ -125,7 +125,7 @@ public class LadderEventsDialog {
         }
 
         @Override
-        public View getView(int index, View view, ViewGroup viewGroup) {
+        public View getView(int index, View view, ViewGroup parent) {
             View substitutionView = view;
 
             if (substitutionView == null) {
@@ -137,7 +137,7 @@ public class LadderEventsDialog {
             TextView playerInText = substitutionView.findViewById(R.id.player_in_text);
             TextView playerOutText = substitutionView.findViewById(R.id.player_out_text);
 
-            Substitution substitution = mSubstitutions.get(index);
+            ApiSubstitution substitution = mSubstitutions.get(index);
             playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
             playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
@@ -150,9 +150,9 @@ public class LadderEventsDialog {
 
     private class SanctionsListAdapter extends BaseAdapter {
 
-        private List<Sanction> mSanctions;
+        private List<ApiSanction> mSanctions;
 
-        private SanctionsListAdapter(List<Sanction> sanctions) {
+        private SanctionsListAdapter(List<ApiSanction> sanctions) {
             mSanctions = sanctions;
         }
 
@@ -172,7 +172,7 @@ public class LadderEventsDialog {
         }
 
         @Override
-        public View getView(int index, View view, ViewGroup viewGroup) {
+        public View getView(int index, View view, ViewGroup parent) {
             View sanctionView = view;
 
             if (sanctionView == null) {
@@ -186,19 +186,19 @@ public class LadderEventsDialog {
             TextView playerText = sanctionView.findViewById(R.id.player_text);
             ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
-            Sanction sanction = mSanctions.get(index);
-            UiUtils.setSanctionImage(sanctionTypeImage, sanction.getSanctionType());
+            ApiSanction sanction = mSanctions.get(index);
+            UiUtils.setSanctionImage(sanctionTypeImage, sanction.getCard());
 
-            if (sanction.getPlayer() < 0) {
+            if (sanction.isTeam()) {
                 playerText.setVisibility(View.GONE);
             } else {
-                if (sanction.getPlayer() > 0) {
-                    playerText.setText(UiUtils.formatNumberFromLocale(sanction.getPlayer()));
-                } else {
+                if (sanction.isPlayer()) {
+                    playerText.setText(UiUtils.formatNumberFromLocale(sanction.getNum()));
+                } else if (sanction.isCoach()) {
                     playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
                 }
 
-                UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, sanction.getPlayer(), playerText);
+                UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, sanction.getNum(), playerText);
             }
 
             return sanctionView;

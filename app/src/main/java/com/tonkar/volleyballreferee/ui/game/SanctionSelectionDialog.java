@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
@@ -133,7 +134,7 @@ public abstract class SanctionSelectionDialog {
         }
 
         @Override
-        public View getView(int index, View view, ViewGroup viewGroup) {
+        public View getView(int index, View view, ViewGroup parent) {
             View itemView;
 
             if (view == null) {
@@ -182,7 +183,7 @@ public abstract class SanctionSelectionDialog {
         private final Context         mContext;
         private final BaseTeamService mTeamService;
         private final TeamType        mTeamType;
-        private final List<Integer>   mPlayers;
+        private final List<ApiPlayer> mPlayers;
         private       int             mSelectedPlayer;
 
         private PlayerAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType) {
@@ -223,7 +224,7 @@ public abstract class SanctionSelectionDialog {
             final int player;
 
             if (mPlayers.size() > position) {
-                player = mPlayers.get(position);
+                player = mPlayers.get(position).getNum();
                 button.setText(UiUtils.formatNumberFromLocale(player));
                 if (mTeamService.isLibero(mTeamType, player)) {
                     button.setColor(mContext, mTeamService.getLiberoColor(mTeamType));
@@ -257,7 +258,7 @@ public abstract class SanctionSelectionDialog {
             return button;
         }
 
-        public int getSelectedPlayer() {
+        int getSelectedPlayer() {
             return mSelectedPlayer;
         }
     }

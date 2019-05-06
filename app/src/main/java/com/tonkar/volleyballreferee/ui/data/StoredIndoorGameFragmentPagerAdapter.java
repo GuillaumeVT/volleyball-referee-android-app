@@ -12,14 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class RecordedIndoorGameFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class StoredIndoorGameFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private final StoredGameService mStoredGameService;
     private final Context           mContext;
     private       TeamsFragment     mTeamsFragment;
     private final List<SetFragment> mSetFragments;
 
-    RecordedIndoorGameFragmentPagerAdapter(StoredGameService storedGameService, Context context, FragmentManager fm) {
+    StoredIndoorGameFragmentPagerAdapter(StoredGameService storedGameService, Context context, FragmentManager fm) {
         super(fm);
 
         mStoredGameService = storedGameService;

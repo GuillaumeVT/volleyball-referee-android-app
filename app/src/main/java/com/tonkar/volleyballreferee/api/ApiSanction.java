@@ -18,6 +18,30 @@ public class ApiSanction {
     @SerializedName("guestPoints")
     private int          guestPoints;
 
+    public boolean isPlayer() {
+        return num >= 0 && num < 100;
+    }
+
+    public boolean isCoach() {
+        return num == 100;
+    }
+
+    public boolean isTeam() {
+        return num == 200;
+    }
+
+    public static boolean isPlayer(int num) {
+        return num >= 0 && num < 100;
+    }
+
+    public static boolean isCoach(int num) {
+        return num == 100;
+    }
+
+    public static boolean isTeam(int num) {
+        return num == 200;
+    }
+
 }
 
 

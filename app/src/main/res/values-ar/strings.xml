@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">الكرة الطائرة الشاطئية</string>
     <string name="new_score_based_game">لوحة النتائج</string>
     <string name="new_time_based_game">محدد الوقت</string>
-    <string name="new_scheduled_game_from_code">من الرمز</string>
     <string name="permission_title">حول صلاحيات التطبيق</string>
     <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
@@ -18,16 +17,8 @@
     <string name="delete">مسح</string>
     <string name="ignore">تجاهل</string>
     <string name="facebook">الفيسبوك</string>
-    <string name="local_data_group">البيانات المحلية</string>
-    <string name="online_data_group">البيانات عبر الإنترنت</string>
     <string name="configuration_group">الإعدادات</string>
-    <string name="view_live_games">عرض المباريات الحية</string>
-    <string name="search_online_games">البحث عن المباريات </string>
     <string name="my_account">حسابي</string>
-    <string name="scheduled_game_question">هل ترغب في تعديل اللعبة قبل إطلاقها؟</string>
-    <string name="game_code_hint">رمز المباراة</string>
-    <string name="invalid_game_code">رمز المباراة غير صالح</string>
-    <string name="download_error_message">لا يمكن تنزيل المباراة</string>
 
     <!-- Purchase activity -->
     <string name="purchase">شراء</string>
@@ -42,7 +33,6 @@
     <string name="user_signed_in_with_provider">تم تسجيل الدخول باستخدام %s</string>
     <string name="user_signed_out">تسجيل الخروج</string>
     <string name="user_sign_in_with_provider_error">حدث خطأ أثناء تسجيل الدخول باستخدام %s</string>
-    <string name="user_scheduled_games_title">مبارياتي المجدولة</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">إعداد المباراة</string>
@@ -135,8 +125,6 @@
 
     <!-- Settings activity -->
     <string name="settings">الإعدادات</string>
-    <string name="pref_referee_name">الإسم \'حكم الكرة الطائرة\' المستعار</string>
-    <string name="pref_sync_data">تزامن البيانات عبر الإنترنت</string>
     <string name="pref_keep_screen_on">الحفاظ على شاشة الهاتف مشتغلة اثناء المباراة</string>
     <string name="pref_interactive_notification">استخدم الإشعارات التفاعلية</string>
 
@@ -144,7 +132,6 @@
     <string name="sync_failed_message">فشل في مزامنة البيانات</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">مباريات مسجلة</string>
     <string name="search_games">البحث عن المباريات</string>
     <string name="delete_games">مسح جميع المباريات</string>
     <string name="delete_game">مسح المباراة</string>
@@ -157,7 +144,6 @@
     <string name="report_exception">فشل في إنشاء أو عرض تقرير المباراة</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">الفرق المحفوظة</string>
     <string name="search_teams">البحث عن الفرق</string>
     <string name="delete_teams">مسح جميع الفرق</string>
     <string name="delete_team">مسح الفريق</string>
@@ -171,7 +157,6 @@
     <string name="leave_team_creation_question">لن يتم حفظ الفريق. هل تريد المغادرة بأي حال؟</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">القوانين المحفوظة</string>
     <string name="delete_all_rules">حذف جميع القوانين</string>
     <string name="delete_rules">حذف القوانين</string>
     <string name="save_rules">حفظ القانون</string>

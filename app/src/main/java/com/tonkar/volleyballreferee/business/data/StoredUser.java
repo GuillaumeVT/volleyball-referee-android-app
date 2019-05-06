@@ -146,6 +146,19 @@ public class StoredUser implements StoredUserService {
     }
 
     @Override
+    public List<ApiFriend> listReferees() {
+        List<ApiFriend> referees = new ArrayList<>();
+
+        if (PrefUtils.canSync(mContext)) {
+            Authentication authentication = PrefUtils.getAuthentication(mContext);
+            referees.add(new ApiFriend(authentication.getUserId(), authentication.getUserPseudo()));
+            referees.addAll(listFriends());
+        }
+
+        return referees;
+    }
+
+    @Override
     public void sendFriendRequest(String friendPseudo, DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, String.format(ApiUtils.FRIENDS_REQUEST_API_URL, friendPseudo), new byte[0], PrefUtils.getAuthentication(mContext),

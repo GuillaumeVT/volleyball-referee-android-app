@@ -89,7 +89,7 @@ public abstract class ColorSelectionDialog {
         }
 
         @Override
-        public View getView(int index, View convertView, ViewGroup viewGroup) {
+        public View getView(int index, View convertView, ViewGroup parent) {
             FloatingActionButton button;
 
             if (convertView == null) {

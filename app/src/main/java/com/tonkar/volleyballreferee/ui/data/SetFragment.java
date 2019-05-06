@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
@@ -37,7 +38,7 @@ public class SetFragment extends Fragment implements StoredGameServiceHandler {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.STORED_GAMES, "Create set fragment");
         View view = inflater.inflate(R.layout.fragment_set, container, false);
 

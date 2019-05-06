@@ -121,7 +121,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
             signedIn(Authentication.of(account.getId(), Authentication.Provider.GOOGLE, "", account.getIdToken()));
         } catch (ApiException e) {
             Log.e(Tags.WEB, "Error during Google sign in", e);
-            UiUtils.makeText(this, String.format(Locale.getDefault(), getString(R.string.user_sign_in_with_provider_error), "Google"), Toast.LENGTH_LONG).show();
+            UiUtils.makeErrorText(this, String.format(Locale.getDefault(), getString(R.string.user_sign_in_with_provider_error), "Google"), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -139,7 +139,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
             @Override
             public void onError(FacebookException exception) {
                 Log.e(Tags.WEB, "Error during Facebook sign in");
-                UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_sign_in_with_provider_error), "Facebook"), Toast.LENGTH_LONG).show();
+                UiUtils.makeErrorText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_sign_in_with_provider_error), "Facebook"), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -220,7 +220,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
                             dialogFragment.show(getSupportFragmentManager(), "pseudo_dialog");
                         }
                     } else {
-                        UiUtils.makeText(AuthenticationActivity.this, getResources().getString(R.string.user_error), Toast.LENGTH_LONG).show();
+                        UiUtils.makeErrorText(AuthenticationActivity.this, getResources().getString(R.string.user_error), Toast.LENGTH_LONG).show();
                     }
                 }
             });

@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Beach volley</string>
     <string name="new_score_based_game">A punti</string>
     <string name="new_time_based_game">A tempo</string>
-    <string name="new_scheduled_game_from_code">Con codice</string>
     <string name="permission_title">Autorizzazioni</string>
     <string name="permission_message">Questa applicazione richiede l\'autorizzazione al salvataggio dei risultati delle partite per la condivisione.</string>
     <string name="resume_game_title">Riprendi la partita</string>
@@ -18,16 +17,8 @@
     <string name="delete">Cancella</string>
     <string name="ignore">Ignora</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Dati locali</string>
-    <string name="online_data_group">Dati in linea</string>
     <string name="configuration_group">Configurazione</string>
-    <string name="view_live_games">Guardare le partite in diretta in linea</string>
-    <string name="search_online_games">Cercare le partite in linea</string>
     <string name="my_account">Il mio profilo</string>
-    <string name="scheduled_game_question">Vuoi modificare la partita prima di cominciare?</string>
-    <string name="game_code_hint">Codice della partita</string>
-    <string name="invalid_game_code">Codice della partita non valido</string>
-    <string name="download_error_message">La partita non ha potuto essere scaricata dal server</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Acquistare</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Connesso via %s</string>
     <string name="user_signed_out">Disconnesso</string>
     <string name="user_sign_in_with_provider_error">Errore durante la connessione a %s</string>
-    <string name="user_scheduled_games_title">Partite programmate</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configura le squadre</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Opzioni</string>
-    <string name="pref_referee_name">Il mio pseudonimo \'Volleyball Referee\'</string>
-    <string name="pref_sync_data">Sincronizzare i dati in linea</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
     <string name="pref_interactive_notification">Utilizzare le notifiche interattive</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Sincronizzazione fallita</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Partite recenti</string>
     <string name="search_games">Cerca partite</string>
     <string name="delete_games">Cancella tutte le partite</string>
     <string name="delete_game">Cancella partita</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Errore di generazione o visualizzazione del referto della partita</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Squadre salvate</string>
     <string name="search_teams">Cerca le squadre</string>
     <string name="delete_teams">Cancella tutte le squadre</string>
     <string name="delete_team">Cancella una squadra</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Questa squadra non sarà salvata. Uscrire?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Regole registrate</string>
     <string name="delete_all_rules">Cancellare tutte le regole</string>
     <string name="delete_rules">Cancellare le regole</string>
     <string name="save_rules">Salvare la regole</string>

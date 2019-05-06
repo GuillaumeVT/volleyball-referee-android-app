@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.ui.rules;
+package com.tonkar.volleyballreferee.ui.setup;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,43 +6,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class IntegerRuleAdapter extends ArrayAdapter<Integer> {
+public abstract class NameSpinnerAdapter<T> extends ArrayAdapter<T> {
 
     private final LayoutInflater mLayoutInflater;
-    private final List<String>   mDisplayedValues;
-    private final List<Integer>  mActualValues;
+    private final List<T>        mItems;
 
-    IntegerRuleAdapter(Context context, LayoutInflater layoutInflater, String[] displayedValues, String[] actualValues) {
-        super(context, R.layout.vbr_spinner);
+    NameSpinnerAdapter(@NonNull Context context, LayoutInflater layoutInflater, @NonNull List<T> items) {
+        super(context, R.layout.vbr_spinner, items);
         mLayoutInflater = layoutInflater;
-        mDisplayedValues = Arrays.asList(displayedValues);
-        mActualValues = new ArrayList<>();
-        for (String actualValue : actualValues) {
-            mActualValues.add(Integer.valueOf(actualValue));
-        }
+        mItems = items;
     }
 
     @Override
     public int getCount() {
-        return mActualValues.size();
+        return mItems.size();
     }
 
     @Override
-    public Integer getItem(int index) {
-        return mActualValues.get(index);
+    public T getItem(int index) {
+        return mItems.get(index);
     }
 
     @Override
-    public int getPosition(Integer value) {
-        return mActualValues.indexOf(value);
+    public long getItemId(int index) {
+        return 0;
+    }
+
+    int getPositionFromId(String id) {
+        boolean found = false;
+        int position = -1;
+        int index = 0;
+
+        while (!found && index < mItems.size()) {
+            if (id.equals(getId(mItems.get(index)))) {
+                found = true;
+                position = index;
+            }
+            index++;
+        }
+
+        return position;
     }
 
     @Override
@@ -55,7 +63,7 @@ public class IntegerRuleAdapter extends ArrayAdapter<Integer> {
             textView = (TextView) view;
         }
 
-        textView.setText(mDisplayedValues.get(index));
+        textView.setText(getName(mItems.get(index)));
 
         return textView;
     }
@@ -70,13 +78,12 @@ public class IntegerRuleAdapter extends ArrayAdapter<Integer> {
             textView = (TextView) view;
         }
 
-        textView.setText(mDisplayedValues.get(index));
+        textView.setText(getName(mItems.get(index)));
 
         return textView;
     }
 
-    @Override
-    public long getItemId(int index) {
-        return 0;
-    }
+    public abstract String getName(T item);
+
+    public abstract String getId(T item);
 }

@@ -229,7 +229,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
         mSyncLayout.setRefreshing(false);
     }
 }

@@ -13,11 +13,11 @@ public interface StoredTeamsService {
 
     boolean hasTeams();
 
-    List<ApiTeamDescription> getListTeams();
+    List<ApiTeamDescription> listTeams();
 
-    List<ApiTeamDescription> getListTeams(GameType kind);
+    List<ApiTeamDescription> listTeams(GameType kind);
 
-    List<String> listSavedTeamName(GameType kind, GenderType genderType);
+    List<ApiTeamDescription> listTeams(GameType kind, GenderType genderType);
 
     ApiTeam getTeam(String id);
 

@@ -64,7 +64,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredTeamsList);
 
-        List<ApiTeamDescription> teams = mStoredTeamsService.getListTeams();
+        List<ApiTeamDescription> teams = mStoredTeamsService.listTeams();
 
         final ListView storedTeamsList = findViewById(R.id.stored_teams_list);
         mStoredTeamsListAdapter = new StoredTeamsListAdapter(this, getLayoutInflater(), teams);
@@ -229,13 +229,13 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationSucceeded() {
-        mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.getListTeams());
+        mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.listTeams());
         mSyncLayout.setRefreshing(false);
     }
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
         mSyncLayout.setRefreshing(false);
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import com.android.billingclient.api.SkuDetails;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
@@ -49,7 +50,7 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         View purchaseView = view;
         ViewHolder viewHolder;
 
@@ -93,7 +94,7 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         }
     }
 
-    public void updatePurchasesList() {
+    void updatePurchasesList() {
         mPurchasesList.clear();
         mPurchasesList.addAll(mBillingService.getSkuDetailsList());
         notifyDataSetChanged();

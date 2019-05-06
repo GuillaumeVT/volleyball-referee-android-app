@@ -258,6 +258,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/referee_spinner_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -269,7 +270,7 @@
                 android:textSize="@dimen/default_text_size"/>
 
         <Spinner
-                android:id="@+id/referee_list"
+                android:id="@+id/referee_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/big_margin_size"

@@ -12,6 +12,7 @@
     <color name="colorSurface">#f3f3f3</color>
     <color name="colorOnSurface">@color/colorOnBackground</color>
     <color name="colorError">#bc0019</color>
+    <color name="colorErrorVariant">#ffbcc5</color>
     <color name="colorOnError">@android:color/white</color>
 
     <color name="colorDisabledButton">#d6d7d7</color>

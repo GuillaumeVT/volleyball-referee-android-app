@@ -66,7 +66,7 @@ public class PointsScoreBoardGameTest {
         playSet(game);
 
         StoredGameService storedGameService = mStoredGamesService.getGame(game.getId());
-        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
+        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
     private void defineTeams(IndoorGame game) {

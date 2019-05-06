@@ -15,8 +15,6 @@ import java.util.List;
 
 public interface StoredGameService extends BaseGeneralService, BaseScoreService, BaseTeamService, BaseTimeoutService, BaseSanctionService, BaseTimeService {
 
-    boolean matchesFilter(String text);
-
     int getActingCaptain(TeamType teamType, int setIndex);
 
     List<ApiTimeout> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);

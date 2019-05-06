@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Пляжный волейбол</string>
     <string name="new_score_based_game">Счётное табло</string>
     <string name="new_time_based_game">Ограничение по времени</string>
-    <string name="new_scheduled_game_from_code">Ввести код</string>
     <string name="permission_title">Разрешения</string>
     <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
@@ -18,16 +17,8 @@
     <string name="delete">Удалить</string>
     <string name="ignore">Пропустить</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Данные в приложении</string>
-    <string name="online_data_group">Данные на сайте</string>
     <string name="configuration_group">Настройки</string>
-    <string name="view_live_games">Смотреть прямые трансляции матчей онлайн</string>
-    <string name="search_online_games">Искать матчи онлайн</string>
     <string name="my_account">Мой аккаунт</string>
-    <string name="scheduled_game_question">Редактировать составы команд и правила перед началом матча?</string>
-    <string name="game_code_hint">Код матча</string>
-    <string name="invalid_game_code">Неверный код матча</string>
-    <string name="download_error_message">Невозможно загрузить матч с сервера</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Купить</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Подключение с %s</string>
     <string name="user_signed_out">Отключён</string>
     <string name="user_sign_in_with_provider_error">Ошибка соединения с %s</string>
-    <string name="user_scheduled_games_title">Мои запланированные матчи</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Настройка матча</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Параметры</string>
-    <string name="pref_referee_name">Мой псевдоним \'Volleyball Referee\'</string>
-    <string name="pref_sync_data">Синхронизировать данные с сервером</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_interactive_notification">Включить интерактивные уведомления</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Ошибка синхронизации</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Сохранённые матчи</string>
     <string name="search_games">Поиск матча</string>
     <string name="delete_games">Удалить все матчи</string>
     <string name="delete_game">Удалить данный матч</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Сохранённые команды</string>
     <string name="search_teams">Поиск команды</string>
     <string name="delete_teams">Удалить все команды</string>
     <string name="delete_team">Удалить данную команду</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Сохранённые правила</string>
     <string name="delete_all_rules">Удалить все правила</string>
     <string name="delete_rules">Удалить правила</string>
     <string name="save_rules">Сохранить правила</string>

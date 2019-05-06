@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -22,7 +23,7 @@ public class PlayersListAdapter extends BaseAdapter {
     private final Context         mContext;
     private final BaseTeamService mTeamService;
     private final TeamType        mTeamType;
-    private final List<Integer>   mPlayers;
+    private final List<ApiPlayer> mPlayers;
 
     PlayersListAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType) {
         mLayoutInflater = layoutInflater;
@@ -48,7 +49,7 @@ public class PlayersListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public View getView(int index, View view, ViewGroup parent) {
         TextView playerText;
 
         if (view == null) {
@@ -57,7 +58,7 @@ public class PlayersListAdapter extends BaseAdapter {
             playerText = (TextView) view;
         }
 
-        int number = mPlayers.get(index);
+        int number = mPlayers.get(index).getNum();
         playerText.setText(UiUtils.formatNumberFromLocale(number));
 
         if (mTeamService.isLibero(mTeamType, number)) {

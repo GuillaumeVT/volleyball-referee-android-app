@@ -39,12 +39,7 @@ public class StoredRules implements StoredRulesService {
 
     @Override
     public List<ApiRulesDescription> listRules(GameType kind) {
-        return AppDatabase.getInstance(mContext).rulesDao().listRulesByKind(kind.toString());
-    }
-
-    @Override
-    public List<String> listRulesNames(GameType kind) {
-        return AppDatabase.getInstance(mContext).rulesDao().listNamesByKind(kind.toString());
+        return AppDatabase.getInstance(mContext).rulesDao().listRulesByKind(kind);
     }
 
     @Override
@@ -55,7 +50,7 @@ public class StoredRules implements StoredRulesService {
 
     @Override
     public ApiRules getRules(GameType kind, String rulesName) {
-        String jsonRules = AppDatabase.getInstance(mContext).rulesDao().findContentByNameAndKind(rulesName, kind.toString());
+        String jsonRules = AppDatabase.getInstance(mContext).rulesDao().findContentByNameAndKind(rulesName, kind);
         return readRules(jsonRules);
     }
 
@@ -119,7 +114,7 @@ public class StoredRules implements StoredRulesService {
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
         if (rules.getName().length() > 1
-                && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind().toString()) == 0
+                && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind()) == 0
                 && !rules.getName().equals(Rules.officialBeachRules().getName())
                 && !rules.getName().equals(Rules.officialIndoorRules().getName())
                 && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())) {

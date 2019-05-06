@@ -19,7 +19,7 @@ import java.util.*;
 
 public class Indoor4x4Game extends Game implements IndoorTeamService {
 
-    public Indoor4x4Game(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
+    Indoor4x4Game(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         super(GameType.INDOOR_4X4, id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
@@ -301,7 +301,7 @@ public class Indoor4x4Game extends Game implements IndoorTeamService {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (number > 0 && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
+        if (ApiSanction.isPlayer(number) && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
             // The player excluded for the set/match has to be legally replaced
             PositionType positionType = getPlayerPosition(teamType, number);
 

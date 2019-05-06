@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Beachvolleybal</string>
     <string name="new_score_based_game">Scorebord</string>
     <string name="new_time_based_game">Tijdgebaseerd</string>
-    <string name="new_scheduled_game_from_code">Vanuit code</string>
     <string name="permission_title">Over rechten</string>
     <string name="permission_message">Deze applicatie heeft de opslagrechten nodig om de resultaten van de wedstrijd te delen.</string>
     <string name="resume_game_title">Spel hervatten</string>
@@ -18,16 +17,8 @@
     <string name="delete">Verwijder</string>
     <string name="ignore">Negeren</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Lokale gegevens</string>
-    <string name="online_data_group">Online gegevens</string>
     <string name="configuration_group">Configuratie</string>
-    <string name="view_live_games">Bekijk live wedstrijden online</string>
-    <string name="search_online_games">Zoek wedstrijden online</string>
     <string name="my_account">Mijn account</string>
-    <string name="scheduled_game_question">Wilt u de ploegen bewerken voordat u de wedstrijd start?</string>
-    <string name="game_code_hint">Wedstrijd code</string>
-    <string name="invalid_game_code">Ongeldig wedstrijdnummer</string>
-    <string name="download_error_message">De wedstrijd kan niet worden gedownload</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Aankoop</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Aangemeld met %s</string>
     <string name="user_signed_out">Afgemeld</string>
     <string name="user_sign_in_with_provider_error">Fout tijdens aanmelden met %s</string>
-    <string name="user_scheduled_games_title">Mijn geplande wedstrijden</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Wedstrijd instellen</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Instellingen</string>
-    <string name="pref_referee_name">Mijn \'Volleyball Referee\' alias</string>
-    <string name="pref_sync_data">Synchroniseer de gegevens online</string>
     <string name="pref_keep_screen_on">Houd het scherm aan tijdens wedstrijden</string>
     <string name="pref_interactive_notification">Gebruik interactieve meldingen</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Gegevenssynchronisatie mislukt</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Opgenomen wedstrijden</string>
     <string name="search_games">Zoek wedstrijden</string>
     <string name="delete_games">Verwijder alle wedstrijden</string>
     <string name="delete_game">Verwijder wedstrijd</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Kan het wedstrijdrapport niet genereren of weergeven</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Opgeslagen ploegen</string>
     <string name="search_teams">Zoek ploegen</string>
     <string name="delete_teams">Verwijder alle ploegen</string>
     <string name="delete_team">Verwijder ploeg</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Deze ploeg wordt niet opgeslagen. Toch verlaten?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Opgeslagen regels</string>
     <string name="delete_all_rules">Verwijder alle regels</string>
     <string name="delete_rules">Verwijder regels</string>
     <string name="save_rules">Regels opslaan</string>

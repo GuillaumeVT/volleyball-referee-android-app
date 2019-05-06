@@ -353,14 +353,6 @@ public class StoredGame extends ApiGame implements StoredGameService {
     }
 
     @Override
-    public boolean matchesFilter(String text) {
-        return text.isEmpty()
-                || getHomeTeam().getName().toLowerCase(Locale.getDefault()).contains(text)
-                || getGuestTeam().getName().toLowerCase(Locale.getDefault()).contains(text)
-                || getLeagueName().toLowerCase(Locale.getDefault()).contains(text);
-    }
-
-    @Override
     public int getActingCaptain(TeamType teamType, int setIndex) {
         return getSets().get(setIndex).getActingCaptain(teamType);
     }

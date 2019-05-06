@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         TextView teamTextView;
 
         if (view == null) {
@@ -96,7 +97,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNameFilter;
     }
 

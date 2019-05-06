@@ -19,7 +19,7 @@ import com.tonkar.volleyballreferee.api.ApiUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
-import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
+import com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.StoredRulesListActivity;
 import com.tonkar.volleyballreferee.ui.data.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
@@ -77,7 +77,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         break;
                     case R.id.action_stored_games:
                         Log.i(Tags.STORED_GAMES, "Stored games");
-                        intent = new Intent(this, RecordedGamesListActivity.class);
+                        intent = new Intent(this, StoredGamesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;

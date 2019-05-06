@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamDescription> {
         mNameFilter = new NameFilter();
     }
 
-    public void updateStoredTeamsList(List<ApiTeamDescription> storedTeamsList) {
+    void updateStoredTeamsList(List<ApiTeamDescription> storedTeamsList) {
         mStoredTeamsList.clear();
         mFilteredStoredTeamsList.clear();
         mStoredTeamsList.addAll(storedTeamsList);
@@ -66,7 +67,7 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamDescription> {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         View storedTeamView = view;
         ViewHolder viewHolder;
 
@@ -103,7 +104,7 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamDescription> {
         switch (team.getKind()) {
             case INDOOR_4X4:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
@@ -124,7 +125,7 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamDescription> {
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNameFilter;
     }
 

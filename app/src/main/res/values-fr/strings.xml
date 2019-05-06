@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Beach Volley-ball</string>
     <string name="new_score_based_game">Panneau de score</string>
     <string name="new_time_based_game">En temps</string>
-    <string name="new_scheduled_game_from_code">Avec code</string>
     <string name="permission_title">À propos des autorisations</string>
     <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Continuer le match</string>
@@ -18,16 +17,8 @@
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Données locales</string>
-    <string name="online_data_group">Données en ligne</string>
     <string name="configuration_group">Configuration</string>
-    <string name="view_live_games">Suivre les matchs en direct</string>
-    <string name="search_online_games">Chercher des matchs en ligne</string>
     <string name="my_account">Mon compte</string>
-    <string name="scheduled_game_question">Voulez-vous éditer le match avant de le démarrer?</string>
-    <string name="game_code_hint">Code du match</string>
-    <string name="invalid_game_code">Code du match invalide</string>
-    <string name="download_error_message">Le match n\'a pas pu être téléchargé depuis le serveur</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Acheter</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Connecté avec %s</string>
     <string name="user_signed_out">Déconnecté</string>
     <string name="user_sign_in_with_provider_error">Erreur lors de la connexion à %s</string>
-    <string name="user_scheduled_games_title">Mes matchs programmés</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configuration du match</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
-    <string name="pref_referee_name">Mon pseudo \'Volleyball Referee\'</string>
-    <string name="pref_sync_data">Synchroniser les données en ligne</string>
     <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
     <string name="pref_interactive_notification">Utiliser les notifications interactives</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Échec de la synchronisation</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Matchs enregistrés</string>
     <string name="search_games">Rechercher des matchs</string>
     <string name="delete_games">Supprimer tous les matchs</string>
     <string name="delete_game">Supprimer un match</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Échec de la génération ou de l\'affichage du rapport</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Équipes enregistrées</string>
     <string name="search_teams">Rechercher des équipes</string>
     <string name="delete_teams">Supprimer toutes les équipes</string>
     <string name="delete_team">Supprimer une équipe</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée. Quitter?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Règles enregistrées</string>
     <string name="delete_all_rules">Supprimer toutes les règles</string>
     <string name="delete_rules">Supprimer les règles</string>
     <string name="save_rules">Enregistrer les règles</string>

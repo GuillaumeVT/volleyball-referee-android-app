@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,7 +31,7 @@ public class PseudoInputDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.user_pseudo_title));
         builder.setView(getActivity().getLayoutInflater().inflate(R.layout.pseudo_input_dialog, null));

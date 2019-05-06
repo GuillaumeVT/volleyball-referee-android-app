@@ -19,6 +19,8 @@ public interface StoredUserService {
 
     List<ApiFriend> listFriends();
 
+    List<ApiFriend> listReferees();
+
     void sendFriendRequest(String friendPseudo, DataSynchronizationListener listener);
 
     void acceptFriendRequest(ApiFriendRequest friendRequest, DataSynchronizationListener listener);

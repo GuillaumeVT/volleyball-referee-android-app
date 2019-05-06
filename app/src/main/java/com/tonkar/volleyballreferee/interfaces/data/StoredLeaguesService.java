@@ -16,6 +16,8 @@ public interface StoredLeaguesService {
 
     ApiLeague getLeague(String id);
 
+    ApiLeague getLeague(GameType kind, String leagueName);
+
     void createAndSaveLeagueFrom(GameType kind, String leagueName, String divisionName);
 
     void syncLeagues();

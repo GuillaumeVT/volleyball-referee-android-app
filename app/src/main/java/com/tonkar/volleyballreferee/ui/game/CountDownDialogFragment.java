@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -29,7 +30,7 @@ public class CountDownDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
         long duration;
 
         if (savedInstanceState == null) {
@@ -87,7 +88,7 @@ public class CountDownDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putLong("saved_timeout_duration", mCountDown.getDuration());

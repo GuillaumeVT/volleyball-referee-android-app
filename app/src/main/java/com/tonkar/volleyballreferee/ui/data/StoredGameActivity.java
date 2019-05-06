@@ -22,28 +22,28 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.File;
 
-public abstract class RecordedGameActivity extends AppCompatActivity {
+public abstract class StoredGameActivity extends AppCompatActivity {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     protected StoredGamesService mStoredGamesService;
-    protected long               mGameDate;
+    protected String             mGameId;
     protected StoredGameService  mStoredGameService;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_recorded_game, menu);
+        inflater.inflate(R.menu.menu_stored_game, menu);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             MenuItem shareMenu = menu.findItem(R.id.action_share_game);
@@ -56,7 +56,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
 
         if (PrefUtils.canSync(this)) {
-            if (mStoredGamesService.isGameIndexed(mGameDate)) {
+            if (mStoredGamesService.isGameIndexed(mGameId)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
                 recordMenu.setIcon(R.drawable.ic_private_menu);
@@ -91,16 +91,24 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
     private void toggleGameIndexed() {
         Log.i(Tags.STORED_GAMES, "Toggle game indexed");
         if (PrefUtils.canSync(this)) {
-            mStoredGamesService.toggleGameIndexed(mGameDate);
+            mStoredGamesService.toggleGameIndexed(mGameId, new DataSynchronizationListener() {
+                @Override
+                public void onSynchronizationSucceeded() {}
+
+                @Override
+                public void onSynchronizationFailed() {
+                    UiUtils.makeErrorText(StoredGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                }
+            });
             invalidateOptionsMenu();
         }
     }
 
     private void generateScoreSheet() {
         Log.i(Tags.STORED_GAMES, "Generate score sheet");
-        File file = ScoreSheetWriter.writeRecordedGame(this, mStoredGamesService.getGame(mGameDate));
+        File file = ScoreSheetWriter.writeStoredGame(this, mStoredGamesService.getGame(mGameId));
         if (file == null) {
-            UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+            UiUtils.makeErrorText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
         } else {
             Uri uri = FileProvider.getUriForFile(this, "com.tonkar.volleyballreferee.fileprovider", file);
             grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -114,7 +122,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Log.e(Tags.STORED_GAMES, "Exception while showing report", e);
-                UiUtils.makeText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeErrorText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -124,10 +132,10 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getResources().getString(R.string.delete_game)).setMessage(getResources().getString(R.string.delete_game_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mStoredGamesService.deleteGame(mGameDate);
-            UiUtils.makeText(RecordedGameActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
+            mStoredGamesService.deleteGame(mGameId);
+            UiUtils.makeText(StoredGameActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(RecordedGameActivity.this, RecordedGamesListActivity.class);
+            Intent intent = new Intent(StoredGameActivity.this, StoredGamesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             UiUtils.animateBackward(this);
@@ -139,19 +147,7 @@ public abstract class RecordedGameActivity extends AppCompatActivity {
 
     private void shareGame() {
         Log.i(Tags.STORED_GAMES, "Share game");
-        UiUtils.shareRecordedGame(this, mStoredGamesService.getGame(mGameDate));
-    }
-
-    protected String buildScore(StoredGameService storedGameService) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("\t\t");
-        for (int setIndex = 0; setIndex < storedGameService.getNumberOfSets(); setIndex++) {
-            int homePoints = storedGameService.getPoints(TeamType.HOME, setIndex);
-            int guestPoints = storedGameService.getPoints(TeamType.GUEST, setIndex);
-            builder.append(UiUtils.formatScoreFromLocale(homePoints, guestPoints, false)).append("\t\t");
-        }
-
-        return builder.toString();
+        UiUtils.shareStoredGame(this, mStoredGamesService.getGame(mGameId));
     }
 
     @Override

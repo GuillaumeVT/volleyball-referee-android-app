@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.SwitchCompat;
@@ -52,7 +53,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.GAME_UI, "Create game action menu fragment");
         View view = inflater
                 .cloneInContext(new ContextThemeWrapper(inflater.getContext(), R.style.AppTheme_Dialog))
@@ -131,7 +132,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
         BottomSheetDialog bottomSheetDialog = (BottomSheetDialog)super.onCreateDialog(savedInstanceState);
         bottomSheetDialog.setOnShowListener(dialog -> {
             BottomSheetDialog tmpDialog = (BottomSheetDialog) dialog;
@@ -151,9 +152,9 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     private void share() {
         Log.i(Tags.GAME_UI, "Share game");
         if (mGameService.isMatchCompleted()) {
-            UiUtils.shareRecordedGame(mActivity, mStoredGamesService.getGame(mGameService.getGameDate()));
+            UiUtils.shareStoredGame(mActivity, mStoredGamesService.getGame(mGameService.getId()));
         } else {
-            UiUtils.shareRecordedGame(mActivity, mStoredGamesService.getCurrentGame());
+            UiUtils.shareStoredGame(mActivity, mStoredGamesService.getCurrentGame());
         }
         dismiss();
     }

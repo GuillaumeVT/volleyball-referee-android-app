@@ -28,8 +28,8 @@ import java.util.List;
 public class JsonIOUtils {
 
     public static final Type CURRENT_GAME_TYPE            = new TypeToken<BaseGame>(){}.getType();
-    public static final Type GAME_LIST_TYPE               = new TypeToken<List<ApiGame>>(){}.getType();
-    public static final Type GAME_TYPE                    = new TypeToken<ApiGame>(){}.getType();
+    public static final Type GAME_LIST_TYPE               = new TypeToken<List<StoredGame>>(){}.getType();
+    public static final Type GAME_TYPE                    = new TypeToken<StoredGame>(){}.getType();
     public static final Type SET_TYPE                     = new TypeToken<ApiSet>(){}.getType();
     public static final Type TEAM_LIST_TYPE               = new TypeToken<List<ApiTeam>>(){}.getType();
     public static final Type TEAM_TYPE                    = new TypeToken<ApiTeam>(){}.getType();

@@ -56,7 +56,7 @@ import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.data.RecordedGamesListActivity;
+import com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
 
 import java.io.File;
@@ -166,12 +166,12 @@ public class UiUtils {
         }
     }
 
-    public static void shareRecordedGame(Context context, StoredGameService storedGameService) {
-        Log.i(Tags.UTILS_UI, "Share recorded game");
+    public static void shareStoredGame(Context context, StoredGameService storedGameService) {
+        Log.i(Tags.UTILS_UI, "Share stored game");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            File file = ScoreSheetWriter.writeRecordedGame(context, storedGameService);
+            File file = ScoreSheetWriter.writeStoredGame(context, storedGameService);
             if (file == null) {
-                UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeErrorText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
                 Uri uri = FileProvider.getUriForFile(context, "com.tonkar.volleyballreferee.fileprovider", file);
                 context.grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -191,8 +191,8 @@ public class UiUtils {
                 try {
                     context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
-                    Log.e(Tags.UTILS_UI, "Exception while sharing recorded game", e);
-                    UiUtils.makeText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                    Log.e(Tags.UTILS_UI, "Exception while sharing stored game", e);
+                    UiUtils.makeErrorText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
@@ -259,10 +259,10 @@ public class UiUtils {
         UiUtils.animateForward(activity);
     }
 
-    public static void navigateToRecordedGameAfterDelay(Activity activity, long delay) {
+    public static void navigateToStoredGameAfterDelay(Activity activity, long delay) {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
-            Intent intent = new Intent(activity, RecordedGamesListActivity.class);
+            Intent intent = new Intent(activity, StoredGamesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -374,6 +374,23 @@ public class UiUtils {
         int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryVariant);
         ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
         textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+
+        Toast toast = new Toast(context.getApplicationContext());
+        toast.setDuration(duration);
+        toast.setView(layout);
+
+        return toast;
+    }
+
+    public static Toast makeErrorText(Context context, CharSequence text, int duration) {
+        View layout = View.inflate(context, R.layout.custom_toast, null);
+
+        TextView textView = layout.findViewById(R.id.toast_text);
+        textView.setText(text);
+
+        int backgroundColor = ContextCompat.getColor(context, R.color.colorErrorVariant);
+        ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
+        textView.setTextColor(ContextCompat.getColor(context, R.color.colorError));
 
         Toast toast = new Toast(context.getApplicationContext());
         toast.setDuration(duration);

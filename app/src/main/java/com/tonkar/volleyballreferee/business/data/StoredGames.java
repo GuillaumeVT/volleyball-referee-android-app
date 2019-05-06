@@ -31,6 +31,7 @@ import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
 import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -365,6 +366,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
             mStoredGame.setIndexed(mGameService.isIndexed());
             mStoredGame.setSets(TeamType.HOME, mGameService.getSets(TeamType.HOME));
             mStoredGame.setSets(TeamType.GUEST, mGameService.getSets(TeamType.GUEST));
+            mStoredGame.setScore(mGameService.getScore());
 
             mStoredGame.getSets().clear();
 
@@ -533,13 +535,12 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     }
 
     private String buildScore(ApiGame game) {
-        StringBuilder scoreBuilder = new StringBuilder();
-
+        StringBuilder builder = new StringBuilder();
         for (ApiSet set : game.getSets()) {
-            scoreBuilder.append(String.format(Locale.getDefault(), "%d-%d\t\t", set.getHomePoints(), set.getGuestPoints()));
+            builder.append(UiUtils.formatScoreFromLocale(set.getHomePoints(), set.getGuestPoints(), false)).append("\t\t");
         }
 
-        return scoreBuilder.toString().trim();
+        return builder.toString().trim();
     }
 
     private String writeGame(ApiGame game) {

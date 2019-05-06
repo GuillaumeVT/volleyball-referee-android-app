@@ -11,6 +11,7 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiRulesDescription;
@@ -32,7 +33,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesDescription> {
     private final List<ApiRulesDescription> mFilteredStoredRulesList;
     private final NameFilter                mNameFilter;
 
-    public StoredRulesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiRulesDescription> storedRulesList) {
+    StoredRulesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiRulesDescription> storedRulesList) {
         super(context, R.layout.stored_rules_list_item, storedRulesList);
         mLayoutInflater = layoutInflater;
         mStoredRulesList = storedRulesList;
@@ -41,7 +42,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesDescription> {
         mNameFilter = new NameFilter();
     }
 
-    public void updateStoredRulesList(List<ApiRulesDescription> storedRulesList) {
+    void updateStoredRulesList(List<ApiRulesDescription> storedRulesList) {
         mStoredRulesList.clear();
         mFilteredStoredRulesList.clear();
         mStoredRulesList.addAll(storedRulesList);
@@ -65,7 +66,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesDescription> {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         View storedRulesView = view;
         ViewHolder viewHolder;
 
@@ -103,7 +104,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesDescription> {
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNameFilter;
     }
 

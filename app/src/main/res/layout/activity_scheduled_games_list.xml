@@ -60,7 +60,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="scheduleIndoor4x4Game"
-                    android:tint="@color/colorIndoor"
+                    android:tint="@color/colorIndoor4x4"
                     app:backgroundTint="@android:color/white"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"

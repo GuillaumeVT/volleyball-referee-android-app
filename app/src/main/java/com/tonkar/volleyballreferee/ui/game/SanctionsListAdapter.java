@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiSanction;
 import com.tonkar.volleyballreferee.interfaces.sanction.BaseSanctionService;
-import com.tonkar.volleyballreferee.interfaces.sanction.Sanction;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -78,7 +78,7 @@ public class SanctionsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public View getView(int index, View view, ViewGroup parent) {
         View sanctionView = view;
         ViewHolder viewHolder;
 
@@ -94,7 +94,7 @@ public class SanctionsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) sanctionView.getTag();
         }
 
-        Sanction sanction;
+        ApiSanction sanction;
 
         if (mSetIndex < 0) {
             sanction = mSanctionService.getGivenSanctions(mTeamType).get(index);
@@ -103,28 +103,28 @@ public class SanctionsListAdapter extends BaseAdapter {
         }
 
         if (TeamType.HOME.equals(mTeamType)) {
-            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", sanction.getHomeTeamPoints(), sanction.getGuestTeamPoints()));
+            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", sanction.getHomePoints(), sanction.getGuestPoints()));
         } else {
-            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", sanction.getGuestTeamPoints(), sanction.getHomeTeamPoints()));
+            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", sanction.getGuestPoints(), sanction.getHomePoints()));
         }
         if (mSetIndex < 0) {
-            viewHolder.setText.setText(String.format(mContext.getResources().getString(R.string.set_number), (sanction.getSetIndex()+1)));
+            viewHolder.setText.setText(String.format(mContext.getResources().getString(R.string.set_number), (sanction.getSet()+1)));
         } else {
             viewHolder.setText.setVisibility(View.GONE);
         }
 
-        UiUtils.setSanctionImage(viewHolder.cardTypeImage, sanction.getSanctionType());
+        UiUtils.setSanctionImage(viewHolder.cardTypeImage, sanction.getCard());
 
-        if (sanction.getPlayer() < 0) {
+        if (sanction.isTeam()) {
             viewHolder.playerText.setVisibility(View.INVISIBLE);
         } else {
-            if (sanction.getPlayer() > 0) {
-                viewHolder.playerText.setText(UiUtils.formatNumberFromLocale(sanction.getPlayer()));
-            } else {
+            if (sanction.isPlayer()) {
+                viewHolder.playerText.setText(UiUtils.formatNumberFromLocale(sanction.getNum()));
+            } else if (sanction.isCoach()) {
                 viewHolder.playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
             }
 
-            UiUtils.styleTeamText(mContext, mTeamService, mTeamType, sanction.getPlayer(), viewHolder.playerText);
+            UiUtils.styleTeamText(mContext, mTeamService, mTeamType, sanction.getNum(), viewHolder.playerText);
         }
 
         return sanctionView;

@@ -6,7 +6,6 @@
     <string name="new_beach_volleyball_game">Ranna võrkpall</string>
     <string name="new_score_based_game">Seisu tabloo</string>
     <string name="new_time_based_game">Ajaline piirang</string>
-    <string name="new_scheduled_game_from_code">Sisesta kood</string>
     <string name="permission_title">Õigused</string>
     <string name="permission_message">Antud rakendusele on vajalik andmete salvestamine antud seadmel selleks, et saaks tulemusi jagada.</string>
     <string name="resume_game_title">Jätka mängu</string>
@@ -18,16 +17,8 @@
     <string name="delete">Kustuta</string>
     <string name="ignore">Jäta vahele</string>
     <string name="facebook">Facebook</string>
-    <string name="local_data_group">Rakenduse andmed</string>
-    <string name="online_data_group">Veebilehe andmed</string>
     <string name="configuration_group">Seaded</string>
-    <string name="view_live_games">Vaata online-mänge</string>
-    <string name="search_online_games">Otsi online-mänge</string>
     <string name="my_account">Minu konto</string>
-    <string name="scheduled_game_question">Kas muudan võistkondade koosseisu ja reegleid enne mängu algust?</string>
-    <string name="game_code_hint">Mängu kood</string>
-    <string name="invalid_game_code">Mängu vale kood</string>
-    <string name="download_error_message">Serverist mängu allalaadimine ei ole võimalik</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Osta</string>
@@ -48,7 +39,6 @@
     <string name="user_signed_in_with_provider">Ühenduse loomine %s</string>
     <string name="user_signed_out">Väljas</string>
     <string name="user_sign_in_with_provider_error">Võrguühenduse viga %s</string>
-    <string name="user_scheduled_games_title">Minu planeeritud mängud</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Mängu seaded</string>
@@ -141,8 +131,6 @@
 
     <!-- Settings activity -->
     <string name="settings">Seaded</string>
-    <string name="pref_referee_name">Minu kasutajanimi \'Volleyball Referee\'</string>
-    <string name="pref_sync_data">Andmete sünktoniseerimine serveriga</string>
     <string name="pref_keep_screen_on">Jäta mängu ajaks aktiivseks ekraani</string>
     <string name="pref_interactive_notification">Aktiveeri interaktiivsed teated</string>
 
@@ -150,7 +138,6 @@
     <string name="sync_failed_message">Sünkroniseerimise viga</string>
 
     <!-- Recorded games activity -->
-    <string name="recorded_games">Salvestatud mängud</string>
     <string name="search_games">Mängu otsimine</string>
     <string name="delete_games">Kustuta kõik mängud</string>
     <string name="delete_game">Eemalda antud mängu</string>
@@ -163,7 +150,6 @@
     <string name="report_exception">Raaporti loomisel / mängu kuvamisel tekkis viga</string>
 
     <!-- Saved teams activity -->
-    <string name="saved_teams">Salvestatud võistkonnad</string>
     <string name="search_teams">Võistkonna otsimine</string>
     <string name="delete_teams">Kõikide võistkondade kustutamine</string>
     <string name="delete_team">Antud võistkonna kustutamine</string>
@@ -177,7 +163,6 @@
     <string name="leave_team_creation_question">Antud võistkonna ei salvestata, kas jätkan?</string>
 
     <!-- Rules activity -->
-    <string name="saved_rules_list">Salvestatud reeglid</string>
     <string name="delete_all_rules">Kustuta kõik reeglid</string>
     <string name="delete_rules">Reeglite kustutamine</string>
     <string name="save_rules">Reeglite salvestamine</string>

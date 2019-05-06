@@ -20,7 +20,6 @@ import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.api.ApiSanction;
 import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.api.ApiTimeout;
-import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
@@ -52,7 +51,7 @@ public class ScoreSheetWriter {
     private       Document          mDocument;
     private       Element           mBody;
 
-    public static File writeRecordedGame(Context context, StoredGameService storedGameService) {
+    public static File writeStoredGame(Context context, StoredGameService storedGameService) {
         File file;
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -180,7 +179,7 @@ public class ScoreSheetWriter {
         formatter.setTimeZone(TimeZone.getDefault());
         infoDiv.appendChild(createCellSpan(formatter.format(new Date(mStoredGameService.getScheduledAt())), true, false));
 
-        final String referee = PrefUtils.getPrefRefereeName(mContext);
+        final String referee = mStoredGameService.getRefereeName();
         if (!referee.isEmpty()) {
             infoDiv.appendChild(createCellSpan(referee, true, false));
         }

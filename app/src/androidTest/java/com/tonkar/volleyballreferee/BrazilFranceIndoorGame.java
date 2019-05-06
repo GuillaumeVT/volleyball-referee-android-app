@@ -65,7 +65,7 @@ public class BrazilFranceIndoorGame {
         playSet5_complete(indoorGame);
 
         StoredGameService storedGameService = mStoredGamesService.getGame(indoorGame.getId());
-        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
+        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
     @Test

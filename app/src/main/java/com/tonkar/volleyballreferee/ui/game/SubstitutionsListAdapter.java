@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.Substitution;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -73,7 +73,7 @@ public class SubstitutionsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public View getView(int index, View view, ViewGroup parent) {
         View substitutionView = view;
         ViewHolder viewHolder;
 
@@ -88,7 +88,7 @@ public class SubstitutionsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) substitutionView.getTag();
         }
 
-        Substitution substitution;
+        ApiSubstitution substitution;
 
         if (mSetIndex < 0) {
             substitution = mTeamService.getSubstitutions(mTeamType).get(index);
@@ -97,9 +97,9 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         }
 
         if (TeamType.HOME.equals(mTeamType)) {
-            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getHomeTeamPoints(), substitution.getGuestTeamPoints()));
+            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getHomePoints(), substitution.getGuestPoints()));
         } else {
-            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getGuestTeamPoints(), substitution.getHomeTeamPoints()));
+            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getGuestPoints(), substitution.getHomePoints()));
         }
         viewHolder.playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
         viewHolder.playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));

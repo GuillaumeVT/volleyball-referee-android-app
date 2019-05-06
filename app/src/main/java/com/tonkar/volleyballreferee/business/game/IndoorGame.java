@@ -314,7 +314,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (number > 0 && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
+        if (ApiSanction.isPlayer(number) && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
             // The player excluded for the set/match has to be legally replaced
             PositionType positionType = getPlayerPosition(teamType, number);
 
@@ -343,7 +343,7 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
             for (ApiSanction sanction : getGivenSanctions(teamType)) {
                 if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getCard())) {
-                    players.remove(sanction.getNum());
+                    players.remove(new ApiPlayer(sanction.getNum()));
                 }
             }
 

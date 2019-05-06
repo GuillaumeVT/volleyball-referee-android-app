@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
+public class StoredGamesListAdapter extends ArrayAdapter<ApiGameDescription> {
 
     static class ViewHolder {
         TextView  summaryText;
@@ -38,41 +37,41 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
         TextView  leagueText;
     }
 
-    private final LayoutInflater          mLayoutInflater;
-    private final List<StoredGameService> mStoredGameServiceList;
-    private final List<StoredGameService> mFilteredStoredGameServiceList;
-    private final DateFormat              mFormatter;
-    private final NamesFilter             mNamesFilter;
-    private final boolean                 mIsSyncOn;
+    private final LayoutInflater           mLayoutInflater;
+    private final List<ApiGameDescription> mStoredGamesList;
+    private final List<ApiGameDescription> mFilteredStoredGamesList;
+    private final DateFormat               mFormatter;
+    private final NamesFilter              mNamesFilter;
+    private final boolean                  mIsSyncOn;
 
-    RecordedGamesListAdapter(Context context, LayoutInflater layoutInflater, List<StoredGameService> storedGameServiceList) {
-        super(context, R.layout.recorded_games_list_item, storedGameServiceList);
+    StoredGamesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiGameDescription> storedGamesList) {
+        super(context, R.layout.recorded_games_list_item, storedGamesList);
         mLayoutInflater = layoutInflater;
-        mStoredGameServiceList = storedGameServiceList;
-        mFilteredStoredGameServiceList = new ArrayList<>();
-        mFilteredStoredGameServiceList.addAll(mStoredGameServiceList);
+        mStoredGamesList = storedGamesList;
+        mFilteredStoredGamesList = new ArrayList<>();
+        mFilteredStoredGamesList.addAll(mStoredGamesList);
         mFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
         mNamesFilter = new NamesFilter();
         mIsSyncOn = PrefUtils.canSync(context);
     }
 
-    public void updateRecordedGamesList(List<StoredGameService> storedGameServiceList) {
-        mStoredGameServiceList.clear();
-        mFilteredStoredGameServiceList.clear();
-        mStoredGameServiceList.addAll(storedGameServiceList);
-        mFilteredStoredGameServiceList.addAll(storedGameServiceList);
+    void updateStoredGamesList(List<ApiGameDescription> storedGamesList) {
+        mStoredGamesList.clear();
+        mFilteredStoredGamesList.clear();
+        mStoredGamesList.addAll(storedGamesList);
+        mFilteredStoredGamesList.addAll(storedGamesList);
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return mFilteredStoredGameServiceList.size();
+        return mFilteredStoredGamesList.size();
     }
 
     @Override
-    public StoredGameService getItem(int index) {
-        return mFilteredStoredGameServiceList.get(index);
+    public ApiGameDescription getItem(int index) {
+        return mFilteredStoredGamesList.get(index);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         View gameView = view;
         ViewHolder viewHolder;
 
@@ -101,26 +100,20 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
             viewHolder = (ViewHolder) gameView.getTag();
         }
 
-        StoredGameService storedGameService = mFilteredStoredGameServiceList.get(index);
-        updateGame(viewHolder, storedGameService);
+        ApiGameDescription game = mFilteredStoredGamesList.get(index);
+        updateGame(viewHolder, game);
 
         return gameView;
     }
 
-    private void updateGame(ViewHolder viewHolder, StoredGameService storedGameService) {
+    private void updateGame(ViewHolder viewHolder, ApiGameDescription game) {
         viewHolder.summaryText.setText(String.format(Locale.getDefault(),"%s\t\t%d - %d\t\t%s",
-                storedGameService.getTeamName(TeamType.HOME), storedGameService.getSets(TeamType.HOME), storedGameService.getSets(TeamType.GUEST), storedGameService.getTeamName(TeamType.GUEST)));
-        viewHolder.dateText.setText(mFormatter.format(new Date(storedGameService.getGameSchedule())));
+                game.getHomeTeamName(), game.getHomeSets(), game.getGuestSets(), game.getGuestTeamName()));
+        viewHolder.dateText.setText(mFormatter.format(new Date(game.getScheduledAt())));
 
-        StringBuilder builder = new StringBuilder();
-        for (int setIndex = 0; setIndex < storedGameService.getNumberOfSets(); setIndex++) {
-            int homePoints = storedGameService.getPoints(TeamType.HOME, setIndex);
-            int guestPoints = storedGameService.getPoints(TeamType.GUEST, setIndex);
-            builder.append(UiUtils.formatScoreFromLocale(homePoints, guestPoints, false)).append("\t\t");
-        }
-        viewHolder.scoreText.setText(builder.toString());
+        viewHolder.scoreText.setText(game.getScore());
 
-        switch (storedGameService.getGender()) {
+        switch (game.getGender()) {
             case MIXED:
                 viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
                 viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
@@ -135,10 +128,10 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
                 break;
         }
 
-        switch (storedGameService.getKind()) {
+        switch (game.getKind()) {
             case INDOOR_4X4:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
                 viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
@@ -155,7 +148,7 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
                 break;
         }
 
-        if (storedGameService.isIndexed()) {
+        if (game.isIndexed()) {
             viewHolder.indexedImage.setImageResource(R.drawable.ic_public);
             viewHolder.indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorWeb), PorterDuff.Mode.SRC_IN));
         } else {
@@ -165,16 +158,16 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
 
         viewHolder.indexedImage.setVisibility(mIsSyncOn ? View.VISIBLE : View.GONE);
 
-        if (storedGameService.getLeagueName().isEmpty() || storedGameService.getDivisionName().isEmpty()) {
-            viewHolder.leagueText.setText(storedGameService.getLeagueName());
+        if (game.getLeagueName().isEmpty() || game.getDivisionName().isEmpty()) {
+            viewHolder.leagueText.setText(game.getLeagueName());
         } else {
-            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , storedGameService.getLeagueName(), storedGameService.getDivisionName()));
+            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , game.getLeagueName(), game.getDivisionName()));
         }
-        viewHolder.leagueText.setVisibility(storedGameService.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
+        viewHolder.leagueText.setVisibility(game.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNamesFilter;
     }
 
@@ -185,16 +178,20 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
             FilterResults results = new FilterResults();
 
             if (prefix == null || prefix.length() == 0) {
-                results.values = mStoredGameServiceList;
-                results.count = mStoredGameServiceList.size();
+                results.values = mStoredGamesList;
+                results.count = mStoredGamesList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<StoredGameService> matchValues = new ArrayList<>();
+                List<ApiGameDescription> matchValues = new ArrayList<>();
 
-                for (StoredGameService storedGameService : mStoredGameServiceList) {
-                    if (storedGameService.matchesFilter(lowerCaseText)) {
-                        matchValues.add(storedGameService);
+                for (ApiGameDescription game : mStoredGamesList) {
+                    if (lowerCaseText.isEmpty()
+                            || game.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
+                            || game.getGuestTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
+                            || game.getLeagueName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
+                            || game.getRefereeName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
+                        matchValues.add(game);
                     }
                 }
 
@@ -207,11 +204,11 @@ public class RecordedGamesListAdapter extends ArrayAdapter<StoredGameService> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mFilteredStoredGameServiceList.clear();
+            mFilteredStoredGamesList.clear();
 
             if (results.values != null) {
-                mFilteredStoredGameServiceList.clear();
-                mFilteredStoredGameServiceList.addAll((Collection<? extends StoredGameService>) results.values);
+                mFilteredStoredGamesList.clear();
+                mFilteredStoredGamesList.addAll((Collection<? extends ApiGameDescription>) results.values);
             }
 
             if (results.count > 0) {

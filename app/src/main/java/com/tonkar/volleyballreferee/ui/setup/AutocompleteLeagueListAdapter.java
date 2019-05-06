@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
 
@@ -22,7 +23,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
     private final List<ApiLeagueDescription> mFilteredStoredLeagueList;
     private final NameFilter                 mNameFilter;
 
-    public AutocompleteLeagueListAdapter(Context context, LayoutInflater layoutInflater, List<ApiLeagueDescription> storedLeagueList) {
+    AutocompleteLeagueListAdapter(Context context, LayoutInflater layoutInflater, List<ApiLeagueDescription> storedLeagueList) {
         super(context, R.layout.autocomplete_list_item, storedLeagueList);
         mLayoutInflater = layoutInflater;
         mStoredLeagueList = storedLeagueList;
@@ -47,7 +48,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
     }
 
     @Override
-    public View getView(int index, View view, ViewGroup viewGroup) {
+    public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
         TextView leagueTextView;
 
         if (view == null) {
@@ -63,7 +64,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
     }
 
     @Override
-    public Filter getFilter() {
+    public @NonNull Filter getFilter() {
         return mNameFilter;
     }
 

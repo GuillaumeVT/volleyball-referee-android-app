@@ -51,7 +51,7 @@ public class ItalyUsaBeachGame {
         playSet2_complete(beachGame);
 
         StoredGameService storedGameService = mStoredGamesService.getGame(beachGame.getId());
-        ScoreSheetWriter.writeRecordedGame(mActivityRule.getActivity(), storedGameService);
+        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
     @Test
