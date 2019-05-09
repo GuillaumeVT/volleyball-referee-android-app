@@ -115,9 +115,13 @@ public class StoredRules implements StoredRulesService {
     public void createAndSaveRulesFrom(Rules rules) {
         if (rules.getName().length() > 1
                 && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind()) == 0
+                && AppDatabase.getInstance(mContext).rulesDao().countById(rules.getId()) == 0
                 && !rules.getName().equals(Rules.officialBeachRules().getName())
                 && !rules.getName().equals(Rules.officialIndoorRules().getName())
-                && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())) {
+                && !rules.getName().equals(Rules.defaultIndoor4x4Rules().getName())
+                && !rules.getId().equals(Rules.officialBeachRules().getId())
+                && !rules.getId().equals(Rules.officialIndoorRules().getId())
+                && !rules.getId().equals(Rules.defaultIndoor4x4Rules().getId())) {
             saveRules(rules);
         }
     }

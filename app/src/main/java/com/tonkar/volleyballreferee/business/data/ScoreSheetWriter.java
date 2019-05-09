@@ -16,10 +16,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiPlayer;
-import com.tonkar.volleyballreferee.api.ApiSanction;
-import com.tonkar.volleyballreferee.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.api.ApiTimeout;
+import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
@@ -167,11 +164,8 @@ public class ScoreSheetWriter {
         Element infoDiv = new Element("div");
         infoDiv.addClass("div-grid-info");
 
-        String league = mStoredGameService.getLeagueName();
-        String division = mStoredGameService.getDivisionName();
-        if (!league.isEmpty() && !division.isEmpty()) {
-            league = league + " / " + division;
-        }
+        ApiSelectedLeague selectedLeague = mStoredGameService.getLeague();
+        String league = selectedLeague == null ? "" : selectedLeague.getName() + " / " + selectedLeague.getDivision();
 
         infoDiv.appendChild(createCellSpan(league, true, false));
 

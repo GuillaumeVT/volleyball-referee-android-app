@@ -38,4 +38,7 @@ public interface RulesDao {
 
     @Query("SELECT COUNT(*) FROM rules WHERE name = :name AND kind = :kind")
     int countByNameAndKind(String name, GameType kind);
+
+    @Query("SELECT COUNT(*) FROM rules WHERE id = :id")
+    int countById(String id);
 }

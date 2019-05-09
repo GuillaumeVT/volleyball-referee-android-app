@@ -72,10 +72,6 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
                 break;
         }
 
-        final String teamName = mTeamService.getTeamName(mTeamType);
-
-        teamNameInput.setText(teamName);
-        teamNameInput.setEnabled(create);
         teamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -84,12 +80,18 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
                 computeSaveItemVisibility();
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        final String teamName = mTeamService.getTeamName(mTeamType);
+
+        teamNameInput.setText(teamName);
+        teamNameInput.setEnabled(create);
 
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
         updateCaptain();

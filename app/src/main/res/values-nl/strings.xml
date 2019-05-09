@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Bevestig je deze opstelling?</string>
     <string name="gender_description">Geslacht</string>
     <string name="match_duration_text">Selecteer de wedstrijdduur</string>
-    <string name="league_name_hint">Naam competitie / toernooi (optioneel)</string>
-    <string name="division_name_hint">Divisie / poule naam (optioneel)</string>
+    <string name="league_name">Naam competitie / toernooi (optioneel)</string>
+    <string name="division_name">Divisie / poule naam (optioneel)</string>
     <string name="misc_tab">Div.</string>
     <string name="rules_tab">Regels</string>
     <string name="teams_tab">Ploegen</string>

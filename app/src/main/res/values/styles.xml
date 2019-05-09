@@ -71,4 +71,9 @@
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
+    <style name="ErrorText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorError</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+    </style>
+
 </resources>

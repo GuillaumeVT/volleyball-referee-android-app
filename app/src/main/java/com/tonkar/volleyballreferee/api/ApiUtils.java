@@ -36,7 +36,7 @@ public class ApiUtils {
     public static String COMPLETED_GAMES_API_URL = BASE_URL + "/games/completed";
 
     public static String USERS_API_URL            = BASE_URL + "/users";
-    public static String USER_API_URL             = BASE_URL + "public/users/d14e2e45-0475-43ac-b6e4-56aae0e383fc";
+    public static String USER_API_URL             = BASE_URL + "/public/users/" + BuildConfig.SIGN_UP_KEY;
     public static String FRIENDS_RECEIVED_API_URL = BASE_URL + "/users/friends/received";
     public static String FRIENDS_REQUEST_API_URL  = BASE_URL + "/users/friends/request/%s";
     public static String FRIENDS_ACCEPT_API_URL   = BASE_URL + "/users/friends/accept/%s";

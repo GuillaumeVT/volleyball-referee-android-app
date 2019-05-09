@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -16,10 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +32,6 @@ import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
-import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
@@ -93,7 +89,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         mScrollView = view.findViewById(R.id.team_setup_scroll);
 
-        final ClearableTextInputAutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
+        final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
         mTeamColorButton = view.findViewById(R.id.team_color_button);
         final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
@@ -111,9 +107,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         }
 
         final String teamName = mTeamService.getTeamName(mTeamType);
-
-        teamNameInput.setText(teamName);
-        teamNameInput.setEnabled(create);
 
         if (isGameContext) {
             StoredTeamsService storedTeamsService = new StoredTeams(getContext());
@@ -150,12 +143,16 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
                 computeConfirmItemVisibility();
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        teamNameInput.setText(teamName);
+        teamNameInput.setEnabled(create);
 
         mPlayerAdapter = new PlayerAdapter(getLayoutInflater(), getActivity(), mTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);

@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>
     <string name="match_duration_text">Выберите длительность матча</string>
-    <string name="league_name_hint">Название лиги / турнира (факультативно)</string>
-    <string name="division_name_hint">Название дивизиона / группы (факультативно)</string>
+    <string name="league_name">Название лиги / турнира (факультативно)</string>
+    <string name="division_name">Название дивизиона / группы (факультативно)</string>
     <string name="misc_tab">Разное</string>
     <string name="rules_tab">Правила</string>
     <string name="teams_tab">Команды</string>

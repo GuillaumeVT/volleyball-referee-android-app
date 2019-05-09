@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.api.ApiPlayer;
 import com.tonkar.volleyballreferee.api.ApiSanction;
+import com.tonkar.volleyballreferee.api.ApiSelectedLeague;
 import com.tonkar.volleyballreferee.api.ApiTimeout;
 import com.tonkar.volleyballreferee.business.team.TeamDefinition;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
@@ -55,12 +56,8 @@ public abstract class Game extends BaseGame {
     private       boolean           mIndexed;
     @SerializedName("rules")
     private final Rules             mRules;
-    @SerializedName("leagueId")
-    private       String            mLeagueId;
-    @SerializedName("leagueName")
-    private       String            mLeagueName;
-    @SerializedName("divisionName")
-    private       String            mDivisionName;
+    @SerializedName("league")
+    private final ApiSelectedLeague mLeague;
     @SerializedName("homeTeam")
     private final TeamDefinition    mHomeTeam;
     @SerializedName("guestTeam")
@@ -101,9 +98,14 @@ public abstract class Game extends BaseGame {
         mUsage = UsageType.NORMAL;
         mRules = rules;
         mIndexed = true;
-        mLeagueId = "";
-        mLeagueName = "";
-        mDivisionName = "";
+        mLeague = new ApiSelectedLeague();
+        mLeague.setId(UUID.randomUUID().toString());
+        mLeague.setCreatedBy(createdBy);
+        mLeague.setCreatedAt(createdAt);
+        mLeague.setUpdatedAt(createdAt);
+        mLeague.setKind(kind);
+        mLeague.setName("");
+        mLeague.setDivision("");
         mHomeTeam = createTeamDefinition(TeamType.HOME);
         mGuestTeam = createTeamDefinition(TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
@@ -244,33 +246,8 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public String getLeagueId() {
-        return mLeagueId;
-    }
-
-    @Override
-    public void setLeagueId(String id) {
-        mLeagueId = id;
-    }
-
-    @Override
-    public String getLeagueName() {
-        return mLeagueName;
-    }
-
-    @Override
-    public void setLeagueName(String name) {
-        mLeagueName = name;
-    }
-
-    @Override
-    public String getDivisionName() {
-        return mDivisionName;
-    }
-
-    @Override
-    public void setDivisionName(String name) {
-        mDivisionName = name;
+    public ApiSelectedLeague getLeague() {
+        return mLeague;
     }
 
     @Override
@@ -1154,8 +1131,7 @@ public abstract class Game extends BaseGame {
                     && (this.getId().equals(other.getId()))
                     && (this.getGender().equals(other.getGender()))
                     && (this.getRules().equals(other.getRules()))
-                    && (this.getLeagueName().equals(other.getLeagueName()))
-                    && (this.getDivisionName().equals(other.getDivisionName()))
+                    && (this.getLeague().equals(other.getLeague()))
                     && (this.getTeamDefinition(TeamType.HOME).equals(other.getTeamDefinition(TeamType.HOME)))
                     && (this.getTeamDefinition(TeamType.GUEST).equals(other.getTeamDefinition(TeamType.GUEST)))
                     && (this.getTeamOnLeftSide().equals(other.getTeamOnLeftSide()))

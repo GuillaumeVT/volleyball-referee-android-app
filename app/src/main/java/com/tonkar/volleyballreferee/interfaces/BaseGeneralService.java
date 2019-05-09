@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.interfaces;
 
+import com.tonkar.volleyballreferee.api.ApiSelectedLeague;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 
 public interface BaseGeneralService {
@@ -36,17 +37,7 @@ public interface BaseGeneralService {
 
     Rules getRules();
 
-    String getLeagueId();
-
-    void setLeagueId(String id);
-
-    String getLeagueName();
-
-    void setLeagueName(String name);
-
-    String getDivisionName();
-
-    void setDivisionName(String name);
+    ApiSelectedLeague getLeague();
 
     boolean isIndexed();
 

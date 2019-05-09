@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 import androidx.annotation.NonNull;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiFriend;
 import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
@@ -28,7 +29,6 @@ import com.tonkar.volleyballreferee.ui.interfaces.BaseGeneralServiceHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import androidx.fragment.app.Fragment;
 
@@ -55,6 +55,10 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
 
         final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
+        divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
+            mGeneralService.getLeague().setDivision((String) divisionNameInput.getAdapter().getItem(index));
+            computeConfirmItemVisibility();
+        });
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -62,14 +66,16 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division");
-                mGeneralService.setDivisionName(s.toString());
+                mGeneralService.getLeague().setDivision(s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.division_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                computeConfirmItemVisibility();
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(mGeneralService.getDivisionName());
+        divisionNameInput.setText(mGeneralService.getLeague().getDivision());
 
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
@@ -77,11 +83,10 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueDescription leagueDescription = (ApiLeagueDescription) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
-            mGeneralService.setLeagueId(leagueDescription.getId());
-            mGeneralService.setLeagueName(leagueDescription.getName());
+            mGeneralService.getLeague().setAll(leagueDescription);
             divisionNameInput.setText("");
             divisionNameInput.setAdapter(new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
-            mGeneralService.setDivisionName("");
+            computeConfirmItemVisibility();
         });
 
         leagueNameInput.addTextChangedListener(new TextWatcher() {
@@ -91,17 +96,16 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update league");
-                // TODO check if triggered when autocomplete
-                mGeneralService.setLeagueId(UUID.randomUUID().toString());
-                mGeneralService.setLeagueName(s.toString());
-                divisionNameInput.setAdapter(null);
+                mGeneralService.getLeague().setName(s.toString().trim());
+                view.findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+                computeConfirmItemVisibility();
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        leagueNameInput.setText(mGeneralService.getLeagueName());
+        leagueNameInput.setText(mGeneralService.getLeague().getName());
 
         List<ApiFriend> referees = storedUserService.listReferees();
 
@@ -143,6 +147,12 @@ public class MiscSetupFragment extends Fragment implements BaseGeneralServiceHan
         }
 
         return view;
+    }
+
+    private void computeConfirmItemVisibility() {
+        if (getActivity() instanceof GameSetupActivity) {
+            ((GameSetupActivity) getActivity()).computeStartItemVisibility();
+        }
     }
 
     @Override

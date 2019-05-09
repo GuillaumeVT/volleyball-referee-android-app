@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Confermate questa formazione?</string>
     <string name="gender_description">Genere</string>
     <string name="match_duration_text">Selezionare la durata di una partita</string>
-    <string name="league_name_hint">Nome della categoria o del torneo (opzionale)</string>
-    <string name="division_name_hint">Nome della divisione / pool (opzionale)</string>
+    <string name="league_name">Nome della categoria o del torneo (opzionale)</string>
+    <string name="division_name">Nome della divisione / pool (opzionale)</string>
     <string name="misc_tab">Varie</string>
     <string name="rules_tab">Regole</string>
     <string name="teams_tab">Squadre</string>

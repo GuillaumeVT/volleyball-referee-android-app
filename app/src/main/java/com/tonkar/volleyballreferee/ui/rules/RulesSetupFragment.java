@@ -11,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ScrollView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiRulesDescription;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
@@ -26,7 +24,6 @@ import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.setup.AutocompleteRulesListAdapter;
-import com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView;
 import com.tonkar.volleyballreferee.ui.data.StoredRulesActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 
@@ -39,27 +36,27 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
     private Rules mRules;
 
-    private ScrollView                             mScrollView;
-    private ClearableTextInputAutoCompleteTextView mRulesNameInput;
-    private Spinner                                mSetsPerGameSpinner;
-    private Spinner                                mPointsPerSetSpinner;
-    private SwitchCompat                           mTieBreakSwitch;
-    private Spinner                                mPointsInTieBreakSpinner;
-    private SwitchCompat                           mTwoPointsDifferenceSwitch;
-    private SwitchCompat                           mSanctionsSwitch;
-    private SwitchCompat                           mTeamTimeoutsSwitch;
-    private Spinner                                mTeamTimeoutsPerSetSpinner;
-    private Spinner                                mTeamTimeoutDurationSpinner;
-    private SwitchCompat                           mTechnicalTimeoutsSwitch;
-    private Spinner                                mTechnicalTimeoutDurationSpinner;
-    private SwitchCompat                           mGameIntervalsSwitch;
-    private Spinner                                mGameIntervalDurationSpinner;
-    private Spinner                                mSubstitutionsLimitationSpinner;
-    private Spinner                                mTeamSubstitutionsPerSetSpinner;
-    private SwitchCompat                           mCourtSwitchesSwitch;
-    private Spinner                                mCourtSwitchFrequencySpinner;
-    private Spinner                                mCourtSwitchFrequencyTieBreakSpinner;
-    private Spinner                                mConsecutiveServesSpinner;
+    private ScrollView           mScrollView;
+    private AutoCompleteTextView mRulesNameInput;
+    private Spinner              mSetsPerGameSpinner;
+    private Spinner              mPointsPerSetSpinner;
+    private SwitchCompat         mTieBreakSwitch;
+    private Spinner              mPointsInTieBreakSpinner;
+    private SwitchCompat         mTwoPointsDifferenceSwitch;
+    private SwitchCompat         mSanctionsSwitch;
+    private SwitchCompat         mTeamTimeoutsSwitch;
+    private Spinner              mTeamTimeoutsPerSetSpinner;
+    private Spinner              mTeamTimeoutDurationSpinner;
+    private SwitchCompat         mTechnicalTimeoutsSwitch;
+    private Spinner              mTechnicalTimeoutDurationSpinner;
+    private SwitchCompat         mGameIntervalsSwitch;
+    private Spinner              mGameIntervalDurationSpinner;
+    private Spinner              mSubstitutionsLimitationSpinner;
+    private Spinner              mTeamSubstitutionsPerSetSpinner;
+    private SwitchCompat         mCourtSwitchesSwitch;
+    private Spinner              mCourtSwitchFrequencySpinner;
+    private Spinner              mCourtSwitchFrequencyTieBreakSpinner;
+    private Spinner              mConsecutiveServesSpinner;
 
     private IntegerRuleAdapter mSetsPerGameAdapter;
     private IntegerRuleAdapter mPointsPerSetAdapter;
@@ -174,8 +171,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mConsecutiveServesAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.consecutive_serves_per_player_entries), getResources().getStringArray(R.array.consecutive_serves_per_player_values));
         mConsecutiveServesSpinner.setAdapter(mConsecutiveServesAdapter);
 
-        initValues();
-
         View indoorSection = view.findViewById(R.id.indoor_rules_section);
         View beachSection = view.findViewById(R.id.beach_rules_section);
 
@@ -217,6 +212,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.RULES, "Update rules name");
                 mRules.setName(s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.rules_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
                 computeConfirmItemVisibility();
             }
 
@@ -377,6 +373,8 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
+        initValues();
 
         computeConfirmItemVisibility();
 

@@ -40,12 +40,8 @@ public class ApiGame {
     private GameStatus        status;
     @SerializedName("indexed")
     private boolean           indexed;
-    @SerializedName("leagueId")
-    private String            leagueId;
-    @SerializedName("leagueName")
-    private String            leagueName;
-    @SerializedName("divisionName")
-    private String            divisionName;
+    @SerializedName("league")
+    private ApiSelectedLeague league;
     @SerializedName("homeTeam")
     private ApiTeam           homeTeam;
     @SerializedName("guestTeam")
@@ -78,9 +74,7 @@ public class ApiGame {
         usage = UsageType.NORMAL;
         status = GameStatus.SCHEDULED;
         indexed = true;
-        leagueId = null;
-        leagueName = "";
-        divisionName = "";
+        league = null;
         homeTeam = null;
         guestTeam = null;
         homeSets = 0;

@@ -10,11 +10,16 @@ import android.util.Log;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.IndoorGame;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
@@ -148,9 +153,8 @@ public class BrazilFranceIndoorGame {
     private void defineTeams(IndoorGame indoorGame) {
         indoorGame.setGender(GenderType.GENTS);
 
-        indoorGame.setLeagueId(UUID.randomUUID().toString());
-        indoorGame.setLeagueName("FIVB Volleyball World League 2017");
-        indoorGame.setDivisionName("Final");
+        indoorGame.getLeague().setName("FIVB Volleyball World League 2017");
+        indoorGame.getLeague().setDivision("Final");
 
         indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
         indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
@@ -199,6 +203,13 @@ public class BrazilFranceIndoorGame {
         indoorGame.setCaptain(TeamType.GUEST, 6);
 
         indoorGame.startMatch();
+
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+        storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, indoorGame, TeamType.HOME);
+        storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, indoorGame, TeamType.GUEST);
+
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+        storedLeaguesService.createAndSaveLeagueFrom(indoorGame.getLeague());
 
         mStoredGamesService = new StoredGames(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(indoorGame);

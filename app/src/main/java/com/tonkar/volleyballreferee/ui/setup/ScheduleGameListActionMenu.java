@@ -23,6 +23,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiGameDescription;
+import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -74,6 +76,13 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
             TextView startGameText = view.findViewById(R.id.action_start_match);
             TextView editAndStartGameText = view.findViewById(R.id.action_edit_start_match);
             TextView deleteGameText = view.findViewById(R.id.action_delete_match);
+
+            Authentication authentication = PrefUtils.getAuthentication(mActivity);
+
+            if (!mGameDescription.getCreatedBy().equals(authentication.getUserId())) {
+                rescheduleGameText.setVisibility(View.GONE);
+                deleteGameText.setVisibility(View.GONE);
+            }
 
             if (GameStatus.LIVE.equals(mGameDescription.getStatus())) {
                 rescheduleGameText.setVisibility(View.GONE);

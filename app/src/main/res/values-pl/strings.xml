@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Czy potwierdzasz te ustawienia?</string>
     <string name="gender_description">Płeć</string>
     <string name="match_duration_text">Wybierz czas trwania meczu</string>
-    <string name="league_name_hint">Liga / turniej (opcjonalnie)</string>
-    <string name="division_name_hint">Nazwa dywizji / grupy (opcjonalnie)</string>
+    <string name="league_name">Liga / turniej (opcjonalnie)</string>
+    <string name="division_name">Nazwa dywizji / grupy (opcjonalnie)</string>
     <string name="rules_tab">Zasasdy</string>
     <string name="teams_tab">Zespoły</string>
     <string name="misc_tab">Różne</string>

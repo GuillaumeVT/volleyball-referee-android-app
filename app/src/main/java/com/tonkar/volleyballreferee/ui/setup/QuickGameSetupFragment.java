@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiFriend;
 import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
@@ -44,7 +45,6 @@ import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class QuickGameSetupFragment extends Fragment implements GameServiceHandler {
 
@@ -93,6 +93,10 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
+        divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
+            mGameService.getLeague().setDivision((String) divisionNameInput.getAdapter().getItem(index));
+            computeConfirmItemVisibility();
+        });
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -100,14 +104,16 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division");
-                mGameService.setDivisionName(s.toString());
+                mGameService.getLeague().setDivision(s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.division_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                computeConfirmItemVisibility();
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(mGameService.getDivisionName());
+        divisionNameInput.setText(mGameService.getLeague().getDivision());
 
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
@@ -115,11 +121,10 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueDescription leagueDescription = (ApiLeagueDescription) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
-            mGameService.setLeagueId(leagueDescription.getId());
-            mGameService.setLeagueName(leagueDescription.getName());
+            mGameService.getLeague().setAll(leagueDescription);
             divisionNameInput.setText("");
             divisionNameInput.setAdapter(new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
-            mGameService.setDivisionName("");
+            computeConfirmItemVisibility();
         });
 
         leagueNameInput.addTextChangedListener(new TextWatcher() {
@@ -129,17 +134,16 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update league");
-                // TODO check if triggered when autocomplete
-                mGameService.setLeagueId(UUID.randomUUID().toString());
-                mGameService.setLeagueName(s.toString());
-                divisionNameInput.setAdapter(null);
+                mGameService.getLeague().setName(s.toString().trim());
+                view.findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+                computeConfirmItemVisibility();
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        leagueNameInput.setText(mGameService.getLeagueName());
+        leagueNameInput.setText(mGameService.getLeague().getName());
 
         List<ApiFriend> referees = storedUserService.listReferees();
 
@@ -188,7 +192,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME.toString()));
-                mGameService.setTeamName(TeamType.HOME, s.toString());
+                mGameService.setTeamName(TeamType.HOME, s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.home_team_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
                 computeConfirmItemVisibility();
             }
 
@@ -205,7 +210,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST.toString()));
-                mGameService.setTeamName(TeamType.GUEST, s.toString());
+                mGameService.setTeamName(TeamType.GUEST, s.toString().trim());
+                ((TextInputLayout)view.findViewById(R.id.guest_team_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
                 computeConfirmItemVisibility();
             }
 

@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Mängu seadete kinnitamine?</string>
     <string name="gender_description">Sugu</string>
     <string name="match_duration_text">Määrake mängu kestvust</string>
-    <string name="league_name_hint">Liiga / turnii nimetus (ei ole kohustuslik)</string>
-    <string name="division_name_hint">Divisiooni / grupi nimetus (ei ole kohustuslik)</string>
+    <string name="league_name">Liiga / turnii nimetus (ei ole kohustuslik)</string>
+    <string name="division_name">Divisiooni / grupi nimetus (ei ole kohustuslik)</string>
     <string name="misc_tab">Erinev</string>
     <string name="rules_tab">Reeglid</string>
     <string name="teams_tab">Võistkonnad</string>

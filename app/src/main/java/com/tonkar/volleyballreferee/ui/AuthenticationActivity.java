@@ -192,7 +192,6 @@ public abstract class AuthenticationActivity extends NavigationActivity {
         PrefUtils.signIn(this, authentication);
         UiUtils.makeText(this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_with_provider), Authentication.Provider.GOOGLE.equals(authentication.getProvider()) ? "Google" : "Facebook"), Toast.LENGTH_LONG).show();
         checkUserAvailability();
-        UiUtils.navigateToHome(this);
     }
 
     private void checkUserAvailability() {
@@ -205,6 +204,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
                 @Override
                 public void onUserReceived(ApiUser user) {
                     UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
+                    UiUtils.navigateToHome(AuthenticationActivity.this);
                 }
 
                 @Override

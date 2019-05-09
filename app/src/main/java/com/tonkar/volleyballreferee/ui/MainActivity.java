@@ -104,7 +104,7 @@ public class MainActivity extends AuthenticationActivity {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final long currentTime = System.currentTimeMillis();
 
-        if (sharedPreferences.getLong("last_full_sync", 0L) + 7200000L < currentTime) {
+        if (PrefUtils.canSync(this) && sharedPreferences.getLong("last_full_sync", 0L) + 7200000L < currentTime) {
             Context applicationContext = getApplicationContext();
             new StoredUser(applicationContext).syncUser();
             new StoredLeagues(applicationContext).syncLeagues();
@@ -303,7 +303,7 @@ public class MainActivity extends AuthenticationActivity {
         if (PrefUtils.canSync(this)) {
             Authentication authentication = PrefUtils.getAuthentication(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                    .setMessage(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()))
+                    .setMessage(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()) + String.format(Locale.getDefault(), "\n\n(%s)", authentication.getUserId()))
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {})
                     .setNegativeButton(R.string.user_sign_out, (dialog, which) -> signOut());
             AlertDialog alertDialog = builder.show();

@@ -47,8 +47,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/big_margin_size">
+                    android:layout_height="wrap_content">
 
                 <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                         android:id="@+id/league_name_input_text"
@@ -56,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_clear"
                         android:ems="10"
-                        android:hint="@string/league_name_hint"
+                        android:hint="@string/league_name"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:textColor="@color/colorPrimary"
@@ -65,8 +64,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/division_name_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:errorTextAppearance="@style/ErrorText">
 
                 <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                         android:id="@+id/division_name_input_text"
@@ -74,8 +76,8 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_clear"
                         android:ems="10"
-                        android:hint="@string/division_name_hint"
-                        android:imeOptions="actionNext"
+                        android:hint="@string/division_name"
+                        android:imeOptions="actionDone"
                         android:inputType="textCapWords"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/default_text_size"/>

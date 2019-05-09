@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 
 import androidx.appcompat.app.AlertDialog;
@@ -38,14 +39,17 @@ public class PseudoInputDialogFragment extends DialogFragment {
         builder.setPositiveButton(getString(android.R.string.ok), null);
         builder.setCancelable(false);
 
+        setCancelable(false);
+
         AlertDialog dialog = builder.create();
 
         dialog.setOnShowListener(dialogInterface -> {
             Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             button.setOnClickListener(view -> {
                 Authentication authentication = PrefUtils.getAuthentication(getContext());
-                EditText editText = dialog.findViewById(R.id.pseudo_input);
+                EditText editText = dialog.findViewById(R.id.pseudo_input_text);
                 String pseudo = editText.getText().toString().trim();
+                TextInputLayout editTextLayout = dialog.findViewById(R.id.pseudo_input_layout);
                 StoredUserService storedUserService = new StoredUser(getContext());
                 if (pseudo.length() >= 3) {
                     storedUserService.createUser(authentication.getUserId(), pseudo, new AsyncUserRequestListener() {
@@ -63,14 +67,14 @@ public class PseudoInputDialogFragment extends DialogFragment {
                         @Override
                         public void onError(int httpCode) {
                             if (HttpURLConnection.HTTP_CONFLICT == httpCode) {
-                                editText.setError(getString(R.string.user_exists_error));
+                                editTextLayout.setError(getString(R.string.user_exists_error));
                             } else {
-                                editText.setError(getString(R.string.user_creation_error));
+                                editTextLayout.setError(getString(R.string.user_creation_error));
                             }
                         }
                     });
                 } else {
-                    editText.setError(String.format(getString(R.string.minimum_size_error), 3));
+                    editTextLayout.setError(String.format(getString(R.string.minimum_size_error), 3));
                 }
             });
         });

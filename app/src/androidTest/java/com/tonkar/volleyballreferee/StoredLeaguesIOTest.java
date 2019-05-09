@@ -3,6 +3,8 @@ package com.tonkar.volleyballreferee;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 import com.tonkar.volleyballreferee.api.ApiLeague;
+import com.tonkar.volleyballreferee.api.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredLeagues;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
 import com.tonkar.volleyballreferee.interfaces.GameType;
@@ -20,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -33,9 +36,27 @@ public class StoredLeaguesIOTest {
 
     @Test
     public void save() {
+        ApiSelectedLeague selectedLeague1 = new ApiSelectedLeague();
+        selectedLeague1.setId(UUID.randomUUID().toString());
+        selectedLeague1.setCreatedBy(Authentication.VBR_USER_ID);
+        selectedLeague1.setCreatedAt(System.currentTimeMillis());
+        selectedLeague1.setUpdatedAt(System.currentTimeMillis());
+        selectedLeague1.setKind(GameType.INDOOR);
+        selectedLeague1.setName("Test League");
+        selectedLeague1.setDivision("Test division");
+
+        ApiSelectedLeague selectedLeague2 = new ApiSelectedLeague();
+        selectedLeague2.setId(UUID.randomUUID().toString());
+        selectedLeague2.setCreatedBy(Authentication.VBR_USER_ID);
+        selectedLeague2.setCreatedAt(System.currentTimeMillis());
+        selectedLeague2.setUpdatedAt(System.currentTimeMillis());
+        selectedLeague2.setKind(GameType.INDOOR);
+        selectedLeague2.setName("Test League Bis");
+        selectedLeague2.setDivision("Test division Bis");
+
         StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity().getApplicationContext());
-        storedLeaguesService.createAndSaveLeagueFrom(GameType.INDOOR, "Test League", "Test division");
-        storedLeaguesService.createAndSaveLeagueFrom(GameType.INDOOR, "Test League Bis", "");
+        storedLeaguesService.createAndSaveLeagueFrom(selectedLeague1);
+        storedLeaguesService.createAndSaveLeagueFrom(selectedLeague2);
     }
 
     @Test

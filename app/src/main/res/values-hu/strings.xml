@@ -56,8 +56,8 @@
     <string name="confirm_game_setup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="gender_description">Nem</string>
     <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
-    <string name="league_name_hint">Bajnokság / torna neve (opcionális)</string>
-    <string name="division_name_hint">Divízió neve (opcionális)</string>
+    <string name="league_name">Bajnokság / torna neve (opcionális)</string>
+    <string name="division_name">Divízió neve (opcionális)</string>
     <string name="misc_tab">Egyéb</string>
     <string name="rules_tab">Szabályok</string>
     <string name="teams_tab">Csapatok</string>

@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,23 +18,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
@@ -109,6 +104,10 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         final AutoCompleteTextView divisionNameInput = findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
+        divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
+            mGameDescription.setDivisionName((String) divisionNameInput.getAdapter().getItem(index));
+            computeItemsVisibility();
+        });
         divisionNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -116,7 +115,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division");
-                mGameDescription.setDivisionName(s.toString());
+                mGameDescription.setDivisionName(s.toString().trim());
+                ((TextInputLayout)findViewById(R.id.division_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                computeItemsVisibility();
             }
 
             @Override
@@ -131,11 +132,11 @@ public class ScheduledGameActivity extends AppCompatActivity {
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueDescription leagueDescription = (ApiLeagueDescription) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
-            mGameDescription.setLeagueId(leagueDescription.getId());
+            mGameDescription.setId(leagueDescription.getId());
             mGameDescription.setLeagueName(leagueDescription.getName());
             divisionNameInput.setText("");
             divisionNameInput.setAdapter(new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
-            mGameDescription.setDivisionName("");
+            computeItemsVisibility();
         });
 
         leagueNameInput.addTextChangedListener(new TextWatcher() {
@@ -145,10 +146,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update league");
-                // TODO check if triggered when autocomplete
-                mGameDescription.setLeagueId(UUID.randomUUID().toString());
-                mGameDescription.setLeagueName(s.toString());
-                divisionNameInput.setAdapter(null);
+                mGameDescription.setLeagueName(s.toString().trim());
+                findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+                computeItemsVisibility();
             }
 
             @Override
@@ -253,14 +253,12 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(Tags.SETUP_UI, "Update referee");
                 ApiFriend referee = refereeAdapter.getItem(position);
-                mGameDescription.setRefereedBy(referee.getId());
-                mGameDescription.setRefereeName(referee.getPseudo());
+                updateReferee(referee);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mGameDescription.setRefereedBy(Authentication.VBR_USER_ID);
-                mGameDescription.setRefereeName("");
+                updateReferee(null);
             }
         });
 
@@ -367,6 +365,12 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private void updateRules(ApiRulesDescription rules) {
         mGameDescription.setRulesId(rules == null ? null : rules.getId());
         mGameDescription.setRulesName(rules == null ? "" : rules.getName());
+        computeItemsVisibility();
+    }
+
+    private void updateReferee(ApiFriend referee) {
+        mGameDescription.setRefereedBy(referee == null ? Authentication.VBR_USER_ID : referee.getId());
+        mGameDescription.setRefereeName(referee == null ? "" : referee.getPseudo());
         computeItemsVisibility();
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/default_margin_size"
@@ -7,38 +8,41 @@
               android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
-            android:id="@+id/league_name_input_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_clear"
-            android:ems="10"
-            android:hint="@string/league_name_hint"
-            android:imeOptions="actionNext"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size" />
+                android:id="@+id/league_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_clear"
+                android:ems="10"
+                android:hint="@string/league_name"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
-            android:id="@+id/division_name_input_text"
+            android:id="@+id/division_name_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_clear"
-            android:ems="10"
-            android:hint="@string/division_name_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size" />
+            android:visibility="gone"
+            app:errorTextAppearance="@style/ErrorText">
+
+        <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
+                android:id="@+id/division_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_clear"
+                android:ems="10"
+                android:hint="@string/division_name"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

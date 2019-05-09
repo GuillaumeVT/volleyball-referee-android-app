@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Stimmen Sie diesen Spieleinstellungen zu?</string>
     <string name="gender_description">Geschlecht</string>
     <string name="match_duration_text">Spieldauer auswählen</string>
-    <string name="league_name_hint">Liga- / Wettbewerbsbezeichnung (optional)</string>
-    <string name="division_name_hint">Spielklasse- / Gruppenbezeichnung (optional)</string>
+    <string name="league_name">Liga- / Wettbewerbsbezeichnung (optional)</string>
+    <string name="division_name">Spielklasse- / Gruppenbezeichnung (optional)</string>
     <string name="rules_tab">Regeln</string>
     <string name="teams_tab">Mannschaften</string>
     <string name="misc_tab">Sonstiges</string>

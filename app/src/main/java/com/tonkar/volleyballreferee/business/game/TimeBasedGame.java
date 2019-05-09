@@ -30,55 +30,51 @@ import java.util.*;
 public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @SerializedName("id")
-    private       String         mId;
+    private       String            mId;
     @SerializedName("createdBy")
-    private       String         mCreatedBy;
+    private       String            mCreatedBy;
     @SerializedName("createdAt")
-    private       long           mCreatedAt;
+    private       long              mCreatedAt;
     @SerializedName("updatedAt")
-    private       long           mUpdatedAt;
+    private       long              mUpdatedAt;
     @SerializedName("scheduledAt")
-    private       long           mScheduledAt;
+    private       long              mScheduledAt;
     @SerializedName("refereedBy")
-    private       String         mRefereedBy;
+    private       String            mRefereedBy;
     @SerializedName("refereeName")
-    private       String         mRefereeName;
+    private       String            mRefereeName;
     @SerializedName("gender")
-    private       GenderType     mGender;
+    private       GenderType        mGender;
     @SerializedName("gameStatus")
-    private       GameStatus     mGameStatus;
+    private       GameStatus        mGameStatus;
     @SerializedName("indexed")
-    private       boolean        mIndexed;
-    @SerializedName("leagueId")
-    private       String         mLeagueId;
-    @SerializedName("leagueName")
-    private       String         mLeagueName;
-    @SerializedName("divisionName")
-    private       String         mDivisionName;
+    private       boolean           mIndexed;
+    @SerializedName("league")
+    private final ApiSelectedLeague mLeague;
     @SerializedName("homeTeam")
-    private final TeamDefinition mHomeTeam;
+    private final TeamDefinition    mHomeTeam;
     @SerializedName("guestTeam")
-    private final TeamDefinition mGuestTeam;
+    private final TeamDefinition    mGuestTeam;
     @SerializedName("teamOnLeftSide")
-    private       TeamType       mTeamOnLeftSide;
+    private       TeamType          mTeamOnLeftSide;
     @SerializedName("teamOnRightSide")
-    private       TeamType       mTeamOnRightSide;
+    private       TeamType          mTeamOnRightSide;
     @SerializedName("homeTeamPoints")
-    private       int            mHomeTeamPoints;
+    private       int               mHomeTeamPoints;
     @SerializedName("guestTeamPoints")
-    private       int            mGuestTeamPoints;
+    private       int               mGuestTeamPoints;
     @SerializedName("pointsLadder")
-    private final List<TeamType> mPointsLadder;
+    private final List<TeamType>    mPointsLadder;
     @SerializedName("duration")
-    private       long           mDuration;
+    private       long              mDuration;
     @SerializedName("startTime")
-    private       long           mStartTime;
+    private       long              mStartTime;
     @SerializedName("endTime")
-    private       long           mEndTime;
+    private       long              mEndTime;
     @SerializedName("isStopped")
-    private       boolean        mIsStopped;
+    private       boolean           mIsStopped;
     @SerializedName("servingTeamAtStart")
-    private       TeamType       mServingTeamAtStart;
+    private       TeamType          mServingTeamAtStart;
 
     private transient java.util.Set<GeneralListener> mGeneralListeners;
     private transient java.util.Set<ScoreListener>   mScoreListeners;
@@ -96,9 +92,14 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
         mGender = GenderType.MIXED;
         mGameStatus = GameStatus.SCHEDULED;
         mIndexed = true;
-        mLeagueId = "";
-        mLeagueName = "";
-        mDivisionName = "";
+        mLeague = new ApiSelectedLeague();
+        mLeague.setId(UUID.randomUUID().toString());
+        mLeague.setCreatedBy(createdBy);
+        mLeague.setCreatedAt(createdAt);
+        mLeague.setUpdatedAt(createdAt);
+        mLeague.setKind(getKind());
+        mLeague.setName("");
+        mLeague.setDivision("");
         mHomeTeam = new EmptyTeamDefinition(UUID.randomUUID().toString(), createdBy, TeamType.HOME);
         mGuestTeam = new EmptyTeamDefinition(UUID.randomUUID().toString(), createdBy, TeamType.GUEST);
         mTeamOnLeftSide = TeamType.HOME;
@@ -229,36 +230,6 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public GameType getKind() {
         return GameType.TIME;
-    }
-
-    @Override
-    public String getLeagueId() {
-        return mLeagueId;
-    }
-
-    @Override
-    public void setLeagueId(String id) {
-        mLeagueId = id;
-    }
-
-    @Override
-    public String getLeagueName() {
-        return mLeagueName;
-    }
-
-    @Override
-    public void setLeagueName(String name) {
-        mLeagueName = name;
-    }
-
-    @Override
-    public String getDivisionName() {
-        return mDivisionName;
-    }
-
-    @Override
-    public void setDivisionName(String name) {
-        mDivisionName = name;
     }
 
     @Override
@@ -669,6 +640,11 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
     @Override
     public Rules getRules() {
         return new Rules();
+    }
+
+    @Override
+    public ApiSelectedLeague getLeague() {
+        return mLeague;
     }
 
     @Override

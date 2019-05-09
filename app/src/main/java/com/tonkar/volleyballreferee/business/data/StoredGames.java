@@ -310,9 +310,11 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         mStoredGame.setUsage(mGameService.getUsage());
         mStoredGame.setStatus(mGameService.getMatchStatus());
         mStoredGame.setIndexed(mGameService.isIndexed());
-        mStoredGame.setLeagueId(mGameService.getLeagueId());
-        mStoredGame.setLeagueName(mGameService.getLeagueName());
-        mStoredGame.setDivisionName(mGameService.getDivisionName());
+        if (mGameService.getLeague().getName().length() > 1 && mStoredGame.getLeague().getDivision().length() > 1) {
+            mStoredGame.setLeague(mGameService.getLeague());
+        } else {
+            mStoredGame.setLeague(null);
+        }
 
         ApiTeam homeTeam = mStoredGame.getTeam(TeamType.HOME);
         homeTeam.setId(mGameService.getTeamId(TeamType.HOME));
@@ -516,8 +518,13 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
             gameEntity.setGender(apiGame.getGender());
             gameEntity.setSynced(synced);
             gameEntity.setIndexed(apiGame.isIndexed());
-            gameEntity.setLeagueName(apiGame.getLeagueName());
-            gameEntity.setDivisionName(apiGame.getDivisionName());
+            if (apiGame.getLeague() == null) {
+                gameEntity.setLeagueName("");
+                gameEntity.setDivisionName("");
+            } else {
+                gameEntity.setLeagueName(apiGame.getLeague().getName());
+                gameEntity.setDivisionName(apiGame.getLeague().getDivision());
+            }
             gameEntity.setHomeTeamName(apiGame.getHomeTeam().getName());
             gameEntity.setGuestTeamName(apiGame.getGuestTeam().getName());
             gameEntity.setHomeSets(apiGame.getHomeSets());

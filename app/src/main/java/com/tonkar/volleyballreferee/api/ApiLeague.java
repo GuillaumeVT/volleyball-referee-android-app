@@ -38,4 +38,15 @@ public class ApiLeague {
         divisions = new ArrayList<>();
     }
 
+    public void setAll(ApiSelectedLeague league) {
+        if (league != null) {
+            setId(league.getId());
+            setCreatedBy(league.getCreatedBy());
+            setCreatedAt(league.getCreatedAt());
+            setUpdatedAt(league.getUpdatedAt());
+            setKind(league.getKind());
+            setName(league.getName());
+            getDivisions().add(league.getDivision());
+        }
+    }
 }

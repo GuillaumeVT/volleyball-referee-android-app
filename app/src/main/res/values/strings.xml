@@ -42,8 +42,8 @@
     <!-- User activity -->
     <string name="facebook_app_id" translatable="false">2086514551632301</string>
     <string name="server_client_id" translatable="false">802590775795-kdff0cnflla62jr2dj0pleqbiv05q97l.apps.googleusercontent.com</string>
-    <string name="user_sign_in_why_title">Why should I sign in?</string>
-    <string name="user_sign_in_why_message">If you stream your games online, you may be interested in signing in.\n\nBy signing in, you will gain full control of your games on https://www.volleyball-referee.com/user\n\nFrom this page, you may create and manage your own rules, teams, games and even tournaments. The scheduled games can then be refereed on your App or on someone else\'s App by providing the game unique code to the referee.</string>
+    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
+    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
     <string name="user_sign_in_privacy_title">Is it safe?</string>
     <string name="user_sign_in_privacy_message">Yes. When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
     <string name="user_sign_in_google">Sign in with Google</string>
@@ -76,13 +76,14 @@
     <string name="confirm_game_setup_question">Do you confirm this setup?</string>
     <string name="gender_description">Gender</string>
     <string name="match_duration_text">Select the match duration</string>
-    <string name="league_name_hint">League / tournament name (optional)</string>
-    <string name="division_name_hint">Division / pool name (optional)</string>
+    <string name="league_name">League / tournament name</string>
+    <string name="division_name">Division / pool name</string>
     <string name="misc_tab">Misc.</string>
     <string name="rules_tab">Rules</string>
     <string name="teams_tab">Teams</string>
     <string name="referee">Referee</string>
     <string name="leave_game_setup_question">This match setup will be lost. Leave anyway?</string>
+    <string name="must_provide_value">Value must not be empty</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>

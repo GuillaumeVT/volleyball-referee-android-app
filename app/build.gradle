@@ -20,13 +20,15 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            buildConfigField "String", "SERVER_ADDRESS", "\"http://192.168.56.101:8080\""
+            buildConfigField "String", "SERVER_ADDRESS", "\"http://10.0.2.2:8080\""
+            buildConfigField "String", "SIGN_UP_KEY", "\"161adaea-90a1-46b7-be28-b27c0837aea8\""
         }
         release {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "SERVER_ADDRESS", "\"https://www.volleyball-referee.com\""
+            buildConfigField "String", "SIGN_UP_KEY", "\"d14e2e45-0475-43ac-b6e4-56aae0e383fc\""
         }
     }
     compileOptions {

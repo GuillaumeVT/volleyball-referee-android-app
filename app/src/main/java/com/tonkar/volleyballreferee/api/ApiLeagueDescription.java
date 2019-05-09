@@ -5,10 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class ApiLeagueDescription {
 
     @PrimaryKey
@@ -48,4 +49,14 @@ public class ApiLeagueDescription {
         name = "";
     }
 
+    public void setAll(ApiLeagueDescription league) {
+        if (league != null) {
+            setId(league.getId());
+            setCreatedBy(league.getCreatedBy());
+            setCreatedAt(league.getCreatedAt());
+            setUpdatedAt(league.getUpdatedAt());
+            setKind(league.getKind());
+            setName(league.getName());
+        }
+    }
 }

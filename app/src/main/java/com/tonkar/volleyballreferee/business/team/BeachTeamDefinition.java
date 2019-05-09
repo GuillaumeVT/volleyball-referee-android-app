@@ -17,6 +17,7 @@ public class BeachTeamDefinition extends TeamDefinition {
 
         addPlayer(1);
         addPlayer(2);
+        setCaptain(1);
     }
 
     // For GSON Deserialization

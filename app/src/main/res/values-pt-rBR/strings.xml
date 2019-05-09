@@ -55,8 +55,8 @@
     <string name="confirm_game_setup_question">Você confirma essa seleção?</string>
     <string name="gender_description">Gênero</string>
     <string name="match_duration_text">Escolha a duração da partida</string>
-    <string name="league_name_hint">Nome da Competição (opcional)</string>
-    <string name="division_name_hint">Nome do Grupo / Divisão (opcional)</string>
+    <string name="league_name">Nome da Competição (opcional)</string>
+    <string name="division_name">Nome do Grupo / Divisão (opcional)</string>
     <string name="misc_tab">Diversos</string>
     <string name="rules_tab">Regras</string>
     <string name="teams_tab">Equipes</string>

@@ -47,9 +47,7 @@ public class GameFactory {
                         storedGameService.getCreatedAt(), storedGameService.getScheduledAt(), storedGameService.getRules());
                 indoorGame.setUsage(storedGameService.getUsage());
                 indoorGame.setIndexed(storedGameService.isIndexed());
-                indoorGame.setLeagueId(storedGameService.getLeagueId());
-                indoorGame.setLeagueName(storedGameService.getLeagueName());
-                indoorGame.setDivisionName(storedGameService.getDivisionName());
+                indoorGame.getLeague().setAll(storedGameService.getLeague());
                 indoorGame.restoreTeams(storedGameService);
                 gameService = indoorGame;
                 break;
@@ -57,9 +55,7 @@ public class GameFactory {
                 BeachGame beachGame = createBeachGame(storedGameService.getId(), storedGameService.getCreatedBy(), storedGameService.getRefereeName(),
                         storedGameService.getCreatedAt(), storedGameService.getScheduledAt(), storedGameService.getRules());
                 beachGame.setIndexed(storedGameService.isIndexed());
-                beachGame.setLeagueId(storedGameService.getLeagueId());
-                beachGame.setLeagueName(storedGameService.getLeagueName());
-                beachGame.setDivisionName(storedGameService.getDivisionName());
+                beachGame.getLeague().setAll(storedGameService.getLeague());
                 beachGame.restoreTeams(storedGameService);
                 gameService = beachGame;
                 break;
@@ -68,9 +64,7 @@ public class GameFactory {
                         storedGameService.getCreatedAt(), storedGameService.getScheduledAt(), storedGameService.getRules());
                 indoor4x4Game.setUsage(storedGameService.getUsage());
                 indoor4x4Game.setIndexed(storedGameService.isIndexed());
-                indoor4x4Game.setLeagueId(storedGameService.getLeagueId());
-                indoor4x4Game.setLeagueName(storedGameService.getLeagueName());
-                indoor4x4Game.setDivisionName(storedGameService.getDivisionName());
+                indoor4x4Game.getLeague().setAll(storedGameService.getLeague());
                 indoor4x4Game.restoreTeams(storedGameService);
                 gameService = indoor4x4Game;
                 break;

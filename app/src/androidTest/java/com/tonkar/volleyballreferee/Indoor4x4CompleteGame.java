@@ -9,11 +9,16 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.team.PositionType;
@@ -61,9 +66,8 @@ public class Indoor4x4CompleteGame {
     private void defineTeams(Indoor4x4Game indoor4x4Game) {
         indoor4x4Game.setGender(GenderType.GENTS);
 
-        indoor4x4Game.setLeagueId(UUID.randomUUID().toString());
-        indoor4x4Game.setLeagueName("4x4");
-        indoor4x4Game.setDivisionName("Division 1");
+        indoor4x4Game.getLeague().setName("4x4");
+        indoor4x4Game.getLeague().setDivision("Division 1");
 
         indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");
         indoor4x4Game.setTeamName(TeamType.GUEST, "Guest Team");
@@ -79,6 +83,13 @@ public class Indoor4x4CompleteGame {
         indoor4x4Game.setCaptain(TeamType.GUEST, 2);
 
         indoor4x4Game.startMatch();
+
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+        storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR_4X4, indoor4x4Game, TeamType.HOME);
+        storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR_4X4, indoor4x4Game, TeamType.GUEST);
+
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+        storedLeaguesService.createAndSaveLeagueFrom(indoor4x4Game.getLeague());
 
         mStoredGamesService = new StoredGames(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(indoor4x4Game);

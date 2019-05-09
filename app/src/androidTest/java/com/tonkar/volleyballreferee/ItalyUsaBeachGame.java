@@ -10,10 +10,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
+import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.business.game.BeachGame;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -91,14 +96,20 @@ public class ItalyUsaBeachGame {
 
     private void defineTeams(BeachGame beachGame) {
         beachGame.setGender(GenderType.GENTS);
-        beachGame.setLeagueId(UUID.randomUUID().toString());
-        beachGame.setLeagueName("FIVB Beach Volleyball World Championship 2017");
-        beachGame.setDivisionName("Final");
+        beachGame.getLeague().setName("FIVB Beach Volleyball World Championship 2017");
+        beachGame.getLeague().setDivision("Final");
         beachGame.setTeamName(TeamType.HOME, "USA");
         beachGame.setTeamName(TeamType.GUEST, "ITALY");
         beachGame.setTeamColor(TeamType.HOME, Color.parseColor("#bc0019"));
         beachGame.setTeamColor(TeamType.GUEST, Color.parseColor("#2980b9"));
         beachGame.startMatch();
+
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+        storedTeamsService.createAndSaveTeamFrom(GameType.BEACH, beachGame, TeamType.HOME);
+        storedTeamsService.createAndSaveTeamFrom(GameType.BEACH, beachGame, TeamType.GUEST);
+
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+        storedLeaguesService.createAndSaveLeagueFrom(beachGame.getLeague());
 
         mStoredGamesService = new StoredGames(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(beachGame);

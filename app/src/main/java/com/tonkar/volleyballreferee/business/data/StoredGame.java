@@ -22,6 +22,7 @@ public class StoredGame extends ApiGame implements StoredGameService {
         setHomeTeam(new ApiTeam());
         setGuestTeam(new ApiTeam());
         setRules(new ApiRules());
+        setLeague(new ApiSelectedLeague());
     }
 
     @Override
@@ -119,10 +120,6 @@ public class StoredGame extends ApiGame implements StoredGameService {
         Rules rules = new Rules();
         rules.setAll(super.getRules());
         return rules;
-    }
-
-    public void setRules(Rules rules) {
-        super.setRules(rules);
     }
 
     @Override

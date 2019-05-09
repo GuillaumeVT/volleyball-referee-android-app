@@ -12,12 +12,14 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
 import com.tonkar.volleyballreferee.business.data.StoredTeams;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -108,7 +110,8 @@ public class GameSetupActivity extends AppCompatActivity {
             if (mGameService.getTeamName(TeamType.HOME).length() < 1 || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getTeamName(TeamType.GUEST).length() < 1 || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getCaptain(TeamType.HOME) < 1 || mGameService.getCaptain(TeamType.GUEST) < 1
-                    || mGameService.getRules().getName().length() < 1) {
+                    || mGameService.getRules().getName().length() < 1
+                    || (mGameService.getLeague().getName().length() > 0 && mGameService.getLeague().getDivision().length() < 1)) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mStartItem.setVisible(false);
             } else {
@@ -126,6 +129,7 @@ public class GameSetupActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             saveTeams();
             saveRules();
+            saveLeague();
             mGameService.startMatch();
             StoredGamesService storedGamesService = new StoredGames(this);
             storedGamesService.createCurrentGame(mGameService);
@@ -150,8 +154,13 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     private void saveRules() {
-        StoredRulesService rulesService = new StoredRules(this);
-        rulesService.createAndSaveRulesFrom(mGameService.getRules());
+        StoredRulesService storedRulesService = new StoredRules(this);
+        storedRulesService.createAndSaveRulesFrom(mGameService.getRules());
+    }
+
+    private void saveLeague() {
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(this);
+        storedLeaguesService.createAndSaveLeagueFrom(mGameService.getLeague());
     }
 
     private void cancelSetup() {

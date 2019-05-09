@@ -54,30 +54,25 @@ public class StoredLeagues implements StoredLeaguesService {
     }
 
     @Override
-    public void createAndSaveLeagueFrom(GameType kind, String leagueName, String divisionName) {
-        long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
+    public void createAndSaveLeagueFrom(ApiSelectedLeague selectedLeague) {
+        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1) {
+            long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
-        if (leagueName.length() > 1
-                && AppDatabase.getInstance(mContext).leagueDao().countByNameAndKind(leagueName, kind) == 0) {
-            ApiLeague league = new ApiLeague();
-            league.setId(UUID.randomUUID().toString());
-            league.setCreatedBy(PrefUtils.getAuthentication(mContext).getUserId());
-            league.setCreatedAt(utcTime);
-            league.setUpdatedAt(utcTime);
-            league.setKind(kind);
-            league.setName(leagueName);
-            league.setDivisions(new ArrayList<>());
-            if (divisionName != null && divisionName.trim().length() > 1) {
-                league.getDivisions().add(divisionName);
+            int leaguesSameName = AppDatabase.getInstance(mContext).leagueDao().countByNameAndKind(selectedLeague.getName(), selectedLeague.getKind());
+            int leaguesSameId = AppDatabase.getInstance(mContext).leagueDao().countById(selectedLeague.getId());
+
+            if (leaguesSameName == 0 && leaguesSameId == 0) {
+                ApiLeague league = new ApiLeague();
+                league.setAll(selectedLeague);
+                saveLeague(league);
+            } else if (leaguesSameName == 1 && leaguesSameId == 1) {
+                ApiLeague league = getLeague(selectedLeague.getId());
+                if (!league.getDivisions().contains(selectedLeague.getDivision())) {
+                    league.setUpdatedAt(utcTime);
+                    league.getDivisions().add(selectedLeague.getDivision());
+                    insertLeagueIntoDb(league, false, false);
+                }
             }
-            saveLeague(league);
-        } else {
-            ApiLeague league = getLeague(kind, leagueName);
-            league.setUpdatedAt(utcTime);
-            if (divisionName != null && divisionName.length() > 1 && !league.getDivisions().contains(divisionName)) {
-                league.getDivisions().add(divisionName);
-            }
-            insertLeagueIntoDb(league, false, false);
         }
     }
 

@@ -34,7 +34,7 @@ public class StoredUser implements StoredUserService {
             user.setFriends(new ArrayList<>());
             final byte[] bytes = writeUser(user).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.USER_API_URL, bytes, PrefUtils.getAuthentication(mContext),
+            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.USER_API_URL, bytes,
                     response -> {
                         PrefUtils.storeUserPseudo(mContext, pseudo);
                         listener.onUserCreated();

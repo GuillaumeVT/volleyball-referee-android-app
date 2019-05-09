@@ -49,8 +49,8 @@
     <string name="confirm_game_setup_question">هل أنت موافق على هذه الإعدادات</string>
     <string name="gender_description">الجنس</string>
     <string name="match_duration_text">حدد مدة المباراة</string>
-    <string name="league_name_hint">اسم الدوري / البطولة (اختياري)</string>
-    <string name="division_name_hint">اسم القسم / التجمع (اختياري)</string>
+    <string name="league_name">اسم الدوري / البطولة (اختياري)</string>
+    <string name="division_name">اسم القسم / التجمع (اختياري)</string>
     <string name="misc_tab">متنوع</string>
     <string name="rules_tab">القوانين</string>
     <string name="teams_tab">الفرق</string>

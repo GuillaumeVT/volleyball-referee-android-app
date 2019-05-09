@@ -42,4 +42,7 @@ public interface TeamDao {
 
     @Query("SELECT COUNT(*) FROM teams WHERE name = :name AND gender = :gender AND kind = :kind")
     int countByNameAndGenderAndKind(String name, GenderType gender, GameType kind);
+
+    @Query("SELECT COUNT(*) FROM rules WHERE id = :id")
+    int countById(String id);
 }

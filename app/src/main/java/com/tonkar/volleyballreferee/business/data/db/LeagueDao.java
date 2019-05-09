@@ -39,4 +39,7 @@ public interface LeagueDao {
     @Query("SELECT COUNT(*) FROM leagues WHERE name = :name AND kind = :kind")
     int countByNameAndKind(String name, GameType kind);
 
+    @Query("SELECT COUNT(*) FROM rules WHERE id = :id")
+    int countById(String id);
+
 }

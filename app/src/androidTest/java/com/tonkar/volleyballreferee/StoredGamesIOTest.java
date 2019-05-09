@@ -83,9 +83,8 @@ public class StoredGamesIOTest {
         game.setKind(GameType.INDOOR);
         game.setGender(GenderType.LADIES);
         game.setRules(Rules.officialIndoorRules());
-        game.setLeagueId(UUID.randomUUID().toString());
-        game.setLeagueName("VBR League");
-        game.setDivisionName("VBR Division");
+        game.getLeague().setName("VBR League");
+        game.getLeague().setDivision("VBR Division");
         game.setRefereedBy(Authentication.VBR_USER_ID);
         game.setRefereeName("VBR");
         game.setMatchStatus(GameStatus.LIVE);
@@ -181,9 +180,8 @@ public class StoredGamesIOTest {
         game.setKind(GameType.BEACH);
         game.setGender(GenderType.GENTS);
         game.setRules(Rules.officialBeachRules());
-        game.setLeagueId(UUID.randomUUID().toString());
-        game.setLeagueName("VBR Beach League");
-        game.setDivisionName("VBR Beach Division");
+        game.getLeague().setName("VBR Beach League");
+        game.getLeague().setDivision("VBR Beach Division");
         game.setRefereedBy(Authentication.VBR_USER_ID);
         game.setRefereeName("VBR");
         game.setMatchStatus(GameStatus.SCHEDULED);
