@@ -22,8 +22,7 @@
                     android:id="@+id/home_team_name_input_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    app:errorTextAppearance="@style/ErrorText">
+                    android:layout_weight="3">
 
                 <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                         android:id="@+id/home_team_name_input_text"
@@ -111,8 +110,7 @@
                     android:id="@+id/guest_team_name_input_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    app:errorTextAppearance="@style/ErrorText">
+                    android:layout_weight="3">
 
                 <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                         android:id="@+id/guest_team_name_input_text"
@@ -247,8 +245,7 @@
                 android:id="@+id/division_name_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:errorTextAppearance="@style/ErrorText">
+                android:visibility="gone">
 
             <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                     android:id="@+id/division_name_input_text"

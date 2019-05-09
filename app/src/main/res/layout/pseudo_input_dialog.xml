@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
@@ -10,8 +9,7 @@
             android:id="@+id/pseudo_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            app:errorTextAppearance="@style/ErrorText">
+            android:layout_margin="@dimen/big_margin_size">
 
         <com.tonkar.volleyballreferee.ui.util.ClearableTextInputEditText
                 android:id="@+id/pseudo_input_text"

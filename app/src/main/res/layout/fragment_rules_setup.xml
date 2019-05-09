@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rules_setup_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -28,8 +27,7 @@
                 android:id="@+id/rules_name_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/big_margin_size"
-                app:errorTextAppearance="@style/ErrorText">
+                android:layout_margin="@dimen/big_margin_size">
 
             <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
                     android:id="@+id/rules_name_input_text"
