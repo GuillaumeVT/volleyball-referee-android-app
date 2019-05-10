@@ -243,7 +243,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     private void startGameWithDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(R.string.start_match_description).setMessage(getResources().getString(R.string.confirm_start_match_question));
+        builder.setTitle(R.string.start_match_description).setMessage(getString(R.string.confirm_start_match_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             Log.i(Tags.GAME_UI, "User accepts to start");
             mGameService.start();
@@ -257,7 +257,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     private void stopGameWithDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(R.string.stop_match_description).setMessage(getResources().getString(R.string.confirm_stop_match_question));
+        builder.setTitle(R.string.stop_match_description).setMessage(getString(R.string.confirm_stop_match_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             Log.i(Tags.GAME_UI, "User accepts to stop");
             mGameService.stop();
@@ -298,7 +298,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         UiUtils.animateBounce(this, mRightTeamScoreButton);
 
         if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            UiUtils.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -339,7 +339,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     public void onMatchCompleted(final TeamType winner) {
-        UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, String.format(getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
         UiUtils.navigateToStoredGameAfterDelay(this, 5000L);
     }
 
@@ -393,9 +393,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public void onMatchIndexed(boolean indexed) {
         if (indexed) {
-            UiUtils.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
         } else {
-            UiUtils.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
         invalidateOptionsMenu();
     }

@@ -90,7 +90,7 @@ public class StoredRulesActivity extends AppCompatActivity {
         Log.i(Tags.STORED_RULES, "Save rules");
         StoredRulesService storedRulesService = new StoredRules(this);
         storedRulesService.saveRules(mRules);
-        UiUtils.makeText(this, getResources().getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -100,11 +100,11 @@ public class StoredRulesActivity extends AppCompatActivity {
     private void deleteRules() {
         Log.i(Tags.STORED_RULES, "Delete rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_rules_question));
+        builder.setTitle(getString(R.string.delete_rules)).setMessage(getString(R.string.delete_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             StoredRulesService storedRulesService = new StoredRules(this);
             storedRulesService.deleteRules(mRules.getId());
-            UiUtils.makeText(StoredRulesActivity.this, getResources().getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredRulesActivity.this, getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -118,7 +118,7 @@ public class StoredRulesActivity extends AppCompatActivity {
 
     private void cancelRules() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.leave_rules_creation_title)).setMessage(getResources().getString(R.string.leave_rules_creation_question));
+        builder.setTitle(getString(R.string.leave_rules_creation_title)).setMessage(getString(R.string.leave_rules_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

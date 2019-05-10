@@ -163,7 +163,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     @Override
     public void onError(int httpCode) {
         mSyncLayout.setRefreshing(false);
-        UiUtils.makeErrorText(this, getResources().getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(this, getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
     }
 
     public void scheduleIndoorGame(View view) {

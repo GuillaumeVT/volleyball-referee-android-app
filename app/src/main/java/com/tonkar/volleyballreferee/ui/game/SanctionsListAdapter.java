@@ -108,7 +108,7 @@ public class SanctionsListAdapter extends BaseAdapter {
             viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", sanction.getGuestPoints(), sanction.getHomePoints()));
         }
         if (mSetIndex < 0) {
-            viewHolder.setText.setText(String.format(mContext.getResources().getString(R.string.set_number), (sanction.getSet()+1)));
+            viewHolder.setText.setText(String.format(mContext.getString(R.string.set_number), (sanction.getSet()+1)));
         } else {
             viewHolder.setText.setVisibility(View.GONE);
         }
@@ -121,7 +121,7 @@ public class SanctionsListAdapter extends BaseAdapter {
             if (sanction.isPlayer()) {
                 viewHolder.playerText.setText(UiUtils.formatNumberFromLocale(sanction.getNum()));
             } else if (sanction.isCoach()) {
-                viewHolder.playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
+                viewHolder.playerText.setText(mContext.getString(R.string.coach_abbreviation));
             }
 
             UiUtils.styleTeamText(mContext, mTeamService, mTeamType, sanction.getNum(), viewHolder.playerText);

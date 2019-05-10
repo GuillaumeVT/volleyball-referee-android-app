@@ -5,22 +5,23 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import com.tonkar.volleyballreferee.api.ApiFriendRequest;
 import com.tonkar.volleyballreferee.api.ApiUser;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredUser;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncUserRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.net.HttpURLConnection;
-import java.util.List;
+import java.util.Locale;
 
 public class PseudoInputDialogFragment extends DialogFragment {
 
@@ -51,18 +52,17 @@ public class PseudoInputDialogFragment extends DialogFragment {
                 String pseudo = editText.getText().toString().trim();
                 TextInputLayout editTextLayout = dialog.findViewById(R.id.pseudo_input_layout);
                 StoredUserService storedUserService = new StoredUser(getContext());
-                if (pseudo.length() >= 3) {
+                if (pseudo.length() > 2) {
                     storedUserService.createUser(authentication.getUserId(), pseudo, new AsyncUserRequestListener() {
                         @Override
-                        public void onUserCreated() {
+                        public void onUserCreated(ApiUser user) {
                             dialog.dismiss();
+                            UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
+                            UiUtils.navigateToHome(getActivity());
                         }
 
                         @Override
                         public void onUserReceived(ApiUser user) {}
-
-                        @Override
-                        public void onFriendRequestsReceived(List<ApiFriendRequest> friendRequests) {}
 
                         @Override
                         public void onError(int httpCode) {

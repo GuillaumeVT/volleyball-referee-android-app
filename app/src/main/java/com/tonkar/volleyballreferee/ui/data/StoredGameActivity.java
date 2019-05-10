@@ -97,7 +97,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
                 @Override
                 public void onSynchronizationFailed() {
-                    UiUtils.makeErrorText(StoredGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                    UiUtils.makeErrorText(StoredGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
                 }
             });
             invalidateOptionsMenu();
@@ -108,7 +108,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         Log.i(Tags.STORED_GAMES, "Generate score sheet");
         File file = ScoreSheetWriter.writeStoredGame(this, mStoredGamesService.getGame(mGameId));
         if (file == null) {
-            UiUtils.makeErrorText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+            UiUtils.makeErrorText(this, getString(R.string.report_exception), Toast.LENGTH_LONG).show();
         } else {
             Uri uri = FileProvider.getUriForFile(this, "com.tonkar.volleyballreferee.fileprovider", file);
             grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -122,7 +122,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Log.e(Tags.STORED_GAMES, "Exception while showing report", e);
-                UiUtils.makeErrorText(this, getResources().getString(R.string.report_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeErrorText(this, getString(R.string.report_exception), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -130,10 +130,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     private void deleteGame() {
         Log.i(Tags.STORED_GAMES, "Delete game");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.delete_game)).setMessage(getResources().getString(R.string.delete_game_question));
+        builder.setTitle(getString(R.string.delete_game)).setMessage(getString(R.string.delete_game_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredGamesService.deleteGame(mGameId);
-            UiUtils.makeText(StoredGameActivity.this, getResources().getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredGameActivity.this, getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(StoredGameActivity.this, StoredGamesListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

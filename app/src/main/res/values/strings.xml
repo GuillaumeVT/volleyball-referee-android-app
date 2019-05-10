@@ -23,6 +23,7 @@
     <string name="available_games">Scheduled &amp; live matches</string>
     <string name="teams">Teams</string>
     <string name="rules">Rules</string>
+    <string name="colleagues">Colleagues</string>
     <string name="live_games_vbr_com">Live matches on website</string>
     <string name="my_account">My account</string>
     <string name="news">News</string>
@@ -60,6 +61,14 @@
     <string name="user_exists_error">This pseudonym already exists</string>
     <string name="user_creation_error">Error while creating the pseudonym</string>
     <string name="minimum_size_error">Must have at least %d characters</string>
+    <string name="search_colleague">Search colleague</string>
+    <string name="add_colleague">Add colleague</string>
+    <string name="received_colleague_request">You received a colleague request from %s</string>
+    <string name="sent_colleague_request">You sent a colleague request to %s</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="remove">Remove</string>
+    <string name="pending">Pending</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Setup game</string>
@@ -159,6 +168,7 @@
     <string name="pref_interactive_notification">Use interactive notifications</string>
 
     <string name="synchronize">Synchronize</string>
+    <string name="sync_succeeded_message">Data synchronization succeeded</string>
     <string name="sync_failed_message">Data synchronization failed</string>
 
     <!-- Stored games activity -->

@@ -26,13 +26,17 @@
                             android:icon="@drawable/ic_volleyball"
                             android:title="@string/completed_games"/>
                     <item
+                            android:id="@+id/action_stored_teams"
+                            android:icon="@drawable/ic_teams"
+                            android:title="@string/teams"/>
+                    <item
                             android:id="@+id/action_stored_rules"
                             android:icon="@drawable/ic_rules"
                             android:title="@string/rules"/>
                     <item
-                            android:id="@+id/action_stored_teams"
-                            android:icon="@drawable/ic_teams"
-                            android:title="@string/teams"/>
+                            android:id="@+id/action_colleagues"
+                            android:icon="@drawable/ic_colleagues"
+                            android:title="@string/colleagues"/>
                 </group>
             </menu>
         </item>

@@ -13,20 +13,18 @@ public interface StoredUserService {
 
     void syncUser();
 
-    void downloadFriendRequests(AsyncUserRequestListener listener);
+    void downloadFriendsAndRequests(AsyncFriendRequestListener listener);
 
     boolean hasFriends();
 
-    List<ApiFriend> listFriends();
-
     List<ApiFriend> listReferees();
 
-    void sendFriendRequest(String friendPseudo, DataSynchronizationListener listener);
+    void sendFriendRequest(String friendPseudo, AsyncFriendRequestListener listener);
 
-    void acceptFriendRequest(ApiFriendRequest friendRequest, DataSynchronizationListener listener);
+    void acceptFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener);
 
-    void rejectFriendRequest(ApiFriendRequest friendRequest, DataSynchronizationListener listener);
+    void rejectFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener);
 
-    void removeFriend(String friendId, DataSynchronizationListener listener);
+    void removeFriend(ApiFriend friend, AsyncFriendRequestListener listener);
 
 }

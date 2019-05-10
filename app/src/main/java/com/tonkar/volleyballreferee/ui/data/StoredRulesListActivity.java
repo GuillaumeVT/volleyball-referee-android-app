@@ -174,10 +174,10 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private void deleteAllRules() {
         Log.i(Tags.STORED_RULES, "Delete all rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.delete_rules)).setMessage(getResources().getString(R.string.delete_all_rules_question));
+        builder.setTitle(getString(R.string.delete_rules)).setMessage(getString(R.string.delete_all_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredRulesService.deleteAllRules();
-            UiUtils.makeText(StoredRulesListActivity.this, getResources().getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredRulesListActivity.this, getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(StoredRulesListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
@@ -229,7 +229,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeErrorText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
         mSyncLayout.setRefreshing(false);
     }
 }

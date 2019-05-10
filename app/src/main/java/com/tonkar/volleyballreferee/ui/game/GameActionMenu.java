@@ -161,7 +161,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
     private void tossACoin() {
         Log.i(Tags.GAME_UI, "Toss a coin");
-        final String tossResult = mRandom.nextBoolean() ? getResources().getString(R.string.toss_heads) : getResources().getString(R.string.toss_tails);
+        final String tossResult = mRandom.nextBoolean() ? getString(R.string.toss_heads) : getString(R.string.toss_tails);
         UiUtils.makeText(mActivity, tossResult, Toast.LENGTH_LONG).show();
         dismiss();
     }
@@ -170,7 +170,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
         Log.i(Tags.GAME_UI, "Reset current set");
         if (!mGameService.isMatchCompleted()) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.AppTheme_Dialog);
-            builder.setTitle(getResources().getString(R.string.reset_set)).setMessage(getResources().getString(R.string.reset_set_question));
+            builder.setTitle(getString(R.string.reset_set)).setMessage(getString(R.string.reset_set_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                 mGameService.resetCurrentSet();
                 mActivity.recreate();

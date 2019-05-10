@@ -148,27 +148,27 @@ public abstract class SanctionSelectionDialog {
 
             switch (mSanctionTypes.get(index)) {
                 case YELLOW:
-                    sanctionText.setText(mContext.getResources().getString(R.string.yellow_card));
+                    sanctionText.setText(mContext.getString(R.string.yellow_card));
                     sanctionImage.setImageResource(R.drawable.yellow_card);
                     break;
                 case RED:
-                    sanctionText.setText(mContext.getResources().getString(R.string.red_card));
+                    sanctionText.setText(mContext.getString(R.string.red_card));
                     sanctionImage.setImageResource(R.drawable.red_card);
                     break;
                 case RED_EXPULSION:
-                    sanctionText.setText(mContext.getResources().getString(R.string.red_card_expulsion));
+                    sanctionText.setText(mContext.getString(R.string.red_card_expulsion));
                     sanctionImage.setImageResource(R.drawable.expulsion_card);
                     break;
                 case RED_DISQUALIFICATION:
-                    sanctionText.setText(mContext.getResources().getString(R.string.red_card_disqualification));
+                    sanctionText.setText(mContext.getString(R.string.red_card_disqualification));
                     sanctionImage.setImageResource(R.drawable.disqualification_card);
                     break;
                 case DELAY_WARNING:
-                    sanctionText.setText(mContext.getResources().getString(R.string.yellow_card));
+                    sanctionText.setText(mContext.getString(R.string.yellow_card));
                     sanctionImage.setImageResource(R.drawable.delay_warning);
                     break;
                 case DELAY_PENALTY:
-                    sanctionText.setText(mContext.getResources().getString(R.string.red_card));
+                    sanctionText.setText(mContext.getString(R.string.red_card));
                     sanctionImage.setImageResource(R.drawable.delay_penalty);
                     break;
             }
@@ -233,7 +233,7 @@ public abstract class SanctionSelectionDialog {
                 }
             } else {
                 player = 0;
-                button.setText(mContext.getResources().getString(R.string.coach_abbreviation));
+                button.setText(mContext.getString(R.string.coach_abbreviation));
                 button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
             }
 

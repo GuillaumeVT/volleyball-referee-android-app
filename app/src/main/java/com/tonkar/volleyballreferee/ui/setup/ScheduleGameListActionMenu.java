@@ -226,7 +226,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     @Override
     public void onError(int httpCode) {
-        UiUtils.makeErrorText(mActivity, getResources().getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(mActivity, getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
     }
 
 }

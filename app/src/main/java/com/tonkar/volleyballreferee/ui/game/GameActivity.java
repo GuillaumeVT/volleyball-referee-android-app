@@ -333,10 +333,10 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     private void increaseScoreWithDialog(final TeamType teamType) {
         if ((mGameService.isMatchPoint() || mGameService.isSetPoint()) && mGameService.getLeadingTeam().equals(teamType)) {
-            String title = mGameService.isMatchPoint() ? getResources().getString(R.string.match_point) : getResources().getString(R.string.set_point);
+            String title = mGameService.isMatchPoint() ? getString(R.string.match_point) : getString(R.string.set_point);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-            builder.setTitle(title).setMessage(getResources().getString(R.string.confirm_set_question));
+            builder.setTitle(title).setMessage(getString(R.string.confirm_set_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                 Log.i(Tags.GAME_UI, "User accepts the set point");
                 mGameService.addPoint(teamType);
@@ -352,7 +352,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private void callTimeoutWithDialog(final TeamType teamType) {
         if (mGameService.getRemainingTimeouts(teamType) > 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-            builder.setTitle(String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getResources().getString(R.string.timeout_question));
+            builder.setTitle(String.format(getString(R.string.timeout_title), mGameService.getTeamName(teamType))).setMessage(getString(R.string.timeout_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                 Log.i(Tags.GAME_UI, "User accepts the timeout");
                 mGameService.callTimeout(teamType);
@@ -361,12 +361,12 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
-            UiUtils.showNotification(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)));
+            UiUtils.showNotification(this, String.format(getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)));
         }
     }
 
     private void showSanctionDialog(final TeamType teamType) {
-        final String title = String.format(Locale.getDefault(), getResources().getString(R.string.sanction), mGameService.getTeamName(teamType));
+        final String title = String.format(Locale.getDefault(), getString(R.string.sanction), mGameService.getTeamName(teamType));
         SanctionSelectionDialog sanctionSelectionDialog = new SanctionSelectionDialog(getLayoutInflater(), this, title, mGameService, teamType) {
             @Override
             public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
@@ -423,10 +423,10 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         if (mGameService.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
             if (GameType.BEACH.equals(mGameService.getKind())) {
-                UiUtils.showNotification(this, getResources().getString(R.string.switch_sides));
+                UiUtils.showNotification(this, getString(R.string.switch_sides));
                 UiUtils.playNotificationSound(this);
             } else {
-                UiUtils.makeText(this, getResources().getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
+                UiUtils.makeText(this, getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -455,13 +455,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         mSetsText.setText(builder.toString().trim());
 
         if (mGameService.isMatchPoint()) {
-            String text = getResources().getString(R.string.match_point);
+            String text = getString(R.string.match_point);
             setActionBarTitle(text);
             if (mGameService.areNotificationsEnabled()) {
                 UiUtils.makeText(this, text, Toast.LENGTH_LONG).show();
             }
         } else if (mGameService.isSetPoint()) {
-            String text = getResources().getString(R.string.set_point);
+            String text = getString(R.string.set_point);
             setActionBarTitle(text);
             if (mGameService.areNotificationsEnabled()) {
                 UiUtils.makeText(this, text, Toast.LENGTH_LONG).show();
@@ -502,7 +502,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         disableView();
         deleteToolbarCountdown();
         deleteFragmentCountdown();
-        UiUtils.makeText(this, String.format(getResources().getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(this, String.format(getString(R.string.won_game), mGameService.getTeamName(winner)), Toast.LENGTH_LONG).show();
         UiUtils.navigateToStoredGameAfterDelay(this, 5000L);
     }
 
@@ -539,11 +539,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     public void onTimeout(TeamType teamType, int duration) {
         deleteToolbarCountdown();
         deleteFragmentCountdown();
-        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getResources().getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
+        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getString(R.string.timeout_title), mGameService.getTeamName(teamType)));
         timeoutFragment.show(getSupportFragmentManager(), "timeout");
 
         if (mGameService.getRemainingTimeouts(teamType) == 0) {
-            UiUtils.showNotification(this, String.format(getResources().getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)));
+            UiUtils.showNotification(this, String.format(getString(R.string.all_timeouts_called), mGameService.getTeamName(teamType)));
         }
     }
 
@@ -552,7 +552,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (mGameService.areNotificationsEnabled()) {
             deleteToolbarCountdown();
             deleteFragmentCountdown();
-            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.technical_timeout_title));
+            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getString(R.string.technical_timeout_title));
             timeoutFragment.show(getSupportFragmentManager(), "timeout");
         }
     }
@@ -562,7 +562,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (mGameService.areNotificationsEnabled()) {
             deleteToolbarCountdown();
             deleteFragmentCountdown();
-            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getResources().getString(R.string.game_interval_title));
+            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getString(R.string.game_interval_title));
             timeoutFragment.show(getSupportFragmentManager(), "timeout");
         }
     }
@@ -628,22 +628,22 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         switch (sanctionType) {
             case YELLOW:
-                sanctionText = getResources().getString(R.string.yellow_card);
+                sanctionText = getString(R.string.yellow_card);
                 break;
             case RED:
-                sanctionText = getResources().getString(R.string.red_card);
+                sanctionText = getString(R.string.red_card);
                 break;
             case RED_EXPULSION:
-                sanctionText = getResources().getString(R.string.red_card_expulsion);
+                sanctionText = getString(R.string.red_card_expulsion);
                 break;
             case RED_DISQUALIFICATION:
-                sanctionText = getResources().getString(R.string.red_card_disqualification);
+                sanctionText = getString(R.string.red_card_disqualification);
                 break;
             case DELAY_WARNING:
-                sanctionText = getResources().getString(R.string.yellow_card);
+                sanctionText = getString(R.string.yellow_card);
                 break;
             case DELAY_PENALTY:
-                sanctionText = getResources().getString(R.string.red_card);
+                sanctionText = getString(R.string.red_card);
                 break;
         }
 
@@ -722,9 +722,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     @Override
     public void onMatchIndexed(boolean indexed) {
         if (indexed) {
-            UiUtils.makeText(this, getResources().getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
         } else {
-            UiUtils.makeText(this, getResources().getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
     }
 

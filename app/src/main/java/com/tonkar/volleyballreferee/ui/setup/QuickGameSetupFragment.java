@@ -323,7 +323,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     private void selectTeamColor(final TeamType teamType) {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", teamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mGameService.getTeamColor(teamType)) {
             @Override
             public void onColorSelected(int selectedColor) {

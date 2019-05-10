@@ -23,6 +23,7 @@ import com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.StoredRulesListActivity;
 import com.tonkar.volleyballreferee.ui.data.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
+import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public abstract class NavigationActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
 
-        computeAvailableGamesItemVisibility(navigationView);
+        computeWebItemVisibility(navigationView);
         computePurchaseItemVisibility(navigationView.getMenu().findItem(R.id.action_purchase));
 
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -94,6 +95,12 @@ public abstract class NavigationActivity extends AppCompatActivity {
                             startActivity(intent);
                             UiUtils.animateForward(this);
                         }
+                        break;
+                    case R.id.action_colleagues:
+                        Log.i(Tags.STORED_USER, "Colleagues");
+                        intent = new Intent(this, ColleaguesListActivity.class);
+                        startActivity(intent);
+                        UiUtils.animateForward(this);
                         break;
                     case R.id.action_live_games_vbr_com:
                         Log.i(Tags.WEB, "Live games on VBR.com");
@@ -162,8 +169,10 @@ public abstract class NavigationActivity extends AppCompatActivity {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
-    private void computeAvailableGamesItemVisibility(NavigationView navigationView) {
-        navigationView.getMenu().findItem(R.id.action_available_games).setVisible(PrefUtils.canSync(this));
+    private void computeWebItemVisibility(NavigationView navigationView) {
+        boolean canSync = PrefUtils.canSync(this);
+        navigationView.getMenu().findItem(R.id.action_available_games).setVisible(canSync);
+        navigationView.getMenu().findItem(R.id.action_colleagues).setVisible(canSync);
     }
 
     protected void computePurchaseItemVisibility(MenuItem item) {

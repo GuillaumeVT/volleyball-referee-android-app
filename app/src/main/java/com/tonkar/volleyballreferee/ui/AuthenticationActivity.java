@@ -18,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiFriendRequest;
 import com.tonkar.volleyballreferee.api.ApiUser;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.api.Authentication;
@@ -183,7 +182,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
     private void signedOut(final boolean andSignInAgain) {
         PrefUtils.signOut(this);
         if (!andSignInAgain) {
-            UiUtils.makeText(this, getResources().getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(this, getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(this);
         }
     }
@@ -199,16 +198,13 @@ public abstract class AuthenticationActivity extends NavigationActivity {
             StoredUserService storedUserService = new StoredUser(this);
             storedUserService.downloadUser(new AsyncUserRequestListener() {
                 @Override
-                public void onUserCreated() {}
+                public void onUserCreated(ApiUser user) {}
 
                 @Override
                 public void onUserReceived(ApiUser user) {
                     UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
                     UiUtils.navigateToHome(AuthenticationActivity.this);
                 }
-
-                @Override
-                public void onFriendRequestsReceived(List<ApiFriendRequest> friendRequests) {}
 
                 @Override
                 public void onError(int httpCode) {
@@ -220,7 +216,7 @@ public abstract class AuthenticationActivity extends NavigationActivity {
                             dialogFragment.show(getSupportFragmentManager(), "pseudo_dialog");
                         }
                     } else {
-                        UiUtils.makeErrorText(AuthenticationActivity.this, getResources().getString(R.string.user_error), Toast.LENGTH_LONG).show();
+                        UiUtils.makeErrorText(AuthenticationActivity.this, getString(R.string.user_error), Toast.LENGTH_LONG).show();
                     }
                 }
             });

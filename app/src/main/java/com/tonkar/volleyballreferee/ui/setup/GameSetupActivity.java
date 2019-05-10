@@ -107,11 +107,11 @@ public class GameSetupActivity extends AppCompatActivity {
 
     public void computeStartItemVisibility() {
         if (mStartItem != null) {
-            if (mGameService.getTeamName(TeamType.HOME).length() < 1 || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
-                    || mGameService.getTeamName(TeamType.GUEST).length() < 1 || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
+            if (mGameService.getTeamName(TeamType.HOME).length() < 2 || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
+                    || mGameService.getTeamName(TeamType.GUEST).length() < 2 || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getCaptain(TeamType.HOME) < 1 || mGameService.getCaptain(TeamType.GUEST) < 1
-                    || mGameService.getRules().getName().length() < 1
-                    || (mGameService.getLeague().getName().length() > 0 && mGameService.getLeague().getDivision().length() < 1)) {
+                    || mGameService.getRules().getName().length() < 2
+                    || (mGameService.getLeague().getName().length() > 0 && mGameService.getLeague().getDivision().length() < 2)) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
                 mStartItem.setVisible(false);
             } else {
@@ -125,7 +125,7 @@ public class GameSetupActivity extends AppCompatActivity {
         Log.i(Tags.SETUP_UI, "Start game");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.confirm_game_setup_question));
+        builder.setTitle(getString(R.string.game_setup_title)).setMessage(getString(R.string.confirm_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             saveTeams();
             saveRules();
@@ -167,7 +167,7 @@ public class GameSetupActivity extends AppCompatActivity {
         Log.i(Tags.SETUP_UI, "Cancel setup");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.game_setup_title)).setMessage(getResources().getString(R.string.leave_game_setup_question));
+        builder.setTitle(getString(R.string.game_setup_title)).setMessage(getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             StoredGamesService storedGamesService = new StoredGames(this);
             if (storedGamesService.hasSetupGame()) {

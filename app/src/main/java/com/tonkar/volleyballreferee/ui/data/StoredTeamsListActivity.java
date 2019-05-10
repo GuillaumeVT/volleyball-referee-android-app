@@ -180,10 +180,10 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private void deleteAllTeams() {
         Log.i(Tags.STORED_TEAMS, "Delete all teams");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.delete_teams)).setMessage(getResources().getString(R.string.delete_teams_question));
+        builder.setTitle(getString(R.string.delete_teams)).setMessage(getString(R.string.delete_teams_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredTeamsService.deleteAllTeams();
-            UiUtils.makeText(StoredTeamsListActivity.this, getResources().getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredTeamsListActivity.this, getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(StoredTeamsListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
@@ -235,7 +235,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeErrorText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
         mSyncLayout.setRefreshing(false);
     }
 }

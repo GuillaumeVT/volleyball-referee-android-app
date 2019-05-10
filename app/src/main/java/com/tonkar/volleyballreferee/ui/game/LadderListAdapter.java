@@ -100,9 +100,9 @@ public class LadderListAdapter extends BaseAdapter {
 
         int actualIndex = mReverseOrder ? (mBaseScoreService.getNumberOfSets() - index - 1) : index;
 
-        viewHolder.setNumberText.setText(String.format(setView.getContext().getResources().getString(R.string.set_number), actualIndex+1));
+        viewHolder.setNumberText.setText(String.format(setView.getContext().getString(R.string.set_number), actualIndex+1));
         viewHolder.setScoreText.setText(UiUtils.formatScoreFromLocale(mBaseScoreService.getPoints(TeamType.HOME, actualIndex), mBaseScoreService.getPoints(TeamType.GUEST, actualIndex), true));
-        viewHolder.setDurationText.setText(String.format(setView.getContext().getResources().getString(R.string.set_duration), mBaseScoreService.getSetDuration(actualIndex) / 60000L));
+        viewHolder.setDurationText.setText(String.format(setView.getContext().getString(R.string.set_duration), mBaseScoreService.getSetDuration(actualIndex) / 60000L));
 
         List<LadderItem> ladderItems = createLadderItems(mBaseScoreService.getPointsLadder(actualIndex));
         addSubstitutions(TeamType.HOME, actualIndex, ladderItems);

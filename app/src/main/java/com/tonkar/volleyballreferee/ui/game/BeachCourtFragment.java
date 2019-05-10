@@ -190,10 +190,10 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (SanctionType.RED_EXPULSION.equals(sanctionType)) {
             // The team is excluded for this set, the other team wins
-            UiUtils.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mBeachTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mBeachTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         } else if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
             // The team is excluded for this match, the other team wins
-            UiUtils.makeText(getActivity(), String.format(getResources().getString(R.string.match_lost_incomplete), mBeachTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(getActivity(), String.format(getString(R.string.match_lost_incomplete), mBeachTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }
 
         update(teamType);

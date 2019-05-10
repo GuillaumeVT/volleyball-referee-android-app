@@ -65,10 +65,10 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
         switch (mTeamType) {
             case HOME:
-                teamNameInputLayout.setHint(getResources().getString(R.string.home_team_hint));
+                teamNameInputLayout.setHint(getString(R.string.home_team_hint));
                 break;
             case GUEST:
-                teamNameInputLayout.setHint(getResources().getString(R.string.guest_team_hint));
+                teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
                 break;
         }
 
@@ -126,7 +126,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {

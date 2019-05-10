@@ -101,7 +101,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
                     showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleSubstitutions);
                 } else {
-                    UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
+                    UiUtils.makeText(getContext(), getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -128,7 +128,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
                     showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleSubstitutions);
                 } else {
-                    UiUtils.makeText(getContext(), getResources().getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
+                    UiUtils.makeText(getContext(), getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -168,7 +168,7 @@ public class IndoorCourtFragment extends CourtFragment {
             confirmStartingLineup();
 
             if (mIndoorTeamService.isStartingLineupConfirmed() && !mIndoorTeamService.hasRemainingSubstitutions(teamType) && !mIndoorTeamService.isLibero(teamType, number)) {
-                UiUtils.showNotification(getContext(), String.format(getResources().getString(R.string.all_substitutions_used), mIndoorTeamService.getTeamName(teamType)));
+                UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mIndoorTeamService.getTeamName(teamType)));
             }
         }
     }
@@ -249,8 +249,8 @@ public class IndoorCourtFragment extends CourtFragment {
             AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
                 if (!mOneStartingLineupDialog) {
-                    alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.confirm_lineup_title), getResources().getString(R.string.confirm_lineup_question),
-                            getResources().getString(android.R.string.no), getResources().getString(android.R.string.yes));
+                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), getString(R.string.confirm_lineup_question),
+                            getString(android.R.string.no), getString(android.R.string.yes));
                     setStartingLineupDialogListener(alertDialogFragment);
                     alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
                     mOneStartingLineupDialog = true;
@@ -283,7 +283,7 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     protected void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
-        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getResources().getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(getActivity(), positionType) + ")",
+        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(getActivity(), positionType) + ")",
                 mIndoorTeamService, mGameService, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
@@ -307,7 +307,7 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void showCaptainSelectionDialog(final TeamType teamType) {
-        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getResources().getString(R.string.select_captain),
+        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_captain),
                 mIndoorTeamService, mGameService, teamType, mIndoorTeamService.getPossibleActingCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
@@ -358,7 +358,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.makeText(getActivity(), String.format(getResources().getString(R.string.set_lost_incomplete), mIndoorTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mIndoorTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }
     }
 

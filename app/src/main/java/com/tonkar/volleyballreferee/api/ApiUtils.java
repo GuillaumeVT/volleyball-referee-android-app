@@ -37,7 +37,7 @@ public class ApiUtils {
 
     public static String USERS_API_URL            = BASE_URL + "/users";
     public static String USER_API_URL             = BASE_URL + "/public/users/" + BuildConfig.SIGN_UP_KEY;
-    public static String FRIENDS_RECEIVED_API_URL = BASE_URL + "/users/friends/received";
+    public static String FRIENDS_API_URL          = BASE_URL + "/users/friends";
     public static String FRIENDS_REQUEST_API_URL  = BASE_URL + "/users/friends/request/%s";
     public static String FRIENDS_ACCEPT_API_URL   = BASE_URL + "/users/friends/accept/%s";
     public static String FRIENDS_REJECT_API_URL   = BASE_URL + "/users/friends/reject/%s";

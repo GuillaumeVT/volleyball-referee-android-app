@@ -112,7 +112,7 @@ public class StoredTeamActivity extends AppCompatActivity {
         Log.i(Tags.STORED_TEAMS, "Save team");
         StoredTeamsService storedTeamsService = new StoredTeams(this);
         storedTeamsService.saveTeam(mTeamService);
-        UiUtils.makeText(StoredTeamActivity.this, getResources().getString(R.string.saved_team), Toast.LENGTH_LONG).show();
+        UiUtils.makeText(StoredTeamActivity.this, getString(R.string.saved_team), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -122,11 +122,11 @@ public class StoredTeamActivity extends AppCompatActivity {
     private void deleteTeam() {
         Log.i(Tags.STORED_TEAMS, "Delete team");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.delete_team)).setMessage(getResources().getString(R.string.delete_team_question));
+        builder.setTitle(getString(R.string.delete_team)).setMessage(getString(R.string.delete_team_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             StoredTeamsService storedTeamsService = new StoredTeams(this);
             storedTeamsService.deleteTeam(mTeamService.getTeamId(null));
-            UiUtils.makeText(StoredTeamActivity.this, getResources().getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredTeamActivity.this, getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -140,7 +140,7 @@ public class StoredTeamActivity extends AppCompatActivity {
 
     private void cancelTeam() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.leave_team_creation_title)).setMessage(getResources().getString(R.string.leave_team_creation_question));
+        builder.setTitle(getString(R.string.leave_team_creation_title)).setMessage(getString(R.string.leave_team_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

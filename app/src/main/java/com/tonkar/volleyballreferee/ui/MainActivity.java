@@ -118,8 +118,8 @@ public class MainActivity extends AuthenticationActivity {
             AlertDialogFragment alertDialogFragment;
 
             if (savedInstanceState == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getResources().getString(R.string.permission_title), getResources().getString(R.string.permission_message),
-                        getResources().getString(android.R.string.ok));
+                alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.permission_title), getString(R.string.permission_message),
+                        getString(android.R.string.ok));
                 alertDialogFragment.show(getSupportFragmentManager(), "permission");
             }
             else {
@@ -264,7 +264,7 @@ public class MainActivity extends AuthenticationActivity {
         GameService gameService = mStoredGamesService.loadCurrentGame();
 
         if (gameService == null) {
-            UiUtils.makeErrorText(MainActivity.this, getResources().getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
+            UiUtils.makeErrorText(MainActivity.this, getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
         } else {
             if (GameType.TIME.equals(gameService.getKind())) {
                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);

@@ -134,10 +134,10 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
     private void deleteAllGames() {
         Log.i(Tags.STORED_GAMES, "Delete all games");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getResources().getString(R.string.delete_games)).setMessage(getResources().getString(R.string.delete_games_question));
+        builder.setTitle(getString(R.string.delete_games)).setMessage(getString(R.string.delete_games_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredGamesService.deleteAllGames();
-            UiUtils.makeText(StoredGamesListActivity.this, getResources().getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredGamesListActivity.this, getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
             UiUtils.navigateToHome(StoredGamesListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
@@ -160,7 +160,7 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeErrorText(this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
         mSyncLayout.setRefreshing(false);
     }
 }

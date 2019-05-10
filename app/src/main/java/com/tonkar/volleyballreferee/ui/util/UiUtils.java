@@ -171,13 +171,13 @@ public class UiUtils {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             File file = ScoreSheetWriter.writeStoredGame(context, storedGameService);
             if (file == null) {
-                UiUtils.makeErrorText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
                 Uri uri = FileProvider.getUriForFile(context, "com.tonkar.volleyballreferee.fileprovider", file);
                 context.grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getResources().getString(R.string.app_name), file.getName()));
+                intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getString(R.string.app_name), file.getName()));
 
                 String summary = storedGameService.getGameSummary();
                 if (PrefUtils.canSync(context)) {
@@ -189,10 +189,10 @@ public class UiUtils {
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 try {
-                    context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
+                    context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
                 } catch (ActivityNotFoundException e) {
                     Log.e(Tags.UTILS_UI, "Exception while sharing stored game", e);
-                    UiUtils.makeErrorText(context, context.getResources().getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+                    UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
@@ -313,22 +313,22 @@ public class UiUtils {
 
         switch (positionType) {
             case POSITION_1:
-                title = context.getResources().getString(R.string.position_1_title);
+                title = context.getString(R.string.position_1_title);
                 break;
             case POSITION_2:
-                title = context.getResources().getString(R.string.position_2_title);
+                title = context.getString(R.string.position_2_title);
                 break;
             case POSITION_3:
-                title = context.getResources().getString(R.string.position_3_title);
+                title = context.getString(R.string.position_3_title);
                 break;
             case POSITION_4:
-                title = context.getResources().getString(R.string.position_4_title);
+                title = context.getString(R.string.position_4_title);
                 break;
             case POSITION_5:
-                title = context.getResources().getString(R.string.position_5_title);
+                title = context.getString(R.string.position_5_title);
                 break;
             case POSITION_6:
-                title = context.getResources().getString(R.string.position_6_title);
+                title = context.getString(R.string.position_6_title);
                 break;
         }
 

@@ -76,6 +76,9 @@
         <activity
             android:name=".ui.CreditsActivity"
             android:parentActivityName=".ui.MainActivity" />
+        <activity
+                android:name=".ui.user.ColleaguesListActivity"
+                android:parentActivityName=".ui.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

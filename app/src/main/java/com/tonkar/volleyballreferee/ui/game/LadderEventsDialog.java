@@ -195,7 +195,7 @@ public class LadderEventsDialog {
                 if (sanction.isPlayer()) {
                     playerText.setText(UiUtils.formatNumberFromLocale(sanction.getNum()));
                 } else if (sanction.isCoach()) {
-                    playerText.setText(mContext.getResources().getString(R.string.coach_abbreviation));
+                    playerText.setText(mContext.getString(R.string.coach_abbreviation));
                 }
 
                 UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, sanction.getNum(), playerText);

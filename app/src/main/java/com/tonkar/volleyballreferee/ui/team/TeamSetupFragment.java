@@ -99,10 +99,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         switch (mTeamType) {
             case HOME:
-                teamNameInputLayout.setHint(getResources().getString(R.string.home_team_hint));
+                teamNameInputLayout.setHint(getString(R.string.home_team_hint));
                 break;
             case GUEST:
-                teamNameInputLayout.setHint(getResources().getString(R.string.guest_team_hint));
+                teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
                 break;
         }
 
@@ -215,7 +215,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getResources().getString(R.string.select_shirts_color),
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
@@ -387,7 +387,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectLiberoColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team libero color", mTeamType.toString()));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_shirts_color),
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mTeamService.getLiberoColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
@@ -422,7 +422,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectCaptain() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team captain", mTeamType.toString()));
-        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, getContext(), getResources().getString(R.string.select_captain), mTeamService,
+        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, getContext(), getString(R.string.select_captain), mTeamService,
                 mTeamType, mTeamService.getPossibleCaptains(mTeamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {

@@ -403,6 +403,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {
+                        UiUtils.makeText(ScheduledGameActivity.this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
                         final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -413,7 +414,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
                     @Override
                     public void onSynchronizationFailed() {
-                        UiUtils.makeErrorText(ScheduledGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -435,7 +436,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
                     @Override
                     public void onSynchronizationFailed() {
-                        UiUtils.makeErrorText(ScheduledGameActivity.this, getResources().getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
                     }
                 });
     }
