@@ -30,9 +30,7 @@
             android:layout_margin="@dimen/small_margin_size"
             android:layout_gravity="end"
             android:text="@string/purchase"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:textColor="@color/colorPrimary"
             app:iconTint="@color/colorPrimary"
             app:icon="@drawable/ic_purchase" android:textAllCaps="false"/>
