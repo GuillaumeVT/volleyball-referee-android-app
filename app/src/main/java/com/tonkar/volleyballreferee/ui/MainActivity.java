@@ -1,9 +1,7 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -14,7 +12,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -31,13 +28,14 @@ import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.*;
+import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
+import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.game.*;
 import com.tonkar.volleyballreferee.interfaces.GameService;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.*;
 import com.tonkar.volleyballreferee.business.rules.Rules;
+import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
@@ -101,19 +99,6 @@ public class MainActivity extends AuthenticationActivity {
             mStoredGamesService.deleteSetupGame();
         }
 
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final long currentTime = System.currentTimeMillis();
-
-        if (PrefUtils.canSync(this) && sharedPreferences.getLong("last_full_sync", 0L) + 7200000L < currentTime) {
-            Context applicationContext = getApplicationContext();
-            new StoredUser(applicationContext).syncUser();
-            new StoredLeagues(applicationContext).syncLeagues();
-            new StoredRules(applicationContext).syncRules();
-            new StoredTeams(applicationContext).syncTeams();
-            mStoredGamesService.syncGames();
-            sharedPreferences.edit().putLong("last_full_sync", currentTime).apply();
-        }
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             AlertDialogFragment alertDialogFragment;
 
@@ -121,8 +106,7 @@ public class MainActivity extends AuthenticationActivity {
                 alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.permission_title), getString(R.string.permission_message),
                         getString(android.R.string.ok));
                 alertDialogFragment.show(getSupportFragmentManager(), "permission");
-            }
-            else {
+            } else {
                 alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("permission");
             }
 
@@ -134,10 +118,12 @@ public class MainActivity extends AuthenticationActivity {
                     }
 
                     @Override
-                    public void onPositiveButtonClicked() {}
+                    public void onPositiveButtonClicked() {
+                    }
 
                     @Override
-                    public void onNeutralButtonClicked() {}
+                    public void onNeutralButtonClicked() {
+                    }
                 });
             }
         }
@@ -294,7 +280,8 @@ public class MainActivity extends AuthenticationActivity {
     private void showNews(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
                 .setTitle(R.string.news).setMessage(message)
-                .setPositiveButton(android.R.string.yes, (dialog, which) -> {});
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                });
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
@@ -304,7 +291,8 @@ public class MainActivity extends AuthenticationActivity {
             Authentication authentication = PrefUtils.getAuthentication(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
                     .setMessage(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()) + String.format(Locale.getDefault(), "\n\n(%s)", authentication.getUserId()))
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {})
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    })
                     .setNegativeButton(R.string.user_sign_out, (dialog, which) -> signOut());
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());

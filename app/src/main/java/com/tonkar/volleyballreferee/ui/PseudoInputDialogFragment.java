@@ -16,6 +16,7 @@ import com.tonkar.volleyballreferee.api.ApiUser;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredUser;
+import com.tonkar.volleyballreferee.business.data.SyncWorker;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncUserRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -56,6 +57,7 @@ public class PseudoInputDialogFragment extends DialogFragment {
                     storedUserService.createUser(authentication.getUserId(), pseudo, new AsyncUserRequestListener() {
                         @Override
                         public void onUserCreated(ApiUser user) {
+                            SyncWorker.syncAll(getActivity().getApplicationContext());
                             dialog.dismiss();
                             UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
                             UiUtils.navigateToHome(getActivity());
