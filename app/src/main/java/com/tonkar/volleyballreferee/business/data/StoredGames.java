@@ -310,7 +310,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         mStoredGame.setUsage(mGameService.getUsage());
         mStoredGame.setStatus(mGameService.getMatchStatus());
         mStoredGame.setIndexed(mGameService.isIndexed());
-        if (mGameService.getLeague().getName().length() > 1 && mStoredGame.getLeague().getDivision().length() > 1) {
+        if (mGameService.getLeague().getName().length() > 1 && mGameService.getLeague().getDivision().length() > 1) {
             mStoredGame.setLeague(mGameService.getLeague());
         } else {
             mStoredGame.setLeague(null);
@@ -356,7 +356,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
             }
         }
 
-        mStoredGame.getRules().setAll(mGameService.getRules());
+        mStoredGame.setRules(mGameService.getRules());
 
         updateCurrentGame();
     }

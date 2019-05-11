@@ -45,7 +45,7 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameDescription> {
     private final boolean                  mIsSyncOn;
 
     StoredGamesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiGameDescription> storedGamesList) {
-        super(context, R.layout.recorded_games_list_item, storedGamesList);
+        super(context, R.layout.stored_games_list_item, storedGamesList);
         mLayoutInflater = layoutInflater;
         mStoredGamesList = storedGamesList;
         mFilteredStoredGamesList = new ArrayList<>();
@@ -85,7 +85,7 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameDescription> {
         ViewHolder viewHolder;
 
         if (gameView == null) {
-            gameView = mLayoutInflater.inflate(R.layout.recorded_games_list_item, null);
+            gameView = mLayoutInflater.inflate(R.layout.stored_games_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.summaryText = gameView.findViewById(R.id.recorded_game_summary);
             viewHolder.dateText = gameView.findViewById(R.id.recorded_game_date);

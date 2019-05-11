@@ -91,7 +91,7 @@
         </provider>
 
         <receiver
-                android:name=".business.data.BootCompleteAndUpdateReceiver"
+                android:name="com.tonkar.volleyballreferee.business.data.BootCompleteAndUpdateReceiver"
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>

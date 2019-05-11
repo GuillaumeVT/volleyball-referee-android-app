@@ -6,6 +6,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
@@ -34,7 +35,8 @@ public class TimeBasedGameTest {
 
     @Test
     public void playGame_complete() {
-        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis());
 
         defineTeams(game);

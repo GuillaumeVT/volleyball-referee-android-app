@@ -63,7 +63,7 @@ public class PrefUtils {
             String token = sharedPreferences.getString(PREF_USER_TOKEN, "");
             authentication = Authentication.of(userId, userPseudo, token);
         } else {
-            authentication = Authentication.of(Authentication.VBR_USER_ID, "", "");
+            authentication = Authentication.of(Authentication.VBR_USER_ID, Authentication.VBR_PSEUDO, "");
         }
 
         return authentication;

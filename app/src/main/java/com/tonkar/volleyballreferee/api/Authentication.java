@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.api;
 public class Authentication {
 
     public static String VBR_USER_ID = "01022018@vbr";
+    public static String VBR_PSEUDO  = "VBR";
 
     public enum Provider {
         GOOGLE, FACEBOOK;

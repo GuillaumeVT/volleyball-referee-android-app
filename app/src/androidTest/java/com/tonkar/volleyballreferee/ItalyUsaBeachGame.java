@@ -8,6 +8,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.data.StoredLeagues;
@@ -47,7 +48,8 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
@@ -61,7 +63,8 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_matchPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);
@@ -86,7 +89,8 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeams(beachGame);

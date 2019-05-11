@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.api.Authentication;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.business.data.StoredLeagues;
@@ -49,7 +50,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
@@ -75,7 +77,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_lastSetEnd() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
@@ -98,7 +101,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
@@ -118,7 +122,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeams(indoorGame);
