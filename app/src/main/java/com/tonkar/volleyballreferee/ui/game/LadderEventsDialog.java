@@ -4,15 +4,13 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 
+import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiSanction;
@@ -20,8 +18,12 @@ import com.tonkar.volleyballreferee.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class LadderEventsDialog {
 
@@ -39,22 +41,40 @@ public class LadderEventsDialog {
 
         View view = layoutInflater.inflate(R.layout.ladder_events_dialog, null);
 
-        ListView timeoutList = view.findViewById(R.id.timeout_list);
-        TimeoutsListAdapter timeoutsListAdapter = new TimeoutsListAdapter(TeamType.HOME.equals(mTeamType) ? ladderItem.getHomeTimeouts().size() > 0 : ladderItem.getGuestTimeouts().size() > 0);
-        timeoutList.setAdapter(timeoutsListAdapter);
+        TextView title = view.findViewById(R.id.ladder_dialog_title);
+        title.setText(String.format(Locale.getDefault(), "%d - %d", ladderItem.getHomePoints(), ladderItem.getGuestPoints()));
 
-        ListView substitutionList = view.findViewById(R.id.substitution_list);
-        SubstitutionsListAdapter substitutionsListAdapter = new SubstitutionsListAdapter(TeamType.HOME.equals(mTeamType) ? ladderItem.getHomeSubstitutions() : ladderItem.getGuestSubstitutions());
-        substitutionList.setAdapter(substitutionsListAdapter);
+        List<LadderEvent> ladderEvents = new ArrayList<>();
 
-        ListView cardList = view.findViewById(R.id.sanction_list);
-        SanctionsListAdapter sanctionsListAdapter = new SanctionsListAdapter(TeamType.HOME.equals(mTeamType) ? ladderItem.getHomeSanctions() : ladderItem.getGuestSanctions());
-        cardList.setAdapter(sanctionsListAdapter);
+        if (TeamType.HOME.equals(mTeamType)) {
+            if (ladderItem.getHomeTimeouts().size() > 0) {
+                ladderEvents.add(new LadderEvent());
+            }
+            for (ApiSubstitution substitution : ladderItem.getHomeSubstitutions()) {
+                ladderEvents.add(new LadderEvent(substitution));
+            }
+            for (ApiSanction sanction : ladderItem.getHomeSanctions()) {
+                ladderEvents.add(new LadderEvent(sanction));
+            }
+        } else {
+            if (ladderItem.getGuestTimeouts().size() > 0) {
+                ladderEvents.add(new LadderEvent());
+            }
+            for (ApiSubstitution substitution : ladderItem.getGuestSubstitutions()) {
+                ladderEvents.add(new LadderEvent(substitution));
+            }
+            for (ApiSanction sanction : ladderItem.getGuestSanctions()) {
+                ladderEvents.add(new LadderEvent(sanction));
+            }
+        }
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
-        builder.setView(view);
+        ListView eventList = view.findViewById(R.id.ladder_event_list);
+        LadderEventListAdapter eventListAdapter = new LadderEventListAdapter(context, ladderEvents);
+        eventList.setAdapter(eventListAdapter);
 
-        mAlertDialog = builder.create();
+        mAlertDialog = new AlertDialog.Builder(context)
+                .setView(view)
+                .create();
     }
 
     public void show() {
@@ -63,81 +83,67 @@ public class LadderEventsDialog {
         }
     }
 
-    private class TimeoutsListAdapter extends BaseAdapter {
+    private class LadderEventListAdapter extends ArrayAdapter<LadderEvent> {
 
-        private boolean mHasTimeout;
+        private final List<LadderEvent> mLadderEvents;
 
-        private TimeoutsListAdapter(boolean hasTimeout) {
-            mHasTimeout = hasTimeout;
+        private LadderEventListAdapter(Context context, List<LadderEvent> ladderEvents) {
+            super(context, android.R.layout.simple_list_item_1, ladderEvents);
+            mLadderEvents = ladderEvents;
         }
 
         @Override
         public int getCount() {
-            return mHasTimeout ? 1 : 0;
+            return mLadderEvents.size();
         }
 
         @Override
-        public Object getItem(int i) {
-            return null;
+        public LadderEvent getItem(int index) {
+            return mLadderEvents.get(index);
         }
 
         @Override
-        public long getItemId(int i) {
+        public long getItemId(int index) {
             return 0;
         }
 
         @Override
-        public View getView(int index, View view, ViewGroup parent) {
-            ImageView imageView = (ImageView) view;
+        public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
+            LadderEvent ladderEvent = mLadderEvents.get(index);
 
-            if (imageView == null) {
-                imageView = (ImageView) mLayoutInflater.inflate(R.layout.ladder_event_item, null);
+            switch (ladderEvent.getEventType()) {
+                case TIMEOUT:
+                    view = createTimeoutEvent(ladderEvent);
+                    break;
+                case SUBSTITUTION:
+                    view = createSubstitutionEvent(ladderEvent);
+                    break;
+                case SANCTION:
+                    view = createSanctionEvent(ladderEvent);
+                    break;
+                default:
+                    break;
             }
 
+            return view;
+        }
+
+        private View createTimeoutEvent(LadderEvent ladderEvent) {
+            ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.ladder_event_item, null);
             imageView.setImageResource(R.drawable.ic_timeout);
             imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
-
             return imageView;
         }
-    }
 
-    private class SubstitutionsListAdapter extends BaseAdapter {
-
-        private List<ApiSubstitution> mSubstitutions;
-
-        private SubstitutionsListAdapter(List<ApiSubstitution> substitutions) {
-            mSubstitutions = substitutions;
-        }
-
-        @Override
-        public int getCount() {
-            return mSubstitutions.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int index, View view, ViewGroup parent) {
-            View substitutionView = view;
-
-            if (substitutionView == null) {
-                substitutionView = mLayoutInflater.inflate(R.layout.substitution_list_item, null);
-            }
+        private View createSubstitutionEvent(LadderEvent ladderEvent) {
+            View substitutionView = mLayoutInflater.inflate(R.layout.substitution_list_item, null);
 
             TextView scoreText = substitutionView.findViewById(R.id.score_text);
             scoreText.setVisibility(View.GONE);
             TextView playerInText = substitutionView.findViewById(R.id.player_in_text);
             TextView playerOutText = substitutionView.findViewById(R.id.player_out_text);
 
-            ApiSubstitution substitution = mSubstitutions.get(index);
+            ApiSubstitution substitution = ladderEvent.getSubstitution();
             playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
             playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
@@ -146,38 +152,9 @@ public class LadderEventsDialog {
 
             return substitutionView;
         }
-    }
 
-    private class SanctionsListAdapter extends BaseAdapter {
-
-        private List<ApiSanction> mSanctions;
-
-        private SanctionsListAdapter(List<ApiSanction> sanctions) {
-            mSanctions = sanctions;
-        }
-
-        @Override
-        public int getCount() {
-            return mSanctions.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int index, View view, ViewGroup parent) {
-            View sanctionView = view;
-
-            if (sanctionView == null) {
-                sanctionView = mLayoutInflater.inflate(R.layout.sanction_list_item, null);
-            }
+        private View createSanctionEvent(LadderEvent ladderEvent) {
+            View sanctionView = mLayoutInflater.inflate(R.layout.sanction_list_item, null);
 
             TextView setText = sanctionView.findViewById(R.id.set_text);
             setText.setVisibility(View.GONE);
@@ -186,7 +163,7 @@ public class LadderEventsDialog {
             TextView playerText = sanctionView.findViewById(R.id.player_text);
             ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
-            ApiSanction sanction = mSanctions.get(index);
+            ApiSanction sanction = ladderEvent.getSanction();
             UiUtils.setSanctionImage(sanctionTypeImage, sanction.getCard());
 
             if (sanction.isTeam()) {
@@ -203,5 +180,36 @@ public class LadderEventsDialog {
 
             return sanctionView;
         }
+    }
+
+    private enum EventType {
+        TIMEOUT, SUBSTITUTION, SANCTION
+    }
+
+    @Getter @Setter
+    private class LadderEvent {
+
+        private final EventType       eventType;
+        private final ApiSubstitution substitution;
+        private final ApiSanction     sanction;
+
+        LadderEvent() {
+            this.eventType = EventType.TIMEOUT;
+            this.substitution = null;
+            this.sanction = null;
+        }
+
+        LadderEvent(ApiSubstitution substitution) {
+            this.eventType = EventType.SUBSTITUTION;
+            this.substitution = substitution;
+            this.sanction = null;
+        }
+
+        LadderEvent(ApiSanction sanction) {
+            this.eventType = EventType.SANCTION;
+            this.substitution = null;
+            this.sanction = sanction;
+        }
+
     }
 }
