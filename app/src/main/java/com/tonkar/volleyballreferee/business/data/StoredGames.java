@@ -719,7 +719,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     private void pushGameToServer(final StoredGameService storedGameService) {
         if (mBatteryReceiver.canPushGameToServer() && PrefUtils.canSync(mContext) && storedGameService != null && isNotTestGame(storedGameService)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
-            ApiGame game = (ApiGame) storedGameService;
+            final ApiGame game = (ApiGame) storedGameService;
             final byte[] bytes = writeGame(game).getBytes();
 
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.FULL_GAME_API_URL, bytes, authentication,
@@ -763,10 +763,10 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
     private void pushCurrentSetToServer() {
         if (mBatteryReceiver.canPushSetToServer() && PrefUtils.canSync(mContext) && mStoredGame != null && isNotTestGame(mStoredGame)) {
             int setIndex = mStoredGame.currentSetIndex();
-            ApiSet set = mStoredGame.getSets().get(setIndex);
+            final ApiSet set = mStoredGame.getSets().get(setIndex);
             final byte[] bytes = writeSet(set).getBytes();
 
-            String url = String.format(ApiUtils.GAME_SET_API_URL, mStoredGame.getId(), setIndex);
+            String url = String.format(ApiUtils.GAME_SET_API_URL, mStoredGame.getId(), 1 + setIndex);
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PATCH, url, bytes, PrefUtils.getAuthentication(mContext),
                     response -> {},
                     error -> {

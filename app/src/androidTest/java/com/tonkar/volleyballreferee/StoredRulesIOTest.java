@@ -107,6 +107,10 @@ public class StoredRulesIOTest {
 
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
+
+        for (ApiRules rules : expectedList) {
+            storedRulesService.deleteRules(rules.getId());
+        }
     }
 
     @Test

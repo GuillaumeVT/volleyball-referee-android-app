@@ -39,6 +39,7 @@ import com.tonkar.volleyballreferee.ui.setup.AutocompleteTeamListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
@@ -143,7 +144,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(count < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                 computeConfirmItemVisibility();
             }
 

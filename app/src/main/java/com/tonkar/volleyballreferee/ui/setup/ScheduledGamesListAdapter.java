@@ -145,12 +145,13 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
             viewHolder.statusImage.setVisibility(View.GONE);
         }
 
-        if (gameDescription.getLeagueName().isEmpty() || gameDescription.getDivisionName().isEmpty()) {
-            viewHolder.leagueText.setText(gameDescription.getLeagueName());
+        if (gameDescription.getLeagueName() == null || gameDescription.getDivisionName() == null || gameDescription.getLeagueName().isEmpty() || gameDescription.getDivisionName().isEmpty()) {
+            viewHolder.leagueText.setText("");
+            viewHolder.leagueText.setVisibility(View.GONE);
         } else {
             viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , gameDescription.getLeagueName(), gameDescription.getDivisionName()));
+            viewHolder.leagueText.setVisibility(View.VISIBLE);
         }
-        viewHolder.leagueText.setVisibility(gameDescription.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -176,7 +177,8 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameDescription> 
                     if (lowerCaseText.isEmpty()
                             || gameDescription.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
                             || gameDescription.getGuestTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
-                            || gameDescription.getLeagueName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
+                            || (gameDescription.getLeagueName() != null && gameDescription.getLeagueName().toLowerCase(Locale.getDefault()).contains(lowerCaseText))
+                            || gameDescription.getRefereeName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(gameDescription);
                     }
                 }

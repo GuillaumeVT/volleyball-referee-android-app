@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
+import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
@@ -269,7 +270,7 @@ public class MainActivity extends AuthenticationActivity {
             JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.MESSAGES_API_URL, new byte[0],
                     response -> {
                         ApiMessage message = JsonIOUtils.GSON.fromJson(response, JsonIOUtils.MESSAGE_TYPE);
-                        showNews(message.getMessage());
+                        showNews(message.getContent());
                     },
                     error -> showNews(getString(R.string.no_news))
             );
@@ -290,11 +291,18 @@ public class MainActivity extends AuthenticationActivity {
         if (PrefUtils.canSync(this)) {
             Authentication authentication = PrefUtils.getAuthentication(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                    .setMessage(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()) + String.format(Locale.getDefault(), "\n\n(%s)", authentication.getUserId()))
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                    })
+                    .setView(getLayoutInflater().inflate(R.layout.user_dialog, null))
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {})
                     .setNegativeButton(R.string.user_sign_out, (dialog, which) -> signOut());
-            AlertDialog alertDialog = builder.show();
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.setOnShowListener(dialogInterface -> {
+                TextView userPseudoText = alertDialog.findViewById(R.id.user_pseudo_text);
+                TextView userIdText = alertDialog.findViewById(R.id.user_id_text);
+                userPseudoText.setText(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()));
+                userIdText.setText(String.format(Locale.getDefault(), getString(R.string.user_id), authentication.getUserId()));
+            });
+            alertDialog.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         }
     }

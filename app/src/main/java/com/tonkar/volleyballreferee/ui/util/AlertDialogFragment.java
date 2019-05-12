@@ -17,7 +17,7 @@ public class AlertDialogFragment extends DialogFragment {
         AlertDialogFragment fragment = new AlertDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("message", message);
+        args.putString("content", message);
         args.putString("negative", negativeButtonText);
         fragment.setArguments(args);
         return fragment;
@@ -27,7 +27,7 @@ public class AlertDialogFragment extends DialogFragment {
         AlertDialogFragment fragment = new AlertDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("message", message);
+        args.putString("content", message);
         args.putString("negative", negativeButtonText);
         args.putString("positive", positiveButtonText);
         fragment.setArguments(args);
@@ -38,7 +38,7 @@ public class AlertDialogFragment extends DialogFragment {
         AlertDialogFragment fragment = new AlertDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("message", message);
+        args.putString("content", message);
         args.putString("negative", negativeButtonText);
         args.putString("positive", positiveButtonText);
         args.putString("neutral", neutralButtonText);
@@ -49,7 +49,7 @@ public class AlertDialogFragment extends DialogFragment {
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
         String title = getArguments().getString("title");
-        String message = getArguments().getString("message");
+        String message = getArguments().getString("content");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle(title).setMessage(message);

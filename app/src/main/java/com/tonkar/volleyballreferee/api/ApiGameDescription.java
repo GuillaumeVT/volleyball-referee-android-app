@@ -62,11 +62,9 @@ public class ApiGameDescription {
     @Ignore
     @SerializedName("leagueId")
     private String     leagueId;
-    @NonNull
     @ColumnInfo(name = "leagueName")
     @SerializedName("leagueName")
     private String     leagueName;
-    @NonNull
     @ColumnInfo(name = "divisionName")
     @SerializedName("divisionName")
     private String     divisionName;

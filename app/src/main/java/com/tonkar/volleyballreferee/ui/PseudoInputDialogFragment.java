@@ -35,11 +35,11 @@ public class PseudoInputDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
-        builder.setTitle(getString(R.string.user_pseudo_title));
-        builder.setView(getActivity().getLayoutInflater().inflate(R.layout.pseudo_input_dialog, null));
-        builder.setPositiveButton(getString(android.R.string.ok), null);
-        builder.setCancelable(false);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog)
+                .setTitle(getString(R.string.create_user_pseudo_title))
+                .setView(getActivity().getLayoutInflater().inflate(R.layout.pseudo_input_dialog, null))
+                .setPositiveButton(getString(android.R.string.ok), null)
+                .setCancelable(false);
 
         setCancelable(false);
 

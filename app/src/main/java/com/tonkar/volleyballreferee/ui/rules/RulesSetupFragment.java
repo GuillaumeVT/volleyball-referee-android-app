@@ -32,6 +32,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import java.util.Locale;
+
 public class RulesSetupFragment extends Fragment implements RulesHandler {
 
     private Rules mRules;
@@ -212,7 +214,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.RULES, "Update rules name");
                 mRules.setName(s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.rules_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                ((TextInputLayout)view.findViewById(R.id.rules_name_input_layout)).setError(count < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                 computeConfirmItemVisibility();
             }
 

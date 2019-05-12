@@ -30,6 +30,8 @@ import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.data.StoredTeamActivity;
 
+import java.util.Locale;
+
 public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
     private TeamType             mTeamType;
@@ -80,7 +82,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
                 mTeamService.setTeamName(mTeamType, s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(count < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                 computeSaveItemVisibility();
             }
 

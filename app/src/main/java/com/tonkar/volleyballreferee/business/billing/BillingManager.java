@@ -127,7 +127,10 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     private void handlePurchase(Purchase purchase) {
         if (purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
             mPurchasedSkus.put(WEB_PREMIUM, true);
-            PrefUtils.purchaseWebPremium(mActivity, true);
+            if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
+                PrefUtils.purchaseWebPremium(mActivity, true);
+                mActivity.recreate();
+            }
         }
     }
 

@@ -74,7 +74,7 @@ public class PrefUtils {
         sharedPreferences.edit().putBoolean(PREF_PURCHASED_WEB_PREMUIM, purchased).apply();
     }
 
-    private static boolean isWebPremiumPurchased(Context context) {
+    public static boolean isWebPremiumPurchased(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(PREF_PURCHASED_WEB_PREMUIM, false);
     }

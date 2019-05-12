@@ -125,7 +125,7 @@ public class StoredTeams implements StoredTeamsService {
 
     @Override
     public void createAndSaveTeamFrom(GameType kind, BaseTeamService teamService, TeamType teamType) {
-        if (teamService.getTeamName(teamType).length() > 1
+        if (teamService.getTeamName(teamType).length() > 1 && !GameType.TIME.equals(kind)
                 && AppDatabase.getInstance(mContext).teamDao().countByNameAndGenderAndKind(teamService.getTeamName(teamType), teamService.getGender(teamType), kind) == 0
                 && AppDatabase.getInstance(mContext).teamDao().countById(teamService.getTeamId(teamType)) == 0) {
             BaseTeamService team = createTeam(kind);

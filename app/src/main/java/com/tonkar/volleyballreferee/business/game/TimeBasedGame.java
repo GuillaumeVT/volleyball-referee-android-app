@@ -639,7 +639,7 @@ public class TimeBasedGame extends BaseGame implements TimeBasedGameService {
 
     @Override
     public Rules getRules() {
-        return new Rules();
+        return Rules.officialIndoorRules();
     }
 
     @Override

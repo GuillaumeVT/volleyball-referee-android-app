@@ -73,8 +73,7 @@
                                 android:layout_marginStart="@dimen/small_margin_size"
                                 android:text="@string/user_sign_in_why_message"
                                 android:textAppearance="@style/TextViewTheme"
-                                android:textSize="@dimen/small_text_size"
-                                android:autoLink="web"/>
+                                android:textSize="@dimen/small_text_size"/>
 
                         <LinearLayout
                                 android:layout_width="match_parent"
@@ -111,8 +110,7 @@
                                 android:layout_marginStart="@dimen/small_margin_size"
                                 android:text="@string/user_sign_in_privacy_message"
                                 android:textAppearance="@style/TextViewTheme"
-                                android:textSize="@dimen/small_text_size"
-                                android:autoLink="web"/>
+                                android:textSize="@dimen/small_text_size"/>
 
                         <LinearLayout
                                 android:layout_width="match_parent"

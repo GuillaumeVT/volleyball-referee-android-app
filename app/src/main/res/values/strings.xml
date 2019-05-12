@@ -52,10 +52,11 @@
     <string name="user_sign_out">Sign out</string>
     <string name="user_signed_in_with_provider">Signed in with %s</string>
     <string name="user_signed_in_as_pseudo">Signed in as %s</string>
+    <string name="user_id">User ID %s</string>
     <string name="user_sign_in_with_provider_error">Error while signing in with %s</string>
     <string name="user_signed_out">Signed out</string>
     <string name="user_error">Error while retrieving user</string>
-    <string name="user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
+    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
     <string name="create">Create</string>
     <string name="user_pseudo_hint">Pseudonym</string>
     <string name="user_exists_error">This pseudonym already exists</string>
@@ -92,7 +93,7 @@
     <string name="teams_tab">Teams</string>
     <string name="referee">Referee</string>
     <string name="leave_game_setup_question">This match setup will be lost. Leave anyway?</string>
-    <string name="must_provide_value">Value must not be empty</string>
+    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>

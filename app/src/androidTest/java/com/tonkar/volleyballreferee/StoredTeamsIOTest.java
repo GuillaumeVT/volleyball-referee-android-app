@@ -118,5 +118,15 @@ public class StoredTeamsIOTest {
 
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
+
+        for (ApiTeam team : expectedList) {
+            storedTeamsService.deleteTeam(team.getId());
+        }
+    }
+
+    @Test
+    public void clear() {
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity().getApplicationContext());
+        storedTeamsService.deleteAllTeams();
     }
 }

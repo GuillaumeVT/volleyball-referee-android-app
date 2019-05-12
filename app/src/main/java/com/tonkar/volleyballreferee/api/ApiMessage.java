@@ -10,7 +10,7 @@ public class ApiMessage {
 
     @SerializedName("id")
     private String id;
-    @SerializedName("message")
-    private String message;
+    @SerializedName("content")
+    private String content;
 
 }

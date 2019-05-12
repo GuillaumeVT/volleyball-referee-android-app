@@ -116,7 +116,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division");
                 mGameDescription.setDivisionName(s.toString().trim());
-                ((TextInputLayout)findViewById(R.id.division_name_input_layout)).setError(count == 0 ? getString(R.string.must_provide_value) : null);
+                ((TextInputLayout)findViewById(R.id.division_name_input_layout)).setError(count < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                 computeItemsVisibility();
             }
 
@@ -132,7 +132,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueDescription leagueDescription = (ApiLeagueDescription) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
-            mGameDescription.setId(leagueDescription.getId());
+            mGameDescription.setLeagueId(leagueDescription.getId());
             mGameDescription.setLeagueName(leagueDescription.getName());
             divisionNameInput.setText("");
             divisionNameInput.setAdapter(new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
@@ -197,6 +197,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         List<ApiRulesDescription> rules = storedRulesService.listRules(mGameDescription.getKind());
 
+
         final NameSpinnerAdapter<ApiRulesDescription> rulesAdapter = new NameSpinnerAdapter<ApiRulesDescription>(this, getLayoutInflater(), rules) {
             @Override
             public String getName(ApiRulesDescription rules) {
@@ -225,10 +226,6 @@ public class ScheduledGameActivity extends AppCompatActivity {
                 updateRules(null);
             }
         });
-
-        if (rulesAdapter.getCount() > 0) {
-            rulesSpinner.setSelection(rulesAdapter.getPositionFromId(mGameDescription.getRulesId()));
-        }
 
         List<ApiFriend> referees = storedUserService.listReferees();
 
@@ -392,7 +389,10 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private void computeItemsVisibility() {
         if (mDeleteItem != null && mSaveItem != null) {
             mDeleteItem.setVisible(!mCreate);
-            mSaveItem.setVisible(mGameDescription.getHomeTeamId() != null && mGameDescription.getGuestTeamId() != null && mGameDescription.getRulesId() != null);
+            mSaveItem.setVisible(
+                    mGameDescription.getHomeTeamId() != null && mGameDescription.getGuestTeamId() != null && mGameDescription.getRulesId() != null
+                            && !mGameDescription.getHomeTeamName().equals(mGameDescription.getGuestTeamName())
+                            && (mGameDescription.getLeagueName().isEmpty() || (mGameDescription.getLeagueName().length() > 1 && mGameDescription.getDivisionName().length() > 1)));
         }
     }
 
