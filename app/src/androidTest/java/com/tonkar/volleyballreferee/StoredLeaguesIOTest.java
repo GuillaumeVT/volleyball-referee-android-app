@@ -6,10 +6,8 @@ import com.tonkar.volleyballreferee.api.ApiLeague;
 import com.tonkar.volleyballreferee.api.ApiSelectedLeague;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.data.StoredLeagues;
-import com.tonkar.volleyballreferee.business.data.StoredRules;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -80,11 +78,5 @@ public class StoredLeaguesIOTest {
 
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
-    }
-
-    @Test
-    public void clear() {
-        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
-        storedRulesService.deleteAllRules();
     }
 }

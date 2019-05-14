@@ -7,6 +7,8 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
+import com.tonkar.volleyballreferee.api.ApiLeague;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
@@ -54,7 +56,7 @@ public class BrazilFranceIndoorGame {
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeams(indoorGame);
+        defineTeamsAndLeague(indoorGame);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -81,7 +83,7 @@ public class BrazilFranceIndoorGame {
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeams(indoorGame);
+        defineTeamsAndLeague(indoorGame);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -105,7 +107,7 @@ public class BrazilFranceIndoorGame {
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeams(indoorGame);
+        defineTeamsAndLeague(indoorGame);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -126,7 +128,7 @@ public class BrazilFranceIndoorGame {
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeams(indoorGame);
+        defineTeamsAndLeague(indoorGame);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -148,73 +150,96 @@ public class BrazilFranceIndoorGame {
 
         for (int index = 0; index < 200; index++) {
             Log.i("VBR-Test", "playGame_io index #" + index);
-            mStoredGamesService.saveCurrentGame();
+            mStoredGamesService.saveCurrentGame(true);
             GameService gameService = mStoredGamesService.loadCurrentGame();
             assertNotEquals(null, gameService);
             assertEquals(indoorGame, gameService);
         }
     }
 
-    private void defineTeams(IndoorGame indoorGame) {
+    private void defineTeamsAndLeague(IndoorGame indoorGame) {
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+
         indoorGame.setGender(GenderType.GENTS);
 
-        indoorGame.getLeague().setName("FIVB Volleyball World League 2017");
-        indoorGame.getLeague().setDivision("Final");
+        ApiLeague league = storedLeaguesService.getLeague(GameType.INDOOR, "FIVB Volleyball World League 2017");
+        if (league == null) {
+            indoorGame.getLeague().setName("FIVB Volleyball World League 2017");
+            indoorGame.getLeague().setDivision("Final");
+        } else {
+            indoorGame.getLeague().setId(league.getId());
+            indoorGame.getLeague().setCreatedBy(league.getCreatedBy());
+            indoorGame.getLeague().setCreatedAt(league.getCreatedAt());
+            indoorGame.getLeague().setUpdatedAt(league.getUpdatedAt());
+            indoorGame.getLeague().setName(league.getName());
+            indoorGame.getLeague().setDivision("Final");
+        }
 
-        indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
-        indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
-        indoorGame.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
-        indoorGame.setTeamColor(TeamType.GUEST, Color.parseColor("#034694"));
-        indoorGame.setLiberoColor(TeamType.HOME, Color.parseColor("#034694"));
-        indoorGame.setLiberoColor(TeamType.GUEST, Color.parseColor("#bc0019"));
+        ApiTeam teamBrazil = storedTeamsService.getTeam(GameType.INDOOR, "BRAZIL", GenderType.GENTS);
+        ApiTeam teamFrance = storedTeamsService.getTeam(GameType.INDOOR, "FRANCE", GenderType.GENTS);
 
-        indoorGame.addPlayer(TeamType.HOME, 1);
-        indoorGame.addPlayer(TeamType.HOME, 3);
-        indoorGame.addPlayer(TeamType.HOME, 4);
-        indoorGame.addPlayer(TeamType.HOME, 5);
-        indoorGame.addPlayer(TeamType.HOME, 6);
-        indoorGame.addPlayer(TeamType.HOME, 8);
-        indoorGame.addPlayer(TeamType.HOME, 9);
-        indoorGame.addPlayer(TeamType.HOME, 10);
-        indoorGame.addPlayer(TeamType.HOME, 11);
-        indoorGame.addPlayer(TeamType.HOME, 13);
-        indoorGame.addPlayer(TeamType.HOME, 16);
-        indoorGame.addPlayer(TeamType.HOME, 18);
-        indoorGame.addPlayer(TeamType.HOME, 19);
-        indoorGame.addPlayer(TeamType.HOME, 20);
+        if (teamBrazil == null) {
+            indoorGame.setTeamName(TeamType.HOME, "BRAZIL");
+            indoorGame.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
+            indoorGame.setLiberoColor(TeamType.HOME, Color.parseColor("#034694"));
 
-        indoorGame.addPlayer(TeamType.GUEST, 2);
-        indoorGame.addPlayer(TeamType.GUEST, 5);
-        indoorGame.addPlayer(TeamType.GUEST, 6);
-        indoorGame.addPlayer(TeamType.GUEST, 8);
-        indoorGame.addPlayer(TeamType.GUEST, 9);
-        indoorGame.addPlayer(TeamType.GUEST, 10);
-        indoorGame.addPlayer(TeamType.GUEST, 11);
-        indoorGame.addPlayer(TeamType.GUEST, 12);
-        indoorGame.addPlayer(TeamType.GUEST, 14);
-        indoorGame.addPlayer(TeamType.GUEST, 16);
-        indoorGame.addPlayer(TeamType.GUEST, 17);
-        indoorGame.addPlayer(TeamType.GUEST, 18);
-        indoorGame.addPlayer(TeamType.GUEST, 20);
-        indoorGame.addPlayer(TeamType.GUEST, 21);
+            indoorGame.addPlayer(TeamType.HOME, 1);
+            indoorGame.addPlayer(TeamType.HOME, 3);
+            indoorGame.addPlayer(TeamType.HOME, 4);
+            indoorGame.addPlayer(TeamType.HOME, 5);
+            indoorGame.addPlayer(TeamType.HOME, 6);
+            indoorGame.addPlayer(TeamType.HOME, 8);
+            indoorGame.addPlayer(TeamType.HOME, 9);
+            indoorGame.addPlayer(TeamType.HOME, 10);
+            indoorGame.addPlayer(TeamType.HOME, 11);
+            indoorGame.addPlayer(TeamType.HOME, 13);
+            indoorGame.addPlayer(TeamType.HOME, 16);
+            indoorGame.addPlayer(TeamType.HOME, 18);
+            indoorGame.addPlayer(TeamType.HOME, 19);
+            indoorGame.addPlayer(TeamType.HOME, 20);
 
-        indoorGame.addLibero(TeamType.HOME, 6);
-        indoorGame.addLibero(TeamType.HOME, 8);
+            indoorGame.addLibero(TeamType.HOME, 6);
+            indoorGame.addLibero(TeamType.HOME, 8);
 
-        indoorGame.addLibero(TeamType.GUEST, 2);
-        indoorGame.addLibero(TeamType.GUEST, 20);
+            indoorGame.setCaptain(TeamType.HOME, 1);
+        } else {
+            storedTeamsService.copyTeam(teamBrazil, indoorGame, TeamType.HOME);
+        }
 
-        indoorGame.setCaptain(TeamType.HOME, 1);
-        indoorGame.setCaptain(TeamType.GUEST, 6);
+        if (teamFrance == null) {
+            indoorGame.setTeamName(TeamType.GUEST, "FRANCE");
+            indoorGame.setTeamColor(TeamType.GUEST, Color.parseColor("#034694"));
+            indoorGame.setLiberoColor(TeamType.GUEST, Color.parseColor("#bc0019"));
 
-        indoorGame.startMatch();
+            indoorGame.addPlayer(TeamType.GUEST, 2);
+            indoorGame.addPlayer(TeamType.GUEST, 5);
+            indoorGame.addPlayer(TeamType.GUEST, 6);
+            indoorGame.addPlayer(TeamType.GUEST, 8);
+            indoorGame.addPlayer(TeamType.GUEST, 9);
+            indoorGame.addPlayer(TeamType.GUEST, 10);
+            indoorGame.addPlayer(TeamType.GUEST, 11);
+            indoorGame.addPlayer(TeamType.GUEST, 12);
+            indoorGame.addPlayer(TeamType.GUEST, 14);
+            indoorGame.addPlayer(TeamType.GUEST, 16);
+            indoorGame.addPlayer(TeamType.GUEST, 17);
+            indoorGame.addPlayer(TeamType.GUEST, 18);
+            indoorGame.addPlayer(TeamType.GUEST, 20);
+            indoorGame.addPlayer(TeamType.GUEST, 21);
 
-        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+            indoorGame.addLibero(TeamType.GUEST, 2);
+            indoorGame.addLibero(TeamType.GUEST, 20);
+
+            indoorGame.setCaptain(TeamType.GUEST, 6);
+        } else {
+            storedTeamsService.copyTeam(teamFrance, indoorGame, TeamType.GUEST);
+        }
+
         storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, indoorGame, TeamType.HOME);
         storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, indoorGame, TeamType.GUEST);
-
-        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
         storedLeaguesService.createAndSaveLeagueFrom(indoorGame.getLeague());
+
+        indoorGame.startMatch();
 
         mStoredGamesService = new StoredGames(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(indoorGame);

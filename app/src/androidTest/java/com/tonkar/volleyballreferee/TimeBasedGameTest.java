@@ -5,13 +5,17 @@ import android.graphics.Color;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.ApiLeague;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
 import com.tonkar.volleyballreferee.business.game.GameFactory;
 import com.tonkar.volleyballreferee.business.game.TimeBasedGame;
+import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
@@ -39,7 +43,7 @@ public class TimeBasedGameTest {
         TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis());
 
-        defineTeams(game);
+        defineTeamsAndLeague(game);
 
         game.setDuration(250);
         game.start();
@@ -55,16 +59,30 @@ public class TimeBasedGameTest {
         ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
-    private void defineTeams(TimeBasedGame game) {
+    private void defineTeamsAndLeague(TimeBasedGame game) {
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+
         game.setGender(GenderType.MIXED);
 
-        game.getLeague().setName("Tournament X");
-        game.getLeague().setDivision("Pool 4");
+        ApiLeague league = storedLeaguesService.getLeague(GameType.TIME, "Tournament X");
+        if (league == null) {
+            game.getLeague().setName("Tournament X");
+            game.getLeague().setDivision("Pool 4");
+        } else {
+            game.getLeague().setId(league.getId());
+            game.getLeague().setCreatedBy(league.getCreatedBy());
+            game.getLeague().setCreatedAt(league.getCreatedAt());
+            game.getLeague().setUpdatedAt(league.getUpdatedAt());
+            game.getLeague().setName(league.getName());
+            game.getLeague().setDivision("Pool 4");
+        }
 
         game.setTeamName(TeamType.HOME, "Team 1");
         game.setTeamName(TeamType.GUEST, "Team 2");
         game.setTeamColor(TeamType.HOME, Color.parseColor("#006032"));
         game.setTeamColor(TeamType.GUEST, Color.parseColor("#ffffff"));
+
+        storedLeaguesService.createAndSaveLeagueFrom(game.getLeague());
 
         game.startMatch();
 

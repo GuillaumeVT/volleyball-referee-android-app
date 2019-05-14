@@ -18,7 +18,6 @@ public class Tags {
     public static final String RULES          = "V-Rules";
     public static final String WEB            = "V-Web";
     public static final String SETTINGS       = "V-Settings";
-    public static final String CODE           = "V-Code";
     public static final String MAIN_UI        = "V-Main-UI";
     public static final String GAME_UI        = "V-Game-UI";
     public static final String SCHEDULE_UI    = "V-Schedule-UI";

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.api.ApiFriend;
 import com.tonkar.volleyballreferee.api.ApiFriendRequest;
@@ -13,6 +14,7 @@ import com.tonkar.volleyballreferee.api.ApiFriendsAndRequests;
 import com.tonkar.volleyballreferee.business.data.StoredUser;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncFriendRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,7 +84,16 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
 
         Button removeFriendButton = view.findViewById(R.id.remove_friend_button);
         removeFriendButton.setOnClickListener(button -> {
-            mStoredUserService.removeFriend(colleagueItem.getFriend(), mListener);
+            Context context = getContext();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog)
+                    .setTitle(context.getString(R.string.remove))
+                    .setMessage(String.format(Locale.getDefault(), context.getString(R.string.remove_colleague_question), colleagueItem.getFriend().getPseudo()))
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        mStoredUserService.removeFriend(colleagueItem.getFriend(), mListener);
+                    })
+                    .setNegativeButton(android.R.string.no, (dialog, which) -> {});
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, context.getResources());
         });
 
         return view;
@@ -96,12 +107,30 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
 
         Button acceptFriendButton = view.findViewById(R.id.accept_friend_button);
         acceptFriendButton.setOnClickListener(button -> {
-            mStoredUserService.acceptFriendRequest(colleagueItem.getFriendRequest(), mListener);
+            Context context = getContext();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog)
+                    .setTitle(context.getString(R.string.accept))
+                    .setMessage(String.format(Locale.getDefault(), context.getString(R.string.accept_colleague_question), colleagueItem.getFriendRequest().getSenderPseudo()))
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        mStoredUserService.acceptFriendRequest(colleagueItem.getFriendRequest(), mListener);
+                    })
+                    .setNegativeButton(android.R.string.no, (dialog, which) -> {});
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, context.getResources());
         });
 
         Button rejectFriendButton = view.findViewById(R.id.reject_friend_button);
         rejectFriendButton.setOnClickListener(button -> {
-            mStoredUserService.rejectFriendRequest(colleagueItem.getFriendRequest(), mListener);
+            Context context = getContext();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog)
+                    .setTitle(context.getString(R.string.reject))
+                    .setMessage(String.format(Locale.getDefault(), context.getString(R.string.reject_colleague_question), colleagueItem.getFriendRequest().getSenderPseudo()))
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        mStoredUserService.rejectFriendRequest(colleagueItem.getFriendRequest(), mListener);
+                    })
+                    .setNegativeButton(android.R.string.no, (dialog, which) -> {});
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, context.getResources());
         });
 
         return view;

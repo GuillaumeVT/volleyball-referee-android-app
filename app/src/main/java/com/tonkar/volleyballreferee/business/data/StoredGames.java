@@ -152,7 +152,8 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         return readCurrentGame(jsonGame);
     }
 
-    private synchronized void saveCurrentGame(boolean syncInsertion) {
+    @Override
+    public synchronized void saveCurrentGame(boolean syncInsertion) {
         updateCurrentGame();
         if (!mGameService.isMatchCompleted()) {
             insertCurrentGameIntoDb(sCurrentGame, mGameService, syncInsertion);
@@ -219,6 +220,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
     @Override
     public void onMatchCompleted(TeamType winner) {
+        updateCurrentGame();
         if (mStoredGame != null) {
             insertGameIntoDb(mStoredGame, false, true);
         }
@@ -246,7 +248,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
 
     @Override
     public void onSetCompleted() {
-        saveCurrentGame();
+        saveCurrentGame(true);
     }
 
     @Override
@@ -756,11 +758,11 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
         }
     }
 
-    private void pushCurrentGameToServer() {
+    private synchronized void pushCurrentGameToServer() {
         pushGameToServer(mStoredGame);
     }
 
-    private void pushCurrentSetToServer() {
+    private synchronized void pushCurrentSetToServer() {
         if (mBatteryReceiver.canPushSetToServer() && PrefUtils.canSync(mContext) && mStoredGame != null && isNotTestGame(mStoredGame)) {
             int setIndex = mStoredGame.currentSetIndex();
             final ApiSet set = mStoredGame.getSets().get(setIndex);

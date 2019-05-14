@@ -29,6 +29,8 @@ public interface StoredGamesService {
 
     GameService loadCurrentGame();
 
+    void saveCurrentGame(boolean syncInsertion);
+
     void saveCurrentGame();
 
     void deleteCurrentGame();

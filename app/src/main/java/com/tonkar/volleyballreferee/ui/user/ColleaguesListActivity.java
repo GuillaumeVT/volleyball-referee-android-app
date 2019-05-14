@@ -74,7 +74,7 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
                     if (pseudo.length() > 2) {
                         mStoredUserService.sendFriendRequest(pseudo, ColleaguesListActivity.this);
                     } else {
-                        UiUtils.makeErrorText(ColleaguesListActivity.this, String.format(getString(R.string.minimum_size_error), 3), Toast.LENGTH_LONG).show();
+                        UiUtils.makeErrorText(ColleaguesListActivity.this, String.format(getString(R.string.must_provide_at_least_n_characters), 3), Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {});

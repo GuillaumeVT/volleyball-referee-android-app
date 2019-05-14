@@ -66,7 +66,7 @@ public class StoredTeamsIOTest {
         teamService.setCaptain(TeamType.HOME, 1);
         teamService.setGender(TeamType.HOME, GenderType.GENTS);
 
-        storedTeamsService.saveTeam(teamService);
+        storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, teamService, TeamType.HOME);
 
         teamService = storedTeamsService.createTeam(GameType.INDOOR);
         teamService.setTeamName(TeamType.HOME, "FRANCE");
@@ -94,7 +94,7 @@ public class StoredTeamsIOTest {
         teamService.setCaptain(TeamType.HOME, 6);
         teamService.setGender(TeamType.HOME, GenderType.GENTS);
 
-        storedTeamsService.saveTeam(teamService);
+        storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, teamService, TeamType.HOME);
     }
 
     @Test
@@ -118,15 +118,6 @@ public class StoredTeamsIOTest {
 
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
-
-        for (ApiTeam team : expectedList) {
-            storedTeamsService.deleteTeam(team.getId());
-        }
     }
 
-    @Test
-    public void clear() {
-        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity().getApplicationContext());
-        storedTeamsService.deleteAllTeams();
-    }
 }

@@ -76,7 +76,7 @@ public class PseudoInputDialogFragment extends DialogFragment {
                         }
                     });
                 } else {
-                    editTextLayout.setError(String.format(getString(R.string.minimum_size_error), 3));
+                    editTextLayout.setError(String.format(getString(R.string.must_provide_at_least_n_characters), 3));
                 }
             });
         });

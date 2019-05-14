@@ -7,6 +7,8 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.ApiLeague;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
@@ -52,7 +54,7 @@ public class ItalyUsaBeachGame {
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
-        defineTeams(beachGame);
+        defineTeamsAndLeague(beachGame);
 
         playSet1_complete(beachGame);
         playSet2_complete(beachGame);
@@ -67,7 +69,7 @@ public class ItalyUsaBeachGame {
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
-        defineTeams(beachGame);
+        defineTeamsAndLeague(beachGame);
 
         playSet1_complete(beachGame);
         playSet2_matchPoint(beachGame);
@@ -80,7 +82,7 @@ public class ItalyUsaBeachGame {
 
         for (int index = 0; index < 5; index++) {
             Log.i("VBR-Test", "playGame_matchPoint index #" + index);
-            mStoredGamesService.saveCurrentGame();
+            mStoredGamesService.saveCurrentGame(true);
             GameService gameService = mStoredGamesService.loadCurrentGame();
             assertNotEquals(null, gameService);
             assertEquals(beachGame, gameService);
@@ -93,27 +95,52 @@ public class ItalyUsaBeachGame {
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
-        defineTeams(beachGame);
+        defineTeamsAndLeague(beachGame);
 
         playSet1_technicalTimeout(beachGame);
     }
 
-    private void defineTeams(BeachGame beachGame) {
-        beachGame.setGender(GenderType.GENTS);
-        beachGame.getLeague().setName("FIVB Beach Volleyball World Championship 2017");
-        beachGame.getLeague().setDivision("Final");
-        beachGame.setTeamName(TeamType.HOME, "USA");
-        beachGame.setTeamName(TeamType.GUEST, "ITALY");
-        beachGame.setTeamColor(TeamType.HOME, Color.parseColor("#bc0019"));
-        beachGame.setTeamColor(TeamType.GUEST, Color.parseColor("#2980b9"));
-        beachGame.startMatch();
-
+    private void defineTeamsAndLeague(BeachGame beachGame) {
         StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+
+        beachGame.setGender(GenderType.GENTS);
+
+        ApiLeague league = storedLeaguesService.getLeague(GameType.BEACH, "FIVB Beach Volleyball World Championship 2017");
+        if (league == null) {
+            beachGame.getLeague().setName("FIVB Beach Volleyball World Championship 2017");
+            beachGame.getLeague().setDivision("Final");
+        } else {
+            beachGame.getLeague().setId(league.getId());
+            beachGame.getLeague().setCreatedBy(league.getCreatedBy());
+            beachGame.getLeague().setCreatedAt(league.getCreatedAt());
+            beachGame.getLeague().setUpdatedAt(league.getUpdatedAt());
+            beachGame.getLeague().setName(league.getName());
+            beachGame.getLeague().setDivision("Final");
+        }
+
+        ApiTeam teamUsa = storedTeamsService.getTeam(GameType.BEACH, "USA", GenderType.GENTS);
+        ApiTeam teamItaly = storedTeamsService.getTeam(GameType.BEACH, "ITALY", GenderType.GENTS);
+
+        if (teamUsa == null) {
+            beachGame.setTeamName(TeamType.HOME, "USA");
+            beachGame.setTeamColor(TeamType.HOME, Color.parseColor("#bc0019"));
+        } else {
+            storedTeamsService.copyTeam(teamUsa, beachGame, TeamType.HOME);
+        }
+
+        if (teamItaly == null) {
+            beachGame.setTeamName(TeamType.GUEST, "ITALY");
+            beachGame.setTeamColor(TeamType.GUEST, Color.parseColor("#2980b9"));
+        } else {
+            storedTeamsService.copyTeam(teamItaly, beachGame, TeamType.GUEST);
+        }
+
         storedTeamsService.createAndSaveTeamFrom(GameType.BEACH, beachGame, TeamType.HOME);
         storedTeamsService.createAndSaveTeamFrom(GameType.BEACH, beachGame, TeamType.GUEST);
-
-        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
         storedLeaguesService.createAndSaveLeagueFrom(beachGame.getLeague());
+
+        beachGame.startMatch();
 
         mStoredGamesService = new StoredGames(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(beachGame);

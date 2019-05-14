@@ -58,7 +58,7 @@ public class StoredRulesIOTest {
         rules.setBeachCourtSwitchFreqTieBreak(1);
         rules.setCustomConsecutiveServesPerPlayer(77);
 
-        storedRulesService.saveRules(rules);
+        storedRulesService.createAndSaveRulesFrom(rules);
 
         rules = storedRulesService.createRules(GameType.BEACH);
         rules.setName("Test Rules 2");
@@ -82,7 +82,7 @@ public class StoredRulesIOTest {
         rules.setBeachCourtSwitchFreqTieBreak(9);
         rules.setCustomConsecutiveServesPerPlayer(10);
 
-        storedRulesService.saveRules(rules);
+        storedRulesService.createAndSaveRulesFrom(rules);
     }
 
     @Test
@@ -113,9 +113,4 @@ public class StoredRulesIOTest {
         }
     }
 
-    @Test
-    public void clear() {
-        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
-        storedRulesService.deleteAllRules();
-    }
 }

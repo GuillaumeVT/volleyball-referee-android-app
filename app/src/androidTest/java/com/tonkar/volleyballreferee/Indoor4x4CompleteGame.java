@@ -6,6 +6,8 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.api.ApiLeague;
+import com.tonkar.volleyballreferee.api.ApiTeam;
 import com.tonkar.volleyballreferee.api.Authentication;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
@@ -50,7 +52,7 @@ public class Indoor4x4CompleteGame {
         Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
-        defineTeams(indoor4x4Game);
+        defineTeamsAndLeague(indoor4x4Game);
 
         composeTeams(indoor4x4Game);
         playSet_complete(indoor4x4Game);
@@ -65,33 +67,59 @@ public class Indoor4x4CompleteGame {
         ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
     }
 
-    private void defineTeams(Indoor4x4Game indoor4x4Game) {
-        indoor4x4Game.setGender(GenderType.GENTS);
+    private void defineTeamsAndLeague(Indoor4x4Game indoor4x4Game) {
+        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
 
-        indoor4x4Game.getLeague().setName("4x4");
-        indoor4x4Game.getLeague().setDivision("Division 1");
+        indoor4x4Game.setGender(GenderType.MIXED);
 
-        indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");
-        indoor4x4Game.setTeamName(TeamType.GUEST, "Guest Team");
-        indoor4x4Game.setTeamColor(TeamType.HOME, Color.parseColor("#2980b9"));
-        indoor4x4Game.setTeamColor(TeamType.GUEST, Color.parseColor("#c2185b"));
-
-        for (int index = 1; index <= 8; index++) {
-            indoor4x4Game.addPlayer(TeamType.HOME, index);
-            indoor4x4Game.addPlayer(TeamType.GUEST, index);
+        ApiLeague league = storedLeaguesService.getLeague(GameType.INDOOR_4X4, "4x4");
+        if (league == null) {
+            indoor4x4Game.getLeague().setName("4x4");
+            indoor4x4Game.getLeague().setDivision("Division 1");
+        } else {
+            indoor4x4Game.getLeague().setId(league.getId());
+            indoor4x4Game.getLeague().setCreatedBy(league.getCreatedBy());
+            indoor4x4Game.getLeague().setCreatedAt(league.getCreatedAt());
+            indoor4x4Game.getLeague().setUpdatedAt(league.getUpdatedAt());
+            indoor4x4Game.getLeague().setName(league.getName());
+            indoor4x4Game.getLeague().setDivision("Division 1");
         }
 
-        indoor4x4Game.setCaptain(TeamType.HOME, 1);
-        indoor4x4Game.setCaptain(TeamType.GUEST, 2);
+        ApiTeam homeTeam = storedTeamsService.getTeam(GameType.INDOOR_4X4, "Home Team", GenderType.MIXED);
+        ApiTeam guestTeam = storedTeamsService.getTeam(GameType.INDOOR_4X4, "Guest Team", GenderType.MIXED);
 
-        indoor4x4Game.startMatch();
+        if (homeTeam == null) {
+            indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");
+            indoor4x4Game.setTeamColor(TeamType.HOME, Color.parseColor("#2980b9"));
 
-        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
+            for (int index = 1; index <= 8; index++) {
+                indoor4x4Game.addPlayer(TeamType.HOME, index);
+            }
+
+            indoor4x4Game.setCaptain(TeamType.HOME, 1);
+        } else {
+            storedTeamsService.copyTeam(homeTeam, indoor4x4Game, TeamType.HOME);
+        }
+
+        if (guestTeam == null) {
+            indoor4x4Game.setTeamName(TeamType.GUEST, "Guest Team");
+            indoor4x4Game.setTeamColor(TeamType.GUEST, Color.parseColor("#c2185b"));
+
+            for (int index = 1; index <= 8; index++) {
+                indoor4x4Game.addPlayer(TeamType.GUEST, index);
+            }
+
+            indoor4x4Game.setCaptain(TeamType.GUEST, 2);
+        } else {
+            storedTeamsService.copyTeam(guestTeam, indoor4x4Game, TeamType.GUEST);
+        }
+
         storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR_4X4, indoor4x4Game, TeamType.HOME);
         storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR_4X4, indoor4x4Game, TeamType.GUEST);
-
-        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
         storedLeaguesService.createAndSaveLeagueFrom(indoor4x4Game.getLeague());
+
+        indoor4x4Game.startMatch();
 
         mStoredGamesService = new StoredGames(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(indoor4x4Game);

@@ -59,7 +59,7 @@ public class PointsScoreBoardGameTest {
 
         for (int index = 0; index < 5; index++) {
             Log.i("VBR-Test", "playGame_complete index #" + index);
-            mStoredGamesService.saveCurrentGame();
+            mStoredGamesService.saveCurrentGame(true);
             GameService gameService = mStoredGamesService.loadCurrentGame();
             assertNotEquals(null, gameService);
             assertEquals(game, gameService);
