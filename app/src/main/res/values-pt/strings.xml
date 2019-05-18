@@ -17,8 +17,17 @@
     <string name="delete">Apagar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
+    <string name="my_data_group">My data</string>
     <string name="configuration_group">Configurações</string>
+    <string name="completed_games">Completed matches</string>
+    <string name="available_games">Scheduled &amp; live matches</string>
+    <string name="teams">Teams</string>
+    <string name="rules">Rules</string>
+    <string name="colleagues">Colleagues</string>
+    <string name="live_games_vbr_com">Live matches on website</string>
     <string name="my_account">A minha conta</string>
+    <string name="news">News</string>
+    <string name="no_news">No news to display</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Compra</string>
@@ -32,13 +41,35 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Porque devo registar-me?</string>
-    <string name="user_sign_in_why_message">Se transmite os seus jogos ao vivo, deverá  registar-se.\n\nAo registar-se, ganha controlo total dos seus jogos em https://www.volleyball-referee.com/user\n\A partir desta página, poderá criar e gerir as suas próprias regras, equipas, jogos e até torneios. Os jogos agendados podem ser arbitrados na sua App ou na App de outra pessoa, providenciando o código único do jogo ao árbitro.</string>
+    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
+    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
     <string name="user_sign_in_privacy_title">É seguro?</string>
     <string name="user_sign_in_privacy_message">Sim. Quando se regista, a única informação que nós importamos do seu perfil é o identificador social único que usamos para o identificar.</string>
+    <string name="user_sign_in_google">Sign in with Google</string>
+    <string name="user_sign_in_facebook">Sign in with Facebook</string>
+    <string name="user_sign_out">Sign out</string>
     <string name="user_signed_in_with_provider">Registado como %s</string>
+    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
+    <string name="user_id">User ID %s</string>
     <string name="user_signed_out">Saiu do registo</string>
     <string name="user_sign_in_with_provider_error">Erro ao registar como %s</string>
+    <string name="user_error">Error while retrieving user</string>
+    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
+    <string name="create">Create</string>
+    <string name="user_pseudo_hint">Pseudonym</string>
+    <string name="user_exists_error">This pseudonym already exists</string>
+    <string name="user_creation_error">Error while creating the pseudonym</string>
+    <string name="search_colleague">Search colleague</string>
+    <string name="add_colleague">Add colleague</string>
+    <string name="received_colleague_request">You received a colleague request from %s</string>
+    <string name="sent_colleague_request">You sent a colleague request to %s</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="remove">Remove</string>
+    <string name="pending">Pending</string>
+    <string name="accept_colleague_question">Accept request from colleague %s?</string>
+    <string name="reject_colleague_question">Reject request from colleague %s?</string>
+    <string name="remove_colleague_question">Remove colleague %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Selecionar Equipas</string>
@@ -55,12 +86,14 @@
     <string name="confirm_game_setup_question">Confirma essa seleção?</string>
     <string name="gender_description">Género</string>
     <string name="match_duration_text">Escolha a duração do jogo</string>
-    <string name="league_name">Nome da Competição (opcional)</string>
-    <string name="division_name">Divisão / nome da série (opcional)</string>
+    <string name="league_name">Nome da Competição</string>
+    <string name="division_name">Divisão / nome da série</string>
     <string name="misc_tab">Diversos</string>
     <string name="rules_tab">Regras</string>
     <string name="teams_tab">Equipas</string>
+    <string name="referee">Referee</string>
     <string name="leave_game_setup_question">A configuração deste jogo será perdida, continuar assim mesmo?</string>
+    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Coroa</string>
@@ -128,6 +161,7 @@
     <string name="edit_start_match">Editar e de seguida iniciar o jogo</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">Continuar o jogo</string>
+    <string name="download_match_error">Error while downloading the match</string>
 
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
@@ -135,40 +169,41 @@
     <string name="pref_interactive_notification">Usar notificações interativas</string>
 
     <string name="synchronize">Sincronizar</string>
+    <string name="sync_succeeded_message">Data synchronization succeeded</string>
     <string name="sync_failed_message">Sincronização de dados falhada</string>
 
-    <!-- Recorded games activity -->
+    <!-- Stored games activity -->
     <string name="search_games">Procurar jogos</string>
     <string name="delete_games">Apagar todos os jogos</string>
     <string name="delete_game">Apagar jogo</string>
-    <string name="delete_games_question">Deseja apagar todos as jogos guardados?</string>
-    <string name="delete_game_question">Deseja apagar esse jogo guardado?</string>
+    <string name="delete_games_question">Deseja apagar todos as jogos?</string>
+    <string name="delete_game_question">Deseja apagar esse jogo?</string>
     <string name="deleted_game">Jogo apagado</string>
     <string name="deleted_games">Todos os jogos foram apagados</string>
     <string name="players">Jogadores</string>
     <string name="report_game">Gerar relatório do jogo</string>
     <string name="report_exception">Falha ao gerar ou exibir o relatório de jogo</string>
 
-    <!-- Saved teams activity -->
+    <!-- Stored teams activity -->
     <string name="search_teams">Procurar equipas</string>
     <string name="delete_teams">Apagar todas as equipas</string>
     <string name="delete_team">Apagar equipa</string>
     <string name="save_team">Guardar equipa</string>
-    <string name="delete_teams_question">Gostaria de apagar todas as equipas guardadas?</string>
-    <string name="delete_team_question">Gostaria de apagar esta equipa guardada?</string>
+    <string name="delete_teams_question">Gostaria de apagar todas as equipas?</string>
+    <string name="delete_team_question">Gostaria de apagar esta equipa?</string>
     <string name="deleted_team">Equipa apagada</string>
     <string name="saved_team">Equipa guardada</string>
     <string name="deleted_teams">Todas as equipas foram guardadas</string>
     <string name="leave_team_creation_title">Sair da criação de equipas</string>
     <string name="leave_team_creation_question">Esta equipa não foi guardada, continuar assim mesmo?</string>
 
-    <!-- Rules activity -->
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Apagar todas as regras</string>
     <string name="delete_rules">Apagar regras</string>
     <string name="save_rules">Gravar regras</string>
     <string name="search_rules">Procurar regras</string>
-    <string name="delete_all_rules_question">Quer apagar todas as regras gravadas?</string>
-    <string name="delete_rules_question">Quer apagar estas regras gravadas?</string>
+    <string name="delete_all_rules_question">Quer apagar todas as regras?</string>
+    <string name="delete_rules_question">Quer apagar estas regras?</string>
     <string name="deleted_rules">As regras foram apagadas</string>
     <string name="saved_rules">As regras foram gravadas</string>
     <string name="deleted_all_rules">Todas as regras foram apagadas</string>
