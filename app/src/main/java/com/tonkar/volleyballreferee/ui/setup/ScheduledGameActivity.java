@@ -115,7 +115,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division");
                 mGameDescription.setDivisionName(s.toString().trim());
-                ((TextInputLayout)findViewById(R.id.division_name_input_layout)).setError(count < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                ((TextInputLayout)findViewById(R.id.division_name_input_layout)).setError(mGameDescription.getDivisionName().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                 computeItemsVisibility();
             }
 
