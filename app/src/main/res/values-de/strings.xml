@@ -17,8 +17,17 @@
     <string name="delete">Löschen</string>
     <string name="ignore">Ignorieren</string>
     <string name="facebook">Facebook</string>
+    <string name="my_data_group">My data</string>
     <string name="configuration_group">Konfiguration</string>
+    <string name="completed_games">Completed matches</string>
+    <string name="available_games">Scheduled &amp; live matches</string>
+    <string name="teams">Teams</string>
+    <string name="rules">Rules</string>
+    <string name="colleagues">Colleagues</string>
+    <string name="live_games_vbr_com">Live matches on website</string>
     <string name="my_account">Mein Konto</string>
+    <string name="news">News</string>
+    <string name="no_news">No news to display</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Kaufen</string>
@@ -32,13 +41,35 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Warum sollte ich mich anmelden?</string>
-    <string name="user_sign_in_why_message">Wenn Sie Ihre Spiele online streamen, sind Sie möglicherweise daran interessiert, sich anzumelden.\n\nMit Ihrer Anmeldung erhalten Sie unter https://www.volleyball-referee.com/user die volle Kontrolle über Ihre Spiele.\n\nAuf dieser Seite können Sie eigene Regeln, Mannschaften, Spiele und sogar Turniere erstellen und verwalten. Die geplanten Spiele können dann in Ihrer App oder in einer anderen App gespielt werden, indem Sie dem Schiedsrichter den Code des Spiels geben.</string>
+    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
+    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
     <string name="user_sign_in_privacy_title">Ist es sicher?</string>
     <string name="user_sign_in_privacy_message">Ja. Wenn Sie sich anmelden, verwenden wir nur Ihre eindeutige soziale Kennung, mit der wir Sie identifizieren.</string>
+    <string name="user_sign_in_google">Sign in with Google</string>
+    <string name="user_sign_in_facebook">Sign in with Facebook</string>
+    <string name="user_sign_out">Sign out</string>
     <string name="user_signed_in_with_provider">Angemeldet mit %s</string>
-    <string name="user_signed_out">Abgemeldet</string>
+    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
+    <string name="user_id">User ID %s</string>
     <string name="user_sign_in_with_provider_error">Fehler bei der Anmeldung mit %s</string>
+    <string name="user_signed_out">Abgemeldet</string>
+    <string name="user_error">Error while retrieving user</string>
+    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
+    <string name="create">Create</string>
+    <string name="user_pseudo_hint">Pseudonym</string>
+    <string name="user_exists_error">This pseudonym already exists</string>
+    <string name="user_creation_error">Error while creating the pseudonym</string>
+    <string name="search_colleague">Search colleague</string>
+    <string name="add_colleague">Add colleague</string>
+    <string name="received_colleague_request">You received a colleague request from %s</string>
+    <string name="sent_colleague_request">You sent a colleague request to %s</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="remove">Remove</string>
+    <string name="pending">Pending</string>
+    <string name="accept_colleague_question">Accept request from colleague %s?</string>
+    <string name="reject_colleague_question">Reject request from colleague %s?</string>
+    <string name="remove_colleague_question">Remove colleague %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Spieleinstellungen</string>
@@ -55,12 +86,14 @@
     <string name="confirm_game_setup_question">Stimmen Sie diesen Spieleinstellungen zu?</string>
     <string name="gender_description">Geschlecht</string>
     <string name="match_duration_text">Spieldauer auswählen</string>
-    <string name="league_name">Liga- / Wettbewerbsbezeichnung (optional)</string>
-    <string name="division_name">Spielklasse- / Gruppenbezeichnung (optional)</string>
+    <string name="league_name">Liga- / Wettbewerbsbezeichnung</string>
+    <string name="division_name">Spielklasse- / Gruppenbezeichnung</string>
     <string name="rules_tab">Regeln</string>
     <string name="teams_tab">Mannschaften</string>
     <string name="misc_tab">Sonstiges</string>
+    <string name="referee">Referee</string>
     <string name="leave_game_setup_question">Diese Spieleinstellungen gehen verloren. Trotzdem fortfahren?</string>
+    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Zahl</string>
@@ -128,6 +161,7 @@
     <string name="edit_start_match">Spiel anpassen und starten</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">@string/resume_game_title</string>
+    <string name="download_match_error">Error while downloading the match</string>
 
     <!-- Settings activity -->
     <string name="settings">Einstellungen</string>
@@ -135,26 +169,27 @@
     <string name="pref_interactive_notification">Verwenden Sie interaktive Benachrichtigungen</string>
 
     <string name="synchronize">Synchronisieren</string>
+    <string name="sync_succeeded_message">Data synchronization succeeded</string>
     <string name="sync_failed_message">Fehler bei der Datensynchronisation</string>
 
-    <!-- Recorded games activity -->
+    <!-- Stored games activity -->
     <string name="search_games">Spielsuche</string>
     <string name="delete_games">Lösche alle Spiele</string>
     <string name="delete_game">Lösche dieses Spiel</string>
-    <string name="delete_games_question">Möchten Sie alle gespeicherten Spiele löschen?</string>
-    <string name="delete_game_question">Möchten Sie dieses gespeicherte Spiel löschen?</string>
+    <string name="delete_games_question">Möchten Sie alle Spiele löschen?</string>
+    <string name="delete_game_question">Möchten Sie dieses Spiel löschen?</string>
     <string name="deleted_game">Spiel wurde gelöscht</string>
     <string name="deleted_games">Alle Spiele wurden gelöscht</string>
     <string name="players">Spieler</string>
     <string name="report_game">Generiere einen Spielbericht</string>
     <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
 
-    <!-- Saved teams activity -->
+    <!-- Stored teams activity -->
     <string name="search_teams">Mannschaftssuche</string>
     <string name="delete_teams">Alle Mannschaften löschen</string>
     <string name="delete_team">Diese Mannschaft löschen</string>
     <string name="save_team">Mannschaft speichern</string>
-    <string name="delete_teams_question">Wollen Sie alle gespeicherten Mannschaften löschen?</string>
+    <string name="delete_teams_question">Wollen Sie alle Mannschaften löschen?</string>
     <string name="delete_team_question">Wollen Sie diese Mannschaft löschen?</string>
     <string name="deleted_team">Mannschaft wurde gelöscht</string>
     <string name="saved_team">Mannschaft wurde gespeichert</string>
@@ -162,12 +197,12 @@
     <string name="leave_team_creation_title">Verlasse die Mannschaftszusammenstellung</string>
     <string name="leave_team_creation_question">Diese Mannschaft wird nicht gespeichert. Trotzdem fortfahren?</string>
 
-    <!-- Rules activity -->
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Alle Regeln löschen</string>
     <string name="delete_rules">Diese Regeln löschen</string>
     <string name="save_rules">Regeln speichern</string>
     <string name="search_rules">Regeln Suche</string>
-    <string name="delete_all_rules_question">Wollen Sie alle gespeicherten Regeln löschen?</string>
+    <string name="delete_all_rules_question">Wollen Sie alle Regeln löschen?</string>
     <string name="delete_rules_question">Wollen Sie diese Regeln löschen?</string>
     <string name="deleted_rules">Regeln wurde gelöscht</string>
     <string name="saved_rules">Regeln wurde gespeichert</string>
