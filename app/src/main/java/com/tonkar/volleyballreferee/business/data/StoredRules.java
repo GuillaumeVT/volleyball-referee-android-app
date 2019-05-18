@@ -123,14 +123,15 @@ public class StoredRules implements StoredRulesService {
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
         if (rules.getName().length() > 1
-                && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind()) == 0
-                && AppDatabase.getInstance(mContext).rulesDao().countById(rules.getId()) == 0
+                && !rules.getKind().equals(GameType.TIME)
                 && !rules.getName().equals(Rules.DEFAULT_BEACH_NAME)
                 && !rules.getName().equals(Rules.DEFAULT_INDOOR_NAME)
                 && !rules.getName().equals(Rules.DEFAULT_INDOOR_4X4_NAME)
                 && !rules.getId().equals(Rules.DEFAULT_BEACH_ID)
                 && !rules.getId().equals(Rules.DEFAULT_INDOOR_ID)
-                && !rules.getId().equals(Rules.DEFAULT_INDOOR_4X4_ID)) {
+                && !rules.getId().equals(Rules.DEFAULT_INDOOR_4X4_ID)
+                && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind()) == 0
+                && AppDatabase.getInstance(mContext).rulesDao().countById(rules.getId()) == 0) {
             saveRules(rules);
         }
     }

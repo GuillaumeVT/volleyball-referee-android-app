@@ -55,7 +55,7 @@ public class StoredLeagues implements StoredLeaguesService {
 
     @Override
     public void createAndSaveLeagueFrom(ApiSelectedLeague selectedLeague) {
-        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1) {
+        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1 && !selectedLeague.getKind().equals(GameType.TIME)) {
             long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
             int leaguesSameName = AppDatabase.getInstance(mContext).leagueDao().countByNameAndKind(selectedLeague.getName(), selectedLeague.getKind());

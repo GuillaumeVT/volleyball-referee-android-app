@@ -72,11 +72,10 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         storedRulesList.setOnItemClickListener((adapterView, view, i, l) -> {
             ApiRulesDescription rulesDescription = mStoredRulesListAdapter.getItem(i);
             ApiRules rules = mStoredRulesService.getRules(rulesDescription.getId());
-            Log.i(Tags.STORED_RULES, String.format("Start activity to edit stored rules %s", rules.getName()));
+            Log.i(Tags.STORED_RULES, String.format("Start activity to view stored rules %s", rules.getName()));
 
-            final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesActivity.class);
+            final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesViewActivity.class);
             intent.putExtra("rules", mStoredRulesService.writeRules(rules));
-            intent.putExtra("create", false);
             startActivity(intent);
             UiUtils.animateForward(this);
         });

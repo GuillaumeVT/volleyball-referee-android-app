@@ -108,7 +108,7 @@ public class Rules extends ApiRules {
         setSetsPerGame(rules.getSetsPerGame());
         setPointsPerSet(rules.getPointsPerSet());
         setTieBreakInLastSet(rules.isTieBreakInLastSet());
-        setPointsPerSet(rules.getPointsPerSet());
+        setPointsInTieBreak(rules.getPointsInTieBreak());
         setTwoPointsDifference(rules.isTwoPointsDifference());
         setSanctions(rules.isSanctions());
         setTeamTimeouts(rules.isTeamTimeouts());

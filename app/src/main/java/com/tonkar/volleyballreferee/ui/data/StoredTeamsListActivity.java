@@ -73,12 +73,10 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         storedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
             ApiTeamDescription teamDescription = mStoredTeamsListAdapter.getItem(i);
             ApiTeam team = mStoredTeamsService.getTeam(teamDescription.getId());
-            Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
+            Log.i(Tags.STORED_TEAMS, String.format("Start activity to view stored team %s", team.getName()));
 
-            final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamActivity.class);
+            final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamViewActivity.class);
             intent.putExtra("team", mStoredTeamsService.writeTeam(team));
-            intent.putExtra("kind", team.getKind().toString());
-            intent.putExtra("create", false);
             startActivity(intent);
             UiUtils.animateForward(this);
         });

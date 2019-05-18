@@ -169,6 +169,7 @@ public class StoredTeams implements StoredTeamsService {
             dest.addPlayer(teamType, player.getNum());
         }
         for (ApiPlayer player : source.getLiberos()) {
+            dest.addPlayer(teamType, player.getNum());
             dest.addLibero(teamType, player.getNum());
         }
 

@@ -41,6 +41,13 @@
         <item name="srcCompat">@android:drawable/ic_input_add</item>
     </style>
 
+    <style name="VbrEditFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/colorOnSecondary</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="srcCompat">@drawable/ic_edit</item>
+    </style>
+
     <style name="TextViewTheme" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textColor">@color/colorOnSurface</item>
         <item name="colorControlHighlight">@color/colorPrimaryVariant</item>

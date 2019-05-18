@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.tonkar.volleyballreferee.ui.data.StoredRulesViewActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+        <include layout="@layout/toolbar"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <ScrollView android:id="@+id/rules_setup_scroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/big_margin_size"
+                        android:gravity="top|center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/big_margin_size">
+
+                    <include layout="@layout/stored_rules_list_item"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:text="@string/general_rules"
+                            android:textAllCaps="true"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size"
+                            android:textStyle="bold"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_sets_per_game"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_sets_per_game"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_points_per_set"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_points_per_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/rules_tie_break"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:clickable="false"
+                            android:text="@string/rules_tie_break"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_points_in_tie_break"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_points_in_tie_break"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/rules_two_points_difference"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:clickable="false"
+                            android:text="@string/rules_two_points_difference"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/rules_sanctions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:text="@string/rules_sanctions"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/timeout_rules"
+                            android:textAllCaps="true"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size"
+                            android:textStyle="bold"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/rules_team_timeouts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:clickable="false"
+                            android:text="@string/rules_team_timeouts"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_team_timeouts_per_set"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_team_timeouts_per_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_team_timeout_duration"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_team_timeout_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/rules_technical_timeouts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:clickable="false"
+                            android:text="@string/rules_technical_timeouts"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_technical_timeout_duration"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_technical_timeout_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/rules_game_intervals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:clickable="false"
+                            android:text="@string/rules_game_intervals"
+                            android:textColor="@color/colorOnSurface"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginTop="@dimen/big_margin_size"
+                            android:text="@string/rules_game_intervals_duration"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textSize="@dimen/default_text_size"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/rules_game_intervals_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginBottom="@dimen/big_margin_size"
+                            android:textAppearance="@style/TextViewTheme"
+                            android:textColor="@color/colorDisabledText"
+                            android:textSize="@dimen/default_text_size"/>
+
+                    <LinearLayout
+                            android:id="@+id/indoor_rules_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/indoor_rules"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/default_text_size"
+                                android:textStyle="bold"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/rules_substitutions_limitation"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/default_text_size"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/rules_substitutions_limitation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorDisabledText"
+                                android:textSize="@dimen/default_text_size"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/rules_substitutions_limitation_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/small_margin_size"
+                                android:drawablePadding="@dimen/default_margin_size"
+                                android:drawableTint="@color/colorPrimary"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/small_text_size"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/rules_team_substitutions_per_set"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/default_text_size"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/rules_team_substitutions_per_set"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorDisabledText"
+                                android:textSize="@dimen/default_text_size"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/rules_consecutive_serves_per_player"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/default_text_size"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/rules_consecutive_serves_per_player"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorDisabledText"
+                                android:textSize="@dimen/default_text_size"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/beach_rules_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/beach_rules"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/default_text_size"
+                                android:textStyle="bold"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/rules_court_switches"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/big_margin_size"
+                                android:clickable="false"
+                                android:text="@string/rules_court_switches"
+                                android:textColor="@color/colorOnSurface"
+                                android:textSize="@dimen/default_text_size"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/rules_court_switch_frequency"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/default_text_size"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/rules_court_switch_frequency"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorDisabledText"
+                                android:textSize="@dimen/default_text_size"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginTop="@dimen/big_margin_size"
+                                android:text="@string/rules_court_switch_frequency_tie_break"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textSize="@dimen/default_text_size"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/rules_court_switch_frequency_tie_break"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/big_margin_size"
+                                android:layout_marginStart="@dimen/big_margin_size"
+                                android:layout_marginBottom="@dimen/big_margin_size"
+                                android:textAppearance="@style/TextViewTheme"
+                                android:textColor="@color/colorDisabledText"
+                                android:textSize="@dimen/default_text_size"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/edit_rules_button"
+                    style="@style/VbrEditFab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size" android:onClick="editRules"
+                    android:layout_marginTop="@dimen/fab_shift_default"
+                    android:layout_marginStart="@dimen/fab_shift_default"
+                    android:layout_marginEnd="@dimen/fab_shift_default"
+                    android:layout_marginBottom="@dimen/fab_shift_default"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/navigation_drawer"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
