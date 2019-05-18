@@ -11,7 +11,7 @@ import com.tonkar.volleyballreferee.api.ApiGameDescription;
 @Dao
 public interface GameDao {
 
-    @Query("SELECT id, createdBy, createdAt, updatedAt, synced, scheduledAt, kind, gender, public, leagueName, divisionName, homeTeamName, guestTeamName, homeSets, guestSets, score FROM games ORDER BY scheduledAt DESC")
+    @Query("SELECT id, createdBy, createdAt, updatedAt, synced, scheduledAt, kind, gender, usage, public, leagueName, divisionName, homeTeamName, guestTeamName, homeSets, guestSets, score FROM games ORDER BY scheduledAt DESC")
     List<ApiGameDescription> listGames();
 
     @Query("SELECT content FROM games WHERE id = :id")

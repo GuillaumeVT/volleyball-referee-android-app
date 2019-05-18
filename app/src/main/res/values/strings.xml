@@ -61,7 +61,6 @@
     <string name="user_pseudo_hint">Pseudonym</string>
     <string name="user_exists_error">This pseudonym already exists</string>
     <string name="user_creation_error">Error while creating the pseudonym</string>
-    <string name="minimum_size_error">Must have at least %d characters</string>
     <string name="search_colleague">Search colleague</string>
     <string name="add_colleague">Add colleague</string>
     <string name="received_colleague_request">You received a colleague request from %s</string>
@@ -70,6 +69,9 @@
     <string name="reject">Reject</string>
     <string name="remove">Remove</string>
     <string name="pending">Pending</string>
+    <string name="accept_colleague_question">Accept request from colleague %s?</string>
+    <string name="reject_colleague_question">Reject request from colleague %s?</string>
+    <string name="remove_colleague_question">Remove colleague %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Setup game</string>

@@ -17,8 +17,17 @@
     <string name="delete">Supprimer</string>
     <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
+    <string name="my_data_group">Mes données</string>
     <string name="configuration_group">Configuration</string>
+    <string name="completed_games">Matchs terminés</string>
+    <string name="available_games">Matchs programmés &amp; live</string>
+    <string name="teams">Équipes</string>
+    <string name="rules">Règles</string>
+    <string name="colleagues">Collègues</string>
+    <string name="live_games_vbr_com">Matchs live sur le site</string>
     <string name="my_account">Mon compte</string>
+    <string name="news">Informations</string>
+    <string name="no_news">Aucune information à afficher</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Acheter</string>
@@ -32,13 +41,35 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Pourquoi devrais-je me connecter?</string>
-    <string name="user_sign_in_why_message">Si vous diffusez vos matchs en ligne, se connecter pourrait vous intéresser.\n\nEn vous connectant, vous aurez le contrôle complet de vos matchs sur https://www.volleyball-referee.com/user\n\nDepuis cette page, vous pourrez également créer et gérer vos règles, équipes, matchs et même vos tournois. Les matchs programmés peuvent ensuite être arbitrés sur votre appli ou sur celle d\'un autre arbitre en lui fournissant le code unique de ce match.</string>
+    <string name="user_sign_in_why_title">Pourquoi me connecter?</string>
+    <string name="user_sign_in_why_message">Vos données Volleyball Referee (matchs, équipes, règles, ligues, collègues) seront synchronisées avec notre serveur. Si vous vous connectez, nous saurons qui vous êtes et nous associerons vos données avec votre compte.</string>
     <string name="user_sign_in_privacy_title">Est-ce sûr?</string>
     <string name="user_sign_in_privacy_message">Oui. Lorsque vous vous connectez, la seule information que nous récupérons est l\'identifiant de votre profil, dont nous nous servons pour vous identifier.</string>
+    <string name="user_sign_in_google">Me connecter avec Google</string>
+    <string name="user_sign_in_facebook">Me connecter avec Facebook</string>
+    <string name="user_sign_out">Me déconnecter</string>
     <string name="user_signed_in_with_provider">Connecté avec %s</string>
-    <string name="user_signed_out">Déconnecté</string>
+    <string name="user_signed_in_as_pseudo">Connecté en tant que %s</string>
+    <string name="user_id">Identifiant utilisateur %s</string>
     <string name="user_sign_in_with_provider_error">Erreur lors de la connexion à %s</string>
+    <string name="user_signed_out">Déconnecté</string>
+    <string name="user_error">Erreur lors de la récupération de l\'utilisateur</string>
+    <string name="create_user_pseudo_title">Créer mon pseudo \'Volleyball Referee\'</string>
+    <string name="create">Créer</string>
+    <string name="user_pseudo_hint">Pseudo</string>
+    <string name="user_exists_error">Ce pseudo existe déjà</string>
+    <string name="user_creation_error">Erreur lors de la création du pseudo</string>
+    <string name="search_colleague">Chercher dans collègues</string>
+    <string name="add_colleague">Ajouter un collègue</string>
+    <string name="received_colleague_request">Vous avez reçu une demande de collègue de %s</string>
+    <string name="sent_colleague_request">Vous avez envoyé une demande de collègue de %s</string>
+    <string name="accept">Accepter</string>
+    <string name="reject">Refuser</string>
+    <string name="remove">Supprimer</string>
+    <string name="pending">En cours</string>
+    <string name="accept_colleague_question">Accepter la demande de collègue de %s?</string>
+    <string name="reject_colleague_question">Refuser la demande de collègue de %s?</string>
+    <string name="remove_colleague_question">Supprimer le collègue %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configuration du match</string>
@@ -55,12 +86,14 @@
     <string name="confirm_game_setup_question">Confirmez-vous cette configuration?</string>
     <string name="gender_description">Genre</string>
     <string name="match_duration_text">Sélectionner la durée du match</string>
-    <string name="league_name">Nom de la ligue / du tournoi (optionnel)</string>
-    <string name="division_name">Nom de la division / poule (optionnel)</string>
+    <string name="league_name">Nom de la ligue / du tournoi</string>
+    <string name="division_name">Nom de la division / poule</string>
     <string name="misc_tab">Divers</string>
     <string name="rules_tab">Règles</string>
     <string name="teams_tab">Équipes</string>
+    <string name="referee">Arbitre</string>
     <string name="leave_game_setup_question">Cette configuration de match sera perdue. Quitter?</string>
+    <string name="must_provide_at_least_n_characters">Doit contenir au moins %d lettres</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Pile</string>
@@ -128,6 +161,7 @@
     <string name="edit_start_match">Éditer puis démarrer le match</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">@string/resume_game_title</string>
+    <string name="download_match_error">Erreur lors du téléchargement du match</string>
 
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
@@ -135,40 +169,41 @@
     <string name="pref_interactive_notification">Utiliser les notifications interactives</string>
 
     <string name="synchronize">Synchroniser</string>
+    <string name="sync_succeeded_message">Synchronisation terminée</string>
     <string name="sync_failed_message">Échec de la synchronisation</string>
 
-    <!-- Recorded games activity -->
+    <!-- Stored games activity -->
     <string name="search_games">Rechercher des matchs</string>
     <string name="delete_games">Supprimer tous les matchs</string>
     <string name="delete_game">Supprimer un match</string>
-    <string name="delete_games_question">Voulez-vous supprimer tous les matchs enregistrés?</string>
-    <string name="delete_game_question">Voulez-vous supprimer ce match enregistré?</string>
+    <string name="delete_games_question">Voulez-vous supprimer tous les matchs?</string>
+    <string name="delete_game_question">Voulez-vous supprimer ce match?</string>
     <string name="deleted_game">Le match a été supprimé</string>
     <string name="deleted_games">Tous les matchs ont été supprimés</string>
     <string name="players">Joueurs</string>
     <string name="report_game">Générer un rapport pour le match</string>
     <string name="report_exception">Échec de la génération ou de l\'affichage du rapport</string>
 
-    <!-- Saved teams activity -->
+    <!-- Stored teams activity -->
     <string name="search_teams">Rechercher des équipes</string>
     <string name="delete_teams">Supprimer toutes les équipes</string>
     <string name="delete_team">Supprimer une équipe</string>
     <string name="save_team">Enregistrer l\'équipe</string>
-    <string name="delete_teams_question">Voulez-vous supprimer toutes les équipes enregistrées?</string>
-    <string name="delete_team_question">Voulez-vous supprimer cette équipe enregistrée?</string>
+    <string name="delete_teams_question">Voulez-vous supprimer toutes les équipes?</string>
+    <string name="delete_team_question">Voulez-vous supprimer cette équipe?</string>
     <string name="deleted_team">L\'équipe a été supprimée</string>
     <string name="saved_team">L\'équipe a été enregistrée</string>
     <string name="deleted_teams">Toutes les équipes ont été supprimées</string>
     <string name="leave_team_creation_title">Quitter la création d\'équipe</string>
     <string name="leave_team_creation_question">Cette équipe ne sera pas enregistrée. Quitter?</string>
 
-    <!-- Rules activity -->
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Supprimer toutes les règles</string>
     <string name="delete_rules">Supprimer les règles</string>
     <string name="save_rules">Enregistrer les règles</string>
     <string name="search_rules">Rechercher des règles</string>
-    <string name="delete_all_rules_question">Voulez-vous supprimer toutes les règles enregistrées?</string>
-    <string name="delete_rules_question">Voulez-vous supprimer ces règles enregistrées?</string>
+    <string name="delete_all_rules_question">Voulez-vous supprimer toutes les règles?</string>
+    <string name="delete_rules_question">Voulez-vous supprimer ces règles?</string>
     <string name="deleted_rules">Les règles ont été supprimées</string>
     <string name="saved_rules">Les règles ont été enregistrées</string>
     <string name="deleted_all_rules">Toutes les règles ont été supprimées</string>

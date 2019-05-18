@@ -518,6 +518,7 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
             gameEntity.setRefereeName(apiGame.getRefereeName());
             gameEntity.setKind(apiGame.getKind());
             gameEntity.setGender(apiGame.getGender());
+            gameEntity.setUsage(apiGame.getUsage());
             gameEntity.setSynced(synced);
             gameEntity.setIndexed(apiGame.isIndexed());
             if (apiGame.getLeague() == null) {

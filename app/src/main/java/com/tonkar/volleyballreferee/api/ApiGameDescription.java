@@ -50,7 +50,8 @@ public class ApiGameDescription {
     @ColumnInfo(name = "gender")
     @SerializedName("gender")
     private GenderType gender;
-    @Ignore
+    @NonNull
+    @ColumnInfo(name = "usage")
     @SerializedName("usage")
     private UsageType  usage;
     @Ignore

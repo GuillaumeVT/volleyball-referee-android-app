@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.business.data.db;
 import androidx.room.TypeConverter;
 import com.tonkar.volleyballreferee.interfaces.GameStatus;
 import com.tonkar.volleyballreferee.interfaces.GameType;
+import com.tonkar.volleyballreferee.interfaces.UsageType;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 
 public class Converters {
@@ -35,5 +36,15 @@ public class Converters {
     @TypeConverter
     public static String fromGenderType(GenderType genderType) {
         return genderType.toString();
+    }
+
+    @TypeConverter
+    public static UsageType toUsageType(String usageTypeStr) {
+        return UsageType.valueOf(usageTypeStr);
+    }
+
+    @TypeConverter
+    public static String fromUsageType(UsageType usageType) {
+        return usageType.toString();
     }
 }

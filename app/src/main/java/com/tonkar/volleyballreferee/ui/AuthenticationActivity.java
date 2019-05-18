@@ -29,7 +29,6 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.net.HttpURLConnection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 public abstract class AuthenticationActivity extends NavigationActivity {
