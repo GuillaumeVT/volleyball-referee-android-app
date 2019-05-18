@@ -17,8 +17,17 @@
     <string name="delete">Borrar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
+    <string name="my_data_group">My data</string>
     <string name="configuration_group">Configuración</string>
+    <string name="completed_games">Completed matches</string>
+    <string name="available_games">Scheduled &amp; live matches</string>
+    <string name="teams">Teams</string>
+    <string name="rules">Rules</string>
+    <string name="colleagues">Colleagues</string>
+    <string name="live_games_vbr_com">Live matches on website</string>
     <string name="my_account">Mi cuenta</string>
+    <string name="news">News</string>
+    <string name="no_news">No news to display</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Comprar</string>
@@ -32,13 +41,35 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">¿Por qué debería registarme?</string>
-    <string name="user_sign_in_why_message">Si emites tus partidos online, te interesa registarte.\n\nDe esta forma, tendrás control total de tus partidos en https://www.volleyball-referee.com/user\n\nDesde esta página podrás crear y administrar tus reglas, equipos, partidos e incluso torneos. Los partidos programados pueden ser arbitrados con la App, dándole el código del partido al árbitro.</string>
+    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
+    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
     <string name="user_sign_in_privacy_title">¿Es seguro?</string>
     <string name="user_sign_in_privacy_message">Sí. Cuando te registras, la única información que recabamos de tu perfil es un número único, que usamos para identificarte.</string>
+    <string name="user_sign_in_google">Sign in with Google</string>
+    <string name="user_sign_in_facebook">Sign in with Facebook</string>
+    <string name="user_sign_out">Sign out</string>
     <string name="user_signed_in_with_provider">Registrado como %s</string>
-    <string name="user_signed_out">Sesión terminada</string>
+    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
+    <string name="user_id">User ID %s</string>
     <string name="user_sign_in_with_provider_error">Error al iniciar sesión como %s</string>
+    <string name="user_signed_out">Sesión terminada</string>
+    <string name="user_error">Error while retrieving user</string>
+    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
+    <string name="create">Create</string>
+    <string name="user_pseudo_hint">Pseudonym</string>
+    <string name="user_exists_error">This pseudonym already exists</string>
+    <string name="user_creation_error">Error while creating the pseudonym</string>
+    <string name="search_colleague">Search colleague</string>
+    <string name="add_colleague">Add colleague</string>
+    <string name="received_colleague_request">You received a colleague request from %s</string>
+    <string name="sent_colleague_request">You sent a colleague request to %s</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="remove">Remove</string>
+    <string name="pending">Pending</string>
+    <string name="accept_colleague_question">Accept request from colleague %s?</string>
+    <string name="reject_colleague_question">Reject request from colleague %s?</string>
+    <string name="remove_colleague_question">Remove colleague %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configurar partido</string>
@@ -55,12 +86,14 @@
     <string name="confirm_game_setup_question">¿Confirmas esta configuración?</string>
     <string name="gender_description">Género</string>
     <string name="match_duration_text">Elige la duración del partido</string>
-    <string name="league_name">Nombre de la liga / torneo (opcional)</string>
-    <string name="division_name">Nombre de división/grupo (opcional)</string>
+    <string name="league_name">Nombre de la liga / torneo</string>
+    <string name="division_name">Nombre de división/grupo</string>
     <string name="misc_tab">Varios</string>
     <string name="rules_tab">Reglas</string>
     <string name="teams_tab">Equipos</string>
+    <string name="referee">Referee</string>
     <string name="leave_game_setup_question">Se perderán los cambios realizados. ¿Salir de todos modos?</string>
+    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Cruz</string>
@@ -128,6 +161,7 @@
     <string name="edit_start_match">Editar y comenzar el partido</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">Continuar el partido</string>
+    <string name="download_match_error">Error while downloading the match</string>
 
     <!-- Settings activity -->
     <string name="settings">Ajustes</string>
@@ -135,34 +169,35 @@
     <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
 
     <string name="synchronize">Sincronizar</string>
+    <string name="sync_succeeded_message">Data synchronization succeeded</string>
     <string name="sync_failed_message">Fallo al sincronizar</string>
 
-    <!-- Recorded games activity -->
+    <!-- Stored games activity -->
     <string name="search_games">Buscar partidos</string>
     <string name="delete_games">Borrar todos los partidos</string>
     <string name="delete_game">Borrar partido</string>
-    <string name="delete_games_question">¿Quieres borrar todos los partidos guardados?</string>
-    <string name="delete_game_question">¿Quieres borrar este partido guardado?</string>
+    <string name="delete_games_question">¿Quieres borrar todos los partidos?</string>
+    <string name="delete_game_question">¿Quieres borrar este partido?</string>
     <string name="deleted_game">Partido borrardo</string>
     <string name="deleted_games">Todos los partidos borrados</string>
     <string name="players">Jugadores</string>
     <string name="report_game">Generar informe de partido</string>
     <string name="report_exception">Error al generar o mostrar el informe del partidos</string>
 
-    <!-- Saved teams activity -->
+    <!-- Stored teams activity -->
     <string name="search_teams">Buscar equipos</string>
     <string name="delete_teams">Borrar todos los equipos</string>
     <string name="delete_team">Borrar equipo</string>
     <string name="save_team">Guardar equipo</string>
-    <string name="delete_teams_question">¿Quieres borrar todos los equipos guardados?</string>
-    <string name="delete_team_question">¿Quieres borrar este equipo guardado?</string>
+    <string name="delete_teams_question">¿Quieres borrar todos los equipos?</string>
+    <string name="delete_team_question">¿Quieres borrar este equipo?</string>
     <string name="deleted_team">Equipo borrado</string>
     <string name="saved_team">Equipo salvado</string>
     <string name="deleted_teams">Todos los equipos borrados</string>
     <string name="leave_team_creation_title">Abandonar la creación del equipo</string>
     <string name="leave_team_creation_question">Este equipo no se guardará. ¿Salir de todos modos?</string>
 
-    <!-- Rules activity -->
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Borrar todas las reglas</string>
     <string name="delete_rules">Borrar reglas</string>
     <string name="save_rules">Guardar reglas</string>
