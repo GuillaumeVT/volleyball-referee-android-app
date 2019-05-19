@@ -17,17 +17,17 @@
     <string name="delete">Borrar</string>
     <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
-    <string name="my_data_group">My data</string>
+    <string name="my_data_group">Mis datos</string>
     <string name="configuration_group">Configuración</string>
-    <string name="completed_games">Completed matches</string>
-    <string name="available_games">Scheduled &amp; live matches</string>
-    <string name="teams">Teams</string>
-    <string name="rules">Rules</string>
-    <string name="colleagues">Colleagues</string>
-    <string name="live_games_vbr_com">Live matches on website</string>
+    <string name="completed_games">Partidos completados</string>
+    <string name="available_games">Partidos previstos y en directo</string>
+    <string name="teams">Equipos</string>
+    <string name="rules">Reglas</string>
+    <string name="colleagues">Compañeros</string>
+    <string name="live_games_vbr_com">Partidos en vivo en la web</string>
     <string name="my_account">Mi cuenta</string>
-    <string name="news">News</string>
-    <string name="no_news">No news to display</string>
+    <string name="news">Noticias</string>
+    <string name="no_news">No hay noticias para mostrar</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Comprar</string>
@@ -41,35 +41,35 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
-    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
+    <string name="user_sign_in_why_title">¿Por qué tengo que registrarme?</string>
+    <string name="user_sign_in_why_message">Tus datos en Volleyball Referee (partidos, equipos, reglas, ligas, compañeros) se sincronizarán con nuestro servidor. Registrándote sabremos quién eres y mantendremos tus datos asociados con tu cuenta.</string>
     <string name="user_sign_in_privacy_title">¿Es seguro?</string>
     <string name="user_sign_in_privacy_message">Sí. Cuando te registras, la única información que recabamos de tu perfil es un número único, que usamos para identificarte.</string>
-    <string name="user_sign_in_google">Sign in with Google</string>
-    <string name="user_sign_in_facebook">Sign in with Facebook</string>
-    <string name="user_sign_out">Sign out</string>
+    <string name="user_sign_in_google">Entrar con Google</string>
+    <string name="user_sign_in_facebook">Entrar con Facebook</string>
+    <string name="user_sign_out">Salir</string>
     <string name="user_signed_in_with_provider">Registrado como %s</string>
-    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
-    <string name="user_id">User ID %s</string>
+    <string name="user_signed_in_as_pseudo">Registrado como %s</string>
+    <string name="user_id">ID de usuario %s</string>
     <string name="user_sign_in_with_provider_error">Error al iniciar sesión como %s</string>
     <string name="user_signed_out">Sesión terminada</string>
-    <string name="user_error">Error while retrieving user</string>
-    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' pseudonym</string>
-    <string name="create">Create</string>
-    <string name="user_pseudo_hint">Pseudonym</string>
-    <string name="user_exists_error">This pseudonym already exists</string>
-    <string name="user_creation_error">Error while creating the pseudonym</string>
-    <string name="search_colleague">Search colleague</string>
-    <string name="add_colleague">Add colleague</string>
-    <string name="received_colleague_request">You received a colleague request from %s</string>
-    <string name="sent_colleague_request">You sent a colleague request to %s</string>
-    <string name="accept">Accept</string>
-    <string name="reject">Reject</string>
-    <string name="remove">Remove</string>
-    <string name="pending">Pending</string>
-    <string name="accept_colleague_question">Accept request from colleague %s?</string>
-    <string name="reject_colleague_question">Reject request from colleague %s?</string>
-    <string name="remove_colleague_question">Remove colleague %s?</string>
+    <string name="user_error">Error recuperando el usuario</string>
+    <string name="create_user_pseudo_title">Crear mi pseudónimo para \'Volleyball Referee\'</string>
+    <string name="create">Crear</string>
+    <string name="user_pseudo_hint">Pseudónimo</string>
+    <string name="user_exists_error">Este pseudónimo ya existe</string>
+    <string name="user_creation_error">Error al crear el pseudónimo</string>
+    <string name="search_colleague">Buscar compañero</string>
+    <string name="add_colleague">Añadir compañero</string>
+    <string name="received_colleague_request">Has recibido una petición para ser compañero de %s</string>
+    <string name="sent_colleague_request">Has enviado una solicitud a %s</string>
+    <string name="accept">Aceptar</string>
+    <string name="reject">Rechazar</string>
+    <string name="remove">Eliminar</string>
+    <string name="pending">Pendiente</string>
+    <string name="accept_colleague_question">¿Aceptar solicitud de %s para ser compañeros?</string>
+    <string name="reject_colleague_question">¿Rechazar la solicitud de %s para ser compañeros?</string>
+    <string name="remove_colleague_question">¿Eliminar a %s como compañero?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configurar partido</string>
@@ -91,9 +91,9 @@
     <string name="misc_tab">Varios</string>
     <string name="rules_tab">Reglas</string>
     <string name="teams_tab">Equipos</string>
-    <string name="referee">Referee</string>
+    <string name="referee">Árbitro</string>
     <string name="leave_game_setup_question">Se perderán los cambios realizados. ¿Salir de todos modos?</string>
-    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
+    <string name="must_provide_at_least_n_characters">Debes introducir al menos %d caracteres</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Cruz</string>
@@ -161,7 +161,7 @@
     <string name="edit_start_match">Editar y comenzar el partido</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">Continuar el partido</string>
-    <string name="download_match_error">Error while downloading the match</string>
+    <string name="download_match_error">Error al descargar el partido</string>
 
     <!-- Settings activity -->
     <string name="settings">Ajustes</string>
@@ -169,7 +169,7 @@
     <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
 
     <string name="synchronize">Sincronizar</string>
-    <string name="sync_succeeded_message">Data synchronization succeeded</string>
+    <string name="sync_succeeded_message">Sincronización de datos completa</string>
     <string name="sync_failed_message">Fallo al sincronizar</string>
 
     <!-- Stored games activity -->
@@ -290,7 +290,7 @@
         <item>Un jugador titular puede salir del juego, sólo una vez en el set, y volver a entrar, pero sólo una vez en el set y únicamente a su posición previa en la formación inicial.\n\nUn jugador suplente puede ingresar al juego para reemplazar a un jugador titular, pero sólo una vez en el set, y a su vez, solamente puede ser reemplazado por el mismo jugador titular.</item>
         <item>Un jugador titular puede ser sustituido varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo), y únicamente en su posición original en la rotación.\n\nUn jugador suplente puede ingresar al juego para reemplazar a un jugador titular varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo), y sólo puede ser sustituido por el mismo jugador titular.</item>
         <item>Un jugador titular puede ser sustituido varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo), y únicamente en su posición original en la rotación.\n\nUn jugador suplente puede ingresar al juego para reemplazar a un jugador titular varias veces durante el set (sin exceder el número de sustituciones permitidas por equipo).\n\nMás de un suplente pueden entrar a jugar en cada posición.</item>
-        <item>Los jugadores pueden salir y entrar del juego en cualquier posición tantas veces como quieran, sin exceder el número de sustiticuiones permitidas por equipo.</item>
+        <item>Los jugadores pueden salir y entrar del juego en cualquier posición tantas veces como quieran, sin exceder el número de sustituciones permitidas por equipo.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 sustituciones por set (según restricciones de sustituciones)</item>
