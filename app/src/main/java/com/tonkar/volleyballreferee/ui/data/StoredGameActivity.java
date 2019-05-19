@@ -4,8 +4,13 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -25,10 +30,15 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
+import com.tonkar.volleyballreferee.interfaces.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public abstract class StoredGameActivity extends AppCompatActivity {
 
@@ -87,13 +97,84 @@ public abstract class StoredGameActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    
+    protected void updateGame() {
+        TextView summaryText = findViewById(R.id.stored_game_summary);
+        TextView dateText = findViewById(R.id.stored_game_date);
+        TextView scoreText = findViewById(R.id.stored_game_score);
+        ImageView genderTypeImage = findViewById(R.id.stored_game_gender_image);
+        ImageView gameTypeImage = findViewById(R.id.stored_game_type_image);
+        ImageView indexedImage = findViewById(R.id.stored_game_indexed_image);
+        TextView leagueText = findViewById(R.id.stored_game_league);
+
+        DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getDefault());
+
+        summaryText.setText(String.format(Locale.getDefault(),"%s\t\t%d - %d\t\t%s",
+                mStoredGameService.getTeamName(TeamType.HOME), mStoredGameService.getSets(TeamType.HOME), mStoredGameService.getSets(TeamType.GUEST), mStoredGameService.getTeamName(TeamType.GUEST)));
+        dateText.setText(formatter.format(new Date(mStoredGameService.getScheduledAt())));
+
+        scoreText.setText(mStoredGameService.getScore());
+
+        switch (mStoredGameService.getGender()) {
+            case MIXED:
+                genderTypeImage.setImageResource(R.drawable.ic_mixed);
+                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                break;
+            case LADIES:
+                genderTypeImage.setImageResource(R.drawable.ic_ladies);
+                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                break;
+            case GENTS:
+                genderTypeImage.setImageResource(R.drawable.ic_gents);
+                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                break;
+        }
+
+        switch (mStoredGameService.getKind()) {
+            case INDOOR_4X4:
+                gameTypeImage.setImageResource(R.drawable.ic_4x4);
+                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
+                break;
+            case BEACH:
+                gameTypeImage.setImageResource(R.drawable.ic_sun);
+                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                break;
+            case TIME:
+                gameTypeImage.setImageResource(R.drawable.ic_time_based);
+                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorTime), PorterDuff.Mode.SRC_IN));
+                break;
+            case INDOOR:
+            default:
+                gameTypeImage.setImageResource(R.drawable.ic_6x6);
+                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                break;
+        }
+
+        if (mStoredGameService.isIndexed()) {
+            indexedImage.setImageResource(R.drawable.ic_public);
+            indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorWeb), PorterDuff.Mode.SRC_IN));
+        } else {
+            indexedImage.setImageResource(R.drawable.ic_private);
+            indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
+        }
+
+        indexedImage.setVisibility(PrefUtils.canSync(this) ? View.VISIBLE : View.GONE);
+
+        if (mStoredGameService.getLeague() != null && !mStoredGameService.getLeague().getName().isEmpty()) {
+            leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , mStoredGameService.getLeague().getName(), mStoredGameService.getLeague().getDivision()));
+        }
+        leagueText.setVisibility(mStoredGameService.getLeague() == null || mStoredGameService.getLeague().getName().isEmpty() ? View.GONE : View.VISIBLE);
+    }
 
     private void toggleGameIndexed() {
         Log.i(Tags.STORED_GAMES, "Toggle game indexed");
         if (PrefUtils.canSync(this)) {
             mStoredGamesService.toggleGameIndexed(mGameId, new DataSynchronizationListener() {
                 @Override
-                public void onSynchronizationSucceeded() {}
+                public void onSynchronizationSucceeded() {
+                    updateGame();
+                }
 
                 @Override
                 public void onSynchronizationFailed() {

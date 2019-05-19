@@ -87,13 +87,13 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameDescription> {
         if (gameView == null) {
             gameView = mLayoutInflater.inflate(R.layout.stored_games_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.summaryText = gameView.findViewById(R.id.recorded_game_summary);
-            viewHolder.dateText = gameView.findViewById(R.id.recorded_game_date);
-            viewHolder.scoreText = gameView.findViewById(R.id.recorded_game_score);
-            viewHolder.genderTypeImage = gameView.findViewById(R.id.recorded_game_gender_image);
-            viewHolder.gameTypeImage = gameView.findViewById(R.id.recorded_game_type_image);
-            viewHolder.indexedImage = gameView.findViewById(R.id.recorded_game_indexed_image);
-            viewHolder.leagueText = gameView.findViewById(R.id.recorded_game_league);
+            viewHolder.summaryText = gameView.findViewById(R.id.stored_game_summary);
+            viewHolder.dateText = gameView.findViewById(R.id.stored_game_date);
+            viewHolder.scoreText = gameView.findViewById(R.id.stored_game_score);
+            viewHolder.genderTypeImage = gameView.findViewById(R.id.stored_game_gender_image);
+            viewHolder.gameTypeImage = gameView.findViewById(R.id.stored_game_type_image);
+            viewHolder.indexedImage = gameView.findViewById(R.id.stored_game_indexed_image);
+            viewHolder.leagueText = gameView.findViewById(R.id.stored_game_league);
             gameView.setTag(viewHolder);
         }
         else {
@@ -158,12 +158,12 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameDescription> {
 
         viewHolder.indexedImage.setVisibility(mIsSyncOn ? View.VISIBLE : View.GONE);
 
-        if (game.getLeagueName().isEmpty() || game.getDivisionName().isEmpty()) {
-            viewHolder.leagueText.setText(game.getLeagueName());
+        if (game.getLeagueName() == null || game.getDivisionName() == null || game.getLeagueName().isEmpty() || game.getDivisionName().isEmpty()) {
+            viewHolder.leagueText.setText("");
         } else {
             viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , game.getLeagueName(), game.getDivisionName()));
         }
-        viewHolder.leagueText.setVisibility(game.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
+        viewHolder.leagueText.setVisibility(game.getLeagueName() == null || game.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override

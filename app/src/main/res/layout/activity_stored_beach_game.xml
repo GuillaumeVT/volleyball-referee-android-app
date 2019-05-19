@@ -6,90 +6,13 @@
               android:orientation="vertical"
               tools:context="com.tonkar.volleyballreferee.ui.data.StoredBeachGameActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/game_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/tiny_margin_size"
-        android:gravity="center"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/small_text_size"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_size"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/home_team_name_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/big_text_size"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/home_team_set_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/small_margin_size"
-            android:layout_weight="1"
-            android:background="@drawable/text_round_background"
-            android:elevation="@dimen/number_text_elevation"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/big_text_size"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/guest_team_set_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/small_margin_size"
-            android:layout_weight="1"
-            android:background="@drawable/text_round_background"
-            android:elevation="@dimen/number_text_elevation"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/big_text_size"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/guest_team_name_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/big_text_size"/>
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/game_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/small_text_size"/>
+    <include layout="@layout/stored_games_list_item"/>
 
     <ListView
-        android:id="@+id/stored_game_set_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            android:id="@+id/stored_game_set_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </LinearLayout>

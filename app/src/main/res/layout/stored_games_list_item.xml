@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/recorded_game_type_image"
+            android:id="@+id/stored_game_type_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/small_margin_size"
@@ -22,7 +22,7 @@
             app:srcCompat="@drawable/ic_sun" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/recorded_game_gender_image"
+            android:id="@+id/stored_game_gender_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/small_margin_size"
@@ -30,14 +30,14 @@
             app:srcCompat="@drawable/ic_ladies" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/recorded_game_indexed_image"
+            android:id="@+id/stored_game_indexed_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/small_margin_size"
             app:srcCompat="@drawable/ic_public" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/recorded_game_date"
+            android:id="@+id/stored_game_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/recorded_game_summary"
+        android:id="@+id/stored_game_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextViewTheme"
@@ -55,14 +55,14 @@
         android:textSize="@dimen/big_text_size" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/recorded_game_score"
+        android:id="@+id/stored_game_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/small_text_size" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/recorded_game_league"
+        android:id="@+id/stored_game_league"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextViewTheme"
