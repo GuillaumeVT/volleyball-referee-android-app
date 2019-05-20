@@ -12,6 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
 import com.tonkar.volleyballreferee.business.data.StoredLeagues;
 import com.tonkar.volleyballreferee.business.data.StoredRules;
@@ -150,20 +151,26 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveTeams() {
-        StoredTeamsService storedTeamsService = new StoredTeams(this);
-        GameType gameType = mGameService.getTeamsKind();
-        storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.HOME);
-        storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.GUEST);
+        if (mGameService.getCreatedBy().equals(PrefUtils.getAuthentication(this).getUserId())) {
+            StoredTeamsService storedTeamsService = new StoredTeams(this);
+            GameType gameType = mGameService.getTeamsKind();
+            storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.HOME);
+            storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.GUEST);
+        }
     }
 
     private void saveRules() {
-        StoredRulesService storedRulesService = new StoredRules(this);
-        storedRulesService.createAndSaveRulesFrom(mGameService.getRules());
+        if (mGameService.getCreatedBy().equals(PrefUtils.getAuthentication(this).getUserId())) {
+            StoredRulesService storedRulesService = new StoredRules(this);
+            storedRulesService.createAndSaveRulesFrom(mGameService.getRules());
+        }
     }
 
     private void saveLeague() {
-        StoredLeaguesService storedLeaguesService = new StoredLeagues(this);
-        storedLeaguesService.createAndSaveLeagueFrom(mGameService.getLeague());
+        if (mGameService.getCreatedBy().equals(PrefUtils.getAuthentication(this).getUserId())) {
+            StoredLeaguesService storedLeaguesService = new StoredLeagues(this);
+            storedLeaguesService.createAndSaveLeagueFrom(mGameService.getLeague());
+        }
     }
 
     private void cancelSetup() {

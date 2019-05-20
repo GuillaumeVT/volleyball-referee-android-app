@@ -272,14 +272,6 @@ public abstract class Game extends BaseGame {
     @Override
     public void startMatch() {
         mRules.printRules();
-        GenderType homeGender = getGender(TeamType.HOME);
-        GenderType guestGender = getGender(TeamType.GUEST);
-
-        if (homeGender.equals(guestGender)) {
-            mGender = homeGender;
-        } else {
-            mGender = GenderType.MIXED;
-        }
 
         if (mScheduledAt== 0L) {
             mScheduledAt = System.currentTimeMillis();
@@ -705,6 +697,15 @@ public abstract class Game extends BaseGame {
     @Override
     public void setGender(TeamType teamType, GenderType gender) {
         getTeamDefinition(teamType).setGender(gender);
+
+        GenderType homeGender = getGender(TeamType.HOME);
+        GenderType guestGender = getGender(TeamType.GUEST);
+
+        if (homeGender.equals(guestGender)) {
+            mGender = homeGender;
+        } else {
+            mGender = GenderType.MIXED;
+        }
     }
 
     @Override

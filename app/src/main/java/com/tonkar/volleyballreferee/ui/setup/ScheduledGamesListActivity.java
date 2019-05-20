@@ -17,11 +17,13 @@ import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.api.ApiGameDescription;
 import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
 import com.tonkar.volleyballreferee.business.data.StoredGames;
+import com.tonkar.volleyballreferee.business.data.StoredLeagues;
 import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
 import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -148,6 +150,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         if (PrefUtils.canSync(this)) {
             mSyncLayout.setRefreshing(true);
             mStoredGamesService.downloadAvailableGames(this);
+            StoredLeaguesService storedLeagues = new StoredLeagues(this);
+            storedLeagues.syncLeagues();
         }
     }
 

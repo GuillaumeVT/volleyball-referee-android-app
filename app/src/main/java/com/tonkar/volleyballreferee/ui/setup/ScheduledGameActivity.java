@@ -397,6 +397,13 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void scheduleGame() {
         Log.i(Tags.SCHEDULE_UI, "Schedule game");
+
+        if (mGameDescription.getLeagueId() == null
+                && mGameDescription.getLeagueName() != null && !mGameDescription.getLeagueName().isEmpty()
+                && mGameDescription.getDivisionName() != null && !mGameDescription.getDivisionName().isEmpty()) {
+            mGameDescription.setLeagueId(UUID.randomUUID().toString());
+        }
+
         StoredGamesService storedGamesService = new StoredGames(this);
         storedGamesService.scheduleGame(mGameDescription, mCreate,
                 new DataSynchronizationListener() {

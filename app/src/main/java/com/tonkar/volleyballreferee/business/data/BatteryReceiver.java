@@ -45,10 +45,10 @@ public class BatteryReceiver extends BroadcastReceiver {
     }
 
     public boolean canPushGameToServer() {
-        return mPercentage >= 20 || mCharging;
+        return mPercentage == 0 || mPercentage >= 20 || mCharging;
     }
 
     public boolean canPushSetToServer() {
-        return mPercentage >= 25 || mCharging;
+        return mPercentage == 0 || mPercentage >= 25 || mCharging;
     }
 }
