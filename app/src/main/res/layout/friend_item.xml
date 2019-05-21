@@ -23,6 +23,6 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:textColor="@color/colorError"
             app:iconTint="@color/colorError"
-            app:icon="@drawable/ic_delete"/>
+            app:icon="@drawable/ic_delete" android:textSize="@dimen/small_text_size"/>
 
 </LinearLayout>

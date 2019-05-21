@@ -104,7 +104,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         break;
                     case R.id.action_live_games_vbr_com:
                         Log.i(Tags.WEB, "Live games on VBR.com");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.WEB_APP_LIVE_URL));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.WEB_APP_LIVE_GAMES));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;

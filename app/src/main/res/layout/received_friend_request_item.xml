@@ -28,7 +28,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:textColor="@color/colorError"
                 app:iconTint="@color/colorError"
-                app:icon="@drawable/ic_delete"/>
+                app:icon="@drawable/ic_delete" android:textSize="@dimen/small_text_size"/>
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/accept_friend_button"
@@ -38,7 +38,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:textColor="@color/colorPrimary"
                 app:iconTint="@color/colorPrimary"
-                app:icon="@android:drawable/ic_input_add"/>
+                app:icon="@android:drawable/ic_input_add" android:textSize="@dimen/small_text_size"/>
 
     </LinearLayout>
 

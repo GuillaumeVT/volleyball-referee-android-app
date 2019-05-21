@@ -111,6 +111,7 @@ public class StoredUser implements StoredUserService {
                         if (friendsAndRequests == null) {
                             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
                         } else {
+                            insertFriendsIntoDb(friendsAndRequests.getFriends(), false);
                             listener.onFriendsAndRequestsReceived(friendsAndRequests);
                         }
                     },

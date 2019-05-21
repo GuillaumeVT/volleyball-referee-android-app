@@ -10,11 +10,10 @@ import com.tonkar.volleyballreferee.BuildConfig;
 
 public class ApiUtils {
 
-    public static String VIEW_GAME = BuildConfig.SERVER_ADDRESS + "/view/game/%s";
+    public static String WEB_APP_VIEW_GAME  = BuildConfig.SERVER_ADDRESS + "/view/game/%s";
+    public static String WEB_APP_LIVE_GAMES = BuildConfig.SERVER_ADDRESS + "/search/live";
 
     public static String BASE_URL = BuildConfig.SERVER_ADDRESS + "/api/v3";
-
-    public static String WEB_APP_LIVE_URL = BASE_URL + "/search/live";
 
     public static String MESSAGES_API_URL = BASE_URL + "/public/messages";
 

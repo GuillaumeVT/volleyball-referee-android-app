@@ -181,7 +181,7 @@ public class UiUtils {
 
                 String summary = storedGameService.getGameSummary();
                 if (PrefUtils.canSync(context)) {
-                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.VIEW_GAME, storedGameService.getId());
+                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.WEB_APP_VIEW_GAME, storedGameService.getId());
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);

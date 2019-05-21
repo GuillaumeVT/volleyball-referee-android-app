@@ -131,7 +131,7 @@
                                     style="@style/VbrButton"
                                     app:backgroundTint="@color/colorGoogle"
                                     app:icon="@drawable/ic_google"
-                                    app:iconTint="@android:color/white"/>
+                                    app:iconTint="@android:color/white" android:textSize="@dimen/small_text_size"/>
 
                             <com.google.android.material.button.MaterialButton
                                     android:id="@+id/facebook_sign_in_button"
@@ -144,7 +144,7 @@
                                     style="@style/VbrButton"
                                     app:backgroundTint="@color/colorFacebook"
                                     app:icon="@drawable/ic_facebook"
-                                    app:iconTint="@android:color/white"/>
+                                    app:iconTint="@android:color/white" android:textSize="@dimen/small_text_size"/>
 
                             <com.google.android.gms.common.SignInButton
                                     android:id="@+id/original_google_sign_in_button"

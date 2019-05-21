@@ -21,7 +21,7 @@
             android:layout_gravity="end"
             android:textAppearance="@style/TextViewTheme"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/small_text_size"
             android:textStyle="italic"
             android:textAllCaps="true"/>
 
