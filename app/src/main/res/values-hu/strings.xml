@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
-    <!-- Main activity -->
     <string name="new_volleyball_game">Teremröplabda</string>
     <string name="new_beach_volleyball_game">Strandröplabda</string>
     <string name="new_score_based_game">Eredménytábla</string>
@@ -18,8 +17,17 @@
     <string name="delete">Törlés</string>
     <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
+    <string name="my_data_group">Adataim</string>
     <string name="configuration_group">Beállítások</string>
+    <string name="completed_games">Befejezett mérkőzések</string>
+    <string name="available_games">Időzített &amp; élő mérkőzések</string>
+    <string name="teams">Csapatok</string>
+    <string name="rules">Szabályok</string>
+    <string name="colleagues">Társak</string>
+    <string name="live_games_vbr_com">Élő mérkőzések a weboldalon</string>
     <string name="my_account">Fiókom</string>
+    <string name="news">Hírek</string>
+    <string name="no_news">Nincsenek hírek</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Vásárlás</string>
@@ -33,13 +41,35 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Miért jelentkezzek be?</string>
-    <string name="user_sign_in_why_message">Jelentkezz be, ha mérkőzéseidet online is szoktad streamelni.\n\nMérkőzéseidhez hozzáférsz a https://www.volleyball-referee.com/user oldalon.\n\nEzen az oldalon kezelheted az egyedi játékszabályaidat, csapataidat, mérkőzéseidet és versenyeidet. Az online létrehozott és beidőzített mérkőzéseid közvetíthetőek a mobil appból más által is, ha adsz nekik egyedi kódot.</string>
+    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
+    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
     <string name="user_sign_in_privacy_title">Biztonságos?</string>
     <string name="user_sign_in_privacy_message">Igen. Bejelentkezéskor csak az online profilod egyedi azonosítóját vizsgáljuk meg azonosítás céljából.</string>
+    <string name="user_sign_in_google">Sign in with Google</string>
+    <string name="user_sign_in_facebook">Sign in with Facebook</string>
+    <string name="user_sign_out">Sign out</string>
     <string name="user_signed_in_with_provider">Belépve ezzel: %s</string>
+    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
+    <string name="user_id">User ID %s</string>
+    <string name="user_sign_in_with_provider_error">Error while signing in with %s</string>
     <string name="user_signed_out">Kilépve</string>
-    <string name="user_sign_in_with_provider_error">Hiba történt belépés közben (%s)</string>
+    <string name="user_error">Error while downloading profile</string>
+    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' name</string>
+    <string name="create">Create</string>
+    <string name="user_pseudo_hint">Name</string>
+    <string name="user_exists_error">This name already exists</string>
+    <string name="user_creation_error">Error while creating profile</string>
+    <string name="search_colleague">Search in colleagues</string>
+    <string name="add_colleague">Add colleague</string>
+    <string name="received_colleague_request">You received a request from %s</string>
+    <string name="sent_colleague_request">You sent a request to %s</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Discard</string>
+    <string name="remove">Remove</string>
+    <string name="pending">Pending</string>
+    <string name="accept_colleague_question">Accept %s as colleague?</string>
+    <string name="reject_colleague_question">Discard request from %s?</string>
+    <string name="remove_colleague_question">Remove %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Csapatok beállítása</string>
@@ -56,12 +86,14 @@
     <string name="confirm_game_setup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="gender_description">Nem</string>
     <string name="match_duration_text">Állítsd be a mérkőzés hosszát</string>
-    <string name="league_name">Bajnokság / torna neve (opcionális)</string>
-    <string name="division_name">Divízió neve (opcionális)</string>
+    <string name="league_name">Bajnokság / torna neve</string>
+    <string name="division_name">Divízió neve</string>
     <string name="misc_tab">Egyéb</string>
     <string name="rules_tab">Szabályok</string>
     <string name="teams_tab">Csapatok</string>
+    <string name="referee">Referee</string>
     <string name="leave_game_setup_question">A mérközés beállításai el fognak veszni. Biztosan kilépsz?</string>
+    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Írás</string>
@@ -129,6 +161,7 @@
     <string name="edit_start_match">Mérkőzés szerkesztése, majd indítása</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">@string/resume_game_title</string>
+    <string name="download_match_error">Error while downloading the match</string>
 
 
     <!-- Settings activity -->
@@ -137,13 +170,14 @@
     <string name="pref_interactive_notification">Interaktív értesítések használata</string>
 
     <string name="synchronize">Szinkronizálás</string>
+    <string name="sync_succeeded_message">Data synchronization succeeded</string>
     <string name="sync_failed_message">Nem sikerült az adat szinkronizálás</string>
 
-    <!-- Recorded games activity -->
+    <!-- Stored games activity -->
     <string name="search_games">Keresés</string>
     <string name="delete_games">Összes mérkőzés törlése</string>
     <string name="delete_game">Mérkőzés törlése</string>
-    <string name="delete_games_question">Biztosan törlöd az összes rögzített mérkőzést?</string>
+    <string name="delete_games_question">Biztosan törlöd az összes mérkőzést?</string>
     <string name="delete_game_question">Biztosan törlöd a mérkőzést?</string>
     <string name="deleted_game">Mérkőzés törölve</string>
     <string name="deleted_games">Minden mérkőzés törölve</string>
@@ -151,7 +185,7 @@
     <string name="report_game">Jegyzőkönyv generálása</string>
     <string name="report_exception">Nem sikerült a jegyzőkönyv generálása</string>
 
-    <!-- Saved teams activity -->
+    <!-- Stored teams activity -->
     <string name="search_teams">Csapat keresése</string>
     <string name="delete_teams">Összes csapat törlése</string>
     <string name="delete_team">Csapat törlése</string>
@@ -164,7 +198,7 @@
     <string name="leave_team_creation_title">Csapat létrehozás elhagyása</string>
     <string name="leave_team_creation_question">A csapat nem lesz elmentve. Biztosan kilépsz?</string>
 
-    <!-- Rules activity -->
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Minden szabály törlése</string>
     <string name="delete_rules">Szabályok törlése</string>
     <string name="save_rules">Szabályok mentése</string>

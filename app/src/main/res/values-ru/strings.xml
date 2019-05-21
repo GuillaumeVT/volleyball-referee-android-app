@@ -5,40 +5,71 @@
     <string name="new_volleyball_game">Волейбол</string>
     <string name="new_beach_volleyball_game">Пляжный волейбол</string>
     <string name="new_score_based_game">Счётное табло</string>
-    <string name="new_time_based_game">Ограничение по времени</string>
+    <string name="new_time_based_game">Матч ограниченный по времени</string>
     <string name="permission_title">Разрешения</string>
-    <string name="permission_message">Этому приложению требуется разрешение на сохранение информации на данном утройстве для возможности делиться результатами.</string>
+    <string name="permission_message">Этому приложению нужно разрешение на хранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
-    <string name="resume_game_question">В приложении сохранён неоконченный матч. Вы хотите продолжить или удалить этот матч?</string>
-    <string name="resume_game_error">Невозможно возобновить матч.</string>
+    <string name="resume_game_question">В приложении сохранён недоигранный матч. Вы хотите продолжить или удалить этот матч?</string>
+    <string name="resume_game_error">Невозможно продолжить матч.</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="resume">Продолжить</string>
     <string name="delete">Удалить</string>
     <string name="ignore">Пропустить</string>
     <string name="facebook">Facebook</string>
+    <string name="my_data_group">Мои данные</string>
     <string name="configuration_group">Настройки</string>
+    <string name="completed_games">Законченные матчи</string>
+    <string name="available_games">Запланированные матчи и матчи в процессе</string>
+    <string name="teams">Команды</string>
+    <string name="rules">Правила</string>
+    <string name="colleagues">Коллеги</string>
+    <string name="live_games_vbr_com">Матчи в процессе (на веб-сайте)</string>
     <string name="my_account">Мой аккаунт</string>
+    <string name="news">Информация</string>
+    <string name="no_news">Нет информации для отображения</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Купить</string>
     <string name="already_purchased">Уже куплено</string>
     <string name="purchase_web_premium_summary">
         \n\u2022 Синхронизация ваших матчей, команд и правил на всех ваших устройствах.
-        \n\u2022 Безлимитное хранение ваших данных и лучшее качество трансляции матчей он-лайн.
+        \n\u2022 Безлимитное хранение ваших данных и лучшее качество трансляции счёта матчей он-лайн.
         \n\u2022 Планирование ваших матчей заранее.
         \n\u2022 Восстановление случайно потерянных матчей с сервера.
-        \n\u2022 Последующие новые web функции приложения будут включены в ваш пакет бесплатно!
+        \n\u2022 Последующие новые веб функции приложения будут включены в ваш пакет бесплатно!
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in_why_title">Почему лучше подключаться через аккаунт?</string>
-    <string name="user_sign_in_why_message">Эта функция может быть для вас интересна, если вы транслируете матчи онлайн.\n\nПодключаясь через ваш аккаунт, вы можете контролировать ваши матчи на сайте https://www.volleyball-referee.com/user\n\nНа вашей персональной странице вы можете управлять вашими правилами, командами и матчами. Вы также можете создавать отдельные турниры. Запланированные матчи могут быть использованы либо вашим приложением, либо приложением любого другого судьи. Для этого достаточно просто передать уникальный код этих матчей.</string>
+    <string name="user_sign_in_why_title">Зачем использовать мой аккаунт?</string>
+    <string name="user_sign_in_why_message">Все ваши данные в Volleyball Referee (матчи, команды, правила, лиги, коллеги) будут синхронизированы с нашим сервером. При идентификации приложение соединяет ваши данные с вашим аккаунтом.</string>
     <string name="user_sign_in_privacy_title">Уверены?</string>
-    <string name="user_sign_in_privacy_message">Да. Для подключения единственной информацией, которую сохраняет приложение, является уникальный код-идентификатор вашего профиля. Он необходим для вашей идентификации.</string>
-    <string name="user_signed_in_with_provider">Подключение с %s</string>
-    <string name="user_signed_out">Отключён</string>
+    <string name="user_sign_in_privacy_message">Да. Единственной информацией, которую сохраняет приложение, является уникальный код-идентификатор вашего аккаунта. Он необходим для вашей идентификации.</string>
+    <string name="user_sign_in_google">Войти в систему с помощью Google</string>
+    <string name="user_sign_in_facebook">Войти в систему с помощью Facebook</string>
+    <string name="user_signed_in_as_pseudo">Подключён как %s</string>
+    <string name="user_id">Идентификатор пользователя %s</string>
     <string name="user_sign_in_with_provider_error">Ошибка соединения с %s</string>
+    <string name="user_sign_out">Выход</string>
+    <string name="user_signed_in_with_provider">Подключение с помощью %s</string>
+    <string name="user_signed_out">Вышел из аккаунта</string>
+    <string name="user_error">Произошла ошибка при загрузке профиля</string>
+    <string name="create_user_pseudo_title">Создать мой никнейм для \'Volleyball Referee\'</string>
+    <string name="create">Создать</string>
+    <string name="user_pseudo_hint">Никнейм</string>
+    <string name="user_exists_error">Данный никнейм уже существует</string>
+    <string name="user_creation_error">Произошла ошибка при создании никнейма</string>
+    <string name="search_colleague">Поиск коллег</string>
+    <string name="add_colleague">Добавить коллегу</string>
+    <string name="received_colleague_request">Вы получили заявку от коллеги %s</string>
+    <string name="sent_colleague_request">Вы отправили заявку коллеге %s</string>
+    <string name="accept">Добавить</string>
+    <string name="reject">Отказать</string>
+    <string name="remove">Удалить</string>
+    <string name="pending">В ожидании</string>
+    <string name="accept_colleague_question">Принять заявку коллеги %s?</string>
+    <string name="reject_colleague_question">Отменить заявку коллеги %s?</string>
+    <string name="remove_colleague_question">Удалить коллегу %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Настройка матча</string>
@@ -55,12 +86,14 @@
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>
     <string name="match_duration_text">Выберите длительность матча</string>
-    <string name="league_name">Название лиги / турнира (факультативно)</string>
-    <string name="division_name">Название дивизиона / группы (факультативно)</string>
+    <string name="league_name">Название лиги / турнира</string>
+    <string name="division_name">Название дивизиона / группы</string>
     <string name="misc_tab">Разное</string>
     <string name="rules_tab">Правила</string>
     <string name="teams_tab">Команды</string>
+    <string name="referee">Судья</string>
     <string name="leave_game_setup_question">Настройки данного матча будут потеряны. Покинуть страницу?</string>
+    <string name="must_provide_at_least_n_characters">Минимум %d буквы</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>
@@ -71,7 +104,7 @@
     <string name="reset_set">Начать партию сначала</string>
     <string name="reset_set_question">Партия начнётся сначала и все ваши действия будут потеряны. Перезагрузить?</string>
     <string name="share">Поделиться</string>
-    <string name="share_exception">Ошибка! Не удалось поделиться результатами матча</string>
+    <string name="share_exception">Произошла ошибка! Не удалось поделиться результатами матча</string>
     <string name="navigate_home_question">Закончить данный матч позже. Покинуть страницу?</string>
     <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
     <string name="court_position_tab">Расстановка</string>
@@ -128,6 +161,7 @@
     <string name="edit_start_match">Изменить и начать матч</string>
     <string name="start_match">@string/start_match_description</string>
     <string name="resume_match">@string/resume_game_title</string>
+    <string name="download_match_error">Произошла ошибка при загрузке матча</string>
 
     <!-- Settings activity -->
     <string name="settings">Параметры</string>
@@ -135,13 +169,14 @@
     <string name="pref_interactive_notification">Включить интерактивные уведомления</string>
 
     <string name="synchronize">Синхронизировать</string>
-    <string name="sync_failed_message">Ошибка синхронизации</string>
+    <string name="sync_succeeded_message">Синхронизация закончена</string>
+    <string name="sync_failed_message">Произошла ошибка при синхронизации</string>
 
-    <!-- Recorded games activity -->
+    <!-- Stored games activity -->
     <string name="search_games">Поиск матча</string>
     <string name="delete_games">Удалить все матчи</string>
     <string name="delete_game">Удалить данный матч</string>
-    <string name="delete_games_question">Удалить все сохранённые матчи?</string>
+    <string name="delete_games_question">Удалить все матчи?</string>
     <string name="delete_game_question">Удалить данный матч?</string>
     <string name="deleted_game">Матч успешно удалён</string>
     <string name="deleted_games">Все матчи успешно удалены</string>
@@ -149,12 +184,12 @@
     <string name="report_game">Создать отчёт по матчу</string>
     <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
 
-    <!-- Saved teams activity -->
+    <!-- Stored teams activity -->
     <string name="search_teams">Поиск команды</string>
     <string name="delete_teams">Удалить все команды</string>
     <string name="delete_team">Удалить данную команду</string>
     <string name="save_team">Сохранить команду</string>
-    <string name="delete_teams_question">Удалить все сохранённые команды?</string>
+    <string name="delete_teams_question">Удалить все команды?</string>
     <string name="delete_team_question">Удалить эту команду?</string>
     <string name="deleted_team">Команда успешно удалена</string>
     <string name="saved_team">Команда сохранена</string>
@@ -162,13 +197,13 @@
     <string name="leave_team_creation_title">Покинуть создание команды</string>
     <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
 
-    <!-- Rules activity -->
+    <!-- Stored rules activity -->
     <string name="delete_all_rules">Удалить все правила</string>
     <string name="delete_rules">Удалить правила</string>
     <string name="save_rules">Сохранить правила</string>
     <string name="search_rules">Искать правила</string>
-    <string name="delete_all_rules_question">Удалить все сохранённые правила?</string>
-    <string name="delete_rules_question">Удалить эти сохранённые правила?</string>
+    <string name="delete_all_rules_question">Удалить все правила?</string>
+    <string name="delete_rules_question">Удалить эти правила?</string>
     <string name="deleted_rules">Правила были успешно удалены</string>
     <string name="saved_rules">Правила были сохранены</string>
     <string name="deleted_all_rules">Все правила были успешно удалены</string>
@@ -253,9 +288,9 @@
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
         <item>Игрок начальной расстановки может выйти из игры, но только один раз в партии, и войти вновь, но только один раз в партии и только на свою прежнюю позицию в расстановке.\n\nЗаменяющий игрок может войти в игру на место игрока начальной расстановки, но только один раз в партии, и может быть заменен только этим же стартовым игроком.</item>
-        <item>Игрок начальной расстановки может выйти из игры, неограниченное количество раз в партии, и войти вновь, неограниченное количество раз в партии (в пределах ограничения замен) и только на свою прежнюю позицию в расстановке.\n\nЗаменяющий игрок может войти в игру на позицию игрока начальной расстановки, неограниченное количество раз в партии (в пределах ограничения замен), и может быть заменен только этим же стартовым игроком.</item>
-        <item>Игрок начальной расстановки может выйти из игры, неограниченное количество раз в партии, и войти вновь, неограниченное количество раз в партии (в пределах ограничения замен) и только на свою прежнюю позицию в расстановке.\n\nЗаменяющий игрок может войти в игру на позицию игрока начальной расстановки, неограниченное количество раз в партии (в пределах ограничения замен).\n\nРазные заменяющие игроки могут входить в игру на одну и ту же позицию в партии.</item>
-        <item>Игрок начальной расстановки может выйти из игры и войти вновь на любую позицию, неограниченное количество раз в партии (в пределах ограничения замен).</item>
+        <item>Игрок начальной расстановки может выйти из игры неограниченное количество раз в партии и войти вновь неограниченное количество раз в партии (в пределах ограничения замен) и только на свою прежнюю позицию в расстановке.\n\nЗаменяющий игрок может войти в игру на позицию игрока начальной расстановки неограниченное количество раз в партии (в пределах ограничения замен) и может быть заменен только этим же стартовым игроком.</item>
+        <item>Игрок начальной расстановки может выйти из игры неограниченное количество раз в партии и войти вновь неограниченное количество раз в партии (в пределах ограничения замен) и только на свою прежнюю позицию в расстановке.\n\nЗаменяющий игрок может войти в игру на позицию игрока начальной расстановки неограниченное количество раз в партии (в пределах ограничения замен).\n\nРазные заменяющие игроки могут входить в игру на одну и ту же позицию в партии.</item>
+        <item>Игрок начальной расстановки может выйти из игры и войти вновь на любую позицию неограниченное количество раз в партии (в пределах ограничения замен).</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 замен в партии (в зависимости от ограничения замен)</item>

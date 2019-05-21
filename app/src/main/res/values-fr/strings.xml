@@ -20,11 +20,11 @@
     <string name="my_data_group">Mes données</string>
     <string name="configuration_group">Configuration</string>
     <string name="completed_games">Matchs terminés</string>
-    <string name="available_games">Matchs programmés &amp; live</string>
+    <string name="available_games">Matchs programmés &amp; en cours</string>
     <string name="teams">Équipes</string>
     <string name="rules">Règles</string>
     <string name="colleagues">Collègues</string>
-    <string name="live_games_vbr_com">Matchs live sur le site</string>
+    <string name="live_games_vbr_com">Matchs en cours sur le site</string>
     <string name="my_account">Mon compte</string>
     <string name="news">Informations</string>
     <string name="no_news">Aucune information à afficher</string>
@@ -53,23 +53,23 @@
     <string name="user_id">Identifiant utilisateur %s</string>
     <string name="user_sign_in_with_provider_error">Erreur lors de la connexion à %s</string>
     <string name="user_signed_out">Déconnecté</string>
-    <string name="user_error">Erreur lors de la récupération de l\'utilisateur</string>
+    <string name="user_error">Erreur lors du téléchargement du compte</string>
     <string name="create_user_pseudo_title">Créer mon pseudo \'Volleyball Referee\'</string>
     <string name="create">Créer</string>
     <string name="user_pseudo_hint">Pseudo</string>
     <string name="user_exists_error">Ce pseudo existe déjà</string>
-    <string name="user_creation_error">Erreur lors de la création du pseudo</string>
-    <string name="search_colleague">Chercher dans collègues</string>
+    <string name="user_creation_error">Erreur lors de la création du compte</string>
+    <string name="search_colleague">Chercher dans les collègues</string>
     <string name="add_colleague">Ajouter un collègue</string>
-    <string name="received_colleague_request">Vous avez reçu une demande de collègue de %s</string>
-    <string name="sent_colleague_request">Vous avez envoyé une demande de collègue de %s</string>
+    <string name="received_colleague_request">Vous avez reçu une demande de %s</string>
+    <string name="sent_colleague_request">Vous avez envoyé une demande à %s</string>
     <string name="accept">Accepter</string>
     <string name="reject">Refuser</string>
     <string name="remove">Supprimer</string>
-    <string name="pending">En cours</string>
-    <string name="accept_colleague_question">Accepter la demande de collègue de %s?</string>
-    <string name="reject_colleague_question">Refuser la demande de collègue de %s?</string>
-    <string name="remove_colleague_question">Supprimer le collègue %s?</string>
+    <string name="pending">En attente</string>
+    <string name="accept_colleague_question">Accepter la demande de %s?</string>
+    <string name="reject_colleague_question">Refuser la demande de %s?</string>
+    <string name="remove_colleague_question">Supprimer %s?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Configuration du match</string>
