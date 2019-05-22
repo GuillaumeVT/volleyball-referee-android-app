@@ -59,7 +59,8 @@ public class ScoreSheetWriter {
             String homeTeam = storedGameService.getTeamName(TeamType.HOME);
             String guestTeam = storedGameService.getTeamName(TeamType.GUEST);
 
-            String filename = String.format(Locale.getDefault(), "%s_%s_%s.html", homeTeam, guestTeam, date);
+            String filename = String.format(Locale.getDefault(), "%s__%s__%s.html", homeTeam, guestTeam, date);
+            filename = filename.replaceAll("[\\s|\\?\\*<:>\\+\\[\\]/\\']", "_");
             ScoreSheetWriter scoreSheetWriter = new ScoreSheetWriter(context, storedGameService, filename);
             switch (storedGameService.getKind()) {
                 case INDOOR:
