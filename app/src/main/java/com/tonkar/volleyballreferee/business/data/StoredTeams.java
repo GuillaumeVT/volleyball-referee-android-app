@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.util.*;
 
 public class StoredTeams implements StoredTeamsService {
@@ -96,11 +95,11 @@ public class StoredTeams implements StoredTeamsService {
     }
 
     @Override
-    public void saveTeam(BaseTeamService team) {
+    public void saveTeam(BaseTeamService team, boolean create) {
         ApiTeam savedTeam = copyTeam(team);
         savedTeam.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
         insertTeamIntoDb(savedTeam, false, false);
-        pushTeamToServer(savedTeam);
+        pushTeamToServer(savedTeam, create);
     }
 
     @Override
@@ -130,7 +129,7 @@ public class StoredTeams implements StoredTeamsService {
                 && AppDatabase.getInstance(mContext).teamDao().countById(teamService.getTeamId(teamType)) == 0) {
             BaseTeamService team = createTeam(kind);
             copyTeam(teamService, team, teamType);
-            saveTeam(team);
+            saveTeam(team, true);
         }
     }
 
@@ -350,7 +349,7 @@ public class StoredTeams implements StoredTeamsService {
                         remoteTeamsToDownload.add(remoteTeam);
                     } else if (localTeam.getUpdatedAt() > remoteTeam.getUpdatedAt()) {
                         ApiTeam team = getTeam(localTeam.getId());
-                        pushTeamToServer(team);
+                        pushTeamToServer(team, false);
                     }
                 }
             }
@@ -362,7 +361,7 @@ public class StoredTeams implements StoredTeamsService {
                 } else {
                     // if the team was not synced, then it is missing from the server because sending it must have failed, so send it again
                     ApiTeam team = getTeam(localTeam.getId());
-                    pushTeamToServer(team);
+                    pushTeamToServer(team, true);
                 }
             }
         }
@@ -410,28 +409,17 @@ public class StoredTeams implements StoredTeamsService {
         }
     }
 
-    private void pushTeamToServer(final ApiTeam team) {
+    private void pushTeamToServer(final ApiTeam team, boolean create) {
         if (PrefUtils.canSync(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             final byte[] bytes = writeTeam(team).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.TEAMS_API_URL, bytes, authentication,
+            int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
+            JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, ApiUtils.TEAMS_API_URL, bytes, authentication,
                     response -> insertTeamIntoDb(team, true, false),
                     error -> {
-                        if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.TEAMS_API_URL, bytes, authentication,
-                                    response -> insertTeamIntoDb(team, true, false),
-                                    error2 -> {
-                                        if (error2.networkResponse != null) {
-                                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error2.networkResponse.statusCode));
-                                        }
-                                    }
-                            );
-                            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
-                        } else {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while creating team", error.networkResponse.statusCode));
-                            }
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while sending team", error.networkResponse.statusCode));
                         }
                     }
             );

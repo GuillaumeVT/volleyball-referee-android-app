@@ -32,6 +32,7 @@ public class StoredTeamActivity extends AppCompatActivity {
 
     private BaseTeamService mTeamService;
     private MenuItem        mSaveItem;
+    private boolean         mCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +45,17 @@ public class StoredTeamActivity extends AppCompatActivity {
         String gameTypeStr = getIntent().getStringExtra("kind");
         GameType gameType = GameType.valueOf(gameTypeStr);
 
-        boolean create = getIntent().getBooleanExtra("create", true);
+        mCreate = getIntent().getBooleanExtra("create", true);
 
         Fragment fragment = null;
 
         switch (gameType) {
             case INDOOR:
             case INDOOR_4X4:
-                fragment = TeamSetupFragment.newInstance(TeamType.HOME, false, create);
+                fragment = TeamSetupFragment.newInstance(TeamType.HOME, false, mCreate);
                 break;
             case BEACH:
-                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME, create);
+                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME, mCreate);
                 break;
             case TIME:
             default:
@@ -111,7 +112,7 @@ public class StoredTeamActivity extends AppCompatActivity {
     private void saveTeam() {
         Log.i(Tags.STORED_TEAMS, "Save team");
         StoredTeamsService storedTeamsService = new StoredTeams(this);
-        storedTeamsService.saveTeam(mTeamService);
+        storedTeamsService.saveTeam(mTeamService, mCreate);
         UiUtils.makeText(StoredTeamActivity.this, getString(R.string.saved_team), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

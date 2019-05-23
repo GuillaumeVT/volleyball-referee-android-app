@@ -77,7 +77,7 @@ public abstract class TeamComposition {
             result = true;
         }
 
-        if (result && oldNumber > 0 && mTeamDefinition.hasPlayer(oldNumber)) {
+        if (result && oldNumber > -1 && mTeamDefinition.hasPlayer(oldNumber)) {
             mPlayers.get(oldNumber).setPosition(PositionType.BENCH);
             Log.i(Tags.TEAM, String.format("Player #%d of %s team is now on bench", oldNumber, mTeamDefinition.getTeamType().toString()));
         }

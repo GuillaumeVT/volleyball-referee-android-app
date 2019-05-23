@@ -260,7 +260,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean hasActingLibero() {
-        return mActingLibero > 0;
+        return mActingLibero > -1;
     }
 
     private boolean hasSecondLibero() {
@@ -280,7 +280,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean hasWaitingMiddleBlocker() {
-        return mWaitingMiddleBlocker > 0;
+        return mWaitingMiddleBlocker > -1;
     }
 
     private boolean isMiddleBlocker(int number) {
@@ -356,7 +356,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     public boolean hasActingCaptainOnCourt() {
-        return mActingCaptain > 0;
+        return mActingCaptain > -1;
     }
 
     public boolean isActingCaptain(int number) {
@@ -366,7 +366,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public Set<Integer> getPossibleActingCaptains() {
         Set<Integer> players = new TreeSet<>();
 
-        if (mActingCaptain > 0) {
+        if (mActingCaptain > -1) {
             players.add(mActingCaptain);
         } else {
             for (int number : getPlayersOnCourt()) {

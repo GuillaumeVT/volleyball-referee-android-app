@@ -25,7 +25,7 @@ public interface StoredRulesService {
 
     Rules createRules(GameType kind);
 
-    void saveRules(Rules rules);
+    void saveRules(Rules rules, boolean create);
 
     void deleteRules(String id);
 

@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.util.*;
 
 public class StoredRules implements StoredRulesService {
@@ -94,10 +93,10 @@ public class StoredRules implements StoredRulesService {
     }
 
     @Override
-    public void saveRules(Rules rules) {
+    public void saveRules(Rules rules, boolean create) {
         rules.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
         insertRulesIntoDb(rules, false, false);
-        pushRulesToServer(rules);
+        pushRulesToServer(rules, create);
     }
 
     @Override
@@ -132,7 +131,7 @@ public class StoredRules implements StoredRulesService {
                 && !rules.getId().equals(Rules.DEFAULT_INDOOR_4X4_ID)
                 && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind()) == 0
                 && AppDatabase.getInstance(mContext).rulesDao().countById(rules.getId()) == 0) {
-            saveRules(rules);
+            saveRules(rules, true);
         }
     }
 
@@ -257,7 +256,7 @@ public class StoredRules implements StoredRulesService {
                         remoteRulesToDownload.add(remoteRules);
                     } else if (localRules.getUpdatedAt() > remoteRules.getUpdatedAt()) {
                         ApiRules rules = getRules(localRules.getId());
-                        pushRulesToServer(rules);
+                        pushRulesToServer(rules, false);
                     }
                 }
             }
@@ -269,7 +268,7 @@ public class StoredRules implements StoredRulesService {
                 } else {
                     // if the rules were not synced, then they are missing from the server because sending them must have failed, so send them again
                     ApiRules rules = getRules(localRules.getId());
-                    pushRulesToServer(rules);
+                    pushRulesToServer(rules, true);
                 }
             }
         }
@@ -317,28 +316,17 @@ public class StoredRules implements StoredRulesService {
         }
     }
 
-    private void pushRulesToServer(final ApiRules rules) {
+    private void pushRulesToServer(final ApiRules rules, boolean create) {
         if (PrefUtils.canSync(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
             final byte[] bytes = writeRules(rules).getBytes();
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.PUT, ApiUtils.RULES_API_URL, bytes, authentication,
+            int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
+            JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, ApiUtils.RULES_API_URL, bytes, authentication,
                     response -> insertRulesIntoDb(rules, true, false),
                     error -> {
-                        if (error.networkResponse != null && HttpURLConnection.HTTP_NOT_FOUND == error.networkResponse.statusCode) {
-                            JsonStringRequest stringRequest1 = new JsonStringRequest(Request.Method.POST, ApiUtils.RULES_API_URL, bytes, authentication,
-                                    response -> insertRulesIntoDb(rules, true, false),
-                                    error2 -> {
-                                        if (error2.networkResponse != null) {
-                                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error2.networkResponse.statusCode));
-                                        }
-                                    }
-                            );
-                            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
-                        } else {
-                            if (error.networkResponse != null) {
-                                Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while creating rules", error.networkResponse.statusCode));
-                            }
+                        if (error.networkResponse != null) {
+                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while sending rules", error.networkResponse.statusCode));
                         }
                     }
             );

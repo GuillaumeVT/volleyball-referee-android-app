@@ -98,13 +98,13 @@ public class IndoorGame extends Game implements IndoorTeamService {
 
     private void checkPosition1(final TeamType scoringTeam) {
         int number = getIndoorTeamComposition(scoringTeam).checkPosition1Offence();
-        if (number > 0)  {
+        if (number > -1)  {
             substitutePlayer(scoringTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
 
         TeamType defendingTeam = scoringTeam.other();
         number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
-        if (number > 0)  {
+        if (number > -1)  {
             substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
     }

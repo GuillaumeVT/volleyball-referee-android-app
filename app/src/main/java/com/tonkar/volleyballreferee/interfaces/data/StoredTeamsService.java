@@ -29,7 +29,7 @@ public interface StoredTeamsService {
 
     BaseTeamService createTeam(GameType kind);
 
-    void saveTeam(BaseTeamService team);
+    void saveTeam(BaseTeamService team, boolean create);
 
     void deleteTeam(String id);
 

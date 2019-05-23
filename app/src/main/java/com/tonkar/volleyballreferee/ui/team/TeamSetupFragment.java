@@ -64,7 +64,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         args.putString(TeamType.class.getName(), teamType.toString());
         args.putBoolean("is_game", isGameContext);
         args.putBoolean("create", create);
-        args.putInt("number_of_shirts", 25);
+        args.putInt("number_of_shirts", 26);
 
         fragment.setArguments(args);
         return fragment;
@@ -270,7 +270,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
-            final int playerShirtNumber = position + 1;
+            final int playerShirtNumber = position;
             PlayerToggleButton button;
 
             if (view == null) {
@@ -331,14 +331,14 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         private void initCount() {
             switch (mNumberOfShirts) {
-                case 99:
-                    mCount = 100;
+                case 100:
+                    mCount = 101;
                     break;
-                case 50:
-                    mCount = 52;
+                case 51:
+                    mCount = 53;
                     break;
                 default:
-                    mCount = 26;
+                    mCount = 27;
                     break;
             }
         }
@@ -351,8 +351,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             final boolean result;
 
             switch (mNumberOfShirts) {
-                case 99:
-                case 50:
+                case 100:
+                case 51:
                     result = position == mNumberOfShirts;
                     break;
                 default:
@@ -365,22 +365,22 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         private void moreShirts() {
             switch (mNumberOfShirts) {
-                case 25:
-                    mNumberOfShirts = 50;
+                case 26:
+                    mNumberOfShirts = 51;
                     break;
-                case 50:
-                    mNumberOfShirts = 99;
+                case 51:
+                    mNumberOfShirts = 100;
                     break;
             }
         }
 
         private void lessShirts() {
             switch (mNumberOfShirts) {
-                case 99:
-                    mNumberOfShirts = 50;
+                case 100:
+                    mNumberOfShirts = 51;
                     break;
-                case 50:
-                    mNumberOfShirts = 25;
+                case 51:
+                    mNumberOfShirts = 26;
                     break;
             }
         }

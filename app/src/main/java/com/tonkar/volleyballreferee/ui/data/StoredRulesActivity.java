@@ -28,6 +28,7 @@ public class StoredRulesActivity extends AppCompatActivity {
 
     private Rules    mRules;
     private MenuItem mSaveItem;
+    private boolean  mCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class StoredRulesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_rules);
 
-        boolean create = getIntent().getBooleanExtra("create", true);
+        mCreate = getIntent().getBooleanExtra("create", true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -49,7 +50,7 @@ public class StoredRulesActivity extends AppCompatActivity {
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, create));
+        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, mCreate));
         fragmentTransaction.commit();
     }
 
@@ -89,7 +90,7 @@ public class StoredRulesActivity extends AppCompatActivity {
     private void saveRules() {
         Log.i(Tags.STORED_RULES, "Save rules");
         StoredRulesService storedRulesService = new StoredRules(this);
-        storedRulesService.saveRules(mRules);
+        storedRulesService.saveRules(mRules, mCreate);
         UiUtils.makeText(this, getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

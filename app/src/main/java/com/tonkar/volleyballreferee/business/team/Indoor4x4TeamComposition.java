@@ -201,7 +201,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     }
 
     public boolean hasActingCaptainOnCourt() {
-        return mActingCaptain > 0;
+        return mActingCaptain > -1;
     }
 
     public boolean isActingCaptain(int number) {
@@ -211,7 +211,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     public Set<Integer> getPossibleActingCaptains() {
         Set<Integer> players = new TreeSet<>();
 
-        if (mActingCaptain > 0) {
+        if (mActingCaptain > -1) {
             players.add(mActingCaptain);
         } else {
             players.addAll(getPlayersOnCourt());

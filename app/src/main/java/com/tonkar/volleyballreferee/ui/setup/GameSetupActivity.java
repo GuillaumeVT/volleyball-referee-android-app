@@ -110,7 +110,7 @@ public class GameSetupActivity extends AppCompatActivity {
         if (mStartItem != null) {
             if (mGameService.getTeamName(TeamType.HOME).length() < 2 || mGameService.getNumberOfPlayers(TeamType.HOME) < mGameService.getExpectedNumberOfPlayersOnCourt()
                     || mGameService.getTeamName(TeamType.GUEST).length() < 2 || mGameService.getNumberOfPlayers(TeamType.GUEST) < mGameService.getExpectedNumberOfPlayersOnCourt()
-                    || mGameService.getCaptain(TeamType.HOME) < 1 || mGameService.getCaptain(TeamType.GUEST) < 1
+                    || mGameService.getCaptain(TeamType.HOME) < 0 || mGameService.getCaptain(TeamType.GUEST) < 0
                     || mGameService.getRules().getName().length() < 2
                     || (mGameService.getLeague().getName().length() > 0 && mGameService.getLeague().getDivision().length() < 2)) {
                 Log.i(Tags.SETUP_UI, "Confirm button is invisible");
