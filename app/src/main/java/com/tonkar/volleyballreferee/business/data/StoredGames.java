@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.business.data;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
@@ -745,7 +744,6 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                                         }
                                     }
                             );
-                            stringRequest1.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                             ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest1);
                         } else {
                             if (error.networkResponse != null) {
@@ -754,7 +752,6 @@ public class StoredGames implements StoredGamesService, GeneralListener, ScoreLi
                         }
                     }
             );
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
         }
     }

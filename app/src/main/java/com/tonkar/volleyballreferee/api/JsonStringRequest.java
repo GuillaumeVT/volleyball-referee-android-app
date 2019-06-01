@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.api;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -19,6 +20,7 @@ public class JsonStringRequest extends StringRequest {
         super(method, url, listener, errorListener);
         mBody = body;
         mAuthentication = authentication;
+        setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     @Override

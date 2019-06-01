@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.tonkar.volleyballreferee.R;
@@ -30,14 +31,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class StoredTeamActivity extends AppCompatActivity {
 
-    private BaseTeamService mTeamService;
-    private MenuItem        mSaveItem;
-    private boolean         mCreate;
+    private StoredTeamsService mStoredTeamsService;
+    private BaseTeamService    mTeamService;
+    private MenuItem           mSaveItem;
+    private boolean            mCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StoredTeamsService storedTeamsService = new StoredTeams(this);
-        mTeamService = storedTeamsService.copyTeam(storedTeamsService.readTeam(getIntent().getStringExtra("team")));
+        mStoredTeamsService = new StoredTeams(this);
+        mTeamService = mStoredTeamsService.copyTeam(mStoredTeamsService.readTeam(getIntent().getStringExtra("team")));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_team);
@@ -74,6 +76,12 @@ public class StoredTeamActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getIntent().putExtra("team", mStoredTeamsService.writeTeam(mStoredTeamsService.copyTeam(mTeamService)));
     }
 
     @Override

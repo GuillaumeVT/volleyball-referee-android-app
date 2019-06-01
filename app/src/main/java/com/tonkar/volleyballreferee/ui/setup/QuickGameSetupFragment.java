@@ -104,10 +104,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, "Update division");
-                mGameService.getLeague().setDivision(s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.division_name_input_layout)).setError(mGameService.getLeague().getDivision().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
-                computeConfirmItemVisibility();
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, "Update division");
+                    mGameService.getLeague().setDivision(s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.division_name_input_layout)).setError(mGameService.getLeague().getDivision().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    computeConfirmItemVisibility();
+                }
             }
 
             @Override
@@ -134,10 +136,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, "Update league");
-                mGameService.getLeague().setName(s.toString().trim());
-                view.findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
-                computeConfirmItemVisibility();
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, "Update league");
+                    mGameService.getLeague().setName(s.toString().trim());
+                    view.findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+                    computeConfirmItemVisibility();
+                }
             }
 
             @Override
@@ -192,10 +196,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME.toString()));
-                mGameService.setTeamName(TeamType.HOME, s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.home_team_name_input_layout)).setError(mGameService.getTeamName(TeamType.HOME).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
-                computeConfirmItemVisibility();
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME.toString()));
+                    mGameService.setTeamName(TeamType.HOME, s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.home_team_name_input_layout)).setError(mGameService.getTeamName(TeamType.HOME).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    computeConfirmItemVisibility();
+                }
             }
 
             @Override
@@ -210,10 +216,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST.toString()));
-                mGameService.setTeamName(TeamType.GUEST, s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.guest_team_name_input_layout)).setError(mGameService.getTeamName(TeamType.GUEST).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
-                computeConfirmItemVisibility();
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST.toString()));
+                    mGameService.setTeamName(TeamType.GUEST, s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.guest_team_name_input_layout)).setError(mGameService.getTeamName(TeamType.GUEST).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    computeConfirmItemVisibility();
+                }
             }
 
             @Override

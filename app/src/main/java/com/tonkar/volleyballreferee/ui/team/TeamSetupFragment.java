@@ -142,10 +142,12 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
-                mTeamService.setTeamName(mTeamType, s.toString().trim());
-                ((TextInputLayout)view.findViewById(R.id.team_name_input_layout)).setError(mTeamService.getTeamName(mTeamType).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
-                computeConfirmItemVisibility();
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType.toString()));
+                    mTeamService.setTeamName(mTeamType, s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.team_name_input_layout)).setError(mTeamService.getTeamName(mTeamType).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    computeConfirmItemVisibility();
+                }
             }
 
             @Override
@@ -209,7 +211,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("number_of_shirts", mNumberOfShirts);
     }

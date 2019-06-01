@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -26,15 +27,16 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class StoredRulesActivity extends AppCompatActivity {
 
-    private Rules    mRules;
-    private MenuItem mSaveItem;
-    private boolean  mCreate;
+    private StoredRulesService mStoredRulesService;
+    private Rules              mRules;
+    private MenuItem           mSaveItem;
+    private boolean            mCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StoredRulesService storedRulesService = new StoredRules(this);
+        mStoredRulesService = new StoredRules(this);
         mRules = new Rules();
-        mRules.setAll(storedRulesService.readRules(getIntent().getStringExtra("rules")));
+        mRules.setAll(mStoredRulesService.readRules(getIntent().getStringExtra("rules")));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_rules);
@@ -52,6 +54,12 @@ public class StoredRulesActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, mCreate));
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getIntent().putExtra("rules", mStoredRulesService.writeRules(mRules));
     }
 
     @Override
