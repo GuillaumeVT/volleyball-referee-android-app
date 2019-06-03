@@ -161,7 +161,11 @@ public abstract class NavigationActivity extends AppCompatActivity {
         if (isNavigationDrawerOpen()) {
             mDrawerLayout.closeDrawers();
         } else {
-            super.onBackPressed();
+            if (this instanceof MainActivity) {
+                super.onBackPressed();
+            } else {
+                UiUtils.navigateToHome(this);
+            }
         }
     }
 
