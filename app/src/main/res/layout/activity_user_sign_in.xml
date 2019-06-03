@@ -44,14 +44,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/big_margin_size"
                                 android:layout_marginStart="@dimen/small_margin_size"
-                                android:orientation="horizontal"
-                                android:weightSum="5">
+                                android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start"
-                                    android:layout_weight="4"
+                                    android:layout_weight="1"
                                     android:paddingBottom="@dimen/default_margin_size"
                                     android:paddingTop="@dimen/default_margin_size"
                                     android:text="@string/user_sign_in_why_title"
@@ -59,9 +58,8 @@
                                     android:textSize="@dimen/big_text_size"/>
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1"
                                     android:scaleType="fitEnd"
                                     app:srcCompat="@mipmap/ic_launcher_foreground"/>
                         </LinearLayout>
@@ -81,14 +79,13 @@
                                 android:layout_marginBottom="@dimen/big_margin_size"
                                 android:layout_marginStart="@dimen/small_margin_size"
                                 android:layout_marginTop="@dimen/big_margin_size"
-                                android:orientation="horizontal"
-                                android:weightSum="5">
+                                android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start"
-                                    android:layout_weight="4"
+                                    android:layout_weight="1"
                                     android:paddingBottom="@dimen/default_margin_size"
                                     android:paddingTop="@dimen/default_margin_size"
                                     android:text="@string/user_sign_in_privacy_title"
@@ -96,9 +93,8 @@
                                     android:textSize="@dimen/big_text_size"/>
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1"
                                     android:scaleType="fitEnd"
                                     app:srcCompat="@mipmap/ic_launcher_foreground"/>
                         </LinearLayout>
@@ -108,56 +104,52 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:layout_marginStart="@dimen/small_margin_size"
+                                android:layout_marginBottom="@dimen/big_margin_size"
                                 android:text="@string/user_sign_in_privacy_message"
                                 android:textAppearance="@style/TextViewTheme"
                                 android:textSize="@dimen/small_text_size"/>
 
-                        <LinearLayout
-                                android:layout_width="match_parent"
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/google_sign_in_button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/big_margin_size"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:padding="@dimen/default_margin_size"
+                                android:layout_gravity="center"
+                                android:text="@string/user_sign_in_google"
+                                android:textColor="@android:color/white"
+                                style="@style/VbrButton"
+                                app:backgroundTint="@color/colorGoogle"
+                                app:icon="@drawable/ic_google"
+                                app:iconTint="@android:color/white"
+                                android:textSize="@dimen/small_text_size"/>
 
-                            <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/google_sign_in_button"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:layout_margin="@dimen/default_margin_size"
-                                    android:text="@string/user_sign_in_google"
-                                    android:textColor="@android:color/white"
-                                    style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorGoogle"
-                                    app:icon="@drawable/ic_google"
-                                    app:iconTint="@android:color/white" android:textSize="@dimen/small_text_size"/>
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/facebook_sign_in_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:padding="@dimen/default_margin_size"
+                                android:layout_gravity="center"
+                                android:text="@string/user_sign_in_facebook"
+                                android:textColor="@android:color/white"
+                                style="@style/VbrButton"
+                                app:backgroundTint="@color/colorFacebook"
+                                app:icon="@drawable/ic_facebook"
+                                app:iconTint="@android:color/white"
+                                android:textSize="@dimen/small_text_size"/>
 
-                            <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/facebook_sign_in_button"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:layout_margin="@dimen/default_margin_size"
-                                    android:text="@string/user_sign_in_facebook"
-                                    android:textColor="@android:color/white"
-                                    style="@style/VbrButton"
-                                    app:backgroundTint="@color/colorFacebook"
-                                    app:icon="@drawable/ic_facebook"
-                                    app:iconTint="@android:color/white" android:textSize="@dimen/small_text_size"/>
+                        <com.google.android.gms.common.SignInButton
+                                android:id="@+id/original_google_sign_in_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
 
-                            <com.google.android.gms.common.SignInButton
-                                    android:id="@+id/original_google_sign_in_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:visibility="gone"/>
-
-                            <com.facebook.login.widget.LoginButton
-                                    android:id="@+id/original_facebook_sign_in_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:visibility="gone"/>
-                        </LinearLayout>
+                        <com.facebook.login.widget.LoginButton
+                                android:id="@+id/original_facebook_sign_in_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
 
                     </LinearLayout>
 

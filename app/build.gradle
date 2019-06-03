@@ -6,8 +6,8 @@ android {
         applicationId "com.tonkar.volleyballreferee"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 74
-        versionName "3.03"
+        versionCode 75
+        versionName "3.04"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {

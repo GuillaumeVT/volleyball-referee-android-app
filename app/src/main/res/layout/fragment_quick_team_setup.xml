@@ -10,22 +10,21 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
-            android:weightSum="4"
             android:baselineAligned="false">
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/team_name_input_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3">
+                android:layout_weight="1">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.tonkar.volleyballreferee.ui.util.ClearableTextInputEditText
                     android:id="@+id/team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_clear"
                     android:ems="10"
                     android:hint="@string/home_team_hint"
                     android:imeOptions="actionDone"
@@ -35,104 +34,72 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-                android:layout_width="0dp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/team_color_button"
+                style="@style/VbrFab"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/team_color_button"
-                    style="@style/VbrFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_shirt_color"/>
-
-        </LinearLayout>
+                android:layout_margin="@dimen/small_margin_size"
+                app:fabCustomSize="@dimen/form_button_size"
+                app:maxImageSize="@dimen/form_fab_icon_size"
+                app:srcCompat="@drawable/ic_shirt_color"/>
 
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
-            android:weightSum="4">
+            android:baselineAligned="false">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:text="@string/select_captain"
                 android:textAppearance="@style/TextViewTheme"
                 android:textSize="@dimen/default_text_size"/>
 
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/team_captain_number_button"
-                    android:layout_width="@dimen/form_button_size"
-                    android:layout_height="@dimen/form_button_size"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/small_margin_size"
-                    android:layout_marginTop="@dimen/small_margin_size"
-                    android:textSize="@dimen/default_text_size"
-                    app:cornerRadius="@dimen/form_button_radius"
-                    style="@style/VbrButton"/>
-
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/team_captain_number_button"
+                android:layout_width="@dimen/form_button_size"
+                android:layout_height="@dimen/form_button_size"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/small_margin_size"
+                android:textSize="@dimen/default_text_size"
+                app:cornerRadius="@dimen/form_button_radius"
+                style="@style/VbrButton"/>
 
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
             android:gravity="center|start"
             android:orientation="horizontal"
-            android:weightSum="4">
+            android:baselineAligned="false">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/select_gender_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:text="@string/select_gender"
                 android:textAppearance="@style/TextViewTheme"
                 android:textSize="@dimen/default_text_size"/>
 
-        <LinearLayout
-                android:layout_width="0dp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/select_gender_button"
+                style="@style/VbrFab"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/select_gender_button"
-                    style="@style/VbrFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:contentDescription="@string/gender_description"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_mixed"/>
-
-        </LinearLayout>
+                android:layout_margin="@dimen/small_margin_size"
+                android:contentDescription="@string/gender_description"
+                app:fabCustomSize="@dimen/form_button_size"
+                app:maxImageSize="@dimen/form_fab_icon_size"
+                app:srcCompat="@drawable/ic_mixed"/>
 
     </LinearLayout>
 
