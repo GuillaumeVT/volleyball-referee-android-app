@@ -20,6 +20,7 @@ public class JsonStringRequest extends StringRequest {
         super(method, url, listener, errorListener);
         mBody = body;
         mAuthentication = authentication;
+        setShouldCache(false);
         setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 

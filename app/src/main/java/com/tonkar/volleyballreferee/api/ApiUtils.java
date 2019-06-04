@@ -58,6 +58,7 @@ public class ApiUtils {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
+        mRequestQueue.getCache().clear();
         return mRequestQueue;
     }
 
