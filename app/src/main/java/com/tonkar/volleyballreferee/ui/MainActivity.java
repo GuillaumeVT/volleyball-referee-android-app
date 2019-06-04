@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
@@ -23,7 +24,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonSyntaxException;
 import com.tonkar.volleyballreferee.R;
@@ -44,7 +44,13 @@ import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -267,24 +273,37 @@ public class MainActivity extends AuthenticationActivity {
 
     private void fetchAndShowNews() {
         if (ApiUtils.isConnectedToInternet(this)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.MESSAGES_API_URL, new byte[0],
-                    response -> {
-                        ApiMessage message = JsonIOUtils.GSON.fromJson(response, JsonIOUtils.MESSAGE_TYPE);
+            Request request = ApiUtils.buildGet(ApiUtils.MESSAGES_API_URL);
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    showNews(getString(R.string.no_news));
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiMessage message = JsonIOUtils.GSON.fromJson(response.body().string(), JsonIOUtils.MESSAGE_TYPE);
                         showNews(message.getContent());
-                    },
-                    error -> showNews(getString(R.string.no_news))
-            );
-            ApiUtils.getInstance().getRequestQueue(this).add(stringRequest);
+                    } else {
+                        showNews(getString(R.string.no_news));
+                    }
+                }
+            });
         }
     }
 
     private void showNews(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                .setTitle(R.string.news).setMessage(message)
-                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                });
-        AlertDialog alertDialog = builder.show();
-        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+        runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+                    .setTitle(R.string.news).setMessage(message)
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    });
+            AlertDialog alertDialog = builder.show();
+            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+        });
     }
 
     private void showAccount() {

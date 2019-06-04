@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.business.data;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
+import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.api.*;
@@ -21,12 +21,17 @@ import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
 import com.tonkar.volleyballreferee.interfaces.team.GenderType;
 import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
 import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.util.*;
 
 public class StoredTeams implements StoredTeamsService {
@@ -295,21 +300,30 @@ public class StoredTeams implements StoredTeamsService {
     @Override
     public void syncTeams(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.TEAMS_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        List<ApiTeamDescription> teamList = readTeams(response);
+            Request request = ApiUtils.buildGet(ApiUtils.TEAMS_API_URL, PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        List<ApiTeamDescription> teamList = readTeams(response.body().string());
                         syncTeams(teamList, listener);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
-                        }
+                    } else {
+                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
                         if (listener != null){
                             listener.onSynchronizationFailed();
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();
@@ -390,68 +404,98 @@ public class StoredTeams implements StoredTeamsService {
             }
         } else {
             ApiTeamDescription remoteTeam = remoteTeams.poll();
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.TEAM_API_URL, remoteTeam.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        ApiTeam team = readTeam(response);
+            Request request = ApiUtils.buildGet(String.format(ApiUtils.TEAM_API_URL, remoteTeam.getId()), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiTeam team = readTeam(response.body().string());
                         insertTeamIntoDb(team, true, false);
                         downloadTeamsRecursive(remoteTeams, listener);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", error.networkResponse.statusCode));
-                        }
+                    } else {
+                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
                         if (listener != null){
                             listener.onSynchronizationFailed();
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void pushTeamToServer(final ApiTeam team, boolean create) {
         if (PrefUtils.canSync(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
-            final byte[] bytes = writeTeam(team).getBytes();
+            final String teamStr = writeTeam(team);
 
-            int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
-            JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, ApiUtils.TEAMS_API_URL, bytes, authentication,
-                    response -> insertTeamIntoDb(team, true, false),
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while sending team", error.networkResponse.statusCode));
-                        }
+            Request request = create ?
+                    ApiUtils.buildPost(ApiUtils.TEAMS_API_URL, teamStr, authentication) :
+                    ApiUtils.buildPut(ApiUtils.TEAMS_API_URL, teamStr, authentication);
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED || response.code() == HttpURLConnection.HTTP_OK) {
+                        insertTeamIntoDb(team, true, false);
+                    } else {
+                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while sending team", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void deleteTeamOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.TEAM_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {},
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", error.networkResponse.statusCode));
-                        }
+            Request request = ApiUtils.buildDelete(String.format(ApiUtils.TEAM_API_URL, id), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
+                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting team", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void deleteAllTeamsOnServer() {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.TEAMS_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {},
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", error.networkResponse.statusCode));
-                        }
+            Request request = ApiUtils.buildDelete(ApiUtils.TEAMS_API_URL, PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
+                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 }

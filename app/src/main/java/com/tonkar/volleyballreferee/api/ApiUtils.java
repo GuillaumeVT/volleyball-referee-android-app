@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.tonkar.volleyballreferee.BuildConfig;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+
+import java.util.concurrent.TimeUnit;
 
 public class ApiUtils {
 
@@ -42,8 +46,10 @@ public class ApiUtils {
     public static String FRIENDS_REJECT_API_URL   = BASE_URL + "/users/friends/reject/%s";
     public static String FRIENDS_REMOVE_API_URL   = BASE_URL + "/users/friends/remove/%s";
 
+    public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
+
     private static ApiUtils     sApiUtils;
-    private        RequestQueue mRequestQueue;
+    private        OkHttpClient mHttpClient;
 
     private ApiUtils() {}
 
@@ -54,17 +60,96 @@ public class ApiUtils {
         return sApiUtils;
     }
 
-    public RequestQueue getRequestQueue(Context context) {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
+    public OkHttpClient getHttpClient() {
+        if (mHttpClient == null) {
+            mHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build();
         }
-        mRequestQueue.getCache().clear();
-        return mRequestQueue;
+
+        return mHttpClient;
     }
 
     public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    public static Request buildGet(String url, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .build();
+    }
+
+    public static Request buildGet(String url) {
+        return new Request.Builder()
+                .url(url)
+                .build();
+    }
+
+    public static Request buildPost(String url, String jsonBody, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .post(RequestBody.create(ApiUtils.JSON_MEDIA_TYPE, jsonBody))
+                .build();
+    }
+
+    public static Request buildPost(String url, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .post(RequestBody.create(ApiUtils.JSON_MEDIA_TYPE, ""))
+                .build();
+    }
+
+    public static Request buildPost(String url, String jsonBody) {
+        return new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(ApiUtils.JSON_MEDIA_TYPE, jsonBody))
+                .build();
+    }
+
+    public static Request buildPut(String url, String jsonBody, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .put(RequestBody.create(ApiUtils.JSON_MEDIA_TYPE, jsonBody))
+                .build();
+    }
+
+    public static Request buildPatch(String url, String jsonBody, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .patch(RequestBody.create(ApiUtils.JSON_MEDIA_TYPE, jsonBody))
+                .build();
+    }
+
+    public static Request buildPatch(String url, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .patch(RequestBody.create(ApiUtils.JSON_MEDIA_TYPE, ""))
+                .build();
+    }
+
+    public static Request buildDelete(String url, Authentication authentication) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", authentication.getToken()))
+                .addHeader("AuthenticationProvider", authentication.getProvider().toString())
+                .delete()
+                .build();
     }
 }

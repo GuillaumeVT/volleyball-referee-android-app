@@ -42,7 +42,7 @@
 
     <!-- User activity -->
     <string name="user_sign_in_why_title">Por que eu tenho que logar?</string>
-    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
+    <string name="user_sign_in_why_message">Seus dados no Volleyball Referee (jogos, equipes, regras, ligas, amigos) serão sincronizados com o nosso servidor. Fazendo login, nós saberemos quem você é e iremos manter seus dados associados com a sua conta.</string>
     <string name="user_sign_in_privacy_title">Isso é seguro?</string>
     <string name="user_sign_in_privacy_message">Sim. Quando você se registra, a única informação que buscamos do seu perfil é sua identidade social única que usaremos para identificar você.</string>
     <string name="user_sign_in_google">Entrar com o Google</string>

@@ -154,13 +154,17 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationSucceeded() {
-        mStoredGamesListAdapter.updateStoredGamesList(mStoredGamesService.listGames());
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            mStoredGamesListAdapter.updateStoredGamesList(mStoredGamesService.listGames());
+            mSyncLayout.setRefreshing(false);
+        });
     }
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+            mSyncLayout.setRefreshing(false);
+        });
     }
 }

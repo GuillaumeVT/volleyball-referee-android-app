@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.business.data;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
+import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.api.*;
@@ -15,12 +15,17 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
 import com.tonkar.volleyballreferee.business.rules.Rules;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.util.*;
 
 public class StoredRules implements StoredRulesService {
@@ -202,21 +207,30 @@ public class StoredRules implements StoredRulesService {
     @Override
     public void syncRules(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        List<ApiRulesDescription> rulesList = readRulesList(response);
+            Request request = ApiUtils.buildGet(ApiUtils.RULES_API_URL, PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        List<ApiRulesDescription> rulesList = readRulesList(response.body().string());
                         syncRules(rulesList, listener);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
-                        }
+                    } else {
+                        Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", response.code()));
                         if (listener != null){
                             listener.onSynchronizationFailed();
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();
@@ -297,68 +311,98 @@ public class StoredRules implements StoredRulesService {
             }
         } else {
             ApiRulesDescription remoteRule = remoteRules.poll();
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.RULE_API_URL, remoteRule.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        ApiRules rules = readRules(response);
+            Request request = ApiUtils.buildGet(String.format(ApiUtils.RULE_API_URL, remoteRule.getId()), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiRules rules = readRules(response.body().string());
                         insertRulesIntoDb(rules, true, false);
                         downloadRulesRecursive(remoteRules, listener);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", error.networkResponse.statusCode));
-                        }
+                    } else {
+                        Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", response.code()));
                         if (listener != null){
                             listener.onSynchronizationFailed();
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void pushRulesToServer(final ApiRules rules, boolean create) {
         if (PrefUtils.canSync(mContext)) {
             final Authentication authentication = PrefUtils.getAuthentication(mContext);
-            final byte[] bytes = writeRules(rules).getBytes();
+            final String rulesStr = writeRules(rules);
 
-            int requestMethod = create ? Request.Method.POST : Request.Method.PUT;
-            JsonStringRequest stringRequest = new JsonStringRequest(requestMethod, ApiUtils.RULES_API_URL, bytes, authentication,
-                    response -> insertRulesIntoDb(rules, true, false),
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while sending rules", error.networkResponse.statusCode));
-                        }
+            Request request = create ?
+                    ApiUtils.buildPost(ApiUtils.RULES_API_URL, rulesStr, authentication) :
+                    ApiUtils.buildPut(ApiUtils.RULES_API_URL, rulesStr, authentication);
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED || response.code() == HttpURLConnection.HTTP_OK) {
+                        insertRulesIntoDb(rules, true, false);
+                    } else {
+                        Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while sending rules", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void deleteRulesOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.RULE_API_URL, id), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {},
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", error.networkResponse.statusCode));
-                        }
+            Request request = ApiUtils.buildDelete(String.format(ApiUtils.RULE_API_URL, id), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
+                        Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void deleteAllRulesServer() {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, ApiUtils.RULES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {},
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", error.networkResponse.statusCode));
-                        }
+            Request request = ApiUtils.buildDelete(ApiUtils.RULES_API_URL, PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
+                        Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 }

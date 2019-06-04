@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.business.data;
 
 import android.content.Context;
 import android.util.Log;
-import com.android.volley.Request;
+import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.api.*;
 import com.tonkar.volleyballreferee.business.PrefUtils;
 import com.tonkar.volleyballreferee.business.data.db.AppDatabase;
@@ -11,7 +11,12 @@ import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncFriendRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.AsyncUserRequestListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +37,28 @@ public class StoredUser implements StoredUserService {
             user.setId(userId);
             user.setPseudo(pseudo);
             user.setFriends(new ArrayList<>());
-            final byte[] bytes = writeUser(user).getBytes();
+            final String userStr = writeUser(user);
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.USER_API_URL, bytes,
-                    response -> {
+            Request request = ApiUtils.buildPost(ApiUtils.USER_API_URL, userStr);
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED) {
                         PrefUtils.storeUserPseudo(mContext, pseudo);
                         listener.onUserCreated(user);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d creating user", error.networkResponse.statusCode));
-                            listener.onError(error.networkResponse.statusCode);
-                        } else {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d creating user", response.code()));
+                        listener.onError(response.code());
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
         }
@@ -58,37 +68,37 @@ public class StoredUser implements StoredUserService {
     public void downloadUser(AsyncUserRequestListener listener) {
         if (PrefUtils.canSync(mContext) || PrefUtils.shouldCreateUser(mContext)) {
             Authentication authentication = PrefUtils.getAuthentication(mContext);
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.USERS_API_URL, new byte[0], authentication,
-                    response -> {
-                        ApiUser user = readUser(response);
 
-                        if (user == null) {
-                            if (listener != null) {
-                                listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                            }
-                        } else {
-                            PrefUtils.signIn(mContext, Authentication.of(user.getId(), user.getPseudo(), authentication.getToken()));
-                            insertFriendsIntoDb(user.getFriends(), false);
+            Request request = ApiUtils.buildGet(ApiUtils.USERS_API_URL, authentication);
 
-                            if (listener != null) {
-                                listener.onUserReceived(user);
-                            }
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null) {
+                        listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiUser user = readUser(response.body().string());
+
+                        PrefUtils.signIn(mContext, Authentication.of(user.getId(), user.getPseudo(), authentication.getToken()));
+                        insertFriendsIntoDb(user.getFriends(), false);
+
+                        if (listener != null) {
+                            listener.onUserReceived(user);
                         }
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting user", error.networkResponse.statusCode));
-                            if (listener != null) {
-                                listener.onError(error.networkResponse.statusCode);
-                            }
-                        } else {
-                            if (listener != null) {
-                                listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                            }
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting user", response.code()));
+                        if (listener != null) {
+                            listener.onError(response.code());
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             if (listener != null) {
                 listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -104,27 +114,28 @@ public class StoredUser implements StoredUserService {
     @Override
     public void downloadFriendsAndRequests(AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.FRIENDS_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        ApiFriendsAndRequests friendsAndRequests = readFriendsAndRequests(response);
+            Request request = ApiUtils.buildGet(ApiUtils.FRIENDS_API_URL, PrefUtils.getAuthentication(mContext));
 
-                        if (friendsAndRequests == null) {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        } else {
-                            insertFriendsIntoDb(friendsAndRequests.getFriends(), false);
-                            listener.onFriendsAndRequestsReceived(friendsAndRequests);
-                        }
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting friends and requests", error.networkResponse.statusCode));
-                            listener.onError(error.networkResponse.statusCode);
-                        } else {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiFriendsAndRequests friendsAndRequests = readFriendsAndRequests(response.body().string());
+
+                        insertFriendsIntoDb(friendsAndRequests.getFriends(), false);
+                        listener.onFriendsAndRequestsReceived(friendsAndRequests);
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting friends and requests", response.code()));
+                        listener.onError(response.code());
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
         }
@@ -154,18 +165,25 @@ public class StoredUser implements StoredUserService {
     @Override
     public void sendFriendRequest(String friendPseudo, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, String.format(ApiUtils.FRIENDS_REQUEST_API_URL, friendPseudo), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> listener.onFriendRequestSent(friendPseudo),
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while sending friend request", error.networkResponse.statusCode));
-                            listener.onError(error.networkResponse.statusCode);
-                        } else {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+            Request request = ApiUtils.buildPost(String.format(ApiUtils.FRIENDS_REQUEST_API_URL, friendPseudo), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED) {
+                        listener.onFriendRequestSent(friendPseudo);
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while sending friend request", response.code()));
+                        listener.onError(response.code());
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
         }
@@ -174,21 +192,26 @@ public class StoredUser implements StoredUserService {
     @Override
     public void acceptFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, String.format(ApiUtils.FRIENDS_ACCEPT_API_URL, friendRequest.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
+            Request request = ApiUtils.buildPost(String.format(ApiUtils.FRIENDS_ACCEPT_API_URL, friendRequest.getId()), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED) {
                         insertFriendIntoDb(friendRequest.getSenderId(), friendRequest.getSenderPseudo(), false);
                         listener.onFriendRequestAccepted(friendRequest);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while accepting friend request", error.networkResponse.statusCode));
-                            listener.onError(error.networkResponse.statusCode);
-                        } else {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while accepting friend request", response.code()));
+                        listener.onError(response.code());
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
         }
@@ -197,18 +220,25 @@ public class StoredUser implements StoredUserService {
     @Override
     public void rejectFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, String.format(ApiUtils.FRIENDS_REJECT_API_URL, friendRequest.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> listener.onFriendRequestRejected(friendRequest),
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while rejecting friend request", error.networkResponse.statusCode));
-                            listener.onError(error.networkResponse.statusCode);
-                        } else {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+            Request request = ApiUtils.buildPost(String.format(ApiUtils.FRIENDS_REJECT_API_URL, friendRequest.getId()), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED) {
+                        listener.onFriendRequestRejected(friendRequest);
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while rejecting friend request", response.code()));
+                        listener.onError(response.code());
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
         }
@@ -217,21 +247,26 @@ public class StoredUser implements StoredUserService {
     @Override
     public void removeFriend(ApiFriend friend, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.DELETE, String.format(ApiUtils.FRIENDS_REMOVE_API_URL, friend.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
+            Request request = ApiUtils.buildDelete(String.format(ApiUtils.FRIENDS_REMOVE_API_URL, friend.getId()), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_NO_CONTENT) {
                         removeFriendFromDb(friend.getId());
                         listener.onFriendRemoved(friend);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while removing friend", error.networkResponse.statusCode));
-                            listener.onError(error.networkResponse.statusCode);
-                        } else {
-                            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+                    } else {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while removing friend", response.code()));
+                        listener.onError(response.code());
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
         }

@@ -133,37 +133,49 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
 
     @Override
     public void onFriendsAndRequestsReceived(ApiFriendsAndRequests friendsAndRequests) {
-        mColleaguesListAdapter.updateFriendsAndRequests(friendsAndRequests);
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            mColleaguesListAdapter.updateFriendsAndRequests(friendsAndRequests);
+            mSyncLayout.setRefreshing(false);
+        });
     }
 
     @Override
     public void onFriendRequestSent(String friendPseudo) {
-        UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-        updateColleaguesList();
+        runOnUiThread(() -> {
+            UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+            updateColleaguesList();
+        });
     }
 
     @Override
     public void onFriendRequestAccepted(ApiFriendRequest friendRequest) {
-        UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-        updateColleaguesList();
+        runOnUiThread(() -> {
+            UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+            updateColleaguesList();
+        });
     }
 
     @Override
     public void onFriendRequestRejected(ApiFriendRequest friendRequest) {
-        UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-        updateColleaguesList();
+        runOnUiThread(() -> {
+            UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+            updateColleaguesList();
+        });
     }
 
     @Override
     public void onFriendRemoved(ApiFriend friend) {
-        UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-        updateColleaguesList();
+        runOnUiThread(() -> {
+            UiUtils.makeText(this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+            updateColleaguesList();
+        });
     }
 
     @Override
     public void onError(int httpCode) {
-        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+            mSyncLayout.setRefreshing(false);
+        });
     }
 }

@@ -49,6 +49,13 @@ public class ItalyUsaBeachGame {
     private StoredGamesService mStoredGamesService;
 
     @Test
+    public void playGame_manyComplete() {
+        for (int index=0; index<80; index++) {
+            playGame_technicalTimeout();
+        }
+    }
+
+    @Test
     public void playGame_complete() {
         Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),

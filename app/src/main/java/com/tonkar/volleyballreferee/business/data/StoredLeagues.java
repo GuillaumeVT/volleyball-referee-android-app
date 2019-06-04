@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.business.data;
 
 import android.content.Context;
 import android.util.Log;
-import com.android.volley.Request;
+import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.api.*;
@@ -13,8 +13,13 @@ import com.tonkar.volleyballreferee.interfaces.GameType;
 import com.tonkar.volleyballreferee.interfaces.Tags;
 import com.tonkar.volleyballreferee.interfaces.data.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.util.*;
 
 public class StoredLeagues implements StoredLeaguesService {
@@ -144,21 +149,30 @@ public class StoredLeagues implements StoredLeaguesService {
     @Override
     public void syncLeagues(DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, ApiUtils.LEAGUES_API_URL, new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        List<ApiLeagueDescription> leagueList = readLeagueList(response);
+            Request request = ApiUtils.buildGet(ApiUtils.LEAGUES_API_URL, PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        List<ApiLeagueDescription> leagueList = readLeagueList(response.body().string());
                         syncLeagues(leagueList, listener);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising league", error.networkResponse.statusCode));
-                        }
+                    } else {
+                        Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising leagues", response.code()));
                         if (listener != null){
                             listener.onSynchronizationFailed();
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();
@@ -233,38 +247,54 @@ public class StoredLeagues implements StoredLeaguesService {
             }
         } else {
             ApiLeagueDescription remoteLeague = remoteLeagues.poll();
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.GET, String.format(ApiUtils.LEAGUE_API_URL, remoteLeague.getId()), new byte[0], PrefUtils.getAuthentication(mContext),
-                    response -> {
-                        ApiLeague league = readLeague(response);
+            Request request = ApiUtils.buildGet(String.format(ApiUtils.LEAGUE_API_URL, remoteLeague.getId()), PrefUtils.getAuthentication(mContext));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiLeague league = readLeague(response.body().string());
                         insertLeagueIntoDb(league, true, false);
                         downloadLeaguesRecursive(remoteLeagues, listener);
-                    },
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising league", error.networkResponse.statusCode));
-                        }
+                    } else {
+                        Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising league", response.code()));
                         if (listener != null){
                             listener.onSynchronizationFailed();
                         }
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 
     private void pushLeagueToServer(final ApiLeague league) {
         if (PrefUtils.canSync(mContext)) {
-            final byte[] bytes = writeLeague(league).getBytes();
+            final String leagueStr = writeLeague(league);
+            Request request = ApiUtils.buildPost(ApiUtils.LEAGUES_API_URL, leagueStr, PrefUtils.getAuthentication(mContext));
 
-            JsonStringRequest stringRequest = new JsonStringRequest(Request.Method.POST, ApiUtils.LEAGUES_API_URL, bytes, PrefUtils.getAuthentication(mContext),
-                    response -> insertLeagueIntoDb(league, true, false),
-                    error -> {
-                        if (error.networkResponse != null) {
-                            Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while creating league", error.networkResponse.statusCode));
-                        }
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() == HttpURLConnection.HTTP_CREATED) {
+                        insertLeagueIntoDb(league, true, false);
+                    } else {
+                        Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while posting league", response.code()));
                     }
-            );
-            ApiUtils.getInstance().getRequestQueue(mContext).add(stringRequest);
+                }
+            });
         }
     }
 }

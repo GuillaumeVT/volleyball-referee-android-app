@@ -227,13 +227,17 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationSucceeded() {
-        mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.listTeams());
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.listTeams());
+            mSyncLayout.setRefreshing(false);
+        });
     }
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+            mSyncLayout.setRefreshing(false);
+        });
     }
 }

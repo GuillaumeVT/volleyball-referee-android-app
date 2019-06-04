@@ -57,10 +57,12 @@ public class PseudoInputDialogFragment extends DialogFragment {
                     storedUserService.createUser(authentication.getUserId(), pseudo, new AsyncUserRequestListener() {
                         @Override
                         public void onUserCreated(ApiUser user) {
-                            SyncWorker.syncAll(getActivity().getApplicationContext());
-                            dialog.dismiss();
-                            UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
-                            UiUtils.navigateToHome(getActivity());
+                            getActivity().runOnUiThread(() -> {
+                                SyncWorker.syncAll(getActivity().getApplicationContext());
+                                dialog.dismiss();
+                                UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
+                                UiUtils.navigateToHome(getActivity());
+                            });
                         }
 
                         @Override
@@ -68,11 +70,13 @@ public class PseudoInputDialogFragment extends DialogFragment {
 
                         @Override
                         public void onError(int httpCode) {
-                            if (HttpURLConnection.HTTP_CONFLICT == httpCode) {
-                                editTextLayout.setError(getString(R.string.user_exists_error));
-                            } else {
-                                editTextLayout.setError(getString(R.string.user_creation_error));
-                            }
+                            getActivity().runOnUiThread(() -> {
+                                if (HttpURLConnection.HTTP_CONFLICT == httpCode) {
+                                    editTextLayout.setError(getString(R.string.user_exists_error));
+                                } else {
+                                    editTextLayout.setError(getString(R.string.user_creation_error));
+                                }
+                            });
                         }
                     });
                 } else {

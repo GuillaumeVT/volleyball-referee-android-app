@@ -172,29 +172,42 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     @Override
     public void onGameReceived(StoredGameService storedGameService) {
         if (storedGameService != null) {
-            final GameService gameService = GameFactory.createGame(storedGameService);
-            Log.i(Tags.SCHEDULE_UI, "Received game");
+            mActivity.runOnUiThread(() -> {
+                final GameService gameService = GameFactory.createGame(storedGameService);
+                Log.i(Tags.SCHEDULE_UI, "Received game");
 
-            switch (storedGameService.getMatchStatus()) {
-                case SCHEDULED:
-                    if (mConfigureBeforeStart) {
-                        Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
-                        mStoredGamesService.saveSetupGame(gameService);
-                        final Intent setupIntent;
-                        if (gameService.getKind().equals(GameType.BEACH)) {
-                            setupIntent = new Intent(mActivity, QuickGameSetupActivity.class);
+                switch (storedGameService.getMatchStatus()) {
+                    case SCHEDULED:
+                        if (mConfigureBeforeStart) {
+                            Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
+                            mStoredGamesService.saveSetupGame(gameService);
+                            final Intent setupIntent;
+                            if (gameService.getKind().equals(GameType.BEACH)) {
+                                setupIntent = new Intent(mActivity, QuickGameSetupActivity.class);
+                            } else {
+                                setupIntent = new Intent(mActivity, GameSetupActivity.class);
+                            }
+                            setupIntent.putExtra("create", false);
+                            setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(setupIntent);
+                            UiUtils.animateForward(mActivity);
                         } else {
-                            setupIntent = new Intent(mActivity, GameSetupActivity.class);
+                            Log.i(Tags.SCHEDULE_UI, "Start scheduled game immediately");
+                            gameService.startMatch();
+                            mStoredGamesService.createCurrentGame(gameService);
+                            final Intent gameIntent = new Intent(mActivity, GameActivity.class);
+                            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(gameIntent);
+                            UiUtils.animateCreate(mActivity);
                         }
-                        setupIntent.putExtra("create", false);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(setupIntent);
-                        UiUtils.animateForward(mActivity);
-                    } else {
-                        Log.i(Tags.SCHEDULE_UI, "Start scheduled game immediately");
-                        gameService.startMatch();
+                        break;
+                    case LIVE:
+                        Log.i(Tags.SCHEDULE_UI, "Resume game");
+                        gameService.restoreGame(storedGameService);
                         mStoredGamesService.createCurrentGame(gameService);
                         final Intent gameIntent = new Intent(mActivity, GameActivity.class);
                         gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -202,22 +215,11 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                         gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(gameIntent);
                         UiUtils.animateCreate(mActivity);
-                    }
-                    break;
-                case LIVE:
-                    Log.i(Tags.SCHEDULE_UI, "Resume game");
-                    gameService.restoreGame(storedGameService);
-                    mStoredGamesService.createCurrentGame(gameService);
-                    final Intent gameIntent = new Intent(mActivity, GameActivity.class);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(gameIntent);
-                    UiUtils.animateCreate(mActivity);
-                    break;
-                 default:
-                     break;
-            }
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
     }
 
@@ -226,7 +228,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     @Override
     public void onError(int httpCode) {
-        UiUtils.makeErrorText(mActivity, getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+        mActivity.runOnUiThread(() -> UiUtils.makeErrorText(mActivity, getString(R.string.download_match_error), Toast.LENGTH_LONG).show());
     }
 
 }

@@ -222,13 +222,17 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onSynchronizationSucceeded() {
-        mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
+            mSyncLayout.setRefreshing(false);
+        });
     }
 
     @Override
     public void onSynchronizationFailed() {
-        UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            UiUtils.makeErrorText(this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+            mSyncLayout.setRefreshing(false);
+        });
     }
 }

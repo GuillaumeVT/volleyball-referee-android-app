@@ -160,14 +160,18 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {
-        mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
-        mSyncLayout.setRefreshing(false);
+        runOnUiThread(() -> {
+            mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
+            mSyncLayout.setRefreshing(false);
+        });
     }
 
     @Override
     public void onError(int httpCode) {
-        mSyncLayout.setRefreshing(false);
-        UiUtils.makeErrorText(this, getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+        runOnUiThread(() -> {
+            mSyncLayout.setRefreshing(false);
+            UiUtils.makeErrorText(this, getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+        });
     }
 
     public void scheduleIndoorGame(View view) {

@@ -201,22 +201,26 @@ public abstract class AuthenticationActivity extends NavigationActivity {
 
                 @Override
                 public void onUserReceived(ApiUser user) {
-                    UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
-                    UiUtils.navigateToHome(AuthenticationActivity.this);
+                    runOnUiThread(() -> {
+                        UiUtils.makeText(AuthenticationActivity.this, String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), user.getPseudo()), Toast.LENGTH_LONG).show();
+                        UiUtils.navigateToHome(AuthenticationActivity.this);
+                    });
                 }
 
                 @Override
                 public void onError(int httpCode) {
-                    if (HttpURLConnection.HTTP_UNAUTHORIZED == httpCode) {
-                        PseudoInputDialogFragment dialogFragment = (PseudoInputDialogFragment) getSupportFragmentManager().findFragmentByTag("pseudo_dialog");
+                    runOnUiThread(() -> {
+                        if (HttpURLConnection.HTTP_UNAUTHORIZED == httpCode) {
+                            PseudoInputDialogFragment dialogFragment = (PseudoInputDialogFragment) getSupportFragmentManager().findFragmentByTag("pseudo_dialog");
 
-                        if (dialogFragment == null) {
-                            dialogFragment = PseudoInputDialogFragment.newInstance();
-                            dialogFragment.show(getSupportFragmentManager(), "pseudo_dialog");
+                            if (dialogFragment == null) {
+                                dialogFragment = PseudoInputDialogFragment.newInstance();
+                                dialogFragment.show(getSupportFragmentManager(), "pseudo_dialog");
+                            }
+                        } else {
+                            UiUtils.makeErrorText(AuthenticationActivity.this, getString(R.string.user_error), Toast.LENGTH_LONG).show();
                         }
-                    } else {
-                        UiUtils.makeErrorText(AuthenticationActivity.this, getString(R.string.user_error), Toast.LENGTH_LONG).show();
-                    }
+                    });
                 }
             });
         }

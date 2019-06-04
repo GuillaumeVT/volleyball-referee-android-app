@@ -409,18 +409,22 @@ public class ScheduledGameActivity extends AppCompatActivity {
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {
-                        UiUtils.makeText(ScheduledGameActivity.this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-                        final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        UiUtils.animateCreate(ScheduledGameActivity.this);
+                        runOnUiThread(() -> {
+                            UiUtils.makeText(ScheduledGameActivity.this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+                            final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            UiUtils.animateCreate(ScheduledGameActivity.this);
+                        });
                     }
 
                     @Override
                     public void onSynchronizationFailed() {
-                        UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        runOnUiThread(() -> {
+                            UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        });
                     }
                 });
     }
@@ -432,17 +436,21 @@ public class ScheduledGameActivity extends AppCompatActivity {
                 new DataSynchronizationListener() {
                     @Override
                     public void onSynchronizationSucceeded() {
-                        final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        UiUtils.animateBackward(ScheduledGameActivity.this);
+                        runOnUiThread(() -> {
+                            final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            UiUtils.animateBackward(ScheduledGameActivity.this);
+                        });
                     }
 
                     @Override
                     public void onSynchronizationFailed() {
-                        UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        runOnUiThread(() -> {
+                            UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                        });
                     }
                 });
     }
