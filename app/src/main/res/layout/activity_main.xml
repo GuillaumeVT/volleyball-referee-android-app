@@ -27,27 +27,67 @@
                     android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                        android:id="@+id/resume_game_card"
+                        android:id="@+id/notifications_card"
                         style="@style/CardView.Light"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface">
+                        app:cardBackgroundColor="@color/colorSurface"
+                        android:visibility="gone">
 
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/resume_game_button"
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:padding="@dimen/default_margin_size"
-                            android:onClick="resumeCurrentGame"
-                            android:text="@string/resume_game_title"
-                            android:textColor="@android:color/white"
-                            style="@style/VbrButton"
-                            app:backgroundTint="@color/colorPlayerIn"
-                            app:icon="@drawable/ic_resume"
-                            app:iconTint="@android:color/white"
-                            android:layout_gravity="center"/>
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/resume_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:padding="@dimen/default_margin_size"
+                                android:onClick="resumeCurrentGame"
+                                android:text="@string/resume_game_title"
+                                android:textColor="@android:color/white"
+                                style="@style/VbrButton"
+                                app:backgroundTint="@color/colorPlayerIn"
+                                app:icon="@drawable/ic_resume"
+                                app:iconTint="@android:color/white"
+                                android:visibility="gone"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/goto_colleagues_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="0dp"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:padding="@dimen/default_margin_size"
+                                android:onClick="goToColleagues"
+                                android:textColor="@color/colorPrimary"
+                                style="@style/VbrButton"
+                                app:backgroundTint="@color/colorSecondary"
+                                app:icon="@drawable/ic_colleagues"
+                                app:iconTint="@color/colorPrimary"
+                                android:visibility="gone"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/goto_available_games_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="0dp"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:padding="@dimen/default_margin_size"
+                                android:onClick="goToAvailableGames"
+                                android:textColor="@color/colorPrimary"
+                                style="@style/VbrButton"
+                                app:backgroundTint="@color/colorSecondary"
+                                app:icon="@drawable/ic_volleyball"
+                                app:iconTint="@color/colorPrimary"
+                                android:visibility="gone"/>
+
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 

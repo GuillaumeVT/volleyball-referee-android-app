@@ -30,21 +30,23 @@ public class ApiUtils {
     public static String TEAMS_API_URL = BASE_URL + "/teams";
     public static String TEAM_API_URL  = BASE_URL + "/teams/%s";
 
-    public static String GAMES_API_URL           = BASE_URL + "/games";
-    public static String GAME_API_URL            = BASE_URL + "/games/%s";
-    public static String GAME_SET_API_URL        = BASE_URL + "/games/%s/set/%d";
-    public static String GAME_INDEXED_API_URL    = BASE_URL + "/games/%s/indexed/%b";
-    public static String FULL_GAME_API_URL       = BASE_URL + "/games/full";
-    public static String AVAILABLE_GAMES_API_URL = BASE_URL + "/games/available";
-    public static String COMPLETED_GAMES_API_URL = BASE_URL + "/games/completed";
+    public static String GAMES_API_URL                 = BASE_URL + "/games";
+    public static String GAME_API_URL                  = BASE_URL + "/games/%s";
+    public static String GAME_SET_API_URL              = BASE_URL + "/games/%s/set/%d";
+    public static String GAME_INDEXED_API_URL          = BASE_URL + "/games/%s/indexed/%b";
+    public static String FULL_GAME_API_URL             = BASE_URL + "/games/full";
+    public static String AVAILABLE_GAMES_API_URL       = BASE_URL + "/games/available";
+    public static String COMPLETED_GAMES_API_URL       = BASE_URL + "/games/completed";
+    public static String AVAILABLE_GAMES_COUNT_API_URL = AVAILABLE_GAMES_API_URL + "/count";
 
-    public static String USERS_API_URL            = BASE_URL + "/users";
-    public static String USER_API_URL             = BASE_URL + "/public/users/" + BuildConfig.SIGN_UP_KEY;
-    public static String FRIENDS_API_URL          = BASE_URL + "/users/friends";
-    public static String FRIENDS_REQUEST_API_URL  = BASE_URL + "/users/friends/request/%s";
-    public static String FRIENDS_ACCEPT_API_URL   = BASE_URL + "/users/friends/accept/%s";
-    public static String FRIENDS_REJECT_API_URL   = BASE_URL + "/users/friends/reject/%s";
-    public static String FRIENDS_REMOVE_API_URL   = BASE_URL + "/users/friends/remove/%s";
+    public static String USERS_API_URL                  = BASE_URL + "/users";
+    public static String USER_API_URL                   = BASE_URL + "/public/users/" + BuildConfig.SIGN_UP_KEY;
+    public static String FRIENDS_API_URL                = BASE_URL + "/users/friends";
+    public static String FRIENDS_REQUEST_API_URL        = BASE_URL + "/users/friends/request/%s";
+    public static String FRIENDS_ACCEPT_API_URL         = BASE_URL + "/users/friends/accept/%s";
+    public static String FRIENDS_REJECT_API_URL         = BASE_URL + "/users/friends/reject/%s";
+    public static String FRIENDS_REMOVE_API_URL         = BASE_URL + "/users/friends/remove/%s";
+    public static String FRIENDS_RECEIVED_COUNT_API_URL = BASE_URL + "/users/friends/received/count";
 
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
 

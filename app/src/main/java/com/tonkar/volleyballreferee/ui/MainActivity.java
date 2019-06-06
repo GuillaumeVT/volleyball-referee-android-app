@@ -42,6 +42,8 @@ import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
+import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import okhttp3.Call;
@@ -92,7 +94,16 @@ public class MainActivity extends AuthenticationActivity {
             beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
         }
 
-        setResumeGameCardVisibility();
+        if (mStoredGamesService.hasCurrentGame()) {
+            MaterialButton resumeGameButton = findViewById(R.id.resume_game_button);
+            resumeGameButton.setVisibility(View.VISIBLE);
+
+            CardView notificationsCard = findViewById(R.id.notifications_card);
+            notificationsCard.setVisibility(View.VISIBLE);
+        }
+
+        fetchFriendRequests();
+        fetchAvailableGames();
 
         if (mStoredGamesService.hasCurrentGame()) {
             try {
@@ -252,6 +263,20 @@ public class MainActivity extends AuthenticationActivity {
         UiUtils.animateForward(this);
     }
 
+    public void goToAvailableGames(View view) {
+        Log.i(Tags.SCHEDULE_UI, "Scheduled games");
+        Intent intent = new Intent(this, ScheduledGamesListActivity.class);
+        startActivity(intent);
+        UiUtils.animateForward(this);
+    }
+
+    public void goToColleagues(View view) {
+        Log.i(Tags.STORED_USER, "Colleagues");
+        Intent intent = new Intent(this, ColleaguesListActivity.class);
+        startActivity(intent);
+        UiUtils.animateForward(this);
+    }
+
     private void resumeCurrentGame() {
         Log.i(Tags.GAME_UI, "Start game activity and resume current game");
         GameService gameService = mStoredGamesService.loadCurrentGame();
@@ -269,6 +294,80 @@ public class MainActivity extends AuthenticationActivity {
                 UiUtils.animateCreate(this);
             }
         }
+    }
+
+    private void fetchFriendRequests() {
+        if (PrefUtils.canSync(this)) {
+            Request request = ApiUtils.buildGet(ApiUtils.FRIENDS_RECEIVED_COUNT_API_URL, PrefUtils.getAuthentication(this));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    initFriendRequestsButton(new ApiCount(0L));
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), JsonIOUtils.COUNT_TYPE);
+                        initFriendRequestsButton(count);
+                    } else {
+                        initFriendRequestsButton(new ApiCount(0L));
+                    }
+                }
+            });
+        }
+    }
+
+    private void initFriendRequestsButton(ApiCount count) {
+        runOnUiThread(() -> {
+            if (count.getCount() > 0) {
+                MaterialButton friendButton = findViewById(R.id.goto_colleagues_button);
+                friendButton.setText(String.format(Locale.getDefault(), "%d", count.getCount()));
+                friendButton.setVisibility(View.VISIBLE);
+
+                CardView notificationsCard = findViewById(R.id.notifications_card);
+                notificationsCard.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void fetchAvailableGames() {
+        if (PrefUtils.canSync(this)) {
+            Request request = ApiUtils.buildGet(ApiUtils.AVAILABLE_GAMES_COUNT_API_URL, PrefUtils.getAuthentication(this));
+
+            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                    initAvailableGamesButton(new ApiCount(0L));
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), JsonIOUtils.COUNT_TYPE);
+                        initAvailableGamesButton(count);
+                    } else {
+                        initAvailableGamesButton(new ApiCount(0L));
+                    }
+                }
+            });
+        }
+    }
+
+    private void initAvailableGamesButton(ApiCount count) {
+        runOnUiThread(() -> {
+            if (count.getCount() > 0) {
+                MaterialButton gameButton = findViewById(R.id.goto_available_games_button);
+                gameButton.setText(String.format(Locale.getDefault(), "%d", count.getCount()));
+                gameButton.setVisibility(View.VISIBLE);
+                
+                CardView notificationsCard = findViewById(R.id.notifications_card);
+                notificationsCard.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void fetchAndShowNews() {
@@ -324,10 +423,5 @@ public class MainActivity extends AuthenticationActivity {
             alertDialog.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         }
-    }
-
-    private void setResumeGameCardVisibility() {
-        CardView resumeGameCard = findViewById(R.id.resume_game_card);
-        resumeGameCard.setVisibility(mStoredGamesService.hasCurrentGame() ? View.VISIBLE : View.GONE);
     }
 }

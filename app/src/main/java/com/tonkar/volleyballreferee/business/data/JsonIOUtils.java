@@ -43,9 +43,9 @@ public class JsonIOUtils {
     public static final Type LEAGUE_TYPE                  = new TypeToken<ApiLeague>(){}.getType();
     public static final Type LEAGUE_LIST_TYPE             = new TypeToken<List<ApiLeague>>(){}.getType();
     public static final Type USER_TYPE                    = new TypeToken<ApiUser>(){}.getType();
-    public static final Type FRIEND_REQUEST_LIST_TYPE     = new TypeToken<List<ApiFriendRequest>>(){}.getType();
     public static final Type FRIENDS_AND_REQUESTS_TYPE    = new TypeToken<ApiFriendsAndRequests>(){}.getType();
     public static final Type MESSAGE_TYPE                 = new TypeToken<ApiMessage>(){}.getType();
+    public static final Type COUNT_TYPE                   = new TypeToken<ApiCount>(){}.getType();
 
     public static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(BaseGame.class, new InheritanceDeserializer<BaseGame>())
