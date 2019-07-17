@@ -7,12 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiSanction;
-import com.tonkar.volleyballreferee.interfaces.sanction.BaseSanctionService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -26,18 +25,18 @@ public class SanctionsListAdapter extends BaseAdapter {
         ImageView cardTypeImage;
     }
 
-    private final Context             mContext;
-    private final LayoutInflater      mLayoutInflater;
-    private final BaseSanctionService mSanctionService;
-    private final BaseTeamService     mTeamService;
-    private       TeamType            mTeamType;
-    private final int                 mSetIndex;
+    private final Context        mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final IBaseSanction  mSanctionService;
+    private final IBaseTeam      mTeamService;
+    private       TeamType       mTeamType;
+    private final int            mSetIndex;
 
-    SanctionsListAdapter(Context context, LayoutInflater layoutInflater, BaseSanctionService sanctionService, BaseTeamService teamService, TeamType teamType) {
+    SanctionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseSanction sanctionService, IBaseTeam teamService, TeamType teamType) {
         this(context, layoutInflater, sanctionService, teamService, teamType, -1);
     }
 
-    public SanctionsListAdapter(Context context, LayoutInflater layoutInflater, BaseSanctionService sanctionService, BaseTeamService teamService, TeamType teamType, int setIndex) {
+    public SanctionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseSanction sanctionService, IBaseTeam teamService, TeamType teamType, int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mSanctionService = sanctionService;

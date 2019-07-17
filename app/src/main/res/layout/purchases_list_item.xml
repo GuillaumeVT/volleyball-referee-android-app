@@ -30,9 +30,11 @@
             android:layout_margin="@dimen/small_margin_size"
             android:layout_gravity="end"
             android:text="@string/purchase"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:textColor="@color/colorPrimary"
             app:iconTint="@color/colorPrimary"
-            app:icon="@drawable/ic_purchase" android:textAllCaps="false"/>
+            app:strokeColor="@color/colorPrimary"
+            app:icon="@drawable/ic_purchase"
+            android:textSize="@dimen/small_text_size"/>
 
 </LinearLayout>

@@ -4,17 +4,18 @@
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/default_margin_size"
               android:gravity="top|center"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:clipToPadding="false"
+              android:paddingBottom="@dimen/empty_fab_space">
 
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/league_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_clear"
                 android:ems="10"
                 android:hint="@string/league_name"
                 android:imeOptions="actionNext"
@@ -30,11 +31,10 @@
             android:layout_height="wrap_content"
             android:visibility="gone">
 
-        <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/division_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_clear"
                 android:ems="10"
                 android:hint="@string/division_name"
                 android:imeOptions="actionDone"

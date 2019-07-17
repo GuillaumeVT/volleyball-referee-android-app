@@ -1,35 +1,21 @@
 package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
-
+import android.util.Log;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import android.util.Log;
-
-import com.tonkar.volleyballreferee.api.ApiLeague;
-import com.tonkar.volleyballreferee.api.ApiTeam;
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
-import com.tonkar.volleyballreferee.business.data.StoredLeagues;
-import com.tonkar.volleyballreferee.business.data.StoredTeams;
-import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.business.game.IndoorGame;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
-import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.business.rules.Rules;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiLeague;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,8 +38,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame);
@@ -73,14 +59,14 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet5(indoorGame);
         playSet5_complete(indoorGame);
 
-        StoredGameService storedGameService = mStoredGamesService.getGame(indoorGame.getId());
-        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGameService);
+        IStoredGame storedGame = mStoredGamesService.getGame(indoorGame.getId());
+        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGame);
     }
 
     @Test
     public void playGame_lastSetEnd() {
-        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame);
@@ -103,8 +89,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame);
@@ -124,8 +110,8 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        Authentication authentication = PrefUtils.getAuthentication(mActivityRule.getActivity());
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame);
@@ -151,15 +137,15 @@ public class BrazilFranceIndoorGame {
         for (int index = 0; index < 200; index++) {
             Log.i("VBR-Test", "playGame_io index #" + index);
             mStoredGamesService.saveCurrentGame(true);
-            GameService gameService = mStoredGamesService.loadCurrentGame();
-            assertNotEquals(null, gameService);
-            assertEquals(indoorGame, gameService);
+            IGame game = mStoredGamesService.loadCurrentGame();
+            assertNotEquals(null, game);
+            assertEquals(indoorGame, game);
         }
     }
 
     private void defineTeamsAndLeague(IndoorGame indoorGame) {
-        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity());
-        StoredLeaguesService storedLeaguesService = new StoredLeagues(mActivityRule.getActivity());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity());
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mActivityRule.getActivity());
 
         indoorGame.setGender(GenderType.GENTS);
 
@@ -241,7 +227,7 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.startMatch();
 
-        mStoredGamesService = new StoredGames(mActivityRule.getActivity());
+        mStoredGamesService = new StoredGamesManager(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(indoorGame);
     }
 

@@ -5,37 +5,35 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
+import com.tonkar.volleyballreferee.ui.stored.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import com.tonkar.volleyballreferee.ui.data.StoredTeamActivity;
 
 import java.util.Locale;
 
 public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
     private TeamType             mTeamType;
-    private BaseTeamService      mTeamService;
+    private IBaseTeam            mTeamService;
     private FloatingActionButton mTeamColorButton;
     private MaterialButton       mCaptainButton;
     private FloatingActionButton mGenderButton;
@@ -198,12 +196,12 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     private void computeSaveItemVisibility() {
         if (getActivity() instanceof StoredTeamActivity) {
-            ((StoredTeamActivity) getActivity()).computeSaveItemVisibility();
+            ((StoredTeamActivity) getActivity()).computeSaveLayoutVisibility();
         }
     }
 
     @Override
-    public void setTeamService(BaseTeamService teamService) {
+    public void setTeamService(IBaseTeam teamService) {
         mTeamService = teamService;
     }
 }

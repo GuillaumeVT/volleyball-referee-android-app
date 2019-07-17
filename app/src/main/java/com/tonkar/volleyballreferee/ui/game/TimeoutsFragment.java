@@ -6,23 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import androidx.annotation.NonNull;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
-
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
+import com.tonkar.volleyballreferee.engine.team.TeamListener;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
 public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamListener, GameServiceHandler {
 
-    private GameService         mGameService;
+    private IGame               mGame;
     private TimeoutsListAdapter mLeftTeamTimeoutsListAdapter;
     private TimeoutsListAdapter mRightTeamTimeoutsListAdapter;
 
@@ -40,16 +38,16 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
         Log.i(Tags.TIMEOUT, "Create Timeouts fragment");
         View view = inflater.inflate(R.layout.fragment_timeouts, container, false);
 
-        if (mGameService != null) {
-            mGameService.addTimeoutListener(this);
-            mGameService.addTeamListener(this);
+        if (mGame != null) {
+            mGame.addTimeoutListener(this);
+            mGame.addTeamListener(this);
 
             ListView leftTeamTimeoutsList = view.findViewById(R.id.left_team_timeouts_list);
-            mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mGameService, mGameService, mGameService.getTeamOnLeftSide());
+            mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnLeftSide());
             leftTeamTimeoutsList.setAdapter(mLeftTeamTimeoutsListAdapter);
 
             ListView rightTeamTimeoutsList = view.findViewById(R.id.right_team_timeouts_list);
-            mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mGameService, mGameService, mGameService.getTeamOnRightSide());
+            mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
             rightTeamTimeoutsList.setAdapter(mRightTeamTimeoutsListAdapter);
         }
 
@@ -60,9 +58,9 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (mGameService != null) {
-            mGameService.removeTimeoutListener(this);
-            mGameService.removeTeamListener(this);
+        if (mGame != null) {
+            mGame.removeTimeoutListener(this);
+            mGame.removeTeamListener(this);
         }
     }
 
@@ -104,7 +102,7 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setGameService(IGame game) {
+        mGame = game;
     }
 }

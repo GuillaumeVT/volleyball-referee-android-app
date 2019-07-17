@@ -1,9 +1,9 @@
 package com.tonkar.volleyballreferee.ui.interfaces;
 
-import com.tonkar.volleyballreferee.interfaces.GameService;
+import com.tonkar.volleyballreferee.engine.game.IGame;
 
 public interface GameServiceHandler {
 
-    void setGameService(GameService gameService);
+    void setGameService(IGame game);
 
 }

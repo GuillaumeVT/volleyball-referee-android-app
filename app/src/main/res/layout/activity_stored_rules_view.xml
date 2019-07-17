@@ -6,7 +6,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.tonkar.volleyballreferee.ui.data.StoredRulesViewActivity">
+        tools:context="com.tonkar.volleyballreferee.ui.stored.StoredRulesViewActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -18,12 +18,13 @@
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
             <ScrollView android:id="@+id/rules_setup_scroll"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingBottom="@dimen/empty_fab_space">
 
                 <LinearLayout
                         android:layout_width="match_parent"

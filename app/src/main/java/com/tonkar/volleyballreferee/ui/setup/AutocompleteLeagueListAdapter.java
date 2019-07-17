@@ -9,21 +9,21 @@ import android.widget.Filter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiLeagueSummary;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescription> {
+public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueSummary> {
 
-    private final LayoutInflater             mLayoutInflater;
-    private final List<ApiLeagueDescription> mStoredLeagueList;
-    private final List<ApiLeagueDescription> mFilteredStoredLeagueList;
-    private final NameFilter                 mNameFilter;
+    private final LayoutInflater         mLayoutInflater;
+    private final List<ApiLeagueSummary> mStoredLeagueList;
+    private final List<ApiLeagueSummary> mFilteredStoredLeagueList;
+    private final NameFilter             mNameFilter;
 
-    AutocompleteLeagueListAdapter(Context context, LayoutInflater layoutInflater, List<ApiLeagueDescription> storedLeagueList) {
+    AutocompleteLeagueListAdapter(Context context, LayoutInflater layoutInflater, List<ApiLeagueSummary> storedLeagueList) {
         super(context, R.layout.autocomplete_list_item, storedLeagueList);
         mLayoutInflater = layoutInflater;
         mStoredLeagueList = storedLeagueList;
@@ -38,7 +38,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
     }
 
     @Override
-    public ApiLeagueDescription getItem(int index) {
+    public ApiLeagueSummary getItem(int index) {
         return mFilteredStoredLeagueList.get(index);
     }
 
@@ -57,7 +57,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
             leagueTextView = (TextView) view;
         }
 
-        ApiLeagueDescription league = mFilteredStoredLeagueList.get(index);
+        ApiLeagueSummary league = mFilteredStoredLeagueList.get(index);
         leagueTextView.setText(league.getName());
 
         return leagueTextView;
@@ -80,9 +80,9 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiLeagueDescription> matchValues = new ArrayList<>();
+                List<ApiLeagueSummary> matchValues = new ArrayList<>();
 
-                for (ApiLeagueDescription league : mStoredLeagueList) {
+                for (ApiLeagueSummary league : mStoredLeagueList) {
                     if (lowerCaseText.isEmpty() || league.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(league);
                     }
@@ -101,7 +101,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueDescrip
 
             if (results.values != null) {
                 mFilteredStoredLeagueList.clear();
-                mFilteredStoredLeagueList.addAll((Collection<? extends ApiLeagueDescription>) results.values);
+                mFilteredStoredLeagueList.addAll((Collection<? extends ApiLeagueSummary>) results.values);
             }
 
             if (results.count > 0) {

@@ -1,9 +1,9 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import com.tonkar.volleyballreferee.api.ApiSanction;
-import com.tonkar.volleyballreferee.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.api.ApiTimeout;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import java.util.ArrayList;
 import java.util.List;

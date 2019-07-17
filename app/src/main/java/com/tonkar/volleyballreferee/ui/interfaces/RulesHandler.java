@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.ui.interfaces;
 
-import com.tonkar.volleyballreferee.business.rules.Rules;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
 
 public interface RulesHandler {
 

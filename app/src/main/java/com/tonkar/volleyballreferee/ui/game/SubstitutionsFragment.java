@@ -6,22 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamListener;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
 public class SubstitutionsFragment extends Fragment implements TeamListener, GameServiceHandler {
 
-    private IndoorTeamService        mIndoorTeamService;
+    private IIndoorTeam              mIndoorTeam;
     private SubstitutionsListAdapter mLeftTeamSubstitutionsListAdapter;
     private SubstitutionsListAdapter mRightTeamSubstitutionsListAdapter;
 
@@ -39,15 +37,15 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
         Log.i(Tags.GAME_UI, "Create substitutions fragment");
         View view = inflater.inflate(R.layout.fragment_substitutions, container, false);
 
-        if (mIndoorTeamService != null) {
-            mIndoorTeamService.addTeamListener(this);
+        if (mIndoorTeam != null) {
+            mIndoorTeam.addTeamListener(this);
 
             ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
-            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnLeftSide());
+            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnLeftSide());
             leftTeamSubstitutionsList.setAdapter(mLeftTeamSubstitutionsListAdapter);
 
             ListView rightTeamSubstitutionsList = view.findViewById(R.id.right_team_substitutions_list);
-            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeamService, mIndoorTeamService.getTeamOnRightSide());
+            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnRightSide());
             rightTeamSubstitutionsList.setAdapter(mRightTeamSubstitutionsListAdapter);
         }
 
@@ -58,8 +56,8 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (mIndoorTeamService != null) {
-            mIndoorTeamService.removeTeamListener(this);
+        if (mIndoorTeam != null) {
+            mIndoorTeam.removeTeamListener(this);
         }
     }
 
@@ -89,7 +87,7 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
-    public void setGameService(GameService gameService) {
-        mIndoorTeamService = (IndoorTeamService) gameService;
+    public void setGameService(IGame game) {
+        mIndoorTeam = (IIndoorTeam) game;
     }
 }

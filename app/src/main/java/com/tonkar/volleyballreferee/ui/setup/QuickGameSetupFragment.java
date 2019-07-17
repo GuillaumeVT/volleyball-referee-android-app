@@ -5,43 +5,36 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiFriend;
-import com.tonkar.volleyballreferee.api.ApiLeagueDescription;
-import com.tonkar.volleyballreferee.api.ApiTeamDescription;
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.StoredLeagues;
-import com.tonkar.volleyballreferee.business.data.StoredTeams;
-import com.tonkar.volleyballreferee.business.data.StoredUser;
-import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
-import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
+import com.tonkar.volleyballreferee.engine.stored.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiLeagueSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +42,7 @@ import java.util.Locale;
 
 public class QuickGameSetupFragment extends Fragment implements GameServiceHandler {
 
-    private GameService                 mGameService;
+    private IGame                       mGame;
     private FloatingActionButton        mGenderButton;
     private FloatingActionButton        mHomeTeamColorButton;
     private FloatingActionButton        mGuestTeamColorButton;
@@ -76,15 +69,15 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         final boolean create = getArguments().getBoolean("create");
 
-        final StoredTeamsService storedTeamsService = new StoredTeams(getContext());
-        final StoredLeaguesService storedLeaguesService = new StoredLeagues(getContext());
-        final StoredUserService storedUserService = new StoredUser(getContext());
+        final StoredTeamsService storedTeamsService = new StoredTeamsManager(getContext());
+        final StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(getContext());
+        final StoredUserService storedUserService = new StoredUserManager(getContext());
 
         mGenderButton = view.findViewById(R.id.switch_gender_button);
-        updateGender(mGameService.getGender());
+        updateGender(mGame.getGender());
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
-            GenderType genderType = mGameService.getGender().next();
+            GenderType genderType = mGame.getGender().next();
             updateGender(genderType);
         });
         mGenderButton.setEnabled(create);
@@ -95,7 +88,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
         divisionNameInput.setThreshold(2);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
-            mGameService.getLeague().setDivision((String) divisionNameInput.getAdapter().getItem(index));
+            mGame.getLeague().setDivision((String) divisionNameInput.getAdapter().getItem(index));
             computeConfirmItemVisibility();
         });
         divisionNameInput.addTextChangedListener(new TextWatcher() {
@@ -106,8 +99,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, "Update division");
-                    mGameService.getLeague().setDivision(s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.division_name_input_layout)).setError(mGameService.getLeague().getDivision().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    mGame.getLeague().setDivision(s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.division_name_input_layout)).setError(mGame.getLeague().getDivision().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -116,15 +109,15 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(mGameService.getLeague().getDivision());
+        divisionNameInput.setText(mGame.getLeague().getDivision());
 
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setThreshold(2);
-        leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGameService.getKind())));
+        leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
-            ApiLeagueDescription leagueDescription = (ApiLeagueDescription) leagueNameInput.getAdapter().getItem(index);
+            ApiLeagueSummary leagueDescription = (ApiLeagueSummary) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
-            mGameService.getLeague().setAll(leagueDescription);
+            mGame.getLeague().setAll(leagueDescription);
             divisionNameInput.setText("");
             divisionNameInput.setAdapter(new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
             computeConfirmItemVisibility();
@@ -138,7 +131,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, "Update league");
-                    mGameService.getLeague().setName(s.toString().trim());
+                    mGame.getLeague().setName(s.toString().trim());
                     view.findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
                     computeConfirmItemVisibility();
                 }
@@ -148,7 +141,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void afterTextChanged(Editable s) {}
         });
 
-        leagueNameInput.setText(mGameService.getLeague().getName());
+        leagueNameInput.setText(mGame.getLeague().getName());
 
         List<ApiFriend> referees = storedUserService.listReferees();
 
@@ -167,21 +160,21 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             };
             refereeSpinner.setAdapter(refereeAdapter);
             if (refereeAdapter.getCount() > 0) {
-                refereeSpinner.setSelection(refereeAdapter.getPositionFromId(mGameService.getRefereedBy()));
+                refereeSpinner.setSelection(refereeAdapter.getPositionFromId(mGame.getRefereedBy()));
             }
             refereeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Log.i(Tags.SETUP_UI, "Update referee");
                     ApiFriend referee = refereeAdapter.getItem(position);
-                    mGameService.setRefereedBy(referee.getId());
-                    mGameService.setRefereeName(referee.getPseudo());
+                    mGame.setRefereedBy(referee.getId());
+                    mGame.setRefereeName(referee.getPseudo());
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    mGameService.setRefereedBy(Authentication.VBR_USER_ID);
-                    mGameService.setRefereeName("");
+                    mGame.setRefereedBy(ApiUserSummary.VBR_USER_ID);
+                    mGame.setRefereeName(ApiUserSummary.VBR_PSEUDO);
                 }
             });
         } else {
@@ -198,8 +191,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME.toString()));
-                    mGameService.setTeamName(TeamType.HOME, s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.home_team_name_input_layout)).setError(mGameService.getTeamName(TeamType.HOME).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    mGame.setTeamName(TeamType.HOME, s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.home_team_name_input_layout)).setError(mGame.getTeamName(TeamType.HOME).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -218,8 +211,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST.toString()));
-                    mGameService.setTeamName(TeamType.GUEST, s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.guest_team_name_input_layout)).setError(mGameService.getTeamName(TeamType.GUEST).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    mGame.setTeamName(TeamType.GUEST, s.toString().trim());
+                    ((TextInputLayout) view.findViewById(R.id.guest_team_name_input_layout)).setError(mGame.getTeamName(TeamType.GUEST).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -240,11 +233,11 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             selectTeamColor(TeamType.GUEST);
         });
 
-        homeTeamNameInput.setText(mGameService.getTeamName(TeamType.HOME));
-        guestTeamNameInput.setText(mGameService.getTeamName(TeamType.GUEST));
+        homeTeamNameInput.setText(mGame.getTeamName(TeamType.HOME));
+        guestTeamNameInput.setText(mGame.getTeamName(TeamType.GUEST));
 
-        if (mGameService.getTeamColor(TeamType.HOME) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)
-                && mGameService.getTeamColor(TeamType.GUEST) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
+        if (mGame.getTeamColor(TeamType.HOME) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)
+                && mGame.getTeamColor(TeamType.GUEST) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
             int homeTeamColor = UiUtils.getRandomShirtColor(getContext());
             teamColorSelected(TeamType.HOME, homeTeamColor);
 
@@ -257,15 +250,15 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             }
             teamColorSelected(TeamType.GUEST, guestTeamColor);
         } else {
-            teamColorSelected(TeamType.HOME, mGameService.getTeamColor(TeamType.HOME));
-            teamColorSelected(TeamType.GUEST, mGameService.getTeamColor(TeamType.GUEST));
+            teamColorSelected(TeamType.HOME, mGame.getTeamColor(TeamType.HOME));
+            teamColorSelected(TeamType.GUEST, mGame.getTeamColor(TeamType.GUEST));
         }
 
         NumberPicker matchDurationPicker = view.findViewById(R.id.match_duration_picker);
         TextView matchDurationText = view.findViewById(R.id.match_duration_text);
 
-        if (GameType.TIME.equals(mGameService.getKind())) {
-            final TimeBasedGameService timeBasedGameService = (TimeBasedGameService) mGameService;
+        if (GameType.TIME.equals(mGame.getKind())) {
+            final ITimeBasedGame timeBasedGameService = (ITimeBasedGame) mGame;
             matchDurationPicker.setWrapSelectorWheel(false);
             matchDurationPicker.setMinValue(10);
             matchDurationPicker.setMaxValue(40);
@@ -277,7 +270,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             matchDurationText.setVisibility(View.GONE);
         }
 
-        if (GameType.BEACH.equals(mGameService.getKind())) {
+        if (GameType.BEACH.equals(mGame.getKind())) {
             updateCaptain(TeamType.HOME);
             mHomeTeamCaptainButton.setOnClickListener(button -> {
                 UiUtils.animate(getContext(), mHomeTeamCaptainButton);
@@ -295,12 +288,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             homeTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
             homeTeamNameInput.setThreshold(2);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamDescription teamDescription = mAutocompleteTeamListAdapter.getItem(index);
+                ApiTeamSummary teamDescription = mAutocompleteTeamListAdapter.getItem(index);
                 homeTeamNameInput.setText(teamDescription.getName());
-                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGameService, TeamType.HOME);
+                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGame, TeamType.HOME);
 
-                teamColorSelected(TeamType.HOME, mGameService.getTeamColor(TeamType.HOME));
-                updateGender(mGameService.getGender(TeamType.HOME));
+                teamColorSelected(TeamType.HOME, mGame.getTeamColor(TeamType.HOME));
+                updateGender(mGame.getGender(TeamType.HOME));
                 updateCaptain(TeamType.HOME);
                 computeConfirmItemVisibility();
             });
@@ -308,12 +301,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
             guestTeamNameInput.setThreshold(2);
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamDescription teamDescription = mAutocompleteTeamListAdapter.getItem(index);
+                ApiTeamSummary teamDescription = mAutocompleteTeamListAdapter.getItem(index);
                 guestTeamNameInput.setText(teamDescription.getName());
-                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGameService, TeamType.GUEST);
+                storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGame, TeamType.GUEST);
 
-                teamColorSelected(TeamType.GUEST, mGameService.getTeamColor(TeamType.GUEST));
-                updateGender(mGameService.getGender(TeamType.GUEST));
+                teamColorSelected(TeamType.GUEST, mGame.getTeamColor(TeamType.GUEST));
+                updateGender(mGame.getGender(TeamType.GUEST));
                 updateCaptain(TeamType.GUEST);
                 computeConfirmItemVisibility();
             });
@@ -333,7 +326,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     private void selectTeamColor(final TeamType teamType) {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", teamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
-                getResources().getStringArray(R.array.shirt_colors), mGameService.getTeamColor(teamType)) {
+                getResources().getStringArray(R.array.shirt_colors), mGame.getTeamColor(teamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(teamType, selectedColor);
@@ -353,13 +346,13 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         }
 
         UiUtils.colorTeamIconButton(getContext(), colorId, button);
-        mGameService.setTeamColor(teamType, colorId);
+        mGame.setTeamColor(teamType, colorId);
         updateCaptain(teamType);
     }
 
     private void updateGender(GenderType genderType) {
         Context context = getContext();
-        mGameService.setGender(genderType);
+        mGame.setGender(genderType);
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
@@ -378,13 +371,13 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     }
 
     private void updateCaptain(TeamType teamType) {
-        int captain = mGameService.getCaptain(teamType);
+        int captain = mGame.getCaptain(teamType);
         captainUpdated(teamType, captain);
     }
 
     private void captainUpdated(TeamType teamType, int number) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team captain", teamType.toString()));
-        mGameService.setCaptain(teamType, number);
+        mGame.setCaptain(teamType, number);
 
         final MaterialButton button;
 
@@ -395,11 +388,11 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         }
 
         button.setText(UiUtils.formatNumberFromLocale(number));
-        UiUtils.styleTeamButton(getContext(), mGameService, teamType, number, button);
+        UiUtils.styleTeamButton(getContext(), mGame, teamType, number, button);
     }
 
     private void switchCaptain(TeamType teamType) {
-        int captain = mGameService.getCaptain(teamType);
+        int captain = mGame.getCaptain(teamType);
 
         switch (captain) {
             case 1:
@@ -417,12 +410,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof QuickGameSetupActivity) {
-            ((QuickGameSetupActivity) getActivity()).computeStartItemVisibility();
+            ((QuickGameSetupActivity) getActivity()).computeStartLayoutVisibility();
         }
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setGameService(IGame game) {
+        mGame = game;
     }
 }

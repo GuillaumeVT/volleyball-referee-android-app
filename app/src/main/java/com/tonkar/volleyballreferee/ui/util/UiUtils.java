@@ -18,8 +18,17 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.AnimRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
@@ -30,34 +39,26 @@ import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
-
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.BounceInterpolator;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.api.ApiUtils;
-import com.tonkar.volleyballreferee.business.data.ScoreSheetWriter;
-import com.tonkar.volleyballreferee.interfaces.*;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
+import com.tonkar.volleyballreferee.engine.game.UsageType;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity;
-import com.tonkar.volleyballreferee.ui.user.UserSignInActivity;
+import com.tonkar.volleyballreferee.ui.stored.StoredGamesListActivity;
+import com.tonkar.volleyballreferee.ui.user.UserActivity;
 
 import java.io.File;
 import java.util.Locale;
@@ -73,25 +74,25 @@ public class UiUtils {
         return Color.parseColor(randomColorStr);
     }
 
-    public static void styleBaseTeamButton(Context context, BaseTeamService teamService, TeamType teamType, MaterialButton button) {
+    public static void styleBaseTeamButton(Context context, IBaseTeam teamService, TeamType teamType, MaterialButton button) {
         colorTeamButton(context, teamService.getTeamColor(teamType), button);
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
     }
 
-    public static void styleIndoorTeamButton(Context context, IndoorTeamService indoorTeamService, TeamType teamType, int number, MaterialButton button) {
+    public static void styleIndoorTeamButton(Context context, IIndoorTeam indoorTeam, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        if (indoorTeamService.isLibero(teamType, number)) {
-            colorTeamButton(context, indoorTeamService.getLiberoColor(teamType), button);
+        if (indoorTeam.isLibero(teamType, number)) {
+            colorTeamButton(context, indoorTeam.getLiberoColor(teamType), button);
         } else {
-            colorTeamButton(context, indoorTeamService.getTeamColor(teamType), button);
-            if (indoorTeamService.isCaptain(teamType, number) || indoorTeamService.isActingCaptain(teamType, number)) {
+            colorTeamButton(context, indoorTeam.getTeamColor(teamType), button);
+            if (indoorTeam.isCaptain(teamType, number) || indoorTeam.isActingCaptain(teamType, number)) {
                 button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
         }
     }
 
-    public static void styleTeamButton(Context context, BaseTeamService teamService, TeamType teamType, int number, MaterialButton button) {
+    public static void styleTeamButton(Context context, IBaseTeam teamService, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (teamService.isLibero(teamType, number)) {
@@ -104,7 +105,7 @@ public class UiUtils {
         }
     }
 
-    public static void styleTeamText(Context context, BaseTeamService teamService, TeamType teamType, int number, TextView text) {
+    public static void styleTeamText(Context context, IBaseTeam teamService, TeamType teamType, int number, TextView text) {
         text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (teamService.isLibero(teamType, number)) {
@@ -166,10 +167,10 @@ public class UiUtils {
         }
     }
 
-    public static void shareStoredGame(Context context, StoredGameService storedGameService) {
+    public static void shareStoredGame(Context context, IStoredGame storedGame) {
         Log.i(Tags.UTILS_UI, "Share stored game");
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            File file = ScoreSheetWriter.writeStoredGame(context, storedGameService);
+            File file = ScoreSheetWriter.writeStoredGame(context, storedGame);
             if (file == null) {
                 UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             } else {
@@ -179,9 +180,9 @@ public class UiUtils {
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getString(R.string.app_name), file.getName()));
 
-                String summary = storedGameService.getGameSummary();
+                String summary = storedGame.getGameSummary();
                 if (PrefUtils.canSync(context)) {
-                    summary = summary + "\n" + String.format(Locale.getDefault(), ApiUtils.WEB_APP_VIEW_GAME, storedGameService.getId());
+                    summary = summary + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS, storedGame.getId());
                 }
 
                 intent.putExtra(Intent.EXTRA_TEXT, summary);
@@ -213,12 +214,12 @@ public class UiUtils {
         navigateToHome(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    public static void navigateToHomeWithDialog(Activity activity, GameService gameService) {
+    public static void navigateToHomeWithDialog(Activity activity, IGame game) {
         Log.i(Tags.GAME_UI, "Navigate to home");
-        if (gameService.isMatchCompleted()) {
+        if (game.isMatchCompleted()) {
             UiUtils.navigateToHome(activity);
-        } else if (GameType.TIME.equals(gameService.getKind())) {
-            TimeBasedGameService timeBasedGameService = (TimeBasedGameService) gameService;
+        } else if (GameType.TIME.equals(game.getKind())) {
+            ITimeBasedGame timeBasedGameService = (ITimeBasedGame) game;
             if (timeBasedGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
                 builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
@@ -251,7 +252,7 @@ public class UiUtils {
     }
 
     public static void navigateToUserSignIn(Activity activity) {
-        Intent intent = new Intent(activity, UserSignInActivity.class);
+        Intent intent = new Intent(activity, UserActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

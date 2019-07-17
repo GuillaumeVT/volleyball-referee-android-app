@@ -1,10 +1,8 @@
 package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.tonkar.volleyballreferee.business.team.BeachPlayer;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-
+import com.tonkar.volleyballreferee.engine.team.player.BeachPlayer;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

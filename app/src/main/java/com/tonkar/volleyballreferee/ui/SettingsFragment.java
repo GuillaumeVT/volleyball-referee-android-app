@@ -1,10 +1,8 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.os.Bundle;
-
-import com.tonkar.volleyballreferee.R;
-
 import androidx.preference.PreferenceFragmentCompat;
+import com.tonkar.volleyballreferee.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

@@ -4,26 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
-
+import android.widget.*;
+import androidx.appcompat.app.AlertDialog;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiPlayer;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.app.AlertDialog;
 
 public abstract class SanctionSelectionDialog {
 
@@ -32,7 +25,7 @@ public abstract class SanctionSelectionDialog {
     private PlayerAdapter mPlayerAdapter;
     private SanctionType  mSelectedSanctionType;
 
-    SanctionSelectionDialog(LayoutInflater layoutInflater, final Context context, String title, final GameService gameService, final TeamType teamType) {
+    SanctionSelectionDialog(LayoutInflater layoutInflater, final Context context, String title, final IGame game, final TeamType teamType) {
         View sanctionsView = layoutInflater.inflate(R.layout.sanction_selection_dialog, null);
 
         final Spinner sanctionSpinner = sanctionsView.findViewById(R.id.sanction_spinner);
@@ -53,7 +46,7 @@ public abstract class SanctionSelectionDialog {
 
         mSanctionGrid = sanctionsView.findViewById(R.id.sanction_grid);
 
-        mPlayerAdapter = new PlayerAdapter(layoutInflater, context, gameService, teamType);
+        mPlayerAdapter = new PlayerAdapter(layoutInflater, context, game, teamType);
         mSanctionGrid.setAdapter(mPlayerAdapter);
 
         mSelectedSanctionType = sanctionTypeAdapter.getItem(sanctionSpinner.getSelectedItemPosition());
@@ -181,12 +174,12 @@ public abstract class SanctionSelectionDialog {
 
         private final LayoutInflater  mLayoutInflater;
         private final Context         mContext;
-        private final BaseTeamService mTeamService;
+        private final IBaseTeam       mTeamService;
         private final TeamType        mTeamType;
         private final List<ApiPlayer> mPlayers;
         private       int             mSelectedPlayer;
 
-        private PlayerAdapter(LayoutInflater layoutInflater, Context context, BaseTeamService teamService, TeamType teamType) {
+        private PlayerAdapter(LayoutInflater layoutInflater, Context context, IBaseTeam teamService, TeamType teamType) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mTeamService = teamService;

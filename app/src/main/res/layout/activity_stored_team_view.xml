@@ -6,7 +6,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.tonkar.volleyballreferee.ui.data.StoredTeamViewActivity">
+        tools:context="com.tonkar.volleyballreferee.ui.stored.StoredTeamViewActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -18,8 +18,7 @@
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -34,7 +33,7 @@
                         android:layout_height="1dp"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/default_margin_size"
-                        android:background="@color/colorDisabledButton" />
+                        android:background="@color/colorDisabledButton"/>
 
                 <GridView
                         android:id="@+id/players_list"
@@ -45,7 +44,9 @@
                         android:gravity="center"
                         android:horizontalSpacing="@dimen/big_margin_size"
                         android:numColumns="auto_fit"
-                        android:verticalSpacing="@dimen/big_margin_size" />
+                        android:verticalSpacing="@dimen/big_margin_size"
+                        android:clipToPadding="false"
+                        android:paddingBottom="@dimen/empty_fab_space"/>
 
             </LinearLayout>
 

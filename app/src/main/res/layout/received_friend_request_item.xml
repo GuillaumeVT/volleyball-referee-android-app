@@ -24,21 +24,27 @@
                 android:id="@+id/reject_friend_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_margin_size"
                 android:text="@string/reject"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:textColor="@color/colorError"
                 app:iconTint="@color/colorError"
-                app:icon="@drawable/ic_delete" android:textSize="@dimen/small_text_size"/>
+                app:strokeColor="@color/colorError"
+                app:icon="@drawable/ic_delete"
+                android:textSize="@dimen/small_text_size"/>
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/accept_friend_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin_size"
                 android:text="@string/accept"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:textColor="@color/colorPrimary"
                 app:iconTint="@color/colorPrimary"
-                app:icon="@android:drawable/ic_input_add" android:textSize="@dimen/small_text_size"/>
+                app:strokeColor="@color/colorPrimary"
+                app:icon="@drawable/ic_plus"
+                android:textSize="@dimen/small_text_size"/>
 
     </LinearLayout>
 

@@ -52,7 +52,10 @@
     <dimen name="form_fab_icon_size">32dp</dimen>
     <dimen name="form_button_radius">12dp</dimen>
 
+    <dimen name="main_card_height">100dp</dimen>
 
     <dimen name="elevation">2dp</dimen>
+    
+    <dimen name="empty_fab_space">72dp</dimen>
 
 </resources>

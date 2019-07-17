@@ -27,11 +27,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -41,7 +41,7 @@ import java.util.Random;
 public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, StoredGamesServiceHandler {
 
     private Activity           mActivity;
-    private GameService        mGameService;
+    private IGame              mGame;
     private StoredGamesService mStoredGamesService;
     private Random             mRandom;
 
@@ -63,7 +63,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
         mActivity = getActivity();
 
-        if (mActivity != null && mGameService != null && mStoredGamesService != null) {
+        if (mActivity != null && mGame != null && mStoredGamesService != null) {
             mRandom = new Random();
             final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
@@ -78,18 +78,18 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
             keepScreenOnSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false));
             interactiveNotificationSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, false));
 
-            if (mGameService.isMatchCompleted()) {
+            if (mGame.isMatchCompleted()) {
                 tossCoinText.setVisibility(View.GONE);
                 indexGameText.setVisibility(View.GONE);
                 resetSetText.setVisibility(View.GONE);
                 keepScreenOnSwitch.setVisibility(View.GONE);
                 interactiveNotificationSwitch.setVisibility(View.GONE);
-            } else if (GameType.TIME.equals(mGameService.getKind())) {
+            } else if (GameType.TIME.equals(mGame.getKind())) {
                 resetSetText.setVisibility(View.GONE);
             }
 
             if (PrefUtils.canSync(context)) {
-                indexGameText.setChecked(mGameService.isIndexed());
+                indexGameText.setChecked(mGame.isIndexed());
             } else {
                 indexGameText.setVisibility(View.GONE);
             }
@@ -114,7 +114,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
             colorIcon(context, keepScreenOnSwitch);
             colorIcon(context, interactiveNotificationSwitch);
 
-            navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGameService));
+            navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGame));
             indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
             shareGameText.setOnClickListener(textView -> share());
             tossCoinText.setOnClickListener(textView -> tossACoin());
@@ -123,9 +123,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 sharedPreferences.edit().putBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, isChecked).apply();
                 mActivity.recreate();
             });
-            interactiveNotificationSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-                sharedPreferences.edit().putBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, isChecked).apply();
-            });
+            interactiveNotificationSwitch.setOnCheckedChangeListener((button, isChecked) -> sharedPreferences.edit().putBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, isChecked).apply());
         }
 
         return view;
@@ -146,13 +144,13 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
     private void toggleIndexed() {
         Log.i(Tags.GAME_UI, "Toggle indexed");
-        mGameService.setIndexed(!mGameService.isIndexed());
+        mGame.setIndexed(!mGame.isIndexed());
     }
 
     private void share() {
         Log.i(Tags.GAME_UI, "Share game");
-        if (mGameService.isMatchCompleted()) {
-            UiUtils.shareStoredGame(mActivity, mStoredGamesService.getGame(mGameService.getId()));
+        if (mGame.isMatchCompleted()) {
+            UiUtils.shareStoredGame(mActivity, mStoredGamesService.getGame(mGame.getId()));
         } else {
             UiUtils.shareStoredGame(mActivity, mStoredGamesService.getCurrentGame());
         }
@@ -168,11 +166,11 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
     private void resetCurrentSetWithDialog() {
         Log.i(Tags.GAME_UI, "Reset current set");
-        if (!mGameService.isMatchCompleted()) {
+        if (!mGame.isMatchCompleted()) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.AppTheme_Dialog);
             builder.setTitle(getString(R.string.reset_set)).setMessage(getString(R.string.reset_set_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                mGameService.resetCurrentSet();
+                mGame.resetCurrentSet();
                 mActivity.recreate();
             });
             builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
@@ -192,8 +190,8 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setGameService(IGame game) {
+        mGame = game;
     }
 
     @Override

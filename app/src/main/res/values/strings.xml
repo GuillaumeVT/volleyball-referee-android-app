@@ -41,26 +41,32 @@
     </string>
 
     <!-- User activity -->
-    <string name="facebook_app_id" translatable="false">2086514551632301</string>
-    <string name="server_client_id" translatable="false">802590775795-kdff0cnflla62jr2dj0pleqbiv05q97l.apps.googleusercontent.com</string>
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_password_update">Update my password</string>
+    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_out">Sign out</string>
     <string name="user_sign_in_why_title">Why do I have to sign in?</string>
     <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
-    <string name="user_sign_in_privacy_title">Is it safe?</string>
-    <string name="user_sign_in_privacy_message">Yes. When you sign in, the only information that we retrieve from your profile is your unique social identifier which we use to identify you.</string>
-    <string name="user_sign_in_google">Sign in with Google</string>
-    <string name="user_sign_in_facebook">Sign in with Facebook</string>
-    <string name="user_sign_out">Sign out</string>
-    <string name="user_signed_in_with_provider">Signed in with %s</string>
+    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_email_hint">Email</string>
+    <string name="user_confirm_email_hint">Confirm email</string>
+    <string name="user_email_not_matching">Email addresses don\'t match</string>
+    <string name="user_current_password_hint">Current password</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_confirm_password_hint">Confirm password</string>
+    <string name="user_new_password_hint">New password</string>
+    <string name="user_confirm_new_password_hint">Confirm new password</string>
+    <string name="user_password_not_matching">Passwords don\'t match</string>
+    <string name="user_password_error">Email and password do not match</string>
+    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
+    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
+    <string name="user_request_error">Error while executing request</string>
     <string name="user_signed_in_as_pseudo">Signed in as %s</string>
-    <string name="user_id">User ID %s</string>
-    <string name="user_sign_in_with_provider_error">Error while signing in with %s</string>
+    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Signed out</string>
-    <string name="user_error">Error while downloading profile</string>
-    <string name="create_user_pseudo_title">Create my \'Volleyball Referee\' name</string>
-    <string name="create">Create</string>
-    <string name="user_pseudo_hint">Name</string>
-    <string name="user_exists_error">This name already exists</string>
-    <string name="user_creation_error">Error while creating profile</string>
     <string name="search_colleague">Search in colleagues</string>
     <string name="add_colleague">Add colleague</string>
     <string name="received_colleague_request">You received a request from %s</string>
@@ -96,6 +102,9 @@
     <string name="referee">Referee</string>
     <string name="leave_game_setup_question">This match setup will be lost. Leave anyway?</string>
     <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>

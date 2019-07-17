@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.tonkar.volleyballreferee.ui.MainActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+        <include layout="@layout/toolbar"/>
+
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|center"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:baselineAligned="false">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/goto_sign_in_card"
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            android:onClick="goToSignIn"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:visibility="gone">
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/indoor_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/goto_sign_in_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="goToSignIn"
+                                android:layout_gravity="center|start"
+                                android:text="@string/user_sign_in"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_account"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/goto_colleagues_card"
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:visibility="gone"
+                            android:onClick="goToColleagues">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/colleague"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/beach_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/goto_colleagues_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="goToColleagues"
+                                android:layout_gravity="center|start"
+                                android:text="@string/colleagues"
+                                android:textColor="@color/colorOnSurface"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_colleagues"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@color/colorOnSurface"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/goto_available_games_card"
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:visibility="gone"
+                            android:onClick="goToAvailableGames">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/schedule"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/resume_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/goto_available_games_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="goToAvailableGames"
+                                android:layout_gravity="center|start"
+                                android:text="@string/available_games"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_schedule"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/resume_game_card"
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:visibility="gone"
+                            android:onClick="resumeCurrentGame">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/resume"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/resume_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/resume_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="resumeCurrentGame"
+                                android:layout_gravity="center|start"
+                                android:text="@string/resume_game_title"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_resume"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:onClick="startIndoorGame">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/indoor"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/indoor_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/start_indoor_6x6_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="startIndoorGame"
+                                android:layout_gravity="center|start"
+                                android:text="@string/new_volleyball_game"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_6x6"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:onClick="startIndoor4x4Game">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/indoor_4x4"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/indoor_4x4_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/start_indoor_4x4_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="startIndoor4x4Game"
+                                android:layout_gravity="center|start"
+                                android:text="@string/new_volleyball_game"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_4x4"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:onClick="startBeachGame">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/beach"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/beach_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/start_beach_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="startBeachGame"
+                                android:layout_gravity="center|start"
+                                android:text="@string/new_beach_volleyball_game"
+                                android:textColor="@color/colorOnSurface"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_sun"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@color/colorOnSurface"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:onClick="startScoreBasedGame">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/scoreboard"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/indoor_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/start_score_based_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="startScoreBasedGame"
+                                android:layout_gravity="center|start"
+                                android:text="@string/new_score_based_game"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_volleyball"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.MaterialComponents.CardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
+                            app:cardBackgroundColor="@color/colorSurface"
+                            android:onClick="startTimeBasedGame">
+
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/time_based_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/start_time_based_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/default_margin_size"
+                                android:onClick="startTimeBasedGame"
+                                android:layout_gravity="center|start"
+                                android:text="@string/new_time_based_game"
+                                android:textColor="@android:color/white"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                app:icon="@drawable/ic_time_based"
+                                app:iconPadding="@dimen/default_margin_size"
+                                app:iconTint="@android:color/white"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <include layout="@layout/navigation_drawer"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

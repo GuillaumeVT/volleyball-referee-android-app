@@ -3,20 +3,21 @@ package com.tonkar.volleyballreferee.ui.game;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiSanction;
-import com.tonkar.volleyballreferee.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,17 +28,17 @@ import java.util.Locale;
 
 public class LadderEventsDialog {
 
-    private       AlertDialog     mAlertDialog;
-    private final LayoutInflater  mLayoutInflater;
-    private final Context         mContext;
-    private final TeamType        mTeamType;
-    private final BaseTeamService mBaseTeamService;
+    private       AlertDialog    mAlertDialog;
+    private final LayoutInflater mLayoutInflater;
+    private final Context        mContext;
+    private final TeamType       mTeamType;
+    private final IBaseTeam      mBaseTeam;
 
-    LadderEventsDialog(LayoutInflater layoutInflater, final Context context, final TeamType teamType, final LadderItem ladderItem, final BaseTeamService baseTeamService) {
+    LadderEventsDialog(LayoutInflater layoutInflater, final Context context, final TeamType teamType, final LadderItem ladderItem, final IBaseTeam baseTeam) {
         mLayoutInflater = layoutInflater;
         mContext = context;
         mTeamType = teamType;
-        mBaseTeamService = baseTeamService;
+        mBaseTeam = baseTeam;
 
         View view = layoutInflater.inflate(R.layout.ladder_events_dialog, null);
 
@@ -147,8 +148,8 @@ public class LadderEventsDialog {
             playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
             playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
-            UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerIn(), playerInText);
-            UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, substitution.getPlayerOut(), playerOutText);
+            UiUtils.styleTeamText(mContext, mBaseTeam, mTeamType, substitution.getPlayerIn(), playerInText);
+            UiUtils.styleTeamText(mContext, mBaseTeam, mTeamType, substitution.getPlayerOut(), playerOutText);
 
             return substitutionView;
         }
@@ -175,7 +176,7 @@ public class LadderEventsDialog {
                     playerText.setText(mContext.getString(R.string.coach_abbreviation));
                 }
 
-                UiUtils.styleTeamText(mContext, mBaseTeamService, mTeamType, sanction.getNum(), playerText);
+                UiUtils.styleTeamText(mContext, mBaseTeam, mTeamType, sanction.getNum(), playerText);
             }
 
             return sanctionView;

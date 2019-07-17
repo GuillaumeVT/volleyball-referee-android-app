@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="top|center"
               android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.data.StoredRulesActivity">
+              tools:context="com.tonkar.volleyballreferee.ui.stored.StoredRulesActivity">
 
     <include layout="@layout/toolbar"/>
 
-    <FrameLayout
-            android:id="@+id/fragment_container"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|center"/>
+            android:layout_height="match_parent">
+
+        <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|center"/>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:id="@+id/save_rules_layout"
+                      android:layout_height="wrap_content"
+                      android:layout_margin="@dimen/default_margin_size"
+                      android:layout_alignParentBottom="true"
+                      android:layout_alignParentEnd="true">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    style="@style/VbrSaveFab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    android:onClick="saveRules"
+                    android:layout_marginTop="@dimen/fab_shift_default"
+                    android:layout_marginStart="@dimen/fab_shift_default"
+                    android:layout_marginEnd="@dimen/fab_shift_default"
+                    android:layout_marginBottom="@dimen/fab_shift_default"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

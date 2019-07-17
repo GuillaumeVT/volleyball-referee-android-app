@@ -1,20 +1,18 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.widget.ImageView;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.View;
-
+import android.widget.ImageView;
+import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.team.TeamListener;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -24,7 +22,7 @@ import java.util.Map;
 public abstract class CourtFragment extends Fragment implements TeamListener, SanctionListener, GameServiceHandler {
 
     protected       View                              mView;
-    protected       GameService                       mGameService;
+    protected       IGame                             mGame;
     protected       TeamType                          mTeamOnLeftSide;
     protected       TeamType                          mTeamOnRightSide;
     protected final Map<PositionType, MaterialButton> mLeftTeamPositions;
@@ -43,9 +41,9 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (mGameService != null) {
-            mGameService.removeTeamListener(this);
-            mGameService.removeSanctionListener(this);
+        if (mGame != null) {
+            mGame.removeTeamListener(this);
+            mGame.removeSanctionListener(this);
             mLeftTeamPositions.clear();
             mRightTeamPositions.clear();
             mLeftTeamSanctionImages.clear();
@@ -56,11 +54,11 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     protected void initView() {
         Log.i(Tags.GAME_UI, "Create court fragment");
 
-        if (mGameService != null) {
-            mTeamOnLeftSide = mGameService.getTeamOnLeftSide();
-            mTeamOnRightSide = mGameService.getTeamOnRightSide();
-            mGameService.addTeamListener(this);
-            mGameService.addSanctionListener(this);
+        if (mGame != null) {
+            mTeamOnLeftSide = mGame.getTeamOnLeftSide();
+            mTeamOnRightSide = mGame.getTeamOnRightSide();
+            mGame.addTeamListener(this);
+            mGame.addSanctionListener(this);
         }
     }
 
@@ -90,8 +88,8 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     public void onStartingLineupSubmitted() {}
 
     protected void updateSanction(TeamType teamType, int number, ImageView sanctionImage) {
-        if (mGameService.hasSanctions(teamType, number)) {
-            SanctionType sanctionType = mGameService.getMostSeriousSanction(teamType, number);
+        if (mGame.hasSanctions(teamType, number)) {
+            SanctionType sanctionType = mGame.getMostSeriousSanction(teamType, number);
             UiUtils.setSanctionImage(sanctionImage, sanctionType);
             sanctionImage.setVisibility(View.VISIBLE);
         } else {

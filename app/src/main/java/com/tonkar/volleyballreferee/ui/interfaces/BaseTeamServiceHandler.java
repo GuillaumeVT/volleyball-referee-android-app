@@ -1,9 +1,9 @@
 package com.tonkar.volleyballreferee.ui.interfaces;
 
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 
 public interface BaseTeamServiceHandler {
 
-    void setTeamService(BaseTeamService teamService);
+    void setTeamService(IBaseTeam teamService);
 
 }

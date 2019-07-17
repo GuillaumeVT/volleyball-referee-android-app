@@ -5,11 +5,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,25 +12,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
+import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiPlayer;
-import com.tonkar.volleyballreferee.api.ApiTeamDescription;
-import com.tonkar.volleyballreferee.business.data.StoredTeams;
-import com.tonkar.volleyballreferee.business.team.TeamDefinition;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import com.tonkar.volleyballreferee.ui.data.StoredTeamActivity;
-import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.AutocompleteTeamListAdapter;
+import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.stored.StoredTeamActivity;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private LayoutInflater       mLayoutInflater;
     private TeamType             mTeamType;
-    private BaseTeamService      mTeamService;
+    private IBaseTeam            mTeamService;
     private int                  mNumberOfShirts;
     private FloatingActionButton mTeamColorButton;
     private PlayerAdapter        mPlayerAdapter;
@@ -110,12 +108,12 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         final String teamName = mTeamService.getTeamName(mTeamType);
 
         if (isGameContext) {
-            StoredTeamsService storedTeamsService = new StoredTeams(getContext());
+            StoredTeamsService storedTeamsService = new StoredTeamsManager(getContext());
 
             teamNameInput.setThreshold(2);
             teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.listTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamDescription teamDescription = (ApiTeamDescription) teamNameInput.getAdapter().getItem(index);
+                ApiTeamSummary teamDescription = (ApiTeamSummary) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(teamDescription.getName());
                 storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mTeamService, mTeamType);
 
@@ -237,7 +235,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     }
 
     @Override
-    public void setTeamService(BaseTeamService teamService) {
+    public void setTeamService(IBaseTeam teamService) {
         mTeamService = teamService;
     }
 
@@ -527,9 +525,9 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartItemVisibility();
+            ((GameSetupActivity) getActivity()).computeStartLayoutVisibility();
         } else if (getActivity() instanceof StoredTeamActivity) {
-            ((StoredTeamActivity) getActivity()).computeSaveItemVisibility();
+            ((StoredTeamActivity) getActivity()).computeSaveLayoutVisibility();
         }
     }
 

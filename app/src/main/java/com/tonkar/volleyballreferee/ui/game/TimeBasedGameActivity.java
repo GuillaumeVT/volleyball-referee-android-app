@@ -3,7 +3,10 @@ package com.tonkar.volleyballreferee.ui.game;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-
+import android.util.Log;
+import android.view.*;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -11,30 +14,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GeneralListener;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.TimeBasedGameService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.GeneralListener;
+import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
+import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.team.TeamListener;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -49,7 +42,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private TimeBasedGameService mGameService;
+    private ITimeBasedGame       mGameService;
     private StoredGamesService   mStoredGamesService;
     private TeamType             mTeamOnLeftSide;
     private TeamType             mTeamOnRightSide;
@@ -69,8 +62,8 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mStoredGamesService = new StoredGames(this);
-        mGameService = (TimeBasedGameService) mStoredGamesService.loadCurrentGame();
+        mStoredGamesService = new StoredGamesManager(this);
+        mGameService = (ITimeBasedGame) mStoredGamesService.loadCurrentGame();
 
         super.onCreate(savedInstanceState);
 

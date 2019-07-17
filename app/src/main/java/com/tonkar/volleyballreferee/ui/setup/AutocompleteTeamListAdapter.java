@@ -4,31 +4,30 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiTeamDescription;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription> {
+public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
 
-    private final LayoutInflater           mLayoutInflater;
-    private final List<ApiTeamDescription> mStoredTeamsList;
-    private final List<ApiTeamDescription> mFilteredStoredTeamsList;
-    private final NameFilter               mNameFilter;
+    private final LayoutInflater       mLayoutInflater;
+    private final List<ApiTeamSummary> mStoredTeamsList;
+    private final List<ApiTeamSummary> mFilteredStoredTeamsList;
+    private final NameFilter           mNameFilter;
 
-    public AutocompleteTeamListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeamDescription> storedTeamsList) {
+    public AutocompleteTeamListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeamSummary> storedTeamsList) {
         super(context, R.layout.autocomplete_list_item, storedTeamsList);
         mLayoutInflater = layoutInflater;
         mStoredTeamsList = storedTeamsList;
@@ -43,7 +42,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription
     }
 
     @Override
-    public ApiTeamDescription getItem(int index) {
+    public ApiTeamSummary getItem(int index) {
         return mFilteredStoredTeamsList.get(index);
     }
 
@@ -62,7 +61,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription
             teamTextView = (TextView) view;
         }
 
-        ApiTeamDescription team = mFilteredStoredTeamsList.get(index);
+        ApiTeamSummary team = mFilteredStoredTeamsList.get(index);
         teamTextView.setText(team.getName());
 
         switch (team.getGender()) {
@@ -113,9 +112,9 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiTeamDescription> matchValues = new ArrayList<>();
+                List<ApiTeamSummary> matchValues = new ArrayList<>();
 
-                for (ApiTeamDescription team : mStoredTeamsList) {
+                for (ApiTeamSummary team : mStoredTeamsList) {
                     if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(team);
                     }
@@ -134,7 +133,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamDescription
 
             if (results.values != null) {
                 mFilteredStoredTeamsList.clear();
-                mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamDescription>) results.values);
+                mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamSummary>) results.values);
             }
 
             if (results.count > 0) {

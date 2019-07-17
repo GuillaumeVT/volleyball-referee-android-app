@@ -6,30 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiTimeout;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.timeout.BaseTimeoutService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.game.timeout.IBaseTimeout;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
 
 public class TimeoutsListAdapter extends BaseAdapter {
 
-    private final Context               mContext;
-    private final LayoutInflater        mLayoutInflater;
-    private final BaseTimeoutService    mTimeoutService;
-    private final BaseTeamService       mTeamService;
-    private       TeamType              mTeamType;
-    private final int                   mSetIndex;
+    private final Context        mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final IBaseTimeout   mTimeoutService;
+    private final IBaseTeam      mTeamService;
+    private       TeamType       mTeamType;
+    private final int            mSetIndex;
 
-    TimeoutsListAdapter(Context context, LayoutInflater layoutInflater, BaseTimeoutService timeoutService, BaseTeamService teamService, TeamType teamType) {
+    TimeoutsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTimeout timeoutService, IBaseTeam teamService, TeamType teamType) {
         this(context, layoutInflater, timeoutService, teamService, teamType, -1);
     }
 
-    public TimeoutsListAdapter(Context context, LayoutInflater layoutInflater, BaseTimeoutService timeoutService, BaseTeamService teamService, TeamType teamType, int setIndex) {
+    public TimeoutsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTimeout timeoutService, IBaseTeam teamService, TeamType teamType, int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mTimeoutService = timeoutService;

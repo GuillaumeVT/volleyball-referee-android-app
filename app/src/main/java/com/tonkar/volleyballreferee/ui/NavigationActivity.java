@@ -12,17 +12,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
+import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.billing.BillingManager;
-import com.tonkar.volleyballreferee.api.ApiUtils;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.billing.BillingService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.billing.BillingManager;
+import com.tonkar.volleyballreferee.engine.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
-import com.tonkar.volleyballreferee.ui.data.StoredGamesListActivity;
-import com.tonkar.volleyballreferee.ui.data.StoredRulesListActivity;
-import com.tonkar.volleyballreferee.ui.data.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
+import com.tonkar.volleyballreferee.ui.stored.StoredGamesListActivity;
+import com.tonkar.volleyballreferee.ui.stored.StoredRulesListActivity;
+import com.tonkar.volleyballreferee.ui.stored.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -97,14 +97,14 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.action_colleagues:
-                        Log.i(Tags.STORED_USER, "Colleagues");
+                        Log.i(Tags.USER_UI, "Colleagues");
                         intent = new Intent(this, ColleaguesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;
                     case R.id.action_live_games_vbr_com:
                         Log.i(Tags.WEB, "Live games on VBR.com");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUtils.WEB_APP_LIVE_GAMES));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search/live", BuildConfig.SERVER_ADDRESS)));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;

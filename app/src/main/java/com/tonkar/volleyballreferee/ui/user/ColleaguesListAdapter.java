@@ -4,16 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Filter;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiFriend;
-import com.tonkar.volleyballreferee.api.ApiFriendRequest;
-import com.tonkar.volleyballreferee.api.ApiFriendsAndRequests;
-import com.tonkar.volleyballreferee.business.data.StoredUser;
-import com.tonkar.volleyballreferee.interfaces.data.AsyncFriendRequestListener;
-import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
+import com.tonkar.volleyballreferee.engine.stored.AsyncFriendRequestListener;
+import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendRequest;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendsAndRequests;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
     ColleaguesListAdapter(Context context, LayoutInflater layoutInflater, AsyncFriendRequestListener listener) {
         super(context, android.R.layout.simple_list_item_1, new ArrayList<>());
         mLayoutInflater = layoutInflater;
-        mStoredUserService = new StoredUser(context);
+        mStoredUserService = new StoredUserManager(context);
         mListener = listener;
         mColleagueItems = new ArrayList<>();
         mFilteredColleagueItems = new ArrayList<>();
@@ -88,9 +91,7 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog)
                     .setTitle(context.getString(R.string.remove))
                     .setMessage(String.format(Locale.getDefault(), context.getString(R.string.remove_colleague_question), colleagueItem.getFriend().getPseudo()))
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        mStoredUserService.removeFriend(colleagueItem.getFriend(), mListener);
-                    })
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> mStoredUserService.removeFriend(colleagueItem.getFriend(), mListener))
                     .setNegativeButton(android.R.string.no, (dialog, which) -> {});
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, context.getResources());
@@ -111,9 +112,7 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog)
                     .setTitle(context.getString(R.string.accept))
                     .setMessage(String.format(Locale.getDefault(), context.getString(R.string.accept_colleague_question), colleagueItem.getFriendRequest().getSenderPseudo()))
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        mStoredUserService.acceptFriendRequest(colleagueItem.getFriendRequest(), mListener);
-                    })
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> mStoredUserService.acceptFriendRequest(colleagueItem.getFriendRequest(), mListener))
                     .setNegativeButton(android.R.string.no, (dialog, which) -> {});
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, context.getResources());
@@ -125,9 +124,7 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog)
                     .setTitle(context.getString(R.string.reject))
                     .setMessage(String.format(Locale.getDefault(), context.getString(R.string.reject_colleague_question), colleagueItem.getFriendRequest().getSenderPseudo()))
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        mStoredUserService.rejectFriendRequest(colleagueItem.getFriendRequest(), mListener);
-                    })
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> mStoredUserService.rejectFriendRequest(colleagueItem.getFriendRequest(), mListener))
                     .setNegativeButton(android.R.string.no, (dialog, which) -> {});
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, context.getResources());

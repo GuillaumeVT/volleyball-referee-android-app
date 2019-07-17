@@ -22,19 +22,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiGameDescription;
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameStatus;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameFactory;
+import com.tonkar.volleyballreferee.engine.game.GameStatus;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.stored.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -44,13 +40,13 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     private Activity           mActivity;
     private StoredGamesService mStoredGamesService;
-    private ApiGameDescription mGameDescription;
+    private ApiGameSummary     mGameDescription;
     private boolean            mConfigureBeforeStart;
 
-    public static ScheduleGameListActionMenu newInstance(ApiGameDescription gameDescription) {
+    public static ScheduleGameListActionMenu newInstance(ApiGameSummary gameDescription) {
         ScheduleGameListActionMenu fragment = new ScheduleGameListActionMenu();
         Bundle args = new Bundle();
-        args.putString("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        args.putString("game", JsonIOUtils.GSON.toJson(gameDescription, ApiGameSummary.class));
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +54,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String gameDescriptionStr = getArguments().getString("game");
-        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, JsonIOUtils.GAME_DESCRIPTION_TYPE);
+        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
 
         Log.i(Tags.SCHEDULE_UI, "Create schedule game list action menu fragment");
         View view = inflater
@@ -68,7 +64,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
         Context context = inflater.getContext();
 
         mActivity = getActivity();
-        mStoredGamesService = new StoredGames(mActivity);
+        mStoredGamesService = new StoredGamesManager(mActivity);
         mConfigureBeforeStart = false;
 
         if (mActivity != null && mGameDescription != null) {
@@ -77,9 +73,9 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
             TextView editAndStartGameText = view.findViewById(R.id.action_edit_start_match);
             TextView deleteGameText = view.findViewById(R.id.action_delete_match);
 
-            Authentication authentication = PrefUtils.getAuthentication(mActivity);
+            ApiUserSummary user = PrefUtils.getUser(mActivity);
 
-            if (!mGameDescription.getCreatedBy().equals(authentication.getUserId())) {
+            if (!mGameDescription.getCreatedBy().equals(user.getId())) {
                 rescheduleGameText.setVisibility(View.GONE);
                 deleteGameText.setVisibility(View.GONE);
             }
@@ -132,7 +128,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                     case BEACH:
                         Log.i(Tags.SCHEDULE_UI, "Start activity to reschedule game");
                         final Intent intent = new Intent(mActivity, ScheduledGameActivity.class);
-                        intent.putExtra("game", JsonIOUtils.GSON.toJson(mGameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+                        intent.putExtra("game", JsonIOUtils.GSON.toJson(mGameDescription, ApiGameSummary.class));
                         intent.putExtra("create", false);
                         startActivity(intent);
                         UiUtils.animateForward(mActivity);
@@ -170,19 +166,19 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     }
 
     @Override
-    public void onGameReceived(StoredGameService storedGameService) {
-        if (storedGameService != null) {
+    public void onGameReceived(IStoredGame storedGame) {
+        if (storedGame != null) {
             mActivity.runOnUiThread(() -> {
-                final GameService gameService = GameFactory.createGame(storedGameService);
+                final IGame game = GameFactory.createGame(storedGame);
                 Log.i(Tags.SCHEDULE_UI, "Received game");
 
-                switch (storedGameService.getMatchStatus()) {
+                switch (storedGame.getMatchStatus()) {
                     case SCHEDULED:
                         if (mConfigureBeforeStart) {
                             Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
-                            mStoredGamesService.saveSetupGame(gameService);
+                            mStoredGamesService.saveSetupGame(game);
                             final Intent setupIntent;
-                            if (gameService.getKind().equals(GameType.BEACH)) {
+                            if (game.getKind().equals(GameType.BEACH)) {
                                 setupIntent = new Intent(mActivity, QuickGameSetupActivity.class);
                             } else {
                                 setupIntent = new Intent(mActivity, GameSetupActivity.class);
@@ -195,8 +191,8 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                             UiUtils.animateForward(mActivity);
                         } else {
                             Log.i(Tags.SCHEDULE_UI, "Start scheduled game immediately");
-                            gameService.startMatch();
-                            mStoredGamesService.createCurrentGame(gameService);
+                            game.startMatch();
+                            mStoredGamesService.createCurrentGame(game);
                             final Intent gameIntent = new Intent(mActivity, GameActivity.class);
                             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -207,8 +203,8 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                         break;
                     case LIVE:
                         Log.i(Tags.SCHEDULE_UI, "Resume game");
-                        gameService.restoreGame(storedGameService);
-                        mStoredGamesService.createCurrentGame(gameService);
+                        game.restoreGame(storedGame);
+                        mStoredGamesService.createCurrentGame(game);
                         final Intent gameIntent = new Intent(mActivity, GameActivity.class);
                         gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -224,7 +220,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     }
 
     @Override
-    public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {}
+    public void onAvailableGamesReceived(List<ApiGameSummary> gameDescriptionList) {}
 
     @Override
     public void onError(int httpCode) {

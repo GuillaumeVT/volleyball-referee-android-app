@@ -2,18 +2,16 @@ package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.tonkar.volleyballreferee.api.*;
-import com.tonkar.volleyballreferee.business.data.StoredGame;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.interfaces.GameStatus;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-
+import com.tonkar.volleyballreferee.engine.game.GameStatus;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.StoredGame;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.stored.api.*;
+import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,9 +38,9 @@ public class StoredGamesIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            StoredGames.writeStoredGamesStream(outputStream, expectedList);
+            StoredGamesManager.writeStoredGamesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = StoredGames.readStoredGamesStream(inputStream);
+            actualList = StoredGamesManager.readStoredGamesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,8 +54,8 @@ public class StoredGamesIOTest {
     public void writeThenRead_one() {
         StoredGame storedGame1 = someStoredGame1();
         try {
-            byte[] bytes1 = StoredGames.storedGameToByteArray(storedGame1);
-            StoredGame readGame1 = StoredGames.byteArrayToStoredGame(bytes1);
+            byte[] bytes1 = StoredGamesManager.storedGameToByteArray(storedGame1);
+            StoredGame readGame1 = StoredGamesManager.byteArrayToStoredGame(bytes1);
             assertEquals(storedGame1, readGame1);
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,8 +63,8 @@ public class StoredGamesIOTest {
 
         StoredGame storedGame2 = someStoredGame2();
         try {
-            byte[] bytes2 = StoredGames.storedGameToByteArray(storedGame2);
-            StoredGame readGame2 = StoredGames.byteArrayToStoredGame(bytes2);
+            byte[] bytes2 = StoredGamesManager.storedGameToByteArray(storedGame2);
+            StoredGame readGame2 = StoredGamesManager.byteArrayToStoredGame(bytes2);
             assertEquals(storedGame2, readGame2);
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,16 +74,17 @@ public class StoredGamesIOTest {
     private StoredGame someStoredGame1() {
         StoredGame game = new StoredGame();
         game.setId(UUID.randomUUID().toString());
-        game.setCreatedBy(Authentication.VBR_USER_ID);
+        game.setCreatedBy(ApiUserSummary.VBR_USER_ID);
         game.setCreatedAt(1234L);
         game.setUpdatedAt(651234L);
         game.setScheduledAt(65432L);
         game.setKind(GameType.INDOOR);
         game.setGender(GenderType.LADIES);
         game.setRules(Rules.officialIndoorRules());
+        game.setLeague(new ApiSelectedLeague());
         game.getLeague().setName("VBR League");
         game.getLeague().setDivision("VBR Division");
-        game.setRefereedBy(Authentication.VBR_USER_ID);
+        game.setRefereedBy(ApiUserSummary.VBR_USER_ID);
         game.setRefereeName("VBR");
         game.setMatchStatus(GameStatus.LIVE);
         game.setSets(TeamType.HOME, 0);
@@ -94,7 +93,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team1 = game.getTeam(TeamType.HOME);
         team1.setId(UUID.randomUUID().toString());
-        team1.setCreatedBy(Authentication.VBR_USER_ID);
+        team1.setCreatedBy(ApiUserSummary.VBR_USER_ID);
         team1.setCreatedAt(4869434L);
         team1.setUpdatedAt(1869694L);
         team1.setName("Team 1");
@@ -107,7 +106,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team2 = game.getTeam(TeamType.GUEST);
         team2.setId(UUID.randomUUID().toString());
-        team2.setCreatedBy(Authentication.VBR_USER_ID);
+        team2.setCreatedBy(ApiUserSummary.VBR_USER_ID);
         team2.setCreatedAt(58594L);
         team2.setUpdatedAt(9578594L);
         team2.setName("Team 2");
@@ -173,16 +172,17 @@ public class StoredGamesIOTest {
     private StoredGame someStoredGame2() {
         StoredGame game = new StoredGame();
         game.setId(UUID.randomUUID().toString());
-        game.setCreatedBy(Authentication.VBR_USER_ID);
+        game.setCreatedBy(ApiUserSummary.VBR_USER_ID);
         game.setCreatedAt(646516L);
         game.setUpdatedAt(58473L);
         game.setScheduledAt(764578L);
         game.setKind(GameType.BEACH);
         game.setGender(GenderType.GENTS);
         game.setRules(Rules.officialBeachRules());
+        game.setLeague(new ApiSelectedLeague());
         game.getLeague().setName("VBR Beach League");
         game.getLeague().setDivision("VBR Beach Division");
-        game.setRefereedBy(Authentication.VBR_USER_ID);
+        game.setRefereedBy(ApiUserSummary.VBR_USER_ID);
         game.setRefereeName("VBR");
         game.setMatchStatus(GameStatus.SCHEDULED);
         game.setSets(TeamType.HOME, 1);
@@ -191,7 +191,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team1 = game.getTeam(TeamType.HOME);
         team1.setId(UUID.randomUUID().toString());
-        team1.setCreatedBy(Authentication.VBR_USER_ID);
+        team1.setCreatedBy(ApiUserSummary.VBR_USER_ID);
         team1.setCreatedAt(5386831L);
         team1.setUpdatedAt(7069493L);
         team1.setName("Player A / Player B");
@@ -201,7 +201,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team2 = game.getTeam(TeamType.GUEST);
         team2.setId(UUID.randomUUID().toString());
-        team2.setCreatedBy(Authentication.VBR_USER_ID);
+        team2.setCreatedBy(ApiUserSummary.VBR_USER_ID);
         team2.setCreatedAt(794302L);
         team2.setUpdatedAt(149593L);
         team2.setName("Player C / Player D");

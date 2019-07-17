@@ -2,7 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/rules_setup_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/empty_fab_space">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -29,11 +31,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/big_margin_size">
 
-            <com.tonkar.volleyballreferee.ui.util.ClearableTextInputAutoCompleteTextView
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/rules_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_clear"
                     android:ems="10"
                     android:hint="@string/rules_name_hint"
                     android:imeOptions="actionDone"

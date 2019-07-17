@@ -1,15 +1,13 @@
 package com.tonkar.volleyballreferee;
 
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.business.game.GameFactory;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import com.tonkar.volleyballreferee.engine.game.GameFactory;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -23,7 +21,7 @@ public class BeachGameTest {
 
     @Test
     public void winSet_normal() {
-        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
@@ -40,7 +38,7 @@ public class BeachGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
@@ -66,7 +64,7 @@ public class BeachGameTest {
 
     @Test
     public void winGame_normal() {
-        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
@@ -86,7 +84,7 @@ public class BeachGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        GameService game = GameFactory.createBeachGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 

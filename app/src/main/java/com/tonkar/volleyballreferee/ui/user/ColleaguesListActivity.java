@@ -13,14 +13,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiFriend;
-import com.tonkar.volleyballreferee.api.ApiFriendRequest;
-import com.tonkar.volleyballreferee.api.ApiFriendsAndRequests;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.StoredUser;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.AsyncFriendRequestListener;
-import com.tonkar.volleyballreferee.interfaces.data.StoredUserService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.stored.AsyncFriendRequestListener;
+import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendRequest;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendsAndRequests;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -42,11 +42,11 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mStoredUserService = new StoredUser(this);
+        mStoredUserService = new StoredUserManager(this);
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.STORED_USER, "Create colleagues list activity");
+        Log.i(Tags.USER_UI, "Create colleagues list activity");
         setContentView(R.layout.activity_colleagues_list);
 
         initNavigationMenu();
@@ -62,7 +62,7 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
     }
 
     public void addColleague(View view) {
-        Log.i(Tags.STORED_USER, "Add colleague");
+        Log.i(Tags.USER_UI, "Add colleague");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
                 .setTitle(getString(R.string.add_colleague))

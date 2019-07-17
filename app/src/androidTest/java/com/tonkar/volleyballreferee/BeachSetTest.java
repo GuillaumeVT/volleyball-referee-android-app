@@ -1,13 +1,11 @@
 package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.tonkar.volleyballreferee.business.game.BeachSet;
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.set.BeachSet;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -15,10 +13,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class BeachSetTest {
@@ -104,7 +99,7 @@ public class BeachSetTest {
 
     @Test
     public void winSet_1PointGap() {
-        Rules rules = new Rules(UUID.randomUUID().toString(), Authentication.VBR_USER_ID,
+        Rules rules = new Rules(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID,
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
                 "My rules", GameType.BEACH,
                 3, 21, true, 15, false, true,

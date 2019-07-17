@@ -34,18 +34,39 @@
         <item name="backgroundTint">@color/colorOnPrimary</item>
     </style>
 
-    <style name="VbrPlusFab" parent="Widget.MaterialComponents.FloatingActionButton">
+    <style name="VbrCreateFab" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="android:adjustViewBounds">true</item>
-        <item name="android:tint">@color/colorOnSecondary</item>
+        <item name="android:tint">@color/colorPrimary</item>
         <item name="backgroundTint">@color/colorSecondary</item>
-        <item name="srcCompat">@android:drawable/ic_input_add</item>
+        <item name="srcCompat">@drawable/ic_plus</item>
     </style>
 
     <style name="VbrEditFab" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="android:adjustViewBounds">true</item>
-        <item name="android:tint">@color/colorOnSecondary</item>
+        <item name="android:tint">@color/colorPrimary</item>
         <item name="backgroundTint">@color/colorSecondary</item>
         <item name="srcCompat">@drawable/ic_edit</item>
+    </style>
+
+    <style name="VbrSaveFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="srcCompat">@drawable/ic_save</item>
+    </style>
+
+    <style name="VbrScheduleFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="srcCompat">@drawable/ic_schedule</item>
+    </style>
+
+    <style name="VbrStartFab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="srcCompat">@drawable/ic_play</item>
     </style>
 
     <style name="TextViewTheme" parent="TextAppearance.AppCompat.Headline">

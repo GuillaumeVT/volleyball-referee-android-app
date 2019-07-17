@@ -2,48 +2,38 @@ package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
 import android.content.Intent;
-
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.os.Build;
-import android.widget.TextView;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.*;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonParseException;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.*;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.business.game.*;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiCount;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiMessage;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
-import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
+import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import okhttp3.Call;
@@ -56,7 +46,7 @@ import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.UUID;
 
-public class MainActivity extends AuthenticationActivity {
+public class MainActivity extends NavigationActivity {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -80,7 +70,7 @@ public class MainActivity extends AuthenticationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mStoredGamesService = new StoredGames(this);
+        mStoredGamesService = new StoredGamesManager(this);
 
         Log.i(Tags.MAIN_UI, "Create main activity");
         setContentView(R.layout.activity_main);
@@ -89,17 +79,14 @@ public class MainActivity extends AuthenticationActivity {
 
         initNavigationMenu();
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            MaterialButton beachButton = findViewById(R.id.start_beach_game_button);
-            beachButton.getIcon().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+        if (mStoredGamesService.hasCurrentGame()) {
+            View resumeGameCard = findViewById(R.id.resume_game_card);
+            resumeGameCard.setVisibility(View.VISIBLE);
         }
 
-        if (mStoredGamesService.hasCurrentGame()) {
-            MaterialButton resumeGameButton = findViewById(R.id.resume_game_button);
-            resumeGameButton.setVisibility(View.VISIBLE);
-
-            CardView notificationsCard = findViewById(R.id.notifications_card);
-            notificationsCard.setVisibility(View.VISIBLE);
+        if (PrefUtils.shouldSignIn(this)) {
+            View goToSignCard = findViewById(R.id.goto_sign_in_card);
+            goToSignCard.setVisibility(View.VISIBLE);
         }
 
         fetchFriendRequests();
@@ -108,7 +95,7 @@ public class MainActivity extends AuthenticationActivity {
         if (mStoredGamesService.hasCurrentGame()) {
             try {
                 mStoredGamesService.loadCurrentGame();
-            } catch (JsonSyntaxException e) {
+            } catch (JsonParseException e) {
                 Log.e(Tags.STORED_GAMES, "Failed to read the recorded game because the JSON format was invalid", e);
                 mStoredGamesService.deleteCurrentGame();
             }
@@ -145,10 +132,7 @@ public class MainActivity extends AuthenticationActivity {
                 });
             }
         }
-
-        checkAuthentication();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,7 +146,7 @@ public class MainActivity extends AuthenticationActivity {
         computePurchaseItemVisibility(purchaseItem);
 
         final MenuItem accountItem = menu.findItem(R.id.action_account_menu);
-        accountItem.setVisible(PrefUtils.isSignedIn(this));
+        accountItem.setVisible(PrefUtils.canSync(this));
 
         return true;
     }
@@ -181,7 +165,10 @@ public class MainActivity extends AuthenticationActivity {
                 UiUtils.animateForward(this);
                 return true;
             case R.id.action_account_menu:
-                showAccount();
+                Log.i(Tags.USER_UI, "User account");
+                intent = new Intent(this, UserActivity.class);
+                startActivity(intent);
+                UiUtils.animateForward(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -193,10 +180,17 @@ public class MainActivity extends AuthenticationActivity {
         resumeCurrentGame();
     }
 
+    public void goToSignIn(View view) {
+        Log.i(Tags.USER_UI, "User sign in");
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
+        UiUtils.animateForward(this);
+    }
+
     public void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
-        Authentication authentication = PrefUtils.getAuthentication(this);
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(this);
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -209,8 +203,8 @@ public class MainActivity extends AuthenticationActivity {
 
     public void startBeachGame(View view) {
         Log.i(Tags.GAME_UI, "Start a beach game");
-        Authentication authentication = PrefUtils.getAuthentication(this);
-        BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(this);
+        BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 System.currentTimeMillis(), 0L, Rules.officialBeachRules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -223,8 +217,8 @@ public class MainActivity extends AuthenticationActivity {
 
     public void startIndoor4x4Game(View view) {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
-        Authentication authentication = PrefUtils.getAuthentication(this);
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(this);
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -237,8 +231,8 @@ public class MainActivity extends AuthenticationActivity {
 
     public void startTimeBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a time-based game");
-        Authentication authentication = PrefUtils.getAuthentication(this);
-        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(this);
+        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 System.currentTimeMillis(), 0L);
         mStoredGamesService.saveSetupGame(game);
 
@@ -251,8 +245,8 @@ public class MainActivity extends AuthenticationActivity {
 
     public void startScoreBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a score-based game");
-        Authentication authentication = PrefUtils.getAuthentication(this);
-        IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), authentication.getUserId(), authentication.getUserPseudo(),
+        ApiUserSummary user = PrefUtils.getUser(this);
+        IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -271,7 +265,7 @@ public class MainActivity extends AuthenticationActivity {
     }
 
     public void goToColleagues(View view) {
-        Log.i(Tags.STORED_USER, "Colleagues");
+        Log.i(Tags.USER_UI, "User colleagues");
         Intent intent = new Intent(this, ColleaguesListActivity.class);
         startActivity(intent);
         UiUtils.animateForward(this);
@@ -279,12 +273,12 @@ public class MainActivity extends AuthenticationActivity {
 
     private void resumeCurrentGame() {
         Log.i(Tags.GAME_UI, "Start game activity and resume current game");
-        GameService gameService = mStoredGamesService.loadCurrentGame();
+        IGame game = mStoredGamesService.loadCurrentGame();
 
-        if (gameService == null) {
+        if (game == null) {
             UiUtils.makeErrorText(MainActivity.this, getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
         } else {
-            if (GameType.TIME.equals(gameService.getKind())) {
+            if (GameType.TIME.equals(game.getKind())) {
                 final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
                 startActivity(gameIntent);
                 UiUtils.animateCreate(this);
@@ -298,9 +292,9 @@ public class MainActivity extends AuthenticationActivity {
 
     private void fetchFriendRequests() {
         if (PrefUtils.canSync(this)) {
-            Request request = ApiUtils.buildGet(ApiUtils.FRIENDS_RECEIVED_COUNT_API_URL, PrefUtils.getAuthentication(this));
+            Request request = ApiUtils.buildGet(String.format("%s/users/friends/received/count", ApiUtils.BASE_URL), PrefUtils.getAuhentication(this));
 
-            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+            ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -310,7 +304,7 @@ public class MainActivity extends AuthenticationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), JsonIOUtils.COUNT_TYPE);
+                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), ApiCount.class);
                         initFriendRequestsButton(count);
                     } else {
                         initFriendRequestsButton(new ApiCount(0L));
@@ -323,21 +317,20 @@ public class MainActivity extends AuthenticationActivity {
     private void initFriendRequestsButton(ApiCount count) {
         runOnUiThread(() -> {
             if (count.getCount() > 0) {
-                MaterialButton friendButton = findViewById(R.id.goto_colleagues_button);
-                friendButton.setText(String.format(Locale.getDefault(), "%d", count.getCount()));
-                friendButton.setVisibility(View.VISIBLE);
+                MaterialButton gotoColleaguesButton = findViewById(R.id.goto_colleagues_button);
+                gotoColleaguesButton.setText(String.format(Locale.getDefault(), "%s: %d", gotoColleaguesButton.getText(), count.getCount()));
 
-                CardView notificationsCard = findViewById(R.id.notifications_card);
-                notificationsCard.setVisibility(View.VISIBLE);
+                View gotoColleaguesCard = findViewById(R.id.goto_colleagues_card);
+                gotoColleaguesCard.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void fetchAvailableGames() {
         if (PrefUtils.canSync(this)) {
-            Request request = ApiUtils.buildGet(ApiUtils.AVAILABLE_GAMES_COUNT_API_URL, PrefUtils.getAuthentication(this));
+            Request request = ApiUtils.buildGet(String.format("%s/games/available/count", ApiUtils.BASE_URL), PrefUtils.getAuhentication(this));
 
-            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+            ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -347,7 +340,7 @@ public class MainActivity extends AuthenticationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), JsonIOUtils.COUNT_TYPE);
+                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), ApiCount.class);
                         initAvailableGamesButton(count);
                     } else {
                         initAvailableGamesButton(new ApiCount(0L));
@@ -360,21 +353,20 @@ public class MainActivity extends AuthenticationActivity {
     private void initAvailableGamesButton(ApiCount count) {
         runOnUiThread(() -> {
             if (count.getCount() > 0) {
-                MaterialButton gameButton = findViewById(R.id.goto_available_games_button);
-                gameButton.setText(String.format(Locale.getDefault(), "%d", count.getCount()));
-                gameButton.setVisibility(View.VISIBLE);
-                
-                CardView notificationsCard = findViewById(R.id.notifications_card);
-                notificationsCard.setVisibility(View.VISIBLE);
+                MaterialButton gotoAvailableGamesButton = findViewById(R.id.goto_available_games_button);
+                gotoAvailableGamesButton.setText(String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesButton.getText(), count.getCount()));
+
+                View gotoAvailableGamesCard = findViewById(R.id.goto_available_games_card);
+                gotoAvailableGamesCard.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void fetchAndShowNews() {
         if (ApiUtils.isConnectedToInternet(this)) {
-            Request request = ApiUtils.buildGet(ApiUtils.MESSAGES_API_URL);
+            Request request = ApiUtils.buildGet(String.format("%s/public/messages", ApiUtils.BASE_URL));
 
-            ApiUtils.getInstance().getHttpClient().newCall(request).enqueue(new Callback() {
+            ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -384,7 +376,7 @@ public class MainActivity extends AuthenticationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiMessage message = JsonIOUtils.GSON.fromJson(response.body().string(), JsonIOUtils.MESSAGE_TYPE);
+                        ApiMessage message = JsonIOUtils.GSON.fromJson(response.body().string(), ApiMessage.class);
                         showNews(message.getContent());
                     } else {
                         showNews(getString(R.string.no_news));
@@ -405,23 +397,4 @@ public class MainActivity extends AuthenticationActivity {
         });
     }
 
-    private void showAccount() {
-        if (PrefUtils.canSync(this)) {
-            Authentication authentication = PrefUtils.getAuthentication(this);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                    .setView(getLayoutInflater().inflate(R.layout.user_dialog, null))
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {})
-                    .setNegativeButton(R.string.user_sign_out, (dialog, which) -> signOut());
-
-            AlertDialog alertDialog = builder.create();
-            alertDialog.setOnShowListener(dialogInterface -> {
-                TextView userPseudoText = alertDialog.findViewById(R.id.user_pseudo_text);
-                TextView userIdText = alertDialog.findViewById(R.id.user_id_text);
-                userPseudoText.setText(String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), authentication.getUserPseudo()));
-                userIdText.setText(String.format(Locale.getDefault(), getString(R.string.user_id), authentication.getUserId()));
-            });
-            alertDialog.show();
-            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-        }
-    }
 }

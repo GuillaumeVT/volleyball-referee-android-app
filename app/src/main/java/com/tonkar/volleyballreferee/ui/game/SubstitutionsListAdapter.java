@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -23,17 +22,17 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         TextView playerOutText;
     }
 
-    private final Context         mContext;
-    private final LayoutInflater  mLayoutInflater;
-    private final BaseTeamService mTeamService;
-    private       TeamType        mTeamType;
-    private final int             mSetIndex;
+    private final Context        mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final IBaseTeam      mTeamService;
+    private       TeamType       mTeamType;
+    private final int            mSetIndex;
 
-    SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseTeamService teamService, TeamType teamType) {
+    SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTeam teamService, TeamType teamType) {
         this(context, layoutInflater, teamService, teamType, -1);
     }
 
-    public SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, BaseTeamService teamService, TeamType teamType, int setIndex) {
+    public SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTeam teamService, TeamType teamType, int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mTeamService = teamService;

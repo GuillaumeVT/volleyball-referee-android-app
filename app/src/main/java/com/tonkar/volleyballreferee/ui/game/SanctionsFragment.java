@@ -6,23 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.team.TeamListener;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
 public class SanctionsFragment extends Fragment implements TeamListener, SanctionListener, GameServiceHandler {
 
-    private GameService          mGameService;
+    private IGame                mGame;
     private SanctionsListAdapter mLeftTeamSanctionsListAdapter;
     private SanctionsListAdapter mRightTeamSanctionsListAdapter;
 
@@ -40,16 +38,16 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
         Log.i(Tags.GAME_UI, "Create sanctions fragment");
         View view = inflater.inflate(R.layout.fragment_sanctions, container, false);
 
-        if (mGameService != null) {
-            mGameService.addSanctionListener(this);
-            mGameService.addTeamListener(this);
+        if (mGame != null) {
+            mGame.addSanctionListener(this);
+            mGame.addTeamListener(this);
 
             ListView leftTeamSanctionsList = view.findViewById(R.id.left_team_sanctions_list);
-            mLeftTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mGameService, mGameService, mGameService.getTeamOnLeftSide());
+            mLeftTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnLeftSide());
             leftTeamSanctionsList.setAdapter(mLeftTeamSanctionsListAdapter);
 
             ListView rightTeamSanctionsList = view.findViewById(R.id.right_team_sanctions_list);
-            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mGameService, mGameService, mGameService.getTeamOnRightSide());
+            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
             rightTeamSanctionsList.setAdapter(mRightTeamSanctionsListAdapter);
         }
 
@@ -60,9 +58,9 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (mGameService != null) {
-            mGameService.removeSanctionListener(this);
-            mGameService.removeTeamListener(this);
+        if (mGame != null) {
+            mGame.removeSanctionListener(this);
+            mGame.removeTeamListener(this);
         }
     }
 
@@ -93,7 +91,7 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setGameService(IGame game) {
+        mGame = game;
     }
 }

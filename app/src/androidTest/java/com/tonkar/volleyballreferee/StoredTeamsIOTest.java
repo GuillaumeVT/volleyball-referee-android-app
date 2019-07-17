@@ -1,19 +1,16 @@
 package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
-
-import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.tonkar.volleyballreferee.api.ApiTeam;
-import com.tonkar.volleyballreferee.business.data.StoredTeams;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
-import com.tonkar.volleyballreferee.interfaces.team.BaseTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.GenderType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import androidx.test.rule.ActivityTestRule;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
+import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,9 +35,9 @@ public class StoredTeamsIOTest {
 
     @Test
     public void save() {
-        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity().getApplicationContext());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity().getApplicationContext());
 
-        BaseTeamService teamService = storedTeamsService.createTeam(GameType.INDOOR);
+        IBaseTeam teamService = storedTeamsService.createTeam(GameType.INDOOR);
         teamService.setTeamName(TeamType.HOME, "BRAZIL");
         teamService.setTeamColor(TeamType.HOME, Color.parseColor("#f3bc07"));
         teamService.setLiberoColor(TeamType.HOME, Color.parseColor("#034694"));
@@ -99,7 +96,7 @@ public class StoredTeamsIOTest {
 
     @Test
     public void writeThenRead() {
-        StoredTeamsService storedTeamsService = new StoredTeams(mActivityRule.getActivity().getApplicationContext());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity().getApplicationContext());
 
         List<ApiTeam> expectedList = new ArrayList<>();
         expectedList.add(storedTeamsService.getTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
@@ -108,9 +105,9 @@ public class StoredTeamsIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            StoredTeams.writeTeamsStream(outputStream, expectedList);
+            StoredTeamsManager.writeTeamsStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = StoredTeams.readTeamsStream(inputStream);
+            actualList = StoredTeamsManager.readTeamsStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();

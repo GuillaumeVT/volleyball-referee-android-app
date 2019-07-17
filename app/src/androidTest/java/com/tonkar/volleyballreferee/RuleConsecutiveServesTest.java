@@ -1,15 +1,13 @@
 package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.tonkar.volleyballreferee.business.game.IndoorGame;
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IndoorGame;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -92,14 +90,14 @@ public class RuleConsecutiveServesTest {
     }
 
     private IndoorGame createGame(int consecutiveServes) {
-        Rules rules = new Rules(UUID.randomUUID().toString(), Authentication.VBR_USER_ID,
+        Rules rules = new Rules(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID,
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
                 "My rules", GameType.INDOOR,
                 5, 25, true, 15, true, true,
                 true,2, 30,true, 60, true, 180,
                 Rules.FIVB_LIMITATION, 6, false, 0, 0, consecutiveServes);
 
-        IndoorGame game = new IndoorGame(UUID.randomUUID().toString(), Authentication.VBR_USER_ID, "",
+        IndoorGame game = new IndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), rules);
 
         for (int index = 1; index <= 6; index++) {

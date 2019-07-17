@@ -12,24 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.*;
-
 import androidx.annotation.NonNull;
-import com.google.android.material.textfield.TextInputLayout;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiRulesDescription;
-import com.tonkar.volleyballreferee.business.data.StoredRules;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
-import com.tonkar.volleyballreferee.business.rules.Rules;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
-import com.tonkar.volleyballreferee.ui.setup.AutocompleteRulesListAdapter;
-import com.tonkar.volleyballreferee.ui.data.StoredRulesActivity;
-import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.textfield.TextInputLayout;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
+import com.tonkar.volleyballreferee.ui.setup.AutocompleteRulesListAdapter;
+import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.stored.StoredRulesActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -188,12 +186,12 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         }
 
         if (isGameContext) {
-            StoredRulesService storedRulesService = new StoredRules(getContext());
+            StoredRulesService storedRulesService = new StoredRulesManager(getContext());
 
             mRulesNameInput.setThreshold(2);
             mRulesNameInput.setAdapter(new AutocompleteRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules(mRules.getKind())));
             mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiRulesDescription rulesDescription = (ApiRulesDescription) mRulesNameInput.getAdapter().getItem(index);
+                ApiRulesSummary rulesDescription = (ApiRulesSummary) mRulesNameInput.getAdapter().getItem(index);
                 mRulesNameInput.setText(rulesDescription.getName());
                 mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
                 initValues();
@@ -417,9 +415,9 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartItemVisibility();
+            ((GameSetupActivity) getActivity()).computeStartLayoutVisibility();
         } else if (getActivity() instanceof StoredRulesActivity) {
-            ((StoredRulesActivity) getActivity()).computeSaveItemVisibility();
+            ((StoredRulesActivity) getActivity()).computeSaveLayoutVisibility();
         }
     }
 

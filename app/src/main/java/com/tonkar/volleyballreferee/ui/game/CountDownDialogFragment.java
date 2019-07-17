@@ -6,14 +6,12 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class CountDownDialogFragment extends DialogFragment {
 

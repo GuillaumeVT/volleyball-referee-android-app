@@ -9,21 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import androidx.appcompat.widget.SearchView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.Authentication;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.api.ApiGameDescription;
-import com.tonkar.volleyballreferee.business.data.JsonIOUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.business.data.StoredLeagues;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGameService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.stored.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -31,9 +26,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
-
-import androidx.appcompat.widget.SearchView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ScheduledGamesListActivity extends NavigationActivity implements AsyncGameRequestListener {
 
@@ -57,7 +49,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mStoredGamesService = new StoredGames(this);
+        mStoredGamesService = new StoredGamesManager(this);
 
         super.onCreate(savedInstanceState);
 
@@ -74,7 +66,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         scheduledGamesList.setAdapter(mScheduledGamesListAdapter);
 
         scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
-            ApiGameDescription gameDescription = mScheduledGamesListAdapter.getItem(i);
+            ApiGameSummary gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getKind())) {
                 switch (gameDescription.getStatus()) {
                     case SCHEDULED:
@@ -150,16 +142,16 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         if (PrefUtils.canSync(this)) {
             mSyncLayout.setRefreshing(true);
             mStoredGamesService.downloadAvailableGames(this);
-            StoredLeaguesService storedLeagues = new StoredLeagues(this);
+            StoredLeaguesService storedLeagues = new StoredLeaguesManager(this);
             storedLeagues.syncLeagues();
         }
     }
 
     @Override
-    public void onGameReceived(StoredGameService storedGameService) {}
+    public void onGameReceived(IStoredGame storedGame) {}
 
     @Override
-    public void onAvailableGamesReceived(List<ApiGameDescription> gameDescriptionList) {
+    public void onAvailableGamesReceived(List<ApiGameSummary> gameDescriptionList) {
         runOnUiThread(() -> {
             mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
             mSyncLayout.setRefreshing(false);
@@ -188,21 +180,21 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     private void scheduleGame(GameType kind) {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
-        Authentication authentication = PrefUtils.getAuthentication(this);
+        ApiUserSummary user = PrefUtils.getUser(this);
 
-        ApiGameDescription gameDescription = new ApiGameDescription();
+        ApiGameSummary gameDescription = new ApiGameSummary();
         gameDescription.setId(UUID.randomUUID().toString());
-        gameDescription.setCreatedBy(authentication.getUserId());
+        gameDescription.setCreatedBy(user.getId());
         gameDescription.setCreatedAt(utcTime);
         gameDescription.setUpdatedAt(utcTime);
         gameDescription.setScheduledAt(System.currentTimeMillis());
-        gameDescription.setRefereedBy(authentication.getUserId());
-        gameDescription.setRefereeName(authentication.getUserPseudo());
+        gameDescription.setRefereedBy(user.getId());
+        gameDescription.setRefereeName(user.getPseudo());
         gameDescription.setKind(kind);
 
         Log.i(Tags.SCHEDULE_UI, "Start activity to schedule game");
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
-        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, JsonIOUtils.GAME_DESCRIPTION_TYPE));
+        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, ApiGameSummary.class));
         intent.putExtra("create", true);
         startActivity(intent);
         UiUtils.animateCreate(this);

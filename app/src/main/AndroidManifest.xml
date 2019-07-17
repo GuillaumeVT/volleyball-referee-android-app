@@ -42,34 +42,34 @@
         <activity android:name=".ui.game.GameActivity"/>
         <activity android:name=".ui.game.TimeBasedGameActivity"/>
         <activity
-                android:name=".ui.data.StoredGamesListActivity"
+                android:name=".ui.stored.StoredGamesListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.data.StoredIndoorGameActivity"
-                android:parentActivityName=".ui.data.StoredGamesListActivity"/>
+                android:name=".ui.stored.StoredIndoorGameActivity"
+                android:parentActivityName=".ui.stored.StoredGamesListActivity"/>
         <activity
-                android:name=".ui.data.StoredBeachGameActivity"
-                android:parentActivityName=".ui.data.StoredGamesListActivity"/>
+                android:name=".ui.stored.StoredBeachGameActivity"
+                android:parentActivityName=".ui.stored.StoredGamesListActivity"/>
         <activity
-                android:name=".ui.data.StoredTeamsListActivity"
+                android:name=".ui.stored.StoredTeamsListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.data.StoredTeamActivity"
-                android:parentActivityName=".ui.data.StoredTeamsListActivity"/>
+                android:name=".ui.stored.StoredTeamActivity"
+                android:parentActivityName=".ui.stored.StoredTeamsListActivity"/>
         <activity
-                android:name=".ui.data.StoredTeamViewActivity"
-                android:parentActivityName=".ui.data.StoredTeamsListActivity"/>
+                android:name=".ui.stored.StoredTeamViewActivity"
+                android:parentActivityName=".ui.stored.StoredTeamsListActivity"/>
         <activity
-                android:name=".ui.data.StoredRulesListActivity"
+                android:name=".ui.stored.StoredRulesListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.data.StoredRulesActivity"
-                android:parentActivityName=".ui.data.StoredRulesListActivity"/>
+                android:name=".ui.stored.StoredRulesActivity"
+                android:parentActivityName=".ui.stored.StoredRulesListActivity"/>
         <activity
-                android:name=".ui.data.StoredRulesViewActivity"
-                android:parentActivityName=".ui.data.StoredRulesListActivity"/>
+                android:name=".ui.stored.StoredRulesViewActivity"
+                android:parentActivityName=".ui.stored.StoredRulesListActivity"/>
         <activity
-                android:name=".ui.user.UserSignInActivity"
+                android:name=".ui.user.UserActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
                 android:name=".ui.setup.ScheduledGamesListActivity"
@@ -98,7 +98,7 @@
         </provider>
 
         <receiver
-                android:name=".business.data.BootCompleteAndUpdateReceiver"
+                android:name=".engine.stored.BootCompleteAndUpdateReceiver"
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>
@@ -108,10 +108,6 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
             </intent-filter>
         </receiver>
-
-        <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

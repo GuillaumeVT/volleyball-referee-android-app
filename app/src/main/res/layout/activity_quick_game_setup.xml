@@ -10,24 +10,62 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/quick_game_setup_nav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:layout_marginTop="@dimen/default_margin_size"
-        android:background="@android:color/white"
-        app:elevation="@dimen/elevation"
-        app:itemBackground="@drawable/navigation_menu_item"
-        app:itemHorizontalTranslationEnabled="true"
-        app:itemIconTint="@drawable/navigation_menu_item"
-        app:itemTextColor="@drawable/navigation_menu_item"
-        app:menu="@menu/navigation_menu_quick_game_setup"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/quick_game_setup_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top|center"/>
+        <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="top|center"
+                      android:orientation="vertical">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/quick_game_setup_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:background="@android:color/white"
+            app:elevation="@dimen/elevation"
+            app:itemBackground="@drawable/navigation_menu_item"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconTint="@drawable/navigation_menu_item"
+            app:itemTextColor="@drawable/navigation_menu_item"
+            app:menu="@menu/navigation_menu_quick_game_setup"/>
+
+        <FrameLayout
+            android:id="@+id/quick_game_setup_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|center"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:id="@+id/start_game_layout"
+                      android:layout_height="wrap_content"
+                      android:layout_margin="@dimen/default_margin_size"
+                      android:layout_alignParentBottom="true"
+                      android:layout_alignParentEnd="true">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    style="@style/VbrStartFab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    android:onClick="startGame"
+                    android:layout_marginTop="@dimen/fab_shift_default"
+                    android:layout_marginStart="@dimen/fab_shift_default"
+                    android:layout_marginEnd="@dimen/fab_shift_default"
+                    android:layout_marginBottom="@dimen/fab_shift_default"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

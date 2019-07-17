@@ -9,21 +9,21 @@ import android.widget.Filter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.api.ApiRulesDescription;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescription> {
+public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
 
-    private final LayoutInflater            mLayoutInflater;
-    private final List<ApiRulesDescription> mStoredRulesList;
-    private final List<ApiRulesDescription> mFilteredStoredRulesList;
-    private final NameFilter                mNameFilter;
+    private final LayoutInflater        mLayoutInflater;
+    private final List<ApiRulesSummary> mStoredRulesList;
+    private final List<ApiRulesSummary> mFilteredStoredRulesList;
+    private final NameFilter            mNameFilter;
 
-    public AutocompleteRulesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiRulesDescription> storedRulesList) {
+    public AutocompleteRulesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiRulesSummary> storedRulesList) {
         super(context, R.layout.autocomplete_list_item, storedRulesList);
         mLayoutInflater = layoutInflater;
         mStoredRulesList = storedRulesList;
@@ -38,7 +38,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescripti
     }
 
     @Override
-    public ApiRulesDescription getItem(int index) {
+    public ApiRulesSummary getItem(int index) {
         return mFilteredStoredRulesList.get(index);
     }
 
@@ -57,7 +57,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescripti
             rulesTextView = (TextView) view;
         }
 
-        ApiRulesDescription rules = mFilteredStoredRulesList.get(index);
+        ApiRulesSummary rules = mFilteredStoredRulesList.get(index);
         rulesTextView.setText(rules.getName());
 
         return rulesTextView;
@@ -80,9 +80,9 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescripti
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiRulesDescription> matchValues = new ArrayList<>();
+                List<ApiRulesSummary> matchValues = new ArrayList<>();
 
-                for (ApiRulesDescription rules : mStoredRulesList) {
+                for (ApiRulesSummary rules : mStoredRulesList) {
                     if (lowerCaseText.isEmpty() || rules.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(rules);
                     }
@@ -101,7 +101,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesDescripti
 
             if (results.values != null) {
                 mFilteredStoredRulesList.clear();
-                mFilteredStoredRulesList.addAll((Collection<? extends ApiRulesDescription>) results.values);
+                mFilteredStoredRulesList.addAll((Collection<? extends ApiRulesSummary>) results.values);
             }
 
             if (results.count > 0) {

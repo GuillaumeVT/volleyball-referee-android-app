@@ -7,29 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.team.IndoorTeamService;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+import com.tonkar.volleyballreferee.ui.team.IndoorPlayerSelectionDialog;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import com.tonkar.volleyballreferee.ui.team.IndoorPlayerSelectionDialog;
 
 import java.util.Map;
 import java.util.Set;
 
 public class IndoorCourtFragment extends CourtFragment {
 
-    protected IndoorTeamService mIndoorTeamService;
-    protected LayoutInflater    mLayoutInflater;
-    private   boolean           mOneStartingLineupDialog;
+    protected IIndoorTeam    mIndoorTeam;
+    protected LayoutInflater mLayoutInflater;
+    private   boolean        mOneStartingLineupDialog;
 
     public IndoorCourtFragment() {
         super();
@@ -51,7 +50,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
         initView();
 
-        if (mIndoorTeamService != null) {
+        if (mIndoorTeam != null) {
             mLayoutInflater = inflater;
 
             addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
@@ -95,7 +94,7 @@ public class IndoorCourtFragment extends CourtFragment {
         for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(view -> {
-                final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
+                final Set<Integer> possibleSubstitutions = mIndoorTeam.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
                 if (possibleSubstitutions.size() > 0) {
                     UiUtils.animate(getContext(), view);
                     Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
@@ -106,11 +105,11 @@ public class IndoorCourtFragment extends CourtFragment {
             });
 
             entry.getValue().setOnLongClickListener(view -> {
-                if (!mIndoorTeamService.isStartingLineupConfirmed()) {
-                    int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnLeftSide, positionType);
+                if (!mIndoorTeam.isStartingLineupConfirmed()) {
+                    int number = mIndoorTeam.getPlayerAtPosition(mTeamOnLeftSide, positionType);
                     if (number > 0) {
                         UiUtils.animateBounce(getContext(), view);
-                        mIndoorTeamService.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
+                        mIndoorTeam.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
                     }
                 }
                 return true;
@@ -122,7 +121,7 @@ public class IndoorCourtFragment extends CourtFragment {
         for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(view -> {
-                final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(mTeamOnRightSide, positionType);
+                final Set<Integer> possibleSubstitutions = mIndoorTeam.getPossibleSubstitutions(mTeamOnRightSide, positionType);
                 if (possibleSubstitutions.size() > 0) {
                     UiUtils.animate(getContext(), view);
                     Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
@@ -133,11 +132,11 @@ public class IndoorCourtFragment extends CourtFragment {
             });
 
             entry.getValue().setOnLongClickListener(view -> {
-                if (!mIndoorTeamService.isStartingLineupConfirmed()) {
-                    int number = mIndoorTeamService.getPlayerAtPosition(mTeamOnRightSide, positionType);
+                if (!mIndoorTeam.isStartingLineupConfirmed()) {
+                    int number = mIndoorTeam.getPlayerAtPosition(mTeamOnRightSide, positionType);
                     if (number > 0) {
                         UiUtils.animateBounce(getContext(), view);
-                        mIndoorTeamService.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
+                        mIndoorTeam.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
                     }
                 }
                 return true;
@@ -167,8 +166,8 @@ public class IndoorCourtFragment extends CourtFragment {
         if (ActionOriginType.USER.equals(actionOriginType)) {
             confirmStartingLineup();
 
-            if (mIndoorTeamService.isStartingLineupConfirmed() && !mIndoorTeamService.hasRemainingSubstitutions(teamType) && !mIndoorTeamService.isLibero(teamType, number)) {
-                UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mIndoorTeamService.getTeamName(teamType)));
+            if (mIndoorTeam.isStartingLineupConfirmed() && !mIndoorTeam.hasRemainingSubstitutions(teamType) && !mIndoorTeam.isLibero(teamType, number)) {
+                UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mIndoorTeam.getTeamName(teamType)));
             }
         }
     }
@@ -192,26 +191,26 @@ public class IndoorCourtFragment extends CourtFragment {
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
-            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() -> {
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
                 getFragmentManager()
                         .beginTransaction()
                         .detach(IndoorCourtFragment.this)
                         .attach(IndoorCourtFragment.this)
-                        .commit();
-            }).start();
+                        .commit()
+            ).start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition5.getX()).y(layoutPosition5.getY()).setDuration(500L).start();
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
-            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() -> {
+            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
                 getFragmentManager()
                         .beginTransaction()
                         .detach(IndoorCourtFragment.this)
                         .attach(IndoorCourtFragment.this)
-                        .commit();
-            }).start();
+                        .commit()
+            ).start();
         }
     }
 
@@ -221,17 +220,17 @@ public class IndoorCourtFragment extends CourtFragment {
 
         for (final Map.Entry<PositionType, MaterialButton> teamPosition : teamPositions.entrySet()) {
             teamPosition.getValue().setText(UiUtils.getPositionTitle(mView.getContext(), teamPosition.getKey()));
-            UiUtils.styleBaseTeamButton(mView.getContext(), mIndoorTeamService, teamType, teamPosition.getValue());
+            UiUtils.styleBaseTeamButton(mView.getContext(), mIndoorTeam, teamType, teamPosition.getValue());
         }
 
         for (final ImageView imageView : teamSanctionImages.values()) {
             imageView.setVisibility(View.INVISIBLE);
         }
 
-        final Set<Integer> players = mIndoorTeamService.getPlayersOnCourt(teamType);
+        final Set<Integer> players = mIndoorTeam.getPlayersOnCourt(teamType);
 
         for (Integer number : players) {
-            final PositionType positionType = mIndoorTeamService.getPlayerPosition(teamType, number);
+            final PositionType positionType = mIndoorTeam.getPlayerPosition(teamType, number);
             updatePosition(teamType, number, teamPositions.get(positionType));
             updateSanction(teamType, number, teamSanctionImages.get(positionType));
         }
@@ -243,9 +242,9 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void confirmStartingLineup() {
-        if (!mIndoorTeamService.isStartingLineupConfirmed()
-                && mIndoorTeamService.getPlayersOnCourt(TeamType.HOME).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()
-                && mIndoorTeamService.getPlayersOnCourt(TeamType.GUEST).size() == mIndoorTeamService.getExpectedNumberOfPlayersOnCourt()) {
+        if (!mIndoorTeam.isStartingLineupConfirmed()
+                && mIndoorTeam.getPlayersOnCourt(TeamType.HOME).size() == mIndoorTeam.getExpectedNumberOfPlayersOnCourt()
+                && mIndoorTeam.getPlayersOnCourt(TeamType.GUEST).size() == mIndoorTeam.getExpectedNumberOfPlayersOnCourt()) {
             AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
                 if (!mOneStartingLineupDialog) {
@@ -271,7 +270,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
             @Override
             public void onPositiveButtonClicked() {
-                mIndoorTeamService.confirmStartingLineup();
+                mIndoorTeam.confirmStartingLineup();
                 checkCaptain(TeamType.HOME, -1);
                 checkCaptain(TeamType.GUEST, -1);
                 mOneStartingLineupDialog = false;
@@ -284,22 +283,22 @@ public class IndoorCourtFragment extends CourtFragment {
 
     protected void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
         IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(getActivity(), positionType) + ")",
-                mIndoorTeamService, mGameService, teamType, possibleReplacements) {
+                mIndoorTeam, mGame, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position by #%d player", teamType.toString(), positionType.toString(), selectedNumber));
-                mIndoorTeamService.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
+                mIndoorTeam.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
             }
         };
         playerSelectionDialog.show();
     }
 
     private void checkCaptain(TeamType teamType, int number) {
-        if (mIndoorTeamService.isStartingLineupConfirmed()) {
-            if (mIndoorTeamService.isCaptain(teamType, number)) {
+        if (mIndoorTeam.isStartingLineupConfirmed()) {
+            if (mIndoorTeam.isCaptain(teamType, number)) {
                 // the captain is back on court, refresh the team
                 update(teamType);
-            } else if (!mIndoorTeamService.hasActingCaptainOnCourt(teamType)) {
+            } else if (!mIndoorTeam.hasActingCaptainOnCourt(teamType)) {
                 // there is no captain on court, request one
                 showCaptainSelectionDialog(teamType);
             }
@@ -308,11 +307,11 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showCaptainSelectionDialog(final TeamType teamType) {
         IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_captain),
-                mIndoorTeamService, mGameService, teamType, mIndoorTeamService.getPossibleActingCaptains(teamType)) {
+                mIndoorTeam, mGame, teamType, mIndoorTeam.getPossibleActingCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
-                mIndoorTeamService.setActingCaptain(teamType, selectedNumber);
+                mIndoorTeam.setActingCaptain(teamType, selectedNumber);
                 // refresh the team with the new captain
                 update(teamType);
             }
@@ -323,7 +322,7 @@ public class IndoorCourtFragment extends CourtFragment {
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (number > 0) {
-            PositionType positionType = mIndoorTeamService.getPlayerPosition(teamType, number);
+            PositionType positionType = mIndoorTeam.getPlayerPosition(teamType, number);
 
             if (!PositionType.BENCH.equals(positionType)) {
                 updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
@@ -336,20 +335,20 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void checkExplusions(TeamType teamType) {
-        final Set<Integer> players = mIndoorTeamService.getPlayersOnCourt(teamType);
-        final Set<Integer> excludedNumbers = mGameService.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+        final Set<Integer> players = mIndoorTeam.getPlayersOnCourt(teamType);
+        final Set<Integer> excludedNumbers = mGame.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
 
         for (Integer number : players) {
             if (excludedNumbers.contains(number)) {
-                final PositionType positionType = mIndoorTeamService.getPlayerPosition(teamType, number);
+                final PositionType positionType = mIndoorTeam.getPlayerPosition(teamType, number);
                 showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
             }
         }
     }
 
     private void showPlayerSelectionDialogAfterExpulsion(TeamType teamType, int number, PositionType positionType) {
-        final Set<Integer> possibleSubstitutions = mIndoorTeamService.getPossibleSubstitutions(teamType, positionType);
-        final Set<Integer> filteredSubstitutions = mIndoorTeamService.filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+        final Set<Integer> possibleSubstitutions = mIndoorTeam.getPossibleSubstitutions(teamType, positionType);
+        final Set<Integer> filteredSubstitutions = mIndoorTeam.filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
 
         if (filteredSubstitutions.size() > 0) {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
@@ -358,7 +357,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mIndoorTeamService.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mIndoorTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -388,12 +387,12 @@ public class IndoorCourtFragment extends CourtFragment {
 
     protected void updatePosition(TeamType teamType, int number, MaterialButton positionButton) {
         positionButton.setText(UiUtils.formatNumberFromLocale(number));
-        UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeamService, teamType, number, positionButton);
+        UiUtils.styleIndoorTeamButton(mView.getContext(), mIndoorTeam, teamType, number, positionButton);
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
-        mIndoorTeamService = (IndoorTeamService) gameService;
+    public void setGameService(IGame game) {
+        mGame = game;
+        mIndoorTeam = (IIndoorTeam) game;
     }
 }

@@ -6,27 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import androidx.annotation.NonNull;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.ActionOriginType;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.interfaces.sanction.SanctionType;
-import com.tonkar.volleyballreferee.interfaces.score.ScoreListener;
-import com.tonkar.volleyballreferee.interfaces.team.PositionType;
-import com.tonkar.volleyballreferee.interfaces.team.TeamListener;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.interfaces.timeout.TimeoutListener;
-
 import androidx.fragment.app.Fragment;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
+import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
+import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
+import com.tonkar.volleyballreferee.engine.team.TeamListener;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
 public class LaddersFragment extends Fragment implements ScoreListener, TimeoutListener, TeamListener, SanctionListener, GameServiceHandler {
 
     private LadderListAdapter mLadderListAdapter;
-    private GameService       mGameService;
+    private IGame             mGame;
 
     public LaddersFragment() {
     }
@@ -43,14 +41,14 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
         Log.i(Tags.SCORE, "Initialise scores fragment");
         View view = inflater.inflate(R.layout.fragment_scores, container, false);
 
-        if (mGameService != null) {
-            mGameService.addScoreListener(this);
-            mGameService.addTimeoutListener(this);
-            mGameService.addTeamListener(this);
-            mGameService.addSanctionListener(this);
+        if (mGame != null) {
+            mGame.addScoreListener(this);
+            mGame.addTimeoutListener(this);
+            mGame.addTeamListener(this);
+            mGame.addSanctionListener(this);
 
             ListView setsList = view.findViewById(R.id.set_list);
-            mLadderListAdapter = new LadderListAdapter(inflater, mGameService, mGameService, mGameService, mGameService, true);
+            mLadderListAdapter = new LadderListAdapter(inflater, mGame, mGame, mGame, mGame, true);
             setsList.setAdapter(mLadderListAdapter);
         }
 
@@ -61,11 +59,11 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (mGameService != null) {
-            mGameService.removeScoreListener(this);
-            mGameService.removeTimeoutListener(this);
-            mGameService.removeTeamListener(this);
-            mGameService.removeSanctionListener(this);
+        if (mGame != null) {
+            mGame.removeScoreListener(this);
+            mGame.removeTimeoutListener(this);
+            mGame.removeTeamListener(this);
+            mGame.removeSanctionListener(this);
         }
     }
 
@@ -125,7 +123,7 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     }
 
     @Override
-    public void setGameService(GameService gameService) {
-        mGameService = gameService;
+    public void setGameService(IGame game) {
+        mGame = game;
     }
 }

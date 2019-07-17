@@ -3,50 +3,37 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.business.PrefUtils;
-import com.tonkar.volleyballreferee.business.data.StoredGames;
-import com.tonkar.volleyballreferee.business.data.StoredLeagues;
-import com.tonkar.volleyballreferee.business.data.StoredRules;
-import com.tonkar.volleyballreferee.business.data.StoredTeams;
-import com.tonkar.volleyballreferee.interfaces.GameService;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.Tags;
-import com.tonkar.volleyballreferee.interfaces.data.StoredGamesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredLeaguesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
-import com.tonkar.volleyballreferee.interfaces.data.StoredTeamsService;
-import com.tonkar.volleyballreferee.ui.interfaces.BaseGeneralServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import com.tonkar.volleyballreferee.ui.game.GameActivity;
-import com.tonkar.volleyballreferee.interfaces.team.TeamType;
-import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
-import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.stored.*;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.ui.game.GameActivity;
+import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
+import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class QuickGameSetupActivity extends AppCompatActivity {
 
-    private GameService mGameService;
-    private MenuItem    mStartItem;
+    private IGame mGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StoredGamesService storedGamesService = new StoredGames(this);
-        mGameService = storedGamesService.loadSetupGame();
+        StoredGamesService storedGamesService = new StoredGamesManager(this);
+        mGame = storedGamesService.loadSetupGame();
 
         super.onCreate(savedInstanceState);
 
@@ -55,7 +42,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        UiUtils.updateToolbarLogo(toolbar, mGameService.getKind(), mGameService.getUsage());
+        UiUtils.updateToolbarLogo(toolbar, mGame.getKind(), mGame.getUsage());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -66,14 +53,14 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.quick_game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState, create);
 
-        computeStartItemVisibility();
+        computeStartLayoutVisibility();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        StoredGamesService storedGamesService = new StoredGames(this);
-        storedGamesService.saveSetupGame(mGameService);
+        StoredGamesService storedGamesService = new StoredGamesManager(this);
+        storedGamesService.saveSetupGame(mGame);
     }
 
     @Override
@@ -82,22 +69,8 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_quick_teams_setup, menu);
-
-        mStartItem = menu.findItem(R.id.action_start);
-        computeStartItemVisibility();
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_start:
-                startGame();
-                return true;
             case android.R.id.home:
                 cancelSetup();
                 return true;
@@ -106,27 +79,26 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         }
     }
 
-    public void computeStartItemVisibility() {
-        if (mStartItem != null) {
-            if (mGameService.getTeamName(TeamType.HOME).length() < 2 || mGameService.getTeamName(TeamType.GUEST).length() < 2
-                    || mGameService.getRules().getName().length() < 2
-                    || (mGameService.getLeague().getName().length() > 0 && mGameService.getLeague().getDivision().length() < 2)) {
-                Log.i(Tags.SETUP_UI, "Confirm button is invisible");
-                mStartItem.setVisible(false);
-            } else {
-                Log.i(Tags.SETUP_UI, "Confirm button is visible");
-                mStartItem.setVisible(true);
-            }
+    public void computeStartLayoutVisibility() {
+        View saveLayout = findViewById(R.id.start_game_layout);
+        if (mGame.getTeamName(TeamType.HOME).length() < 2 || mGame.getTeamName(TeamType.GUEST).length() < 2
+                || mGame.getRules().getName().length() < 2
+                || (mGame.getLeague().getName().length() > 0 && mGame.getLeague().getDivision().length() < 2)) {
+            Log.i(Tags.SETUP_UI, "Save button is invisible");
+            saveLayout.setVisibility(View.GONE);
+        } else {
+            Log.i(Tags.SETUP_UI, "Save button is visible");
+            saveLayout.setVisibility(View.VISIBLE);
         }
     }
 
-    public void startGame() {
+    public void startGame(View view) {
         Log.i(Tags.SETUP_UI, "Start game");
-        mGameService.startMatch();
-        StoredGamesService storedGamesService = new StoredGames(this);
-        storedGamesService.createCurrentGame(mGameService);
+        mGame.startMatch();
+        StoredGamesService storedGamesService = new StoredGamesManager(this);
+        storedGamesService.createCurrentGame(mGame);
 
-        if (GameType.TIME.equals(mGameService.getKind())) {
+        if (GameType.TIME.equals(mGame.getKind())) {
             Log.i(Tags.SETUP_UI, "Start time-based game activity");
             final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
             gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -135,7 +107,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             startActivity(gameIntent);
             UiUtils.animateCreate(this);
         } else {
-            if (GameType.BEACH.equals(mGameService.getKind())) {
+            if (GameType.BEACH.equals(mGame.getKind())) {
                 saveTeams();
                 saveLeague();
                 saveRules();
@@ -151,25 +123,25 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveTeams() {
-        if (mGameService.getCreatedBy().equals(PrefUtils.getAuthentication(this).getUserId())) {
-            StoredTeamsService storedTeamsService = new StoredTeams(this);
-            GameType gameType = mGameService.getTeamsKind();
-            storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.HOME);
-            storedTeamsService.createAndSaveTeamFrom(gameType, mGameService, TeamType.GUEST);
+        if (mGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+            StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
+            GameType gameType = mGame.getTeamsKind();
+            storedTeamsService.createAndSaveTeamFrom(gameType, mGame, TeamType.HOME);
+            storedTeamsService.createAndSaveTeamFrom(gameType, mGame, TeamType.GUEST);
         }
     }
 
     private void saveRules() {
-        if (mGameService.getCreatedBy().equals(PrefUtils.getAuthentication(this).getUserId())) {
-            StoredRulesService storedRulesService = new StoredRules(this);
-            storedRulesService.createAndSaveRulesFrom(mGameService.getRules());
+        if (mGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+            StoredRulesService storedRulesService = new StoredRulesManager(this);
+            storedRulesService.createAndSaveRulesFrom(mGame.getRules());
         }
     }
 
     private void saveLeague() {
-        if (mGameService.getCreatedBy().equals(PrefUtils.getAuthentication(this).getUserId())) {
-            StoredLeaguesService storedLeaguesService = new StoredLeagues(this);
-            storedLeaguesService.createAndSaveLeagueFrom(mGameService.getLeague());
+        if (mGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+            StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(this);
+            storedLeaguesService.createAndSaveLeagueFrom(mGame.getLeague());
         }
     }
 
@@ -179,7 +151,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.game_setup_title)).setMessage(getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            StoredGamesService storedGamesService = new StoredGames(this);
+            StoredGamesService storedGamesService = new StoredGamesManager(this);
             if (storedGamesService.hasSetupGame()) {
                 storedGamesService.deleteSetupGame();
             }
@@ -200,7 +172,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                             fragment = QuickGameSetupFragment.newInstance(create);
                             break;
                         case R.id.rules_tab:
-                            if (GameType.TIME.equals(mGameService.getKind())) {
+                            if (GameType.TIME.equals(mGame.getKind())) {
                                 fragment = null;
                             } else {
                                 fragment = RulesSetupFragment.newInstance(true, create);
@@ -223,7 +195,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameSetupNavigation.setSelectedItemId(R.id.teams_tab);
         }
 
-        if (GameType.TIME.equals(mGameService.getKind())) {
+        if (GameType.TIME.equals(mGame.getKind())) {
             gameSetupNavigation.setVisibility(View.GONE);
         }
     }
@@ -232,15 +204,11 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     public void onAttachFragment(Fragment fragment) {
         if (fragment instanceof GameServiceHandler) {
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
-            gameServiceHandler.setGameService(mGameService);
+            gameServiceHandler.setGameService(mGame);
         }
         if (fragment instanceof RulesHandler) {
             RulesHandler rulesHandler = (RulesHandler) fragment;
-            rulesHandler.setRules(mGameService.getRules());
-        }
-        if (fragment instanceof BaseGeneralServiceHandler) {
-            BaseGeneralServiceHandler generalServiceHandler = (BaseGeneralServiceHandler) fragment;
-            generalServiceHandler.setGeneralService(mGameService);
+            rulesHandler.setRules(mGame.getRules());
         }
     }
 

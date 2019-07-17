@@ -2,10 +2,9 @@ package com.tonkar.volleyballreferee.ui;
 
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.annotation.IdRes;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.interfaces.Tags;
+import com.tonkar.volleyballreferee.engine.Tags;
 
 public class SettingsActivity extends NavigationActivity {
 

@@ -6,7 +6,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.tonkar.volleyballreferee.ui.data.StoredTeamsListActivity">
+        tools:context="com.tonkar.volleyballreferee.ui.stored.StoredTeamsListActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -18,8 +18,7 @@
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:id="@+id/sync_layout"
@@ -30,7 +29,9 @@
                         android:id="@+id/stored_teams_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_size"/>
+                        android:layout_margin="@dimen/default_margin_size"
+                        android:clipToPadding="false"
+                        android:paddingBottom="@dimen/empty_fab_space"/>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -84,7 +85,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_team_button"
-                    style="@style/VbrPlusFab"
+                    style="@style/VbrCreateFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

@@ -1,15 +1,13 @@
 package com.tonkar.volleyballreferee;
 
-import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.tonkar.volleyballreferee.api.ApiRules;
-import com.tonkar.volleyballreferee.business.data.StoredRules;
-import com.tonkar.volleyballreferee.interfaces.GameType;
-import com.tonkar.volleyballreferee.interfaces.data.StoredRulesService;
-import com.tonkar.volleyballreferee.business.rules.Rules;
+import androidx.test.rule.ActivityTestRule;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
+import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiRules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +32,7 @@ public class StoredRulesIOTest {
 
     @Test
     public void save() {
-        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
+        StoredRulesService storedRulesService = new StoredRulesManager(mActivityRule.getActivity().getApplicationContext());
 
         Rules rules = storedRulesService.createRules(GameType.INDOOR);
         rules.setName("Test Rules 1");
@@ -87,7 +85,7 @@ public class StoredRulesIOTest {
 
     @Test
     public void writeThenRead() {
-        StoredRulesService storedRulesService = new StoredRules(mActivityRule.getActivity().getApplicationContext());
+        StoredRulesService storedRulesService = new StoredRulesManager(mActivityRule.getActivity().getApplicationContext());
 
         List<ApiRules> expectedList = new ArrayList<>();
         expectedList.add(storedRulesService.getRules(GameType.INDOOR,"Test Rules 1"));
@@ -97,9 +95,9 @@ public class StoredRulesIOTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            StoredRules.writeRulesStream(outputStream, expectedList);
+            StoredRulesManager.writeRulesStream(outputStream, expectedList);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            actualList = StoredRules.readRulesStream(inputStream);
+            actualList = StoredRulesManager.readRulesStream(inputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
