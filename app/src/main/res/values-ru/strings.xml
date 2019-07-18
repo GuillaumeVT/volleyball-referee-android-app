@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
+    <!-- General actions -->
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="resume">Продолжить</string>
+    <string name="delete">Удалить</string>
+    <string name="ignore">Пропустить</string>
+    <string name="accept">Добавить</string>
+    <string name="reject">Отказать</string>
+    <string name="remove">Удалить</string>
+    <string name="create">Создать</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">Волейбол</string>
     <string name="new_beach_volleyball_game">Пляжный волейбол</string>
@@ -11,11 +25,6 @@
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён недоигранный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume_game_error">Невозможно продолжить матч.</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="resume">Продолжить</string>
-    <string name="delete">Удалить</string>
-    <string name="ignore">Пропустить</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Мои данные</string>
     <string name="configuration_group">Настройки</string>
@@ -41,31 +50,36 @@
     </string>
 
     <!-- User activity -->
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_password_update">Update my password</string>
+    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_out">Выход</string>
     <string name="user_sign_in_why_title">Зачем использовать мой аккаунт?</string>
     <string name="user_sign_in_why_message">Все ваши данные в Volleyball Referee (матчи, команды, правила, лиги, коллеги) будут синхронизированы с нашим сервером. При идентификации приложение соединяет ваши данные с вашим аккаунтом.</string>
-    <string name="user_sign_in_privacy_title">Уверены?</string>
-    <string name="user_sign_in_privacy_message">Да. Единственной информацией, которую сохраняет приложение, является уникальный код-идентификатор вашего аккаунта. Он необходим для вашей идентификации.</string>
-    <string name="user_sign_in_google">Войти в систему с помощью Google</string>
-    <string name="user_sign_in_facebook">Войти в систему с помощью Facebook</string>
+    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_email_hint">Email</string>
+    <string name="user_confirm_email_hint">Confirm email</string>
+    <string name="user_email_not_matching">Email addresses don\'t match</string>
+    <string name="user_current_password_hint">Current password</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_confirm_password_hint">Confirm password</string>
+    <string name="user_new_password_hint">New password</string>
+    <string name="user_confirm_new_password_hint">Confirm new password</string>
+    <string name="user_password_not_matching">Passwords don\'t match</string>
+    <string name="user_password_error">Wrong password</string>
+    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
+    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
+    <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Подключён как %s</string>
-    <string name="user_id">Идентификатор пользователя %s</string>
-    <string name="user_sign_in_with_provider_error">Ошибка соединения с %s</string>
-    <string name="user_sign_out">Выход</string>
-    <string name="user_signed_in_with_provider">Подключение с помощью %s</string>
+    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Вышел из аккаунта</string>
-    <string name="user_error">Произошла ошибка при загрузке профиля</string>
-    <string name="create_user_pseudo_title">Создать мой никнейм для \'Volleyball Referee\'</string>
-    <string name="create">Создать</string>
-    <string name="user_pseudo_hint">Никнейм</string>
-    <string name="user_exists_error">Данный никнейм уже существует</string>
-    <string name="user_creation_error">Произошла ошибка при создании никнейма</string>
     <string name="search_colleague">Поиск коллег</string>
     <string name="add_colleague">Добавить коллегу</string>
     <string name="received_colleague_request">Вы получили заявку от коллеги %s</string>
     <string name="sent_colleague_request">Вы отправили заявку коллеге %s</string>
-    <string name="accept">Добавить</string>
-    <string name="reject">Отказать</string>
-    <string name="remove">Удалить</string>
     <string name="pending">В ожидании</string>
     <string name="accept_colleague_question">Принять заявку коллеги %s?</string>
     <string name="reject_colleague_question">Отменить заявку коллеги %s?</string>

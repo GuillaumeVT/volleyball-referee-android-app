@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
+    <!-- General actions -->
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="resume">Continuer</string>
+    <string name="delete">Supprimer</string>
+    <string name="ignore">Ignorer</string>
+    <string name="accept">Accepter</string>
+    <string name="reject">Refuser</string>
+    <string name="remove">Supprimer</string>
+    <string name="create">Créer</string>
+    <string name="edit">Éditer</string>
+    <string name="save">Enregistrer</string>
+    <string name="start">Démarrer</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">Volley-ball</string>
     <string name="new_beach_volleyball_game">Beach Volley-ball</string>
@@ -11,11 +25,6 @@
     <string name="resume_game_title">Continuer le match</string>
     <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le continuer ou le supprimer?</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="resume">Continuer</string>
-    <string name="delete">Supprimer</string>
-    <string name="ignore">Ignorer</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Mes données</string>
     <string name="configuration_group">Configuration</string>
@@ -41,31 +50,36 @@
     </string>
 
     <!-- User activity -->
+    <string name="user_sign_in">Me connecter</string>
+    <string name="user_sign_up">@string/create</string>
+    <string name="user_password_update">Modifier mon mot de passe</string>
+    <string name="user_lost_password">Mot de passe oublié</string>
+    <string name="user_sign_out">Me déconnecter</string>
     <string name="user_sign_in_why_title">Pourquoi me connecter?</string>
     <string name="user_sign_in_why_message">Vos données Volleyball Referee (matchs, équipes, règles, ligues, collègues) seront synchronisées avec notre serveur. Si vous vous connectez, nous saurons qui vous êtes et nous associerons vos données avec votre compte.</string>
-    <string name="user_sign_in_privacy_title">Est-ce sûr?</string>
-    <string name="user_sign_in_privacy_message">Oui. Lorsque vous vous connectez, la seule information que nous récupérons est l\'identifiant de votre profil, dont nous nous servons pour vous identifier.</string>
-    <string name="user_sign_in_google">Me connecter avec Google</string>
-    <string name="user_sign_in_facebook">Me connecter avec Facebook</string>
-    <string name="user_sign_out">Me déconnecter</string>
-    <string name="user_signed_in_with_provider">Connecté avec %s</string>
+    <string name="user_pseudo_hint">Pseudo d\'arbitre</string>
+    <string name="user_email_hint">E-mail</string>
+    <string name="user_confirm_email_hint">Confirmer e-mail</string>
+    <string name="user_email_not_matching">Les addresses e-mail sont différentes</string>
+    <string name="user_current_password_hint">Mot de passe actuel</string>
+    <string name="user_password_hint">Mot de passe</string>
+    <string name="user_confirm_password_hint">Confirmer mot de passe</string>
+    <string name="user_new_password_hint">Nouveau mot de passe</string>
+    <string name="user_confirm_new_password_hint">Confirmer nouveau mot de passe</string>
+    <string name="user_password_not_matching">Les mots de passe sont différents</string>
+    <string name="user_password_error">Mot de passe incorrect</string>
+    <string name="user_locked_error">Le compte est bloqué pendant 30 minutes suite à de trop nombreuses tentatives de connexion</string>
+    <string name="user_email_pseudo_conflict">Ce pseudo ou cette addresse e-mail existent déjà</string>
+    <string name="user_request_error">Erreur lors du traitement de la requête</string>
     <string name="user_signed_in_as_pseudo">Connecté en tant que %s</string>
-    <string name="user_id">Identifiant utilisateur %s</string>
-    <string name="user_sign_in_with_provider_error">Erreur lors de la connexion à %s</string>
+    <string name="user_password_recovery_initiated">Un e-mail a été envoyé à %s pour réinitialiser le mot de passe</string>
+    <string name="password_strength">Le mot de passe doit contenir au moins 8 lettres, dont 1 majuscule, 1 chiffre, et 1 caractère special</string>
+    <string name="password_strength_error">Le mot de passe ne remplit pas les critères décrits précédemment</string>
     <string name="user_signed_out">Déconnecté</string>
-    <string name="user_error">Erreur lors du téléchargement du compte</string>
-    <string name="create_user_pseudo_title">Créer mon pseudo \'Volleyball Referee\'</string>
-    <string name="create">Créer</string>
-    <string name="user_pseudo_hint">Pseudo</string>
-    <string name="user_exists_error">Ce pseudo existe déjà</string>
-    <string name="user_creation_error">Erreur lors de la création du compte</string>
     <string name="search_colleague">Chercher dans les collègues</string>
     <string name="add_colleague">Ajouter un collègue</string>
     <string name="received_colleague_request">Vous avez reçu une demande de %s</string>
     <string name="sent_colleague_request">Vous avez envoyé une demande à %s</string>
-    <string name="accept">Accepter</string>
-    <string name="reject">Refuser</string>
-    <string name="remove">Supprimer</string>
     <string name="pending">En attente</string>
     <string name="accept_colleague_question">Accepter la demande de %s?</string>
     <string name="reject_colleague_question">Refuser la demande de %s?</string>

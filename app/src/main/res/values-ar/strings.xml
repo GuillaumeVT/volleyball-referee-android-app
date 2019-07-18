@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">حكم الكرة الطائرة</string>
 
+    <!-- General actions -->
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="resume">إستئناف</string>
+    <string name="delete">مسح</string>
+    <string name="ignore">تجاهل</string>
+    <string name="accept">قبول</string>
+    <string name="reject">رفض</string>
+    <string name="remove">إزالة</string>
+    <string name="create">إنشاء</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">الكرة الطائرة</string>
     <string name="new_beach_volleyball_game">الكرة الطائرة الشاطئية</string>
@@ -11,11 +25,6 @@
     <string name="resume_game_title">إستئناف المباراة</string>
     <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في استئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
-    <string name="yes">نعم</string>
-    <string name="no">لا</string>
-    <string name="resume">إستئناف</string>
-    <string name="delete">مسح</string>
-    <string name="ignore">تجاهل</string>
     <string name="facebook">الفيسبوك</string>
     <string name="my_data_group">بياناتي</string>
     <string name="configuration_group">الإعدادات</string>
@@ -35,31 +44,36 @@
     <string name="purchase_web_premium_summary">\n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك. \n\u2022 استمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة. \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا. \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم. \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.</string>
 
     <!-- User activity -->
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_password_update">Update my password</string>
+    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_out">تسجيل الخروج</string>
     <string name="user_sign_in_why_title">لماذا يجب عليك تسجيل الدخول؟</string>
     <string name="user_sign_in_why_message">ستتم مزامنة بيانات حكم الكرة الطائرة (المباريات ، الفرق ، القواعد ، البطولات ، الزملاء) مع خادمنا. من خلال تسجيل الدخول ، سوف نعرف من أنت و سنحتفظ ببياناتك المرتبطة بحسابك.</string>
-    <string name="user_sign_in_privacy_title">هل هو آمن؟</string>
-    <string name="user_sign_in_privacy_message">نعم فعلا. عند تسجيل الدخول ، فإن المعلومات الوحيدة التي نسترجعها من ملفك الشخصي هي معرفك الاجتماعي الفريد الذي نستخدمه لتحديد هويتك.</string>
-    <string name="user_sign_in_google">تسجيل الدخول من خلال جوجل</string>
-    <string name="user_sign_in_facebook">تسجيل الدخول من خلال الفيسبوك</string>
-    <string name="user_sign_out">تسجيل الخروج</string>
-    <string name="user_signed_in_with_provider">تم تسجيل الدخول باستخدام %s</string>
+    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_email_hint">Email</string>
+    <string name="user_confirm_email_hint">Confirm email</string>
+    <string name="user_email_not_matching">Email addresses don\'t match</string>
+    <string name="user_current_password_hint">Current password</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_confirm_password_hint">Confirm password</string>
+    <string name="user_new_password_hint">New password</string>
+    <string name="user_confirm_new_password_hint">Confirm new password</string>
+    <string name="user_password_not_matching">Passwords don\'t match</string>
+    <string name="user_password_error">Wrong password</string>
+    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
+    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
+    <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">تسجيل الدخول ك %s</string>
-    <string name="user_id">هوية المستخدم %s</string>
-    <string name="user_sign_in_with_provider_error">حدث خطأ أثناء تسجيل الدخول باستخدام %s</string>
+    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">تسجيل الخروج</string>
-    <string name="user_error">خطأ أثناء إسترداد المستخدم</string>
-    <string name="create_user_pseudo_title">قم بإنشاء إسم مستعار لحكم الكرة الطائرة</string>
-    <string name="create">إنشاء</string>
-    <string name="user_pseudo_hint">الإسم المستعار</string>
-    <string name="user_exists_error">الإسم المستعار موجود بالفعل</string>
-    <string name="user_creation_error">خطأ أثناء إنشاء الإسم المستعار</string>
     <string name="search_colleague">البحث في الزملاء</string>
     <string name="add_colleague">أضف زميل</string>
     <string name="received_colleague_request">لقد تلقيت طلبًا من %s</string>
     <string name="sent_colleague_request">لقد أرسلت طلبًا إلى %s</string>
-    <string name="accept">قبول</string>
-    <string name="reject">رفض</string>
-    <string name="remove">إزالة</string>
     <string name="pending">قيد الانتظار</string>
     <string name="accept_colleague_question">هل تقبل %s كزميل؟</string>
     <string name="reject_colleague_question">رفض الطلب من %s?</string>

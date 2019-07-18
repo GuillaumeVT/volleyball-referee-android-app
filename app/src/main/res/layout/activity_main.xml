@@ -26,14 +26,12 @@
                     android:gravity="top|center"
                     android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
+                <FrameLayout
                         android:id="@+id/goto_sign_in_card"
-                        style="@style/Widget.MaterialComponents.CardView"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
                         android:onClick="goToSignIn"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:visibility="gone">
 
                     <View
@@ -56,15 +54,13 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
+                <FrameLayout
                         android:id="@+id/goto_colleagues_card"
-                        style="@style/Widget.MaterialComponents.CardView"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:visibility="gone"
                         android:onClick="goToColleagues">
 
@@ -94,15 +90,13 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@color/colorOnSurface"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
+                <FrameLayout
                         android:id="@+id/goto_available_games_card"
-                        style="@style/Widget.MaterialComponents.CardView"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:visibility="gone"
                         android:onClick="goToAvailableGames">
 
@@ -132,15 +126,13 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
+                <FrameLayout
                         android:id="@+id/resume_game_card"
-                        style="@style/Widget.MaterialComponents.CardView"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:visibility="gone"
                         android:onClick="resumeCurrentGame">
 
@@ -170,14 +162,12 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.MaterialComponents.CardView"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:onClick="startIndoorGame">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -206,14 +196,12 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.MaterialComponents.CardView"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:onClick="startBeachGame">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -242,14 +230,12 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@color/colorOnSurface"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.MaterialComponents.CardView"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:onClick="startScoreBasedGame">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -278,14 +264,12 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.MaterialComponents.CardView"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:onClick="startIndoor4x4Game">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -314,14 +298,12 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.MaterialComponents.CardView"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/main_card_height"
                         android:layout_margin="@dimen/tiny_margin_size"
-                        app:cardBackgroundColor="@color/colorSurface"
                         android:onClick="startTimeBasedGame">
 
 
@@ -345,7 +327,7 @@
                             app:iconPadding="@dimen/default_margin_size"
                             app:iconTint="@android:color/white"/>
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
             </LinearLayout>
 

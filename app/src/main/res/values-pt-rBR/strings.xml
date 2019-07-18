@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
+    <!-- General actions -->
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="resume">Continuar</string>
+    <string name="delete">Deletar</string>
+    <string name="ignore">Ignorar</string>
+    <string name="accept">Aceitar</string>
+    <string name="reject">Recusar</string>
+    <string name="remove">Remover</string>
+    <string name="create">Criar</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">Voleibol de quadra</string>
     <string name="new_beach_volleyball_game">Vôlei de praia</string>
@@ -11,11 +25,6 @@
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>
-    <string name="yes">Sim</string>
-    <string name="no">Não</string>
-    <string name="resume">Continuar</string>
-    <string name="delete">Deletar</string>
-    <string name="ignore">Ignorar</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Meus dados</string>
     <string name="configuration_group">Configurações</string>
@@ -41,31 +50,36 @@
     </string>
 
     <!-- User activity -->
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_password_update">Update my password</string>
+    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_out">Sair</string>
     <string name="user_sign_in_why_title">Por que eu tenho que logar?</string>
     <string name="user_sign_in_why_message">Seus dados no Volleyball Referee (jogos, equipes, regras, ligas, amigos) serão sincronizados com o nosso servidor. Fazendo login, nós saberemos quem você é e iremos manter seus dados associados com a sua conta.</string>
-    <string name="user_sign_in_privacy_title">Isso é seguro?</string>
-    <string name="user_sign_in_privacy_message">Sim. Quando você se registra, a única informação que buscamos do seu perfil é sua identidade social única que usaremos para identificar você.</string>
-    <string name="user_sign_in_google">Entrar com o Google</string>
-    <string name="user_sign_in_facebook">Entrar com o Facebook</string>
-    <string name="user_sign_out">Sair</string>
-    <string name="user_signed_in_with_provider">Logado como %s</string>
+    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_email_hint">Email</string>
+    <string name="user_confirm_email_hint">Confirm email</string>
+    <string name="user_email_not_matching">Email addresses don\'t match</string>
+    <string name="user_current_password_hint">Current password</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_confirm_password_hint">Confirm password</string>
+    <string name="user_new_password_hint">New password</string>
+    <string name="user_confirm_new_password_hint">Confirm new password</string>
+    <string name="user_password_not_matching">Passwords don\'t match</string>
+    <string name="user_password_error">Wrong password</string>
+    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
+    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
+    <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Logado como %s</string>
-    <string name="user_id">Usuário %s</string>
+    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Você saiu</string>
-    <string name="user_sign_in_with_provider_error">Erro tentando logar como %s</string>
-    <string name="user_error">Erro ao baixar pergfil</string>
-    <string name="create_user_pseudo_title">Criar \'Volleyball Referee\' apelido</string>
-    <string name="create">Criar</string>
-    <string name="user_pseudo_hint">Apelido</string>
-    <string name="user_exists_error">Esse apelido já existe</string>
-    <string name="user_creation_error">Erro ao criar perfil</string>
     <string name="search_colleague">Procurar amigo</string>
     <string name="add_colleague">Adicionar amigo</string>
     <string name="received_colleague_request">Você recebeu um convite de %s</string>
     <string name="sent_colleague_request">Você enviou um convite para %s</string>
-    <string name="accept">Aceitar</string>
-    <string name="reject">Recusar</string>
-    <string name="remove">Remover</string>
     <string name="pending">Pendente</string>
     <string name="accept_colleague_question">Aceitar %s como amigo?</string>
     <string name="reject_colleague_question">Recusar convite de %s?</string>

@@ -2,6 +2,20 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
+    <!-- General actions -->
+    <string name="yes">Igen</string>
+    <string name="no">Nem</string>
+    <string name="resume">Folytatás</string>
+    <string name="delete">Törlés</string>
+    <string name="ignore">Mégsem</string>
+    <string name="accept">Elfogadás</string>
+    <string name="reject">Visszautasítás</string>
+    <string name="remove">Eltávolítás</string>
+    <string name="create">Létrehozás</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">Teremröplabda</string>
     <string name="new_beach_volleyball_game">Strandröplabda</string>
@@ -12,11 +26,6 @@
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
     <string name="resume_game_error">A mérkőzés nem folytatható.</string>
-    <string name="yes">Igen</string>
-    <string name="no">Nem</string>
-    <string name="resume">Folytatás</string>
-    <string name="delete">Törlés</string>
-    <string name="ignore">Mégsem</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Adataim</string>
     <string name="configuration_group">Beállítások</string>
@@ -42,31 +51,36 @@
     </string>
 
     <!-- User activity -->
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_password_update">Update my password</string>
+    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_out">Kijelentkezés</string>
     <string name="user_sign_in_why_title">Miért kell belépnem?</string>
     <string name="user_sign_in_why_message">Volleyball Referee adataid (mérkőzések, csapatok, egyedi szabályzatok, bajnokságok, játékvezető társak) le tudjuk menteni, de csak akkor, ha bejelentkezel.</string>
-    <string name="user_sign_in_privacy_title">Biztonságos?</string>
-    <string name="user_sign_in_privacy_message">Igen. Bejelentkezéskor csak az online profilod egyedi azonosítóját vizsgáljuk meg azonosítás céljából.</string>
-    <string name="user_sign_in_google">Bejelentkezés Google-el</string>
-    <string name="user_sign_in_facebook">Bejelentkezés Facebookkal</string>
-    <string name="user_sign_out">Kijelentkezés</string>
-    <string name="user_signed_in_with_provider">Belépve ezzel: %s</string>
+    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_email_hint">Email</string>
+    <string name="user_confirm_email_hint">Confirm email</string>
+    <string name="user_email_not_matching">Email addresses don\'t match</string>
+    <string name="user_current_password_hint">Current password</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_confirm_password_hint">Confirm password</string>
+    <string name="user_new_password_hint">New password</string>
+    <string name="user_confirm_new_password_hint">Confirm new password</string>
+    <string name="user_password_not_matching">Passwords don\'t match</string>
+    <string name="user_password_error">Wrong password</string>
+    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
+    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
+    <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Belépve, mint %s</string>
-    <string name="user_id">User ID %s</string>
+    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Kilépve</string>
-    <string name="user_sign_in_with_provider_error">Hiba történt belépés közben (%s)</string>
-    <string name="user_error">Hiba történt a profil letöltése közben</string>
-    <string name="create_user_pseudo_title">\‘Volleyball Referee\’ álnév létrehozása</string>
-    <string name="create">Létrehozás</string>
-    <string name="user_pseudo_hint">Álnév</string>
-    <string name="user_exists_error">Ez az álnév már foglalt</string>
-    <string name="user_creation_error">Hiba történt a profil létrehozása közben</string>
     <string name="search_colleague">Társ keresése</string>
     <string name="add_colleague">Társ hozzáadása</string>
     <string name="received_colleague_request">%s felkérést küldött</string>
     <string name="sent_colleague_request">%s felkérést kapott tőled</string>
-    <string name="accept">Elfogadás</string>
-    <string name="reject">Visszautasítás</string>
-    <string name="remove">Eltávolítás</string>
     <string name="pending">Függő</string>
     <string name="accept_colleague_question">%s elfogadása társnak?</string>
     <string name="reject_colleague_question">%s visszautasítása?</string>

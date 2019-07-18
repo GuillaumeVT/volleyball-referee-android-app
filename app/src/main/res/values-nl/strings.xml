@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
+    <!-- General actions -->
+    <string name="yes">Ja</string>
+    <string name="no">Neen</string>
+    <string name="resume">Hervat</string>
+    <string name="delete">Verwijder</string>
+    <string name="ignore">Negeren</string>
+    <string name="accept">Aanvaarden</string>
+    <string name="reject">Afwijzen</string>
+    <string name="remove">Verwijderen</string>
+    <string name="create">Creëer</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">Volleybal</string>
     <string name="new_beach_volleyball_game">Beachvolleybal</string>
@@ -11,11 +25,6 @@
     <string name="resume_game_title">Spel hervatten</string>
     <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u dit te hervatten of te verwijderen?</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>
-    <string name="yes">Ja</string>
-    <string name="no">Neen</string>
-    <string name="resume">Hervat</string>
-    <string name="delete">Verwijder</string>
-    <string name="ignore">Negeren</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Mijn data</string>
     <string name="configuration_group">Configuratie</string>
@@ -41,31 +50,36 @@
     </string>
 
     <!-- User activity -->
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_password_update">Update my password</string>
+    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_out">Uitloggen</string>
     <string name="user_sign_in_why_title">Waarom moet ik me aanmelden?</string>
     <string name="user_sign_in_why_message">Je volleybalgegevens (wedstrijden, ploegen, regels, competities, collega\'s) worden gesynchroniseerd met onze server. Door u aan te melden, weten we wie u bent en houden we uw gegevens aan uw account gekoppeld.</string>
-    <string name="user_sign_in_privacy_title">Is het veilig?</string>
-    <string name="user_sign_in_privacy_message">Ja. Wanneer je aanmeldt, is de enige informatie die we uit uw profiel ophalen uw unieke sociale id die we gebruiken om u te identificeren.</string>
-    <string name="user_sign_in_google">Login met Google</string>
-    <string name="user_sign_in_facebook">Login met Facebook</string>
-    <string name="user_sign_out">Uitloggen</string>
-    <string name="user_signed_in_with_provider">Aangemeld met %s</string>
+    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_email_hint">Email</string>
+    <string name="user_confirm_email_hint">Confirm email</string>
+    <string name="user_email_not_matching">Email addresses don\'t match</string>
+    <string name="user_current_password_hint">Current password</string>
+    <string name="user_password_hint">Password</string>
+    <string name="user_confirm_password_hint">Confirm password</string>
+    <string name="user_new_password_hint">New password</string>
+    <string name="user_confirm_new_password_hint">Confirm new password</string>
+    <string name="user_password_not_matching">Passwords don\'t match</string>
+    <string name="user_password_error">Wrong password</string>
+    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
+    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
+    <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Aangemeld als %s</string>
-    <string name="user_id">Gebruikers ID %s</string>
+    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Afgemeld</string>
-    <string name="user_sign_in_with_provider_error">Fout tijdens aanmelden met %s</string>
-    <string name="user_error">Fout tijdens het ophalen van gebruiker</string>
-    <string name="create_user_pseudo_title">Creëer mijn \'Volleyball Referee\' pseudoniem</string>
-    <string name="create">Creëer</string>
-    <string name="user_pseudo_hint">Pseudoniem</string>
-    <string name="user_exists_error">Dit pseudoniem bestaat al</string>
-    <string name="user_creation_error">Fout tijdens het maken van het pseudoniem</string>
     <string name="search_colleague">Zoek een collega</string>
     <string name="add_colleague">Voeg collega toe</string>
     <string name="received_colleague_request">U heeft een collega-aanvraag ontvangen van %s</string>
     <string name="sent_colleague_request">U hebt een collega-verzoek verzonden naar %s</string>
-    <string name="accept">Aanvaarden</string>
-    <string name="reject">Afwijzen</string>
-    <string name="remove">Verwijderen</string>
     <string name="pending">In afwachting</string>
     <string name="accept_colleague_question">Verzoek accepteren van collega %s?</string>
     <string name="reject_colleague_question">Verzoek afwijzen van collega %s?</string>

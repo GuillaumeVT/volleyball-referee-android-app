@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
+    <!-- General actions -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="resume">Resume</string>
+    <string name="delete">Delete</string>
+    <string name="ignore">Ignore</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Discard</string>
+    <string name="remove">Remove</string>
+    <string name="create">Create</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="start">Start</string>
+
     <!-- Main activity -->
     <string name="new_volleyball_game">Volleyball</string>
     <string name="new_beach_volleyball_game">Beach Volleyball</string>
@@ -11,11 +25,6 @@
     <string name="resume_game_title">Resume match</string>
     <string name="resume_game_question">The application found a match in progress. Do you wish to resume it or to delete it?</string>
     <string name="resume_game_error">The match could not be resumed.</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="resume">Resume</string>
-    <string name="delete">Delete</string>
-    <string name="ignore">Ignore</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">My data</string>
     <string name="configuration_group">Configuration</string>
@@ -58,10 +67,10 @@
     <string name="user_new_password_hint">New password</string>
     <string name="user_confirm_new_password_hint">Confirm new password</string>
     <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Email and password do not match</string>
+    <string name="user_password_error">Wrong password</string>
     <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
     <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while executing request</string>
+    <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Signed in as %s</string>
     <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
     <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
@@ -71,9 +80,6 @@
     <string name="add_colleague">Add colleague</string>
     <string name="received_colleague_request">You received a request from %s</string>
     <string name="sent_colleague_request">You sent a request to %s</string>
-    <string name="accept">Accept</string>
-    <string name="reject">Discard</string>
-    <string name="remove">Remove</string>
     <string name="pending">Pending</string>
     <string name="accept_colleague_question">Accept %s as colleague?</string>
     <string name="reject_colleague_question">Discard request from %s?</string>
@@ -102,9 +108,6 @@
     <string name="referee">Referee</string>
     <string name="leave_game_setup_question">This match setup will be lost. Leave anyway?</string>
     <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Tails</string>
