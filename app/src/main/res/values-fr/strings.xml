@@ -140,8 +140,9 @@
     <string name="call_timeout_description">Appeler un temps mort</string>
     <string name="match_point">Balle de match</string>
     <string name="set_point">Balle de set</string>
-    <string name="confirm_lineup_title">Composition d\'équipe</string>
+    <string name="confirm_lineup_title">Confirmation de composition d\'équipe</string>
     <string name="confirm_lineup_question">Confirmez-vous les compositions d\'équipe pour ce set?</string>
+    <string name="confirm_team_lineup_question">Confirmez-vous la composition de %s pour ce set?</string>
     <string name="no_substitution_message">Pas de changement possible</string>
     <string name="confirm_set_question">Confirmez-vous ce point?</string>
     <string name="start_match_description">Démarrer le match</string>
