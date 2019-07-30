@@ -392,12 +392,12 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
-    public boolean isStartingLineupConfirmed() {
+    public boolean isStartingLineupConfirmed(TeamType teamType) {
         return true;
     }
 
     @Override
-    public boolean isStartingLineupConfirmed(int setIndex) {
+    public boolean isStartingLineupConfirmed(TeamType teamType, int setIndex) {
         return true;
     }
 

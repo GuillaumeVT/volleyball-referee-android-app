@@ -141,7 +141,8 @@ public class Indoor4x4GameTest {
             game.substitutePlayer(TeamType.GUEST, index, PositionType.fromInt(index), ActionOriginType.USER);
         }
 
-        game.confirmStartingLineup();
+        game.confirmStartingLineup(TeamType.HOME);
+        game.confirmStartingLineup(TeamType.GUEST);
 
         game.addPoint(TeamType.HOME);
         assertEquals(1, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));
@@ -180,7 +181,8 @@ public class Indoor4x4GameTest {
             game.substitutePlayer(TeamType.GUEST, index, PositionType.fromInt(index), ActionOriginType.USER);
         }
 
-        game.confirmStartingLineup();
+        game.confirmStartingLineup(TeamType.HOME);
+        game.confirmStartingLineup(TeamType.GUEST);
 
         game.addPoint(TeamType.HOME);
         assertEquals(1, game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_1));

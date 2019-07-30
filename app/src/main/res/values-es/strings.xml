@@ -141,7 +141,6 @@
     <string name="match_point">Punto de partido</string>
     <string name="set_point">Punto de set</string>
     <string name="confirm_lineup_title">Alineación inicial</string>
-    <string name="confirm_lineup_question">¿Confirmas la alineación inicial de ambos equipos para este set?</string>
     <string name="no_substitution_message">No quedan más sustituciones</string>
     <string name="confirm_set_question">¿Confirmas este punto?</string>
     <string name="start_match_description">Comenzar partido</string>

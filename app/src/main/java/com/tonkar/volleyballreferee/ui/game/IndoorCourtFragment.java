@@ -21,6 +21,7 @@ import com.tonkar.volleyballreferee.ui.team.IndoorPlayerSelectionDialog;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -105,7 +106,7 @@ public class IndoorCourtFragment extends CourtFragment {
             });
 
             entry.getValue().setOnLongClickListener(view -> {
-                if (!mIndoorTeam.isStartingLineupConfirmed()) {
+                if (!mIndoorTeam.isStartingLineupConfirmed(mTeamOnLeftSide)) {
                     int number = mIndoorTeam.getPlayerAtPosition(mTeamOnLeftSide, positionType);
                     if (number > 0) {
                         UiUtils.animateBounce(getContext(), view);
@@ -132,7 +133,7 @@ public class IndoorCourtFragment extends CourtFragment {
             });
 
             entry.getValue().setOnLongClickListener(view -> {
-                if (!mIndoorTeam.isStartingLineupConfirmed()) {
+                if (!mIndoorTeam.isStartingLineupConfirmed(mTeamOnRightSide)) {
                     int number = mIndoorTeam.getPlayerAtPosition(mTeamOnRightSide, positionType);
                     if (number > 0) {
                         UiUtils.animateBounce(getContext(), view);
@@ -164,9 +165,9 @@ public class IndoorCourtFragment extends CourtFragment {
         }
 
         if (ActionOriginType.USER.equals(actionOriginType)) {
-            confirmStartingLineup();
+            confirmStartingLineup(teamType);
 
-            if (mIndoorTeam.isStartingLineupConfirmed() && !mIndoorTeam.hasRemainingSubstitutions(teamType) && !mIndoorTeam.isLibero(teamType, number)) {
+            if (mIndoorTeam.isStartingLineupConfirmed(teamType) && !mIndoorTeam.hasRemainingSubstitutions(teamType) && !mIndoorTeam.isLibero(teamType, number)) {
                 UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mIndoorTeam.getTeamName(teamType)));
             }
         }
@@ -174,7 +175,11 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onTeamRotated(TeamType teamType, boolean clockwise) {
-        rotateAnimation(teamType, clockwise);
+        if (mIndoorTeam.isStartingLineupConfirmed(teamType)) {
+            rotateAnimation(teamType, clockwise);
+        } else {
+            update(teamType);
+        }
     }
 
     protected void rotateAnimation(TeamType teamType, boolean clockwise) {
@@ -192,11 +197,7 @@ public class IndoorCourtFragment extends CourtFragment {
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                getFragmentManager()
-                        .beginTransaction()
-                        .detach(IndoorCourtFragment.this)
-                        .attach(IndoorCourtFragment.this)
-                        .commit()
+                    getFragmentManager().beginTransaction().detach(IndoorCourtFragment.this).attach(IndoorCourtFragment.this).commit()
             ).start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
@@ -205,11 +206,7 @@ public class IndoorCourtFragment extends CourtFragment {
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition5.getX()).y(layoutPosition5.getY()).setDuration(500L).start();
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
             layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                getFragmentManager()
-                        .beginTransaction()
-                        .detach(IndoorCourtFragment.this)
-                        .attach(IndoorCourtFragment.this)
-                        .commit()
+                    getFragmentManager().beginTransaction().detach(IndoorCourtFragment.this).attach(IndoorCourtFragment.this).commit()
             ).start();
         }
     }
@@ -235,33 +232,31 @@ public class IndoorCourtFragment extends CourtFragment {
             updateSanction(teamType, number, teamSanctionImages.get(positionType));
         }
 
-        confirmStartingLineup();
+        confirmStartingLineup(teamType);
         checkCaptain(teamType, -1);
         checkExplusions(TeamType.HOME);
         checkExplusions(TeamType.GUEST);
     }
 
-    private void confirmStartingLineup() {
-        if (!mIndoorTeam.isStartingLineupConfirmed()
-                && mIndoorTeam.getPlayersOnCourt(TeamType.HOME).size() == mIndoorTeam.getExpectedNumberOfPlayersOnCourt()
-                && mIndoorTeam.getPlayersOnCourt(TeamType.GUEST).size() == mIndoorTeam.getExpectedNumberOfPlayersOnCourt()) {
+    private void confirmStartingLineup(TeamType teamType) {
+        if (!mIndoorTeam.isStartingLineupConfirmed(teamType) && mIndoorTeam.getPlayersOnCourt(teamType).size() == mIndoorTeam.getExpectedNumberOfPlayersOnCourt()) {
             AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
                 if (!mOneStartingLineupDialog) {
-                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), getString(R.string.confirm_lineup_question),
+                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), String.format(Locale.getDefault(), getString(R.string.confirm_team_lineup_question), mIndoorTeam.getTeamName(teamType)),
                             getString(android.R.string.no), getString(android.R.string.yes));
-                    setStartingLineupDialogListener(alertDialogFragment);
+                    setStartingLineupDialogListener(alertDialogFragment, teamType);
                     alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
                     mOneStartingLineupDialog = true;
                 }
             } else {
                 mOneStartingLineupDialog = true;
-                setStartingLineupDialogListener(alertDialogFragment);
+                setStartingLineupDialogListener(alertDialogFragment, teamType);
             }
         }
     }
 
-    private void setStartingLineupDialogListener(final AlertDialogFragment alertDialogFragment) {
+    private void setStartingLineupDialogListener(final AlertDialogFragment alertDialogFragment, TeamType teamType) {
         alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
             @Override
             public void onNegativeButtonClicked() {
@@ -270,9 +265,8 @@ public class IndoorCourtFragment extends CourtFragment {
 
             @Override
             public void onPositiveButtonClicked() {
-                mIndoorTeam.confirmStartingLineup();
-                checkCaptain(TeamType.HOME, -1);
-                checkCaptain(TeamType.GUEST, -1);
+                mIndoorTeam.confirmStartingLineup(teamType);
+                checkCaptain(teamType, -1);
                 mOneStartingLineupDialog = false;
             }
 
@@ -294,7 +288,7 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void checkCaptain(TeamType teamType, int number) {
-        if (mIndoorTeam.isStartingLineupConfirmed()) {
+        if (mIndoorTeam.isStartingLineupConfirmed(teamType)) {
             if (mIndoorTeam.isCaptain(teamType, number)) {
                 // the captain is back on court, refresh the team
                 update(teamType);

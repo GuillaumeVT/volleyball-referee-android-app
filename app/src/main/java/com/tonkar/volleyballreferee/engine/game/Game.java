@@ -787,10 +787,10 @@ public abstract class Game extends BaseGame {
         }
     }
 
-    void notifyStartingLineupSubmitted() {
-        Log.i(Tags.TEAM, "Submit the starting lineup");
+    void notifyStartingLineupSubmitted(TeamType teamType) {
+        Log.i(Tags.TEAM, String.format("Submit the starting lineup for %s team", teamType));
         for (final TeamListener listener : mTeamListeners) {
-            listener.onStartingLineupSubmitted();
+            listener.onStartingLineupSubmitted(teamType);
         }
     }
 

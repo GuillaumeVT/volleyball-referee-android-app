@@ -74,22 +74,14 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                getFragmentManager()
-                        .beginTransaction()
-                        .detach(Indoor4x4CourtFragment.this)
-                        .attach(Indoor4x4CourtFragment.this)
-                        .commit()
+                    getFragmentManager().beginTransaction().detach(Indoor4x4CourtFragment.this).attach(Indoor4x4CourtFragment.this).commit()
             ).start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                getFragmentManager()
-                        .beginTransaction()
-                        .detach(Indoor4x4CourtFragment.this)
-                        .attach(Indoor4x4CourtFragment.this)
-                        .commit()
+                    getFragmentManager().beginTransaction().detach(Indoor4x4CourtFragment.this).attach(Indoor4x4CourtFragment.this).commit()
             ).start();
         }
     }

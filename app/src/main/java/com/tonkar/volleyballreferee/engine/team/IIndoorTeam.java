@@ -11,7 +11,7 @@ public interface IIndoorTeam extends ITeam {
 
     void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType);
 
-    void confirmStartingLineup();
+    void confirmStartingLineup(TeamType teamType);
 
     boolean hasActingCaptainOnCourt(TeamType teamType);
 

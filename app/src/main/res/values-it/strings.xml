@@ -141,7 +141,6 @@
     <string name="match_point">Match ball</string>
     <string name="set_point">Set ball</string>
     <string name="confirm_lineup_title">Composizione squadra titolare</string>
-    <string name="confirm_lineup_question">Confermi la composizione di entrambe le squadre titolari per il set?</string>
     <string name="no_substitution_message">Nessun cambio possibile</string>
     <string name="confirm_set_question">Vuoi confermare il punto?</string>
     <string name="start_match_description">Iniziare la partita</string>

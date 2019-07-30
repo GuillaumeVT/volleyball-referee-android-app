@@ -141,7 +141,6 @@
     <string name="match_point">Matšpall</string>
     <string name="set_point">Geimpall</string>
     <string name="confirm_lineup_title">Asetus</string>
-    <string name="confirm_lineup_question">Kinnita mõlema võistkonna asetust antud mängus?</string>
     <string name="no_substitution_message">Vahetust pole võimalik teha</string>
     <string name="confirm_set_question">Kinnitada antud geimi lõppemist?</string>
     <string name="start_match_description">Alusta mängu</string>

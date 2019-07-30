@@ -120,10 +120,9 @@ public class IndoorGame extends Game implements IIndoorTeam {
     }
 
     @Override
-    public void confirmStartingLineup() {
-        getIndoorTeamComposition(TeamType.HOME).confirmStartingLineup();
-        getIndoorTeamComposition(TeamType.GUEST).confirmStartingLineup();
-        notifyStartingLineupSubmitted();
+    public void confirmStartingLineup(TeamType teamType) {
+        getIndoorTeamComposition(teamType).confirmStartingLineup();
+        notifyStartingLineupSubmitted(teamType);
     }
 
     @Override
@@ -183,13 +182,13 @@ public class IndoorGame extends Game implements IIndoorTeam {
     }
 
     @Override
-    public boolean isStartingLineupConfirmed() {
-        return getIndoorTeamComposition(TeamType.HOME).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST).isStartingLineupConfirmed();
+    public boolean isStartingLineupConfirmed(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).isStartingLineupConfirmed();
     }
 
     @Override
-    public boolean isStartingLineupConfirmed(int setIndex) {
-        return getIndoorTeamComposition(TeamType.HOME, setIndex).isStartingLineupConfirmed() && getIndoorTeamComposition(TeamType.GUEST, setIndex).isStartingLineupConfirmed();
+    public boolean isStartingLineupConfirmed(TeamType teamType, int setIndex) {
+        return getIndoorTeamComposition(teamType, setIndex).isStartingLineupConfirmed();
     }
 
     @Override
@@ -387,18 +386,25 @@ public class IndoorGame extends Game implements IIndoorTeam {
 
             for (int setIndex = 0; setIndex < storedGame.getNumberOfSets(); setIndex++) {
                 List<TeamType> pointsLadder = storedGame.getPointsLadder(setIndex);
-                boolean isStartingLineupConfirmed = storedGame.isStartingLineupConfirmed();
 
-                if (isStartingLineupConfirmed) {
+                if (storedGame.isStartingLineupConfirmed(TeamType.HOME)) {
                     ApiCourt homeStartingLineup = storedGame.getStartingLineup(TeamType.HOME, setIndex);
-                    ApiCourt guestStartingLineup = storedGame.getStartingLineup(TeamType.GUEST, setIndex);
 
                     for (PositionType position : PositionType.listPositions(getKind())) {
                         substitutePlayer(TeamType.HOME, homeStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
+                    }
+
+                    confirmStartingLineup(TeamType.HOME);
+                }
+
+                if (storedGame.isStartingLineupConfirmed(TeamType.GUEST)) {
+                    ApiCourt guestStartingLineup = storedGame.getStartingLineup(TeamType.GUEST, setIndex);
+
+                    for (PositionType position : PositionType.listPositions(getKind())) {
                         substitutePlayer(TeamType.GUEST, guestStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
                     }
 
-                    confirmStartingLineup();
+                    confirmStartingLineup(TeamType.GUEST);
                 }
 
                 getSet(setIndex).setServingTeamAtStart(storedGame.getFirstServingTeam(setIndex));

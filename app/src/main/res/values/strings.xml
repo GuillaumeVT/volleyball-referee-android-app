@@ -141,8 +141,7 @@
     <string name="call_timeout_description">Call timeout</string>
     <string name="match_point">Match point</string>
     <string name="set_point">Set point</string>
-    <string name="confirm_lineup_title">Starting line-up confirmation</string>
-    <string name="confirm_lineup_question">Do you confirm this starting line-up for both teams in this set?</string>
+    <string name="confirm_lineup_title">Starting line-up</string>
     <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
     <string name="no_substitution_message">No substitution available</string>
     <string name="confirm_set_question">Do you confirm this point?</string>

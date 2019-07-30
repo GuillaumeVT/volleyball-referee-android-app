@@ -141,7 +141,6 @@
     <string name="match_point">Матчбол</string>
     <string name="set_point">Сетбол</string>
     <string name="confirm_lineup_title">Расстановка</string>
-    <string name="confirm_lineup_question">Подтвердить стартовую расстановку обеих команд в данной партии?</string>
     <string name="no_substitution_message">Замена невозможна</string>
     <string name="confirm_set_question">Подтвердить окончание данной партии?</string>
     <string name="start_match_description">Начать матч</string>

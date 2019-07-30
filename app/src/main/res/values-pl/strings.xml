@@ -142,7 +142,6 @@
     <string name="match_point">Pilka meczowa</string>
     <string name="set_point">Pilka setowa</string>
     <string name="confirm_lineup_title">Sklad wyjsciowy</string>
-    <string name="confirm_lineup_question">Czy potwierdzasz skład wyjsciowy obu drużyn w tym secie?</string>
     <string name="no_substitution_message">Brak zmiany</string>
     <string name="confirm_set_question">Czy potwierdzasz ten punkt</string>
     <string name="start_match_description">Rozpocznij mecz</string>

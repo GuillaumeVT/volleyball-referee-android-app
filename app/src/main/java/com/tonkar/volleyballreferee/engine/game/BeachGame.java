@@ -153,12 +153,12 @@ public class BeachGame extends Game implements IBeachTeam {
     }
 
     @Override
-    public boolean isStartingLineupConfirmed() {
+    public boolean isStartingLineupConfirmed(TeamType teamType) {
         return true;
     }
 
     @Override
-    public boolean isStartingLineupConfirmed(int setIndex) {
+    public boolean isStartingLineupConfirmed(TeamType teamType, int setIndex) {
         return true;
     }
 

@@ -141,7 +141,6 @@
     <string name="match_point">Matchbal</string>
     <string name="set_point">Setbal</string>
     <string name="confirm_lineup_title">Startopstelling</string>
-    <string name="confirm_lineup_question">Bevestig je deze startopstelling voor beide ploegen in deze set?</string>
     <string name="no_substitution_message">Geen vervanging beschikbaar</string>
     <string name="confirm_set_question">Bevestig je dit punt?</string>
     <string name="start_match_description">Start de wedstrijd</string>

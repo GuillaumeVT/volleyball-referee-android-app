@@ -239,6 +239,8 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.HOME, 16, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 4, PositionType.POSITION_6, ActionOriginType.USER);
 
+        indoorGame.confirmStartingLineup(TeamType.HOME);
+
         indoorGame.substitutePlayer(TeamType.GUEST, 6, PositionType.POSITION_1, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 9, PositionType.POSITION_2, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 10, PositionType.POSITION_3, ActionOriginType.USER);
@@ -246,7 +248,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.GUEST, 5, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 21, PositionType.POSITION_6, ActionOriginType.USER);
 
-        indoorGame.confirmStartingLineup();
+        indoorGame.confirmStartingLineup(TeamType.GUEST);
 
         indoorGame.substitutePlayer(TeamType.HOME, 8, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 2, PositionType.POSITION_6, ActionOriginType.USER);
@@ -313,6 +315,8 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.HOME, 13, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 1, PositionType.POSITION_6, ActionOriginType.USER);
 
+        indoorGame.confirmStartingLineup(TeamType.HOME);
+
         indoorGame.substitutePlayer(TeamType.GUEST, 5, PositionType.POSITION_1, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 21, PositionType.POSITION_2, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 6, PositionType.POSITION_3, ActionOriginType.USER);
@@ -320,7 +324,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.GUEST, 10, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 12, PositionType.POSITION_6, ActionOriginType.USER);
 
-        indoorGame.confirmStartingLineup();
+        indoorGame.confirmStartingLineup(TeamType.GUEST);
 
         indoorGame.substitutePlayer(TeamType.HOME, 8, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 2, PositionType.POSITION_5, ActionOriginType.USER);
@@ -380,6 +384,8 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.HOME, 19, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 16, PositionType.POSITION_6, ActionOriginType.USER);
 
+        indoorGame.confirmStartingLineup(TeamType.HOME);
+
         indoorGame.substitutePlayer(TeamType.GUEST, 5, PositionType.POSITION_1, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 21, PositionType.POSITION_2, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 6, PositionType.POSITION_3, ActionOriginType.USER);
@@ -387,7 +393,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.GUEST, 10, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 12, PositionType.POSITION_6, ActionOriginType.USER);
 
-        indoorGame.confirmStartingLineup();
+        indoorGame.confirmStartingLineup(TeamType.GUEST);
 
         indoorGame.substitutePlayer(TeamType.HOME, 8, PositionType.POSITION_6, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 2, PositionType.POSITION_5, ActionOriginType.USER);
@@ -456,6 +462,8 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.HOME, 3, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 1, PositionType.POSITION_6, ActionOriginType.USER);
 
+        indoorGame.confirmStartingLineup(TeamType.HOME);
+
         indoorGame.substitutePlayer(TeamType.GUEST, 12, PositionType.POSITION_1, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 5, PositionType.POSITION_2, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 21, PositionType.POSITION_3, ActionOriginType.USER);
@@ -463,7 +471,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.GUEST, 9, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 10, PositionType.POSITION_6, ActionOriginType.USER);
 
-        indoorGame.confirmStartingLineup();
+        indoorGame.confirmStartingLineup(TeamType.GUEST);
 
         indoorGame.substitutePlayer(TeamType.HOME, 8, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 2, PositionType.POSITION_6, ActionOriginType.USER);
@@ -540,6 +548,8 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.HOME, 3, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 1, PositionType.POSITION_6, ActionOriginType.USER);
 
+        indoorGame.confirmStartingLineup(TeamType.HOME);
+
         indoorGame.substitutePlayer(TeamType.GUEST, 6, PositionType.POSITION_1, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 9, PositionType.POSITION_2, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 10, PositionType.POSITION_3, ActionOriginType.USER);
@@ -547,7 +557,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.substitutePlayer(TeamType.GUEST, 5, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 21, PositionType.POSITION_6, ActionOriginType.USER);
 
-        indoorGame.confirmStartingLineup();
+        indoorGame.confirmStartingLineup(TeamType.GUEST);
 
         indoorGame.substitutePlayer(TeamType.HOME, 8, PositionType.POSITION_5, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 2, PositionType.POSITION_6, ActionOriginType.USER);

@@ -188,12 +188,12 @@ public class WrappedTeam implements IBaseTeam {
     }
 
     @Override
-    public boolean isStartingLineupConfirmed() {
+    public boolean isStartingLineupConfirmed(TeamType teamType) {
         return false;
     }
 
     @Override
-    public boolean isStartingLineupConfirmed(int setIndex) {
+    public boolean isStartingLineupConfirmed(TeamType teamType, int setIndex) {
         return false;
     }
 

@@ -135,7 +135,6 @@
     <string name="match_point">نقطة المباراة</string>
     <string name="set_point">نقطة الشوط</string>
     <string name="confirm_lineup_title">تشكيلة البداية</string>
-    <string name="confirm_lineup_question">هل توافق على تشكيلة بداية الفريقين لهذا الشوط؟</string>
     <string name="no_substitution_message">لا يوجد بديل متاح</string>
     <string name="confirm_set_question">هل تؤكد هذه النقطة؟</string>
     <string name="start_match_description">بدأ المباراة</string>

@@ -5,7 +5,7 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 public interface TeamListener {
 
-    void onStartingLineupSubmitted();
+    void onStartingLineupSubmitted(TeamType teamType);
 
     void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType);
 

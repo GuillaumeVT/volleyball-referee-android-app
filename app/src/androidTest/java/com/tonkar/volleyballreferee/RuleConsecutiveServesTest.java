@@ -112,7 +112,8 @@ public class RuleConsecutiveServesTest {
             game.substitutePlayer(TeamType.GUEST, index, PositionType.fromInt(index), ActionOriginType.USER);
         }
 
-        game.confirmStartingLineup();
+        game.confirmStartingLineup(TeamType.HOME);
+        game.confirmStartingLineup(TeamType.GUEST);
 
         return game;
     }

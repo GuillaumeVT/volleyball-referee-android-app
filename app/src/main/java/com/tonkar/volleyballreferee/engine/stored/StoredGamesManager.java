@@ -235,7 +235,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     @Override
-    public void onStartingLineupSubmitted() {
+    public void onStartingLineupSubmitted(TeamType teamType) {
         saveCurrentGame();
         pushCurrentGameToServer();
     }

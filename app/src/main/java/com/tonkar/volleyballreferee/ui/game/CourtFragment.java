@@ -85,7 +85,7 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     }
 
     @Override
-    public void onStartingLineupSubmitted() {}
+    public void onStartingLineupSubmitted(TeamType teamType) {}
 
     protected void updateSanction(TeamType teamType, int number, ImageView sanctionImage) {
         if (mGame.hasSanctions(teamType, number)) {

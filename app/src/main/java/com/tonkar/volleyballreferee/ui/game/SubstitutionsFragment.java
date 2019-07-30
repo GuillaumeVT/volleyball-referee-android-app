@@ -62,7 +62,7 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
     }
 
     @Override
-    public void onStartingLineupSubmitted() {}
+    public void onStartingLineupSubmitted(TeamType teamType) {}
 
     @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {

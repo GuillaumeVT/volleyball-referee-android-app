@@ -142,7 +142,6 @@
     <string name="match_point">Mérkőzéslabda</string>
     <string name="set_point">Játszmalabda</string>
     <string name="confirm_lineup_title">Kezdőcsapat</string>
-    <string name="confirm_lineup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="no_substitution_message">Nincsen elérhető cserejátékos</string>
     <string name="confirm_set_question">Jóváhagyod ezt a pontot?</string>
     <string name="start_match_description">Mérkőzés indítása</string>

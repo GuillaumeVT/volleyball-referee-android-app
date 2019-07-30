@@ -141,7 +141,6 @@
     <string name="match_point">Matchball</string>
     <string name="set_point">Satzball</string>
     <string name="confirm_lineup_title">Startaufstellung</string>
-    <string name="confirm_lineup_question">Bestätigen Sie die Startaufstellung für beide Mannschaften in diesem Satz?</string>
     <string name="no_substitution_message">Kein Ersatz möglich</string>
     <string name="confirm_set_question">Bestätigen Sie diesen Punkt?</string>
     <string name="start_match_description">Starte das Spiel</string>

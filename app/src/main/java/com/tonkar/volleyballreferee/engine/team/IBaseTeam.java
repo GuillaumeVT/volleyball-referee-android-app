@@ -75,9 +75,9 @@ public interface IBaseTeam {
 
     List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex);
 
-    boolean isStartingLineupConfirmed();
+    boolean isStartingLineupConfirmed(TeamType teamType);
 
-    boolean isStartingLineupConfirmed(int setIndex);
+    boolean isStartingLineupConfirmed(TeamType teamType, int setIndex);
 
     ApiCourt getStartingLineup(TeamType teamType, int setIndex);
 

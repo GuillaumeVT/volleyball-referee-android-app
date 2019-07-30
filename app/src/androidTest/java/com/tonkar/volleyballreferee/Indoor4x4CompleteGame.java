@@ -121,7 +121,8 @@ public class Indoor4x4CompleteGame {
             indoor4x4Game.substitutePlayer(TeamType.GUEST, 5 - index, PositionType.fromInt(5 - index), ActionOriginType.USER);
         }
 
-        indoor4x4Game.confirmStartingLineup();
+        indoor4x4Game.confirmStartingLineup(TeamType.HOME);
+        indoor4x4Game.confirmStartingLineup(TeamType.GUEST);
     }
 
     private void playSet_complete(Indoor4x4Game indoor4x4Game) {
