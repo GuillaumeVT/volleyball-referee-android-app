@@ -119,11 +119,7 @@ public class ScoreSheetWriter {
                 Element teamDiv = new Element("div");
                 teamDiv.addClass("div-flex-row");
                 teamDiv.appendChild(createStoredStartingLineup(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
-
-                if (!mStoredGame.getSubstitutions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
-                    teamDiv.appendChild(createStoredSubstitutions(setIndex));
-                }
-
+                teamDiv.appendChild(createStoredSubstitutions(setIndex));
                 cardDiv.appendChild(teamDiv);
             }
 
@@ -350,10 +346,9 @@ public class ScoreSheetWriter {
 
     private Element createLineupDiv(TeamType teamType, int setIndex) {
         Element lineupDiv = new Element("div");
+        lineupDiv.addClass("div-grid-lineup").addClass("border");
 
         if (mStoredGame.isStartingLineupConfirmed(teamType, setIndex)) {
-            lineupDiv.addClass("div-grid-lineup").addClass("border");
-
             lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_4_title), false, false));
             lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_3_title), false, false));
             lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_2_title), false, false));
@@ -597,12 +592,7 @@ public class ScoreSheetWriter {
                 Element teamDiv = new Element("div");
                 teamDiv.addClass("div-flex-row");
                 teamDiv.appendChild(createStoredStartingLineup4x4(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
-
-                if (!mStoredGame.getSubstitutions(TeamType.HOME, setIndex).isEmpty()
-                        || !mStoredGame.getSubstitutions(TeamType.GUEST, setIndex).isEmpty()) {
-                    teamDiv.appendChild(createStoredSubstitutions(setIndex));
-                }
-
+                teamDiv.appendChild(createStoredSubstitutions(setIndex));
                 cardDiv.appendChild(teamDiv);
             }
 
@@ -643,10 +633,9 @@ public class ScoreSheetWriter {
 
     private Element createLineupDiv4x4(TeamType teamType, int setIndex) {
         Element lineupDiv = new Element("div");
+        lineupDiv.addClass("div-grid-lineup").addClass("border");
 
         if (mStoredGame.isStartingLineupConfirmed(teamType, setIndex)) {
-            lineupDiv.addClass("div-grid-lineup").addClass("border");
-
             lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_4_title), false, false));
             lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_3_title), false, false));
             lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_2_title), false, false));
