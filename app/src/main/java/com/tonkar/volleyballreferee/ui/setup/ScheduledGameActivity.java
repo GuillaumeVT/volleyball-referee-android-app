@@ -287,16 +287,19 @@ public class ScheduledGameActivity extends AppCompatActivity {
         mGameSummary.setGender(genderType);
         switch (genderType) {
             case MIXED:
+                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorMixed));
                 mGenderButton.setImageResource(R.drawable.ic_mixed);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
+                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorLadies));
                 mGenderButton.setImageResource(R.drawable.ic_ladies);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
+                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorGents));
                 mGenderButton.setImageResource(R.drawable.ic_gents);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
         }
     }

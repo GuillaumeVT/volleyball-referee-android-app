@@ -197,7 +197,9 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                    if (listener != null) {
+                        listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                    }
                 }
 
                 @Override
@@ -206,15 +208,21 @@ public class StoredUserManager implements StoredUserService {
                         ApiFriendsAndRequests friendsAndRequests = JsonIOUtils.GSON.fromJson(response.body().string(), new TypeToken<ApiFriendsAndRequests>(){}.getType());
 
                         insertFriendsIntoDb(friendsAndRequests.getFriends(), false);
-                        listener.onFriendsAndRequestsReceived(friendsAndRequests);
+                        if (listener != null) {
+                            listener.onFriendsAndRequestsReceived(friendsAndRequests);
+                        }
                     } else {
                         Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting friends and requests", response.code()));
-                        listener.onError(response.code());
+                        if (listener != null) {
+                            listener.onError(response.code());
+                        }
                     }
                 }
             });
         } else {
-            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+            if (listener != null) {
+                listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+            }
         }
     }
 

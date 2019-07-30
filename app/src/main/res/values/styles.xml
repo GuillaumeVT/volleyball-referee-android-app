@@ -100,4 +100,25 @@
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
+    <style name="IconChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipIconSize">@dimen/default_text_size</item>
+        <item name="iconStartPadding">@dimen/default_margin_size</item>
+        <item name="iconEndPadding">@dimen/default_margin_size</item>
+        <item name="textStartPadding">0dp</item>
+        <item name="textEndPadding">0dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:enabled">false</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="textStartPadding">@dimen/default_margin_size</item>
+        <item name="textEndPadding">@dimen/default_margin_size</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:enabled">false</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

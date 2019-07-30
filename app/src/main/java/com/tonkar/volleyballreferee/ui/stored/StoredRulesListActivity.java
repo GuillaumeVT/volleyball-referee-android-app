@@ -187,9 +187,9 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoorRulesButton.show();
         mAddIndoor4x4RulesButton.show();
         mAddBeachRulesButton.show();
-        mAddIndoorRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
-        mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
-        mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
+        mAddIndoorRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
+        mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
+        mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
     }
 
     private void closeFABMenu(){

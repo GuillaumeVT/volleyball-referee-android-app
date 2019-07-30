@@ -17,13 +17,38 @@
         android:textAppearance="@style/TextViewTheme"
         android:textSize="@dimen/default_text_size"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/stored_rules_kind_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/small_margin_size"
-        android:tint="@color/colorBeach"
-        app:srcCompat="@drawable/ic_sun" />
+    <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipSpacing="@dimen/default_margin_size">
+
+        <com.google.android.material.chip.Chip
+                style="@style/IconChip"
+                android:id="@+id/beach_rules_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_beach"
+                app:chipIconTint="@color/colorOnSurface"
+                app:chipBackgroundColor="@color/colorBeach"/>
+
+        <com.google.android.material.chip.Chip
+                style="@style/TextChip"
+                android:id="@+id/indoor_6x6_rules_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6x6"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/colorIndoor"/>
+
+        <com.google.android.material.chip.Chip
+                style="@style/TextChip"
+                android:id="@+id/indoor_4x4_rules_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4x4"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/colorIndoor4x4"/>
+
+    </com.google.android.material.chip.ChipGroup>
 
 </LinearLayout>

@@ -454,7 +454,7 @@ public class UiUtils {
                 imageView.setImageResource(R.drawable.ic_4x4);
                 break;
             case BEACH:
-                imageView.setImageResource(R.drawable.ic_sun);
+                imageView.setImageResource(R.drawable.ic_beach);
                 break;
             case TIME:
                 imageView.setImageResource(R.drawable.ic_time_based);

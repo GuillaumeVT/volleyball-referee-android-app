@@ -45,27 +45,11 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="addIndoorTeam"
-                    android:tint="@color/colorIndoor"
-                    app:backgroundTint="@android:color/white"
+                    android:tint="@android:color/white"
+                    app:backgroundTint="@color/colorIndoor"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
                     app:srcCompat="@drawable/ic_6x6"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_4x4_team_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="addIndoor4x4Team"
-                    android:tint="@color/colorIndoor4x4"
-                    app:backgroundTint="@android:color/white"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_4x4"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_beach_team_button"
@@ -77,11 +61,27 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="addBeachTeam"
-                    android:tint="@color/colorBeach"
-                    app:backgroundTint="@android:color/white"
+                    android:tint="@color/colorOnSurface"
+                    app:backgroundTint="@color/colorBeach"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_sun"/>
+                    app:srcCompat="@drawable/ic_beach"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_4x4_team_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="addIndoor4x4Team"
+                    android:tint="@android:color/white"
+                    app:backgroundTint="@color/colorIndoor4x4"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_4x4"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_team_button"

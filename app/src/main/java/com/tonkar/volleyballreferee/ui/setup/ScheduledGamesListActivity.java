@@ -205,9 +205,9 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoorGameButton.show();
         mScheduleIndoor4x4GameButton.show();
         mScheduleBeachGameButton.show();
-        mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
-        mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
-        mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
+        mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
+        mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
+        mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
     }
 
     private void closeFABMenu(){

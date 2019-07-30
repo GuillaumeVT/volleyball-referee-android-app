@@ -6,13 +6,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonParseException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -317,8 +317,8 @@ public class MainActivity extends NavigationActivity {
     private void initFriendRequestsButton(ApiCount count) {
         runOnUiThread(() -> {
             if (count.getCount() > 0) {
-                MaterialButton gotoColleaguesButton = findViewById(R.id.goto_colleagues_button);
-                gotoColleaguesButton.setText(String.format(Locale.getDefault(), "%s: %d", gotoColleaguesButton.getText(), count.getCount()));
+                TextView gotoColleaguesText = findViewById(R.id.goto_colleagues_text);
+                gotoColleaguesText.setText(String.format(Locale.getDefault(), "%s: %d", gotoColleaguesText.getText(), count.getCount()));
 
                 View gotoColleaguesCard = findViewById(R.id.goto_colleagues_card);
                 gotoColleaguesCard.setVisibility(View.VISIBLE);
@@ -353,8 +353,8 @@ public class MainActivity extends NavigationActivity {
     private void initAvailableGamesButton(ApiCount count) {
         runOnUiThread(() -> {
             if (count.getCount() > 0) {
-                MaterialButton gotoAvailableGamesButton = findViewById(R.id.goto_available_games_button);
-                gotoAvailableGamesButton.setText(String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesButton.getText(), count.getCount()));
+                TextView gotoAvailableGamesText = findViewById(R.id.goto_available_games_text);
+                gotoAvailableGamesText.setText(String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesText.getText(), count.getCount()));
 
                 View gotoAvailableGamesCard = findViewById(R.id.goto_available_games_card);
                 gotoAvailableGamesCard.setVisibility(View.VISIBLE);

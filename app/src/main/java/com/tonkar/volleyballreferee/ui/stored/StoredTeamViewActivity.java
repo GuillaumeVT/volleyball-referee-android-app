@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
@@ -48,43 +48,47 @@ public class StoredTeamViewActivity extends AppCompatActivity {
         }
 
         TextView nameText = findViewById(R.id.stored_team_name);
-        ImageView gameTypeImage = findViewById(R.id.stored_team_type_image);
-        ImageView genderTypeImage = findViewById(R.id.stored_team_gender_image);
+        Chip beachItem = findViewById(R.id.beach_team_item);
+        Chip indoor6x6Item = findViewById(R.id.indoor_6x6_team_item);
+        Chip indoor4x4Item = findViewById(R.id.indoor_4x4_team_item);
+        Chip genderItem = findViewById(R.id.gender_team_item);
 
         nameText.setText(mTeamService.getTeamName(null));
 
         switch (mTeamService.getGender()) {
             case MIXED:
-                genderTypeImage.setImageResource(R.drawable.ic_mixed);
-                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipIconResource(R.drawable.ic_mixed);
+                genderItem.setChipBackgroundColorResource(R.color.colorMixed);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
-                genderTypeImage.setImageResource(R.drawable.ic_ladies);
-                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipIconResource(R.drawable.ic_ladies);
+                genderItem.setChipBackgroundColorResource(R.color.colorLadies);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
-                genderTypeImage.setImageResource(R.drawable.ic_gents);
-                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipIconResource(R.drawable.ic_gents);
+                genderItem.setChipBackgroundColorResource(R.color.colorGents);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (mTeamService.getTeamsKind()) {
             case INDOOR_4X4:
-                gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.VISIBLE);
                 break;
             case BEACH:
-                gameTypeImage.setImageResource(R.drawable.ic_sun);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorBeach), PorterDuff.Mode.SRC_IN));
-                break;
-            case TIME:
-                gameTypeImage.setImageResource(R.drawable.ic_time_based);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorTime), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.VISIBLE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.GONE);
                 break;
             case INDOOR:
             default:
-                gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.VISIBLE);
+                indoor4x4Item.setVisibility(View.GONE);
                 break;
         }
 

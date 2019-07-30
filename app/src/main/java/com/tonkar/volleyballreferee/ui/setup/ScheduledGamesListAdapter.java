@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
@@ -21,12 +21,15 @@ import java.util.*;
 public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 
     static class ViewHolder {
-        TextView  summaryText;
-        TextView  dateText;
-        ImageView genderTypeImage;
-        ImageView gameTypeImage;
-        ImageView statusImage;
-        TextView  leagueText;
+        TextView summaryText;
+        TextView dateText;
+        Chip     liveItem;
+        Chip     beachItem;
+        Chip     indoor6x6Item;
+        Chip     indoor4x4Item;
+        Chip     timeItem;
+        Chip     genderItem;
+        TextView leagueText;
     }
 
     private final LayoutInflater       mLayoutInflater;
@@ -78,9 +81,12 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             viewHolder = new ViewHolder();
             viewHolder.summaryText = gameView.findViewById(R.id.scheduled_game_summary);
             viewHolder.dateText = gameView.findViewById(R.id.scheduled_game_date);
-            viewHolder.genderTypeImage = gameView.findViewById(R.id.scheduled_game_gender_image);
-            viewHolder.gameTypeImage = gameView.findViewById(R.id.scheduled_game_type_image);
-            viewHolder.statusImage = gameView.findViewById(R.id.scheduled_game_status_image);
+            viewHolder.liveItem = gameView.findViewById(R.id.live_game_item);
+            viewHolder.beachItem = gameView.findViewById(R.id.beach_game_item);
+            viewHolder.indoor6x6Item = gameView.findViewById(R.id.indoor_6x6_game_item);
+            viewHolder.indoor4x4Item = gameView.findViewById(R.id.indoor_4x4_game_item);
+            viewHolder.timeItem = gameView.findViewById(R.id.time_game_item);
+            viewHolder.genderItem = gameView.findViewById(R.id.gender_game_item);
             viewHolder.leagueText = gameView.findViewById(R.id.scheduled_game_league);
             gameView.setTag(viewHolder);
         }
@@ -100,44 +106,51 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 
         switch (gameDescription.getGender()) {
             case MIXED:
-                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_mixed);
-                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderItem.setChipIconResource(R.drawable.ic_mixed);
+                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorMixed);
+                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
-                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_ladies);
-                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderItem.setChipIconResource(R.drawable.ic_ladies);
+                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorLadies);
+                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
-                viewHolder.genderTypeImage.setImageResource(R.drawable.ic_gents);
-                viewHolder.genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderItem.setChipIconResource(R.drawable.ic_gents);
+                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorGents);
+                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (gameDescription.getKind()) {
             case INDOOR_4X4:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.GONE);
+                viewHolder.indoor6x6Item.setVisibility(View.GONE);
+                viewHolder.indoor4x4Item.setVisibility(View.VISIBLE);
+                viewHolder.timeItem.setVisibility(View.GONE);
                 break;
             case BEACH:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.VISIBLE);
+                viewHolder.indoor6x6Item.setVisibility(View.GONE);
+                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.timeItem.setVisibility(View.GONE);
                 break;
             case TIME:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_time_based);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorTime), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.GONE);
+                viewHolder.indoor6x6Item.setVisibility(View.GONE);
+                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.timeItem.setVisibility(View.VISIBLE);
                 break;
             case INDOOR:
             default:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.GONE);
+                viewHolder.indoor6x6Item.setVisibility(View.VISIBLE);
+                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.timeItem.setVisibility(View.GONE);
                 break;
         }
 
-        if (GameStatus.LIVE.equals(gameDescription.getStatus())) {
-            viewHolder.statusImage.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.statusImage.setVisibility(View.GONE);
-        }
+        viewHolder.liveItem.setVisibility(GameStatus.LIVE.equals(gameDescription.getStatus()) ? View.VISIBLE : View.GONE);
 
         if (gameDescription.getLeagueName() == null || gameDescription.getDivisionName() == null || gameDescription.getLeagueName().isEmpty() || gameDescription.getDivisionName().isEmpty()) {
             viewHolder.leagueText.setText("");

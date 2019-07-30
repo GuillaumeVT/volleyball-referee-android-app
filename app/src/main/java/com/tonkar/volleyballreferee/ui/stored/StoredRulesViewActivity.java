@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
@@ -54,24 +54,29 @@ public class StoredRulesViewActivity extends AppCompatActivity {
 
         LinearLayout itemLayout = findViewById(R.id.stored_rules_item_layout);
         TextView nameText = findViewById(R.id.stored_rules_name);
-        ImageView gameTypeImage = findViewById(R.id.stored_rules_kind_image);
+        Chip beachItem = findViewById(R.id.beach_rules_item);
+        Chip indoor6x6Item = findViewById(R.id.indoor_6x6_rules_item);
+        Chip indoor4x4Item = findViewById(R.id.indoor_4x4_rules_item);
 
         itemLayout.setPadding(0, 0, 0, 0);
         nameText.setText(mRules.getName());
 
         switch (mRules.getKind()) {
             case INDOOR_4X4:
-                gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.VISIBLE);
                 break;
             case BEACH:
-                gameTypeImage.setImageResource(R.drawable.ic_sun);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.VISIBLE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.GONE);
                 break;
             case INDOOR:
             default:
-                gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.VISIBLE);
+                indoor4x4Item.setVisibility(View.GONE);
                 break;
         }
 

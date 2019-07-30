@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
@@ -21,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -102,9 +102,12 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         TextView summaryText = findViewById(R.id.stored_game_summary);
         TextView dateText = findViewById(R.id.stored_game_date);
         TextView scoreText = findViewById(R.id.stored_game_score);
-        ImageView genderTypeImage = findViewById(R.id.stored_game_gender_image);
-        ImageView gameTypeImage = findViewById(R.id.stored_game_type_image);
-        ImageView indexedImage = findViewById(R.id.stored_game_indexed_image);
+        Chip beachItem = findViewById(R.id.beach_game_item);
+        Chip indoor6x6Item = findViewById(R.id.indoor_6x6_game_item);
+        Chip indoor4x4Item = findViewById(R.id.indoor_4x4_game_item);
+        Chip timeItem = findViewById(R.id.time_game_item);
+        Chip genderItem = findViewById(R.id.gender_game_item);
+        Chip indexedItem = findViewById(R.id.indexed_game_item);
         TextView leagueText = findViewById(R.id.stored_game_league);
 
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
@@ -118,48 +121,64 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
         switch (mStoredGame.getGender()) {
             case MIXED:
-                genderTypeImage.setImageResource(R.drawable.ic_mixed);
-                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipIconResource(R.drawable.ic_mixed);
+                genderItem.setChipBackgroundColorResource(R.color.colorMixed);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
-                genderTypeImage.setImageResource(R.drawable.ic_ladies);
-                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipIconResource(R.drawable.ic_ladies);
+                genderItem.setChipBackgroundColorResource(R.color.colorLadies);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
-                genderTypeImage.setImageResource(R.drawable.ic_gents);
-                genderTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipIconResource(R.drawable.ic_gents);
+                genderItem.setChipBackgroundColorResource(R.color.colorGents);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (mStoredGame.getKind()) {
             case INDOOR_4X4:
-                gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor4x4), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.VISIBLE);
+                timeItem.setVisibility(View.GONE);
                 break;
             case BEACH:
-                gameTypeImage.setImageResource(R.drawable.ic_sun);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.VISIBLE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.GONE);
+                timeItem.setVisibility(View.GONE);
                 break;
             case TIME:
-                gameTypeImage.setImageResource(R.drawable.ic_time_based);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorTime), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.GONE);
+                indoor4x4Item.setVisibility(View.GONE);
+                timeItem.setVisibility(View.VISIBLE);
                 break;
             case INDOOR:
             default:
-                gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                beachItem.setVisibility(View.GONE);
+                indoor6x6Item.setVisibility(View.VISIBLE);
+                indoor4x4Item.setVisibility(View.GONE);
+                timeItem.setVisibility(View.GONE);
                 break;
         }
 
-        if (mStoredGame.isIndexed()) {
-            indexedImage.setImageResource(R.drawable.ic_public);
-            indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorWeb), PorterDuff.Mode.SRC_IN));
+        if (PrefUtils.canSync(this)) {
+            if (mStoredGame.isIndexed()) {
+                indexedItem.setChipIconResource(R.drawable.ic_public);
+                indexedItem.setChipBackgroundColorResource(R.color.colorWebPublic);
+                indexedItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+            } else {
+                indexedItem.setChipIconResource(R.drawable.ic_private);
+                indexedItem.setChipBackgroundColorResource(R.color.colorWebPrivate);
+                indexedItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+            }
+            indexedItem.setVisibility(View.VISIBLE);
         } else {
-            indexedImage.setImageResource(R.drawable.ic_private);
-            indexedImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.holo_red_dark), PorterDuff.Mode.SRC_IN));
+            indexedItem.setVisibility(View.GONE);
         }
-
-        indexedImage.setVisibility(PrefUtils.canSync(this) ? View.VISIBLE : View.GONE);
 
         if (mStoredGame.getLeague() != null && !mStoredGame.getLeague().getName().isEmpty()) {
             leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , mStoredGame.getLeague().getName(), mStoredGame.getLeague().getDivision()));

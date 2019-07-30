@@ -40,19 +40,20 @@
                             android:background="@drawable/indoor_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/goto_sign_in_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="goToSignIn"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/user_sign_in"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_account"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_account"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -76,19 +77,20 @@
                             android:background="@drawable/beach_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/goto_colleagues_button"
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/goto_colleagues_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="goToColleagues"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/colleagues"
                             android:textColor="@color/colorOnSurface"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_colleagues"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@color/colorOnSurface"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_colleagues"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@color/colorOnSurface"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -112,19 +114,20 @@
                             android:background="@drawable/resume_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/goto_available_games_button"
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/goto_available_games_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="goToAvailableGames"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/available_games"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_schedule"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_schedule"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -148,19 +151,20 @@
                             android:background="@drawable/resume_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/resume_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="resumeCurrentGame"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/resume_game_title"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_resume"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_resume"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -182,19 +186,20 @@
                             android:background="@drawable/indoor_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/start_indoor_6x6_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="startIndoorGame"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/new_volleyball_game"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_6x6"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_6x6"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -216,19 +221,20 @@
                             android:background="@drawable/beach_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/start_beach_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="startBeachGame"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/new_beach_volleyball_game"
                             android:textColor="@color/colorOnSurface"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_sun"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@color/colorOnSurface"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_beach"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@color/colorOnSurface"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -250,19 +256,20 @@
                             android:background="@drawable/indoor_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/start_score_based_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="startScoreBasedGame"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/new_score_based_game"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_volleyball"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_volleyball"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -284,19 +291,20 @@
                             android:background="@drawable/indoor_4x4_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/start_indoor_4x4_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="startIndoor4x4Game"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/new_volleyball_game"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_4x4"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_4x4"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 
@@ -313,19 +321,20 @@
                             android:background="@drawable/time_based_background_gradient"
                             android:foreground="?attr/selectableItemBackground"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/start_time_based_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/default_margin_size"
-                            android:onClick="startTimeBasedGame"
+                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
                             android:text="@string/new_time_based_game"
                             android:textColor="@android:color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            app:icon="@drawable/ic_time_based"
-                            app:iconPadding="@dimen/default_margin_size"
-                            app:iconTint="@android:color/white"/>
+                            android:textSize="@dimen/big_text_size"
+                            app:drawableStartCompat="@drawable/ic_time_based"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            app:drawableTint="@android:color/white"
+                            app:textAllCaps="true"
+                            android:fontFamily="sans-serif-medium"/>
 
                 </FrameLayout>
 

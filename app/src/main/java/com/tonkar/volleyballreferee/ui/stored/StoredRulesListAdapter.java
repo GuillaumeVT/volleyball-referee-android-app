@@ -1,17 +1,14 @@
 package com.tonkar.volleyballreferee.ui.stored;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
 
@@ -23,8 +20,10 @@ import java.util.Locale;
 public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
 
     static class ViewHolder {
-        TextView  nameText;
-        ImageView gameTypeImage;
+        TextView nameText;
+        Chip     beachItem;
+        Chip     indoor6x6Item;
+        Chip     indoor4x4Item;
     }
 
     private final LayoutInflater        mLayoutInflater;
@@ -73,7 +72,9 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
             storedRulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.nameText = storedRulesView.findViewById(R.id.stored_rules_name);
-            viewHolder.gameTypeImage = storedRulesView.findViewById(R.id.stored_rules_kind_image);
+            viewHolder.beachItem = storedRulesView.findViewById(R.id.beach_rules_item);
+            viewHolder.indoor6x6Item = storedRulesView.findViewById(R.id.indoor_6x6_rules_item);
+            viewHolder.indoor4x4Item = storedRulesView.findViewById(R.id.indoor_4x4_rules_item);
             storedRulesView.setTag(viewHolder);
         }
         else {
@@ -85,17 +86,20 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
 
         switch (rules.getKind()) {
             case INDOOR_4X4:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_4x4);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.GONE);
+                viewHolder.indoor6x6Item.setVisibility(View.GONE);
+                viewHolder.indoor4x4Item.setVisibility(View.VISIBLE);
                 break;
             case BEACH:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_sun);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorBeach), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.VISIBLE);
+                viewHolder.indoor6x6Item.setVisibility(View.GONE);
+                viewHolder.indoor4x4Item.setVisibility(View.GONE);
                 break;
             case INDOOR:
             default:
-                viewHolder.gameTypeImage.setImageResource(R.drawable.ic_6x6);
-                viewHolder.gameTypeImage.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorIndoor), PorterDuff.Mode.SRC_IN));
+                viewHolder.beachItem.setVisibility(View.GONE);
+                viewHolder.indoor6x6Item.setVisibility(View.VISIBLE);
+                viewHolder.indoor4x4Item.setVisibility(View.GONE);
                 break;
         }
 

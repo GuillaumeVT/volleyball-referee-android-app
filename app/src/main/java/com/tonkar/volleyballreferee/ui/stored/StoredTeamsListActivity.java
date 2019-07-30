@@ -192,9 +192,9 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd6x6TeamButton.show();
         mAdd4x4TeamButton.show();
         mAddBeachTeamButton.show();
-        mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
-        mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
-        mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
+        mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
+        mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
+        mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
     }
 
     private void closeFABMenu(){
