@@ -24,9 +24,7 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
 
     static class ViewHolder {
         TextView nameText;
-        Chip     beachItem;
-        Chip     indoor6x6Item;
-        Chip     indoor4x4Item;
+        Chip     kindItem;
         Chip     genderItem;
     }
 
@@ -76,10 +74,8 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
             storedTeamView = mLayoutInflater.inflate(R.layout.stored_teams_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.nameText = storedTeamView.findViewById(R.id.stored_team_name);
-            viewHolder.beachItem = storedTeamView.findViewById(R.id.beach_team_item);
-            viewHolder.indoor6x6Item = storedTeamView.findViewById(R.id.indoor_6x6_team_item);
-            viewHolder.indoor4x4Item = storedTeamView.findViewById(R.id.indoor_4x4_team_item);
-            viewHolder.genderItem = storedTeamView.findViewById(R.id.gender_team_item);
+            viewHolder.kindItem = storedTeamView.findViewById(R.id.team_kind_item);
+            viewHolder.genderItem = storedTeamView.findViewById(R.id.team_gender_item);
             storedTeamView.setTag(viewHolder);
         }
         else {
@@ -92,37 +88,37 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
         switch (team.getGender()) {
             case MIXED:
                 viewHolder.genderItem.setChipIconResource(R.drawable.ic_mixed);
-                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorMixed);
-                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorMixedLight);
+                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 viewHolder.genderItem.setChipIconResource(R.drawable.ic_ladies);
-                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorLadies);
-                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorLadiesLight);
+                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 viewHolder.genderItem.setChipIconResource(R.drawable.ic_gents);
-                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorGents);
-                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN));
+                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorGentsLight);
+                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (team.getKind()) {
             case INDOOR_4X4:
-                viewHolder.beachItem.setVisibility(View.GONE);
-                viewHolder.indoor6x6Item.setVisibility(View.GONE);
-                viewHolder.indoor4x4Item.setVisibility(View.VISIBLE);
+                viewHolder.kindItem.setChipIconResource(R.drawable.ic_4x4_small);
+                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
+                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
-                viewHolder.beachItem.setVisibility(View.VISIBLE);
-                viewHolder.indoor6x6Item.setVisibility(View.GONE);
-                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.kindItem.setChipIconResource(R.drawable.ic_beach);
+                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
+                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
-                viewHolder.beachItem.setVisibility(View.GONE);
-                viewHolder.indoor6x6Item.setVisibility(View.VISIBLE);
-                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.kindItem.setChipIconResource(R.drawable.ic_6x6_small);
+                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
+                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 

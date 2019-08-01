@@ -21,17 +21,27 @@
     <color name="colorTextTeamLightBackground">@color/colorOnSurface</color>
 
     <color name="colorLive">#ffcc0000</color>
+    <color name="colorLiveLight">#faa</color>
     <color name="colorPlayerIn">#006032</color>
     <color name="colorPlayerOut">#bc0019</color>
     <color name="colorIndoor">#1f4294</color>
+    <color name="colorIndoorLight">#cedaf5</color>
     <color name="colorBeach">#f2bb1a</color>
+    <color name="colorBeachLight">#f8dc8a</color>
     <color name="colorTime">#1f1f1f</color>
+    <color name="colorTimeLight">#d1d1d1</color>
     <color name="colorIndoor4x4">#2980b9</color>
+    <color name="colorIndoor4x4Light">#e7f2fa</color>
     <color name="colorWebPublic">#2980b9</color>
+    <color name="colorWebPublicLight">#e7f2fa</color>
     <color name="colorWebPrivate">#ffcc0000</color>
+    <color name="colorWebPrivateLight">#faa</color>
     <color name="colorMixed">#006032</color>
+    <color name="colorMixedLight">#c8ffe4</color>
     <color name="colorLadies">#c2185b</color>
+    <color name="colorLadiesLight">#f7c0d6</color>
     <color name="colorGents">#1f4294</color>
+    <color name="colorGentsLight">#cedaf5</color>
     <color name="colorYellowCard">#f3bc07</color>
     <color name="colorRedCard">#bc0019</color>
     <color name="colorReportDuplicate">#d6d7d7</color>

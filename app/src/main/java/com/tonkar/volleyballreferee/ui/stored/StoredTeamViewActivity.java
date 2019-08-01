@@ -48,47 +48,45 @@ public class StoredTeamViewActivity extends AppCompatActivity {
         }
 
         TextView nameText = findViewById(R.id.stored_team_name);
-        Chip beachItem = findViewById(R.id.beach_team_item);
-        Chip indoor6x6Item = findViewById(R.id.indoor_6x6_team_item);
-        Chip indoor4x4Item = findViewById(R.id.indoor_4x4_team_item);
-        Chip genderItem = findViewById(R.id.gender_team_item);
+        Chip kindItem = findViewById(R.id.team_kind_item);
+        Chip genderItem = findViewById(R.id.team_gender_item);
 
         nameText.setText(mTeamService.getTeamName(null));
 
         switch (mTeamService.getGender()) {
             case MIXED:
                 genderItem.setChipIconResource(R.drawable.ic_mixed);
-                genderItem.setChipBackgroundColorResource(R.color.colorMixed);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipBackgroundColorResource(R.color.colorMixedLight);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 genderItem.setChipIconResource(R.drawable.ic_ladies);
-                genderItem.setChipBackgroundColorResource(R.color.colorLadies);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipBackgroundColorResource(R.color.colorLadiesLight);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 genderItem.setChipIconResource(R.drawable.ic_gents);
-                genderItem.setChipBackgroundColorResource(R.color.colorGents);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipBackgroundColorResource(R.color.colorGentsLight);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (mTeamService.getTeamsKind()) {
             case INDOOR_4X4:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.VISIBLE);
+                kindItem.setChipIconResource(R.drawable.ic_4x4_small);
+                kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
-                beachItem.setVisibility(View.VISIBLE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_beach);
+                kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.VISIBLE);
-                indoor4x4Item.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_6x6_small);
+                kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 

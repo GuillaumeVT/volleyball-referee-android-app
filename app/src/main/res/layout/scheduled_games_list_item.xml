@@ -20,57 +20,28 @@
 
             <com.google.android.material.chip.Chip
                     style="@style/IconChip"
-                    android:id="@+id/live_game_item"
+                    android:id="@+id/game_status_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipIcon="@drawable/ic_live"
-                    app:chipIconTint="@android:color/white"
-                    app:chipBackgroundColor="@color/colorLive"/>
+                    app:chipBackgroundColor="@color/colorLiveLight"/>
 
             <com.google.android.material.chip.Chip
                     style="@style/IconChip"
-                    android:id="@+id/beach_game_item"
+                    android:id="@+id/game_kind_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipIcon="@drawable/ic_beach"
                     app:chipIconTint="@color/colorOnSurface"
-                    app:chipBackgroundColor="@color/colorBeach"/>
-
-            <com.google.android.material.chip.Chip
-                    style="@style/TextChip"
-                    android:id="@+id/indoor_6x6_game_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="6x6"
-                    android:textColor="@android:color/white"
-                    app:chipBackgroundColor="@color/colorIndoor"/>
-
-            <com.google.android.material.chip.Chip
-                    style="@style/TextChip"
-                    android:id="@+id/indoor_4x4_game_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4x4"
-                    android:textColor="@android:color/white"
-                    app:chipBackgroundColor="@color/colorIndoor4x4"/>
+                    app:chipBackgroundColor="@color/colorBeachLight"/>
 
             <com.google.android.material.chip.Chip
                     style="@style/IconChip"
-                    android:id="@+id/time_game_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipIcon="@drawable/ic_time_based"
-                    app:chipIconTint="@android:color/white"
-                    app:chipBackgroundColor="@color/colorTime"/>
-
-            <com.google.android.material.chip.Chip
-                    style="@style/IconChip"
-                    android:id="@+id/gender_game_item"
+                    android:id="@+id/game_gender_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipIcon="@drawable/ic_mixed"
-                    app:chipIconTint="@android:color/white"
-                    app:chipBackgroundColor="@color/colorMixed"
+                    app:chipBackgroundColor="@color/colorMixedLight"
                     android:visibility="visible"/>
 
         </com.google.android.material.chip.ChipGroup>

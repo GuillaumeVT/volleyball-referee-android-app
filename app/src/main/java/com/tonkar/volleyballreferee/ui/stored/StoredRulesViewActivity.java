@@ -54,29 +54,27 @@ public class StoredRulesViewActivity extends AppCompatActivity {
 
         LinearLayout itemLayout = findViewById(R.id.stored_rules_item_layout);
         TextView nameText = findViewById(R.id.stored_rules_name);
-        Chip beachItem = findViewById(R.id.beach_rules_item);
-        Chip indoor6x6Item = findViewById(R.id.indoor_6x6_rules_item);
-        Chip indoor4x4Item = findViewById(R.id.indoor_4x4_rules_item);
+        Chip kindItem = findViewById(R.id.rules_kind_item);
 
         itemLayout.setPadding(0, 0, 0, 0);
         nameText.setText(mRules.getName());
 
         switch (mRules.getKind()) {
             case INDOOR_4X4:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.VISIBLE);
+                kindItem.setChipIconResource(R.drawable.ic_4x4_small);
+                kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
-                beachItem.setVisibility(View.VISIBLE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_beach);
+                kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.VISIBLE);
-                indoor4x4Item.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_6x6_small);
+                kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 

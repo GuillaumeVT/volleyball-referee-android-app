@@ -102,12 +102,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         TextView summaryText = findViewById(R.id.stored_game_summary);
         TextView dateText = findViewById(R.id.stored_game_date);
         TextView scoreText = findViewById(R.id.stored_game_score);
-        Chip beachItem = findViewById(R.id.beach_game_item);
-        Chip indoor6x6Item = findViewById(R.id.indoor_6x6_game_item);
-        Chip indoor4x4Item = findViewById(R.id.indoor_4x4_game_item);
-        Chip timeItem = findViewById(R.id.time_game_item);
-        Chip genderItem = findViewById(R.id.gender_game_item);
-        Chip indexedItem = findViewById(R.id.indexed_game_item);
+        Chip kindItem = findViewById(R.id.game_kind_item);
+        Chip genderItem = findViewById(R.id.game_gender_item);
+        Chip indexedItem = findViewById(R.id.game_indexed_item);
         TextView leagueText = findViewById(R.id.stored_game_league);
 
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
@@ -122,58 +119,54 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         switch (mStoredGame.getGender()) {
             case MIXED:
                 genderItem.setChipIconResource(R.drawable.ic_mixed);
-                genderItem.setChipBackgroundColorResource(R.color.colorMixed);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipBackgroundColorResource(R.color.colorMixedLight);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case LADIES:
                 genderItem.setChipIconResource(R.drawable.ic_ladies);
-                genderItem.setChipBackgroundColorResource(R.color.colorLadies);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipBackgroundColorResource(R.color.colorLadiesLight);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case GENTS:
                 genderItem.setChipIconResource(R.drawable.ic_gents);
-                genderItem.setChipBackgroundColorResource(R.color.colorGents);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                genderItem.setChipBackgroundColorResource(R.color.colorGentsLight);
+                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         switch (mStoredGame.getKind()) {
             case INDOOR_4X4:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.VISIBLE);
-                timeItem.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_4x4_small);
+                kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
-                beachItem.setVisibility(View.VISIBLE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.GONE);
-                timeItem.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_beach);
+                kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case TIME:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.GONE);
-                indoor4x4Item.setVisibility(View.GONE);
-                timeItem.setVisibility(View.VISIBLE);
+                kindItem.setChipIconResource(R.drawable.ic_time_based);
+                kindItem.setChipBackgroundColorResource(R.color.colorTimeLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
-                beachItem.setVisibility(View.GONE);
-                indoor6x6Item.setVisibility(View.VISIBLE);
-                indoor4x4Item.setVisibility(View.GONE);
-                timeItem.setVisibility(View.GONE);
+                kindItem.setChipIconResource(R.drawable.ic_6x6_small);
+                kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
+                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
         if (PrefUtils.canSync(this)) {
             if (mStoredGame.isIndexed()) {
                 indexedItem.setChipIconResource(R.drawable.ic_public);
-                indexedItem.setChipBackgroundColorResource(R.color.colorWebPublic);
-                indexedItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                indexedItem.setChipBackgroundColorResource(R.color.colorWebPublicLight);
+                indexedItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
             } else {
                 indexedItem.setChipIconResource(R.drawable.ic_private);
-                indexedItem.setChipBackgroundColorResource(R.color.colorWebPrivate);
-                indexedItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                indexedItem.setChipBackgroundColorResource(R.color.colorWebPrivateLight);
+                indexedItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
             }
             indexedItem.setVisibility(View.VISIBLE);
         } else {

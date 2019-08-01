@@ -1,6 +1,8 @@
 package com.tonkar.volleyballreferee.ui.stored;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
@@ -21,9 +24,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
 
     static class ViewHolder {
         TextView nameText;
-        Chip     beachItem;
-        Chip     indoor6x6Item;
-        Chip     indoor4x4Item;
+        Chip     kindItem;
     }
 
     private final LayoutInflater        mLayoutInflater;
@@ -72,9 +73,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
             storedRulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.nameText = storedRulesView.findViewById(R.id.stored_rules_name);
-            viewHolder.beachItem = storedRulesView.findViewById(R.id.beach_rules_item);
-            viewHolder.indoor6x6Item = storedRulesView.findViewById(R.id.indoor_6x6_rules_item);
-            viewHolder.indoor4x4Item = storedRulesView.findViewById(R.id.indoor_4x4_rules_item);
+            viewHolder.kindItem = storedRulesView.findViewById(R.id.rules_kind_item);
             storedRulesView.setTag(viewHolder);
         }
         else {
@@ -86,20 +85,20 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
 
         switch (rules.getKind()) {
             case INDOOR_4X4:
-                viewHolder.beachItem.setVisibility(View.GONE);
-                viewHolder.indoor6x6Item.setVisibility(View.GONE);
-                viewHolder.indoor4x4Item.setVisibility(View.VISIBLE);
+                viewHolder.kindItem.setChipIconResource(R.drawable.ic_4x4_small);
+                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
+                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case BEACH:
-                viewHolder.beachItem.setVisibility(View.VISIBLE);
-                viewHolder.indoor6x6Item.setVisibility(View.GONE);
-                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.kindItem.setChipIconResource(R.drawable.ic_beach);
+                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
+                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
             case INDOOR:
             default:
-                viewHolder.beachItem.setVisibility(View.GONE);
-                viewHolder.indoor6x6Item.setVisibility(View.VISIBLE);
-                viewHolder.indoor4x4Item.setVisibility(View.GONE);
+                viewHolder.kindItem.setChipIconResource(R.drawable.ic_6x6_small);
+                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
+                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
                 break;
         }
 
