@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
@@ -11,9 +12,9 @@
     <string name="reject">Recusar</string>
     <string name="remove">Remover</string>
     <string name="create">Criar</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
+    <string name="edit">Editar</string>
+    <string name="save">Salvar</string>
+    <string name="start">Iniciar</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Voleibol de quadra</string>
@@ -50,31 +51,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Entrar</string>
+    <string name="user_sign_up">Inscrever-se</string>
+    <string name="user_password_update">Mudar minha senha</string>
+    <string name="user_lost_password">Esqueci minha senha</string>
     <string name="user_sign_out">Sair</string>
     <string name="user_sign_in_why_title">Por que eu tenho que logar?</string>
     <string name="user_sign_in_why_message">Seus dados no Volleyball Referee (jogos, equipes, regras, ligas, amigos) serão sincronizados com o nosso servidor. Fazendo login, nós saberemos quem você é e iremos manter seus dados associados com a sua conta.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_pseudo_hint">Nome de Usuário</string>
+    <string name="user_email_hint">E-mail</string>
+    <string name="user_confirm_email_hint">Confirmar e-mail</string>
+    <string name="user_email_not_matching">E-mails não conferem</string>
+    <string name="user_current_password_hint">Senha Atual</string>
+    <string name="user_password_hint">Senha</string>
+    <string name="user_confirm_password_hint">Confirmar Senha</string>
+    <string name="user_new_password_hint">Nova Senha</string>
+    <string name="user_confirm_new_password_hint">Confirmar Nova Senha</string>
+    <string name="user_password_not_matching">Senhas não conferem</string>
+    <string name="user_password_error">Senha incoreta</string>
+    <string name="user_locked_error">A Conta está bloqueada por 30 minutos após muitas tentativas sem sucesso de entrar</string>
+    <string name="user_email_pseudo_conflict">Esse nome de usuário ou este e-mail já existem</string>
+    <string name="user_request_error">Erro ao processar o pedido</string>
     <string name="user_signed_in_as_pseudo">Logado como %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Um link de recuperação de senha foi enviado para %s</string>
+    <string name="password_strength">A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial</string>
+    <string name="password_strength_error">A senha não atende aos critérios mencionados acima</string>
     <string name="user_signed_out">Você saiu</string>
     <string name="search_colleague">Procurar amigo</string>
     <string name="add_colleague">Adicionar amigo</string>
@@ -141,6 +142,7 @@
     <string name="match_point">Match point</string>
     <string name="set_point">Set point</string>
     <string name="confirm_lineup_title">Escalação inicial</string>
+    <string name="confirm_team_lineup_question">Você confirma essa escalação inicial para %s no set?</string>
     <string name="no_substitution_message">Não há substituição disponível</string>
     <string name="confirm_set_question">Você confirma esse ponto?</string>
     <string name="start_match_description">Iniciar partida</string>

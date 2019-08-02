@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
@@ -11,9 +12,9 @@
     <string name="reject">Rejeitar</string>
     <string name="remove">Remover</string>
     <string name="create">Criar</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
+    <string name="edit">Editar</string>
+    <string name="save">Gravar</string>
+    <string name="start">Começar</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Voleibol</string>
@@ -28,12 +29,12 @@
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Os meus dados</string>
     <string name="configuration_group">Configurações</string>
-    <string name="completed_games">Jogos finalizados</string>
-    <string name="available_games">Agendados &amp; jogos ao vivo</string>
+    <string name="completed_games">Jogos terminados</string>
+    <string name="available_games">Jogos agendados &amp; e ao vivo</string>
     <string name="teams">Equipas</string>
     <string name="rules">Regras</string>
     <string name="colleagues">Colegas</string>
-    <string name="live_games_vbr_com">Jogos ao vivo na página web</string>
+    <string name="live_games_vbr_com">Jogos ao vivo</string>
     <string name="my_account">A minha conta</string>
     <string name="news">Notícias</string>
     <string name="no_news">Sem notícias para apresentar</string>
@@ -42,40 +43,40 @@
     <string name="purchase">Compra</string>
     <string name="already_purchased">Já comprado</string>
     <string name="purchase_web_premium_summary">
-        \n\u2022 Mantenha os seus jogos, equipas e regras, sincronizados entre os seus dispositivos.
-        \n\u2022 Disfrute de armazenamento ilimitado para os seus dados e a melhor qualidade de transmissão dos seus jogos ao vivo.
+        \n\u2022 Mantenha os seus jogos, equipas e regras, sincronizados entre dispositivos.
+        \n\u2022 Disfrute de armazenamento ilimitado para os seus dados e a melhor qualidade de transmissão dos jogos ao vivo.
         \n\u2022 Agende os seus jogos para transmitir mais tarde.
-        \n\u2022 Apagou o seu jogo por engano? Recupere os seus jogos a partir da cópia de segurança no servidor.
+        \n\u2022 Apagou o jogo por engano? Recupere os seus jogos a partir da cópia de segurança no servidor.
         \n\u2022 Beneficie automaticamente das futuras novas funcionalidades online.
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Iniciar sessão</string>
+    <string name="user_sign_up">Registar</string>
+    <string name="user_password_update">Atualizar palavra-passe</string>
+    <string name="user_lost_password">Palavra-passe esquecida</string>
     <string name="user_sign_out">Terminar sessão</string>
     <string name="user_sign_in_why_title">Por que devo iniciar sessão?</string>
     <string name="user_sign_in_why_message">Os seus dados do Volleyball Referee (jogos, equipas, regras, ligas, colegas) serão sincronizados com o nosso servidor. Ao iniciar sessão, nós saberemos quem o fez e manteremos os dados sincronizados com a sua conta.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_pseudo_hint">Pseudónimo do árbitro</string>
     <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_confirm_email_hint">Confirmar email</string>
+    <string name="user_email_not_matching">Os endereços de email não coincidem</string>
+    <string name="user_current_password_hint">Palavra-passe atual</string>
+    <string name="user_password_hint">Palavra-passe</string>
+    <string name="user_confirm_password_hint">Confirmar palavra-passe</string>
+    <string name="user_new_password_hint">Nova palavra-passe</string>
+    <string name="user_confirm_new_password_hint">Confirmar nova palavra-passe</string>
+    <string name="user_password_not_matching">As palavras-passe não coincidem</string>
+    <string name="user_password_error">Palavra-passe errada</string>
+    <string name="user_locked_error">A conta ficará bloqueada durante 30 minutos devido a demasiadas tentativas de início de sessão</string>
+    <string name="user_email_pseudo_conflict">O pseudónimo de árbitro ou este email já existem</string>
+    <string name="user_request_error">Erro a processar o pedido</string>
     <string name="user_signed_in_as_pseudo">Sessão iniciada como %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
-    <string name="user_signed_out">Saiu do registo</string>
+    <string name="user_password_recovery_initiated">Um link de recuperação foi enviado por email para %s</string>
+    <string name="password_strength">A palavra-passe tem que conter pelo menos 8 caracteres, incluindo 1 letra maiúscula, 1 número e 1 caracter especial</string>
+    <string name="password_strength_error">A palavra passe não satisfaz os critérios indicados</string>
+    <string name="user_signed_out">Sessão terminada</string>
     <string name="search_colleague">Procurar colega</string>
     <string name="add_colleague">Adicionar colega</string>
     <string name="received_colleague_request">Recebeu um pedido de colega de %s</string>
@@ -112,7 +113,7 @@
     <!-- Game activity -->
     <string name="toss_tails">Coroa</string>
     <string name="toss_heads">Cara</string>
-    <string name="toss_coin">Atire a moeda ao ar</string>
+    <string name="toss_coin">Atirar a moeda ao ar</string>
     <string name="swap_first_service">Alterar primeiro serviço</string>
     <string name="navigate_home">Voltar ao Início</string>
     <string name="reset_set">Reiniciar o set atual</string>
@@ -141,12 +142,13 @@
     <string name="match_point">Match point</string>
     <string name="set_point">Set point</string>
     <string name="confirm_lineup_title">Formação inicial</string>
+    <string name="confirm_team_lineup_question">Confirma esta formação inicial para %s neste set?</string>
     <string name="no_substitution_message">Não há substituição disponível</string>
     <string name="confirm_set_question">Confirma esse ponto?</string>
     <string name="start_match_description">Iniciar jogo</string>
     <string name="stop_match_description">Terminar jogo</string>
     <string name="confirm_start_match_question">Deseja iniciar esse jogo?</string>
-    <string name="confirm_stop_match_question">Deseja terminar essa jogo?</string>
+    <string name="confirm_stop_match_question">Deseja terminar esse jogo?</string>
     <string name="index_game">Alternar público / jogo privado</string>
     <string name="public_game_message">O jogo é agora público</string>
     <string name="private_game_message">O jogo é agora privado</string>

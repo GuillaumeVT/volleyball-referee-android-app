@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
@@ -11,8 +12,8 @@
     <string name="reject">Afwijzen</string>
     <string name="remove">Verwijderen</string>
     <string name="create">Creëer</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
+    <string name="edit">Bewerk</string>
+    <string name="save">Opslaan</string>
     <string name="start">Start</string>
 
     <!-- Main activity -->
@@ -21,9 +22,9 @@
     <string name="new_score_based_game">Scorebord</string>
     <string name="new_time_based_game">Tijdgebaseerd</string>
     <string name="permission_title">Over rechten</string>
-    <string name="permission_message">Deze applicatie heeft de opslagrechten nodig om de resultaten van de wedstrijd te delen.</string>
+    <string name="permission_message">Deze applicatie heeft opslagrechten nodig om de resultaten van de wedstrijd te delen.</string>
     <string name="resume_game_title">Spel hervatten</string>
-    <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u dit te hervatten of te verwijderen?</string>
+    <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u deze te hervatten of te verwijderen?</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Mijn data</string>
@@ -32,7 +33,7 @@
     <string name="available_games">Scheduled &amp; live matches</string>
     <string name="teams">Ploegen</string>
     <string name="rules">Regels</string>
-    <string name="colleagues">Collega\'s</string>
+    <string name="colleagues">Collega scheidsrechters</string>
     <string name="live_games_vbr_com">Live wedstrijden op de website</string>
     <string name="my_account">Mijn account</string>
     <string name="news">Nieuws</string>
@@ -42,7 +43,7 @@
     <string name="purchase">Aankoop</string>
     <string name="already_purchased">Al gekocht</string>
     <string name="purchase_web_premium_summary">
-        \n\u2022 Hou je wedstrijden, ploegen en regels gesynchroniseerd tussen uw apparaten.
+        \n\u2022 Hou je wedstrijden, ploegen en regels gesynchroniseerd tussen je apparaten.
         \n\u2022 Geniet van de onbeperkte opslag voor je gegevens en betere streamingkwaliteit voor je live wedstrijden.
         \n\u2022 Plan je wedstrijden die later gespeeld worden.
         \n\u2022 Heb je per ongeluk je wedstrijd verwijderd? Herstel je wedstrijden van de server back-up.
@@ -50,31 +51,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Aanmelden</string>
+    <string name="user_sign_up">Registreren</string>
+    <string name="user_password_update">Update mijn wachtwoord</string>
+    <string name="user_lost_password">Wachtwoord vergeten</string>
     <string name="user_sign_out">Uitloggen</string>
     <string name="user_sign_in_why_title">Waarom moet ik me aanmelden?</string>
     <string name="user_sign_in_why_message">Je volleybalgegevens (wedstrijden, ploegen, regels, competities, collega\'s) worden gesynchroniseerd met onze server. Door u aan te melden, weten we wie u bent en houden we uw gegevens aan uw account gekoppeld.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_pseudo_hint">Scheidsrechter pseudoniem</string>
     <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_confirm_email_hint">Bevestig email</string>
+    <string name="user_email_not_matching">E-mailadressen komen niet overeen</string>
+    <string name="user_current_password_hint">Huidig wachtwoord</string>
+    <string name="user_password_hint">Wachtwoord</string>
+    <string name="user_confirm_password_hint">Bevestig wachtwoord</string>
+    <string name="user_new_password_hint">Nieuw wachtwoord</string>
+    <string name="user_confirm_new_password_hint">Bevestig nieuw wachtwoord</string>
+    <string name="user_password_not_matching">Wachtwoorden komen niet overeen</string>
+    <string name="user_password_error">Verkeerd wachtwoord</string>
+    <string name="user_locked_error">Account is 30 minuten vergrendeld na te veel mislukte pogingen om in te loggen</string>
+    <string name="user_email_pseudo_conflict">Dit scheidsrechter pseudoniem of deze e-mail bestaat al</string>
+    <string name="user_request_error">Fout tijdens het verwerken van het verzoek</string>
     <string name="user_signed_in_as_pseudo">Aangemeld als %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Een herstellink is per e-mail verzonden naar %s</string>
+    <string name="password_strength">Het wachtwoord moet minimaal 8 tekens bevatten, waaronder 1 hoofdletter, 1 cijfer en 1 speciaal teken</string>
+    <string name="password_strength_error">Wachtwoord voldoet niet aan de bovengenoemde criteria</string>
     <string name="user_signed_out">Afgemeld</string>
     <string name="search_colleague">Zoek een collega</string>
     <string name="add_colleague">Voeg collega toe</string>
@@ -141,6 +142,7 @@
     <string name="match_point">Matchbal</string>
     <string name="set_point">Setbal</string>
     <string name="confirm_lineup_title">Startopstelling</string>
+    <string name="confirm_team_lineup_question">Bevestig je deze beginopstelling voor %s in deze set?</string>
     <string name="no_substitution_message">Geen vervanging beschikbaar</string>
     <string name="confirm_set_question">Bevestig je dit punt?</string>
     <string name="start_match_description">Start de wedstrijd</string>

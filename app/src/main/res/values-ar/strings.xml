@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">حكم الكرة الطائرة</string>
 
@@ -11,9 +12,9 @@
     <string name="reject">رفض</string>
     <string name="remove">إزالة</string>
     <string name="create">إنشاء</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
+    <string name="edit">تعديل</string>
+    <string name="save">حفظ</string>
+    <string name="start">بدأ</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">الكرة الطائرة</string>
@@ -44,31 +45,31 @@
     <string name="purchase_web_premium_summary">\n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك. \n\u2022 استمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة. \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا. \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم. \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.</string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">تسجيل الدخول</string>
+    <string name="user_sign_up">تسجيل حساب</string>
+    <string name="user_password_update">تحديث كلمة المرور</string>
+    <string name="user_lost_password">فقدان كلمة المرور</string>
     <string name="user_sign_out">تسجيل الخروج</string>
     <string name="user_sign_in_why_title">لماذا يجب عليك تسجيل الدخول؟</string>
     <string name="user_sign_in_why_message">ستتم مزامنة بيانات حكم الكرة الطائرة (المباريات ، الفرق ، القواعد ، البطولات ، الزملاء) مع خادمنا. من خلال تسجيل الدخول ، سوف نعرف من أنت و سنحتفظ ببياناتك المرتبطة بحسابك.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_pseudo_hint">إسم الحكم المستعار</string>
+    <string name="user_email_hint">البريد الإلكتروني</string>
+    <string name="user_confirm_email_hint">تأكيد عنوان البريد الإلكتروني</string>
+    <string name="user_email_not_matching">عناوين البريد الإلكتروني غير متطابق</string>
+    <string name="user_current_password_hint">كلمة المرور الحالية</string>
+    <string name="user_password_hint">كلمه المرور</string>
+    <string name="user_confirm_password_hint">تأكيد كلمة المرور</string>
+    <string name="user_new_password_hint">كلمة المرور الجديدة</string>
+    <string name="user_confirm_new_password_hint">تأكيد كلمة المرور الجديدة</string>
+    <string name="user_password_not_matching">كلمات المرور غير متطابق</string>
+    <string name="user_password_error">كلمة المرور خاطئة</string>
+    <string name="user_locked_error">الحساب مغلق لمدة 30 دقيقة بعد محاولات فاشلة كثيرة لتسجيل الدخول</string>
+    <string name="user_email_pseudo_conflict">اسم مستعار للحكم أو هذا البريد الإلكتروني موجود بالفعل</string>
+    <string name="user_request_error">خطأ أثناء معالجة الطلب</string>
     <string name="user_signed_in_as_pseudo">تسجيل الدخول ك %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">تم إرسال رابط الاسترداد عن طريق البريد الإلكتروني إلى %s</string>
+    <string name="password_strength">يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل ، بما في ذلك حرف كبير واحد ورقم واحد وحرف خاص واحد</string>
+    <string name="password_strength_error">كلمة المرور لا تفي بالمعايير المذكورة أعلاه</string>
     <string name="user_signed_out">تسجيل الخروج</string>
     <string name="search_colleague">البحث في الزملاء</string>
     <string name="add_colleague">أضف زميل</string>
@@ -135,6 +136,7 @@
     <string name="match_point">نقطة المباراة</string>
     <string name="set_point">نقطة الشوط</string>
     <string name="confirm_lineup_title">تشكيلة البداية</string>
+    <string name="confirm_team_lineup_question">هل تؤكد خط البداية هذا على %s في هذه الشوط؟</string>
     <string name="no_substitution_message">لا يوجد بديل متاح</string>
     <string name="confirm_set_question">هل تؤكد هذه النقطة؟</string>
     <string name="start_match_description">بدأ المباراة</string>

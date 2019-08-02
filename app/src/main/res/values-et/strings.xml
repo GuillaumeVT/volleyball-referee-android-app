@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
@@ -11,8 +12,8 @@
     <string name="reject">Tagasi lükkamine</string>
     <string name="remove">Eemalda</string>
     <string name="create">Loo</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
+    <string name="edit">Muuda</string>
+    <string name="save">Salvesta</string>
     <string name="start">Start</string>
 
     <!-- Main activity -->
@@ -50,31 +51,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Logi sisse</string>
+    <string name="user_sign_up">Registreeru</string>
+    <string name="user_password_update">Minu salasõna uuendamine</string>
+    <string name="user_lost_password">Unustasin salasõna</string>
     <string name="user_sign_out">Logi välja</string>
     <string name="user_sign_in_why_title">Miks ennast registreerida?</string>
     <string name="user_sign_in_why_message">Teie Volleyball Referee rakenduse andmed (mängud, võistkonnad, reeglid, liigad ja kolleegid) sünkroniseeritakse meie sereriga. Registreerimisega me saame teada kes Te olete ning suudame seostada andmed Teie kontoga.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_pseudo_hint">Kohtuniku pseudonüüm</string>
     <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_confirm_email_hint">Emaili kordamine</string>
+    <string name="user_email_not_matching">Email aadress ei klapi match</string>
+    <string name="user_current_password_hint">Kehtiv salasõna</string>
+    <string name="user_password_hint">Salasõna</string>
+    <string name="user_confirm_password_hint">Korda salasõna</string>
+    <string name="user_new_password_hint">Uus salasõna</string>
+    <string name="user_confirm_new_password_hint">Uue salasõna kordamine</string>
+    <string name="user_password_not_matching">salasõna ei klapi</string>
+    <string name="user_password_error">Vale salasõna</string>
+    <string name="user_locked_error">Konto on blokeeritud 30 minutiks pärast mitmeid sisselogimise ebaõnnestumisi</string>
+    <string name="user_email_pseudo_conflict">Antud kohtuniku pseudnüüm või email on juba olemas</string>
+    <string name="user_request_error">Viga päringu protsessis</string>
     <string name="user_signed_in_as_pseudo">Registreeritud nimega %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Salasõna taastamise link on saadetud emailile: %s</string>
+    <string name="password_strength">Salasõna peab olema vähemalt 8 sümbolist koosnev, milles 1 peab olema suur täht, 1 number ning 1 erisümbol</string>
+    <string name="password_strength_error">Sisestatud salasõna ei vasta kriteeriumitele</string>
     <string name="user_signed_out">Väljas</string>
     <string name="search_colleague">Kolleegi otsimine</string>
     <string name="add_colleague">Kolleegi lisamine</string>
@@ -141,6 +142,7 @@
     <string name="match_point">Matšpall</string>
     <string name="set_point">Geimpall</string>
     <string name="confirm_lineup_title">Asetus</string>
+    <string name="confirm_team_lineup_question">Kas Te kinnitate algasetust võistkonnal %s antud geimi jaoks?</string>
     <string name="no_substitution_message">Vahetust pole võimalik teha</string>
     <string name="confirm_set_question">Kinnitada antud geimi lõppemist?</string>
     <string name="start_match_description">Alusta mängu</string>

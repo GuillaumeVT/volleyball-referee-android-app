@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
@@ -11,8 +12,8 @@
     <string name="reject">Ablehnen</string>
     <string name="remove">Entfernen</string>
     <string name="create">Erstellen</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="save">Speichern</string>
     <string name="start">Start</string>
 
     <!-- Main activity -->
@@ -50,31 +51,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Anmelden</string>
+    <string name="user_sign_up">Registrieren</string>
+    <string name="user_password_update">Kennwort aktualisieren</string>
+    <string name="user_lost_password">Kennwort vergessen</string>
     <string name="user_sign_out">Abmelden</string>
     <string name="user_sign_in_why_title">Warum muss ich mich anmelden?</string>
     <string name="user_sign_in_why_message">Ihre Volleyball Referee Daten (Spiele, Mannschaften, Regeln, Ligen, Schulen / Hochschulen) werden mit unserem Server synchronisiert. Durch das Anmelden können wir die mit dem Konto verknüpften Daten speichern.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_pseudo_hint">Schiedsrichter Pseudonym</string>
+    <string name="user_email_hint">E-Mail</string>
+    <string name="user_confirm_email_hint">E-Mail Adresse bestätigen</string>
+    <string name="user_email_not_matching">E-Mail Adresse stimmt nicht überein</string>
+    <string name="user_current_password_hint">Aktuelles Kennwort</string>
+    <string name="user_password_hint">Kennwort</string>
+    <string name="user_confirm_password_hint">Kennwort bestätigen</string>
+    <string name="user_new_password_hint">Neues Kennwort</string>
+    <string name="user_confirm_new_password_hint">Neues Kennwort bestätigen</string>
+    <string name="user_password_not_matching">Kennwörter stimmen nicht überein.</string>
+    <string name="user_password_error">Falsches Kennwort</string>
+    <string name="user_locked_error">Der Account ist auf Grund von zu vielen falschen Anmeldeversuchen für 30 Minuten gesperrt.</string>
+    <string name="user_email_pseudo_conflict">Schiedsrichter Pseudonym oder E-Mail Adressen sind schon vorhanden.</string>
+    <string name="user_request_error">Fehler beim Verarbeiten der Anfrage</string>
     <string name="user_signed_in_as_pseudo">Anmelden als %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Ein Wiederherstellungslink wurde per E-Mail an %s versendet</string>
+    <string name="password_strength">Das Kennwort muss mindestens 8 Zeichen lang sein und mindestens ein Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.</string>
+    <string name="password_strength_error">Das Kennwort erfüllt nicht die Komplexitätsrichtlinien.</string>
     <string name="user_signed_out">Abgemeldet</string>
     <string name="search_colleague">Schule / Hochschule suchen</string>
     <string name="add_colleague">Schule / Hochschule hinzufügen</string>
@@ -141,6 +142,7 @@
     <string name="match_point">Matchball</string>
     <string name="set_point">Satzball</string>
     <string name="confirm_lineup_title">Startaufstellung</string>
+    <string name="confirm_team_lineup_question">Bestätigen Sie die Startaufstellung für %s in diesem Satz?</string>
     <string name="no_substitution_message">Kein Ersatz möglich</string>
     <string name="confirm_set_question">Bestätigen Sie diesen Punkt?</string>
     <string name="start_match_description">Starte das Spiel</string>

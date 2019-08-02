@@ -98,6 +98,7 @@
     <string name="select_gender">Выберите категорию (пол)</string>
     <string name="confirm">Подтвердить</string>
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
+    <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
     <string name="gender_description">Пол</string>
     <string name="match_duration_text">Выберите длительность матча</string>
     <string name="league_name">Название лиги / турнира</string>

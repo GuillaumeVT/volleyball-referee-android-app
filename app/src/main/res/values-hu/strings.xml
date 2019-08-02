@@ -12,8 +12,8 @@
     <string name="reject">Visszautasítás</string>
     <string name="remove">Eltávolítás</string>
     <string name="create">Létrehozás</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
+    <string name="edit">Szerkesztés</string>
+    <string name="save">Mentés</string>
     <string name="start">Start</string>
 
     <!-- Main activity -->
@@ -51,31 +51,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Bejelentkezés</string>
+    <string name="user_sign_up">Regisztráció</string>
+    <string name="user_password_update">Jelszó módosítása</string>
+    <string name="user_lost_password">Elfelejtettem a jelszavam</string>
     <string name="user_sign_out">Kijelentkezés</string>
     <string name="user_sign_in_why_title">Miért kell belépnem?</string>
     <string name="user_sign_in_why_message">Volleyball Referee adataid (mérkőzések, csapatok, egyedi szabályzatok, bajnokságok, játékvezető társak) le tudjuk menteni, de csak akkor, ha bejelentkezel.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_pseudo_hint">Név</string>
     <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_confirm_email_hint">Email megerősítése</string>
+    <string name="user_email_not_matching">Email címek nem egyeznek</string>
+    <string name="user_current_password_hint">Jelenlegi jelszó</string>
+    <string name="user_password_hint">Jelszó</string>
+    <string name="user_confirm_password_hint">Jelszó megerősítése</string>
+    <string name="user_new_password_hint">Új jelszó</string>
+    <string name="user_confirm_new_password_hint">Új jelszó megerősítése</string>
+    <string name="user_password_not_matching">A jelszavak nem egyeznek</string>
+    <string name="user_password_error">Hibás jelszó</string>
+    <string name="user_locked_error">Túl sok hibás próbálkozás. 30 percig nem lehet próbálkozni.</string>
+    <string name="user_email_pseudo_conflict">Ez a név vagy email már foglalt.</string>
+    <string name="user_request_error">Hiba történt a feldolgozás közben</string>
     <string name="user_signed_in_as_pseudo">Belépve, mint %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Jelszó helyreállító kiküldtük a %s címre</string>
+    <string name="password_strength">A jelszónak legalább 8 karakter hosszúnak kell lennie és tartalmaznia kell legalább 1 nagybetűt, 1 számot és egy speciális karaktert.</string>
+    <string name="password_strength_error">A jelszó nem elég biztonságos.</string>
     <string name="user_signed_out">Kilépve</string>
     <string name="search_colleague">Társ keresése</string>
     <string name="add_colleague">Társ hozzáadása</string>
@@ -142,6 +142,7 @@
     <string name="match_point">Mérkőzéslabda</string>
     <string name="set_point">Játszmalabda</string>
     <string name="confirm_lineup_title">Kezdőcsapat</string>
+    <string name="confirm_team_lineup_question">Valóban ez legyen a kezdő felállása a %s csapatnak?</string>
     <string name="no_substitution_message">Nincsen elérhető cserejátékos</string>
     <string name="confirm_set_question">Jóváhagyod ezt a pontot?</string>
     <string name="start_match_description">Mérkőzés indítása</string>
