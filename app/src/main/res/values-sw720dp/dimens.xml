@@ -53,6 +53,6 @@
 
     <dimen name="elevation">2dp</dimen>
 
-    <dimen name="empty_fab_space">120dp</dimen>
+    <dimen name="empty_fab_space">150dp</dimen>
 
 </resources>

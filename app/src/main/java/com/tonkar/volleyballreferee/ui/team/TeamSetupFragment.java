@@ -51,7 +51,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     private MaterialButton       mCaptainButton;
     private LiberoAdapter        mLiberoAdapter;
     private FloatingActionButton mGenderButton;
-    private ScrollView           mScrollView;
 
     public TeamSetupFragment() {}
 
@@ -85,8 +84,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         } else {
             mNumberOfShirts = savedInstanceState.getInt("number_of_shirts");
         }
-
-        mScrollView = view.findViewById(R.id.team_setup_scroll);
 
         final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
@@ -125,7 +122,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                     liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
                     mLiberoAdapter.notifyDataSetChanged();
                 }
-                mScrollView.post(() -> mScrollView.fullScroll(ScrollView.FOCUS_UP));
                 computeConfirmItemVisibility();
             });
         }

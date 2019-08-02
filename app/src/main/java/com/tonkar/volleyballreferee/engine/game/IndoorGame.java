@@ -169,7 +169,7 @@ public class IndoorGame extends Game implements IIndoorTeam {
         final java.util.Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
         final java.util.Set<Integer> excludedNumbers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
 
-        for(Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
+        for (Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
             int possibleReplacement = iterator.next();
             if (excludedNumbers.contains(possibleReplacement)) {
                 iterator.remove();
