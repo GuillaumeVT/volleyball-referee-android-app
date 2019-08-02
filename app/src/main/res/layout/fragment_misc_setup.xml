@@ -4,8 +4,7 @@
               android:layout_height="wrap_content"
               android:gravity="top|center"
               android:orientation="vertical"
-              android:clipToPadding="false"
-              android:paddingBottom="@dimen/empty_fab_space">
+              android:clipToPadding="false">
 
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

@@ -22,7 +22,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/big_margin_size"
-                    android:gravity="top|center"/>
+                    android:gravity="top|center"
+                    android:paddingBottom="@dimen/empty_fab_space"/>
 
         </ScrollView>
 

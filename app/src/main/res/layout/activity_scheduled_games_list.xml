@@ -49,7 +49,7 @@
                     app:backgroundTint="@color/colorIndoor"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_6x6"/>
+                    app:srcCompat="@drawable/ic_6x6_small"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_beach_game_button"
@@ -81,7 +81,7 @@
                     app:backgroundTint="@color/colorIndoor4x4"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_4x4"/>
+                    app:srcCompat="@drawable/ic_4x4_small"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_game_button"
