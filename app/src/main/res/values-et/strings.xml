@@ -156,6 +156,8 @@
     <string name="all_substitutions_used">Võistkond \"%s\": ei ole rohkem vahetusi antud geimis</string>
     <string name="sanctions_tab">Karistused</string>
     <string name="sanction">Karistus (%s)</string>
+    <string name="delay_sanction">Viivitus</string>
+    <string name="misconduct_sanction">Väärkäitumine</string>
     <string name="yellow_card">Hoiatus</string>
     <string name="red_card">Punktiga karistamine ning pallingu üleminek vastasvõistkonnale (palli kaotamine)</string>
     <string name="red_card_expulsion">Eemaldamine geimi lõpuni</string>

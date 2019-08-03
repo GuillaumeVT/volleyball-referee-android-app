@@ -27,7 +27,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.setup.AutocompleteRulesListAdapter;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.stored.StoredRulesActivity;
+import com.tonkar.volleyballreferee.ui.stored.rules.StoredRulesActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;

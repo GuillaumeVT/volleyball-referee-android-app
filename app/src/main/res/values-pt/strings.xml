@@ -156,6 +156,8 @@
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
     <string name="sanctions_tab">Sanções</string>
     <string name="sanction">Sanção (%s)</string>
+    <string name="delay_sanction">Demora</string>
+    <string name="misconduct_sanction">Conduta inapropriada</string>
     <string name="yellow_card">Advertência</string>
     <string name="red_card">Perda do ponto</string>
     <string name="red_card_expulsion">Expulsão do set</string>

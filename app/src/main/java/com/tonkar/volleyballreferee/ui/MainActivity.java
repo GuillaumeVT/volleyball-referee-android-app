@@ -108,8 +108,7 @@ public class MainActivity extends NavigationActivity {
             AlertDialogFragment alertDialogFragment;
 
             if (savedInstanceState == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.permission_title), getString(R.string.permission_message),
-                        getString(android.R.string.ok));
+                alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.permission_title), getString(R.string.permission_message), getString(android.R.string.ok));
                 alertDialogFragment.show(getSupportFragmentManager(), "permission");
             } else {
                 alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("permission");

@@ -15,4 +15,8 @@ public interface ISanction extends IBaseSanction {
     Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType);
 
     SanctionType getMostSeriousSanction(TeamType teamType, int number);
+
+    SanctionType getPossibleDelaySanction(TeamType teamType);
+
+    Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number);
 }

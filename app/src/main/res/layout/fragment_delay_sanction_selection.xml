@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top|start"
+              android:orientation="vertical">
+
+    <LinearLayout
+            android:id="@+id/delay_warning_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/sanction_max_width"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/delay_warning"/>
+
+        <com.tonkar.volleyballreferee.ui.team.PlayerToggleButton
+                android:id="@+id/delay_warning_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_size"
+                android:text="@string/yellow_card"
+                android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/delay_penalty_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/sanction_max_width"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/delay_penalty"/>
+
+        <com.tonkar.volleyballreferee.ui.team.PlayerToggleButton
+                android:id="@+id/delay_penalty_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_size"
+                android:text="@string/red_card"
+                android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/default_margin_size">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/sanction_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/big_margin_size"
-        android:layout_marginTop="@dimen/big_margin_size"
-        android:spinnerMode="dialog" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/sanction_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/big_margin_size"
+            android:background="@color/colorOnPrimary"
+            app:elevation="@dimen/elevation"
+            app:itemBackground="@drawable/navigation_menu_item"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconTint="@drawable/navigation_menu_item"
+            app:itemTextColor="@drawable/navigation_menu_item"
+            app:menu="@menu/navigation_menu_sanction"/>
 
-    <GridView
-        android:id="@+id/sanction_grid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="@dimen/form_button_size"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/default_margin_size"
-        android:numColumns="auto_fit" />
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <FrameLayout
+                android:id="@+id/sanction_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:layout_margin="@dimen/big_margin_size"
+                android:paddingBottom="@dimen/default_margin_size"/>
+
+    </ScrollView>
+
 </LinearLayout>
 

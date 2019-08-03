@@ -84,4 +84,12 @@ public enum SanctionType {
 
         return seriousness;
     }
+
+    public boolean isDelaySanctionType() {
+        return DELAY_WARNING.equals(this) || DELAY_PENALTY.equals(this);
+    }
+
+    public boolean isMisconductSanctionType() {
+        return !isDelaySanctionType();
+    }
 }

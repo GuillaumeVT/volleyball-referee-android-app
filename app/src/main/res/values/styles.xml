@@ -88,7 +88,7 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/default_text_size</item>
         <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@drawable/dialog_round_background</item>
     </style>
 
     <style name="NumberPickerTheme" parent="AppTheme">

@@ -60,7 +60,7 @@ import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.stored.StoredGamesListActivity;
+import com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 
 import java.io.File;

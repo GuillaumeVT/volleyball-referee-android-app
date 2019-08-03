@@ -42,32 +42,32 @@
         <activity android:name=".ui.game.GameActivity"/>
         <activity android:name=".ui.game.TimeBasedGameActivity"/>
         <activity
-                android:name=".ui.stored.StoredGamesListActivity"
+                android:name=".ui.stored.game.StoredGamesListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.stored.StoredIndoorGameActivity"
-                android:parentActivityName=".ui.stored.StoredGamesListActivity"/>
+                android:name=".ui.stored.game.StoredIndoorGameActivity"
+                android:parentActivityName=".ui.stored.game.StoredGamesListActivity"/>
         <activity
-                android:name=".ui.stored.StoredBeachGameActivity"
-                android:parentActivityName=".ui.stored.StoredGamesListActivity"/>
+                android:name=".ui.stored.game.StoredBeachGameActivity"
+                android:parentActivityName=".ui.stored.game.StoredGamesListActivity"/>
         <activity
-                android:name=".ui.stored.StoredTeamsListActivity"
+                android:name=".ui.stored.team.StoredTeamsListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.stored.StoredTeamActivity"
-                android:parentActivityName=".ui.stored.StoredTeamsListActivity"/>
+                android:name=".ui.stored.team.StoredTeamActivity"
+                android:parentActivityName=".ui.stored.team.StoredTeamsListActivity"/>
         <activity
-                android:name=".ui.stored.StoredTeamViewActivity"
-                android:parentActivityName=".ui.stored.StoredTeamsListActivity"/>
+                android:name=".ui.stored.team.StoredTeamViewActivity"
+                android:parentActivityName=".ui.stored.team.StoredTeamsListActivity"/>
         <activity
-                android:name=".ui.stored.StoredRulesListActivity"
+                android:name=".ui.stored.rules.StoredRulesListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.stored.StoredRulesActivity"
-                android:parentActivityName=".ui.stored.StoredRulesListActivity"/>
+                android:name=".ui.stored.rules.StoredRulesActivity"
+                android:parentActivityName=".ui.stored.rules.StoredRulesListActivity"/>
         <activity
-                android:name=".ui.stored.StoredRulesViewActivity"
-                android:parentActivityName=".ui.stored.StoredRulesListActivity"/>
+                android:name=".ui.stored.rules.StoredRulesViewActivity"
+                android:parentActivityName=".ui.stored.rules.StoredRulesListActivity"/>
         <activity
                 android:name=".ui.user.UserActivity"
                 android:parentActivityName=".ui.MainActivity"/>

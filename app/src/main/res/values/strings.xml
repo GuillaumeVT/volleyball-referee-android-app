@@ -156,6 +156,8 @@
     <string name="all_substitutions_used">%s has no more available substitution</string>
     <string name="sanctions_tab">Sanctions</string>
     <string name="sanction">Sanction (%s)</string>
+    <string name="delay_sanction">Delay</string>
+    <string name="misconduct_sanction">Misconduct</string>
     <string name="yellow_card">Simple warning</string>
     <string name="red_card">A point and service to the opponent</string>
     <string name="red_card_expulsion">Expulsion for the remainder of the set</string>

@@ -6,7 +6,7 @@
               android:layout_height="wrap_content"
               android:gravity="top|center"
               android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.stored.StoredTeamActivity">
+              tools:context="com.tonkar.volleyballreferee.ui.stored.team.StoredTeamActivity">
 
     <include layout="@layout/toolbar"/>
 

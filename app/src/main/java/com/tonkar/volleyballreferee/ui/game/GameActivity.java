@@ -36,6 +36,16 @@ import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.team.TeamListener;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+import com.tonkar.volleyballreferee.ui.game.court.BeachCourtFragment;
+import com.tonkar.volleyballreferee.ui.game.court.Indoor4x4CourtFragment;
+import com.tonkar.volleyballreferee.ui.game.court.IndoorCourtFragment;
+import com.tonkar.volleyballreferee.ui.game.ladder.LaddersFragment;
+import com.tonkar.volleyballreferee.ui.game.sanction.SanctionSelectionDialog;
+import com.tonkar.volleyballreferee.ui.game.sanction.SanctionsFragment;
+import com.tonkar.volleyballreferee.ui.game.substitution.SubstitutionsFragment;
+import com.tonkar.volleyballreferee.ui.game.timeout.CountDown;
+import com.tonkar.volleyballreferee.ui.game.timeout.CountDownDialogFragment;
+import com.tonkar.volleyballreferee.ui.game.timeout.TimeoutsFragment;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -96,6 +106,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         else {
             long duration = savedInstanceState.getLong("saved_timeout_duration");
             startToolbarCountDown(duration);
+            deleteFragmentSanction();
         }
 
         if (mGame == null || mStoredGamesService == null) {
@@ -347,13 +358,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     private void showSanctionDialog(final TeamType teamType) {
         final String title = String.format(Locale.getDefault(), getString(R.string.sanction), mGame.getTeamName(teamType));
-        SanctionSelectionDialog sanctionSelectionDialog = new SanctionSelectionDialog(getLayoutInflater(), this, title, mGame, teamType) {
-            @Override
-            public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-                mGame.giveSanction(teamType, sanctionType, number);
-            }
-        };
-        sanctionSelectionDialog.show();
+        SanctionSelectionDialog sanctionSelectionDialog = new SanctionSelectionDialog(title, mGame, teamType);
+        sanctionSelectionDialog.show(getSupportFragmentManager(), "sanction_dialog");
     }
 
     // Listeners
@@ -587,6 +593,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         Fragment timeoutFragment = getSupportFragmentManager().findFragmentByTag("timeout");
         if (timeoutFragment != null) {
             getSupportFragmentManager().beginTransaction().remove(timeoutFragment).commit();
+        }
+    }
+
+    private void deleteFragmentSanction() {
+        Fragment sanctionSelectionFragment = getSupportFragmentManager().findFragmentByTag("sanction_dialog");
+        if (sanctionSelectionFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(sanctionSelectionFragment).commit();
         }
     }
 

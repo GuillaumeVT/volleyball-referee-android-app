@@ -839,6 +839,16 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
+    public SanctionType getPossibleDelaySanction(TeamType teamType) {
+        return null;
+    }
+
+    @Override
+    public Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
+        return new HashSet<>();
+    }
+
+    @Override
     public List<ApiSanction> getGivenSanctions(TeamType teamType) {
         return new ArrayList<>();
     }
