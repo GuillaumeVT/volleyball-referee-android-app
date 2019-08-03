@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.stored;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,7 +14,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -55,38 +52,26 @@ public class StoredTeamViewActivity extends AppCompatActivity {
 
         switch (mTeamService.getGender()) {
             case MIXED:
-                genderItem.setChipIconResource(R.drawable.ic_mixed);
-                genderItem.setChipBackgroundColorResource(R.color.colorMixedLight);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorMixedLight, R.drawable.ic_mixed, genderItem);
                 break;
             case LADIES:
-                genderItem.setChipIconResource(R.drawable.ic_ladies);
-                genderItem.setChipBackgroundColorResource(R.color.colorLadiesLight);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorLadiesLight, R.drawable.ic_ladies, genderItem);
                 break;
             case GENTS:
-                genderItem.setChipIconResource(R.drawable.ic_gents);
-                genderItem.setChipBackgroundColorResource(R.color.colorGentsLight);
-                genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorGentsLight, R.drawable.ic_gents, genderItem);
                 break;
         }
 
         switch (mTeamService.getTeamsKind()) {
             case INDOOR_4X4:
-                kindItem.setChipIconResource(R.drawable.ic_4x4_small);
-                kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
-                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
                 break;
             case BEACH:
-                kindItem.setChipIconResource(R.drawable.ic_beach);
-                kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
-                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
                 break;
             case INDOOR:
             default:
-                kindItem.setChipIconResource(R.drawable.ic_6x6_small);
-                kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
-                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
                 break;
         }
 

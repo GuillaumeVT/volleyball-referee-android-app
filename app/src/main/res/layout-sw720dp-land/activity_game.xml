@@ -267,7 +267,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/default_margin_size"
-                    android:background="@android:color/white"
+                    android:background="@color/colorOnPrimary"
                     app:elevation="@dimen/elevation"
                     app:itemBackground="@drawable/navigation_menu_item"
                     app:itemHorizontalTranslationEnabled="true"

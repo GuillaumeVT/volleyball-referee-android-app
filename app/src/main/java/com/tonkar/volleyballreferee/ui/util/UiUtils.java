@@ -30,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.AnimRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -40,6 +42,7 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
@@ -149,16 +152,27 @@ public class UiUtils {
         return textColor;
     }
 
-    public static void colorTeamIconButton(Context context, int color, FloatingActionButton button) {
+    public static void colorTeamIconButton(Context context, @ColorInt int color, FloatingActionButton button) {
         button.setBackgroundTintList(ColorStateList.valueOf(color));
         if (button.getDrawable() != null) {
             button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
         }
     }
 
+    public static void colorTeamIconButton(Context context, @ColorInt int color, @DrawableRes int drawable, FloatingActionButton button) {
+        button.setImageResource(drawable);
+        colorTeamIconButton(context, color, button);
+    }
+
     public static void colorIconButtonInWhite(FloatingActionButton button) {
         int color = Color.parseColor("#ffffff");
         button.setBackgroundTintList(ColorStateList.valueOf(color));
+    }
+
+    public static void colorChipIcon(Context context, @ColorRes int color, @DrawableRes int drawable, Chip chip) {
+        chip.setChipIconResource(drawable);
+        chip.setChipBackgroundColorResource(color);
+        chip.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
     }
 
     public static void fixFabCompatPadding(FloatingActionButton button) {

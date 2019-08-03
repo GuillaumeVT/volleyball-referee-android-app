@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_search_rules"
         android:icon="@drawable/ic_search_menu"
-        android:iconTint="@android:color/white"
+        android:iconTint="@color/colorOnPrimary"
         android:orderInCategory="1"
         android:title="@string/search_rules"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
@@ -13,14 +13,14 @@
     <item
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_menu"
-        android:iconTint="@android:color/white"
+        android:iconTint="@color/colorOnPrimary"
         android:orderInCategory="2"
         android:title="@string/synchronize"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_delete_rules"
         android:icon="@drawable/ic_delete_menu"
-        android:iconTint="@android:color/white"
+        android:iconTint="@color/colorOnPrimary"
         android:orderInCategory="3"
         android:title="@string/delete_all_rules"
         app:showAsAction="always"/>

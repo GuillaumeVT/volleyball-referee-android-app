@@ -1,7 +1,5 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +7,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
 import java.util.*;
@@ -100,43 +98,29 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 
         switch (gameDescription.getGender()) {
             case MIXED:
-                viewHolder.genderItem.setChipIconResource(R.drawable.ic_mixed);
-                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorMixedLight);
-                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorMixedLight, R.drawable.ic_mixed, viewHolder.genderItem);
                 break;
             case LADIES:
-                viewHolder.genderItem.setChipIconResource(R.drawable.ic_ladies);
-                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorLadiesLight);
-                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorLadiesLight, R.drawable.ic_ladies, viewHolder.genderItem);
                 break;
             case GENTS:
-                viewHolder.genderItem.setChipIconResource(R.drawable.ic_gents);
-                viewHolder.genderItem.setChipBackgroundColorResource(R.color.colorGentsLight);
-                viewHolder.genderItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorGentsLight, R.drawable.ic_gents, viewHolder.genderItem);
                 break;
         }
 
         switch (gameDescription.getKind()) {
             case INDOOR_4X4:
-                viewHolder.kindItem.setChipIconResource(R.drawable.ic_4x4_small);
-                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
-                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, viewHolder.kindItem);
                 break;
             case BEACH:
-                viewHolder.kindItem.setChipIconResource(R.drawable.ic_beach);
-                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
-                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
                 break;
             case TIME:
-                viewHolder.kindItem.setChipIconResource(R.drawable.ic_time_based);
-                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorTimeLight);
-                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorTimeLight, R.drawable.ic_time_based, viewHolder.kindItem);
                 break;
             case INDOOR:
             default:
-                viewHolder.kindItem.setChipIconResource(R.drawable.ic_6x6_small);
-                viewHolder.kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
-                viewHolder.kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(getContext(), R.color.colorIndoorLight, R.drawable.ic_6x6_small, viewHolder.kindItem);
                 break;
         }
 

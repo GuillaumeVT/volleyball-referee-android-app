@@ -42,8 +42,11 @@
     <color name="colorLadiesLight">#f7c0d6</color>
     <color name="colorGents">#1f4294</color>
     <color name="colorGentsLight">#cedaf5</color>
+    <color name="colorTimeout">@android:color/holo_orange_dark</color>
     <color name="colorYellowCard">#f3bc07</color>
     <color name="colorRedCard">#bc0019</color>
+    <color name="colorStart">@android:color/holo_green_dark</color>
+    <color name="colorStop">@android:color/holo_red_dark</color>
     <color name="colorReportDuplicate">#d6d7d7</color>
 
 </resources>

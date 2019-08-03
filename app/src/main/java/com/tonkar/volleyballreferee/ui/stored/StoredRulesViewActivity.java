@@ -61,20 +61,14 @@ public class StoredRulesViewActivity extends AppCompatActivity {
 
         switch (mRules.getKind()) {
             case INDOOR_4X4:
-                kindItem.setChipIconResource(R.drawable.ic_4x4_small);
-                kindItem.setChipBackgroundColorResource(R.color.colorIndoor4x4Light);
-                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
                 break;
             case BEACH:
-                kindItem.setChipIconResource(R.drawable.ic_beach);
-                kindItem.setChipBackgroundColorResource(R.color.colorBeachLight);
-                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
                 break;
             case INDOOR:
             default:
-                kindItem.setChipIconResource(R.drawable.ic_6x6_small);
-                kindItem.setChipBackgroundColorResource(R.color.colorIndoorLight);
-                kindItem.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
                 break;
         }
 

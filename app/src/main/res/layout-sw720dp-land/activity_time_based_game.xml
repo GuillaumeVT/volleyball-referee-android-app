@@ -189,8 +189,8 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/start_match_description"
                         android:onClick="startMatch"
-                        android:tint="@android:color/holo_green_dark"
-                        app:backgroundTint="@android:color/white"
+                        android:tint="@color/colorStart"
+                        app:backgroundTint="@color/colorOnPrimary"
                         app:fabCustomSize="@dimen/game_fab_size"
                         app:maxImageSize="@dimen/game_fab_icon_size"
                         app:srcCompat="@drawable/ic_play"/>
@@ -204,8 +204,8 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/stop_match_description"
                         android:onClick="stopMatch"
-                        android:tint="@android:color/holo_red_dark"
-                        app:backgroundTint="@android:color/white"
+                        android:tint="@color/colorStop"
+                        app:backgroundTint="@color/colorOnPrimary"
                         app:fabCustomSize="@dimen/game_fab_size"
                         app:maxImageSize="@dimen/game_fab_icon_size"
                         app:srcCompat="@drawable/ic_stop"/>

@@ -3,7 +3,7 @@
     <item
             android:id="@+id/action_game_action_menu"
             android:icon="@drawable/ic_more_menu"
-            android:iconTint="@android:color/white"
+            android:iconTint="@color/colorOnPrimary"
             android:orderInCategory="1"
             android:title=""
             app:showAsAction="always"/>

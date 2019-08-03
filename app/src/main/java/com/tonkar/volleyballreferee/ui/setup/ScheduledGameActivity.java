@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -287,19 +284,13 @@ public class ScheduledGameActivity extends AppCompatActivity {
         mGameSummary.setGender(genderType);
         switch (genderType) {
             case MIXED:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorMixed));
-                mGenderButton.setImageResource(R.drawable.ic_mixed);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(this, getResources().getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorLadies));
-                mGenderButton.setImageResource(R.drawable.ic_ladies);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(this, getResources().getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorGents));
-                mGenderButton.setImageResource(R.drawable.ic_gents);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(this, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

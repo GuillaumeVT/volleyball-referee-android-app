@@ -149,7 +149,6 @@
             android:layout_gravity="center_vertical|end"
             android:layout_margin="@dimen/small_margin_size"
             android:contentDescription="@string/gender_description"
-            app:backgroundTint="@android:color/white"
             app:fabCustomSize="@dimen/form_button_size"
             app:maxImageSize="@dimen/form_fab_icon_size"
             app:srcCompat="@drawable/ic_mixed"/>

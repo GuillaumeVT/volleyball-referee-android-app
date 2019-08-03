@@ -507,7 +507,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 if (maxCount - newCount > index) {
                     colorId = R.color.colorDisabledButton;
                 } else {
-                    colorId = android.R.color.holo_orange_dark;
+                    colorId = R.color.colorTimeout;
                 }
 
                 imageView.setColorFilter(ContextCompat.getColor(this, colorId), PorterDuff.Mode.SRC_IN);

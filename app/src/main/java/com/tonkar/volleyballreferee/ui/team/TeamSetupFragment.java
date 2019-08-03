@@ -505,19 +505,13 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorMixed));
-                mGenderButton.setImageResource(R.drawable.ic_mixed);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorLadies));
-                mGenderButton.setImageResource(R.drawable.ic_ladies);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorGents));
-                mGenderButton.setImageResource(R.drawable.ic_gents);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

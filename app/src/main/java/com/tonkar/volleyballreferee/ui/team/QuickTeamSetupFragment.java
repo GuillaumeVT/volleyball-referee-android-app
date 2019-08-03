@@ -2,8 +2,6 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -180,19 +177,13 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorMixed));
-                mGenderButton.setImageResource(R.drawable.ic_mixed);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorLadies));
-                mGenderButton.setImageResource(R.drawable.ic_ladies);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                mGenderButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorGents));
-                mGenderButton.setImageResource(R.drawable.ic_gents);
-                mGenderButton.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN));
+                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

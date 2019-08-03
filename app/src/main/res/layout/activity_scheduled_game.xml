@@ -39,7 +39,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/default_margin_size"
                             android:textColor="@color/colorPrimary"
-                            app:backgroundTint="@android:color/white"/>
+                            app:backgroundTint="@color/colorOnPrimary"/>
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/time_input_button"
@@ -47,7 +47,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/default_margin_size"
                             android:textColor="@color/colorPrimary"
-                            app:backgroundTint="@android:color/white"/>
+                            app:backgroundTint="@color/colorOnPrimary"/>
 
                 </LinearLayout>
 
