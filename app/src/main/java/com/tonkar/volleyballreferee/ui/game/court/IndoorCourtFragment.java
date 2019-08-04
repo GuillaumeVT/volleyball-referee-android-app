@@ -14,6 +14,7 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -315,13 +316,13 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        if (number > 0) {
+        if (ApiSanction.isPlayer(number)) {
             PositionType positionType = mIndoorTeam.getPlayerPosition(teamType, number);
 
             if (!PositionType.BENCH.equals(positionType)) {
                 updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
 
-                if (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
+                if (sanctionType.isMisconductExpulsionCard() || sanctionType.isMisconductDisqualificationCard()) {
                     showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
                 }
             }

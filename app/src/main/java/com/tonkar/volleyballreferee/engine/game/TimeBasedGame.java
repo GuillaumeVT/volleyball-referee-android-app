@@ -849,17 +849,17 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
-    public List<ApiSanction> getGivenSanctions(TeamType teamType) {
+    public List<ApiSanction> getAllSanctions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ApiSanction> getGivenSanctions(TeamType teamType, int setIndex) {
+    public List<ApiSanction> getAllSanctions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ApiSanction> getSanctions(TeamType teamType, int number) {
+    public List<ApiSanction> getPlayerSanctions(TeamType teamType, int number) {
         return new ArrayList<>();
     }
 

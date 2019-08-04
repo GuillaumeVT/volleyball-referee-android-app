@@ -349,15 +349,15 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiSanction> getGivenSanctions(TeamType teamType) {
+    public List<ApiSanction> getAllSanctions(TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? getHomeCards() : getGuestCards();
     }
 
     @Override
-    public List<ApiSanction> getGivenSanctions(TeamType teamType, int setIndex) {
+    public List<ApiSanction> getAllSanctions(TeamType teamType, int setIndex) {
         List<ApiSanction> sanctionsForSet = new ArrayList<>();
 
-        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+        for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getSet() == setIndex) {
                 sanctionsForSet.add(sanction);
             }
@@ -367,7 +367,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiSanction> getSanctions(TeamType teamType, int number) {
+    public List<ApiSanction> getPlayerSanctions(TeamType teamType, int number) {
         return new ArrayList<>();
     }
 
@@ -406,7 +406,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
     public List<ApiSanction> getSanctionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
         List<ApiSanction> sanctions = new ArrayList<>();
 
-        for (ApiSanction sanction : getGivenSanctions(teamType, setIndex)) {
+        for (ApiSanction sanction : getAllSanctions(teamType, setIndex)) {
             if (sanction.getHomePoints() == hPoints && sanction.getGuestPoints() == gPoints) {
                 sanctions.add(sanction);
             }

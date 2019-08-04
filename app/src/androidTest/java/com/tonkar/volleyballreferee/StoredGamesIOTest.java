@@ -163,8 +163,8 @@ public class StoredGamesIOTest {
         set2.setActingCaptain(TeamType.HOME, 1);
         set2.setActingCaptain(TeamType.GUEST, 2);
 
-        game.getGivenSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.YELLOW, 5, 1, 12, 14));
-        game.getGivenSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED, 8, 3, 20, 1));
+        game.getAllSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.YELLOW, 5, 1, 12, 14));
+        game.getAllSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED, 8, 3, 20, 1));
 
         return game;
     }
@@ -241,8 +241,8 @@ public class StoredGamesIOTest {
             set2.getCurrentPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
         }
 
-        game.getGivenSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.RED_DISQUALIFICATION, 200, 2, 4, 8));
-        game.getGivenSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED_EXPULSION, 100, 0, 5, 6));
+        game.getAllSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.RED_DISQUALIFICATION, 200, 2, 4, 8));
+        game.getAllSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED_EXPULSION, 100, 0, 5, 6));
 
         return game;
     }

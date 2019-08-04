@@ -58,9 +58,9 @@ public class SanctionsListAdapter extends BaseAdapter {
         int count;
 
         if (mSetIndex < 0) {
-            count = mSanctionService.getGivenSanctions(mTeamType).size();
+            count = mSanctionService.getAllSanctions(mTeamType).size();
         } else {
-            count = mSanctionService.getGivenSanctions(mTeamType, mSetIndex).size();
+            count = mSanctionService.getAllSanctions(mTeamType, mSetIndex).size();
         }
 
         return count;
@@ -96,9 +96,9 @@ public class SanctionsListAdapter extends BaseAdapter {
         ApiSanction sanction;
 
         if (mSetIndex < 0) {
-            sanction = mSanctionService.getGivenSanctions(mTeamType).get(index);
+            sanction = mSanctionService.getAllSanctions(mTeamType).get(index);
         } else {
-            sanction = mSanctionService.getGivenSanctions(mTeamType, mSetIndex).get(index);
+            sanction = mSanctionService.getAllSanctions(mTeamType, mSetIndex).get(index);
         }
 
         if (TeamType.HOME.equals(mTeamType)) {
@@ -123,6 +123,7 @@ public class SanctionsListAdapter extends BaseAdapter {
                 viewHolder.playerText.setText(mContext.getString(R.string.coach_abbreviation));
             }
 
+            viewHolder.playerText.setVisibility(View.VISIBLE);
             UiUtils.styleTeamText(mContext, mTeamService, mTeamType, sanction.getNum(), viewHolder.playerText);
         }
 

@@ -96,7 +96,7 @@ public class SetFragment extends Fragment implements StoredGameHandler {
             guestTeamTimeouts.setAdapter(guestTeamTimeoutsAdapter);
         }
 
-        if (mStoredGame.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() && mStoredGame.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty()) {
+        if (mStoredGame.getAllSanctions(TeamType.HOME, setIndex).isEmpty() && mStoredGame.getAllSanctions(TeamType.GUEST, setIndex).isEmpty()) {
             view.findViewById(R.id.set_sanctions_card).setVisibility(View.GONE);
         } else {
             ListView homeTeamSanctions = view.findViewById(R.id.home_team_sanctions);

@@ -422,16 +422,16 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 mStoredGame.getSets().add(set);
             }
 
-            mStoredGame.getGivenSanctions(TeamType.HOME).clear();
+            mStoredGame.getAllSanctions(TeamType.HOME).clear();
 
-            for (ApiSanction sanction : mGame.getGivenSanctions(TeamType.HOME)) {
-                mStoredGame.getGivenSanctions(TeamType.HOME).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
+            for (ApiSanction sanction : mGame.getAllSanctions(TeamType.HOME)) {
+                mStoredGame.getAllSanctions(TeamType.HOME).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
             }
 
-            mStoredGame.getGivenSanctions(TeamType.GUEST).clear();
+            mStoredGame.getAllSanctions(TeamType.GUEST).clear();
 
-            for (ApiSanction sanction : mGame.getGivenSanctions(TeamType.GUEST)) {
-                mStoredGame.getGivenSanctions(TeamType.GUEST).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
+            for (ApiSanction sanction : mGame.getAllSanctions(TeamType.GUEST)) {
+                mStoredGame.getAllSanctions(TeamType.GUEST).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
             }
         }
     }

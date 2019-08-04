@@ -298,7 +298,7 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (ApiSanction.isPlayer(number) && (SanctionType.RED_EXPULSION.equals(sanctionType) || SanctionType.RED_DISQUALIFICATION.equals(sanctionType))) {
+        if (ApiSanction.isPlayer(number) && (sanctionType.isMisconductExpulsionCard() || sanctionType.isMisconductDisqualificationCard())) {
             // The player excluded for the set/match has to be legally replaced
             PositionType positionType = getPlayerPosition(teamType, number);
 
@@ -313,14 +313,14 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
             }
         }
 
-        if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType) && !isMatchCompleted()) {
+        if (sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
             List<ApiPlayer> players = getTeamDefinition(teamType).getPlayers();
 
             // Remove the disqualified players
 
-            for (ApiSanction sanction : getGivenSanctions(teamType)) {
-                if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getCard())) {
+            for (ApiSanction sanction : getAllSanctions(teamType)) {
+                if (sanction.getCard().isMisconductDisqualificationCard()) {
                     players.remove(new ApiPlayer(sanction.getNum()));
                 }
             }

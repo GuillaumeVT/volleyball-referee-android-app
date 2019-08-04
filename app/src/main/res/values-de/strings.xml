@@ -156,6 +156,8 @@
     <string name="all_substitutions_used">%s kann keinen Spielerwechsel mehr durchführen</string>
     <string name="sanctions_tab">Sanktionen</string>
     <string name="sanction">Sanktion (%s)</string>
+    <string name="delay_sanction">Verzögerung</string>
+    <string name="misconduct_sanction">Fehlverhalten</string>
     <string name="yellow_card">Verwarnung</string>
     <string name="red_card">Punkt und Aufschlag für den Gegner</string>
     <string name="red_card_expulsion">Ausschluss für den Rest des Satzes</string>

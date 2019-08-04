@@ -185,7 +185,7 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addSanctions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (ApiSanction sanction : mBaseSanction.getGivenSanctions(teamType, setIndex)) {
+        for (ApiSanction sanction : mBaseSanction.getAllSanctions(teamType, setIndex)) {
             int homePoints = sanction.getHomePoints();
             int guestPoints = sanction.getGuestPoints();
 

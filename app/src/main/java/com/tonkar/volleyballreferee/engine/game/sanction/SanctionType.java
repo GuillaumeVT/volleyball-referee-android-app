@@ -92,4 +92,16 @@ public enum SanctionType {
     public boolean isMisconductSanctionType() {
         return !isDelaySanctionType();
     }
+
+    public boolean isMisconductRedCard() {
+        return RED.equals(this);
+    }
+
+    public boolean isMisconductExpulsionCard() {
+        return RED_EXPULSION.equals(this);
+    }
+
+    public boolean isMisconductDisqualificationCard() {
+        return RED_DISQUALIFICATION.equals(this);
+    }
 }

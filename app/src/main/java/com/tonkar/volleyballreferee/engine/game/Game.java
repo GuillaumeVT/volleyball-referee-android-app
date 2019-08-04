@@ -412,7 +412,7 @@ public abstract class Game extends BaseGame {
         return mSets.get(currentSetIndex());
     }
 
-    private int currentSetIndex() {
+    int currentSetIndex() {
         return mSets.size() - 1;
     }
 
@@ -908,7 +908,7 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<ApiSanction> getGivenSanctions(TeamType teamType) {
+    public List<ApiSanction> getAllSanctions(TeamType teamType) {
         List<ApiSanction> sanctions;
 
         if (TeamType.HOME.equals(teamType)) {
@@ -921,10 +921,10 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<ApiSanction> getGivenSanctions(TeamType teamType, int setIndex) {
+    public List<ApiSanction> getAllSanctions(TeamType teamType, int setIndex) {
         List<ApiSanction> sanctionsForSet = new ArrayList<>();
 
-        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+        for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getSet() == setIndex) {
                 sanctionsForSet.add(sanction);
             }
@@ -934,10 +934,10 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public List<ApiSanction> getSanctions(TeamType teamType, int number) {
+    public List<ApiSanction> getPlayerSanctions(TeamType teamType, int number) {
         List<ApiSanction> sanctionsForPlayer = new ArrayList<>();
 
-        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+        for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getNum() == number) {
                 sanctionsForPlayer.add(sanction);
             }
@@ -948,20 +948,20 @@ public abstract class Game extends BaseGame {
 
     @Override
     public boolean hasSanctions(TeamType teamType, int number) {
-        return getSanctions(teamType, number).size() > 0;
+        return getPlayerSanctions(teamType, number).size() > 0;
     }
 
     @Override
     public java.util.Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
         java.util.Set<Integer> players = new HashSet<>();
 
-        List<ApiSanction> sanctionsForGame = getGivenSanctions(teamType);
+        List<ApiSanction> sanctionsForGame = getAllSanctions(teamType);
         int currentSetIndex = currentSetIndex();
 
         for (ApiSanction sanction : sanctionsForGame) {
-            if (SanctionType.RED_DISQUALIFICATION.equals(sanction.getCard())) {
+            if (sanction.getCard().isMisconductDisqualificationCard()) {
                 players.add(sanction.getNum());
-            } else if (SanctionType.RED_EXPULSION.equals(sanction.getCard()) && sanction.getSet() == currentSetIndex) {
+            } else if (sanction.getCard().isMisconductExpulsionCard() && sanction.getSet() == currentSetIndex) {
                 players.add(sanction.getNum());
             }
         }
@@ -972,7 +972,7 @@ public abstract class Game extends BaseGame {
     @Override
     public SanctionType getMostSeriousSanction(TeamType teamType, int number) {
         SanctionType sanctionType = SanctionType.YELLOW;
-        List<ApiSanction> playerSanctions = getSanctions(teamType, number);
+        List<ApiSanction> playerSanctions = getPlayerSanctions(teamType, number);
 
         for (ApiSanction sanction: playerSanctions) {
             if (sanction.getCard().seriousness() > sanctionType.seriousness()) {
@@ -987,7 +987,7 @@ public abstract class Game extends BaseGame {
     public SanctionType getPossibleDelaySanction(TeamType teamType) {
         boolean teamHasReachedPenalty = false;
 
-        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+        for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getCard().isDelaySanctionType()) {
                 teamHasReachedPenalty = true;
             }
@@ -1000,19 +1000,21 @@ public abstract class Game extends BaseGame {
     public java.util.Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
         boolean teamHasReachedPenalty = false;
 
-        for (ApiSanction sanction : getGivenSanctions(teamType)) {
+        for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getCard().isMisconductSanctionType()) {
                 teamHasReachedPenalty = true;
             }
         }
 
         java.util.Set<SanctionType> possibleMisconductSanctions = new HashSet<>();
-        if (!teamHasReachedPenalty) {
-            possibleMisconductSanctions.add(SanctionType.YELLOW);
-        }
+        possibleMisconductSanctions.add(SanctionType.YELLOW);
         possibleMisconductSanctions.add(SanctionType.RED);
         possibleMisconductSanctions.add(SanctionType.RED_EXPULSION);
         possibleMisconductSanctions.add(SanctionType.RED_DISQUALIFICATION);
+
+        if (teamHasReachedPenalty) {
+            possibleMisconductSanctions.remove(SanctionType.YELLOW);
+        }
 
         if (hasSanctions(teamType, number)) {
             SanctionType mostSeriousSanction = getMostSeriousSanction(teamType, number);

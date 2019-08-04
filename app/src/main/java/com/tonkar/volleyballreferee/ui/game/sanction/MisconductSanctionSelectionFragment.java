@@ -13,6 +13,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
@@ -201,7 +202,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                     button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
                 }
             } else {
-                player = 100; // coach
+                player = ApiSanction.COACH;
                 button.setText(mContext.getString(R.string.coach_abbreviation));
                 button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
             }

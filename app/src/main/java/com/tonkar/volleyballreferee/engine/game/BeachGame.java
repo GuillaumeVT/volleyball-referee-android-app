@@ -13,10 +13,7 @@ import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class BeachGame extends Game implements IBeachTeam {
 
@@ -99,13 +96,52 @@ public class BeachGame extends Game implements IBeachTeam {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (ApiSanction.isPlayer(number) && SanctionType.RED_EXPULSION.equals(sanctionType)) {
+        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
             forceFinishSet(teamType.other());
-        } else if (ApiSanction.isPlayer(number) && SanctionType.RED_DISQUALIFICATION.equals(sanctionType)) {
+        } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
             forceFinishMatch(teamType.other());
         }
+    }
+
+    @Override
+    public java.util.Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
+        boolean teamHasReachedPenalty = false;
+
+        for (ApiSanction sanction : getAllSanctions(teamType)) {
+            if (sanction.getCard().isMisconductSanctionType()) {
+                teamHasReachedPenalty = true;
+            }
+        }
+
+        java.util.Set<SanctionType> possibleMisconductSanctions = new HashSet<>();
+
+        possibleMisconductSanctions.add(SanctionType.YELLOW);
+        possibleMisconductSanctions.add(SanctionType.RED);
+        possibleMisconductSanctions.add(SanctionType.RED_EXPULSION);
+        possibleMisconductSanctions.add(SanctionType.RED_DISQUALIFICATION);
+
+        if (teamHasReachedPenalty) {
+            possibleMisconductSanctions.remove(SanctionType.YELLOW);
+        }
+
+        int currentSetIndex = currentSetIndex();
+        int numberOfRedCards = 0;
+
+        // A player can have 2 red cards in the same set. On the third rude conduct the player is at least expulsed
+
+        for (ApiSanction sanction : getPlayerSanctions(teamType, number)) {
+            if (sanction.getSet() == currentSetIndex && sanction.getCard().isMisconductRedCard()) {
+                numberOfRedCards++;
+            }
+        }
+
+        if (numberOfRedCards >= 2) {
+            possibleMisconductSanctions.remove(SanctionType.RED);
+        }
+
+        return possibleMisconductSanctions;
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.IBeachTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -187,10 +188,10 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        if (SanctionType.RED_EXPULSION.equals(sanctionType) && (number == 1 || number == 2)) {
+        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
             UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
-        } else if (SanctionType.RED_DISQUALIFICATION.equals(sanctionType) && (number == 1 || number == 2)) {
+        } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
             UiUtils.makeText(getActivity(), String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IBaseSanction {
 
-    List<ApiSanction> getGivenSanctions(TeamType teamType);
+    List<ApiSanction> getAllSanctions(TeamType teamType);
 
-    List<ApiSanction> getGivenSanctions(TeamType teamType, int setIndex);
+    List<ApiSanction> getAllSanctions(TeamType teamType, int setIndex);
 
-    List<ApiSanction> getSanctions(TeamType teamType, int number);
+    List<ApiSanction> getPlayerSanctions(TeamType teamType, int number);
 
     boolean hasSanctions(TeamType teamType, int number);
 

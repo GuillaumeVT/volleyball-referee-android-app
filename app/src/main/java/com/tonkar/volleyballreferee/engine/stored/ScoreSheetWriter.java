@@ -134,7 +134,7 @@ public class ScoreSheetWriter {
 
             if (UsageType.NORMAL.equals(mStoredGame.getUsage())
                     && mStoredGame.getRules().isSanctions()
-                    && (!mStoredGame.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                    && (!mStoredGame.getAllSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getAllSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createStoredSanctions(setIndex));
             }
 
@@ -482,7 +482,7 @@ public class ScoreSheetWriter {
         Element sanctionsDiv = new Element("div");
         sanctionsDiv.addClass("div-flex-column");
 
-        for (ApiSanction sanction : mStoredGame.getGivenSanctions(teamType, setIndex)) {
+        for (ApiSanction sanction : mStoredGame.getAllSanctions(teamType, setIndex)) {
             sanctionsDiv.appendChild(createSanctionDiv(teamType, sanction));
         }
 
@@ -607,7 +607,7 @@ public class ScoreSheetWriter {
 
             if (UsageType.NORMAL.equals(mStoredGame.getUsage())
                     && mStoredGame.getRules().isSanctions()
-                    && (!mStoredGame.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                    && (!mStoredGame.getAllSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getAllSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createStoredSanctions(setIndex));
             }
 
@@ -675,7 +675,7 @@ public class ScoreSheetWriter {
             }
 
             if (mStoredGame.getRules().isSanctions()
-                    && (!mStoredGame.getGivenSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getGivenSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                    && (!mStoredGame.getAllSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getAllSanctions(TeamType.GUEST, setIndex).isEmpty())) {
                 timeoutAndSanctionDiv.appendChild(createStoredSanctions(setIndex));
             }
 

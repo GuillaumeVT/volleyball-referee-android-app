@@ -19,29 +19,31 @@ public class ApiSanction {
     private int          guestPoints;
 
     public boolean isPlayer() {
-        return num >= 0 && num < 100;
+        return num >= 0 && num < COACH;
     }
 
     public boolean isCoach() {
-        return num == 100;
+        return num == COACH;
     }
 
     public boolean isTeam() {
-        return num == 200;
+        return num == TEAM;
     }
 
     public static boolean isPlayer(int num) {
-        return num >= 0 && num < 100;
+        return num >= 0 && num < COACH;
     }
 
     public static boolean isCoach(int num) {
-        return num == 100;
+        return num == COACH;
     }
 
     public static boolean isTeam(int num) {
-        return num == 200;
+        return num == TEAM;
     }
 
+    public static final int COACH = 100;
+    public static final int TEAM  = 200;
 }
 
 
