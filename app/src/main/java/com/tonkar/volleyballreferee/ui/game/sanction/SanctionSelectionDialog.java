@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -87,6 +88,8 @@ public class SanctionSelectionDialog extends DialogFragment {
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})
                 .create();
 
+        mAlertDialog.setOnShowListener(dialog -> computeOkAvailability(R.id.delay_sanction_tab));
+
         return mAlertDialog;
     }
 
@@ -108,7 +111,11 @@ public class SanctionSelectionDialog extends DialogFragment {
                 enableOk = (mMisconductSanctionSelectionFragment.getSelectedMisconductSanction() != null) && (mMisconductSanctionSelectionFragment.getSelectedMisconductPlayer() >= 0);
             }
 
-            mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(enableOk);
+            Button okButton = mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+
+            if (okButton != null) {
+                okButton.setEnabled(enableOk);
+            }
         }
     }
 

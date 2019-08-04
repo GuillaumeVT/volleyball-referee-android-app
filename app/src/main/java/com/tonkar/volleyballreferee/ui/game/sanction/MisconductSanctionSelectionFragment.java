@@ -117,7 +117,6 @@ public class MisconductSanctionSelectionFragment extends Fragment {
             misconductPlayerGrid.setAdapter(mMisconductPlayerAdapter);
 
             onMisconductPlayerSelected(-1);
-
         }
 
         return view;
@@ -206,7 +205,6 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 button.setText(mContext.getString(R.string.coach_abbreviation));
                 button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
             }
-
 
             button.setOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);

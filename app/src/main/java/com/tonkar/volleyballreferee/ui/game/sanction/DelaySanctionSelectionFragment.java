@@ -57,7 +57,6 @@ public class DelaySanctionSelectionFragment extends Fragment {
                 }
             });
 
-
             SanctionType possibleDelaySanction = mGame.getPossibleDelaySanction(mTeamType);
 
             ViewGroup delayWarningLayout = view.findViewById(R.id.delay_warning_layout);
@@ -65,6 +64,9 @@ public class DelaySanctionSelectionFragment extends Fragment {
             delayWarningLayout.setVisibility(SanctionType.DELAY_WARNING.equals(possibleDelaySanction) ? View.VISIBLE : View.GONE);
             delayPenaltyLayout.setVisibility(SanctionType.DELAY_PENALTY.equals(possibleDelaySanction) ? View.VISIBLE : View.GONE);
         }
+
+        mSelectedDelaySanction = null;
+        mSanctionSelectionDialog.computeOkAvailability(R.id.delay_sanction_tab);
 
         return view;
     }
