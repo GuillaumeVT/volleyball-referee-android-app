@@ -221,7 +221,7 @@ public class ScoreSheetWriter {
 
         for (ApiPlayer player : mStoredGame.getPlayers(teamType)) {
             teamDiv.appendChild(createPlayerSpan(teamType, player.getNum(), mStoredGame.isLibero(teamType, player.getNum())));
-            teamDiv.appendChild(createCellSpan(player.getName(), false, false)); // TODO
+            teamDiv.appendChild(createCellSpan(player.getName(), false, false));
         }
 
         return teamDiv;
