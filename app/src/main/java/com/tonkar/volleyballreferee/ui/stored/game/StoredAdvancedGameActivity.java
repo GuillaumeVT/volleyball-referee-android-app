@@ -10,7 +10,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 
-public class StoredIndoorGameActivity extends StoredGameActivity {
+public class StoredAdvancedGameActivity extends StoredGameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,8 @@ public class StoredIndoorGameActivity extends StoredGameActivity {
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.STORED_GAMES, "Create stored indoor game activity");
-        setContentView(R.layout.activity_stored_indoor_game);
+        Log.i(Tags.STORED_GAMES, "Create stored advanced game activity");
+        setContentView(R.layout.activity_stored_advanced_game);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -33,11 +33,11 @@ public class StoredIndoorGameActivity extends StoredGameActivity {
 
         updateGame();
 
-        final ViewPager indoorGamePager = findViewById(R.id.indoor_game_pager);
-        final StoredIndoorGameFragmentPagerAdapter indoorGamePagerAdapter = new StoredIndoorGameFragmentPagerAdapter(mStoredGame, this, getSupportFragmentManager());
-        indoorGamePager.setAdapter(indoorGamePagerAdapter);
+        final ViewPager storedGamePager = findViewById(R.id.stored_game_pager);
+        final StoredGameFragmentPagerAdapter storedGamePagerAdapter = new StoredGameFragmentPagerAdapter(mStoredGame, this, getSupportFragmentManager());
+        storedGamePager.setAdapter(storedGamePagerAdapter);
 
-        final TabLayout indoorGameTabs = findViewById(R.id.indoor_game_tabs);
-        indoorGameTabs.setupWithViewPager(indoorGamePager);
+        final TabLayout storedGameTabs = findViewById(R.id.stored_game_tabs);
+        storedGameTabs.setupWithViewPager(storedGamePager);
     }
 }

@@ -95,8 +95,9 @@
     <string name="select_players">Valige mängijate numbreid, k.a libero</string>
     <string name="select_shirts_color">Valige võistluse vormi värvi</string>
     <string name="select_captain">Valige kapteni</string>
-    <string name="select_libero">Valige libero (ei ole kohustuslik)</string>
+    <string name="select_libero">Valige libero (valikuline)</string>
     <string name="select_gender">Valige kategooria (sugu)</string>
+    <string name="input_player_names">Sisesta mängijate nimed (valikuline)</string>
     <string name="confirm">Kinnita</string>
     <string name="confirm_game_setup_question">Mängu seadete kinnitamine?</string>
     <string name="gender_description">Sugu</string>

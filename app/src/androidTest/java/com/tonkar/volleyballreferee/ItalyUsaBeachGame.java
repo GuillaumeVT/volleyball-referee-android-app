@@ -115,6 +115,8 @@ public class ItalyUsaBeachGame {
         if (teamUsa == null) {
             beachGame.setTeamName(TeamType.HOME, "USA");
             beachGame.setTeamColor(TeamType.HOME, Color.parseColor("#bc0019"));
+            beachGame.setPlayerName(TeamType.HOME, 1, "Leon");
+            beachGame.setPlayerName(TeamType.HOME, 2, "Gustave");
         } else {
             storedTeamsService.copyTeam(teamUsa, beachGame, TeamType.HOME);
         }
@@ -122,6 +124,8 @@ public class ItalyUsaBeachGame {
         if (teamItaly == null) {
             beachGame.setTeamName(TeamType.GUEST, "ITALY");
             beachGame.setTeamColor(TeamType.GUEST, Color.parseColor("#2980b9"));
+            beachGame.setPlayerName(TeamType.GUEST, 1, "Robert");
+            beachGame.setPlayerName(TeamType.GUEST, 2, "Gerard");
         } else {
             storedTeamsService.copyTeam(teamItaly, beachGame, TeamType.GUEST);
         }

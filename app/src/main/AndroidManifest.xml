@@ -45,10 +45,10 @@
                 android:name=".ui.stored.game.StoredGamesListActivity"
                 android:parentActivityName=".ui.MainActivity"/>
         <activity
-                android:name=".ui.stored.game.StoredIndoorGameActivity"
+                android:name=".ui.stored.game.StoredAdvancedGameActivity"
                 android:parentActivityName=".ui.stored.game.StoredGamesListActivity"/>
         <activity
-                android:name=".ui.stored.game.StoredBeachGameActivity"
+                android:name=".ui.stored.game.StoredBasicGameActivity"
                 android:parentActivityName=".ui.stored.game.StoredGamesListActivity"/>
         <activity
                 android:name=".ui.stored.team.StoredTeamsListActivity"

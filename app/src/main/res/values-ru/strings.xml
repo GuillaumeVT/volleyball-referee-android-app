@@ -96,7 +96,7 @@
     <string name="select_captain">Выберите капитана</string>
     <string name="select_libero">Выберите либеро (факультативно)</string>
     <string name="select_gender">Выберите категорию (пол)</string>
-    <string name="select_player_names">Saisir les noms des joueurs (optionnel)</string>
+    <string name="input_player_names">Saisir les noms des joueurs (optionnel)</string>
     <string name="confirm">Подтвердить</string>
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>

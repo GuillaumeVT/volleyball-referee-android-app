@@ -114,7 +114,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/select_player_names"
+                android:text="@string/input_player_names"
                 android:textAppearance="@style/TextViewTheme"
                 android:textSize="@dimen/default_text_size"/>
 

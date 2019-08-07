@@ -40,14 +40,25 @@ public class MisconductSanctionSelectionFragment extends Fragment {
     private ViewGroup                       mDisqualificationCardLayout;
     private SanctionType                    mSelectedMisconductSanction;
 
-    void init(SanctionSelectionDialogFragment sanctionSelectionDialogFragment, IGame game, TeamType teamType) {
+    public static MisconductSanctionSelectionFragment newInstance(TeamType teamType) {
+        MisconductSanctionSelectionFragment fragment = new MisconductSanctionSelectionFragment();
+        Bundle args = new Bundle();
+        args.putString("teamType", teamType.toString());
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public MisconductSanctionSelectionFragment() {}
+
+    void init(SanctionSelectionDialogFragment sanctionSelectionDialogFragment, IGame game) {
         mSanctionSelectionDialogFragment = sanctionSelectionDialogFragment;
         mGame = game;
-        mTeamType = teamType;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
+        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+
         View view = layoutInflater.inflate(R.layout.fragment_misconduct_sanction_selection, container, false);
 
         if (mGame != null && mTeamType != null) {

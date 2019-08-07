@@ -148,7 +148,7 @@ public class StoredRulesActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof RulesHandler) {
             RulesHandler rulesHandler = (RulesHandler) fragment;
             rulesHandler.setRules(mRules);

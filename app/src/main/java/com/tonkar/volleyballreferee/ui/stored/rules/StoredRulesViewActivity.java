@@ -1,9 +1,6 @@
 package com.tonkar.volleyballreferee.ui.stored.rules;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,21 +10,21 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.ArrayRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRules;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class StoredRulesViewActivity extends AppCompatActivity {
@@ -72,73 +69,9 @@ public class StoredRulesViewActivity extends AppCompatActivity {
                 break;
         }
 
-        TextView setsPerGame = findViewById(R.id.rules_sets_per_game);
-        TextView pointsPerSet = findViewById(R.id.rules_points_per_set);
-        SwitchCompat tieBreakSwitch = findViewById(R.id.rules_tie_break);
-        TextView pointsInTieBreak = findViewById(R.id.rules_points_in_tie_break);
-        SwitchCompat twoPointsDifferenceSwitch = findViewById(R.id.rules_two_points_difference);
-        SwitchCompat sanctionsSwitch = findViewById(R.id.rules_sanctions);
-
-        SwitchCompat teamTimeoutsSwitch = findViewById(R.id.rules_team_timeouts);
-        TextView teamTimeoutsPerSet = findViewById(R.id.rules_team_timeouts_per_set);
-        TextView teamTimeoutDuration = findViewById(R.id.rules_team_timeout_duration);
-        SwitchCompat technicalTimeoutsSwitch = findViewById(R.id.rules_technical_timeouts);
-        TextView technicalTimeoutDuration = findViewById(R.id.rules_technical_timeout_duration);
-        SwitchCompat gameIntervalsSwitch = findViewById(R.id.rules_game_intervals);
-        TextView gameIntervalDuration = findViewById(R.id.rules_game_intervals_duration);
-
-        TextView substitutionsLimitation = findViewById(R.id.rules_substitutions_limitation);
-        TextView substitutionsLimitationDescription = findViewById(R.id.rules_substitutions_limitation_description);
-        UiUtils.setDrawableStart(substitutionsLimitationDescription, R.drawable.ic_info);
-        for (Drawable drawable : substitutionsLimitationDescription.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
-            }
-        }
-        TextView teamSubstitutionsPerSet = findViewById(R.id.rules_team_substitutions_per_set);
-
-        SwitchCompat courtSwitchesSwitch = findViewById(R.id.rules_court_switches);
-        TextView courtSwitchFrequency = findViewById(R.id.rules_court_switch_frequency);
-        TextView courtSwitchFrequencyTieBreak = findViewById(R.id.rules_court_switch_frequency_tie_break);
-        TextView consecutiveServes = findViewById(R.id.rules_consecutive_serves_per_player);
-
-        setsPerGame.setText(findRuleEntry(mRules.getSetsPerGame(), R.array.sets_per_game_entries, R.array.sets_per_game_values));
-        pointsPerSet.setText(findRuleEntry(mRules.getPointsPerSet(), R.array.points_per_set_entries, R.array.points_per_set_values));
-        tieBreakSwitch.setChecked(mRules.isTieBreakInLastSet());
-        pointsInTieBreak.setText(findRuleEntry(mRules.getPointsInTieBreak(), R.array.points_per_set_entries, R.array.points_per_set_values));
-        twoPointsDifferenceSwitch.setChecked(mRules.isTwoPointsDifference());
-        sanctionsSwitch.setChecked(mRules.isSanctions());
-
-        teamTimeoutsSwitch.setChecked(mRules.isTeamTimeouts());
-        teamTimeoutsPerSet.setText(findRuleEntry(mRules.getTeamTimeoutsPerSet(), R.array.team_timeouts_per_set_entries, R.array.team_timeouts_per_set_values));
-        teamTimeoutDuration.setText(findRuleEntry(mRules.getTeamTimeoutDuration(), R.array.timeout_duration_entries, R.array.timeout_duration_values));
-        technicalTimeoutsSwitch.setChecked(mRules.isTechnicalTimeouts());
-        technicalTimeoutDuration.setText(findRuleEntry(mRules.getTechnicalTimeoutDuration(), R.array.timeout_duration_entries, R.array.timeout_duration_values));
-        gameIntervalsSwitch.setChecked(mRules.isGameIntervals());
-        gameIntervalDuration.setText(findRuleEntry(mRules.getGameIntervalDuration(), R.array.game_interval_duration_entries, R.array.game_interval_duration_values));
-
-        substitutionsLimitation.setText(findRuleEntry(mRules.getSubstitutionsLimitation(), R.array.substitutions_limitation_entries, R.array.substitutions_limitation_values));
-        substitutionsLimitationDescription.setText(findRuleEntry(mRules.getSubstitutionsLimitation(), R.array.substitutions_limitation_description_entries, R.array.substitutions_limitation_values));
-        teamSubstitutionsPerSet.setText(findRuleEntry(mRules.getTeamSubstitutionsPerSet(), R.array.team_substitutions_per_set_entries, R.array.team_substitutions_per_set_values));
-
-        courtSwitchesSwitch.setChecked(mRules.isBeachCourtSwitches());
-        courtSwitchFrequency.setText(findRuleEntry(mRules.getBeachCourtSwitchFreq(), R.array.court_switch_frequency_entries, R.array.court_switch_frequency_values));
-        courtSwitchFrequencyTieBreak.setText(findRuleEntry(mRules.getBeachCourtSwitchFreqTieBreak(), R.array.court_switch_frequency_entries, R.array.court_switch_frequency_values));
-        consecutiveServes.setText(findRuleEntry(mRules.getCustomConsecutiveServesPerPlayer(), R.array.consecutive_serves_per_player_entries, R.array.consecutive_serves_per_player_values));
-
-        View indoorSection = findViewById(R.id.indoor_rules_section);
-        View beachSection = findViewById(R.id.beach_rules_section);
-
-        if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
-            indoorSection.setVisibility(View.VISIBLE);
-            beachSection.setVisibility(View.GONE);
-        } else if (GameType.BEACH.equals(mRules.getKind())) {
-            indoorSection.setVisibility(View.GONE);
-            beachSection.setVisibility(View.VISIBLE);
-        } else {
-            indoorSection.setVisibility(View.GONE);
-            beachSection.setVisibility(View.GONE);
-        }
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, RulesFragment.newInstance());
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -204,18 +137,11 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
-    private String findRuleEntry(int value, @ArrayRes int entriesRes, @ArrayRes int valuesRes) {
-        String entry = "";
-        String valueStr = Integer.toString(value);
-        String[] entries = getResources().getStringArray(entriesRes);
-        String[] values = getResources().getStringArray(valuesRes);
-
-        for (int index = 0; index < values.length; index++) {
-            if (values[index].equals(valueStr)) {
-                entry = entries[index];
-            }
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        if (fragment instanceof RulesHandler) {
+            RulesHandler rulesHandler = (RulesHandler) fragment;
+            rulesHandler.setRules(mRules);
         }
-
-        return entry;
     }
 }

@@ -22,14 +22,25 @@ public class DelaySanctionSelectionFragment extends Fragment {
     private PlayerToggleButton              mDelayPenaltyButton;
     private SanctionType                    mSelectedDelaySanction;
 
-    void init(SanctionSelectionDialogFragment sanctionSelectionDialogFragment, IGame game, TeamType teamType) {
+    public static DelaySanctionSelectionFragment newInstance(TeamType teamType) {
+        DelaySanctionSelectionFragment fragment = new DelaySanctionSelectionFragment();
+        Bundle args = new Bundle();
+        args.putString("teamType", teamType.toString());
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public DelaySanctionSelectionFragment() {}
+
+    void init(SanctionSelectionDialogFragment sanctionSelectionDialogFragment, IGame game) {
         mSanctionSelectionDialogFragment = sanctionSelectionDialogFragment;
         mGame = game;
-        mTeamType = teamType;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+
         View view = inflater.inflate(R.layout.fragment_delay_sanction_selection, container, false);
 
         if (mGame != null && mTeamType != null) {

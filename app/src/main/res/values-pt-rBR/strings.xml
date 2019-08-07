@@ -97,7 +97,7 @@
     <string name="select_captain">Selecionar Capitão</string>
     <string name="select_libero">Selecionar líberos (opcional)</string>
     <string name="select_gender">Selecionar o naipe</string>
-    <string name="select_player_names">Set the player names (optional)</string>
+    <string name="input_player_names">Incluir nome dos atletas (opcional)</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_game_setup_question">Você confirma essa seleção?</string>
     <string name="gender_description">Gênero</string>

@@ -17,26 +17,29 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-public class SanctionSelectionDialogFragment extends DialogFragment {
+public class SanctionSelectionDialogFragment extends DialogFragment implements GameServiceHandler {
 
     private IGame                               mGame;
     private TeamType                            mTeamType;
-    private String                              mTitle;
     private AlertDialog                         mAlertDialog;
     private View                                mView;
     private BottomNavigationView                mSanctionTypePager;
     private DelaySanctionSelectionFragment      mDelaySanctionSelectionFragment;
     private MisconductSanctionSelectionFragment mMisconductSanctionSelectionFragment;
 
-    public SanctionSelectionDialogFragment() {}
-
-    public SanctionSelectionDialogFragment(String title, IGame game, TeamType teamType) {
-        mGame = game;
-        mTeamType = teamType;
-        mTitle = title;
+    public static SanctionSelectionDialogFragment newInstance(String title, TeamType teamType) {
+        SanctionSelectionDialogFragment fragment = new SanctionSelectionDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putString("teamType", teamType.toString());
+        fragment.setArguments(args);
+        return fragment;
     }
+
+    public SanctionSelectionDialogFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,13 +48,13 @@ public class SanctionSelectionDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
+        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+        String title = getArguments().getString("title");
+
         mView = getActivity().getLayoutInflater().inflate(R.layout.sanction_selection_dialog, null);
 
-        mDelaySanctionSelectionFragment = new DelaySanctionSelectionFragment();
-        mMisconductSanctionSelectionFragment = new MisconductSanctionSelectionFragment();
-
-        mDelaySanctionSelectionFragment.init(this, mGame, mTeamType);
-        mMisconductSanctionSelectionFragment.init(this, mGame, mTeamType);
+        mDelaySanctionSelectionFragment = DelaySanctionSelectionFragment.newInstance(mTeamType);
+        mMisconductSanctionSelectionFragment = MisconductSanctionSelectionFragment.newInstance(mTeamType);
 
         mSanctionTypePager = mView.findViewById(R.id.sanction_nav);
 
@@ -83,7 +86,7 @@ public class SanctionSelectionDialogFragment extends DialogFragment {
 
         mAlertDialog = new AlertDialog
                 .Builder(getContext(), R.style.AppTheme_Dialog)
-                .setTitle(mTitle).setView(mView)
+                .setTitle(title).setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> giveSanction())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})
                 .create();
@@ -119,4 +122,20 @@ public class SanctionSelectionDialogFragment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        if (childFragment instanceof DelaySanctionSelectionFragment) {
+            DelaySanctionSelectionFragment fragment = (DelaySanctionSelectionFragment) childFragment;
+            fragment.init(this, mGame);
+        }
+        if (childFragment instanceof MisconductSanctionSelectionFragment) {
+            MisconductSanctionSelectionFragment fragment = (MisconductSanctionSelectionFragment) childFragment;
+            fragment.init(this, mGame);
+        }
+    }
+
+    @Override
+    public void setGameService(IGame game) {
+        mGame = game;
+    }
 }

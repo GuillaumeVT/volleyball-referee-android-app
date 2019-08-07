@@ -27,6 +27,7 @@ import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -228,6 +229,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         if (fragment instanceof StoredGameHandler) {
             StoredGameHandler storedGameHandler = (StoredGameHandler) fragment;
             storedGameHandler.setStoredGame(mStoredGame);
+        }
+        if (fragment instanceof RulesHandler) {
+            RulesHandler rulesHandler = (RulesHandler) fragment;
+            rulesHandler.setRules(mStoredGame.getRules());
         }
     }
 }

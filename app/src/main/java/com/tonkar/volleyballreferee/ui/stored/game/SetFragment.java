@@ -46,7 +46,8 @@ public class SetFragment extends Fragment implements StoredGameHandler {
         LadderListAdapter ladderListAdapter = new LadderListAdapter(inflater, mStoredGame, mStoredGame, mStoredGame, mStoredGame, false);
         ladderLayout.addView(ladderListAdapter.getView(setIndex, null, ladderLayout));
 
-        if (mStoredGame.isStartingLineupConfirmed(TeamType.HOME, setIndex) || mStoredGame.isStartingLineupConfirmed(TeamType.GUEST, setIndex)) {
+        if ((mStoredGame.getKind().equals(GameType.INDOOR) || mStoredGame.getKind().equals(GameType.INDOOR_4X4))
+                && (mStoredGame.isStartingLineupConfirmed(TeamType.HOME, setIndex) || mStoredGame.isStartingLineupConfirmed(TeamType.GUEST, setIndex))) {
             if (mStoredGame.isStartingLineupConfirmed(TeamType.HOME, setIndex)) {
                 GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
                 final LineupAdapter homeTeamLineupAdapter;

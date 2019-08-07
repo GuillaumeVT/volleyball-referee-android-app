@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
 
@@ -11,9 +12,9 @@
     <string name="reject">Rechazar</string>
     <string name="remove">Eliminar</string>
     <string name="create">Crear</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
+    <string name="edit">Editar</string>
+    <string name="save">Salvar</string>
+    <string name="start">Comenzar</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Voleibol</string>
@@ -50,31 +51,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Entrar</string>
+    <string name="user_sign_up">Registrarse</string>
+    <string name="user_password_update">Cambiar contraseña</string>
+    <string name="user_lost_password">Constraseña perdida</string>
     <string name="user_sign_out">Salir</string>
     <string name="user_sign_in_why_title">¿Por qué tengo que registrarme?</string>
     <string name="user_sign_in_why_message">Tus datos en Volleyball Referee (partidos, equipos, reglas, ligas, compañeros) se sincronizarán con nuestro servidor. Registrándote sabremos quién eres y mantendremos tus datos asociados con tu cuenta.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_pseudo_hint">Pseudónimo de árbitro</string>
     <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_confirm_email_hint">Confirmar email</string>
+    <string name="user_email_not_matching">Las direcciones de mail no coinciden</string>
+    <string name="user_current_password_hint">Contraseña actual</string>
+    <string name="user_password_hint">Contraseña</string>
+    <string name="user_confirm_password_hint">Confirmar contraseña</string>
+    <string name="user_new_password_hint">Contraseña nueva</string>
+    <string name="user_confirm_new_password_hint">Confirmar nueva contraseña</string>
+    <string name="user_password_not_matching">Las contraseñas no coinciden</string>
+    <string name="user_password_error">Contraseña errónea</string>
+    <string name="user_locked_error">Demasiados fallos de autenticación; la cuenta se bloqueará durante 30 minutos</string>
+    <string name="user_email_pseudo_conflict">Este pseudónimo o email ya existe</string>
+    <string name="user_request_error">Error al procesar la petición</string>
     <string name="user_signed_in_as_pseudo">Registrado como %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Se ha enviado un email con un enlace de recuperación a %s</string>
+    <string name="password_strength">La contraseña debe tener al menos 8 caracteres, incluyendo 1 mayúscula, 1 dígito y 1 carácter especial (símbolo)</string>
+    <string name="password_strength_error">La contraseña no cumple con los requisitos</string>
     <string name="user_signed_out">Sesión terminada</string>
     <string name="search_colleague">Buscar compañero</string>
     <string name="add_colleague">Añadir compañero</string>
@@ -96,6 +97,7 @@
     <string name="select_captain">Elige al capitán</string>
     <string name="select_libero">Elige los líberos (opcional)</string>
     <string name="select_gender">Selecciona el género</string>
+    <string name="input_player_names">Introduce los nombres de los jugadores (opcional)</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_game_setup_question">¿Confirmas esta configuración?</string>
     <string name="gender_description">Género</string>
@@ -141,6 +143,7 @@
     <string name="match_point">Punto de partido</string>
     <string name="set_point">Punto de set</string>
     <string name="confirm_lineup_title">Alineación inicial</string>
+    <string name="confirm_team_lineup_question">¿Confirmas la alineación inicial de %s para este set?</string>
     <string name="no_substitution_message">No quedan más sustituciones</string>
     <string name="confirm_set_question">¿Confirmas este punto?</string>
     <string name="start_match_description">Comenzar partido</string>
@@ -154,6 +157,8 @@
     <string name="all_substitutions_used">%s no puede pedir más sustituciones</string>
     <string name="sanctions_tab">Sanciones</string>
     <string name="sanction">Sanción (%s)</string>
+    <string name="delay_sanction">Demora</string>
+    <string name="misconduct_sanction">Conducta incorrecta</string>
     <string name="yellow_card">Amonestación</string>
     <string name="red_card">Punto y servicio para el oponente</string>
     <string name="red_card_expulsion">Expulsión durante el resto del set</string>

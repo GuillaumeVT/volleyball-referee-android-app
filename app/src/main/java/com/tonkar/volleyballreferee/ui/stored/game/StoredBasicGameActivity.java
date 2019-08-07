@@ -10,7 +10,7 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.ui.game.ladder.LadderListAdapter;
 
-public class StoredBeachGameActivity extends StoredGameActivity {
+public class StoredBasicGameActivity extends StoredGameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,8 @@ public class StoredBeachGameActivity extends StoredGameActivity {
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.STORED_GAMES, "Create stored beach game activity");
-        setContentView(R.layout.activity_stored_beach_game);
+        Log.i(Tags.STORED_GAMES, "Create stored basic game activity");
+        setContentView(R.layout.activity_stored_basic_game);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");

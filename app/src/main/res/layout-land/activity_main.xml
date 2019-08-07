@@ -216,6 +216,41 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:onClick="startSnowGame">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/snow"/>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/snow_background_gradient"
+                                android:foreground="?attr/selectableItemBackground"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/start_snow_game_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/big_margin_size"
+                                android:layout_gravity="center|start"
+                                android:text="Coming Soon!"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/big_text_size"
+                                app:drawableStartCompat="@drawable/ic_snow"
+                                android:drawablePadding="@dimen/default_margin_size"
+                                app:drawableTint="@android:color/white"
+                                app:textAllCaps="true"
+                                android:fontFamily="sans-serif-medium"/>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/main_card_height"
+                            android:layout_margin="@dimen/tiny_margin_size"
                             android:onClick="startIndoor4x4Game">
 
                         <androidx.appcompat.widget.AppCompatImageView

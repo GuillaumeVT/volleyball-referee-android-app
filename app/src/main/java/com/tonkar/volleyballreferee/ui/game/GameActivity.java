@@ -106,7 +106,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         else {
             long duration = savedInstanceState.getLong("saved_timeout_duration");
             startToolbarCountDown(duration);
-            deleteFragmentSanction();
         }
 
         if (mGame == null || mStoredGamesService == null) {
@@ -253,12 +252,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_game_action_menu:
-                showGameActionMenu();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_game_action_menu) {
+            showGameActionMenu();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -358,7 +356,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     private void showSanctionDialog(final TeamType teamType) {
         final String title = String.format(Locale.getDefault(), getString(R.string.sanction), mGame.getTeamName(teamType));
-        SanctionSelectionDialogFragment sanctionSelectionDialogFragment = new SanctionSelectionDialogFragment(title, mGame, teamType);
+        SanctionSelectionDialogFragment sanctionSelectionDialogFragment = SanctionSelectionDialogFragment.newInstance(title, teamType);
         sanctionSelectionDialogFragment.show(getSupportFragmentManager(), "sanction_dialog");
     }
 
@@ -593,13 +591,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         Fragment timeoutFragment = getSupportFragmentManager().findFragmentByTag("timeout");
         if (timeoutFragment != null) {
             getSupportFragmentManager().beginTransaction().remove(timeoutFragment).commit();
-        }
-    }
-
-    private void deleteFragmentSanction() {
-        Fragment sanctionSelectionFragment = getSupportFragmentManager().findFragmentByTag("sanction_dialog");
-        if (sanctionSelectionFragment != null) {
-            getSupportFragmentManager().beginTransaction().remove(sanctionSelectionFragment).commit();
         }
     }
 

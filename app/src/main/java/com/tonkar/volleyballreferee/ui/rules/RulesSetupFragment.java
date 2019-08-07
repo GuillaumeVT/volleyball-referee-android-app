@@ -36,7 +36,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
     private Rules mRules;
 
-    private ScrollView           mScrollView;
     private AutoCompleteTextView mRulesNameInput;
     private Spinner              mSetsPerGameSpinner;
     private Spinner              mPointsPerSetSpinner;
@@ -95,8 +94,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
         final boolean isGameContext = getArguments().getBoolean("is_game");
         final boolean create = getArguments().getBoolean("create");
-
-        mScrollView = view.findViewById(R.id.rules_setup_scroll);
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
         mRulesNameInput.setEnabled(create);
@@ -195,7 +192,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
                 mRulesNameInput.setText(rulesDescription.getName());
                 mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
                 initValues();
-                mScrollView.post(() -> mScrollView.fullScroll(ScrollView.FOCUS_UP));
                 computeConfirmItemVisibility();
             });
         }

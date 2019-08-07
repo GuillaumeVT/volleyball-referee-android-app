@@ -97,6 +97,7 @@
     <string name="select_captain">Selecionar Capitão</string>
     <string name="select_libero">Selecionar líberos (opcional)</string>
     <string name="select_gender">Selecionar género</string>
+    <string name="input_player_names">Introduza o nome dos jogadores (opcional)</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_game_setup_question">Confirma essa seleção?</string>
     <string name="gender_description">Género</string>

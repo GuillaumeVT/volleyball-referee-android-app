@@ -214,6 +214,10 @@ public class MainActivity extends NavigationActivity {
         UiUtils.animateForward(this);
     }
 
+    public void startSnowGame(View view) {
+        Log.i(Tags.GAME_UI, "Start a snow game");
+    }
+
     public void startIndoor4x4Game(View view) {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
         ApiUserSummary user = PrefUtils.getUser(this);

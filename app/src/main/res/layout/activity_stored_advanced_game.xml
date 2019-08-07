@@ -5,14 +5,14 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.stored.game.StoredIndoorGameActivity">
+              tools:context="com.tonkar.volleyballreferee.ui.stored.game.StoredAdvancedGameActivity">
 
     <include layout="@layout/toolbar"/>
 
     <include layout="@layout/stored_games_list_item"/>
 
     <com.google.android.material.tabs.TabLayout
-            android:id="@+id/indoor_game_tabs"
+            android:id="@+id/stored_game_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin_size"
@@ -22,7 +22,7 @@
             app:tabTextAppearance="@style/DynamicTabText"/>
 
     <androidx.viewpager.widget.ViewPager
-            android:id="@+id/indoor_game_pager"
+            android:id="@+id/stored_game_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"

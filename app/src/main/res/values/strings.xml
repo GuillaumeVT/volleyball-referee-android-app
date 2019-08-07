@@ -97,7 +97,7 @@
     <string name="select_captain">Select the captain</string>
     <string name="select_libero">Select the liberos (optional)</string>
     <string name="select_gender">Select the gender</string>
-    <string name="select_player_names">Input the player names (optional)</string>
+    <string name="input_player_names">Input the player names (optional)</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_game_setup_question">Do you confirm this setup?</string>
     <string name="gender_description">Gender</string>

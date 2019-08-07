@@ -67,10 +67,10 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
 
             final Intent intent;
 
-            if ((GameType.INDOOR.equals(game.getKind()) || GameType.INDOOR_4X4.equals(game.getKind())) && UsageType.NORMAL.equals(game.getUsage())) {
-                intent = new Intent(StoredGamesListActivity.this, StoredIndoorGameActivity.class);
+            if ((GameType.INDOOR.equals(game.getKind()) || GameType.INDOOR_4X4.equals(game.getKind()) || GameType.BEACH.equals(game.getKind())) && UsageType.NORMAL.equals(game.getUsage())) {
+                intent = new Intent(StoredGamesListActivity.this, StoredAdvancedGameActivity.class);
             } else {
-                intent = new Intent(StoredGamesListActivity.this, StoredBeachGameActivity.class);
+                intent = new Intent(StoredGamesListActivity.this, StoredBasicGameActivity.class);
             }
 
             intent.putExtra("game", game.getId());
