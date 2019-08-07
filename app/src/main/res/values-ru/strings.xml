@@ -11,9 +11,9 @@
     <string name="reject">Отказать</string>
     <string name="remove">Удалить</string>
     <string name="create">Создать</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
+    <string name="edit">Изменить</string>
+    <string name="save">Сохранить</string>
+    <string name="start">Начать</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Волейбол</string>
@@ -50,31 +50,31 @@
     </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_sign_in">Войти</string>
+    <string name="user_sign_up">Зарегистрироваться</string>
+    <string name="user_password_update">Изменить пароль</string>
+    <string name="user_lost_password">Забыли пароль?</string>
     <string name="user_sign_out">Выход</string>
     <string name="user_sign_in_why_title">Зачем использовать мой аккаунт?</string>
     <string name="user_sign_in_why_message">Все ваши данные в Volleyball Referee (матчи, команды, правила, лиги, коллеги) будут синхронизированы с нашим сервером. При идентификации приложение соединяет ваши данные с вашим аккаунтом.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
+    <string name="user_pseudo_hint">Никнейм</string>
     <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_confirm_email_hint">Подтвердить email</string>
+    <string name="user_email_not_matching">Адрес почты не совпадает</string>
+    <string name="user_current_password_hint">Текущий пароль</string>
+    <string name="user_password_hint">Пароль</string>
+    <string name="user_confirm_password_hint">Подтвердить пароль</string>
+    <string name="user_new_password_hint">Новый пароль</string>
+    <string name="user_confirm_new_password_hint">Подтвердить новый пароль</string>
+    <string name="user_password_not_matching">Пароли не совпадают</string>
+    <string name="user_password_error">Неправильный пароль</string>
+    <string name="user_locked_error">Ваш аккаунт временно заблокирован по причине слишком большого числа неудачных попыток входа</string>
+    <string name="user_email_pseudo_conflict">Данный никнейм или email уже существует</string>
+    <string name="user_request_error">Произошла ошибка при запросе</string>
     <string name="user_signed_in_as_pseudo">Подключён как %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">На ваш email %s была отправлена ссылка для восстановления пароля</string>
+    <string name="password_strength">Пароль должен содержать не менее восьми символов, включая одну заклавную букву, одну цифру и один специальный символ</string>
+    <string name="password_strength_error">Введённый пароль не удовлетворяет заданным требованиям</string>
     <string name="user_signed_out">Вышел из аккаунта</string>
     <string name="search_colleague">Поиск коллег</string>
     <string name="add_colleague">Добавить коллегу</string>
@@ -96,9 +96,9 @@
     <string name="select_captain">Выберите капитана</string>
     <string name="select_libero">Выберите либеро (факультативно)</string>
     <string name="select_gender">Выберите категорию (пол)</string>
+    <string name="select_player_names">Saisir les noms des joueurs (optionnel)</string>
     <string name="confirm">Подтвердить</string>
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
-    <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
     <string name="gender_description">Пол</string>
     <string name="match_duration_text">Выберите длительность матча</string>
     <string name="league_name">Название лиги / турнира</string>
@@ -142,6 +142,7 @@
     <string name="match_point">Матчбол</string>
     <string name="set_point">Сетбол</string>
     <string name="confirm_lineup_title">Расстановка</string>
+    <string name="confirm_team_lineup_question">Подтвердить стартовую расстановку команды %s в данной партии?</string>
     <string name="no_substitution_message">Замена невозможна</string>
     <string name="confirm_set_question">Подтвердить окончание данной партии?</string>
     <string name="start_match_description">Начать матч</string>
@@ -155,6 +156,8 @@
     <string name="all_substitutions_used">Команда \"%s\": нет доступных замен в данной партии</string>
     <string name="sanctions_tab">Санкции</string>
     <string name="sanction">Санкция (%s)</string>
+    <string name="delay_sanction">Задержка</string>
+    <string name="misconduct_sanction">Неправильное поведение</string>
     <string name="yellow_card">Замечание</string>
     <string name="red_card">Наказание очком и подачей соперника (проигрыш розыгрыша)</string>
     <string name="red_card_expulsion">Удаление до конца партии</string>

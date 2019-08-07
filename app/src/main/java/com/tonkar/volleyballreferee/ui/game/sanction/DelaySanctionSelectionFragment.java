@@ -15,15 +15,15 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class DelaySanctionSelectionFragment extends Fragment {
 
-    private SanctionSelectionDialog mSanctionSelectionDialog;
-    private IGame                   mGame;
-    private TeamType                mTeamType;
-    private PlayerToggleButton      mDelayWarningButton;
-    private PlayerToggleButton      mDelayPenaltyButton;
-    private SanctionType            mSelectedDelaySanction;
+    private SanctionSelectionDialogFragment mSanctionSelectionDialogFragment;
+    private IGame                           mGame;
+    private TeamType                        mTeamType;
+    private PlayerToggleButton              mDelayWarningButton;
+    private PlayerToggleButton              mDelayPenaltyButton;
+    private SanctionType                    mSelectedDelaySanction;
 
-    void init(SanctionSelectionDialog sanctionSelectionDialog, IGame game, TeamType teamType) {
-        mSanctionSelectionDialog = sanctionSelectionDialog;
+    void init(SanctionSelectionDialogFragment sanctionSelectionDialogFragment, IGame game, TeamType teamType) {
+        mSanctionSelectionDialogFragment = sanctionSelectionDialogFragment;
         mGame = game;
         mTeamType = teamType;
     }
@@ -44,7 +44,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
                 if (isChecked) {
                     mSelectedDelaySanction = SanctionType.DELAY_WARNING;
                     mDelayPenaltyButton.setChecked(false);
-                    mSanctionSelectionDialog.computeOkAvailability(R.id.delay_sanction_tab);
+                    mSanctionSelectionDialogFragment.computeOkAvailability(R.id.delay_sanction_tab);
                 }
             });
 
@@ -53,7 +53,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
                 if (isChecked) {
                     mSelectedDelaySanction = SanctionType.DELAY_PENALTY;
                     mDelayWarningButton.setChecked(false);
-                    mSanctionSelectionDialog.computeOkAvailability(R.id.delay_sanction_tab);
+                    mSanctionSelectionDialogFragment.computeOkAvailability(R.id.delay_sanction_tab);
                 }
             });
 
@@ -66,7 +66,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
         }
 
         mSelectedDelaySanction = null;
-        mSanctionSelectionDialog.computeOkAvailability(R.id.delay_sanction_tab);
+        mSanctionSelectionDialogFragment.computeOkAvailability(R.id.delay_sanction_tab);
 
         return view;
     }

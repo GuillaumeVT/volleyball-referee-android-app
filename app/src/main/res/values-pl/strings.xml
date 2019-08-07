@@ -97,6 +97,7 @@
     <string name="select_captain">Wybierz kapitana</string>
     <string name="select_libero">Wybierz libero (opcjonalnie)</string>
     <string name="select_gender">Wybierz płeć</string>
+    <string name="select_player_names">Set the player names (optional)</string>
     <string name="confirm">Potwierdz</string>
     <string name="confirm_game_setup_question">Czy potwierdzasz te ustawienia?</string>
     <string name="gender_description">Płeć</string>

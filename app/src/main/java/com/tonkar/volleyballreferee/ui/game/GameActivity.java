@@ -40,7 +40,7 @@ import com.tonkar.volleyballreferee.ui.game.court.BeachCourtFragment;
 import com.tonkar.volleyballreferee.ui.game.court.Indoor4x4CourtFragment;
 import com.tonkar.volleyballreferee.ui.game.court.IndoorCourtFragment;
 import com.tonkar.volleyballreferee.ui.game.ladder.LaddersFragment;
-import com.tonkar.volleyballreferee.ui.game.sanction.SanctionSelectionDialog;
+import com.tonkar.volleyballreferee.ui.game.sanction.SanctionSelectionDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.sanction.SanctionsFragment;
 import com.tonkar.volleyballreferee.ui.game.substitution.SubstitutionsFragment;
 import com.tonkar.volleyballreferee.ui.game.timeout.CountDown;
@@ -358,8 +358,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     private void showSanctionDialog(final TeamType teamType) {
         final String title = String.format(Locale.getDefault(), getString(R.string.sanction), mGame.getTeamName(teamType));
-        SanctionSelectionDialog sanctionSelectionDialog = new SanctionSelectionDialog(title, mGame, teamType);
-        sanctionSelectionDialog.show(getSupportFragmentManager(), "sanction_dialog");
+        SanctionSelectionDialogFragment sanctionSelectionDialogFragment = new SanctionSelectionDialogFragment(title, mGame, teamType);
+        sanctionSelectionDialogFragment.show(getSupportFragmentManager(), "sanction_dialog");
     }
 
     // Listeners

@@ -97,6 +97,7 @@
     <string name="select_captain">Selecionar Capitão</string>
     <string name="select_libero">Selecionar líberos (opcional)</string>
     <string name="select_gender">Selecionar o naipe</string>
+    <string name="select_player_names">Set the player names (optional)</string>
     <string name="confirm">Confirmar</string>
     <string name="confirm_game_setup_question">Você confirma essa seleção?</string>
     <string name="gender_description">Gênero</string>
@@ -156,6 +157,8 @@
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
     <string name="sanctions_tab">Punições</string>
     <string name="sanction">Punição (%s)</string>
+    <string name="delay_sanction">Retardo</string>
+    <string name="misconduct_sanction">Conduta Inadequada</string>
     <string name="yellow_card">Advertência</string>
     <string name="red_card">Perda do ponto</string>
     <string name="red_card_expulsion">Expulsão do set</string>

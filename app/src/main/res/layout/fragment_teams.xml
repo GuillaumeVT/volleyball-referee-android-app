@@ -6,28 +6,20 @@
               android:orientation="horizontal"
               android:weightSum="2">
 
-    <GridView
+    <ListView
         android:id="@+id/home_team_players_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/default_margin_size"
         android:layout_weight="1"
-        android:columnWidth="@dimen/player_column_width"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/default_margin_size"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/default_margin_size" />
+        android:gravity="top|start" />
 
-    <GridView
-        android:id="@+id/guest_team_players_list"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/default_margin_size"
-        android:layout_weight="1"
-        android:columnWidth="@dimen/player_column_width"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/default_margin_size"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/default_margin_size" />
+    <ListView
+            android:id="@+id/guest_team_players_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_margin_size"
+            android:layout_weight="1"
+            android:gravity="top|start" />
 
 </LinearLayout>

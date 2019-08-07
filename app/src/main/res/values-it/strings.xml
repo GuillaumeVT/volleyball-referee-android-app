@@ -156,6 +156,8 @@
     <string name="all_substitutions_used">%s non ha più sostituzioni di giocatori disponibili</string>
     <string name="sanctions_tab">Sanzioni</string>
     <string name="sanction">Sanzione (%s)</string>
+    <string name="delay_sanction">Ritardo di gioco</string>
+    <string name="misconduct_sanction">Comportamento scorretto</string>
     <string name="yellow_card">Avvertimento</string>
     <string name="red_card">Punto e servizio all\'avversario</string>
     <string name="red_card_expulsion">Espulsione per il resto del set</string>

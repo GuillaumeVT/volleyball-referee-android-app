@@ -54,6 +54,32 @@ public abstract class TeamDefinition extends ApiTeam {
         return getPlayers().contains(new ApiPlayer(number));
     }
 
+    public String getPlayerName(final int number) {
+        String playerName = "";
+
+        for (ApiPlayer player : getPlayers()) {
+            if (player.getNum() == number) {
+                playerName = player.getName();
+            }
+        }
+
+        return playerName;
+    }
+
+    public void setPlayerName(final int number, final String name) {
+        Log.i(Tags.TEAM, String.format("Set name of player #%d to %s team as %s", number, mTeamType.toString(), name));
+        for (ApiPlayer player : getPlayers()) {
+            if (player.getNum() == number) {
+                player.setName(name);
+            }
+        }
+        for (ApiPlayer player : getLiberos()) {
+            if (player.getNum() == number) {
+                player.setName(name);
+            }
+        }
+    }
+
     public int getExpectedNumberOfPlayersOnCourt() {
         int number;
 

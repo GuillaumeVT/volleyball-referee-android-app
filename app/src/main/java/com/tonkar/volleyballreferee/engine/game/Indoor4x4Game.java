@@ -340,12 +340,13 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     @Override
     public void restoreTeams(IStoredGame storedGame) {
         super.restoreTeams(storedGame);
+    }
 
-        setLiberoColor(TeamType.HOME, Color.parseColor(TeamDefinition.DEFAULT_COLOR));
-        setCaptain(TeamType.HOME, storedGame.getCaptain(TeamType.HOME));
-
-        setLiberoColor(TeamType.GUEST, Color.parseColor(TeamDefinition.DEFAULT_COLOR));
-        setCaptain(TeamType.GUEST, storedGame.getCaptain(TeamType.GUEST));
+    @Override
+    void restoreTeam(IStoredGame storedGame, TeamType teamType) {
+        super.restoreTeam(storedGame, teamType);
+        setLiberoColor(teamType, Color.parseColor(TeamDefinition.DEFAULT_COLOR));
+        setCaptain(teamType, storedGame.getCaptain(teamType));
     }
 
     @Override

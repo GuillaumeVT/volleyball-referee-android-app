@@ -26,22 +26,22 @@ import java.util.Set;
 
 public class MisconductSanctionSelectionFragment extends Fragment {
 
-    private SanctionSelectionDialog mSanctionSelectionDialog;
-    private IGame                   mGame;
-    private TeamType                mTeamType;
-    private MisconductPlayerAdapter mMisconductPlayerAdapter;
-    private PlayerToggleButton      mYellowCardButton;
-    private PlayerToggleButton      mRedCardButton;
-    private PlayerToggleButton      mExpulsionCardButton;
-    private PlayerToggleButton      mDisqualificationCardButton;
-    private ViewGroup               mYellowCardLayout;
-    private ViewGroup               mRedCardLayout;
-    private ViewGroup               mExpulsionCardLayout;
-    private ViewGroup               mDisqualificationCardLayout;
-    private SanctionType            mSelectedMisconductSanction;
+    private SanctionSelectionDialogFragment mSanctionSelectionDialogFragment;
+    private IGame                           mGame;
+    private TeamType                        mTeamType;
+    private MisconductPlayerAdapter         mMisconductPlayerAdapter;
+    private PlayerToggleButton              mYellowCardButton;
+    private PlayerToggleButton              mRedCardButton;
+    private PlayerToggleButton              mExpulsionCardButton;
+    private PlayerToggleButton              mDisqualificationCardButton;
+    private ViewGroup                       mYellowCardLayout;
+    private ViewGroup                       mRedCardLayout;
+    private ViewGroup                       mExpulsionCardLayout;
+    private ViewGroup                       mDisqualificationCardLayout;
+    private SanctionType                    mSelectedMisconductSanction;
 
-    void init(SanctionSelectionDialog sanctionSelectionDialog, IGame game, TeamType teamType) {
-        mSanctionSelectionDialog = sanctionSelectionDialog;
+    void init(SanctionSelectionDialogFragment sanctionSelectionDialogFragment, IGame game, TeamType teamType) {
+        mSanctionSelectionDialogFragment = sanctionSelectionDialogFragment;
         mGame = game;
         mTeamType = teamType;
     }
@@ -73,7 +73,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                     mRedCardButton.setChecked(false);
                     mExpulsionCardButton.setChecked(false);
                     mDisqualificationCardButton.setChecked(false);
-                    mSanctionSelectionDialog.computeOkAvailability(R.id.misconduct_sanction_tab);
+                    mSanctionSelectionDialogFragment.computeOkAvailability(R.id.misconduct_sanction_tab);
                 }
             });
 
@@ -84,7 +84,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                     mYellowCardButton.setChecked(false);
                     mExpulsionCardButton.setChecked(false);
                     mDisqualificationCardButton.setChecked(false);
-                    mSanctionSelectionDialog.computeOkAvailability(R.id.misconduct_sanction_tab);
+                    mSanctionSelectionDialogFragment.computeOkAvailability(R.id.misconduct_sanction_tab);
                 }
             });
 
@@ -95,7 +95,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                     mYellowCardButton.setChecked(false);
                     mRedCardButton.setChecked(false);
                     mDisqualificationCardButton.setChecked(false);
-                    mSanctionSelectionDialog.computeOkAvailability(R.id.misconduct_sanction_tab);
+                    mSanctionSelectionDialogFragment.computeOkAvailability(R.id.misconduct_sanction_tab);
                 }
             });
 
@@ -106,7 +106,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                     mYellowCardButton.setChecked(false);
                     mRedCardButton.setChecked(false);
                     mExpulsionCardButton.setChecked(false);
-                    mSanctionSelectionDialog.computeOkAvailability(R.id.misconduct_sanction_tab);
+                    mSanctionSelectionDialogFragment.computeOkAvailability(R.id.misconduct_sanction_tab);
                 }
             });
 
@@ -143,7 +143,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
         mRedCardButton.setChecked(false);
         mExpulsionCardButton.setChecked(false);
         mDisqualificationCardButton.setChecked(false);
-        mSanctionSelectionDialog.computeOkAvailability(R.id.misconduct_sanction_tab);
+        mSanctionSelectionDialogFragment.computeOkAvailability(R.id.misconduct_sanction_tab);
     }
 
     private class MisconductPlayerAdapter extends BaseAdapter {

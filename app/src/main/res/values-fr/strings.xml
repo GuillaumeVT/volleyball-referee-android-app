@@ -73,7 +73,7 @@
     <string name="user_request_error">Erreur lors du traitement de la requête</string>
     <string name="user_signed_in_as_pseudo">Connecté en tant que %s</string>
     <string name="user_password_recovery_initiated">Un e-mail a été envoyé à %s pour réinitialiser le mot de passe</string>
-    <string name="password_strength">Le mot de passe doit contenir au moins 8 lettres, dont 1 majuscule, 1 chiffre, et 1 caractère special</string>
+    <string name="password_strength">Le mot de passe doit contenir au moins 8 caractères, dont 1 majuscule, 1 chiffre, et 1 caractère special</string>
     <string name="password_strength_error">Le mot de passe ne remplit pas les critères décrits précédemment</string>
     <string name="user_signed_out">Déconnecté</string>
     <string name="search_colleague">Chercher dans les collègues</string>
@@ -96,6 +96,7 @@
     <string name="select_captain">Sélectionner le capitaine</string>
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="select_gender">Sélectionner le genre</string>
+    <string name="select_player_names">Saisir les noms des joueurs (optionnel)</string>
     <string name="confirm">Confirmer</string>
     <string name="confirm_game_setup_question">Confirmez-vous cette configuration?</string>
     <string name="gender_description">Genre</string>

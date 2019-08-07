@@ -18,6 +18,11 @@ import java.util.List;
 
 public class PlayersListAdapter extends BaseAdapter {
 
+    static class ViewHolder {
+        TextView playerNumber;
+        TextView playerName;
+    }
+
     private final LayoutInflater  mLayoutInflater;
     private final Context         mContext;
     private final IBaseTeam       mTeamService;
@@ -49,29 +54,36 @@ public class PlayersListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int index, View view, ViewGroup parent) {
-        TextView playerText;
+        View playerItem = view;
+        ViewHolder viewHolder;
 
         if (view == null) {
-            playerText = (TextView) mLayoutInflater.inflate(R.layout.ladder_item, null);
+            playerItem = mLayoutInflater.inflate(R.layout.full_player_item, null);
+            viewHolder = new ViewHolder();
+            viewHolder.playerNumber = playerItem.findViewById(R.id.player_number);
+            viewHolder.playerName = playerItem.findViewById(R.id.player_name);
+            playerItem.setTag(viewHolder);
         } else {
-            playerText = (TextView) view;
+            viewHolder = (ViewHolder) playerItem.getTag();
         }
 
-        int number = mPlayers.get(index).getNum();
-        playerText.setText(UiUtils.formatNumberFromLocale(number));
+        ApiPlayer player = mPlayers.get(index);
+        viewHolder.playerNumber.setText(UiUtils.formatNumberFromLocale(player.getNum()));
 
-        if (mTeamService.isLibero(mTeamType, number)) {
-            UiUtils.colorTeamText(mContext, mTeamService.getLiberoColor(mTeamType), playerText);
+        if (mTeamService.isLibero(mTeamType, player.getNum())) {
+            UiUtils.colorTeamText(mContext, mTeamService.getLiberoColor(mTeamType), viewHolder.playerNumber);
         } else {
-            UiUtils.colorTeamText(mContext, mTeamService.getTeamColor(mTeamType), playerText);
+            UiUtils.colorTeamText(mContext, mTeamService.getTeamColor(mTeamType), viewHolder.playerNumber);
         }
 
-        if (mTeamService.isCaptain(mTeamType, number)) {
-            playerText.setPaintFlags(playerText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        if (mTeamService.isCaptain(mTeamType, player.getNum())) {
+            viewHolder.playerNumber.setPaintFlags(viewHolder.playerNumber.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         } else {
-            playerText.setPaintFlags(playerText.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+            viewHolder.playerNumber.setPaintFlags(viewHolder.playerNumber.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
         }
 
-        return playerText;
+        viewHolder.playerName.setText(player.getName());
+
+        return playerItem;
     }
 }

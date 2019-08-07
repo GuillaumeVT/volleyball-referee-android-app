@@ -34,6 +34,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     private FloatingActionButton mTeamColorButton;
     private MaterialButton       mCaptainButton;
     private FloatingActionButton mGenderButton;
+    private FloatingActionButton mPlayerNamesButton;
 
     public QuickTeamSetupFragment() {}
 
@@ -59,6 +60,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         final TextInputEditText teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
         mTeamColorButton = view.findViewById(R.id.team_color_button);
+        mPlayerNamesButton = view.findViewById(R.id.team_player_names_button);
+        mPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment());
 
         switch (mTeamType) {
             case HOME:
@@ -123,6 +126,14 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         return view;
     }
 
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        if (childFragment instanceof PlayerNamesInputDialogFragment) {
+            PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
+            fragment.setTeam(mTeamService);
+        }
+    }
+
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
@@ -138,6 +149,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     private void teamColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType.toString()));
         UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamIconButton(getActivity(), color, mPlayerNamesButton);
         mTeamService.setTeamColor(mTeamType, color);
         updateCaptain();
     }
@@ -186,6 +198,12 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
                 UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
+    }
+
+    private void showPlayerNamesInputDialogFragment() {
+        PlayerNamesInputDialogFragment fragment = PlayerNamesInputDialogFragment.newInstance(mTeamType);
+        fragment.show(getChildFragmentManager(), "player_names_input_dialog");
+        fragment.setTeam(mTeamService);
     }
 
     private void computeSaveItemVisibility() {

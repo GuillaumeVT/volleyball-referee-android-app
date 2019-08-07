@@ -212,6 +212,27 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
+    public void setPlayerName(TeamType teamType, int number, String name) {}
+
+    @Override
+    public String getPlayerName(TeamType teamType, int number) {
+        String playerName = "";
+
+        for (ApiPlayer player : getTeam(teamType).getPlayers()) {
+            if (player.getNum() == number) {
+                playerName = player.getName();
+            }
+        }
+        for (ApiPlayer player : getTeam(teamType).getLiberos()) {
+            if (player.getNum() == number) {
+                playerName = player.getName();
+            }
+        }
+
+        return playerName;
+    }
+
+    @Override
     public GenderType getGender(TeamType teamType) {
         return getTeam(teamType).getGender();
     }

@@ -47,6 +47,10 @@ public interface IBaseTeam {
 
     Set<ApiPlayer> getPlayers(TeamType teamType);
 
+    void setPlayerName(TeamType teamType, int number, String name);
+
+    String getPlayerName(TeamType teamType, int number);
+
     GenderType getGender();
 
     GenderType getGender(TeamType teamType);

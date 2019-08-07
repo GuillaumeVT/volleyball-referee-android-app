@@ -326,6 +326,14 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
+    public void setPlayerName(TeamType teamType, int number, String name) {}
+
+    @Override
+    public String getPlayerName(TeamType teamType, int number) {
+        return "";
+    }
+
+    @Override
     public GenderType getGender() {
         return mGender;
     }

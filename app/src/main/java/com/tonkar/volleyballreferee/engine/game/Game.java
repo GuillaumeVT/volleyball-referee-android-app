@@ -672,6 +672,16 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public void setPlayerName(TeamType teamType, int number, String name) {
+        getTeamDefinition(teamType).setPlayerName(number, name);
+    }
+
+    @Override
+    public String getPlayerName(TeamType teamType, int number) {
+        return getTeamDefinition(teamType).getPlayerName(number);
+    }
+
+    @Override
     public GenderType getGender() {
         return mGender;
     }
@@ -1122,28 +1132,24 @@ public abstract class Game extends BaseGame {
 
     @Override
     public void restoreTeams(IStoredGame storedGame) {
-        setTeamId(TeamType.HOME, storedGame.getTeamId(TeamType.HOME));
-        setCreatedBy(TeamType.HOME, storedGame.getCreatedBy(TeamType.HOME));
-        setCreatedAt(TeamType.HOME, storedGame.getCreatedAt(TeamType.HOME));
-        setUpdatedAt(TeamType.HOME, storedGame.getUpdatedAt(TeamType.HOME));
-        setTeamName(TeamType.HOME, storedGame.getTeamName(TeamType.HOME));
-        setTeamColor(TeamType.HOME, storedGame.getTeamColor(TeamType.HOME));
-        setGender(TeamType.HOME, storedGame.getGender(TeamType.HOME));
+        restoreTeam(storedGame, TeamType.HOME);
+        restoreTeam(storedGame, TeamType.GUEST);
+    }
 
-        for (ApiPlayer player : storedGame.getPlayers(TeamType.HOME))  {
-            addPlayer(TeamType.HOME, player.getNum());
-        }
+    void restoreTeam(IStoredGame storedGame, TeamType teamType) {
+        setTeamId(teamType, storedGame.getTeamId(teamType));
+        setCreatedBy(teamType, storedGame.getCreatedBy(teamType));
+        setCreatedAt(teamType, storedGame.getCreatedAt(teamType));
+        setUpdatedAt(teamType, storedGame.getUpdatedAt(teamType));
+        setTeamName(teamType, storedGame.getTeamName(teamType));
+        setTeamColor(teamType, storedGame.getTeamColor(teamType));
+        setGender(teamType, storedGame.getGender(teamType));
 
-        setTeamId(TeamType.GUEST, storedGame.getTeamId(TeamType.GUEST));
-        setCreatedBy(TeamType.GUEST, storedGame.getCreatedBy(TeamType.GUEST));
-        setCreatedAt(TeamType.GUEST, storedGame.getCreatedAt(TeamType.GUEST));
-        setUpdatedAt(TeamType.GUEST, storedGame.getUpdatedAt(TeamType.GUEST));
-        setTeamName(TeamType.GUEST, storedGame.getTeamName(TeamType.GUEST));
-        setTeamColor(TeamType.GUEST, storedGame.getTeamColor(TeamType.GUEST));
-        setGender(TeamType.GUEST, storedGame.getGender(TeamType.GUEST));
-
-        for (ApiPlayer player : storedGame.getPlayers(TeamType.GUEST))  {
-            addPlayer(TeamType.GUEST, player.getNum());
+        for (ApiPlayer player : storedGame.getPlayers(teamType))  {
+            addPlayer(teamType, player.getNum());
+            if (!player.getName().trim().isEmpty()) {
+                setPlayerName(teamType, player.getNum(), player.getName());
+            }
         }
     }
 

@@ -359,24 +359,22 @@ public class IndoorGame extends Game implements IIndoorTeam {
     @Override
     public void restoreTeams(IStoredGame storedGame) {
         super.restoreTeams(storedGame);
+    }
 
-        setLiberoColor(TeamType.HOME, storedGame.getLiberoColor(TeamType.HOME));
+    @Override
+    void restoreTeam(IStoredGame storedGame, TeamType teamType) {
+        super.restoreTeam(storedGame, teamType);
+        setLiberoColor(teamType, storedGame.getLiberoColor(teamType));
 
-        for (ApiPlayer player : storedGame.getLiberos(TeamType.HOME))  {
-            addPlayer(TeamType.HOME, player.getNum());
-            addLibero(TeamType.HOME, player.getNum());
+        for (ApiPlayer player : storedGame.getLiberos(teamType))  {
+            addPlayer(teamType, player.getNum());
+            addLibero(teamType, player.getNum());
+            if (!player.getName().trim().isEmpty()) {
+                setPlayerName(teamType, player.getNum(), player.getName());
+            }
         }
 
-        setCaptain(TeamType.HOME, storedGame.getCaptain(TeamType.HOME));
-
-        setLiberoColor(TeamType.GUEST, storedGame.getLiberoColor(TeamType.GUEST));
-
-        for (ApiPlayer player : storedGame.getLiberos(TeamType.GUEST))  {
-            addPlayer(TeamType.GUEST, player.getNum());
-            addLibero(TeamType.GUEST, player.getNum());
-        }
-
-        setCaptain(TeamType.GUEST, storedGame.getCaptain(TeamType.GUEST));
+        setCaptain(teamType, storedGame.getCaptain(teamType));
     }
 
     @Override

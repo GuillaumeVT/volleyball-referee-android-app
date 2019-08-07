@@ -31,6 +31,7 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
+import com.tonkar.volleyballreferee.ui.team.PlayerNamesInputDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     private FloatingActionButton        mGuestTeamColorButton;
     private MaterialButton              mHomeTeamCaptainButton;
     private MaterialButton              mGuestTeamCaptainButton;
+    private FloatingActionButton        mHomeTeamPlayerNamesButton;
+    private FloatingActionButton        mGuestTeamPlayerNamesButton;
     private AutocompleteTeamListAdapter mAutocompleteTeamListAdapter;
 
     public QuickGameSetupFragment() {}
@@ -233,6 +236,9 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         homeTeamNameInput.setText(mGame.getTeamName(TeamType.HOME));
         guestTeamNameInput.setText(mGame.getTeamName(TeamType.GUEST));
 
+        mHomeTeamPlayerNamesButton = view.findViewById(R.id.home_team_player_names_button);
+        mGuestTeamPlayerNamesButton = view.findViewById(R.id.guest_team_player_names_button);
+
         if (mGame.getTeamColor(TeamType.HOME) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)
                 && mGame.getTeamColor(TeamType.GUEST) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
             int homeTeamColor = UiUtils.getRandomShirtColor(getContext());
@@ -310,14 +316,29 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
             guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
             guestTeamNameInput.setThreshold(2);
+
+            mHomeTeamPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment(TeamType.HOME));
+            mGuestTeamPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment(TeamType.GUEST));
         } else {
             View teamCaptainLayout = view.findViewById(R.id.home_team_captain_layout);
             teamCaptainLayout.setVisibility(View.GONE);
             teamCaptainLayout = view.findViewById(R.id.guest_team_captain_layout);
             teamCaptainLayout.setVisibility(View.GONE);
+            View teamPlayerNamesLayout = view.findViewById(R.id.home_team_player_names_layout);
+            teamPlayerNamesLayout.setVisibility(View.GONE);
+            teamPlayerNamesLayout = view.findViewById(R.id.guest_team_player_names_layout);
+            teamPlayerNamesLayout.setVisibility(View.GONE);
         }
 
         return view;
+    }
+
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        if (childFragment instanceof PlayerNamesInputDialogFragment) {
+            PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
+            fragment.setTeam(mGame);
+        }
     }
 
     private void selectTeamColor(final TeamType teamType) {
@@ -334,15 +355,19 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     private void teamColorSelected(TeamType teamType, int colorId) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", teamType.toString()));
-        final FloatingActionButton button;
+        final FloatingActionButton colorButton;
+        final FloatingActionButton namesButton;
 
         if (TeamType.HOME.equals(teamType)) {
-            button = mHomeTeamColorButton;
+            colorButton = mHomeTeamColorButton;
+            namesButton = mHomeTeamPlayerNamesButton;
         } else {
-            button = mGuestTeamColorButton;
+            colorButton = mGuestTeamColorButton;
+            namesButton = mGuestTeamPlayerNamesButton;
         }
 
-        UiUtils.colorTeamIconButton(getContext(), colorId, button);
+        UiUtils.colorTeamIconButton(getContext(), colorId, colorButton);
+        UiUtils.colorTeamIconButton(getContext(), colorId, namesButton);
         mGame.setTeamColor(teamType, colorId);
         updateCaptain(teamType);
     }
@@ -406,6 +431,12 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         if (getActivity() instanceof QuickGameSetupActivity) {
             ((QuickGameSetupActivity) getActivity()).computeStartLayoutVisibility();
         }
+    }
+
+    private void showPlayerNamesInputDialogFragment(TeamType teamType) {
+        PlayerNamesInputDialogFragment fragment = PlayerNamesInputDialogFragment.newInstance(teamType);
+        fragment.show(getChildFragmentManager(), "player_names_input_dialog");
+        fragment.setTeam(mGame);
     }
 
     @Override

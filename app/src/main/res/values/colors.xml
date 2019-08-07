@@ -30,8 +30,10 @@
     <color name="colorBeachLight">#f8dc8a</color>
     <color name="colorTime">#1f1f1f</color>
     <color name="colorTimeLight">#d1d1d1</color>
-    <color name="colorIndoor4x4">#2980b9</color>
-    <color name="colorIndoor4x4Light">#e7f2fa</color>
+    <color name="colorIndoor4x4">#781fc9</color>
+    <color name="colorIndoor4x4Light">#dbc0f5</color>
+    <color name="colorSnow">#2980b9</color>
+    <color name="colorSnowLight">#e7f2fa</color>
     <color name="colorWebPublic">#2980b9</color>
     <color name="colorWebPublicLight">#e7f2fa</color>
     <color name="colorWebPrivate">#ffcc0000</color>

@@ -19,7 +19,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-public class SanctionSelectionDialog extends DialogFragment {
+public class SanctionSelectionDialogFragment extends DialogFragment {
 
     private IGame                               mGame;
     private TeamType                            mTeamType;
@@ -30,9 +30,9 @@ public class SanctionSelectionDialog extends DialogFragment {
     private DelaySanctionSelectionFragment      mDelaySanctionSelectionFragment;
     private MisconductSanctionSelectionFragment mMisconductSanctionSelectionFragment;
 
-    public SanctionSelectionDialog() {}
+    public SanctionSelectionDialogFragment() {}
 
-    public SanctionSelectionDialog(String title, IGame game, TeamType teamType) {
+    public SanctionSelectionDialogFragment(String title, IGame game, TeamType teamType) {
         mGame = game;
         mTeamType = teamType;
         mTitle = title;

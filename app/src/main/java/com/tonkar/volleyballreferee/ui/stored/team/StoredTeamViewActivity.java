@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
@@ -75,7 +75,7 @@ public class StoredTeamViewActivity extends AppCompatActivity {
                 break;
         }
 
-        GridView playersList = findViewById(R.id.players_list);
+        ListView playersList = findViewById(R.id.players_list);
         PlayersListAdapter playersListAdapter = new PlayersListAdapter(getLayoutInflater(), this, mTeamService, null);
         playersList.setAdapter(playersListAdapter);
     }

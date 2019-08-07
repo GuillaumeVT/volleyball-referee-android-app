@@ -118,6 +118,16 @@ public class WrappedTeam implements IBaseTeam {
     }
 
     @Override
+    public void setPlayerName(TeamType teamType, int number, String name) {
+        mTeamDefinition.setPlayerName(number, name);
+    }
+
+    @Override
+    public String getPlayerName(TeamType teamType, int number) {
+        return mTeamDefinition.getPlayerName(number);
+    }
+
+    @Override
     public GenderType getGender() {
         return mTeamDefinition.getGender();
     }

@@ -189,6 +189,20 @@ public class BrazilFranceIndoorGame {
             indoorGame.addLibero(TeamType.HOME, 8);
 
             indoorGame.setCaptain(TeamType.HOME, 1);
+
+            indoorGame.setPlayerName(TeamType.HOME, 1, "Bruno Mossa Rezende");
+            indoorGame.setPlayerName(TeamType.HOME, 3, "Eder Carbonera");
+            indoorGame.setPlayerName(TeamType.HOME, 4, "Wallace De Souza");
+            indoorGame.setPlayerName(TeamType.HOME, 5, "Lucas Eduardo Loh");
+            indoorGame.setPlayerName(TeamType.HOME, 6, "Tiago Brendle");
+            indoorGame.setPlayerName(TeamType.HOME, 8, "Thales Hoss");
+            indoorGame.setPlayerName(TeamType.HOME, 9, "Raphael Vieira De Oliveira");
+            indoorGame.setPlayerName(TeamType.HOME, 10, "Otávio Henrique Rodrigues Pinto");
+            indoorGame.setPlayerName(TeamType.HOME, 11, "Rodrigo Leao");
+            indoorGame.setPlayerName(TeamType.HOME, 16, "Lucas Saatkamp");
+            indoorGame.setPlayerName(TeamType.HOME, 18, "Ricardo Lucarelli Souza");
+            indoorGame.setPlayerName(TeamType.HOME, 19, "Mauricio Borges Almeida Silva");
+            indoorGame.setPlayerName(TeamType.HOME, 20, "Renan Buiatti");
         } else {
             storedTeamsService.copyTeam(teamBrazil, indoorGame, TeamType.HOME);
         }
@@ -217,6 +231,21 @@ public class BrazilFranceIndoorGame {
             indoorGame.addLibero(TeamType.GUEST, 20);
 
             indoorGame.setCaptain(TeamType.GUEST, 6);
+
+            indoorGame.setPlayerName(TeamType.GUEST, 2, "Jenia Grebennikov");
+            indoorGame.setPlayerName(TeamType.GUEST, 5, "Trevor Clevenot");
+            indoorGame.setPlayerName(TeamType.GUEST, 6, "Benjamin Toniutti");
+            indoorGame.setPlayerName(TeamType.GUEST, 8, "Julien Lyneel");
+            indoorGame.setPlayerName(TeamType.GUEST, 9, "Earvin Ngapeth");
+            indoorGame.setPlayerName(TeamType.GUEST, 10, "Kevin Le Roux");
+            indoorGame.setPlayerName(TeamType.GUEST, 11, "Antoine Brizard");
+            indoorGame.setPlayerName(TeamType.GUEST, 12, "Stephen Boyer");
+            indoorGame.setPlayerName(TeamType.GUEST, 14, "Nicolas Le Goff");
+            indoorGame.setPlayerName(TeamType.GUEST, 16, "Daryl Bultor");
+            indoorGame.setPlayerName(TeamType.GUEST, 17, "Guillaume Quesque");
+            indoorGame.setPlayerName(TeamType.GUEST, 18, "Thibault Rossard");
+            indoorGame.setPlayerName(TeamType.GUEST, 20, "Nicolas Rossard");
+            indoorGame.setPlayerName(TeamType.GUEST, 21, "Barthélémy Chinenyeze");
         } else {
             storedTeamsService.copyTeam(teamFrance, indoorGame, TeamType.GUEST);
         }

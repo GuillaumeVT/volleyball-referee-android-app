@@ -51,6 +51,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     private MaterialButton       mCaptainButton;
     private LiberoAdapter        mLiberoAdapter;
     private FloatingActionButton mGenderButton;
+    private FloatingActionButton mPlayerNamesButton;
 
     public TeamSetupFragment() {}
 
@@ -92,6 +93,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
         final GridView liberoNumbersGrid = view.findViewById(R.id.team_libero_numbers_grid);
         mLiberoColorButton = view.findViewById(R.id.libero_color_button);
+        mPlayerNamesButton = view.findViewById(R.id.team_player_names_button);
+        mPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment());
 
         switch (mTeamType) {
             case HOME:
@@ -210,6 +213,14 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         outState.putInt("number_of_shirts", mNumberOfShirts);
     }
 
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        if (childFragment instanceof PlayerNamesInputDialogFragment) {
+            PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
+            fragment.setTeam(mTeamService);
+        }
+    }
+
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType.toString()));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
@@ -225,6 +236,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     private void teamColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType.toString()));
         UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamIconButton(getActivity(), color, mPlayerNamesButton);
         mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
         updateCaptain();
@@ -514,6 +526,12 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
+    }
+
+    private void showPlayerNamesInputDialogFragment() {
+        PlayerNamesInputDialogFragment fragment = PlayerNamesInputDialogFragment.newInstance(mTeamType);
+        fragment.show(getChildFragmentManager(), "player_names_input_dialog");
+        fragment.setTeam(mTeamService);
     }
 
     private void computeConfirmItemVisibility() {

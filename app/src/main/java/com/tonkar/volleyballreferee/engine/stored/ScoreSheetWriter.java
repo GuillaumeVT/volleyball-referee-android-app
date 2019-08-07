@@ -208,7 +208,7 @@ public class ScoreSheetWriter {
         cardDiv.appendChild(createTitleDiv(mContext.getString(R.string.players)));
 
         Element teamsDiv = new Element("div");
-        teamsDiv.addClass("div-flex-row");
+        teamsDiv.addClass("div-grid-h-g");
         teamsDiv.appendChild(createTeamDiv(TeamType.HOME)).appendChild(createSpacingDiv()).appendChild(createTeamDiv(TeamType.GUEST));
         cardDiv.appendChild(teamsDiv);
 
@@ -221,6 +221,7 @@ public class ScoreSheetWriter {
 
         for (ApiPlayer player : mStoredGame.getPlayers(teamType)) {
             teamDiv.appendChild(createPlayerSpan(teamType, player.getNum(), mStoredGame.isLibero(teamType, player.getNum())));
+            teamDiv.appendChild(createCellSpan(player.getName(), false, false)); // TODO
         }
 
         return teamDiv;
@@ -919,12 +920,12 @@ public class ScoreSheetWriter {
                 "    }\n" +
                 "    .div-grid-team {\n" +
                 "      display: grid;\n" +
-                "      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;\n" +
+                "      grid-template-columns: 1fr 8fr;\n" +
                 "      grid-auto-rows: 1fr;\n" +
                 "      align-items: center;\n" +
-                "      align-content: center;\n" +
-                "      justify-content: center;\n" +
-                "      margin-right: 34px;\n" +
+                "      align-content: start;\n" +
+                "      justify-content: start;\n" +
+                "      justify-items: start;\n" +
                 "    }\n" +
                 "    .div-grid-set-info {\n" +
                 "      display: grid;\n" +

@@ -53,6 +53,35 @@
             android:baselineAligned="false">
 
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/select_gender_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/select_gender"
+                android:textAppearance="@style/TextViewTheme"
+                android:textSize="@dimen/default_text_size"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/select_gender_button"
+                style="@style/VbrFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size"
+                android:contentDescription="@string/gender_description"
+                app:fabCustomSize="@dimen/form_button_size"
+                app:maxImageSize="@dimen/form_fab_icon_size"
+                app:srcCompat="@drawable/ic_mixed"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|start"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -81,24 +110,23 @@
             android:baselineAligned="false">
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/select_gender_title"
+                android:id="@+id/team_player_names_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/select_gender"
+                android:text="@string/select_player_names"
                 android:textAppearance="@style/TextViewTheme"
                 android:textSize="@dimen/default_text_size"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/select_gender_button"
+                android:id="@+id/team_player_names_button"
                 style="@style/VbrFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
-                android:contentDescription="@string/gender_description"
                 app:fabCustomSize="@dimen/form_button_size"
                 app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_mixed"/>
+                app:srcCompat="@drawable/ic_player_name"/>
 
     </LinearLayout>
 
