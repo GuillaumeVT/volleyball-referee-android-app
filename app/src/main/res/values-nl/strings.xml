@@ -97,6 +97,7 @@
     <string name="select_captain">Selecteer de kapitein</string>
     <string name="select_libero">Selecteer de liberos (optioneel)</string>
     <string name="select_gender">Selecteer het geslacht</string>
+    <string name="input_player_names">Voer de spelersnamen in (optioneel)</string>
     <string name="confirm">Bevestig</string>
     <string name="confirm_game_setup_question">Bevestig je deze opstelling?</string>
     <string name="gender_description">Geslacht</string>
@@ -156,6 +157,8 @@
     <string name="all_substitutions_used">%s heeft geen vervaningen meer</string>
     <string name="sanctions_tab">Sancties</string>
     <string name="sanction">Sanctie (%s)</string>
+    <string name="delay_sanction">Spelvertraging</string>
+    <string name="misconduct_sanction">Wangedrag</string>
     <string name="yellow_card">Eenvoudige waarschuwing</string>
     <string name="red_card">Een punt en opslag aan de tegenstander</string>
     <string name="red_card_expulsion">Uitwijzing voor de rest van de set</string>

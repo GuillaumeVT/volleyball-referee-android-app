@@ -95,8 +95,9 @@
     <string name="select_players">Seleziona i giocatori (anche i liberi)</string>
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
     <string name="select_captain">Seleziona il capitano</string>
-    <string name="select_libero">Seleziona il libero (opzionale)</string>
+    <string name="select_libero">Seleziona il libero (facoltativo)</string>
     <string name="select_gender">Seleziona il tipo di squadra</string>
+    <string name="input_player_names">Scegliere il nome dei giocatori (facoltativo)</string>
     <string name="confirm">Confermare</string>
     <string name="confirm_game_setup_question">Confermate questa formazione?</string>
     <string name="gender_description">Genere</string>

@@ -97,6 +97,7 @@
     <string name="select_captain">Mannschaftskapitän auswählen</string>
     <string name="select_libero">Liberos auswählen (optional)</string>
     <string name="select_gender">Geschlecht auswählen</string>
+    <string name="input_player_names">Spielername eingeben (optional)</string>
     <string name="confirm">Bestätigen</string>
     <string name="confirm_game_setup_question">Stimmen Sie diesen Spieleinstellungen zu?</string>
     <string name="gender_description">Geschlecht</string>
@@ -310,8 +311,8 @@
         <item>Spieler können unter Beachtung der Gesamtzahl der Auswechslungen pro Team beliebig oft an jeder Position aus- und eingewechselt werden.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 Auswechslungen pro Satz (entsprechend der Regelung zur Spielerauswecheslung)</item>
-        <item>15 Auswechslungen pro Satz (entsprechend der Regelung zur Spielerauswecheslung)</item>
+        <item>18 Auswechslungen pro Satz (entsprechend der Regelung zur Spielerauswechslung)</item>
+        <item>15 Auswechslungen pro Satz (entsprechend der Regelung zur Spielerauswechslung)</item>
         <item>12 Auswechslungen pro Satz</item>
         <item>6 Auswechslungen pro Satz</item>
         <item>5 Auswechslungen pro Satz</item>

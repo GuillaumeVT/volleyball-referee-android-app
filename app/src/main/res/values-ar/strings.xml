@@ -91,7 +91,7 @@
     <string name="select_captain">حدد قائد الفريق</string>
     <string name="select_libero">حدد اللاعب الحر (اختياري)</string>
     <string name="select_gender">حدد الجنس</string>
-    <string name="input_player_names">Set the player names (optional)</string>
+    <string name="input_player_names">أدخل أسماء اللاعب (اختياري)</string>
     <string name="confirm">تأكيد</string>
     <string name="confirm_game_setup_question">هل أنت موافق على هذه الإعدادات</string>
     <string name="gender_description">الجنس</string>
