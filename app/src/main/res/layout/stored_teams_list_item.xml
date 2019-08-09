@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
+              android:descendantFocusability="blocksDescendants"
               android:padding="@dimen/big_margin_size">
 
     <androidx.appcompat.widget.AppCompatTextView

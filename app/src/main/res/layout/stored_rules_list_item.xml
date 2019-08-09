@@ -4,6 +4,7 @@
               android:id="@+id/stored_rules_item_layout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:descendantFocusability="blocksDescendants"
               android:orientation="horizontal"
               android:padding="@dimen/big_margin_size">
 

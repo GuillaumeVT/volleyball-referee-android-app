@@ -117,6 +117,9 @@
         <item name="textStartPadding">0dp</item>
         <item name="textEndPadding">0dp</item>
         <item name="android:enabled">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
         <item name="android:gravity">center</item>
     </style>
 
