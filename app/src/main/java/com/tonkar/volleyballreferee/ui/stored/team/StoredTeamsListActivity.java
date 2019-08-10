@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
@@ -75,8 +76,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
             final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamViewActivity.class);
             intent.putExtra("team", mStoredTeamsService.writeTeam(team));
-            startActivity(intent);
-            UiUtils.animateForward(this);
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
         });
 
         mIsFabOpen = false;
@@ -100,20 +100,20 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     public void addIndoorTeam(View view) {
         GameType gameType = GameType.INDOOR;
-        addTeam(gameType);
+        addTeam(gameType, view);
     }
 
     public void addIndoor4x4Team(View view) {
         GameType gameType = GameType.INDOOR_4X4;
-        addTeam(gameType);
+        addTeam(gameType, view);
     }
 
     public void addBeachTeam(View view) {
         GameType gameType = GameType.BEACH;
-        addTeam(gameType);
+        addTeam(gameType, view);
     }
 
-    private void addTeam(GameType gameType) {
+    private void addTeam(GameType gameType, View view) {
         Log.i(Tags.STORED_TEAMS, "Start activity to create new team");
         IBaseTeam teamService = mStoredTeamsService.createTeam(gameType);
 
@@ -121,8 +121,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         intent.putExtra("team", mStoredTeamsService.writeTeam(mStoredTeamsService.copyTeam(teamService)));
         intent.putExtra("kind", gameType.toString());
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateCreate(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     @Override

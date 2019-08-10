@@ -348,6 +348,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(teamType, selectedColor);
+                UiUtils.animateBounce(getContext(), TeamType.HOME.equals(teamType) ? mHomeTeamColorButton : mGuestTeamColorButton);
             }
         };
         colorSelectionDialog.show();

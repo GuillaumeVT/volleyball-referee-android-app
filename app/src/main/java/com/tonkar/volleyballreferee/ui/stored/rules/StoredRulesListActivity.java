@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
@@ -74,8 +75,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
             final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesViewActivity.class);
             intent.putExtra("rules", mStoredRulesService.writeRules(rules));
-            startActivity(intent);
-            UiUtils.animateForward(this);
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
         });
 
         mIsFabOpen = false;
@@ -99,25 +99,24 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     public void addIndoorRules(View view) {
         Log.i(Tags.STORED_RULES, "Start activity to create new indoor rules");
-        addRules(GameType.INDOOR);
+        addRules(GameType.INDOOR, view);
     }
 
     public void addIndoor4x4Rules(View view) {
         Log.i(Tags.STORED_RULES, "Start activity to create new indoor 4x4 rules");
-        addRules(GameType.INDOOR_4X4);
+        addRules(GameType.INDOOR_4X4, view);
     }
 
     public void addBeachRules(View view) {
         Log.i(Tags.STORED_RULES, "Start activity to create new beach rules");
-        addRules(GameType.BEACH);
+        addRules(GameType.BEACH, view);
     }
 
-    private void addRules(GameType gameType) {
+    private void addRules(GameType gameType, View view) {
         final Intent intent = new Intent(this, StoredRulesActivity.class);
         intent.putExtra("rules", mStoredRulesService.writeRules(mStoredRulesService.createRules(gameType)));
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateCreate(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     @Override

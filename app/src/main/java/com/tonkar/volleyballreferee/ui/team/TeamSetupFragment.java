@@ -228,6 +228,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);
+                UiUtils.animateBounce(getContext(), mTeamColorButton);
             }
         };
         colorSelectionDialog.show();
@@ -401,6 +402,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             @Override
             public void onColorSelected(int selectedColor) {
                 liberoColorSelected(selectedColor);
+                UiUtils.animateBounce(getContext(), mLiberoColorButton);
             }
         };
         colorSelectionDialog.show();
@@ -436,6 +438,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 captainUpdated(mTeamType, selectedNumber);
+                UiUtils.animateBounce(getContext(), mCaptainButton);
             }
         };
         playerSelectionDialog.show();

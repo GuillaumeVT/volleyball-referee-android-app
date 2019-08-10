@@ -159,8 +159,10 @@ public class IndoorCourtFragment extends CourtFragment {
         if (PositionType.BENCH.equals(positionType)) {
             update(teamType);
         } else {
-            updatePosition(teamType, number, getTeamPositions(teamType).get(positionType));
+            MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
+            updatePosition(teamType, number, positionButton);
             updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
+            UiUtils.animateBounce(mView.getContext(), positionButton);
 
             checkCaptain(teamType, number);
         }

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -74,8 +75,7 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
             }
 
             intent.putExtra("game", game.getId());
-            startActivity(intent);
-            UiUtils.animateForward(this);
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
         });
 
         updateStoredGamesList();

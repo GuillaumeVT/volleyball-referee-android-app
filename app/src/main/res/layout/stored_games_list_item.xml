@@ -6,6 +6,7 @@
               android:descendantFocusability="blocksDescendants"
               android:gravity="top|start"
               android:orientation="vertical"
+              android:transitionName="listItemToDetails"
               android:padding="@dimen/big_margin_size">
 
     <LinearLayout

@@ -49,7 +49,8 @@
                     app:backgroundTint="@color/colorIndoor"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_6x6_small"/>
+                    app:srcCompat="@drawable/ic_6x6_small"
+                    android:transitionName="gameKindToToolbar"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_beach_game_button"
@@ -65,7 +66,8 @@
                     app:backgroundTint="@color/colorBeach"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_beach"/>
+                    app:srcCompat="@drawable/ic_beach"
+                    android:transitionName="gameKindToToolbar"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_indoor_4x4_game_button"
@@ -81,7 +83,8 @@
                     app:backgroundTint="@color/colorIndoor4x4"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_4x4_small"/>
+                    app:srcCompat="@drawable/ic_4x4_small"
+                    android:transitionName="gameKindToToolbar"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_game_button"

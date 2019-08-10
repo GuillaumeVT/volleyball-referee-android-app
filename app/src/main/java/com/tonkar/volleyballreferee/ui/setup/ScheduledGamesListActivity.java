@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
@@ -167,18 +168,18 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     }
 
     public void scheduleIndoorGame(View view) {
-        scheduleGame(GameType.INDOOR);
+        scheduleGame(GameType.INDOOR, view);
     }
 
     public void scheduleIndoor4x4Game(View view) {
-        scheduleGame(GameType.INDOOR_4X4);
+        scheduleGame(GameType.INDOOR_4X4, view);
     }
 
     public void scheduleBeachGame(View view) {
-        scheduleGame(GameType.BEACH);
+        scheduleGame(GameType.BEACH, view);
     }
 
-    private void scheduleGame(GameType kind) {
+    private void scheduleGame(GameType kind, View view) {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
         ApiUserSummary user = PrefUtils.getUser(this);
 
@@ -196,8 +197,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
         intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, ApiGameSummary.class));
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateCreate(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     private void showFABMenu(){

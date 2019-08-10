@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import com.google.gson.JsonParseException;
 import com.tonkar.volleyballreferee.R;
@@ -196,8 +197,7 @@ public class MainActivity extends NavigationActivity {
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void startBeachGame(View view) {
@@ -210,8 +210,7 @@ public class MainActivity extends NavigationActivity {
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void startSnowGame(View view) {
@@ -228,8 +227,7 @@ public class MainActivity extends NavigationActivity {
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void startTimeBasedGame(View view) {
@@ -242,8 +240,7 @@ public class MainActivity extends NavigationActivity {
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void startScoreBasedGame(View view) {
@@ -256,8 +253,7 @@ public class MainActivity extends NavigationActivity {
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
         intent.putExtra("create", true);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void goToAvailableGames(View view) {

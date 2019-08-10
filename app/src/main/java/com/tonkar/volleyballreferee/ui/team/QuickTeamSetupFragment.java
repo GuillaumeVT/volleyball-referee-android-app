@@ -141,6 +141,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);
+                UiUtils.animateBounce(getContext(), mTeamColorButton);
             }
         };
         colorSelectionDialog.show();

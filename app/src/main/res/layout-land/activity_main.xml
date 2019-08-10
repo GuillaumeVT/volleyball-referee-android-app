@@ -62,7 +62,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -99,7 +100,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@color/colorOnSurface"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -136,7 +138,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -173,7 +176,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -208,7 +212,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -243,7 +248,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -278,7 +284,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -322,7 +329,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@color/colorOnSurface"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -357,7 +365,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
@@ -387,7 +396,8 @@
                                 android:drawablePadding="@dimen/default_margin_size"
                                 app:drawableTint="@android:color/white"
                                 app:textAllCaps="true"
-                                android:fontFamily="sans-serif-medium"/>
+                                android:fontFamily="sans-serif-medium"
+                                android:transitionName="gameKindToToolbar"/>
 
                     </FrameLayout>
 
