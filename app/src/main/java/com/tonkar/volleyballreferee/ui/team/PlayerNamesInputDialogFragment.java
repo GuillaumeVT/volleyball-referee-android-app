@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -57,11 +58,15 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
         mPlayerNameListAdapter = new PlayerNameListAdapter(getActivity().getLayoutInflater());
         playerNameList.setAdapter(mPlayerNameListAdapter);
 
-        return new AlertDialog
+        AlertDialog alertDialog = new AlertDialog
                 .Builder(getContext(), R.style.AppTheme_Dialog)
                 .setTitle(R.string.players).setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> dismiss())
                 .create();
+
+        playerNameList.post(() -> alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM));
+
+        return alertDialog;
     }
 
     public void setTeam(IBaseTeam team) {
