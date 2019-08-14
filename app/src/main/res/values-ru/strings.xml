@@ -18,6 +18,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Волейбол</string>
     <string name="new_beach_volleyball_game">Пляжный волейбол</string>
+    <string name="new_snow_volleyball_game">Coming Soon!</string>
     <string name="new_score_based_game">Счётное табло</string>
     <string name="new_time_based_game">Матч ограниченный по времени</string>
     <string name="permission_title">Разрешения</string>

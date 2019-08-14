@@ -33,6 +33,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textCapWords"
                 android:textColor="@color/colorPrimary"
+                android:importantForAutofill="no"
                 android:textSize="@dimen/default_text_size"/>
 
     </com.google.android.material.textfield.TextInputLayout>

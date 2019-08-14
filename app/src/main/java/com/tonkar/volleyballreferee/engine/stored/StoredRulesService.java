@@ -6,6 +6,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiRules;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
 
 import java.util.List;
+import java.util.Set;
 
 public interface StoredRulesService {
 
@@ -29,7 +30,7 @@ public interface StoredRulesService {
 
     void deleteRules(String id);
 
-    void deleteAllRules();
+    void deleteRules(Set<String> ids, DataSynchronizationListener listener);
 
     void createAndSaveRulesFrom(Rules rules);
 

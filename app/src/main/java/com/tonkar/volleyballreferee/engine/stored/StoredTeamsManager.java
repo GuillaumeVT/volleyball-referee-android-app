@@ -112,11 +112,16 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     @Override
-    public void deleteAllTeams() {
+    public void deleteTeams(Set<String> ids, DataSynchronizationListener listener) {
         new Thread() {
             public void run() {
-                AppDatabase.getInstance(mContext).teamDao().deleteAll();
-                deleteAllTeamsOnServer();
+                for (String id : ids) {
+                    AppDatabase.getInstance(mContext).teamDao().deleteById(id);
+                    deleteTeamOnServer(id);
+                    if (listener != null) {
+                        listener.onSynchronizationSucceeded();
+                    }
+                }
             }
         }.start();
     }
@@ -477,23 +482,4 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
     }
 
-    private void deleteAllTeamsOnServer() {
-        if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format("%s/teams", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
-
-            ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) {
-                    if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
-                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while deleting all teams", response.code()));
-                    }
-                }
-            });
-        }
-    }
 }

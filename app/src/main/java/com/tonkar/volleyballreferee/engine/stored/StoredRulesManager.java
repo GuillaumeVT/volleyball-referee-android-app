@@ -109,11 +109,16 @@ public class StoredRulesManager implements StoredRulesService {
     }
 
     @Override
-    public void deleteAllRules() {
+    public void deleteRules(Set<String> ids, DataSynchronizationListener listener) {
         new Thread() {
             public void run() {
-                AppDatabase.getInstance(mContext).rulesDao().deleteAll();
-                deleteAllRulesServer();
+                for (String id : ids) {
+                    AppDatabase.getInstance(mContext).rulesDao().deleteById(id);
+                    deleteRulesOnServer(id);
+                    if (listener != null) {
+                        listener.onSynchronizationSucceeded();
+                    }
+                }
             }
         }.start();
     }
@@ -374,26 +379,6 @@ public class StoredRulesManager implements StoredRulesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) {
                     if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
                         Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting rules", response.code()));
-                    }
-                }
-            });
-        }
-    }
-
-    private void deleteAllRulesServer() {
-        if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format("%s/rules", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
-
-            ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) {
-                    if (response.code() != HttpURLConnection.HTTP_NO_CONTENT) {
-                        Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while deleting all rules", response.code()));
                     }
                 }
             });

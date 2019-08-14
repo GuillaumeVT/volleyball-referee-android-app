@@ -1,16 +1,19 @@
 package com.tonkar.volleyballreferee.ui.stored.rules;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
+import com.tonkar.volleyballreferee.ui.stored.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
@@ -18,11 +21,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
+public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSummary> {
 
     static class ViewHolder {
-        TextView nameText;
-        Chip     kindItem;
+        LinearLayout listItemLayout;
+        TextView     nameText;
+        Chip         kindItem;
     }
 
     private final LayoutInflater        mLayoutInflater;
@@ -44,7 +48,7 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
         mFilteredStoredRulesList.clear();
         mStoredRulesList.addAll(storedRulesList);
         mFilteredStoredRulesList.addAll(storedRulesList);
-        notifyDataSetChanged();
+        clearSelectedItems();
     }
 
     @Override
@@ -64,18 +68,19 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
 
     @Override
     public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
-        View storedRulesView = view;
+        View rulesView = view;
         ViewHolder viewHolder;
 
-        if (storedRulesView == null) {
-            storedRulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, null);
+        if (rulesView == null) {
+            rulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.nameText = storedRulesView.findViewById(R.id.stored_rules_name);
-            viewHolder.kindItem = storedRulesView.findViewById(R.id.rules_kind_item);
-            storedRulesView.setTag(viewHolder);
+            viewHolder.listItemLayout = rulesView.findViewById(R.id.list_item_layout);
+            viewHolder.nameText = rulesView.findViewById(R.id.stored_rules_name);
+            viewHolder.kindItem = rulesView.findViewById(R.id.rules_kind_item);
+            rulesView.setTag(viewHolder);
         }
         else {
-            viewHolder = (ViewHolder) storedRulesView.getTag();
+            viewHolder = (ViewHolder) rulesView.getTag();
         }
 
         ApiRulesSummary rules = mFilteredStoredRulesList.get(index);
@@ -94,7 +99,9 @@ public class StoredRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
                 break;
         }
 
-        return storedRulesView;
+        viewHolder.listItemLayout.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorPrimaryVariant : R.color.colorBackground), PorterDuff.Mode.SRC_IN);
+
+        return rulesView;
     }
 
     @Override

@@ -19,6 +19,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Teremröplabda</string>
     <string name="new_beach_volleyball_game">Strandröplabda</string>
+    <string name="new_snow_volleyball_game">Coming Soon!</string>
     <string name="new_score_based_game">Eredménytábla</string>
     <string name="new_time_based_game">Időalapú</string>
     <string name="permission_title">App jogosultságok</string>
@@ -97,7 +98,7 @@
     <string name="select_captain">Jelöld ki a kapitányt</string>
     <string name="select_libero">Jelöld ki a liberókat (nem kötelező)</string>
     <string name="select_gender">Válaszd ki a csapat nemét</string>
-    <string name="input_player_names">Input the player names (optional)</string>
+    <string name="input_player_names">Add meg a játékosok neveit (opcionális)</string>
     <string name="confirm">Jóváhagyás</string>
     <string name="confirm_game_setup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="gender_description">Nem</string>
@@ -157,8 +158,8 @@
     <string name="all_substitutions_used">%s csapatnak nincs több cserelehetősége</string>
     <string name="sanctions_tab">Szankciók</string>
     <string name="sanction">Szankció (%s)</string>
-    <string name="delay_sanction">Delay</string>
-    <string name="misconduct_sanction">Misconduct</string>
+    <string name="delay_sanction">Késleltetés</string>
+    <string name="misconduct_sanction">Sportszerűtlenség</string>
     <string name="yellow_card">Sárga kártya</string>
     <string name="red_card">Piros kártya</string>
     <string name="red_card_expulsion">Sárga és piros kártya egy kézben</string>

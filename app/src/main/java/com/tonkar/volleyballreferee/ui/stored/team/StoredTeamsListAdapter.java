@@ -1,16 +1,19 @@
 package com.tonkar.volleyballreferee.ui.stored.team;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
+import com.tonkar.volleyballreferee.ui.stored.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
@@ -18,12 +21,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
+public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummary> {
 
     static class ViewHolder {
-        TextView nameText;
-        Chip     kindItem;
-        Chip     genderItem;
+        LinearLayout listItemLayout;
+        TextView     nameText;
+        Chip         kindItem;
+        Chip         genderItem;
     }
 
     private final LayoutInflater       mLayoutInflater;
@@ -45,7 +49,7 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
         mFilteredStoredTeamsList.clear();
         mStoredTeamsList.addAll(storedTeamsList);
         mFilteredStoredTeamsList.addAll(storedTeamsList);
-        notifyDataSetChanged();
+        clearSelectedItems();
     }
 
     @Override
@@ -65,19 +69,20 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
 
     @Override
     public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
-        View storedTeamView = view;
+        View teamView = view;
         ViewHolder viewHolder;
 
-        if (storedTeamView == null) {
-            storedTeamView = mLayoutInflater.inflate(R.layout.stored_teams_list_item, null);
+        if (teamView == null) {
+            teamView = mLayoutInflater.inflate(R.layout.stored_teams_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.nameText = storedTeamView.findViewById(R.id.stored_team_name);
-            viewHolder.kindItem = storedTeamView.findViewById(R.id.team_kind_item);
-            viewHolder.genderItem = storedTeamView.findViewById(R.id.team_gender_item);
-            storedTeamView.setTag(viewHolder);
+            viewHolder.listItemLayout = teamView.findViewById(R.id.list_item_layout);
+            viewHolder.nameText = teamView.findViewById(R.id.stored_team_name);
+            viewHolder.kindItem = teamView.findViewById(R.id.team_kind_item);
+            viewHolder.genderItem = teamView.findViewById(R.id.team_gender_item);
+            teamView.setTag(viewHolder);
         }
         else {
-            viewHolder = (ViewHolder) storedTeamView.getTag();
+            viewHolder = (ViewHolder) teamView.getTag();
         }
 
         ApiTeamSummary team = mFilteredStoredTeamsList.get(index);
@@ -108,7 +113,9 @@ public class StoredTeamsListAdapter extends ArrayAdapter<ApiTeamSummary> {
                 break;
         }
 
-        return storedTeamView;
+        viewHolder.listItemLayout.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorPrimaryVariant : R.color.colorBackground), PorterDuff.Mode.SRC_IN);
+
+        return teamView;
     }
 
     @Override

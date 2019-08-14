@@ -1,32 +1,36 @@
 package com.tonkar.volleyballreferee.ui.stored.game;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
+import com.tonkar.volleyballreferee.ui.stored.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
 import java.util.*;
 
-public class StoredGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
+public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummary> {
 
     static class ViewHolder {
-        TextView summaryText;
-        TextView dateText;
-        TextView scoreText;
-        Chip     kindItem;
-        Chip     genderItem;
-        Chip     indexedItem;
-        TextView leagueText;
+        LinearLayout listItemLayout;
+        TextView     summaryText;
+        TextView     dateText;
+        TextView     scoreText;
+        Chip         kindItem;
+        Chip         genderItem;
+        Chip         indexedItem;
+        TextView     leagueText;
     }
 
     private final LayoutInflater       mLayoutInflater;
@@ -53,7 +57,7 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
         mFilteredStoredGamesList.clear();
         mStoredGamesList.addAll(storedGamesList);
         mFilteredStoredGamesList.addAll(storedGamesList);
-        notifyDataSetChanged();
+        clearSelectedItems();
     }
 
     @Override
@@ -79,6 +83,7 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
         if (gameView == null) {
             gameView = mLayoutInflater.inflate(R.layout.stored_games_list_item, null);
             viewHolder = new ViewHolder();
+            viewHolder.listItemLayout = gameView.findViewById(R.id.list_item_layout);
             viewHolder.summaryText = gameView.findViewById(R.id.stored_game_summary);
             viewHolder.dateText = gameView.findViewById(R.id.stored_game_date);
             viewHolder.scoreText = gameView.findViewById(R.id.stored_game_score);
@@ -150,6 +155,8 @@ public class StoredGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , game.getLeagueName(), game.getDivisionName()));
         }
         viewHolder.leagueText.setVisibility(game.getLeagueName() == null || game.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
+
+        viewHolder.listItemLayout.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), isSelectedItem(game.getId()) ? R.color.colorPrimaryVariant : R.color.colorBackground), PorterDuff.Mode.SRC_IN);
     }
 
     @Override

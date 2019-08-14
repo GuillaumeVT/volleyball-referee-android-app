@@ -38,6 +38,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private FloatingActionButton   mAdd6x6TeamButton;
     private FloatingActionButton   mAdd4x4TeamButton;
     private FloatingActionButton   mAddBeachTeamButton;
+    private MenuItem               mDeleteSelectedTeamsItem;
 
     @Override
     protected String getToolbarTitle() {
@@ -69,14 +70,27 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mStoredTeamsListAdapter = new StoredTeamsListAdapter(this, getLayoutInflater(), teams);
         storedTeamsList.setAdapter(mStoredTeamsListAdapter);
 
-        storedTeamsList.setOnItemClickListener((adapterView, view, i, l) -> {
-            ApiTeamSummary teamDescription = mStoredTeamsListAdapter.getItem(i);
-            ApiTeam team = mStoredTeamsService.getTeam(teamDescription.getId());
-            Log.i(Tags.STORED_TEAMS, String.format("Start activity to view stored team %s", team.getName()));
+        storedTeamsList.setOnItemClickListener((parent, view, position, l) -> {
+            ApiTeamSummary teamDescription = mStoredTeamsListAdapter.getItem(position);
 
-            final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamViewActivity.class);
-            intent.putExtra("team", mStoredTeamsService.writeTeam(team));
-            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+            if (mStoredTeamsListAdapter.hasSelectedItems()) {
+                mStoredTeamsListAdapter.toggleItemSelection(teamDescription.getId());
+                mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
+            } else {
+                ApiTeam team = mStoredTeamsService.getTeam(teamDescription.getId());
+                Log.i(Tags.STORED_TEAMS, String.format("Start activity to view stored team %s", team.getName()));
+
+                final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamViewActivity.class);
+                intent.putExtra("team", mStoredTeamsService.writeTeam(team));
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+            }
+        });
+
+        storedTeamsList.setOnItemLongClickListener((parent, view, position, id) -> {
+            ApiTeamSummary teamDescription = mStoredTeamsListAdapter.getItem(position);
+            mStoredTeamsListAdapter.toggleItemSelection(teamDescription.getId());
+            mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
+            return true;
         });
 
         mIsFabOpen = false;
@@ -129,8 +143,8 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_stored_teams, menu);
 
-        MenuItem deleteAllTeamsItem = menu.findItem(R.id.action_delete_teams);
-        deleteAllTeamsItem.setVisible(mStoredTeamsService.hasTeams());
+        mDeleteSelectedTeamsItem = menu.findItem(R.id.action_delete_teams);
+        mDeleteSelectedTeamsItem.setVisible(false);
 
         MenuItem searchTeamsItem = menu.findItem(R.id.action_search_teams);
         SearchView searchTeamsView = (SearchView) searchTeamsItem.getActionView();
@@ -165,21 +179,20 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
                 updateStoredTeamsList();
                 return true;
             case R.id.action_delete_teams:
-                deleteAllTeams();
+                deleteSelectedTeams();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void deleteAllTeams() {
-        Log.i(Tags.STORED_TEAMS, "Delete all teams");
+    private void deleteSelectedTeams() {
+        Log.i(Tags.STORED_TEAMS, "Delete selected teams");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.delete_teams)).setMessage(getString(R.string.delete_teams_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mStoredTeamsService.deleteAllTeams();
+            mStoredTeamsService.deleteTeams(mStoredTeamsListAdapter.getSelectedItems(), this);
             UiUtils.makeText(StoredTeamsListActivity.this, getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToHome(StoredTeamsListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -208,8 +221,10 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onBackPressed() {
-        if(mIsFabOpen){
+        if(mIsFabOpen) {
             closeFABMenu();
+        } else if(mStoredTeamsListAdapter.hasSelectedItems()){
+            mStoredTeamsListAdapter.clearSelectedItems();
         } else {
             super.onBackPressed();
         }
@@ -226,6 +241,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     public void onSynchronizationSucceeded() {
         runOnUiThread(() -> {
             mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.listTeams());
+            mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
             mSyncLayout.setRefreshing(false);
         });
     }

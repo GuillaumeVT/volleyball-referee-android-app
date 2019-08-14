@@ -31,6 +31,7 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
     private StoredGamesService     mStoredGamesService;
     private StoredGamesListAdapter mStoredGamesListAdapter;
     private SwipeRefreshLayout     mSyncLayout;
+    private MenuItem               mDeleteSelectedGamesItem;
 
     @Override
     protected String getToolbarTitle() {
@@ -62,20 +63,33 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
         mStoredGamesListAdapter = new StoredGamesListAdapter(this, getLayoutInflater(), games);
         storedGamesList.setAdapter(mStoredGamesListAdapter);
 
-        storedGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
-            ApiGameSummary game = mStoredGamesListAdapter.getItem(i);
-            Log.i(Tags.STORED_GAMES, String.format("Start activity to display stored game %s", game.getId()));
+        storedGamesList.setOnItemClickListener((parent, view, position, l) -> {
+            ApiGameSummary game = mStoredGamesListAdapter.getItem(position);
 
-            final Intent intent;
-
-            if ((GameType.INDOOR.equals(game.getKind()) || GameType.INDOOR_4X4.equals(game.getKind()) || GameType.BEACH.equals(game.getKind())) && UsageType.NORMAL.equals(game.getUsage())) {
-                intent = new Intent(StoredGamesListActivity.this, StoredAdvancedGameActivity.class);
+            if (mStoredGamesListAdapter.hasSelectedItems()) {
+                mStoredGamesListAdapter.toggleItemSelection(game.getId());
+                mDeleteSelectedGamesItem.setVisible(mStoredGamesListAdapter.hasSelectedItems());
             } else {
-                intent = new Intent(StoredGamesListActivity.this, StoredBasicGameActivity.class);
-            }
+                Log.i(Tags.STORED_GAMES, String.format("Start activity to display stored game %s", game.getId()));
 
-            intent.putExtra("game", game.getId());
-            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+                final Intent intent;
+
+                if ((GameType.INDOOR.equals(game.getKind()) || GameType.INDOOR_4X4.equals(game.getKind()) || GameType.BEACH.equals(game.getKind())) && UsageType.NORMAL.equals(game.getUsage())) {
+                    intent = new Intent(StoredGamesListActivity.this, StoredAdvancedGameActivity.class);
+                } else {
+                    intent = new Intent(StoredGamesListActivity.this, StoredBasicGameActivity.class);
+                }
+
+                intent.putExtra("game", game.getId());
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+            }
+        });
+
+        storedGamesList.setOnItemLongClickListener((parent, view, position, id) -> {
+            ApiGameSummary game = mStoredGamesListAdapter.getItem(position);
+            mStoredGamesListAdapter.toggleItemSelection(game.getId());
+            mDeleteSelectedGamesItem.setVisible(mStoredGamesListAdapter.hasSelectedItems());
+            return true;
         });
 
         updateStoredGamesList();
@@ -86,8 +100,8 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_stored_games, menu);
 
-        MenuItem deleteAllGamesItem = menu.findItem(R.id.action_delete_games);
-        deleteAllGamesItem.setVisible(mStoredGamesService.hasGames());
+        mDeleteSelectedGamesItem = menu.findItem(R.id.action_delete_games);
+        mDeleteSelectedGamesItem.setVisible(false);
 
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();
@@ -122,21 +136,29 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
                 updateStoredGamesList();
                 return true;
             case R.id.action_delete_games:
-                deleteAllGames();
+                deleteSelectedGames();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void deleteAllGames() {
-        Log.i(Tags.STORED_GAMES, "Delete all games");
+    @Override
+    public void onBackPressed() {
+        if(mStoredGamesListAdapter.hasSelectedItems()){
+            mStoredGamesListAdapter.clearSelectedItems();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void deleteSelectedGames() {
+        Log.i(Tags.STORED_GAMES, "Delete selected games");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.delete_games)).setMessage(getString(R.string.delete_games_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mStoredGamesService.deleteAllGames();
+            mStoredGamesService.deleteGames(mStoredGamesListAdapter.getSelectedItems(), this);
             UiUtils.makeText(StoredGamesListActivity.this, getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToHome(StoredGamesListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -154,6 +176,7 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
     public void onSynchronizationSucceeded() {
         runOnUiThread(() -> {
             mStoredGamesListAdapter.updateStoredGamesList(mStoredGamesService.listGames());
+            mDeleteSelectedGamesItem.setVisible(mStoredGamesListAdapter.hasSelectedItems());
             mSyncLayout.setRefreshing(false);
         });
     }

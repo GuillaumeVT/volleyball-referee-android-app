@@ -5,6 +5,7 @@
               android:layout_height="wrap_content"
               android:gravity="top|center"
               android:orientation="vertical"
+              android:importantForAutofill="noExcludeDescendants"
               android:clipToPadding="false">
 
     <LinearLayout

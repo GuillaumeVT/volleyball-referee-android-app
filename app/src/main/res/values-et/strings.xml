@@ -19,6 +19,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Võrkpall</string>
     <string name="new_beach_volleyball_game">Ranna võrkpall</string>
+    <string name="new_snow_volleyball_game">Coming Soon!</string>
     <string name="new_score_based_game">Seisu tabloo</string>
     <string name="new_time_based_game">Ajaline piirang</string>
     <string name="permission_title">Õigused</string>

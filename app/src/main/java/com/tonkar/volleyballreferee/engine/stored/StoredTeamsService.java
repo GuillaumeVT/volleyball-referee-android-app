@@ -8,6 +8,7 @@ import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import java.util.List;
+import java.util.Set;
 
 public interface StoredTeamsService {
 
@@ -33,7 +34,7 @@ public interface StoredTeamsService {
 
     void deleteTeam(String id);
 
-    void deleteAllTeams();
+    void deleteTeams(Set<String> ids, DataSynchronizationListener listener);
 
     void createAndSaveTeamFrom(GameType kind, IBaseTeam teamService, TeamType teamType);
 

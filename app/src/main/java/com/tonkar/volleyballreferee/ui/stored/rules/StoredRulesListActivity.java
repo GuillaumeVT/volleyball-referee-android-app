@@ -37,6 +37,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private FloatingActionButton   mAddIndoorRulesButton;
     private FloatingActionButton   mAddIndoor4x4RulesButton;
     private FloatingActionButton   mAddBeachRulesButton;
+    private MenuItem               mDeleteSelectedRulesItem;
 
     @Override
     protected String getToolbarTitle() {
@@ -68,14 +69,27 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mStoredRulesListAdapter = new StoredRulesListAdapter(this, getLayoutInflater(), storedRules);
         storedRulesList.setAdapter(mStoredRulesListAdapter);
 
-        storedRulesList.setOnItemClickListener((adapterView, view, i, l) -> {
-            ApiRulesSummary rulesDescription = mStoredRulesListAdapter.getItem(i);
-            ApiRules rules = mStoredRulesService.getRules(rulesDescription.getId());
-            Log.i(Tags.STORED_RULES, String.format("Start activity to view stored rules %s", rules.getName()));
+        storedRulesList.setOnItemClickListener((parent, view, position, l) -> {
+            ApiRulesSummary rulesDescription = mStoredRulesListAdapter.getItem(position);
 
-            final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesViewActivity.class);
-            intent.putExtra("rules", mStoredRulesService.writeRules(rules));
-            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+            if (mStoredRulesListAdapter.hasSelectedItems()) {
+                mStoredRulesListAdapter.toggleItemSelection(rulesDescription.getId());
+                mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
+            } else {
+                ApiRules rules = mStoredRulesService.getRules(rulesDescription.getId());
+                Log.i(Tags.STORED_RULES, String.format("Start activity to view stored rules %s", rules.getName()));
+
+                final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesViewActivity.class);
+                intent.putExtra("rules", mStoredRulesService.writeRules(rules));
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+            }
+        });
+
+        storedRulesList.setOnItemLongClickListener((parent, view, position, id) -> {
+            ApiRulesSummary rulesDescription = mStoredRulesListAdapter.getItem(position);
+            mStoredRulesListAdapter.toggleItemSelection(rulesDescription.getId());
+            mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
+            return true;
         });
 
         mIsFabOpen = false;
@@ -124,8 +138,8 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_stored_rules_list, menu);
 
-        MenuItem deleteAllRulesItem = menu.findItem(R.id.action_delete_rules);
-        deleteAllRulesItem.setVisible(mStoredRulesService.hasRules());
+        mDeleteSelectedRulesItem = menu.findItem(R.id.action_delete_rules);
+        mDeleteSelectedRulesItem.setVisible(false);
 
         MenuItem searchRulesItem = menu.findItem(R.id.action_search_rules);
         SearchView searchRulesView = (SearchView) searchRulesItem.getActionView();
@@ -160,21 +174,20 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
                 updateStoredRulesList();
                 return true;
             case R.id.action_delete_rules:
-                deleteAllRules();
+                deleteSelectedRules();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void deleteAllRules() {
-        Log.i(Tags.STORED_RULES, "Delete all rules");
+    private void deleteSelectedRules() {
+        Log.i(Tags.STORED_RULES, "Delete selected rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.delete_rules)).setMessage(getString(R.string.delete_all_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            mStoredRulesService.deleteAllRules();
+            mStoredRulesService.deleteRules(mStoredRulesListAdapter.getSelectedItems(), this);
             UiUtils.makeText(StoredRulesListActivity.this, getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
-            UiUtils.navigateToHome(StoredRulesListActivity.this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -203,8 +216,10 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onBackPressed() {
-        if(mIsFabOpen){
+        if(mIsFabOpen) {
             closeFABMenu();
+        } else if(mStoredRulesListAdapter.hasSelectedItems()){
+            mStoredRulesListAdapter.clearSelectedItems();
         } else {
             super.onBackPressed();
         }
@@ -221,6 +236,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     public void onSynchronizationSucceeded() {
         runOnUiThread(() -> {
             mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
+            mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
             mSyncLayout.setRefreshing(false);
         });
     }

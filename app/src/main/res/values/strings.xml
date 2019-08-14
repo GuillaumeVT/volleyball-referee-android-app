@@ -19,6 +19,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Volleyball</string>
     <string name="new_beach_volleyball_game">Beach Volleyball</string>
+    <string name="new_snow_volleyball_game">Coming Soon!</string>
     <string name="new_score_based_game">Scoreboard</string>
     <string name="new_time_based_game">Time-based</string>
     <string name="permission_title">About permissions</string>

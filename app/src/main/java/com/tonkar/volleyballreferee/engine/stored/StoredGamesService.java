@@ -4,6 +4,7 @@ import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
 
 import java.util.List;
+import java.util.Set;
 
 public interface StoredGamesService {
 
@@ -23,7 +24,7 @@ public interface StoredGamesService {
 
     void deleteGame(String id);
 
-    void deleteAllGames();
+    void deleteGames(Set<String> ids, DataSynchronizationListener listener);
 
     boolean hasCurrentGame();
 

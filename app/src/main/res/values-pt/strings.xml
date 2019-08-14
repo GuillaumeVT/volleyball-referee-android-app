@@ -19,6 +19,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Voleibol</string>
     <string name="new_beach_volleyball_game">Voleibol de praia</string>
+    <string name="new_snow_volleyball_game">Brevemente!</string>
     <string name="new_score_based_game">Marcador</string>
     <string name="new_time_based_game">Jogo por tempo</string>
     <string name="permission_title">Permissões</string>
@@ -30,7 +31,7 @@
     <string name="my_data_group">Os meus dados</string>
     <string name="configuration_group">Configurações</string>
     <string name="completed_games">Jogos terminados</string>
-    <string name="available_games">Jogos agendados &amp; e ao vivo</string>
+    <string name="available_games">Jogos agendados &amp; ao vivo</string>
     <string name="teams">Equipas</string>
     <string name="rules">Regras</string>
     <string name="colleagues">Colegas</string>
@@ -58,7 +59,7 @@
     <string name="user_sign_out">Terminar sessão</string>
     <string name="user_sign_in_why_title">Por que devo iniciar sessão?</string>
     <string name="user_sign_in_why_message">Os seus dados do Volleyball Referee (jogos, equipas, regras, ligas, colegas) serão sincronizados com o nosso servidor. Ao iniciar sessão, nós saberemos quem o fez e manteremos os dados sincronizados com a sua conta.</string>
-    <string name="user_pseudo_hint">Pseudónimo do árbitro</string>
+    <string name="user_pseudo_hint">Nome do utilizador</string>
     <string name="user_email_hint">Email</string>
     <string name="user_confirm_email_hint">Confirmar email</string>
     <string name="user_email_not_matching">Os endereços de email não coincidem</string>
@@ -70,7 +71,7 @@
     <string name="user_password_not_matching">As palavras-passe não coincidem</string>
     <string name="user_password_error">Palavra-passe errada</string>
     <string name="user_locked_error">A conta ficará bloqueada durante 30 minutos devido a demasiadas tentativas de início de sessão</string>
-    <string name="user_email_pseudo_conflict">O pseudónimo de árbitro ou este email já existem</string>
+    <string name="user_email_pseudo_conflict">O nome do utilizador ou este email já existem</string>
     <string name="user_request_error">Erro a processar o pedido</string>
     <string name="user_signed_in_as_pseudo">Sessão iniciada como %s</string>
     <string name="user_password_recovery_initiated">Um link de recuperação foi enviado por email para %s</string>
@@ -82,8 +83,8 @@
     <string name="received_colleague_request">Recebeu um pedido de colega de %s</string>
     <string name="sent_colleague_request">Enviou um pedido de colega para %s</string>
     <string name="pending">Pendente</string>
-    <string name="accept_colleague_question">Aceitar pedido do colega %s?</string>
-    <string name="reject_colleague_question">Rejeitar pedido do colega %s?</string>
+    <string name="accept_colleague_question">Aceitar pedido de colega %s?</string>
+    <string name="reject_colleague_question">Rejeitar pedido de colega %s?</string>
     <string name="remove_colleague_question">Remover colega %s?</string>
 
     <!-- Setup activities -->

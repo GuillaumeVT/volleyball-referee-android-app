@@ -18,6 +18,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Volley-ball</string>
     <string name="new_beach_volleyball_game">Beach Volley-ball</string>
+    <string name="new_snow_volleyball_game">Bientôt dans votre appli!</string>
     <string name="new_score_based_game">Panneau de score</string>
     <string name="new_time_based_game">En temps</string>
     <string name="permission_title">À propos des autorisations</string>
