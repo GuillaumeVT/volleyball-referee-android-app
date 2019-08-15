@@ -32,6 +32,16 @@ public class IndoorTeamDefinition extends TeamDefinition {
     }
 
     @Override
+    public void setPlayerName(final int number, final String name) {
+        super.setPlayerName(number, name);
+        for (ApiPlayer player : getLiberos()) {
+            if (player.getNum() == number) {
+                player.setName(name);
+            }
+        }
+    }
+
+    @Override
     public boolean isLibero(int number) {
         return getLiberos().contains(new ApiPlayer(number));
     }
@@ -57,7 +67,8 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void addLibero(final int number) {
         if (canAddLibero() && hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Add player #%d as libero of %s team", number, getTeamType().toString()));
-            getLiberos().add(new ApiPlayer(number));
+            ApiPlayer player = getPlayer(number);
+            getLiberos().add(player);
         }
     }
 

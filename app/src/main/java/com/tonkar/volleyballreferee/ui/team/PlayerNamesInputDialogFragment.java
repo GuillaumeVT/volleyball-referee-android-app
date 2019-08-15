@@ -29,6 +29,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
     private       View                  mView;
     private       PlayerNameListAdapter mPlayerNameListAdapter;
     private       TeamType              mTeamType;
+    private       IBaseTeam             mTeam;
     private final List<ApiPlayer>       mPlayers;
 
     public static PlayerNamesInputDialogFragment newInstance(TeamType teamType) {
@@ -71,8 +72,9 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
 
     public void setTeam(IBaseTeam team) {
         mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+        mTeam = team;
         mPlayers.clear();
-        mPlayers.addAll(team.getPlayers(mTeamType));
+        mPlayers.addAll(mTeam.getPlayers(mTeamType));
         if (mPlayerNameListAdapter != null) {
             mPlayerNameListAdapter.notifyDataSetChanged();
         }
@@ -119,9 +121,9 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     String name = s.toString().trim();
-                    if (isAdded() && !name.isEmpty()) {
+                    if (isAdded()) {
                         ApiPlayer player = mPlayers.get(position);
-                        player.setName(name);
+                        mTeam.setPlayerName(mTeamType, player.getNum(), name);
                     }
                 }
 

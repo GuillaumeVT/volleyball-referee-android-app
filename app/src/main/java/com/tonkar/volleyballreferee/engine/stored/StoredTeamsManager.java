@@ -174,8 +174,8 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
         for (ApiPlayer player : source.getLiberos()) {
             dest.addPlayer(teamType, player.getNum());
-            dest.addLibero(teamType, player.getNum());
             dest.setPlayerName(teamType, player.getNum(), player.getName());
+            dest.addLibero(teamType, player.getNum());
         }
 
         dest.setCaptain(teamType, source.getCaptain());
@@ -229,7 +229,6 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
         for (ApiPlayer player : source.getLiberos(teamType)) {
             dest.addLibero(teamType, player.getNum());
-            dest.setPlayerName(teamType, player.getNum(), player.getName());
         }
 
         dest.setCaptain(teamType, source.getCaptain(teamType));
