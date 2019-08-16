@@ -387,12 +387,14 @@ public class MainActivity extends NavigationActivity {
 
     private void showNews(String message) {
         runOnUiThread(() -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                    .setTitle(R.string.news).setMessage(message)
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                    });
-            AlertDialog alertDialog = builder.show();
-            UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+            if (!isFinishing()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+                        .setTitle(R.string.news).setMessage(message)
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        });
+                AlertDialog alertDialog = builder.show();
+                UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+            }
         });
     }
 
