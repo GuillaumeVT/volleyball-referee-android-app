@@ -129,6 +129,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
                             android:layout_marginStart="@dimen/default_margin_size"
+                            android:divider="@android:color/transparent"
                             android:layout_weight="1" />
 
                         <view
@@ -138,6 +139,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
                             android:layout_marginStart="@dimen/default_margin_size"
+                            android:divider="@android:color/transparent"
                             android:layout_weight="1" />
 
                     </LinearLayout>
@@ -250,6 +252,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
                             android:layout_marginStart="@dimen/default_margin_size"
+                            android:divider="@android:color/transparent"
                             android:layout_weight="1" />
 
                         <view
@@ -259,6 +262,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/default_margin_size"
                             android:layout_marginStart="@dimen/default_margin_size"
+                            android:divider="@android:color/transparent"
                             android:layout_weight="1" />
 
                     </LinearLayout>

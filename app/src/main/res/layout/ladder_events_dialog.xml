@@ -23,6 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="@dimen/default_text_size"
             app:layout_constraintTop_toBottomOf="@+id/ladder_dialog_title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

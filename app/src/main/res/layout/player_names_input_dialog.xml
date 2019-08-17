@@ -10,5 +10,6 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginBottom="@dimen/big_margin_size"
             android:layout_marginStart="@dimen/default_margin_size"
-            android:layout_marginEnd="@dimen/default_margin_size"/>
+            android:layout_marginEnd="@dimen/default_margin_size"
+            android:divider="@android:color/transparent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

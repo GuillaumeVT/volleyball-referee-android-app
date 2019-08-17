@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/default_margin_size"
         android:layout_weight="1"
+        android:divider="@android:color/transparent"
         android:gravity="top|start" />
 
     <ListView
@@ -20,6 +21,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/default_margin_size"
             android:layout_weight="1"
+            android:divider="@android:color/transparent"
             android:gravity="top|start" />
 
 </LinearLayout>

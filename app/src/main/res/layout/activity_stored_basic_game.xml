@@ -14,12 +14,15 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/default_margin_size"
             android:layout_marginBottom="@dimen/default_margin_size"
             android:background="@color/colorDisabledButton" />
 
     <ListView
             android:id="@+id/stored_game_set_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"/>
 
 </LinearLayout>

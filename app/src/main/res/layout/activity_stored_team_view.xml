@@ -41,6 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/big_margin_size"
                         android:gravity="top|start"
+                        android:divider="@android:color/transparent"
                         android:clipToPadding="false"
                         android:paddingBottom="@dimen/empty_fab_space"/>
 
