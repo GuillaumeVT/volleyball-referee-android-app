@@ -33,6 +33,7 @@ If your language is missing and you feel like helping the community, you may con
 | Estonian              |
 | French                |
 | German                |
+| Greek                 |
 | Hungarian             |
 | Italian               |
 | Polish                |
@@ -45,4 +46,4 @@ If your language is missing and you feel like helping the community, you may con
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| Player names                      | Planned                                |
+| Snow volleyball                   | Planned                                |
