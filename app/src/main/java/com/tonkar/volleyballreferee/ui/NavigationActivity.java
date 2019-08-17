@@ -109,6 +109,10 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search/live", BuildConfig.SERVER_ADDRESS)));
                         startActivity(intent);
                         UiUtils.animateForward(this);
+                        navigationView.post(() -> {
+                            navigationView.getMenu().findItem(R.id.action_live_games_vbr_com).setChecked(false);
+                            navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
+                        });
                         break;
                     case R.id.action_facebook:
                         Log.i(Tags.WEB, "Facebook");
@@ -122,6 +126,10 @@ public abstract class NavigationActivity extends AppCompatActivity {
                             startActivity(browserIntent);
                             UiUtils.animateForward(this);
                         }
+                        navigationView.post(() -> {
+                            navigationView.getMenu().findItem(R.id.action_facebook).setChecked(false);
+                            navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
+                        });
                         break;
                     case R.id.action_credits:
                         Log.i(Tags.MAIN_UI, "Credits");
@@ -134,6 +142,10 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/privacy-policy", BuildConfig.SERVER_ADDRESS)));
                         startActivity(intent);
                         UiUtils.animateForward(this);
+                        navigationView.post(() -> {
+                            navigationView.getMenu().findItem(R.id.action_privacy_policy).setChecked(false);
+                            navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
+                        });
                         break;
                 }
             }
