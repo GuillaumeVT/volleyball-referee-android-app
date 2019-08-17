@@ -63,7 +63,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
         MenuItem deleteMenu = menu.findItem(R.id.action_delete_game);
 
-        if (PrefUtils.canSync(this) && mStoredGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+        String userId = PrefUtils.getUser(this).getId();
+
+        if (PrefUtils.canSync(this) && mStoredGame.getCreatedBy().equals(userId)) {
             if (mStoredGamesService.isGameIndexed(mGameId)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
@@ -71,8 +73,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
             }
         } else {
             recordMenu.setVisible(false);
-            deleteMenu.setVisible(false);
         }
+
+        deleteMenu.setVisible(mStoredGame.getCreatedBy().equals(userId));
 
         return true;
     }
