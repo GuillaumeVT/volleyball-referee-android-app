@@ -34,6 +34,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private SwipeRefreshLayout        mSyncLayout;
     private ScheduledGamesListAdapter mScheduledGamesListAdapter;
     private boolean                   mIsFabOpen;
+    private FloatingActionButton      mScheduleGameButton;
     private FloatingActionButton      mScheduleIndoorGameButton;
     private FloatingActionButton      mScheduleIndoor4x4GameButton;
     private FloatingActionButton      mScheduleBeachGameButton;
@@ -90,8 +91,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoorGameButton.hide();
         mScheduleIndoor4x4GameButton.hide();
         mScheduleBeachGameButton.hide();
-        FloatingActionButton scheduleGameButton = findViewById(R.id.schedule_game_button);
-        scheduleGameButton.setOnClickListener(button -> {
+        mScheduleGameButton = findViewById(R.id.schedule_game_button);
+        mScheduleGameButton.setOnClickListener(button -> {
             if(mIsFabOpen){
                 closeFABMenu();
             }else{
@@ -202,6 +203,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     private void showFABMenu(){
         mIsFabOpen = true;
+        UiUtils.colorCloseIconButton(this, mScheduleGameButton);
         mScheduleIndoorGameButton.show();
         mScheduleIndoor4x4GameButton.show();
         mScheduleBeachGameButton.show();
@@ -212,6 +214,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     private void closeFABMenu(){
         mIsFabOpen = false;
+        UiUtils.colorPlusIconButton(this, mScheduleGameButton);
+        mScheduleGameButton.setImageResource(R.drawable.ic_plus);
         mScheduleIndoorGameButton.animate().translationY(0);
         mScheduleIndoor4x4GameButton.animate().translationY(0);
         mScheduleBeachGameButton.animate().translationY(0);

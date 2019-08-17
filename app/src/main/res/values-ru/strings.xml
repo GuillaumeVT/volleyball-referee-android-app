@@ -38,6 +38,7 @@
     <string name="my_account">Мой аккаунт</string>
     <string name="news">Информация</string>
     <string name="no_news">Нет информации для отображения</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Купить</string>
@@ -192,22 +193,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Поиск матча</string>
-    <string name="delete_games">Удалить все матчи</string>
+    <string name="delete_selected_games">Удалить все матчи</string>
     <string name="delete_game">Удалить данный матч</string>
-    <string name="delete_games_question">Удалить все матчи?</string>
+    <string name="delete_selected_games_question">Удалить все матчи?</string>
     <string name="delete_game_question">Удалить данный матч?</string>
     <string name="deleted_game">Матч успешно удалён</string>
-    <string name="deleted_games">Все матчи успешно удалены</string>
+    <string name="deleted_selected_games">Все матчи успешно удалены</string>
     <string name="players">Игроки</string>
     <string name="report_game">Создать отчёт по матчу</string>
     <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Поиск команды</string>
-    <string name="delete_teams">Удалить все команды</string>
+    <string name="delete_selected_teams">Удалить все команды</string>
     <string name="delete_team">Удалить данную команду</string>
     <string name="save_team">Сохранить команду</string>
-    <string name="delete_teams_question">Удалить все команды?</string>
+    <string name="delete_selected_teams_question">Удалить все команды?</string>
     <string name="delete_team_question">Удалить эту команду?</string>
     <string name="deleted_team">Команда успешно удалена</string>
     <string name="saved_team">Команда сохранена</string>
@@ -216,15 +217,15 @@
     <string name="leave_team_creation_question">Эта команда не будет сохранена, продолжить?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Удалить все правила</string>
+    <string name="delete_selected_rules">Удалить все правила</string>
     <string name="delete_rules">Удалить правила</string>
     <string name="save_rules">Сохранить правила</string>
     <string name="search_rules">Искать правила</string>
-    <string name="delete_all_rules_question">Удалить все правила?</string>
+    <string name="delete_selected_rules_question">Удалить все правила?</string>
     <string name="delete_rules_question">Удалить эти правила?</string>
     <string name="deleted_rules">Правила были успешно удалены</string>
     <string name="saved_rules">Правила были сохранены</string>
-    <string name="deleted_all_rules">Все правила были успешно удалены</string>
+    <string name="deleted_selected_rules">Все правила были успешно удалены</string>
     <string name="leave_rules_creation_title">Покинуть создание правил</string>
     <string name="leave_rules_creation_question">Эти правила не будут сохранены. Покинуть страницу?</string>
     <string name="rules_name_hint">Название правил</string>

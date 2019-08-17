@@ -39,6 +39,7 @@
     <string name="my_account">Fiókom</string>
     <string name="news">Hírek</string>
     <string name="no_news">Nincsenek hírek</string>
+    <string name="privacy_policy">Adatvédelmi politika</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Vásárlás</string>
@@ -194,22 +195,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Keresés</string>
-    <string name="delete_games">Összes mérkőzés törlése</string>
+    <string name="delete_selected_games">Összes mérkőzés törlése</string>
     <string name="delete_game">Mérkőzés törlése</string>
-    <string name="delete_games_question">Biztosan törlöd az összes mérkőzést?</string>
+    <string name="delete_selected_games_question">Biztosan törlöd az összes mérkőzést?</string>
     <string name="delete_game_question">Biztosan törlöd a mérkőzést?</string>
     <string name="deleted_game">Mérkőzés törölve</string>
-    <string name="deleted_games">Minden mérkőzés törölve</string>
+    <string name="deleted_selected_games">Minden mérkőzés törölve</string>
     <string name="players">Játékosok</string>
     <string name="report_game">Jegyzőkönyv generálása</string>
     <string name="report_exception">Nem sikerült a jegyzőkönyv generálása</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Csapat keresése</string>
-    <string name="delete_teams">Összes csapat törlése</string>
+    <string name="delete_selected_teams">Összes csapat törlése</string>
     <string name="delete_team">Csapat törlése</string>
     <string name="save_team">Csapat mentése</string>
-    <string name="delete_teams_question">Biztosan törlöd az összes csapatot?</string>
+    <string name="delete_selected_teams_question">Biztosan törlöd az összes csapatot?</string>
     <string name="delete_team_question">Biztosan törlöd a csapatot?</string>
     <string name="deleted_team">Csapat törölve</string>
     <string name="saved_team">Csapat elmentve</string>
@@ -218,15 +219,15 @@
     <string name="leave_team_creation_question">A csapat nem lesz elmentve. Biztosan kilépsz?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Minden szabály törlése</string>
+    <string name="delete_selected_rules">Minden szabály törlése</string>
     <string name="delete_rules">Szabályok törlése</string>
     <string name="save_rules">Szabályok mentése</string>
     <string name="search_rules">Szabályok keresése</string>
-    <string name="delete_all_rules_question">Biztosan törölni akarsz minden szabályt?</string>
+    <string name="delete_selected_rules_question">Biztosan törölni akarsz minden szabályt?</string>
     <string name="delete_rules_question">Biztosan törölni akarod a szabályokat?</string>
     <string name="deleted_rules">Szabályok törölve</string>
     <string name="saved_rules">Szabályok elmentve</string>
-    <string name="deleted_all_rules">Minden szabály törölve</string>
+    <string name="deleted_selected_rules">Minden szabály törölve</string>
     <string name="leave_rules_creation_title">Szabály készítő elhagyása</string>
     <string name="leave_rules_creation_question">A szabályok nem lesznek mentve. Biztosan kilépsz?</string>
     <string name="rules_name_hint">Szabály neve</string>

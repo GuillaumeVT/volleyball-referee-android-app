@@ -39,6 +39,7 @@
     <string name="my_account">Il mio profilo</string>
     <string name="news">Novità</string>
     <string name="no_news">Nessuna novità</string>
+    <string name="privacy_policy">Politica in materia di privacy</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Acquistare</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Cerca partite</string>
-    <string name="delete_games">Cancella tutte le partite</string>
+    <string name="delete_selected_games">Cancella tutte le partite</string>
     <string name="delete_game">Cancella partita</string>
-    <string name="delete_games_question">Vuoi cancellare tutte le partite?</string>
+    <string name="delete_selected_games_question">Vuoi cancellare tutte le partite?</string>
     <string name="delete_game_question">Vuoi cancellare la partita?</string>
     <string name="deleted_game">La partita è stata cancellata</string>
-    <string name="deleted_games">Tutte le partite son state cancellate</string>
+    <string name="deleted_selected_games">Tutte le partite son state cancellate</string>
     <string name="players">Giocatori</string>
     <string name="report_game">Generare il referto della partita</string>
     <string name="report_exception">Errore di generazione o visualizzazione del referto della partita</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Cerca le squadre</string>
-    <string name="delete_teams">Cancella tutte le squadre</string>
+    <string name="delete_selected_teams">Cancella tutte le squadre</string>
     <string name="delete_team">Cancella una squadra</string>
     <string name="save_team">Salva la squadra</string>
-    <string name="delete_teams_question">Vuoi cancellare tutte le squadre?</string>
+    <string name="delete_selected_teams_question">Vuoi cancellare tutte le squadre?</string>
     <string name="delete_team_question">Vuoi cancellare la squadra?</string>
     <string name="deleted_team">La squadra é stata cancellata</string>
     <string name="saved_team">La squadra é stata salvata</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Questa squadra non sarà salvata. Uscrire?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Cancellare tutte le regole</string>
+    <string name="delete_selected_rules">Cancellare tutte le regole</string>
     <string name="delete_rules">Cancellare le regole</string>
     <string name="save_rules">Salvare la regole</string>
     <string name="search_rules">Cercare le regole</string>
-    <string name="delete_all_rules_question">Vuoi cancellare tutte le regole?</string>
+    <string name="delete_selected_rules_question">Vuoi cancellare tutte le regole?</string>
     <string name="delete_rules_question">Vuoi cancellare queste regole?</string>
     <string name="deleted_rules">Le regole sono state cancellate</string>
     <string name="saved_rules">Le regole sono state salvate</string>
-    <string name="deleted_all_rules">Tutte le regole sono state cancellate</string>
+    <string name="deleted_selected_rules">Tutte le regole sono state cancellate</string>
     <string name="leave_rules_creation_title">Uscire dalla creazione delle regole</string>
     <string name="leave_rules_creation_question">Queste regole non saranno salvate. Uscire?</string>
     <string name="rules_name_hint">Nome delle regole</string>

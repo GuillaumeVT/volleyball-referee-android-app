@@ -34,6 +34,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private StoredRulesListAdapter mStoredRulesListAdapter;
     private SwipeRefreshLayout     mSyncLayout;
     private boolean                mIsFabOpen;
+    private FloatingActionButton   mAddRulesButton;
     private FloatingActionButton   mAddIndoorRulesButton;
     private FloatingActionButton   mAddIndoor4x4RulesButton;
     private FloatingActionButton   mAddBeachRulesButton;
@@ -99,8 +100,8 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoorRulesButton.hide();
         mAddIndoor4x4RulesButton.hide();
         mAddBeachRulesButton.hide();
-        FloatingActionButton addRulesButton = findViewById(R.id.add_rules_button);
-        addRulesButton.setOnClickListener(view -> {
+        mAddRulesButton = findViewById(R.id.add_rules_button);
+        mAddRulesButton.setOnClickListener(view -> {
             if(mIsFabOpen){
                 closeFABMenu();
             }else{
@@ -184,10 +185,10 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private void deleteSelectedRules() {
         Log.i(Tags.STORED_RULES, "Delete selected rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getString(R.string.delete_rules)).setMessage(getString(R.string.delete_all_rules_question));
+        builder.setTitle(getString(R.string.delete_rules)).setMessage(getString(R.string.delete_selected_rules_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredRulesService.deleteRules(mStoredRulesListAdapter.getSelectedItems(), this);
-            UiUtils.makeText(StoredRulesListActivity.this, getString(R.string.deleted_all_rules), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredRulesListActivity.this, getString(R.string.deleted_selected_rules), Toast.LENGTH_LONG).show();
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
@@ -196,6 +197,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     private void showFABMenu(){
         mIsFabOpen = true;
+        UiUtils.colorCloseIconButton(this, mAddRulesButton);
         mAddIndoorRulesButton.show();
         mAddIndoor4x4RulesButton.show();
         mAddBeachRulesButton.show();
@@ -206,6 +208,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     private void closeFABMenu(){
         mIsFabOpen = false;
+        UiUtils.colorPlusIconButton(this, mAddRulesButton);
         mAddIndoorRulesButton.animate().translationY(0);
         mAddIndoor4x4RulesButton.animate().translationY(0);
         mAddBeachRulesButton.animate().translationY(0);

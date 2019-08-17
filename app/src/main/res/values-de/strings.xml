@@ -39,6 +39,7 @@
     <string name="my_account">Mein Konto</string>
     <string name="news">Neuigkeiten</string>
     <string name="no_news">Keine Neuigkeiten vorhanden</string>
+    <string name="privacy_policy">Datenschutzerklärung</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Kaufen</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Spielsuche</string>
-    <string name="delete_games">Lösche alle Spiele</string>
+    <string name="delete_selected_games">Lösche alle Spiele</string>
     <string name="delete_game">Lösche dieses Spiel</string>
-    <string name="delete_games_question">Möchten Sie alle Spiele löschen?</string>
+    <string name="delete_selected_games_question">Möchten Sie alle Spiele löschen?</string>
     <string name="delete_game_question">Möchten Sie dieses Spiel löschen?</string>
     <string name="deleted_game">Spiel wurde gelöscht</string>
-    <string name="deleted_games">Alle Spiele wurden gelöscht</string>
+    <string name="deleted_selected_games">Alle Spiele wurden gelöscht</string>
     <string name="players">Spieler</string>
     <string name="report_game">Generiere einen Spielbericht</string>
     <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Mannschaftssuche</string>
-    <string name="delete_teams">Alle Mannschaften löschen</string>
+    <string name="delete_selected_teams">Alle Mannschaften löschen</string>
     <string name="delete_team">Diese Mannschaft löschen</string>
     <string name="save_team">Mannschaft speichern</string>
-    <string name="delete_teams_question">Wollen Sie alle Mannschaften löschen?</string>
+    <string name="delete_selected_teams_question">Wollen Sie alle Mannschaften löschen?</string>
     <string name="delete_team_question">Wollen Sie diese Mannschaft löschen?</string>
     <string name="deleted_team">Mannschaft wurde gelöscht</string>
     <string name="saved_team">Mannschaft wurde gespeichert</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Diese Mannschaft wird nicht gespeichert. Trotzdem fortfahren?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Alle Regeln löschen</string>
+    <string name="delete_selected_rules">Alle Regeln löschen</string>
     <string name="delete_rules">Diese Regeln löschen</string>
     <string name="save_rules">Regeln speichern</string>
     <string name="search_rules">Regeln Suche</string>
-    <string name="delete_all_rules_question">Wollen Sie alle Regeln löschen?</string>
+    <string name="delete_selected_rules_question">Wollen Sie alle Regeln löschen?</string>
     <string name="delete_rules_question">Wollen Sie diese Regeln löschen?</string>
     <string name="deleted_rules">Regeln wurde gelöscht</string>
     <string name="saved_rules">Regeln wurde gespeichert</string>
-    <string name="deleted_all_rules">Alle Regeln wurden gelöscht</string>
+    <string name="deleted_selected_rules">Alle Regeln wurden gelöscht</string>
     <string name="leave_rules_creation_title">Verlasse die Regeln Zusammenstellung</string>
     <string name="leave_rules_creation_question">Diese Regeln wird nicht gespeichert. Trotzdem fortfahren?</string>
     <string name="rules_name_hint">Name der Regeln</string>

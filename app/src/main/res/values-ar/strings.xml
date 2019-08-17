@@ -39,6 +39,7 @@
     <string name="my_account">حسابي</string>
     <string name="news">الأخبار</string>
     <string name="no_news">لا توجد أخبار للعرض</string>
+    <string name="privacy_policy">نهج الخصوصية</string>
 
     <!-- Purchase activity -->
     <string name="purchase">شراء</string>
@@ -187,22 +188,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">البحث عن المباريات</string>
-    <string name="delete_games">مسح جميع المباريات</string>
+    <string name="delete_selected_games">مسح جميع المباريات</string>
     <string name="delete_game">مسح المباراة</string>
-    <string name="delete_games_question">هل تريد مسح جميع المباريات المسجلة؟</string>
+    <string name="delete_selected_games_question">هل تريد مسح جميع المباريات المسجلة؟</string>
     <string name="delete_game_question">هل تريد حذف هذه المباراة المسجلة؟</string>
     <string name="deleted_game">تم مسح المباراة</string>
-    <string name="deleted_games">تم مسح جميع المباريات</string>
+    <string name="deleted_selected_games">تم مسح جميع المباريات</string>
     <string name="players">اللاعبين</string>
     <string name="report_game">إنشاء تقرير المباراة</string>
     <string name="report_exception">فشل في إنشاء أو عرض تقرير المباراة</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">البحث عن الفرق</string>
-    <string name="delete_teams">مسح جميع الفرق</string>
+    <string name="delete_selected_teams">مسح جميع الفرق</string>
     <string name="delete_team">مسح الفريق</string>
     <string name="save_team">حفظ الفريق</string>
-    <string name="delete_teams_question">هل تريد حذف جميع الفرق المحفوظة؟</string>
+    <string name="delete_selected_teams_question">هل تريد حذف جميع الفرق المحفوظة؟</string>
     <string name="delete_team_question">هل تريد حذف هذا الفريق المحفوظ؟</string>
     <string name="deleted_team">تم مسح الفريق</string>
     <string name="saved_team">تم حفظ الفريق</string>
@@ -211,15 +212,15 @@
     <string name="leave_team_creation_question">لن يتم حفظ الفريق. هل تريد المغادرة بأي حال؟</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">حذف جميع القوانين</string>
+    <string name="delete_selected_rules">حذف جميع القوانين</string>
     <string name="delete_rules">حذف القوانين</string>
     <string name="save_rules">حفظ القانون</string>
     <string name="search_rules">البحث عن القوانين</string>
-    <string name="delete_all_rules_question">هل تريد محو جميع القوانين المحفوظة؟</string>
+    <string name="delete_selected_rules_question">هل تريد محو جميع القوانين المحفوظة؟</string>
     <string name="delete_rules_question">هل تريد مسح هذه القوانين المحفوظة؟</string>
     <string name="deleted_rules">تم حذف القوانين</string>
     <string name="saved_rules">تم حفظ القوانين</string>
-    <string name="deleted_all_rules">تم حذف جميع القوانين</string>
+    <string name="deleted_selected_rules">تم حذف جميع القوانين</string>
     <string name="leave_rules_creation_title">مغادرة إنشاء القوانين</string>
     <string name="leave_rules_creation_question">لن يتم حفظ هذه القوانين. اترك على أي حال؟</string>
     <string name="rules_name_hint">اسم القانون</string>

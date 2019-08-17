@@ -39,6 +39,7 @@
     <string name="my_account">My account</string>
     <string name="news">News</string>
     <string name="no_news">No news to display</string>
+    <string name="privacy_policy">Privacy policy</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Purchase</string>
@@ -193,39 +194,39 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Search games</string>
-    <string name="delete_games">Delete all games</string>
+    <string name="delete_selected_games">Delete selected games</string>
     <string name="delete_game">Delete game</string>
-    <string name="delete_games_question">Do you want to delete all the games?</string>
+    <string name="delete_selected_games_question">Do you want to delete the selected games?</string>
     <string name="delete_game_question">Do you want to delete this game?</string>
     <string name="deleted_game">Game was deleted</string>
-    <string name="deleted_games">All games were deleted</string>
+    <string name="deleted_selected_games">All selected games were deleted</string>
     <string name="players">Players</string>
     <string name="report_game">Generate game report</string>
     <string name="report_exception">Failed to generate or to display the game report</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Search teams</string>
-    <string name="delete_teams">Delete all teams</string>
+    <string name="delete_selected_teams">Delete selected teams</string>
     <string name="delete_team">Delete team</string>
     <string name="save_team">Save team</string>
-    <string name="delete_teams_question">Do you want to delete all the teams?</string>
+    <string name="delete_selected_teams_question">Do you want to delete the selected teams?</string>
     <string name="delete_team_question">Do you want to delete this team?</string>
     <string name="deleted_team">Team was deleted</string>
     <string name="saved_team">Team was saved</string>
-    <string name="deleted_teams">All teams were deleted</string>
+    <string name="deleted_teams">All selected teams were deleted</string>
     <string name="leave_team_creation_title">Leaving team creation</string>
     <string name="leave_team_creation_question">This team will not be saved. Leave anyway?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Delete all rules</string>
+    <string name="delete_selected_rules">Delete selected rules</string>
     <string name="delete_rules">Delete rules</string>
     <string name="save_rules">Save rules</string>
     <string name="search_rules">Search rules</string>
-    <string name="delete_all_rules_question">Do you want to delete all the rules?</string>
+    <string name="delete_selected_rules_question">Do you want to delete the selected rules?</string>
     <string name="delete_rules_question">Do you want to delete these rules?</string>
     <string name="deleted_rules">Rules were deleted</string>
     <string name="saved_rules">Rules were saved</string>
-    <string name="deleted_all_rules">All rules were deleted</string>
+    <string name="deleted_selected_rules">All selected rules were deleted</string>
     <string name="leave_rules_creation_title">Leaving rules creation</string>
     <string name="leave_rules_creation_question">These rules will not be saved. Leave anyway?</string>
     <string name="rules_name_hint">Rules name</string>
@@ -340,7 +341,7 @@
     <string name="credit_title" translatable="false">About the VBR Team</string>
     <string name="credit_designers" translatable="false">Volleyball Referee is designed and developped by Guillaume VT and Polina P as a hobby project.\nYou can contact us at vbr.app.team@gmail.com.</string>
     <string name="credit_translators_intro" translatable="false">Our translations are made by voluntary referees and players. A huge thanks to them all:</string>
-    <string name="credit_translators" translatable="false"> <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>
+    <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>
 
     <string-array name="points_per_set_values" translatable="false">
         <item>30</item>

@@ -119,7 +119,7 @@ public class UserAccountFragment extends Fragment {
                                 confirmNewPasswordInputLayout.setError(getString(R.string.password_strength_error));
                                 break;
                             default:
-                                UiUtils.makeText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show();
+                                UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show();
                                 break;
                         }
                     });

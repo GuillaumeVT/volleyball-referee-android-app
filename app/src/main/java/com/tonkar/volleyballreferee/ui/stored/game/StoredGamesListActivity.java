@@ -155,10 +155,10 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
     private void deleteSelectedGames() {
         Log.i(Tags.STORED_GAMES, "Delete selected games");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getString(R.string.delete_games)).setMessage(getString(R.string.delete_games_question));
+        builder.setTitle(getString(R.string.delete_selected_games)).setMessage(getString(R.string.delete_selected_games_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredGamesService.deleteGames(mStoredGamesListAdapter.getSelectedItems(), this);
-            UiUtils.makeText(StoredGamesListActivity.this, getString(R.string.deleted_games), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(StoredGamesListActivity.this, getString(R.string.deleted_selected_games), Toast.LENGTH_LONG).show();
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();

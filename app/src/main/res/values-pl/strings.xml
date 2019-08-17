@@ -38,6 +38,7 @@
     <string name="my_account">Moje Konto</string>
     <string name="news">Informacje</string>
     <string name="no_news">Nie ma nowych informacji</string>
+    <string name="privacy_policy">Informacja o polityce prywatności</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Zakup</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Szukaj meczy</string>
-    <string name="delete_games">Usun wszystkie mecze</string>
+    <string name="delete_selected_games">Usun wszystkie mecze</string>
     <string name="delete_game">Usun mecz</string>
-    <string name="delete_games_question">Czy chcesz usunąć ten mecz?</string>
+    <string name="delete_selected_games_question">Czy chcesz usunąć ten mecz?</string>
     <string name="delete_game_question">Czy chcesz usunąć wszystkie mecze?</string>
     <string name="deleted_game">Mecz usuniety</string>
-    <string name="deleted_games">Wszystkie mecze usuniete</string>
+    <string name="deleted_selected_games">Wszystkie mecze usuniete</string>
     <string name="players">Gracze</string>
     <string name="report_game">Wygeneruj raport meczowy</string>
     <string name="report_exception">Nie udało się wygenerować ani wyświetlić raportu meczowego</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Wyszukaj zespoły</string>
-    <string name="delete_teams">Usuń wszystkie zespoły</string>
+    <string name="delete_selected_teams">Usuń wszystkie zespoły</string>
     <string name="delete_team">Usuń zespół</string>
     <string name="save_team">Zapisz zespół</string>
-    <string name="delete_teams_question">Czy chcesz usunąć wszystkie zespoły?</string>
+    <string name="delete_selected_teams_question">Czy chcesz usunąć wszystkie zespoły?</string>
     <string name="delete_team_question">Czy chcesz usunąć ten zespół?</string>
     <string name="deleted_team">Zespół został usunięty</string>
     <string name="saved_team">Zespół został zapisany</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Ten zespół nie zostanie zapisany, mimo to kontynuować?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Usuń wszystkie reguły</string>
+    <string name="delete_selected_rules">Usuń wszystkie reguły</string>
     <string name="delete_rules">Usuń reguły</string>
     <string name="save_rules">Zapisz reguły</string>
     <string name="search_rules">Wyszukaj reguły</string>
-    <string name="delete_all_rules_question">Czy chcesz usunąć wszystkie reguły?</string>
+    <string name="delete_selected_rules_question">Czy chcesz usunąć wszystkie reguły?</string>
     <string name="delete_rules_question">Czy chcesz usunąć te reguły?</string>
     <string name="deleted_rules">Reguły zostały usunięte</string>
     <string name="saved_rules">Reguły zostały zapisane</string>
-    <string name="deleted_all_rules">Wszystkie reguły zostały usunięte</string>
+    <string name="deleted_selected_rules">Wszystkie reguły zostały usunięte</string>
     <string name="leave_rules_creation_title">Opuszczasz tworzenie reguł</string>
     <string name="leave_rules_creation_question">Te zasady nie zostaną zapisane. Wyjść mimo to?</string>
     <string name="rules_name_hint">Nazwa reguły</string>

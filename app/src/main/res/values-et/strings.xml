@@ -39,6 +39,7 @@
     <string name="my_account">Minu konto</string>
     <string name="news">Uudised</string>
     <string name="no_news">Puuduvad uudised</string>
+    <string name="privacy_policy">Isikuandmete kaitse</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Osta</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Mängu otsimine</string>
-    <string name="delete_games">Kustuta kõik mängud</string>
+    <string name="delete_selected_games">Kustuta kõik mängud</string>
     <string name="delete_game">Eemalda antud mängu</string>
-    <string name="delete_games_question">Kustutada kõik mängud?</string>
+    <string name="delete_selected_games_question">Kustutada kõik mängud?</string>
     <string name="delete_game_question">Kustutan antud mängu?</string>
     <string name="deleted_game">Mäng on edukalt kustutatud</string>
-    <string name="deleted_games">Kõik mängud on edukalt kustutatud</string>
+    <string name="deleted_selected_games">Kõik mängud on edukalt kustutatud</string>
     <string name="players">Mängijad</string>
     <string name="report_game">Loo mängu raaport</string>
     <string name="report_exception">Raaporti loomisel / mängu kuvamisel tekkis viga</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Võistkonna otsimine</string>
-    <string name="delete_teams">Kõikide võistkondade kustutamine</string>
+    <string name="delete_selected_teams">Kõikide võistkondade kustutamine</string>
     <string name="delete_team">Antud võistkonna kustutamine</string>
     <string name="save_team">Võistkonna salvestamine</string>
-    <string name="delete_teams_question">Kas kustutan kõik võistkonnad?</string>
+    <string name="delete_selected_teams_question">Kas kustutan kõik võistkonnad?</string>
     <string name="delete_team_question">Kas kustutan antud võistkonda?</string>
     <string name="deleted_team">Võistkonnad on edukalt kustutatud</string>
     <string name="saved_team">Võistkond salvestatud</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Antud võistkonna ei salvestata, kas jätkan?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Kustuta kõik reeglid</string>
+    <string name="delete_selected_rules">Kustuta kõik reeglid</string>
     <string name="delete_rules">Reeglite kustutamine</string>
     <string name="save_rules">Reeglite salvestamine</string>
     <string name="search_rules">Otsi reegleid</string>
-    <string name="delete_all_rules_question">Kas kustutan kõiki reegleid?</string>
+    <string name="delete_selected_rules_question">Kas kustutan kõiki reegleid?</string>
     <string name="delete_rules_question">Kas kustutan need reeglid?</string>
     <string name="deleted_rules">Reeglid on edukalt kustutatud</string>
     <string name="saved_rules">Reeglid on edukalt salvestatud</string>
-    <string name="deleted_all_rules">Reeglid on edukalt kustutatud</string>
+    <string name="deleted_selected_rules">Reeglid on edukalt kustutatud</string>
     <string name="leave_rules_creation_title">LAhku reeglite loomisest</string>
     <string name="leave_rules_creation_question">Need reeglid jäävad salvestamata. Kas soovite lehelt lahkuda?</string>
     <string name="rules_name_hint">Reeglite nimetus</string>

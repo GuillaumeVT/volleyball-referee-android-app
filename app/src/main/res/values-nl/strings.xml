@@ -39,6 +39,7 @@
     <string name="my_account">Mijn account</string>
     <string name="news">Nieuws</string>
     <string name="no_news">Geen nieuws om weer te geven</string>
+    <string name="privacy_policy">Privacybeleid</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Aankoop</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Zoek wedstrijden</string>
-    <string name="delete_games">Verwijder alle wedstrijden</string>
+    <string name="delete_selected_games">Verwijder alle wedstrijden</string>
     <string name="delete_game">Verwijder wedstrijd</string>
-    <string name="delete_games_question">Wil je alle wedstrijden verwijderen?</string>
+    <string name="delete_selected_games_question">Wil je alle wedstrijden verwijderen?</string>
     <string name="delete_game_question">Wil je deze wedstrijd verwijderen?</string>
     <string name="deleted_game">Wedstrijd is verwijderd</string>
-    <string name="deleted_games">Alle wedstrijden zijn verwijderd</string>
+    <string name="deleted_selected_games">Alle wedstrijden zijn verwijderd</string>
     <string name="players">Spelers</string>
     <string name="report_game">Genereer een wedstrijdrapport</string>
     <string name="report_exception">Kan het wedstrijdrapport niet genereren of weergeven</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Zoek ploegen</string>
-    <string name="delete_teams">Verwijder alle ploegen</string>
+    <string name="delete_selected_teams">Verwijder alle ploegen</string>
     <string name="delete_team">Verwijder ploeg</string>
     <string name="save_team">Bewaar ploeg</string>
-    <string name="delete_teams_question">Wilt u alle ploegen verwijderen?</string>
+    <string name="delete_selected_teams_question">Wilt u alle ploegen verwijderen?</string>
     <string name="delete_team_question">Wilt u deze ploeg verwijderen?</string>
     <string name="deleted_team">Ploeg is verwijderd</string>
     <string name="saved_team">Ploeg is opgeslagen</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Deze ploeg wordt niet opgeslagen. Toch verlaten?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Verwijder alle regels</string>
+    <string name="delete_selected_rules">Verwijder alle regels</string>
     <string name="delete_rules">Verwijder regels</string>
     <string name="save_rules">Regels opslaan</string>
     <string name="search_rules">Regels zoeken</string>
-    <string name="delete_all_rules_question">Wilt u alle regels verwijderen?</string>
+    <string name="delete_selected_rules_question">Wilt u alle regels verwijderen?</string>
     <string name="delete_rules_question">Wilt u deze regels verwijderen?</string>
     <string name="deleted_rules">Regels zijn verwijderd</string>
     <string name="saved_rules">Regels zijn opgeslagen</string>
-    <string name="deleted_all_rules">Alle regels zijn verwijderd</string>
+    <string name="deleted_selected_rules">Alle regels zijn verwijderd</string>
     <string name="leave_rules_creation_title">Verlaten van het maken van regels</string>
     <string name="leave_rules_creation_question">Deze regels worden niet opgeslagen. Toch weggaan?</string>
     <string name="rules_name_hint">Naam regels</string>

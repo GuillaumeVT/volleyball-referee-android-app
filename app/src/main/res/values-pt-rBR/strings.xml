@@ -39,6 +39,7 @@
     <string name="my_account">Minha Conta</string>
     <string name="news">Novidades</string>
     <string name="no_news">Não há novidades no momento</string>
+    <string name="privacy_policy">Política de privacidade</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Adquirir</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Procurar partidas</string>
-    <string name="delete_games">Deletar todas as partidas</string>
+    <string name="delete_selected_games">Deletar todas as partidas</string>
     <string name="delete_game">Deletar partida</string>
-    <string name="delete_games_question">Deseja deletar todas as partidas?</string>
+    <string name="delete_selected_games_question">Deseja deletar todas as partidas?</string>
     <string name="delete_game_question">Deseja deletar essa partida?</string>
     <string name="deleted_game">Partida deletada</string>
-    <string name="deleted_games">Todas as partidas foram deletadas</string>
+    <string name="deleted_selected_games">Todas as partidas foram deletadas</string>
     <string name="players">Jogadores</string>
     <string name="report_game">Gerar relatório da partida</string>
     <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Procurar equipes</string>
-    <string name="delete_teams">Deletar todas as equipes</string>
+    <string name="delete_selected_teams">Deletar todas as equipes</string>
     <string name="delete_team">Deletar equipe</string>
     <string name="save_team">Salvar equipe</string>
-    <string name="delete_teams_question">Gostaria de deletar todas as equipes?</string>
+    <string name="delete_selected_teams_question">Gostaria de deletar todas as equipes?</string>
     <string name="delete_team_question">Gostaria de deletar esta equipe?</string>
     <string name="deleted_team">Equipe deletada</string>
     <string name="saved_team">Equipe salva</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Esta equipe não foi salva, continuar assim mesmo?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Deletar todas as regras</string>
+    <string name="delete_selected_rules">Deletar todas as regras</string>
     <string name="delete_rules">Deletar regras</string>
     <string name="save_rules">Salvar regras</string>
     <string name="search_rules">Buscar regras</string>
-    <string name="delete_all_rules_question">Você deseja deletar todas as regras?</string>
+    <string name="delete_selected_rules_question">Você deseja deletar todas as regras?</string>
     <string name="delete_rules_question">Você deseja salvar essas regras?</string>
     <string name="deleted_rules">As regras foram deletadas</string>
     <string name="saved_rules">As regras foram salvas</string>
-    <string name="deleted_all_rules">Todas as regras foram deletadas</string>
+    <string name="deleted_selected_rules">Todas as regras foram deletadas</string>
     <string name="leave_rules_creation_title">Saindo da criação de regras</string>
     <string name="leave_rules_creation_question">Essas regras não serão salvas. Sair assim mesmo?</string>
     <string name="rules_name_hint">Definir regras como</string>

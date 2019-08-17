@@ -98,7 +98,7 @@ public class UserSignInFragment extends Fragment {
                                 passwordInputLayout.setError(getString(R.string.user_locked_error));
                                 break;
                             default:
-                                UiUtils.makeText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show();
+                                UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show();
                                 break;
                         }
                     });
@@ -123,7 +123,7 @@ public class UserSignInFragment extends Fragment {
 
             @Override
             public void onError(int httpCode) {
-                getActivity().runOnUiThread(() -> UiUtils.makeText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
+                getActivity().runOnUiThread(() -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
             }
         });
 

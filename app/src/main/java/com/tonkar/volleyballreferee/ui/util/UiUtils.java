@@ -164,6 +164,18 @@ public class UiUtils {
         colorTeamIconButton(context, color, button);
     }
 
+    public static void colorPlusIconButton(Context context, FloatingActionButton button) {
+        button.setImageResource(R.drawable.ic_plus);
+        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorSecondary)));
+        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+    }
+
+    public static void colorCloseIconButton(Context context, FloatingActionButton button) {
+        button.setImageResource(R.drawable.ic_close);
+        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorSecondary)));
+        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+    }
+
     public static void colorIconButtonInWhite(FloatingActionButton button) {
         int color = Color.parseColor("#ffffff");
         button.setBackgroundTintList(ColorStateList.valueOf(color));

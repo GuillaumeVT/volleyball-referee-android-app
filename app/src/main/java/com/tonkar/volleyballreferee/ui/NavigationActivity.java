@@ -97,10 +97,12 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.action_colleagues:
-                        Log.i(Tags.USER_UI, "Colleagues");
-                        intent = new Intent(this, ColleaguesListActivity.class);
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
+                        if (PrefUtils.canSync(this)) {
+                            Log.i(Tags.USER_UI, "Colleagues");
+                            intent = new Intent(this, ColleaguesListActivity.class);
+                            startActivity(intent);
+                            UiUtils.animateForward(this);
+                        }
                         break;
                     case R.id.action_live_games_vbr_com:
                         Log.i(Tags.WEB, "Live games on VBR.com");
@@ -124,6 +126,12 @@ public abstract class NavigationActivity extends AppCompatActivity {
                     case R.id.action_credits:
                         Log.i(Tags.MAIN_UI, "Credits");
                         intent = new Intent(this, CreditsActivity.class);
+                        startActivity(intent);
+                        UiUtils.animateForward(this);
+                        break;
+                    case R.id.action_privacy_policy:
+                        Log.i(Tags.WEB, "Privacy policy on VBR.com");
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/privacy-policy", BuildConfig.SERVER_ADDRESS)));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         break;

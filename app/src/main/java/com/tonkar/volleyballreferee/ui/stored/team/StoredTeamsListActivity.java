@@ -35,6 +35,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private StoredTeamsListAdapter mStoredTeamsListAdapter;
     private SwipeRefreshLayout     mSyncLayout;
     private boolean                mIsFabOpen;
+    private FloatingActionButton   mAddTeamButton;
     private FloatingActionButton   mAdd6x6TeamButton;
     private FloatingActionButton   mAdd4x4TeamButton;
     private FloatingActionButton   mAddBeachTeamButton;
@@ -100,8 +101,8 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd6x6TeamButton.hide();
         mAdd4x4TeamButton.hide();
         mAddBeachTeamButton.hide();
-        FloatingActionButton addTeamButton = findViewById(R.id.add_team_button);
-        addTeamButton.setOnClickListener(view -> {
+        mAddTeamButton = findViewById(R.id.add_team_button);
+        mAddTeamButton.setOnClickListener(view -> {
             if(mIsFabOpen){
                 closeFABMenu();
             }else{
@@ -189,7 +190,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private void deleteSelectedTeams() {
         Log.i(Tags.STORED_TEAMS, "Delete selected teams");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getString(R.string.delete_teams)).setMessage(getString(R.string.delete_teams_question));
+        builder.setTitle(getString(R.string.delete_selected_teams)).setMessage(getString(R.string.delete_selected_teams_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredTeamsService.deleteTeams(mStoredTeamsListAdapter.getSelectedItems(), this);
             UiUtils.makeText(StoredTeamsListActivity.this, getString(R.string.deleted_teams), Toast.LENGTH_LONG).show();
@@ -201,6 +202,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     private void showFABMenu(){
         mIsFabOpen = true;
+        UiUtils.colorCloseIconButton(this, mAddTeamButton);
         mAdd6x6TeamButton.show();
         mAdd4x4TeamButton.show();
         mAddBeachTeamButton.show();
@@ -211,6 +213,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     private void closeFABMenu(){
         mIsFabOpen = false;
+        UiUtils.colorPlusIconButton(this, mAddTeamButton);
         mAdd6x6TeamButton.animate().translationY(0);
         mAdd4x4TeamButton.animate().translationY(0);
         mAddBeachTeamButton.animate().translationY(0);

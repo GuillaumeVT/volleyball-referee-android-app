@@ -22,6 +22,6 @@
         android:icon="@drawable/ic_delete_menu"
         android:iconTint="@color/colorOnPrimary"
         android:orderInCategory="3"
-        android:title="@string/delete_games"
+        android:title="@string/delete_selected_games"
         app:showAsAction="always"/>
 </menu>

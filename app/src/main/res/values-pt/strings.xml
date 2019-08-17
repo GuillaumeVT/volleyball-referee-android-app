@@ -39,6 +39,7 @@
     <string name="my_account">A minha conta</string>
     <string name="news">Notícias</string>
     <string name="no_news">Sem notícias para apresentar</string>
+    <string name="privacy_policy">Política de privacidade</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Compra</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Procurar jogos</string>
-    <string name="delete_games">Apagar todos os jogos</string>
+    <string name="delete_selected_games">Apagar todos os jogos</string>
     <string name="delete_game">Apagar jogo</string>
-    <string name="delete_games_question">Deseja apagar todos as jogos?</string>
+    <string name="delete_selected_games_question">Deseja apagar todos as jogos?</string>
     <string name="delete_game_question">Deseja apagar esse jogo?</string>
     <string name="deleted_game">Jogo apagado</string>
-    <string name="deleted_games">Todos os jogos foram apagados</string>
+    <string name="deleted_selected_games">Todos os jogos foram apagados</string>
     <string name="players">Jogadores</string>
     <string name="report_game">Gerar relatório do jogo</string>
     <string name="report_exception">Falha ao gerar ou exibir o relatório de jogo</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Procurar equipas</string>
-    <string name="delete_teams">Apagar todas as equipas</string>
+    <string name="delete_selected_teams">Apagar todas as equipas</string>
     <string name="delete_team">Apagar equipa</string>
     <string name="save_team">Guardar equipa</string>
-    <string name="delete_teams_question">Gostaria de apagar todas as equipas?</string>
+    <string name="delete_selected_teams_question">Gostaria de apagar todas as equipas?</string>
     <string name="delete_team_question">Gostaria de apagar esta equipa?</string>
     <string name="deleted_team">Equipa apagada</string>
     <string name="saved_team">Equipa guardada</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Esta equipa não foi guardada, continuar assim mesmo?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Apagar todas as regras</string>
+    <string name="delete_selected_rules">Apagar todas as regras</string>
     <string name="delete_rules">Apagar regras</string>
     <string name="save_rules">Gravar regras</string>
     <string name="search_rules">Procurar regras</string>
-    <string name="delete_all_rules_question">Quer apagar todas as regras?</string>
+    <string name="delete_selected_rules_question">Quer apagar todas as regras?</string>
     <string name="delete_rules_question">Quer apagar estas regras?</string>
     <string name="deleted_rules">As regras foram apagadas</string>
     <string name="saved_rules">As regras foram gravadas</string>
-    <string name="deleted_all_rules">Todas as regras foram apagadas</string>
+    <string name="deleted_selected_rules">Todas as regras foram apagadas</string>
     <string name="leave_rules_creation_title">Sair da criação de regras</string>
     <string name="leave_rules_creation_question">Estas regras não serão gravadas. Sair mesmo assim?</string>
     <string name="rules_name_hint">Nome das regras</string>

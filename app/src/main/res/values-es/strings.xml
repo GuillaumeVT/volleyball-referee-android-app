@@ -39,6 +39,7 @@
     <string name="my_account">Mi cuenta</string>
     <string name="news">Noticias</string>
     <string name="no_news">No hay noticias para mostrar</string>
+    <string name="privacy_policy">Política de privacidad</string>
 
     <!-- Purchase activity -->
     <string name="purchase">Comprar</string>
@@ -193,22 +194,22 @@
 
     <!-- Stored games activity -->
     <string name="search_games">Buscar partidos</string>
-    <string name="delete_games">Borrar todos los partidos</string>
+    <string name="delete_selected_games">Borrar todos los partidos</string>
     <string name="delete_game">Borrar partido</string>
-    <string name="delete_games_question">¿Quieres borrar todos los partidos?</string>
+    <string name="delete_selected_games_question">¿Quieres borrar todos los partidos?</string>
     <string name="delete_game_question">¿Quieres borrar este partido?</string>
     <string name="deleted_game">Partido borrardo</string>
-    <string name="deleted_games">Todos los partidos borrados</string>
+    <string name="deleted_selected_games">Todos los partidos borrados</string>
     <string name="players">Jugadores</string>
     <string name="report_game">Generar informe de partido</string>
     <string name="report_exception">Error al generar o mostrar el informe del partidos</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Buscar equipos</string>
-    <string name="delete_teams">Borrar todos los equipos</string>
+    <string name="delete_selected_teams">Borrar todos los equipos</string>
     <string name="delete_team">Borrar equipo</string>
     <string name="save_team">Guardar equipo</string>
-    <string name="delete_teams_question">¿Quieres borrar todos los equipos?</string>
+    <string name="delete_selected_teams_question">¿Quieres borrar todos los equipos?</string>
     <string name="delete_team_question">¿Quieres borrar este equipo?</string>
     <string name="deleted_team">Equipo borrado</string>
     <string name="saved_team">Equipo salvado</string>
@@ -217,15 +218,15 @@
     <string name="leave_team_creation_question">Este equipo no se guardará. ¿Salir de todos modos?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_all_rules">Borrar todas las reglas</string>
+    <string name="delete_selected_rules">Borrar todas las reglas</string>
     <string name="delete_rules">Borrar reglas</string>
     <string name="save_rules">Guardar reglas</string>
     <string name="search_rules">Buscar reglas</string>
-    <string name="delete_all_rules_question">¿Quieres borrar todas las reglas?</string>
+    <string name="delete_selected_rules_question">¿Quieres borrar todas las reglas?</string>
     <string name="delete_rules_question">¿Quieres borrar estas reglas?</string>
     <string name="deleted_rules">Reglas borradas</string>
     <string name="saved_rules">Reglas guardadas</string>
-    <string name="deleted_all_rules">Todas las reglas borradas</string>
+    <string name="deleted_selected_rules">Todas las reglas borradas</string>
     <string name="leave_rules_creation_title">Salir de la creación de reglas</string>
     <string name="leave_rules_creation_question">Estas reglas no se guardarán. ¿Salir de todos modos?</string>
     <string name="rules_name_hint">Nombre de las reglas</string>
