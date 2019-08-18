@@ -244,7 +244,9 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     public void onSynchronizationSucceeded() {
         runOnUiThread(() -> {
             mStoredTeamsListAdapter.updateStoredTeamsList(mStoredTeamsService.listTeams());
-            mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
+            if (mDeleteSelectedTeamsItem != null) {
+                mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
+            }
             mSyncLayout.setRefreshing(false);
         });
     }

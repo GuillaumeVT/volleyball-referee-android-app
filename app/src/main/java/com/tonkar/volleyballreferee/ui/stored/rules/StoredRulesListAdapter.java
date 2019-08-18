@@ -1,15 +1,14 @@
 package com.tonkar.volleyballreferee.ui.stored.rules;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
@@ -24,9 +23,9 @@ import java.util.Locale;
 public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSummary> {
 
     static class ViewHolder {
-        LinearLayout listItemLayout;
-        TextView     nameText;
-        Chip         kindItem;
+        MaterialCardView listItemCard;
+        TextView         nameText;
+        Chip             kindItem;
     }
 
     private final LayoutInflater        mLayoutInflater;
@@ -74,7 +73,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
         if (rulesView == null) {
             rulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.listItemLayout = rulesView.findViewById(R.id.list_item_layout);
+            viewHolder.listItemCard = rulesView.findViewById(R.id.list_item_card);
             viewHolder.nameText = rulesView.findViewById(R.id.stored_rules_name);
             viewHolder.kindItem = rulesView.findViewById(R.id.rules_kind_item);
             rulesView.setTag(viewHolder);
@@ -99,7 +98,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
                 break;
         }
 
-        viewHolder.listItemLayout.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorPrimaryVariant : R.color.colorBackground), PorterDuff.Mode.SRC_IN);
+        viewHolder.listItemCard.setBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorPrimaryVariant : R.color.colorSurface));
 
         return rulesView;
     }

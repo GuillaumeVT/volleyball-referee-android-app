@@ -29,7 +29,7 @@
                         android:id="@+id/scheduled_games_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_size"
+                        android:divider="@android:color/transparent"
                         android:clipToPadding="false"
                         android:paddingBottom="@dimen/empty_fab_space"/>
 

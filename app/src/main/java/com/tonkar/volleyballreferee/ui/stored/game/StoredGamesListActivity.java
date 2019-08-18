@@ -176,7 +176,9 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
     public void onSynchronizationSucceeded() {
         runOnUiThread(() -> {
             mStoredGamesListAdapter.updateStoredGamesList(mStoredGamesService.listGames());
-            mDeleteSelectedGamesItem.setVisible(mStoredGamesListAdapter.hasSelectedItems());
+            if (mDeleteSelectedGamesItem != null) {
+                mDeleteSelectedGamesItem.setVisible(mStoredGamesListAdapter.hasSelectedItems());
+            }
             mSyncLayout.setRefreshing(false);
         });
     }

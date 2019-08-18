@@ -239,7 +239,9 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     public void onSynchronizationSucceeded() {
         runOnUiThread(() -> {
             mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
-            mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
+            if (mDeleteSelectedRulesItem != null) {
+                mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
+            }
             mSyncLayout.setRefreshing(false);
         });
     }

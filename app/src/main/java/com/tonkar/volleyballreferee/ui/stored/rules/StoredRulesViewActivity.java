@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -50,13 +48,9 @@ public class StoredRulesViewActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        FrameLayout itemParentLayout = findViewById(R.id.list_item_parent_layout);
-        LinearLayout itemLayout = findViewById(R.id.list_item_layout);
         TextView nameText = findViewById(R.id.stored_rules_name);
         Chip kindItem = findViewById(R.id.rules_kind_item);
 
-        itemParentLayout.setPadding(0, 0, 0, 0);
-        itemLayout.setPadding(0, 0, 0, 0);
         nameText.setText(mRules.getName());
 
         switch (mRules.getKind()) {

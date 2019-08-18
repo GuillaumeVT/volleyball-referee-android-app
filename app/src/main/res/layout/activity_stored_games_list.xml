@@ -24,7 +24,8 @@
             <ListView
                     android:id="@+id/stored_games_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:divider="@android:color/transparent"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

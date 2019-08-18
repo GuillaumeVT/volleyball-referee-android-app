@@ -1,15 +1,14 @@
 package com.tonkar.volleyballreferee.ui.stored.team;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
@@ -24,10 +23,10 @@ import java.util.Locale;
 public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummary> {
 
     static class ViewHolder {
-        LinearLayout listItemLayout;
-        TextView     nameText;
-        Chip         kindItem;
-        Chip         genderItem;
+        MaterialCardView listItemCard;
+        TextView         nameText;
+        Chip             kindItem;
+        Chip             genderItem;
     }
 
     private final LayoutInflater       mLayoutInflater;
@@ -75,7 +74,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
         if (teamView == null) {
             teamView = mLayoutInflater.inflate(R.layout.stored_teams_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.listItemLayout = teamView.findViewById(R.id.list_item_layout);
+            viewHolder.listItemCard = teamView.findViewById(R.id.list_item_card);
             viewHolder.nameText = teamView.findViewById(R.id.stored_team_name);
             viewHolder.kindItem = teamView.findViewById(R.id.team_kind_item);
             viewHolder.genderItem = teamView.findViewById(R.id.team_gender_item);
@@ -113,7 +112,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
                 break;
         }
 
-        viewHolder.listItemLayout.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorPrimaryVariant : R.color.colorBackground), PorterDuff.Mode.SRC_IN);
+        viewHolder.listItemCard.setBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorPrimaryVariant : R.color.colorSurface));
 
         return teamView;
     }

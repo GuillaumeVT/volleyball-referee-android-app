@@ -1,51 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="@dimen/big_margin_size">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/friend_text"
-            android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_margin_size"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/default_text_size" />
+            android:layout_margin="@dimen/small_margin_size"
+            app:contentPadding="@dimen/default_margin_size"
+            app:cardBackgroundColor="@color/colorSurface"
+            app:cardCornerRadius="@dimen/default_margin_size">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/reject_friend_button"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_margin_size"
-                android:text="@string/reject"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/colorError"
-                app:iconTint="@color/colorError"
-                app:strokeColor="@color/colorError"
-                app:icon="@drawable/ic_delete"
-                android:textSize="@dimen/small_text_size"/>
+                android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/accept_friend_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin_size"
-                android:text="@string/accept"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/colorPrimary"
-                app:iconTint="@color/colorPrimary"
-                app:strokeColor="@color/colorPrimary"
-                app:icon="@drawable/ic_plus"
-                android:textSize="@dimen/small_text_size"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/friend_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:textAppearance="@style/TextViewTheme"
+                    android:textSize="@dimen/default_text_size"/>
 
-    </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
 
-</LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/reject_friend_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:text="@string/reject"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:textColor="@color/colorError"
+                        app:iconTint="@color/colorError"
+                        app:strokeColor="@color/colorError"
+                        app:icon="@drawable/ic_delete"
+                        android:textSize="@dimen/small_text_size"/>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/accept_friend_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:text="@string/accept"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:textColor="@color/colorPrimary"
+                        app:iconTint="@color/colorPrimary"
+                        app:strokeColor="@color/colorPrimary"
+                        app:icon="@drawable/ic_plus"
+                        android:textSize="@dimen/small_text_size"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

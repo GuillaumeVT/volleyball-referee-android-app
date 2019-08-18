@@ -4,89 +4,105 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:descendantFocusability="blocksDescendants"
-             android:transitionName="listItemToDetails"
-             android:padding="@dimen/small_margin_size">
+             android:transitionName="listItemToDetails">
 
-    <LinearLayout
-            android:id="@+id/list_item_layout"
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/list_item_card"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/selectable_list_item_background"
-            android:gravity="top|start"
-            android:orientation="vertical"
-            android:padding="@dimen/big_margin_size">
+            android:layout_margin="@dimen/small_margin_size"
+            app:contentPadding="@dimen/default_margin_size"
+            app:cardBackgroundColor="@color/colorSurface"
+            app:cardCornerRadius="@dimen/default_margin_size">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:gravity="top|start"
+                android:orientation="vertical">
 
-            <com.google.android.material.chip.ChipGroup
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:chipSpacing="@dimen/default_margin_size">
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <com.google.android.material.chip.Chip
-                        style="@style/IconChip"
-                        android:id="@+id/game_kind_item"
+                <com.google.android.material.chip.ChipGroup
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipIcon="@drawable/ic_beach"
-                        app:chipBackgroundColor="@color/colorBeachLight"/>
+                        app:chipSpacing="@dimen/default_margin_size">
 
-                <com.google.android.material.chip.Chip
-                        style="@style/IconChip"
-                        android:id="@+id/game_gender_item"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.chip.Chip
+                            style="@style/IconChip"
+                            android:id="@+id/game_kind_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipIcon="@drawable/ic_beach"
+                            app:chipBackgroundColor="@color/colorBeachLight"/>
+
+                    <com.google.android.material.chip.Chip
+                            style="@style/IconChip"
+                            android:id="@+id/game_gender_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipIcon="@drawable/ic_mixed"
+                            app:chipBackgroundColor="@color/colorMixedLight"
+                            android:visibility="visible"/>
+
+                    <com.google.android.material.chip.Chip
+                            style="@style/IconChip"
+                            android:id="@+id/game_indexed_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:chipIcon="@drawable/ic_public"
+                            app:chipBackgroundColor="@color/colorWebPublicLight"/>
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/stored_game_date"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:chipIcon="@drawable/ic_mixed"
-                        app:chipBackgroundColor="@color/colorMixedLight"
-                        android:visibility="visible"/>
+                        android:layout_weight="1"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextViewTheme"
+                        android:textSize="@dimen/small_text_size"/>
+            </LinearLayout>
 
-                <com.google.android.material.chip.Chip
-                        style="@style/IconChip"
-                        android:id="@+id/game_indexed_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipIcon="@drawable/ic_public"
-                        app:chipBackgroundColor="@color/colorWebPublicLight"/>
-
-            </com.google.android.material.chip.ChipGroup>
+            <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/small_margin_size"
+                    android:layout_marginBottom="@dimen/small_margin_size"
+                    android:background="@color/colorDisabledButton" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/stored_game_date"
-                    android:layout_width="0dp"
+                    android:id="@+id/stored_game_summary"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextViewTheme"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/big_text_size"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/stored_game_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textAppearance="@style/TextViewTheme"
                     android:textSize="@dimen/small_text_size"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/stored_game_league"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextViewTheme"
+                    android:textSize="@dimen/small_text_size"/>
+
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/stored_game_summary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextViewTheme"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/big_text_size"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/stored_game_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/small_text_size"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/stored_game_league"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/small_text_size"/>
-
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>
