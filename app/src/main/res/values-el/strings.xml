@@ -19,7 +19,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Βόλεϊ Σάλας</string>
     <string name="new_beach_volleyball_game">Βόλεϊ Άμμου</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
+    <string name="new_snow_volleyball_game">Έρχεται σύντομα!</string>
     <string name="new_score_based_game">Πίνακας Σκορ</string>
     <string name="new_time_based_game">Με Χρόνο</string>
     <string name="permission_title">Σχετικά με τις άδειες</string>
@@ -33,9 +33,9 @@
     <string name="completed_games">Ολοκληρωμένοι αγώνες</string>
     <string name="available_games">Προγραμματισμένοι &amp; ζωντανοί αγώνες</string>
     <string name="teams">Ομάδες</string>
-    <string name="rules">Κανόνες</string>
+    <string name="rules">Κανονισμοί</string>
     <string name="colleagues">Συνάδελφοι</string>
-    <string name="live_games_vbr_com">Όλοι οι ζωντανοί αγώνες στην ιστοσελίδα</string>
+    <string name="live_games_vbr_com">Ζωντανοί αγώνες στην ιστοσελίδα</string>
     <string name="my_account">Ο λογαριασμός μου</string>
     <string name="news">Νέα</string>
     <string name="no_news">Δεν υπάρχουν νέα για προβολή</string>
@@ -55,7 +55,7 @@
     <!-- User activity -->
     <string name="user_sign_in">Σύνδεση</string>
     <string name="user_sign_up">Εγγραφή</string>
-    <string name="user_password_update">Ανανέωση κωδικού</string>
+    <string name="user_password_update">Αλλαγή κωδικού</string>
     <string name="user_lost_password">Έχασα τον κωδικό μου</string>
     <string name="user_sign_out">Αποσύνδεση</string>
     <string name="user_sign_in_why_title">Γιατί να συνδεθώ;</string>
@@ -89,7 +89,7 @@
     <string name="remove_colleague_question">Διαγραφή %s;</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Setup game</string>
+    <string name="game_setup_title">Σύνθεση αγώνα</string>
     <string name="home_team_tab">Γηπεδούχος ομάδα</string>
     <string name="home_team_hint">Όνομα γηπεδούχου ομάδας</string>
     <string name="guest_team_tab">Φιλοξενούμενη ομάδα</string>
@@ -111,7 +111,7 @@
     <string name="teams_tab">Ομάδες</string>
     <string name="referee">Διαιτητής</string>
     <string name="leave_game_setup_question">Η σύνθεση του αγώνα θα χαθεί. Αποχώρηση;</string>
-    <string name="must_provide_at_least_n_characters">Πρέπει να συμπληρώσεις τουλάχιστον %d χαρακτήρες</string>
+    <string name="must_provide_at_least_n_characters">Πρέπει να συμπληρωθούν τουλάχιστον %d χαρακτήρες</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Γράμματα</string>
