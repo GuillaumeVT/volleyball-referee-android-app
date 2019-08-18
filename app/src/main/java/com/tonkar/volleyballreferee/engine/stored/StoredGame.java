@@ -21,7 +21,11 @@ public class StoredGame extends ApiGame implements IStoredGame {
 
     @Override
     public String getGameSummary() {
-        return String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", getHomeTeam().getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), getGuestTeam().getName());
+        if (GameStatus.COMPLETED.equals(getMatchStatus())) {
+            return String.format(Locale.getDefault(), "%s\t\t%d\t-\t%d\t\t%s\n", getHomeTeam().getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), getGuestTeam().getName());
+        } else {
+            return String.format(Locale.getDefault(), "%s\t-\t%s\n", getHomeTeam().getName(), getGuestTeam().getName());
+        }
     }
 
     int currentSetIndex() {

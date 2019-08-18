@@ -48,10 +48,7 @@ import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
@@ -195,7 +192,21 @@ public class UiUtils {
 
     public static void shareStoredGame(Context context, IStoredGame storedGame) {
         Log.i(Tags.UTILS_UI, "Share stored game");
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+        if (GameStatus.LIVE.equals(storedGame.getMatchStatus()) && PrefUtils.canSync(context)){
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, storedGame.getGameSummary() + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS, storedGame.getId()));
+            intent.setType("text/plain");
+
+            try {
+                context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
+            } catch (ActivityNotFoundException e) {
+                Log.e(Tags.UTILS_UI, "Exception while sharing stored game", e);
+                UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
+            }
+
+        } else if (GameStatus.COMPLETED.equals(storedGame.getMatchStatus()) && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             File file = ScoreSheetWriter.writeStoredGame(context, storedGame);
             if (file == null) {
                 UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
@@ -222,8 +233,6 @@ public class UiUtils {
                     UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
                 }
             }
-        } else {
-            Log.w(Tags.UTILS_UI, "No permission to share");
         }
     }
 

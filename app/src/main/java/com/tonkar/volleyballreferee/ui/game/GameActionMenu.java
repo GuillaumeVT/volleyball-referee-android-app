@@ -1,11 +1,9 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -92,9 +90,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 indexGameText.setChecked(mGame.isIndexed());
             } else {
                 indexGameText.setVisibility(View.GONE);
-            }
-
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 shareGameText.setVisibility(View.GONE);
             }
 
