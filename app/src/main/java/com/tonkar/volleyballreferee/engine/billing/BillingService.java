@@ -22,5 +22,5 @@ public interface BillingService {
 
     boolean isAllPurchased();
 
-    void launchPurchase(String sku);
+    void launchPurchase(SkuDetails skuDetails);
 }

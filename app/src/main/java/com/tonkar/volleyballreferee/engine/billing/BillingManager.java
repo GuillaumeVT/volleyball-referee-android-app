@@ -27,7 +27,7 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
 
         mPurchasedSkus.put(WEB_PREMIUM, false);
 
-        mBillingClient = BillingClient.newBuilder(mActivity).setListener(this).build();
+        mBillingClient = BillingClient.newBuilder(mActivity).enablePendingPurchases().setListener(this).build();
 
         startServiceConnection(() -> {
             querySkuList();
@@ -36,15 +36,15 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     }
 
     @Override
-    public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-        if (responseCode == BillingClient.BillingResponse.OK) {
+    public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
+        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
             for (Purchase purchase : purchases) {
                 handlePurchase(purchase);
             }
-        } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+        } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
             Log.w(Tags.BILLING, "Purchase canceled by user");
         } else {
-            Log.w(Tags.BILLING, String.format("Unknown purchase response code code %d", responseCode));
+            Log.w(Tags.BILLING, String.format("Unknown purchase response code code %d", billingResult.getResponseCode()));
         }
 
         for (BillingListener listener : mBillingListeners) {
@@ -55,10 +55,9 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     private void startServiceConnection(final Runnable executeOnSuccess) {
         mBillingClient.startConnection(new BillingClientStateListener() {
             @Override
-            public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-                Log.d(Tags.BILLING, String.format("Billing setup finished with response code %d", billingResponseCode));
-
-                if (billingResponseCode == BillingClient.BillingResponse.OK) {
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                Log.d(Tags.BILLING, String.format("Billing setup finished with response code %d", billingResult.getResponseCode()));
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                     mIsServiceConnected = true;
                     if (executeOnSuccess != null) {
                         executeOnSuccess.run();
@@ -87,8 +86,8 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
         params.setSkusList(Arrays.asList(BillingService.IN_APP_SKUS)).setType(BillingClient.SkuType.INAPP);
         mBillingClient.querySkuDetailsAsync(
                 params.build(),
-                (responseCode, skuDetailsList) -> {
-                    if (responseCode == BillingClient.BillingResponse.OK && skuDetailsList != null) {
+                (billingResult, skuDetailsList) -> {
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
                         mSkuDetailsList.clear();
                         mSkuDetailsList.addAll(skuDetailsList);
                     }
@@ -102,14 +101,14 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     private void queryPurchases() {
         Runnable queryToExecute = () -> {
             Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.INAPP);
-            onPurchasesUpdated(purchasesResult.getResponseCode(), purchasesResult.getPurchasesList());
+            onPurchasesUpdated(purchasesResult.getBillingResult(), purchasesResult.getPurchasesList());
         };
 
         executeServiceRequest(queryToExecute);
     }
 
     private void handlePurchase(Purchase purchase) {
-        if (purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
+        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED && purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
             mPurchasedSkus.put(WEB_PREMIUM, true);
             if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
                 PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
@@ -150,8 +149,8 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     }
 
     @Override
-    public void launchPurchase(String sku) {
-        BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSku(sku).setType(BillingClient.SkuType.INAPP).build();
+    public void launchPurchase(SkuDetails skuDetails) {
+        BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build();
         mBillingClient.launchBillingFlow(mActivity, flowParams);
     }
 
