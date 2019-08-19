@@ -31,7 +31,7 @@
     <string name="my_data_group">Mijn data</string>
     <string name="configuration_group">Configuratie</string>
     <string name="completed_games">Voltooide wedstrijden</string>
-    <string name="available_games">Scheduled &amp; live matches</string>
+    <string name="available_games">Geplande &amp; live wedstrijden</string>
     <string name="teams">Ploegen</string>
     <string name="rules">Regels</string>
     <string name="colleagues">Collega scheidsrechters</string>
