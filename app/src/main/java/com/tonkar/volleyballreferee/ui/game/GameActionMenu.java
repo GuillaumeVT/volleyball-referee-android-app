@@ -67,7 +67,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
             TextView navigateHomeText = view.findViewById(R.id.action_navigate_home);
             SwitchCompat indexGameText = view.findViewById(R.id.action_index_game);
-            TextView shareGameText = view.findViewById(R.id.action_share_game);
+            TextView shareGameLinkText = view.findViewById(R.id.action_share_game_link);
             TextView tossCoinText = view.findViewById(R.id.action_toss_coin);
             TextView resetSetText = view.findViewById(R.id.action_reset_set);
             SwitchCompat keepScreenOnSwitch = view.findViewById(R.id.keep_screen_on);
@@ -90,12 +90,12 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 indexGameText.setChecked(mGame.isIndexed());
             } else {
                 indexGameText.setVisibility(View.GONE);
-                shareGameText.setVisibility(View.GONE);
+                shareGameLinkText.setVisibility(View.GONE);
             }
 
             UiUtils.setDrawableStart(navigateHomeText, R.drawable.ic_home);
             UiUtils.setDrawableStart(indexGameText, R.drawable.ic_private);
-            UiUtils.setDrawableStart(shareGameText, R.drawable.ic_share);
+            UiUtils.setDrawableStart(shareGameLinkText, R.drawable.ic_link);
             UiUtils.setDrawableStart(tossCoinText, R.drawable.ic_coin);
             UiUtils.setDrawableStart(resetSetText, R.drawable.ic_reset_set);
             UiUtils.setDrawableStart(keepScreenOnSwitch, R.drawable.ic_screen_on);
@@ -103,7 +103,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
             colorIcon(context, navigateHomeText);
             colorIcon(context, indexGameText);
-            colorIcon(context, shareGameText);
+            colorIcon(context, shareGameLinkText);
             colorIcon(context, tossCoinText);
             colorIcon(context, resetSetText);
             colorIcon(context, keepScreenOnSwitch);
@@ -111,7 +111,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
             navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGame));
             indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
-            shareGameText.setOnClickListener(textView -> share());
+            shareGameLinkText.setOnClickListener(textView -> shareLink());
             tossCoinText.setOnClickListener(textView -> tossACoin());
             resetSetText.setOnClickListener(textView -> resetCurrentSetWithDialog());
             keepScreenOnSwitch.setOnCheckedChangeListener((button, isChecked) -> {
@@ -142,13 +142,9 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
         mGame.setIndexed(!mGame.isIndexed());
     }
 
-    private void share() {
-        Log.i(Tags.GAME_UI, "Share game");
-        if (mGame.isMatchCompleted()) {
-            UiUtils.shareStoredGame(mActivity, mStoredGamesService.getGame(mGame.getId()));
-        } else {
-            UiUtils.shareStoredGame(mActivity, mStoredGamesService.getCurrentGame());
-        }
+    private void shareLink() {
+        Log.i(Tags.GAME_UI, "Share game link");
+        UiUtils.shareGameLink(mActivity, mGame.isMatchCompleted() ? mStoredGamesService.getGame(mGame.getId()) : mStoredGamesService.getCurrentGame());
         dismiss();
     }
 

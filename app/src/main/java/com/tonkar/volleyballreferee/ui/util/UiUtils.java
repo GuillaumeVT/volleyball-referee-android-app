@@ -190,10 +190,8 @@ public class UiUtils {
         }
     }
 
-    public static void shareStoredGame(Context context, IStoredGame storedGame) {
-        Log.i(Tags.UTILS_UI, "Share stored game");
-
-        if (GameStatus.LIVE.equals(storedGame.getMatchStatus()) && PrefUtils.canSync(context)){
+    public static void shareGameLink(Context context, IStoredGame storedGame) {
+        if (PrefUtils.canSync(context)){
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, storedGame.getGameSummary() + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS, storedGame.getId()));
@@ -206,7 +204,13 @@ public class UiUtils {
                 UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             }
 
-        } else if (GameStatus.COMPLETED.equals(storedGame.getMatchStatus()) && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        }
+    }
+
+    public static void shareStoredGame(Context context, IStoredGame storedGame) {
+        Log.i(Tags.UTILS_UI, "Share stored game");
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             File file = ScoreSheetWriter.writeStoredGame(context, storedGame);
             if (file == null) {
                 UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();

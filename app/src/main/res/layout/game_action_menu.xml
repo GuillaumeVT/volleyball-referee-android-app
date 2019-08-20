@@ -35,7 +35,7 @@
             android:drawablePadding="@dimen/big_margin_size"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/action_share_game"
+            android:id="@+id/action_share_game_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/big_margin_size"

@@ -1,10 +1,8 @@
 package com.tonkar.volleyballreferee.ui.stored.game;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
@@ -24,14 +21,12 @@ import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -53,19 +48,18 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_stored_game, menu);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            MenuItem shareMenu = menu.findItem(R.id.action_share_game);
+            MenuItem shareMenu = menu.findItem(R.id.action_share_game_score_sheet);
             shareMenu.setVisible(false);
-
-            MenuItem scoreSheetMenu = menu.findItem(R.id.action_generate_score_sheet);
-            scoreSheetMenu.setVisible(false);
         }
 
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
         MenuItem deleteMenu = menu.findItem(R.id.action_delete_game);
+        MenuItem shareLinkMenu = menu.findItem(R.id.action_share_game_link);
 
         String userId = PrefUtils.getUser(this).getId();
+        boolean canSync = PrefUtils.canSync(this);
 
-        if (PrefUtils.canSync(this) && mStoredGame.getCreatedBy().equals(userId)) {
+        if (canSync && mStoredGame.getCreatedBy().equals(userId)) {
             if (mStoredGamesService.isGameIndexed(mGameId)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
@@ -76,6 +70,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         }
 
         deleteMenu.setVisible(mStoredGame.getCreatedBy().equals(userId));
+        shareLinkMenu.setVisible(canSync);
 
         return true;
     }
@@ -86,14 +81,14 @@ public abstract class StoredGameActivity extends AppCompatActivity {
             case R.id.action_index_game:
                 toggleGameIndexed();
                 return true;
-            case R.id.action_generate_score_sheet:
-                generateScoreSheet();
-                return true;
             case R.id.action_delete_game:
                 deleteGame();
                 return true;
-            case R.id.action_share_game:
-                shareGame();
+            case R.id.action_share_game_score_sheet:
+                shareGameScoreSheet();
+                return true;
+            case R.id.action_share_game_link:
+                shareGameLink();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -181,29 +176,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         }
     }
 
-    private void generateScoreSheet() {
-        Log.i(Tags.STORED_GAMES, "Generate score sheet");
-        File file = ScoreSheetWriter.writeStoredGame(this, mStoredGamesService.getGame(mGameId));
-        if (file == null) {
-            UiUtils.makeErrorText(this, getString(R.string.report_exception), Toast.LENGTH_LONG).show();
-        } else {
-            Uri uri = FileProvider.getUriForFile(this, "com.tonkar.volleyballreferee.fileprovider", file);
-            grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Intent target = new Intent(Intent.ACTION_VIEW);
-            target.setDataAndType(uri,"text/html");
-            target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-            Intent intent = Intent.createChooser(target, file.getName());
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                Log.e(Tags.STORED_GAMES, "Exception while showing report", e);
-                UiUtils.makeErrorText(this, getString(R.string.report_exception), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
     private void deleteGame() {
         Log.i(Tags.STORED_GAMES, "Delete game");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
@@ -222,9 +194,14 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
-    private void shareGame() {
-        Log.i(Tags.STORED_GAMES, "Share game");
+    private void shareGameScoreSheet() {
+        Log.i(Tags.STORED_GAMES, "Share game score sheet");
         UiUtils.shareStoredGame(this, mStoredGamesService.getGame(mGameId));
+    }
+
+    private void shareGameLink() {
+        Log.i(Tags.STORED_GAMES, "Share game link");
+        UiUtils.shareGameLink(this, mStoredGamesService.getGame(mGameId));
     }
 
     @Override
