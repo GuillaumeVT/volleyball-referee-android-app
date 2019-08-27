@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/pseudo_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,11 +16,13 @@
                 android:id="@+id/pseudo_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin_size"
+                android:layout_marginEnd="@dimen/default_margin_size"
                 android:ems="10"
                 android:hint="@string/user_pseudo_hint"
                 android:inputType="textCapWords"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size"/>
+                android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

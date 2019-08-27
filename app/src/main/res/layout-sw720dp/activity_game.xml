@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.game.GameActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.tonkar.volleyballreferee.ui.game.GameActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -25,55 +25,59 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/left_team_name_text"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:background="@drawable/text_round_border"
                     android:gravity="center"
+                    android:padding="@dimen/default_margin_size"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:textSize="@dimen/big_text_size" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/swap_teams_button"
                     style="@style/VbrFab"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
-                    android:contentDescription="@string/switch_sides_description"
                     android:layout_weight="1"
+                    android:contentDescription="@string/switch_sides_description"
                     android:onClick="swapTeams"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_swap"/>
+                    app:srcCompat="@drawable/ic_swap" />
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/right_team_name_text"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:background="@drawable/text_round_border"
                     android:gravity="center"
+                    android:padding="@dimen/default_margin_size"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:textSize="@dimen/big_text_size" />
 
         </LinearLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/big_margin_size"
                 android:layout_marginTop="@dimen/big_margin_size"
+                android:layout_marginBottom="@dimen/big_margin_size"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="6">
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/left_team_score_button"
+                    style="@style/VbrButton"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/score_button_height"
                     android:layout_weight="2"
                     android:onClick="increaseLeftScore"
-                    android:textSize="@dimen/score_point_size"
-                    style="@style/VbrButton"/>
+                    android:textSize="@dimen/score_point_size" />
 
             <RelativeLayout
                     android:layout_width="0dp"
@@ -84,26 +88,26 @@
                         android:id="@+id/left_team_set_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin_size"
-                        android:layout_centerHorizontal="true"
                         android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/small_margin_size"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/score_set_size"/>
+                        android:textSize="@dimen/score_set_size" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/left_team_service_button"
                         style="@style/VbrFab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin_size"
-                        android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/small_margin_size"
                         android:contentDescription="@string/swap_first_service"
                         android:onClick="swapFirstService"
                         app:fabCustomSize="@dimen/game_small_fab_size"
                         app:maxImageSize="@dimen/game_small_fab_icon_size"
-                        app:srcCompat="@drawable/ic_service"/>
+                        app:srcCompat="@drawable/ic_service" />
 
             </RelativeLayout>
 
@@ -116,37 +120,37 @@
                         android:id="@+id/right_team_set_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin_size"
-                        android:layout_centerHorizontal="true"
                         android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/small_margin_size"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/score_set_size"/>
+                        android:textSize="@dimen/score_set_size" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/right_team_service_button"
                         style="@style/VbrFab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin_size"
-                        android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/small_margin_size"
                         android:contentDescription="@string/swap_first_service"
                         android:onClick="swapFirstService"
                         app:fabCustomSize="@dimen/game_small_fab_size"
                         app:maxImageSize="@dimen/game_small_fab_icon_size"
-                        app:srcCompat="@drawable/ic_service"/>
+                        app:srcCompat="@drawable/ic_service" />
 
             </RelativeLayout>
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/right_team_score_button"
+                    style="@style/VbrButton"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/score_button_height"
                     android:layout_weight="2"
                     android:onClick="increaseRightScore"
-                    android:textSize="@dimen/score_point_size"
-                    style="@style/VbrButton"/>
+                    android:textSize="@dimen/score_point_size" />
 
         </LinearLayout>
 
@@ -156,40 +160,45 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textSize="@dimen/default_text_size" />
 
-        <LinearLayout
+        <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/big_margin_size"
                 android:layout_marginTop="@dimen/big_margin_size"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginBottom="@dimen/big_margin_size"
+                app:alignContent="center"
+                app:alignItems="center"
+                app:justifyContent="space_around">
 
             <LinearLayout
-                    android:id="@+id/left_team_timeout_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:id="@+id/left_team_timeout_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                </LinearLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/left_team_timeout_button"
+                        style="@style/VbrFab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin_size"
+                        android:contentDescription="@string/call_timeout_description"
+                        android:onClick="callLeftTimeout"
+                        app:fabCustomSize="@dimen/game_fab_size"
+                        app:maxImageSize="@dimen/game_fab_icon_size"
+                        app:srcCompat="@drawable/ic_timeout" />
 
             </LinearLayout>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/left_team_timeout_button"
-                    style="@style/VbrFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:contentDescription="@string/call_timeout_description"
-                    android:onClick="callLeftTimeout"
-                    app:fabCustomSize="@dimen/game_fab_size"
-                    app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_timeout"/>
-
-            <Space
-                    android:layout_width="@dimen/game_buttons_horizontal_spacing"
-                    android:layout_height="wrap_content"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/left_team_cards_button"
@@ -200,11 +209,7 @@
                     android:onClick="giveLeftSanction"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_penalty_card"/>
-
-            <Space
-                    android:layout_width="@dimen/game_buttons_horizontal_spacing"
-                    android:layout_height="wrap_content"/>
+                    app:srcCompat="@drawable/ic_penalty_card" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/score_remove_button"
@@ -216,11 +221,7 @@
                     android:onClick="removeLastPoint"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_score_revert"/>
-
-            <Space
-                    android:layout_width="@dimen/game_buttons_horizontal_spacing"
-                    android:layout_height="wrap_content"/>
+                    app:srcCompat="@drawable/ic_score_revert" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/right_team_cards_button"
@@ -231,54 +232,58 @@
                     android:onClick="giveRightSanction"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_penalty_card"/>
-
-            <Space
-                    android:layout_width="@dimen/game_buttons_horizontal_spacing"
-                    android:layout_height="wrap_content"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/right_team_timeout_button"
-                    style="@style/VbrFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:contentDescription="@string/call_timeout_description"
-                    android:onClick="callRightTimeout"
-                    app:fabCustomSize="@dimen/game_fab_size"
-                    app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_timeout"/>
+                    app:srcCompat="@drawable/ic_penalty_card" />
 
             <LinearLayout
-                    android:id="@+id/right_team_timeout_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/right_team_timeout_button"
+                        style="@style/VbrFab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin_size"
+                        android:contentDescription="@string/call_timeout_description"
+                        android:onClick="callRightTimeout"
+                        app:fabCustomSize="@dimen/game_fab_size"
+                        app:maxImageSize="@dimen/game_fab_icon_size"
+                        app:srcCompat="@drawable/ic_timeout" />
+
+                <LinearLayout
+                        android:id="@+id/right_team_timeout_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.google.android.flexbox.FlexboxLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/game_nav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin_size"
                 android:layout_marginTop="@dimen/default_margin_size"
+                android:layout_marginBottom="@dimen/default_margin_size"
                 android:background="@color/colorOnPrimary"
                 app:elevation="@dimen/elevation"
                 app:itemBackground="@drawable/navigation_menu_item"
                 app:itemHorizontalTranslationEnabled="true"
                 app:itemIconTint="@drawable/navigation_menu_item"
                 app:itemTextColor="@drawable/navigation_menu_item"
-                app:menu="@menu/navigation_menu_game"/>
+                app:menu="@menu/navigation_menu_game" />
 
         <FrameLayout
                 android:id="@+id/game_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="top|center"/>
+                android:layout_gravity="top|center" />
 
     </LinearLayout>
 

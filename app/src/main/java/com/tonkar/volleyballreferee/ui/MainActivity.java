@@ -123,12 +123,10 @@ public class MainActivity extends NavigationActivity {
                     }
 
                     @Override
-                    public void onPositiveButtonClicked() {
-                    }
+                    public void onPositiveButtonClicked() {}
 
                     @Override
-                    public void onNeutralButtonClicked() {
-                    }
+                    public void onNeutralButtonClicked() {}
                 });
             }
         }

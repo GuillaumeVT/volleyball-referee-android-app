@@ -3,16 +3,16 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:paddingBottom="@dimen/empty_fab_space"
               android:gravity="top|center"
               android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
+            style="@style/RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:contentPadding="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorSurface">
+            android:layout_margin="@dimen/big_margin_size"
+            app:contentPadding="@dimen/default_margin_size">
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -44,14 +44,18 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/user_email_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_email_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_email_hint"
                         android:imeOptions="actionNext"
@@ -62,14 +66,18 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/user_pseudo_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_pseudo_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_pseudo_hint"
                         android:imeOptions="actionNext"
@@ -83,24 +91,24 @@
                     android:id="@+id/user_sign_out_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size"
                     android:layout_gravity="center"
                     android:text="@string/user_sign_out"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:textColor="@color/colorOnSurface"
                     app:strokeColor="@color/colorOnSurface"
-                    android:textAllCaps="true"/>
+                    android:textAllCaps="false"/>
 
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.MaterialComponents.CardView"
+            style="@style/RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:contentPadding="@dimen/default_margin_size"
-            app:cardBackgroundColor="@color/colorSurface">
+            android:layout_margin="@dimen/big_margin_size"
+            app:contentPadding="@dimen/default_margin_size">
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -132,14 +140,18 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/user_current_password_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_current_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_current_password_hint"
                         android:imeOptions="actionNext"
@@ -152,20 +164,24 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:layout_margin="@dimen/small_margin_size"
                     android:textAppearance="@style/TextViewTheme"
                     android:text="@string/password_strength"
                     android:textSize="@dimen/default_text_size"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/user_password_input_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_new_password_hint"
                         android:imeOptions="actionNext"
@@ -176,15 +192,18 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/user_confirm_password_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/big_margin_size">
+                    android:layout_margin="@dimen/small_margin_size">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_confirm_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_confirm_new_password_hint"
                         android:imeOptions="actionDone"
@@ -195,15 +214,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:id="@+id/user_password_update_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size"
                     android:layout_gravity="center"
                     android:text="@string/user_password_update"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:textColor="@color/colorPrimary"
                     app:strokeColor="@color/colorPrimary"
-                    android:textAllCaps="true"/>
+                    android:textAllCaps="false"/>
 
         </LinearLayout>
 

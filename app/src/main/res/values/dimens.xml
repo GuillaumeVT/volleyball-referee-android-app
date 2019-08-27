@@ -22,7 +22,6 @@
     <dimen name="number_text_elevation">2dp</dimen>
 
     <dimen name="score_button_height">90dp</dimen>
-    <dimen name="game_buttons_horizontal_spacing">56dp</dimen>
     <dimen name="game_fab_size">56dp</dimen>
     <dimen name="game_fab_icon_size">40dp</dimen>
     <dimen name="game_small_fab_size">40dp</dimen>

@@ -302,7 +302,7 @@ public class StoredTeamsManager implements StoredTeamsService {
     @Override
     public void syncTeams(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format("%s/teams", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/teams", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -406,7 +406,7 @@ public class StoredTeamsManager implements StoredTeamsService {
             }
         } else {
             ApiTeamSummary remoteTeam = remoteTeams.poll();
-            Request request = ApiUtils.buildGet(String.format("%s/teams/%s", ApiUtils.BASE_URL, remoteTeam.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/teams/%s", ApiUtils.BASE_URL, remoteTeam.getId()), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -440,8 +440,8 @@ public class StoredTeamsManager implements StoredTeamsService {
             final String teamStr = writeTeam(team);
 
             Request request = create ?
-                    ApiUtils.buildPost(String.format("%s/teams", ApiUtils.BASE_URL), teamStr, userToken) :
-                    ApiUtils.buildPut(String.format("%s/teams", ApiUtils.BASE_URL), teamStr, userToken);
+                    ApiUtils.buildPost(String.format(Locale.US, "%s/teams", ApiUtils.BASE_URL), teamStr, userToken) :
+                    ApiUtils.buildPut(String.format(Locale.US, "%s/teams", ApiUtils.BASE_URL), teamStr, userToken);
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -463,7 +463,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     private void deleteTeamOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format("%s/teams/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/teams/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override

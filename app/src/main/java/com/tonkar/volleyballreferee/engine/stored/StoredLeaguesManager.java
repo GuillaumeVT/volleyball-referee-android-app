@@ -148,7 +148,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     @Override
     public void syncLeagues(DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format("%s/leagues", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/leagues", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -246,7 +246,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
             }
         } else {
             ApiLeagueSummary remoteLeague = remoteLeagues.poll();
-            Request request = ApiUtils.buildGet(String.format("%s/leagues/%s", ApiUtils.BASE_URL, remoteLeague.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/leagues/%s", ApiUtils.BASE_URL, remoteLeague.getId()), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -277,7 +277,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     private void pushLeagueToServer(final ApiLeague league) {
         if (PrefUtils.canSync(mContext)) {
             final String leagueStr = writeLeague(league);
-            Request request = ApiUtils.buildPost(String.format("%s/leagues", ApiUtils.BASE_URL), leagueStr, PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/leagues", ApiUtils.BASE_URL), leagueStr, PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override

@@ -372,16 +372,18 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         // Left
         mLeftTeamNameText.setText(mGame.getTeamName(mTeamOnLeftSide));
-        UiUtils.colorTeamButton(this, mGame.getTeamColor(mTeamOnLeftSide), mLeftTeamScoreButton);
-        UiUtils.colorTeamIconButton(this, mGame.getTeamColor(mTeamOnLeftSide), mLeftTeamTimeoutButton);
-        UiUtils.colorTeamIconButton(this, mGame.getTeamColor(mTeamOnLeftSide), mLeftTeamCardsButton);
+        int leftColor = mGame.getTeamColor(mTeamOnLeftSide);
+        UiUtils.colorTeamButton(this, leftColor, mLeftTeamScoreButton);
+        UiUtils.colorTeamIconButton(this, leftColor, mLeftTeamTimeoutButton);
+        UiUtils.colorTeamIconButton(this, leftColor, mLeftTeamCardsButton);
 
         // Right
 
         mRightTeamNameText.setText(mGame.getTeamName(mTeamOnRightSide));
-        UiUtils.colorTeamButton(this, mGame.getTeamColor(mTeamOnRightSide), mRightTeamScoreButton);
-        UiUtils.colorTeamIconButton(this, mGame.getTeamColor(mTeamOnRightSide), mRightTeamTimeoutButton);
-        UiUtils.colorTeamIconButton(this, mGame.getTeamColor(mTeamOnRightSide), mRightTeamCardsButton);
+        int rightColor = mGame.getTeamColor(mTeamOnRightSide);
+        UiUtils.colorTeamButton(this, rightColor, mRightTeamScoreButton);
+        UiUtils.colorTeamIconButton(this, rightColor, mRightTeamTimeoutButton);
+        UiUtils.colorTeamIconButton(this, rightColor, mRightTeamCardsButton);
 
         onPointsUpdated(mTeamOnLeftSide, mGame.getPoints(mTeamOnLeftSide));
         onSetsUpdated(mTeamOnLeftSide, mGame.getSets(mTeamOnLeftSide));

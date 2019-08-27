@@ -53,13 +53,17 @@
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin_size">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/league_name_input_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_margin_size"
+                            android:layout_marginEnd="@dimen/default_margin_size"
                             android:ems="10"
                             android:hint="@string/league_name"
                             android:imeOptions="actionNext"
@@ -70,15 +74,19 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:id="@+id/division_name_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin_size"
                         android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/division_name_input_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_margin_size"
+                            android:layout_marginEnd="@dimen/default_margin_size"
                             android:ems="10"
                             android:hint="@string/division_name"
                             android:imeOptions="actionDone"
@@ -91,8 +99,7 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/big_margin_size"
-                        android:gravity="center|start"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:baselineAligned="false">
 
@@ -100,6 +107,7 @@
                             android:id="@+id/gender_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_margin_size"
                             android:layout_weight="1"
                             android:text="@string/gender_description"
                             android:textAppearance="@style/TextViewTheme"
@@ -122,6 +130,8 @@
                         android:id="@+id/home_team_name_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
                         android:text="@string/home_team_tab"
                         android:textAppearance="@style/TextViewTheme"
@@ -131,6 +141,8 @@
                         android:id="@+id/home_team_name_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:ems="10"
                         android:spinnerMode="dialog"
@@ -141,6 +153,8 @@
                         android:id="@+id/guest_team_tab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
                         android:text="@string/guest_team_hint"
                         android:textAppearance="@style/TextViewTheme"
@@ -150,6 +164,8 @@
                         android:id="@+id/guest_team_name_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:ems="10"
                         android:spinnerMode="dialog"
@@ -160,6 +176,8 @@
                         android:id="@+id/rules_tab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
                         android:text="@string/rules_name_hint"
                         android:textAppearance="@style/TextViewTheme"
@@ -169,6 +187,8 @@
                         android:id="@+id/rules_name_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:ems="10"
                         android:spinnerMode="dialog"
@@ -179,6 +199,8 @@
                         android:id="@+id/referee_spinner_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
                         android:text="@string/referee"
                         android:textAppearance="@style/TextViewTheme"
@@ -188,6 +210,8 @@
                         android:id="@+id/referee_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:prompt="@string/referee"
                         android:spinnerMode="dialog"

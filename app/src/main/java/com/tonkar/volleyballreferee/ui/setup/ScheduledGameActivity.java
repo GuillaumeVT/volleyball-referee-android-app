@@ -137,7 +137,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update league");
                 mGameSummary.setLeagueName(s.toString().trim());
-                findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+                findViewById(R.id.division_name_input_layout).setVisibility(mGameSummary.getLeagueName().length() < 2 ? View.GONE : View.VISIBLE);
                 computeScheduleLayoutVisibility();
             }
 

@@ -206,7 +206,7 @@ public class StoredRulesManager implements StoredRulesService {
     @Override
     public void syncRules(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format("%s/rules", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/rules", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -310,7 +310,7 @@ public class StoredRulesManager implements StoredRulesService {
             }
         } else {
             ApiRulesSummary remoteRule = remoteRules.poll();
-            Request request = ApiUtils.buildGet(String.format("%s/rules/%s", ApiUtils.BASE_URL, remoteRule.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/rules/%s", ApiUtils.BASE_URL, remoteRule.getId()), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -344,8 +344,8 @@ public class StoredRulesManager implements StoredRulesService {
             final String rulesStr = writeRules(rules);
 
             Request request = create ?
-                    ApiUtils.buildPost(String.format("%s/rules", ApiUtils.BASE_URL), rulesStr, userToken) :
-                    ApiUtils.buildPut(String.format("%s/rules", ApiUtils.BASE_URL), rulesStr, userToken);
+                    ApiUtils.buildPost(String.format(Locale.US, "%s/rules", ApiUtils.BASE_URL), rulesStr, userToken) :
+                    ApiUtils.buildPut(String.format(Locale.US, "%s/rules", ApiUtils.BASE_URL), rulesStr, userToken);
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -367,7 +367,7 @@ public class StoredRulesManager implements StoredRulesService {
 
     private void deleteRulesOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format("%s/rules/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/rules/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override

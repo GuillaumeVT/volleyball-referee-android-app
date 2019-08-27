@@ -194,17 +194,17 @@
                             android:id="@+id/start_indoor_6x6_game_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/big_margin_size"
                             android:layout_gravity="center|start"
+                            android:layout_margin="@dimen/big_margin_size"
+                            android:drawablePadding="@dimen/default_margin_size"
+                            android:fontFamily="sans-serif-medium"
                             android:text="@string/new_volleyball_game"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/big_text_size"
+                            android:transitionName="gameKindToToolbar"
                             app:drawableStartCompat="@drawable/ic_6x6"
-                            android:drawablePadding="@dimen/default_margin_size"
                             app:drawableTint="@android:color/white"
-                            app:textAllCaps="true"
-                            android:fontFamily="sans-serif-medium"
-                            android:transitionName="gameKindToToolbar"/>
+                            app:textAllCaps="true" />
 
                 </FrameLayout>
 

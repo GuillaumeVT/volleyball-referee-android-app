@@ -132,7 +132,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, "Update league");
                     mGame.getLeague().setName(s.toString().trim());
-                    view.findViewById(R.id.division_name_input_layout).setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+                    view.findViewById(R.id.division_name_input_layout).setVisibility(mGame.getLeague().getName().length() < 2 ? View.GONE : View.VISIBLE);
                     computeConfirmItemVisibility();
                 }
             }

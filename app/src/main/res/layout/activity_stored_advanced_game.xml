@@ -18,6 +18,7 @@
             android:layout_marginTop="@dimen/default_margin_size"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabMode="scrollable"
+            app:tabBackground="@color/colorSurface"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/DynamicTabText"/>
 

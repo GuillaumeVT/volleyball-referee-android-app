@@ -11,20 +11,24 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
         <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/team_name_input_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin_size"
+                    android:layout_marginEnd="@dimen/default_margin_size"
                     android:ems="10"
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
@@ -48,7 +52,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -56,6 +60,7 @@
                 android:id="@+id/select_gender_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/select_gender"
                 android:textAppearance="@style/TextViewTheme"
@@ -78,7 +83,7 @@
             android:id="@+id/team_member_numbers_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_margin="@dimen/small_margin_size"
             android:text="@string/select_players"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/default_text_size"/>
@@ -88,7 +93,7 @@
             class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_margin="@dimen/small_margin_size"
             android:columnWidth="@dimen/form_button_size"
             android:gravity="center"
             android:horizontalSpacing="@dimen/default_margin_size"
@@ -97,7 +102,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -105,6 +110,7 @@
                 android:id="@+id/team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/select_captain"
                 android:textAppearance="@style/TextViewTheme"
@@ -125,7 +131,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -133,6 +139,7 @@
                 android:id="@+id/team_libero_numbers_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/select_libero"
                 android:textAppearance="@style/TextViewTheme"
@@ -155,8 +162,7 @@
             class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/default_margin_size"
-            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_margin="@dimen/small_margin_size"
             android:columnWidth="@dimen/form_button_size"
             android:gravity="center"
             android:horizontalSpacing="@dimen/default_margin_size"
@@ -165,7 +171,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
@@ -173,6 +179,7 @@
                 android:id="@+id/team_player_names_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/input_player_names"
                 android:textAppearance="@style/TextViewTheme"
