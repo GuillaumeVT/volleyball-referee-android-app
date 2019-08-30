@@ -45,7 +45,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="addIndoorTeam"
-                    android:tint="@color/colorOnPrimary"
+                    android:tint="@color/colorOnDarkSurface"
                     app:backgroundTint="@color/colorIndoor"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
@@ -62,7 +62,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="addBeachTeam"
-                    android:tint="@color/colorOnSurface"
+                    android:tint="@color/colorOnLightSurface"
                     app:backgroundTint="@color/colorBeach"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
@@ -79,7 +79,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="addIndoor4x4Team"
-                    android:tint="@color/colorOnPrimary"
+                    android:tint="@color/colorOnDarkSurface"
                     app:backgroundTint="@color/colorIndoor4x4"
                     app:fabCustomSize="@dimen/form_button_size"
                     app:maxImageSize="@dimen/form_fab_icon_size"
@@ -88,16 +88,13 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add_team_button"
-                    style="@style/VbrCreateFab"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/fab_shift_default"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"/>
+                    app:srcCompat="@drawable/ic_plus"/>
 
         </RelativeLayout>
 

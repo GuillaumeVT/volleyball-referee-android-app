@@ -51,9 +51,9 @@
                         android:layout_marginStart="@dimen/default_margin_size"
                         android:text="@string/accept"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:textColor="@color/colorPrimary"
-                        app:iconTint="@color/colorPrimary"
-                        app:strokeColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
+                        app:iconTint="@color/colorAccent"
+                        app:strokeColor="@color/colorAccent"
                         app:icon="@drawable/ic_plus"
                         android:textSize="@dimen/small_text_size"
                         android:textAllCaps="false"/>

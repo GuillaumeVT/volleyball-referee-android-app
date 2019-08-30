@@ -175,7 +175,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     private void colorIcon(Context context, TextView textView) {
         for (Drawable drawable : textView.getCompoundDrawables()) {
             if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorAccent), PorterDuff.Mode.SRC_IN));
             }
         }
     }

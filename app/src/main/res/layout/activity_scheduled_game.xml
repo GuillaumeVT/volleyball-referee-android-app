@@ -39,16 +39,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/default_margin_size"
-                            android:textColor="@color/colorPrimary"
-                            app:backgroundTint="@color/colorOnPrimary"/>
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:textColor="@color/colorAccent"
+                            app:strokeColor="@color/colorAccent"
+                            android:textAllCaps="false"/>
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/time_input_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/default_margin_size"
-                            android:textColor="@color/colorPrimary"
-                            app:backgroundTint="@color/colorOnPrimary"/>
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:textColor="@color/colorAccent"
+                            app:strokeColor="@color/colorAccent"
+                            android:textAllCaps="false"/>
 
                 </LinearLayout>
 
@@ -68,7 +72,7 @@
                             android:hint="@string/league_name"
                             android:imeOptions="actionNext"
                             android:inputType="textCapWords"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
                             android:textSize="@dimen/default_text_size"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -91,7 +95,7 @@
                             android:hint="@string/division_name"
                             android:imeOptions="actionDone"
                             android:inputType="textCapWords"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
                             android:textSize="@dimen/default_text_size"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -115,7 +119,7 @@
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/switch_gender_button"
-                            style="@style/VbrFab"
+                            style="@style/VbrRoundButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
@@ -146,7 +150,7 @@
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:ems="10"
                         android:spinnerMode="dialog"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorDisabledText"
                         android:textSize="@dimen/default_text_size"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -169,7 +173,7 @@
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:ems="10"
                         android:spinnerMode="dialog"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorDisabledText"
                         android:textSize="@dimen/default_text_size"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -192,7 +196,7 @@
                         android:layout_marginBottom="@dimen/default_margin_size"
                         android:ems="10"
                         android:spinnerMode="dialog"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorDisabledText"
                         android:textSize="@dimen/default_text_size"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -230,13 +234,10 @@
                       android:layout_alignParentEnd="true">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    style="@style/VbrScheduleFab"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_schedule"
                     android:onClick="scheduleGame"
                     android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"

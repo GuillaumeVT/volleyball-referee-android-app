@@ -39,15 +39,13 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/edit_rules_button"
-                    style="@style/VbrEditFab"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size" android:onClick="editRules"
+                    app:srcCompat="@drawable/ic_edit"
+                    android:onClick="editRules"
                     android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"
                     android:layout_marginEnd="@dimen/fab_shift_default"

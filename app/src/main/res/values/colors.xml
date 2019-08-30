@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#1f4294</color>
     <color name="colorPrimaryVariant">#cedaf5</color>
     <color name="colorOnPrimary">@android:color/white</color>
     <color name="colorSecondary">#fac511</color>
     <color name="colorSecondaryVariant">#fde596</color>
     <color name="colorOnSecondary">#1f1f1f</color>
+    <color name="colorAccent">@color/colorPrimary</color>
 
     <color name="colorBackground">#ecebec</color>
     <color name="colorOnBackground">#1f1f1f</color>
     <color name="colorSurface">#f3f3f3</color>
     <color name="colorOnSurface">@color/colorOnBackground</color>
+    <color name="colorOnDarkSurface">@android:color/white</color>
+    <color name="colorOnLightSurface">#1f1f1f</color>
     <color name="colorError">#bc0019</color>
     <color name="colorErrorVariant">#ffbcc5</color>
     <color name="colorOnError">@android:color/white</color>
 
+    <color name="colorSelectedItem">@color/colorPrimaryVariant</color>
     <color name="colorDisabledButton">#d6d7d7</color>
-    <color name="colorDisabledText">#8a000000</color>
-    <color name="colorTextTeamDarkBackground">@android:color/white</color>
-    <color name="colorTextTeamLightBackground">@color/colorOnSurface</color>
+    <color name="colorDisabledText">#757368</color>
+    <color name="colorSeparator">#d6d7d7</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/colorSeparator</color>
 
     <color name="colorLive">#ffcc0000</color>
     <color name="colorLiveLight">#faa</color>
@@ -50,5 +54,8 @@
     <color name="colorStart">@android:color/holo_green_dark</color>
     <color name="colorStop">@android:color/holo_red_dark</color>
     <color name="colorReportDuplicate">#d6d7d7</color>
+
+    <color name="colorScoreSheetBackground">#ecebec</color>
+    <color name="colorOnScoreSheetBackground">#1f1f1f</color>
 
 </resources>

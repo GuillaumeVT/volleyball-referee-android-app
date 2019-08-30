@@ -82,7 +82,7 @@
                         android:ems="10"
                         android:hint="@string/user_email_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="textEmailAddress"/>
 
@@ -104,7 +104,7 @@
                         android:ems="10"
                         android:hint="@string/user_pseudo_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="text"/>
 
@@ -126,7 +126,7 @@
                         android:ems="10"
                         android:hint="@string/user_password_hint"
                         android:imeOptions="actionDone"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="textPassword"/>
 
@@ -139,9 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/user_sign_in"
-                    app:icon="@drawable/ic_account"
-                    app:iconTint="@color/colorOnPrimary"
-                    android:textAllCaps="false"/>
+                    app:icon="@drawable/ic_account"/>
 
         </LinearLayout>
 
@@ -161,8 +159,8 @@
                 android:layout_gravity="center"
                 android:text="@string/user_lost_password"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/colorPrimary"
-                app:strokeColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
                 android:textAllCaps="false"/>
 
     </com.google.android.material.card.MaterialCardView>

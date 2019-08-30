@@ -23,7 +23,7 @@
             android:id="@+id/reschedule_match_separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledButton"/>
+            android:background="@color/colorSeparator"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_start_match"
@@ -52,7 +52,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledButton"/>
+            android:background="@color/colorSeparator"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_delete_match"

@@ -22,7 +22,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledButton"/>
+            android:background="@color/colorSeparator"/>
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/action_index_game"
@@ -61,7 +61,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledButton"/>
+            android:background="@color/colorSeparator"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_reset_set"
@@ -78,7 +78,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDisabledButton"/>
+            android:background="@color/colorSeparator"/>
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/keep_screen_on"

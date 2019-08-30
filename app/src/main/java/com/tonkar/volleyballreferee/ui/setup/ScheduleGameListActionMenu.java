@@ -69,6 +69,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
         if (mActivity != null && mGameDescription != null) {
             TextView rescheduleGameText = view.findViewById(R.id.action_reschedule_match);
+            View rescheduleGameSeparator = view.findViewById(R.id.reschedule_match_separator);
             TextView startGameText = view.findViewById(R.id.action_start_match);
             TextView editAndStartGameText = view.findViewById(R.id.action_edit_start_match);
             TextView deleteGameText = view.findViewById(R.id.action_delete_match);
@@ -77,11 +78,13 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
             if (!mGameDescription.getCreatedBy().equals(user.getId())) {
                 rescheduleGameText.setVisibility(View.GONE);
+                rescheduleGameSeparator.setVisibility(View.GONE);
                 deleteGameText.setVisibility(View.GONE);
             }
 
             if (GameStatus.LIVE.equals(mGameDescription.getStatus())) {
                 rescheduleGameText.setVisibility(View.GONE);
+                rescheduleGameSeparator.setVisibility(View.GONE);
                 editAndStartGameText.setVisibility(View.GONE);
                 startGameText.setText(R.string.resume_match);
             }
@@ -160,7 +163,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     private void colorIcon(Context context, TextView textView) {
         for (Drawable drawable : textView.getCompoundDrawables()) {
             if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorAccent), PorterDuff.Mode.SRC_IN));
             }
         }
     }

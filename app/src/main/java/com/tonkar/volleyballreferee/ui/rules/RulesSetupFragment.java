@@ -149,7 +149,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         UiUtils.setDrawableStart(mSubstitutionsLimitationDescription, R.drawable.ic_info);
         for (Drawable drawable : mSubstitutionsLimitationDescription.getCompoundDrawables()) {
             if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_IN));
             }
         }
 

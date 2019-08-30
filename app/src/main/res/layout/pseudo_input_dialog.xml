@@ -21,7 +21,7 @@
                 android:ems="10"
                 android:hint="@string/user_pseudo_hint"
                 android:inputType="textCapWords"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>

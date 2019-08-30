@@ -16,10 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin_size"
-            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabMode="scrollable"
             app:tabBackground="@color/colorSurface"
-            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorAccent"
             app:tabTextAppearance="@style/DynamicTabText"/>
 
     <androidx.viewpager.widget.ViewPager

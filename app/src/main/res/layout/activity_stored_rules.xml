@@ -36,13 +36,10 @@
                       android:layout_alignParentEnd="true">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    style="@style/VbrSaveFab"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_save"
                     android:onClick="saveRules"
                     android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"

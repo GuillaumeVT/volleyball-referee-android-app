@@ -155,7 +155,7 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
         }
         viewHolder.leagueText.setVisibility(game.getLeagueName() == null || game.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
 
-        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(game.getId()) ? R.color.colorPrimaryVariant : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(game.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
     }
 
     @Override

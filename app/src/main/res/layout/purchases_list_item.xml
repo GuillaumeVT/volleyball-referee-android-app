@@ -22,7 +22,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/default_margin_size"
                     android:textAppearance="@style/TextViewTheme"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/big_text_size"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -40,9 +40,9 @@
                     android:layout_gravity="end"
                     android:text="@string/purchase"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:textColor="@color/colorPrimary"
-                    app:iconTint="@color/colorPrimary"
-                    app:strokeColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
+                    app:iconTint="@color/colorAccent"
+                    app:strokeColor="@color/colorAccent"
                     app:icon="@drawable/ic_purchase"
                     android:textSize="@dimen/small_text_size"
                     android:textAllCaps="false"/>

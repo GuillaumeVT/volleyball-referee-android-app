@@ -58,7 +58,7 @@
                         android:ems="10"
                         android:hint="@string/user_email_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="textEmailAddress"/>
 
@@ -80,7 +80,7 @@
                         android:ems="10"
                         android:hint="@string/user_confirm_email_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="textEmailAddress"/>
 
@@ -102,7 +102,7 @@
                         android:ems="10"
                         android:hint="@string/user_pseudo_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="text"/>
 
@@ -132,7 +132,7 @@
                         android:ems="10"
                         android:hint="@string/user_password_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="textPassword"/>
 
@@ -154,7 +154,7 @@
                         android:ems="10"
                         android:hint="@string/user_confirm_password_hint"
                         android:imeOptions="actionDone"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/default_text_size"
                         android:inputType="textPassword"/>
 
@@ -168,9 +168,7 @@
                     android:layout_margin="@dimen/small_margin_size"
                     android:layout_gravity="center"
                     android:text="@string/user_sign_up"
-                    app:icon="@drawable/ic_account"
-                    app:iconTint="@color/colorOnPrimary"
-                    android:textAllCaps="false"/>
+                    app:icon="@drawable/ic_account"/>
 
         </LinearLayout>
 

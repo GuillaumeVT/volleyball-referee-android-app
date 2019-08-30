@@ -114,7 +114,7 @@ public class LadderEventsDialog {
 
             switch (ladderEvent.getEventType()) {
                 case TIMEOUT:
-                    view = createTimeoutEvent(ladderEvent);
+                    view = createTimeoutEvent();
                     break;
                 case SUBSTITUTION:
                     view = createSubstitutionEvent(ladderEvent);
@@ -129,7 +129,7 @@ public class LadderEventsDialog {
             return view;
         }
 
-        private View createTimeoutEvent(LadderEvent ladderEvent) {
+        private View createTimeoutEvent() {
             ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.ladder_event_item, null);
             imageView.setImageResource(R.drawable.ic_timeout);
             imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));

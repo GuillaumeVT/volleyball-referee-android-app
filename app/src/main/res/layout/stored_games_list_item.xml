@@ -75,14 +75,14 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/default_margin_size"
                     android:layout_marginBottom="@dimen/default_margin_size"
-                    android:background="@color/colorDisabledButton" />
+                    android:background="@color/colorSeparator" />
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/stored_game_summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextViewTheme"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/big_text_size"/>
 
             <androidx.appcompat.widget.AppCompatTextView

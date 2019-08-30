@@ -33,14 +33,14 @@
                     android:hint="@string/home_team_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/default_text_size"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/team_color_button"
-                style="@style/VbrFab"
+                style="@style/VbrRoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
@@ -69,7 +69,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/select_gender_button"
-                style="@style/VbrFab"
+                style="@style/VbrRoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
@@ -128,7 +128,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/team_player_names_button"
-                style="@style/VbrFab"
+                style="@style/VbrRoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"

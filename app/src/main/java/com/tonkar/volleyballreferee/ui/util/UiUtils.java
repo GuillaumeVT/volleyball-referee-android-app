@@ -141,9 +141,9 @@ public class UiUtils {
         double a = 1 - ( 0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(backgroundColor)) / 255;
 
         if (a < 0.5) {
-            textColor = ContextCompat.getColor(context, R.color.colorTextTeamLightBackground);
+            textColor = ContextCompat.getColor(context, R.color.colorOnLightSurface);
         } else {
-            textColor = ContextCompat.getColor(context, R.color.colorTextTeamDarkBackground);
+            textColor = ContextCompat.getColor(context, R.color.colorOnDarkSurface);
         }
 
         return textColor;
@@ -181,7 +181,7 @@ public class UiUtils {
     public static void colorChipIcon(Context context, @ColorRes int color, @DrawableRes int drawable, Chip chip) {
         chip.setChipIconResource(drawable);
         chip.setChipBackgroundColorResource(color);
-        chip.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+        chip.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnLightSurface), PorterDuff.Mode.SRC_IN));
     }
 
     public static void fixFabCompatPadding(FloatingActionButton button) {

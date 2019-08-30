@@ -56,7 +56,7 @@ public class RulesFragment extends Fragment implements RulesHandler {
         UiUtils.setDrawableStart(substitutionsLimitationDescription, R.drawable.ic_info);
         for (Drawable drawable : substitutionsLimitationDescription.getCompoundDrawables()) {
             if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_IN));
             }
         }
         TextView teamSubstitutionsPerSet = view.findViewById(R.id.rules_team_substitutions_per_set);

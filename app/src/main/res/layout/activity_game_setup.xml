@@ -24,7 +24,7 @@
                     android:id="@+id/game_setup_nav"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorOnPrimary"
+                    android:background="@color/colorSurface"
                     app:elevation="@dimen/elevation"
                     app:itemBackground="@drawable/navigation_menu_item"
                     app:itemHorizontalTranslationEnabled="true"
@@ -56,13 +56,10 @@
                       android:layout_alignParentEnd="true">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    style="@style/VbrStartFab"
+                    style="@style/VbrFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_play"
                     android:onClick="startGame"
                     android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"

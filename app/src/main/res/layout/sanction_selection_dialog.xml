@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/big_margin_size"
-            android:background="@color/colorOnPrimary"
+            android:background="@color/colorSurface"
             app:elevation="@dimen/elevation"
             app:itemBackground="@drawable/navigation_menu_item"
             app:itemHorizontalTranslationEnabled="true"

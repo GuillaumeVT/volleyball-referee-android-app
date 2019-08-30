@@ -20,7 +20,7 @@
                 android:text="@string/general_rules"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextViewTheme"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/default_text_size"
                 android:textStyle="bold"/>
 
@@ -129,7 +129,7 @@
                 android:text="@string/timeout_rules"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextViewTheme"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/default_text_size"
                 android:textStyle="bold"/>
 
@@ -267,7 +267,7 @@
                     android:text="@string/indoor_rules"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextViewTheme"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/default_text_size"
                     android:textStyle="bold"/>
 
@@ -302,7 +302,7 @@
                     android:layout_marginStart="@dimen/big_margin_size"
                     android:layout_marginTop="@dimen/small_margin_size"
                     android:drawablePadding="@dimen/default_margin_size"
-                    android:drawableTint="@color/colorPrimary"
+                    android:drawableTint="@color/colorAccent"
                     android:textAppearance="@style/TextViewTheme"
                     android:textSize="@dimen/small_text_size"/>
 
@@ -368,7 +368,7 @@
                     android:text="@string/beach_rules"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextViewTheme"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textSize="@dimen/default_text_size"
                     android:textStyle="bold"/>
 

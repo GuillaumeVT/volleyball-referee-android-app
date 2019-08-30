@@ -15,7 +15,7 @@
             android:layout_marginBottom="@dimen/big_margin_size"
             android:textAppearance="@style/TextViewTheme"
             android:textSize="@dimen/big_text_size"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <ListView
