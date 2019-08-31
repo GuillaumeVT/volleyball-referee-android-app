@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui;
 
 import android.os.Bundle;
+
 import com.tonkar.volleyballreferee.R;
 
 public class CreditsActivity extends NavigationActivity {

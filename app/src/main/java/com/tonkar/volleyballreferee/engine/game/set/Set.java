@@ -6,10 +6,11 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.TeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
-import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
 public abstract class Set {

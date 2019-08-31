@@ -2,24 +2,40 @@ package com.tonkar.volleyballreferee.engine.stored;
 
 import android.content.Context;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.stored.api.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiLeague;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiLeagueSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
 import com.tonkar.volleyballreferee.engine.stored.database.AppDatabase;
 import com.tonkar.volleyballreferee.engine.stored.database.LeagueEntity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Queue;
+import java.util.TimeZone;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.util.*;
 
 public class StoredLeaguesManager implements StoredLeaguesService {
 

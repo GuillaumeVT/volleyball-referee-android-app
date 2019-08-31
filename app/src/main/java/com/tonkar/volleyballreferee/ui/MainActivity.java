@@ -5,20 +5,32 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+
 import com.google.gson.JsonParseException;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.BeachGame;
+import com.tonkar.volleyballreferee.engine.game.GameFactory;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
+import com.tonkar.volleyballreferee.engine.game.IndoorGame;
+import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
@@ -37,15 +49,16 @@ import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.UUID;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends NavigationActivity {
 

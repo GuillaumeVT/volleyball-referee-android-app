@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.team.composition;
 
 import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;

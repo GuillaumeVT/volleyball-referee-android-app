@@ -1,16 +1,21 @@
 package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.BeachTeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class BeachTeamCompositionTest {

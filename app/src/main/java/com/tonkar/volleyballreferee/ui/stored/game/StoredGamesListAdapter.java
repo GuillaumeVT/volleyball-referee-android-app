@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
@@ -17,7 +19,12 @@ import com.tonkar.volleyballreferee.ui.stored.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummary> {
 

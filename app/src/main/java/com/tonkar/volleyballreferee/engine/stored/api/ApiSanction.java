@@ -2,7 +2,12 @@ package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @EqualsAndHashCode
 public class ApiSanction {

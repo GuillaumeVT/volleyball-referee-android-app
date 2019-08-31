@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;

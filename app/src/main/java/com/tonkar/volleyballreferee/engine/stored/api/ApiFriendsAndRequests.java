@@ -1,11 +1,12 @@
 package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter @Setter
 public class ApiFriendsAndRequests {

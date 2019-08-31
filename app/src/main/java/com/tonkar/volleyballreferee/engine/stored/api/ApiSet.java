@@ -2,12 +2,13 @@ package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter @Setter @EqualsAndHashCode
 public class ApiSet {

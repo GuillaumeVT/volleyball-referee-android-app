@@ -2,12 +2,14 @@ package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
+
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRules;
 import com.tonkar.volleyballreferee.ui.MainActivity;
+
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;

@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
 

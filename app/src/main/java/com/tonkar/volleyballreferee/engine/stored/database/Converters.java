@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.stored.database;
 
 import androidx.room.TypeConverter;
+
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.UsageType;

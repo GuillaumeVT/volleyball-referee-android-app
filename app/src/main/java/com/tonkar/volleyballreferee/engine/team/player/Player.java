@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.team.player;
 
 import com.google.gson.annotations.SerializedName;
+
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode

@@ -11,9 +11,11 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;

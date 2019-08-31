@@ -3,8 +3,10 @@ package com.tonkar.volleyballreferee.engine.stored.api;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.GameType;
+
 import lombok.Getter;
 import lombok.Setter;
 

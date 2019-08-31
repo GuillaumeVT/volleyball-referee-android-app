@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
@@ -14,7 +16,12 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 

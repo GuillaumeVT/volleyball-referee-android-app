@@ -2,8 +2,10 @@ package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
 import android.util.Log;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
+
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.IGame;
@@ -18,6 +20,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

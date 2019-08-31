@@ -5,7 +5,12 @@ import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.TableRow;
+import android.widget.TextView;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
 import com.tonkar.volleyballreferee.engine.game.score.IBaseScore;

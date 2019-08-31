@@ -8,8 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.AsyncFriendRequestListener;
 import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;

@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

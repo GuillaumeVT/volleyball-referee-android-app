@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
+
 import lombok.Getter;
 import lombok.Setter;
 

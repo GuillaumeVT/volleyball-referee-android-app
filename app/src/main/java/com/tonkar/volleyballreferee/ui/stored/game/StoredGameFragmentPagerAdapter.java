@@ -1,10 +1,12 @@
 package com.tonkar.volleyballreferee.ui.stored.game;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.ui.stored.rules.RulesFragment;

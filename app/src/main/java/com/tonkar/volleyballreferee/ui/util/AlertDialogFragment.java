@@ -2,9 +2,11 @@ package com.tonkar.volleyballreferee.ui.util;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
 import com.tonkar.volleyballreferee.R;
 
 public class AlertDialogFragment extends DialogFragment {

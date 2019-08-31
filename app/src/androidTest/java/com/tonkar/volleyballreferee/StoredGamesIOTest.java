@@ -1,17 +1,26 @@
 package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.StoredGame;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.api.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSet;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

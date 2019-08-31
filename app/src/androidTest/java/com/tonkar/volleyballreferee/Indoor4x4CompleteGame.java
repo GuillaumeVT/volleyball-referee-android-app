@@ -1,9 +1,11 @@
 package com.tonkar.volleyballreferee;
 
 import android.graphics.Color;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
@@ -11,7 +13,14 @@ import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.*;
+import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiLeague;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
@@ -19,6 +28,7 @@ import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,16 +1,18 @@
 package com.tonkar.volleyballreferee.engine.stored.api;
 
 import android.graphics.Color;
+
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter @Setter @EqualsAndHashCode
 public class ApiTeam {

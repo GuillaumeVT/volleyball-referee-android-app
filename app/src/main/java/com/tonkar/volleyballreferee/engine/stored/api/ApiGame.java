@@ -5,13 +5,14 @@ import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter @Setter @EqualsAndHashCode
 public class ApiGame {

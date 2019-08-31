@@ -10,21 +10,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class LadderEventsDialog {
 

@@ -2,11 +2,12 @@ package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.GameType;
+
+import java.util.UUID;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Getter @Setter @EqualsAndHashCode
 public class ApiRules {

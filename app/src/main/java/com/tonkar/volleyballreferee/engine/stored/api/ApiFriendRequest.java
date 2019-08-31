@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

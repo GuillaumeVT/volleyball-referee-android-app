@@ -12,25 +12,55 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.stored.*;
-import com.tonkar.volleyballreferee.engine.stored.api.*;
+import com.tonkar.volleyballreferee.engine.stored.DataSynchronizationListener;
+import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
+import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiLeagueSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.UUID;
 
 public class ScheduledGameActivity extends AppCompatActivity {
 

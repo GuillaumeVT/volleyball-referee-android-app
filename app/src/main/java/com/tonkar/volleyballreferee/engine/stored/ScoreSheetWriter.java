@@ -7,25 +7,35 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
+
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
+
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.stored.api.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,7 +78,7 @@ public class ScoreSheetWriter {
                     scoreSheetWriter.writeStoredTimeGame();
                     break;
             }
-            file = scoreSheetWriter.write(filename);
+            file = scoreSheetWriter.write(context, filename);
         } else {
             file = null;
         }
@@ -83,10 +93,8 @@ public class ScoreSheetWriter {
         mBody = mDocument.body();
     }
 
-    private File write(String filename) {
-        File filedir = new File(Environment.getExternalStorageDirectory(), "Documents");
-        filedir.mkdirs();
-        File file = new File(filedir, filename);
+    private File write(Context context, String filename) {
+        File file = new File(context.getExternalFilesDir(null), filename);
 
         try {
             FileOutputStream outputStream = new FileOutputStream(file);

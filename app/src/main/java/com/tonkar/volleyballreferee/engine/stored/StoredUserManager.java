@@ -2,23 +2,34 @@ package com.tonkar.volleyballreferee.engine.stored;
 
 import android.content.Context;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import com.google.gson.reflect.TypeToken;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.stored.api.*;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiEmailCredentials;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendRequest;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendsAndRequests;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiNewUser;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserPasswordUpdate;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUserToken;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
 import com.tonkar.volleyballreferee.engine.stored.database.AppDatabase;
 import com.tonkar.volleyballreferee.engine.stored.database.FriendEntity;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class StoredUserManager implements StoredUserService {
 

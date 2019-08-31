@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.team.composition;
 
 import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiCourt;
@@ -12,7 +13,13 @@ import com.tonkar.volleyballreferee.engine.team.player.Indoor4x4Player;
 import com.tonkar.volleyballreferee.engine.team.player.Player;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Indoor4x4TeamComposition extends TeamComposition {
 
