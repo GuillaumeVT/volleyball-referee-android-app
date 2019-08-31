@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.game.ladder;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -284,13 +285,28 @@ public class LadderListAdapter extends BaseAdapter {
 
     private int getIcon(TeamType teamType, LadderItem ladderItem) {
         int id = 0;
+        int currentNightMode = mLayoutInflater.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         if (ladderItem.hasSeveralEvents(teamType)) {
-            id = R.drawable.ic_thumb_list;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    id = R.drawable.ic_thumb_list;
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    id = R.drawable.ic_thumb_list_white;
+                    break;
+            }
         } else if (ladderItem.hasSubstitutionEvents(teamType)) {
             id = R.drawable.ic_thumb_substitution;
         } else if (ladderItem.hasTimeoutEvents(teamType)) {
-            id = R.drawable.ic_thumb_timeout;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    id = R.drawable.ic_thumb_timeout;
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    id = R.drawable.ic_thumb_timeout_white;
+                    break;
+            }
         } else if (ladderItem.hasSanctionEvents(teamType)) {
             id = R.drawable.ic_thumb_card;
         }
