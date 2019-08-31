@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path name="screenshots" path="Screenshots/" />
-    <external-path name="documents" path="Documents/" />
+    <external-files-path name="games" path="Games/" />
 </paths>

@@ -94,7 +94,9 @@ public class ScoreSheetWriter {
     }
 
     private File write(Context context, String filename) {
-        File file = new File(context.getExternalFilesDir(null), filename);
+        File filedir = new File(context.getExternalFilesDir(null), "Games");
+        filedir.mkdirs();
+        File file = new File(filedir, filename);
 
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
