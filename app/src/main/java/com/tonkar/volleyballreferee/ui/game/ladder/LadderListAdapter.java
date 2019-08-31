@@ -41,6 +41,7 @@ public class LadderListAdapter extends BaseAdapter {
     private final IBaseTeam      mBaseTeam;
     private final IBaseTimeout   mBaseTimeout;
     private final IBaseSanction  mBaseSanction;
+    private final int            mCurrentNightMode;
 
     public LadderListAdapter(LayoutInflater layoutInflater, IBaseScore baseScore, IBaseTeam baseTeam, IBaseTimeout baseTimeout, IBaseSanction baseSanction, boolean reverseOrder) {
         mLayoutInflater = layoutInflater;
@@ -49,6 +50,7 @@ public class LadderListAdapter extends BaseAdapter {
         mReverseOrder = reverseOrder;
         mBaseTimeout = baseTimeout;
         mBaseSanction = baseSanction;
+        mCurrentNightMode = mLayoutInflater.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
     }
 
     @Override
@@ -285,10 +287,9 @@ public class LadderListAdapter extends BaseAdapter {
 
     private int getIcon(TeamType teamType, LadderItem ladderItem) {
         int id = 0;
-        int currentNightMode = mLayoutInflater.getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         if (ladderItem.hasSeveralEvents(teamType)) {
-            switch (currentNightMode) {
+            switch (mCurrentNightMode) {
                 case Configuration.UI_MODE_NIGHT_NO:
                     id = R.drawable.ic_thumb_list;
                     break;
@@ -299,7 +300,7 @@ public class LadderListAdapter extends BaseAdapter {
         } else if (ladderItem.hasSubstitutionEvents(teamType)) {
             id = R.drawable.ic_thumb_substitution;
         } else if (ladderItem.hasTimeoutEvents(teamType)) {
-            switch (currentNightMode) {
+            switch (mCurrentNightMode) {
                 case Configuration.UI_MODE_NIGHT_NO:
                     id = R.drawable.ic_thumb_timeout;
                     break;
