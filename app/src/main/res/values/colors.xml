@@ -8,6 +8,7 @@
     <color name="colorOnSecondary">#1f1f1f</color>
     <color name="colorAccent">@color/colorPrimary</color>
 
+    <color name="colorBackgroundMain">#ecebec</color>
     <color name="colorBackground">#ecebec</color>
     <color name="colorOnBackground">#1f1f1f</color>
     <color name="colorSurface">#f3f3f3</color>

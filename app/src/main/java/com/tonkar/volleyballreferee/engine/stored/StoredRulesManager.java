@@ -225,7 +225,7 @@ public class StoredRulesManager implements StoredRulesService {
     @Override
     public void syncRules(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/rules", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/rules", ApiUtils.BASE_URL), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -329,7 +329,7 @@ public class StoredRulesManager implements StoredRulesService {
             }
         } else {
             ApiRulesSummary remoteRule = remoteRules.poll();
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/rules/%s", ApiUtils.BASE_URL, remoteRule.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/rules/%s", ApiUtils.BASE_URL, remoteRule.getId()), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -359,7 +359,7 @@ public class StoredRulesManager implements StoredRulesService {
 
     private void pushRulesToServer(final ApiRules rules, boolean create) {
         if (PrefUtils.canSync(mContext)) {
-            final ApiUserToken userToken = PrefUtils.getAuhentication(mContext);
+            final ApiUserToken userToken = PrefUtils.getUserToken(mContext);
             final String rulesStr = writeRules(rules);
 
             Request request = create ?
@@ -386,7 +386,7 @@ public class StoredRulesManager implements StoredRulesService {
 
     private void deleteRulesOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/rules/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/rules/%s", ApiUtils.BASE_URL, id), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override

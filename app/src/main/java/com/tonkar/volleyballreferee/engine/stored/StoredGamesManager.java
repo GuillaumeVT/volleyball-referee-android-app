@@ -597,7 +597,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     @Override
     public void downloadGame(final String id, final AsyncGameRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, id), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -625,7 +625,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     @Override
     public void downloadAvailableGames(final AsyncGameRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/available", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/available", ApiUtils.BASE_URL), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -655,8 +655,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         if (PrefUtils.canSync(mContext)) {
             final String gameStr = writeGameDescription(gameDescription);
             Request request = create ?
-                    ApiUtils.buildPost(String.format(Locale.US, "%s/games", ApiUtils.BASE_URL), gameStr, PrefUtils.getAuhentication(mContext)) :
-                    ApiUtils.buildPut(String.format(Locale.US, "%s/games", ApiUtils.BASE_URL), gameStr, PrefUtils.getAuhentication(mContext));
+                    ApiUtils.buildPost(String.format(Locale.US, "%s/games", ApiUtils.BASE_URL), gameStr, PrefUtils.getUserToken(mContext)) :
+                    ApiUtils.buildPut(String.format(Locale.US, "%s/games", ApiUtils.BASE_URL), gameStr, PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -687,7 +687,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     @Override
     public void cancelGame(String id, DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, id), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -722,7 +722,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
 
     private void deleteGameOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, id), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, id), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -751,11 +751,11 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
 
     private void pushGameToServer(final IStoredGame storedGame) {
         if (PrefUtils.canSync(mContext) && storedGame != null) {
-            final ApiUserToken authentication = PrefUtils.getAuhentication(mContext);
+            final ApiUserToken userToken = PrefUtils.getUserToken(mContext);
             final ApiGame game = (ApiGame) storedGame;
             final String jsonGame = writeGame(game);
 
-            Request request = ApiUtils.buildPut(String.format(Locale.US, "%s/games/full", ApiUtils.BASE_URL), jsonGame, authentication);
+            Request request = ApiUtils.buildPut(String.format(Locale.US, "%s/games/full", ApiUtils.BASE_URL), jsonGame, userToken);
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -770,7 +770,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                             insertGameIntoDb(game, true, false);
                         }
                     } else if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                        Request request2 = ApiUtils.buildPost(String.format(Locale.US, "%s/games/full", ApiUtils.BASE_URL), jsonGame, authentication);
+                        Request request2 = ApiUtils.buildPost(String.format(Locale.US, "%s/games/full", ApiUtils.BASE_URL), jsonGame, userToken);
 
                         ApiUtils.getInstance().getHttpClient(mContext).newCall(request2).enqueue(new Callback() {
                             @Override
@@ -807,7 +807,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             final ApiSet set = mStoredGame.getSets().get(setIndex);
             final String jsonSet = writeSet(set);
 
-            Request request = ApiUtils.buildPatch(String.format(Locale.US, "%s/games/%s/set/%d", ApiUtils.BASE_URL, mStoredGame.getId(), 1 + setIndex), jsonSet, PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPatch(String.format(Locale.US, "%s/games/%s/set/%d", ApiUtils.BASE_URL, mStoredGame.getId(), 1 + setIndex), jsonSet, PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -828,7 +828,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
 
     private void setIndexedOnServer(IStoredGame storedGame, DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext) && storedGame != null) {
-            Request request = ApiUtils.buildPatch(String.format(Locale.US, "%s/games/%s/indexed/%b", ApiUtils.BASE_URL, storedGame.getId(), storedGame.isIndexed()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPatch(String.format(Locale.US, "%s/games/%s/indexed/%b", ApiUtils.BASE_URL, storedGame.getId(), storedGame.isIndexed()), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -863,7 +863,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     @Override
     public void syncGames(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/completed", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/completed", ApiUtils.BASE_URL), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -977,7 +977,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         } else {
             ApiGameSummary remoteGame = remoteGames.poll();
 
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, remoteGame.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/%s", ApiUtils.BASE_URL, remoteGame.getId()), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override

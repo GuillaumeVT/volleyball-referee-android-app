@@ -10,5 +10,6 @@ public class ApiUserToken {
 
     private ApiUserSummary user;
     private String         token;
+    private long           tokenExpiry;
 
 }

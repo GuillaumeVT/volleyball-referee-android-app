@@ -40,6 +40,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="goToSignIn"
                             android:visibility="gone">
 
@@ -72,6 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:visibility="gone"
                             android:onClick="goToColleagues">
 
@@ -110,6 +112,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:visibility="gone"
                             android:onClick="goToAvailableGames">
 
@@ -148,6 +151,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:visibility="gone"
                             android:onClick="resumeCurrentGame">
 
@@ -185,6 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="startIndoorGame">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -221,6 +226,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="startSnowGame">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -257,6 +263,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="startIndoor4x4Game">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -302,6 +309,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="startBeachGame">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -338,6 +346,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="startScoreBasedGame">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -374,6 +383,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/main_card_height"
                             android:layout_margin="@dimen/tiny_margin_size"
+                            android:background="@color/colorBackgroundMain"
                             android:onClick="startTimeBasedGame">
 
 

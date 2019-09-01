@@ -302,7 +302,7 @@ public class MainActivity extends NavigationActivity {
 
     private void fetchFriendRequests() {
         if (PrefUtils.canSync(this)) {
-            Request request = ApiUtils.buildGet(String.format("%s/users/friends/received/count", ApiUtils.BASE_URL), PrefUtils.getAuhentication(this));
+            Request request = ApiUtils.buildGet(String.format("%s/users/friends/received/count", ApiUtils.BASE_URL), PrefUtils.getUserToken(this));
 
             ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
                 @Override
@@ -338,7 +338,7 @@ public class MainActivity extends NavigationActivity {
 
     private void fetchAvailableGames() {
         if (PrefUtils.canSync(this)) {
-            Request request = ApiUtils.buildGet(String.format("%s/games/available/count", ApiUtils.BASE_URL), PrefUtils.getAuhentication(this));
+            Request request = ApiUtils.buildGet(String.format("%s/games/available/count", ApiUtils.BASE_URL), PrefUtils.getUserToken(this));
 
             ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
                 @Override

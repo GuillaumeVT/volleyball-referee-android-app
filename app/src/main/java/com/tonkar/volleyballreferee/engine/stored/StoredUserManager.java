@@ -168,7 +168,7 @@ public class StoredUserManager implements StoredUserService {
     public void updateUserPassword(ApiUserPasswordUpdate passwordUpdate, AsyncUserRequestListener listener) {
         if (PrefUtils.shouldSignIn(mContext)) {
             String passwordUpdateStr = JsonIOUtils.GSON.toJson(passwordUpdate);
-            Request request = ApiUtils.buildPatch(String.format(Locale.US, "%s/users/password", ApiUtils.BASE_URL), passwordUpdateStr, PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPatch(String.format(Locale.US, "%s/users/password", ApiUtils.BASE_URL), passwordUpdateStr, PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -202,7 +202,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void downloadFriendsAndRequests(AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/users/friends", ApiUtils.BASE_URL), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/users/friends", ApiUtils.BASE_URL), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -256,7 +256,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void sendFriendRequest(String friendPseudo, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/friends/request/%s", ApiUtils.BASE_URL, friendPseudo), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/friends/request/%s", ApiUtils.BASE_URL, friendPseudo), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -283,7 +283,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void acceptFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/friends/accept/%s", ApiUtils.BASE_URL, friendRequest.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/friends/accept/%s", ApiUtils.BASE_URL, friendRequest.getId()), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -311,7 +311,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void rejectFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/friends/reject/%s", ApiUtils.BASE_URL, friendRequest.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/friends/reject/%s", ApiUtils.BASE_URL, friendRequest.getId()), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
@@ -338,7 +338,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void removeFriend(ApiFriend friend, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/users/friends/remove/%s", ApiUtils.BASE_URL, friend.getId()), PrefUtils.getAuhentication(mContext));
+            Request request = ApiUtils.buildDelete(String.format(Locale.US, "%s/users/friends/remove/%s", ApiUtils.BASE_URL, friend.getId()), PrefUtils.getUserToken(mContext));
 
             ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
                 @Override
