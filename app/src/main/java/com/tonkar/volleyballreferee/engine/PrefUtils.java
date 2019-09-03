@@ -88,6 +88,11 @@ public class PrefUtils {
         sharedPreferences.edit().putString(PREF_WEB_PREMUIM_TOKEN, purchaseToken).apply();
     }
 
+    public static void unpurchaseWebPremium(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().remove(PREF_WEB_PREMUIM_TOKEN).apply();
+    }
+
     public static boolean isWebPremiumPurchased(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return !"".equals(sharedPreferences.getString(PREF_WEB_PREMUIM_TOKEN, ""));

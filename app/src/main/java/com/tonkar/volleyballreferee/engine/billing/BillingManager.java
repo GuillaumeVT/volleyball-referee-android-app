@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -52,9 +53,16 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
-        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
-            for (Purchase purchase : purchases) {
-                handlePurchase(purchase);
+        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+            if (purchases != null && purchases.size() > 0) {
+                for (Purchase purchase : purchases) {
+                    handlePurchase(purchase);
+                }
+            } else if (PrefUtils.isWebPremiumPurchased(mActivity)) {
+                mPurchasedSkus.put(WEB_PREMIUM, false);
+                PrefUtils.unpurchaseWebPremium(mActivity);
+                PrefUtils.signOut(mActivity);
+                mActivity.recreate();
             }
         } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
             Log.w(Tags.BILLING, "Purchase canceled by user");
@@ -123,11 +131,21 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     }
 
     private void handlePurchase(Purchase purchase) {
-        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED && purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
-            mPurchasedSkus.put(WEB_PREMIUM, true);
-            if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
-                PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
-                mActivity.recreate();
+        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+            if (purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
+                mPurchasedSkus.put(WEB_PREMIUM, true);
+                if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
+                    PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
+                    mActivity.recreate();
+                }
+            }
+
+            if (!purchase.isAcknowledged()) {
+                AcknowledgePurchaseParams acknowledgePurchaseParams = AcknowledgePurchaseParams
+                        .newBuilder()
+                        .setPurchaseToken(purchase.getPurchaseToken())
+                        .build();
+                mBillingClient.acknowledgePurchase(acknowledgePurchaseParams, billingResult -> {});
             }
         }
     }
