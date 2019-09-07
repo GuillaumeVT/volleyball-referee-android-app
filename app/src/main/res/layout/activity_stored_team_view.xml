@@ -40,14 +40,15 @@
 
             </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/edit_team_button"
-                    style="@style/VbrFab"
+                    style="@style/VbrExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    app:srcCompat="@drawable/ic_edit"
+                    android:text="@string/edit"
+                    app:icon="@drawable/ic_edit"
                     android:onClick="editTeam"
                     android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"

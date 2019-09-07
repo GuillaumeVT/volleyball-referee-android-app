@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.engine;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
 import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
@@ -23,6 +24,7 @@ public class PrefUtils {
     private static final String PREF_WEB_PREMUIM_TOKEN         = "pref_web_premium_token";
     private static final String PREF_USER_ID                   = "pref_user_identifier";
     private static final String PREF_USER_PSEUDO               = "pref_user_pseudo";
+    public static final  String PREF_NIGHT_MODE                = "pref_night_mode";
 
     public static void signIn(Context context, ApiUserToken userToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -124,5 +126,35 @@ public class PrefUtils {
 
     public static boolean shouldSignIn(Context context) {
         return isWebPremiumPurchased(context) && ApiUtils.isConnectedToInternet(context) && !isSignedIn(context);
+    }
+
+    public static void applyNightMode(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String nightMode = sharedPreferences.getString(PrefUtils.PREF_NIGHT_MODE, "system");
+
+        switch (nightMode) {
+            case "system":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static String getNightMode(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(PrefUtils.PREF_NIGHT_MODE, "system");
+    }
+
+    public static void setNightMode(Context context, String nightMode) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().putString(PREF_NIGHT_MODE, nightMode).apply();
+        applyNightMode(context);
     }
 }

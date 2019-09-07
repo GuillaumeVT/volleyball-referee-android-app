@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.textfield.TextInputLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/AppTheme.TextInputLayout"
         android:id="@+id/player_name_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/small_margin_size">
+        android:layout_margin="@dimen/small_margin_size"
+        app:endIconMode="clear_text">
 
     <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/player_name_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin_size"
-            android:layout_marginEnd="@dimen/default_margin_size"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
             android:ems="10"
             android:imeOptions="actionNext"
             android:inputType="textCapWords"

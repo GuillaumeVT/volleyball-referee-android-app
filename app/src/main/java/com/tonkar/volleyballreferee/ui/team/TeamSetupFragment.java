@@ -135,6 +135,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
 
+        teamNameInput.setText(teamName);
         teamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -152,9 +153,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        teamNameInput.setText(teamName);
-        teamNameInput.setEnabled(create);
 
         mPlayerAdapter = new PlayerAdapter(getLayoutInflater(), getActivity(), mTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);
@@ -196,7 +194,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         }
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
-        mGenderButton.setEnabled(create);
         updateGender(mTeamService.getGender(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
@@ -305,7 +302,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 button.setChecked(false);
             }
 
-            button.setOnCheckedChangeListener((cButton, isChecked) -> {
+            button.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);
                 if (isShirt) {
                     final int number = Integer.parseInt(cButton.getText().toString());
@@ -489,7 +486,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             button.setChecked(mTeamService.isLibero(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
 
-            button.setOnCheckedChangeListener((cButton, isChecked) -> {
+            button.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);
                 final int number = Integer.parseInt(cButton.getText().toString());
                 if (isChecked) {

@@ -12,12 +12,10 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class PlayerToggleButton extends MaterialButton {
 
-    private boolean                      mChecked;
-    private int                          mBackgroundColor;
-    private int                          mTextColor;
-    private int                          mCheckedBackgroundColor;
-    private int                          mCheckedTextColor;
-    private OnCheckedChangeListener      mListener;
+    private int mBackgroundColor;
+    private int mTextColor;
+    private int mCheckedBackgroundColor;
+    private int mCheckedTextColor;
 
     public PlayerToggleButton(Context context) {
         super(context);
@@ -35,7 +33,7 @@ public class PlayerToggleButton extends MaterialButton {
     }
 
     private void init(Context context) {
-        mChecked = false;
+        setCheckable(true);
         mBackgroundColor = ContextCompat.getColor(context, R.color.colorDisabledButton);
         mTextColor = ContextCompat.getColor(context, R.color.colorDisabledText);
         mCheckedBackgroundColor = ContextCompat.getColor(context, R.color.colorPrimary);
@@ -43,16 +41,13 @@ public class PlayerToggleButton extends MaterialButton {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.default_text_size));
         color();
 
-        setOnClickListener(view -> {
-            setChecked(!mChecked);
-            if (mListener != null) {
-                mListener.onCheckedChanged(PlayerToggleButton.this, mChecked);
-            }
+        addOnCheckedChangeListener((button, isChecked) -> {
+            color();
         });
     }
 
     private void color() {
-        if (mChecked) {
+        if (isChecked()) {
             UiUtils.colorTeamButton(getContext(), mCheckedBackgroundColor, this);
             setTextColor(mCheckedTextColor);
         } else {
@@ -65,23 +60,6 @@ public class PlayerToggleButton extends MaterialButton {
         mCheckedBackgroundColor = backgroundColor;
         mCheckedTextColor = UiUtils.getTextColor(context, mCheckedBackgroundColor);
         color();
-    }
-
-    public boolean isChecked() {
-        return mChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        mChecked = checked;
-        color();
-    }
-
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
-        mListener = listener;
-    }
-
-    public interface OnCheckedChangeListener {
-        void onCheckedChanged(PlayerToggleButton button, boolean isChecked);
     }
 
 }

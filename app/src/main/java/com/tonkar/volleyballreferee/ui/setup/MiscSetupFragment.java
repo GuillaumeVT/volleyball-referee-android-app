@@ -55,6 +55,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         StoredUserService storedUserService = new StoredUserManager(getContext());
 
         final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        divisionNameInput.setText(mGame.getLeague().getDivision());
         divisionNameInput.setThreshold(2);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
             mGame.getLeague().setDivision((String) divisionNameInput.getAdapter().getItem(index));
@@ -78,9 +79,8 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(mGame.getLeague().getDivision());
-
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        leagueNameInput.setText(mGame.getLeague().getName());
         leagueNameInput.setThreshold(2);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
@@ -109,8 +109,6 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        leagueNameInput.setText(mGame.getLeague().getName());
 
         List<ApiFriend> referees = storedUserService.listReferees();
 

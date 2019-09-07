@@ -101,7 +101,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         final boolean create = getArguments().getBoolean("create");
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
-        mRulesNameInput.setEnabled(create);
 
         mSetsPerGameSpinner = view.findViewById(R.id.rules_sets_per_game);
         mSetsPerGameAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.sets_per_game_entries), getResources().getStringArray(R.array.sets_per_game_values));
@@ -385,7 +384,9 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     }
 
     private void initValues() {
-        mRulesNameInput.setText(mRules.getName());
+        if (!mRules.getName().isEmpty()) {
+            mRulesNameInput.setText(mRules.getName());
+        }
         mSetsPerGameSpinner.setSelection(mSetsPerGameAdapter.getPosition(mRules.getSetsPerGame()));
         mPointsPerSetSpinner.setSelection(mPointsPerSetAdapter.getPosition(mRules.getPointsPerSet()));
         mTieBreakSwitch.setChecked(mRules.isTieBreakInLastSet());

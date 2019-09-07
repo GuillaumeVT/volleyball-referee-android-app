@@ -86,6 +86,7 @@ public class MainActivity extends NavigationActivity {
 
         mStoredGamesService = new StoredGamesManager(this);
 
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         Log.i(Tags.MAIN_UI, "Create main activity");
         setContentView(R.layout.activity_main);
 

@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.stored.game.StoredAdvancedGameActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.tonkar.volleyballreferee.ui.stored.game.StoredAdvancedGameActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
-    <include layout="@layout/stored_games_list_item"/>
+    <include layout="@layout/stored_games_list_item" />
 
     <com.google.android.material.tabs.TabLayout
             android:id="@+id/stored_game_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin_size"
+            android:background="@color/colorSurface"
+            app:tabBackground="@color/colorSurface"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabMode="scrollable"
-            app:tabBackground="@color/colorSurface"
             app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextAppearance="@style/DynamicTabText"/>
+            app:tabTextAppearance="@style/DynamicTabText" />
 
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/stored_game_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
-            android:layout_margin="@dimen/default_margin_size"/>
+            android:layout_margin="@dimen/default_margin_size" />
 
 </LinearLayout>

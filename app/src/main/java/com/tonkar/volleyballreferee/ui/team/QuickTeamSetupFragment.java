@@ -74,6 +74,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
                 break;
         }
 
+        final String teamName = mTeamService.getTeamName(mTeamType);
+        teamNameInput.setText(teamName);
         teamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -91,11 +93,6 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        final String teamName = mTeamService.getTeamName(mTeamType);
-
-        teamNameInput.setText(teamName);
-        teamNameInput.setEnabled(create);
 
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
         updateCaptain();
@@ -115,7 +112,6 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         });
 
         mGenderButton = view.findViewById(R.id.select_gender_button);
-        mGenderButton.setEnabled(create);
         updateGender(mTeamService.getGender(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);

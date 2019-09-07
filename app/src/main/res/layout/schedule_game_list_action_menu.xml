@@ -9,11 +9,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_reschedule_match"
+            android:textAppearance="@style/TextViewTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/big_margin_size"
             android:text="@string/reschedule_match"
-            android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
@@ -27,11 +28,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_start_match"
+            android:textAppearance="@style/TextViewTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/big_margin_size"
             android:text="@string/start_match"
-            android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
@@ -39,11 +41,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_edit_start_match"
+            android:textAppearance="@style/TextViewTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/big_margin_size"
             android:text="@string/edit_start_match"
-            android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"
@@ -56,11 +59,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_delete_match"
+            android:textAppearance="@style/TextViewTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/big_margin_size"
             android:text="@string/delete_match"
-            android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
             android:drawablePadding="@dimen/big_margin_size"
             android:gravity="center_vertical|start"

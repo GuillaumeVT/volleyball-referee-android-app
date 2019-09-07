@@ -123,6 +123,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         });
 
         final AutoCompleteTextView divisionNameInput = findViewById(R.id.division_name_input_text);
+        divisionNameInput.setText(mGameSummary.getDivisionName());
         divisionNameInput.setThreshold(2);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
             mGameSummary.setDivisionName((String) divisionNameInput.getAdapter().getItem(index));
@@ -144,9 +145,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(mGameSummary.getDivisionName());
-
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
+        leagueNameInput.setText(mGameSummary.getLeagueName());
         leagueNameInput.setThreshold(2);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(this, getLayoutInflater(), storedLeaguesService.listLeagues(mGameSummary.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
@@ -174,8 +174,6 @@ public class ScheduledGameActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        leagueNameInput.setText(mGameSummary.getLeagueName());
 
         mHomeTeamSpinner = findViewById(R.id.home_team_name_spinner);
         mHomeTeamSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -483,7 +481,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         @Override
         public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
             Calendar scheduleDate = mActivity.getScheduleDate();
-            return new DatePickerDialog(mActivity, this,
+            return new DatePickerDialog(mActivity, R.style.AppTheme_Dialog,this,
                     scheduleDate.get(Calendar.YEAR), scheduleDate.get(Calendar.MONTH), scheduleDate.get(Calendar.DAY_OF_MONTH));
         }
 
@@ -504,7 +502,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         @Override
         public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
             Calendar scheduleDate = mActivity.getScheduleDate();
-            return new TimePickerDialog(mActivity, this, scheduleDate.get(Calendar.HOUR_OF_DAY), scheduleDate.get(Calendar.MINUTE),true);
+            return new TimePickerDialog(mActivity, R.style.AppTheme_Dialog,this, scheduleDate.get(Calendar.HOUR_OF_DAY), scheduleDate.get(Calendar.MINUTE),true);
         }
 
         public void onTimeSet(TimePicker view, int hour, int minute) {

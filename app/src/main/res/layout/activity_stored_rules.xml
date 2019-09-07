@@ -35,11 +35,12 @@
                       android:layout_alignParentBottom="true"
                       android:layout_alignParentEnd="true">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    style="@style/VbrFab"
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    style="@style/VbrExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_save"
+                    android:text="@string/save_rules"
+                    app:icon="@drawable/ic_save"
                     android:onClick="saveRules"
                     android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"

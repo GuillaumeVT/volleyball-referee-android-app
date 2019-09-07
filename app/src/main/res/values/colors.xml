@@ -25,6 +25,9 @@
     <color name="colorSeparator">#d6d7d7</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/colorSeparator</color>
 
+    <color name="colorToolbar">@color/colorPrimary</color>
+    <color name="colorOnToolbar">@color/colorOnPrimary</color>
+
     <color name="colorLive">#ffcc0000</color>
     <color name="colorLiveLight">#faa</color>
     <color name="colorPlayerIn">#006032</color>
@@ -35,7 +38,7 @@
     <color name="colorBeachLight">#f8dc8a</color>
     <color name="colorTime">#1f1f1f</color>
     <color name="colorTimeLight">#d1d1d1</color>
-    <color name="colorIndoor4x4">#781fc9</color>
+    <color name="colorIndoor4x4">#781FC9</color>
     <color name="colorIndoor4x4Light">#dbc0f5</color>
     <color name="colorSnow">#2980b9</color>
     <color name="colorSnowLight">#e7f2fa</color>

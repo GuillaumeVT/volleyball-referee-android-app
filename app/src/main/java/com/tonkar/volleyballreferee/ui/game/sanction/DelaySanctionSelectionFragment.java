@@ -52,7 +52,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
             mDelayWarningButton.setColor(getContext(), mGame.getTeamColor(mTeamType));
             mDelayPenaltyButton.setColor(getContext(), mGame.getTeamColor(mTeamType));
 
-            mDelayWarningButton.setOnCheckedChangeListener((cButton, isChecked) -> {
+            mDelayWarningButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
                 if (isChecked) {
                     mSelectedDelaySanction = SanctionType.DELAY_WARNING;
@@ -61,7 +61,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
                 }
             });
 
-            mDelayPenaltyButton.setOnCheckedChangeListener((cButton, isChecked) -> {
+            mDelayPenaltyButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
                 if (isChecked) {
                     mSelectedDelaySanction = SanctionType.DELAY_PENALTY;

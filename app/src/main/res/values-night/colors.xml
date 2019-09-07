@@ -9,4 +9,7 @@
     <color name="colorSelectedItem">@color/colorSeparator</color>
     <color name="colorSeparator">#757368</color>
 
+    <color name="colorToolbar">@color/colorSurface</color>
+    <color name="colorOnToolbar">@color/colorOnSurface</color>
+
 </resources>

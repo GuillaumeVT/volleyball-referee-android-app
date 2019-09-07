@@ -79,7 +79,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
             mExpulsionCardButton.setColor(getContext(), mGame.getTeamColor(mTeamType));
             mDisqualificationCardButton.setColor(getContext(), mGame.getTeamColor(mTeamType));
 
-            mYellowCardButton.setOnCheckedChangeListener((cButton, isChecked) -> {
+            mYellowCardButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
                 if (isChecked) {
                     mSelectedMisconductSanction = SanctionType.YELLOW;
@@ -90,7 +90,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 }
             });
 
-            mRedCardButton.setOnCheckedChangeListener((cButton, isChecked) -> {
+            mRedCardButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
                 if (isChecked) {
                     mSelectedMisconductSanction = SanctionType.RED;
@@ -101,7 +101,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 }
             });
 
-            mExpulsionCardButton.setOnCheckedChangeListener((cButton, isChecked) -> {
+            mExpulsionCardButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
                 if (isChecked) {
                     mSelectedMisconductSanction = SanctionType.RED_EXPULSION;
@@ -112,7 +112,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 }
             });
 
-            mDisqualificationCardButton.setOnCheckedChangeListener((cButton, isChecked) -> {
+            mDisqualificationCardButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
                 if (isChecked) {
                     mSelectedMisconductSanction = SanctionType.RED_DISQUALIFICATION;
@@ -219,7 +219,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
             }
 
-            button.setOnCheckedChangeListener((cButton, isChecked) -> {
+            button.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);
                 if (isChecked) {
                     for (int index = 0; index < parent.getChildCount(); index++) {

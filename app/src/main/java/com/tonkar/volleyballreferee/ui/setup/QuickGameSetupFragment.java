@@ -98,6 +98,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         mGuestTeamCaptainButton = view.findViewById(R.id.guest_team_captain_number_button);
 
         final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        divisionNameInput.setText(mGame.getLeague().getDivision());
         divisionNameInput.setThreshold(2);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
             mGame.getLeague().setDivision((String) divisionNameInput.getAdapter().getItem(index));
@@ -121,9 +122,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             public void afterTextChanged(Editable s) {}
         });
 
-        divisionNameInput.setText(mGame.getLeague().getDivision());
-
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        leagueNameInput.setText(mGame.getLeague().getName());
         leagueNameInput.setThreshold(2);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
@@ -152,8 +152,6 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        leagueNameInput.setText(mGame.getLeague().getName());
 
         List<ApiFriend> referees = storedUserService.listReferees();
 
@@ -195,6 +193,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         }
 
         final AutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
+        homeTeamNameInput.setText(mGame.getTeamName(TeamType.HOME));
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -212,9 +211,9 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        homeTeamNameInput.setEnabled(create);
 
         final AutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
+        guestTeamNameInput.setText(mGame.getTeamName(TeamType.GUEST));
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -232,7 +231,6 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        guestTeamNameInput.setEnabled(create);
 
         mHomeTeamColorButton = view.findViewById(R.id.home_team_color_button);
         mHomeTeamColorButton.setOnClickListener(button -> {
@@ -244,9 +242,6 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             UiUtils.animate(getContext(), mGuestTeamColorButton);
             selectTeamColor(TeamType.GUEST);
         });
-
-        homeTeamNameInput.setText(mGame.getTeamName(TeamType.HOME));
-        guestTeamNameInput.setText(mGame.getTeamName(TeamType.GUEST));
 
         mHomeTeamPlayerNamesButton = view.findViewById(R.id.home_team_player_names_button);
         mGuestTeamPlayerNamesButton = view.findViewById(R.id.guest_team_player_names_button);

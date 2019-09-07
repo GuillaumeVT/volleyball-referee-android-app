@@ -43,18 +43,19 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_email_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size">
+                    android:layout_margin="@dimen/small_margin_size"
+                    app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_email_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_email_hint"
                         android:imeOptions="actionNext"
@@ -65,18 +66,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_confirm_email_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size">
+                    android:layout_margin="@dimen/small_margin_size"
+                    app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_confirm_email_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_confirm_email_hint"
                         android:imeOptions="actionNext"
@@ -87,18 +89,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_pseudo_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size">
+                    android:layout_margin="@dimen/small_margin_size"
+                    app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_pseudo_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_pseudo_hint"
                         android:imeOptions="actionNext"
@@ -117,18 +120,19 @@
                     android:textSize="@dimen/default_text_size" />
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_new_password_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size">
+                    android:layout_margin="@dimen/small_margin_size"
+                    app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_new_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_password_hint"
                         android:imeOptions="actionNext"
@@ -139,18 +143,19 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_confirm_new_password_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size">
+                    android:layout_margin="@dimen/small_margin_size"
+                    app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/user_confirm_new_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_confirm_password_hint"
                         android:imeOptions="actionDone"

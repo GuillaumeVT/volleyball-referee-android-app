@@ -1,103 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/game_action_menu"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="@dimen/big_margin_size"
-              android:orientation="vertical"
-              android:gravity="start">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/game_action_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:gravity="start"
+        android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_navigate_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:foreground="?android:selectableItemBackground"
+            android:gravity="center_vertical|start"
             android:padding="@dimen/big_margin_size"
             android:text="@string/navigate_home"
             android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:gravity="center_vertical|start"
-            android:foreground="?android:selectableItemBackground"/>
+            app:drawableStartCompat="@drawable/ic_home" />
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorSeparator"/>
+            android:background="@color/colorSeparator" />
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/action_index_game"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
             android:padding="@dimen/big_margin_size"
             android:text="@string/index_game"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"/>
+            app:drawableStartCompat="@drawable/ic_private" />
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_share_game_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:foreground="?android:selectableItemBackground"
+            android:gravity="center_vertical|start"
             android:padding="@dimen/big_margin_size"
             android:text="@string/share"
             android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:gravity="center_vertical|start"
-            android:foreground="?android:selectableItemBackground"/>
+            app:drawableStartCompat="@drawable/ic_link" />
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_toss_coin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:foreground="?android:selectableItemBackground"
+            android:gravity="center_vertical|start"
             android:padding="@dimen/big_margin_size"
             android:text="@string/toss_coin"
             android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:gravity="center_vertical|start"
-            android:foreground="?android:selectableItemBackground"/>
+            app:drawableStartCompat="@drawable/ic_coin" />
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorSeparator"/>
+            android:background="@color/colorSeparator" />
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/action_reset_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:foreground="?android:selectableItemBackground"
+            android:gravity="center_vertical|start"
             android:padding="@dimen/big_margin_size"
             android:text="@string/reset_set"
             android:textAppearance="@style/TextViewTheme"
+            android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:gravity="center_vertical|start"
-            android:foreground="?android:selectableItemBackground"/>
+            app:drawableStartCompat="@drawable/ic_reset_set" />
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorSeparator"/>
+            android:background="@color/colorSeparator" />
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/keep_screen_on"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
             android:padding="@dimen/big_margin_size"
             android:text="@string/pref_keep_screen_on"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"/>
+            app:drawableStartCompat="@drawable/ic_screen_on" />
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/interactive_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/big_margin_size"
             android:padding="@dimen/big_margin_size"
             android:text="@string/pref_interactive_notification"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size"
-            android:drawablePadding="@dimen/big_margin_size"/>
+            app:drawableStartCompat="@drawable/ic_notification" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/big_margin_size"
+            android:paddingEnd="@dimen/big_margin_size">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/night_mode_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                app:drawableStartCompat="@drawable/ic_night_mode" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/night_mode_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/big_margin_size"
+                android:prompt="@string/pref_night_mode"
+                android:spinnerMode="dialog"
+                android:textSize="@dimen/default_text_size" />
+    </LinearLayout>
 
 </LinearLayout>

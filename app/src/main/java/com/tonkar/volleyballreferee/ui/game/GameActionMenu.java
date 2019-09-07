@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -36,6 +35,8 @@ import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, StoredGamesServiceHandler {
@@ -74,6 +75,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
             TextView resetSetText = view.findViewById(R.id.action_reset_set);
             SwitchCompat keepScreenOnSwitch = view.findViewById(R.id.keep_screen_on);
             SwitchCompat interactiveNotificationSwitch = view.findViewById(R.id.interactive_notification);
+            Spinner nightModeSpinner = view.findViewById(R.id.night_mode_spinner);
 
             keepScreenOnSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false));
             interactiveNotificationSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, false));
@@ -95,22 +97,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 shareGameLinkText.setVisibility(View.GONE);
             }
 
-            UiUtils.setDrawableStart(navigateHomeText, R.drawable.ic_home);
-            UiUtils.setDrawableStart(indexGameText, R.drawable.ic_private);
-            UiUtils.setDrawableStart(shareGameLinkText, R.drawable.ic_link);
-            UiUtils.setDrawableStart(tossCoinText, R.drawable.ic_coin);
-            UiUtils.setDrawableStart(resetSetText, R.drawable.ic_reset_set);
-            UiUtils.setDrawableStart(keepScreenOnSwitch, R.drawable.ic_screen_on);
-            UiUtils.setDrawableStart(interactiveNotificationSwitch, R.drawable.ic_notification);
-
-            colorIcon(context, navigateHomeText);
-            colorIcon(context, indexGameText);
-            colorIcon(context, shareGameLinkText);
-            colorIcon(context, tossCoinText);
-            colorIcon(context, resetSetText);
-            colorIcon(context, keepScreenOnSwitch);
-            colorIcon(context, interactiveNotificationSwitch);
-
             navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGame));
             indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
             shareGameLinkText.setOnClickListener(textView -> shareLink());
@@ -121,6 +107,18 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 mActivity.recreate();
             });
             interactiveNotificationSwitch.setOnCheckedChangeListener((button, isChecked) -> sharedPreferences.edit().putBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, isChecked).apply());
+            StringArrayAdapter nightModeSpinnerAdapter = new StringArrayAdapter(getContext(), inflater, getResources().getStringArray(R.array.night_mode_entries), getResources().getStringArray(R.array.night_mode_values));
+            nightModeSpinner.setAdapter(nightModeSpinnerAdapter);
+            nightModeSpinner.setSelection(nightModeSpinnerAdapter.getPosition(PrefUtils.getNightMode(mActivity)));
+            nightModeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    PrefUtils.setNightMode(mActivity, nightModeSpinnerAdapter.getItem(index));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
         }
 
         return view;
@@ -174,14 +172,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
         dismiss();
     }
 
-    private void colorIcon(Context context, TextView textView) {
-        for (Drawable drawable : textView.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorAccent), PorterDuff.Mode.SRC_IN));
-            }
-        }
-    }
-
     @Override
     public void setGameService(IGame game) {
         mGame = game;
@@ -191,4 +181,70 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     public void setStoredGamesService(StoredGamesService storedGamesService) {
         mStoredGamesService = storedGamesService;
     }
+
+    private class StringArrayAdapter extends ArrayAdapter<String> {
+
+        private final LayoutInflater mLayoutInflater;
+        private final List<String>   mDisplayedValues;
+        private final List<String>   mActualValues;
+
+        private StringArrayAdapter(Context context, LayoutInflater layoutInflater, String[] displayedValues, String[] actualValues) {
+            super(context, R.layout.vbr_spinner);
+            mLayoutInflater = layoutInflater;
+            mDisplayedValues = Arrays.asList(displayedValues);
+            mActualValues = Arrays.asList(actualValues);
+        }
+
+        @Override
+        public int getCount() {
+            return mActualValues.size();
+        }
+
+        @Override
+        public String getItem(int index) {
+            return mActualValues.get(index);
+        }
+
+        @Override
+        public int getPosition(String value) {
+            return mActualValues.indexOf(value);
+        }
+
+        @Override
+        public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
+            TextView textView;
+
+            if (view == null) {
+                textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_spinner, null);
+            } else {
+                textView = (TextView) view;
+            }
+
+            textView.setText(mDisplayedValues.get(index));
+            textView.setTextColor(getResources().getColor(R.color.colorOnSurface));
+
+            return textView;
+        }
+
+        @Override
+        public View getDropDownView(int index, View view, @NonNull ViewGroup parent) {
+            TextView textView;
+
+            if (view == null) {
+                textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_checked_spinner_entry, null);
+            } else {
+                textView = (TextView) view;
+            }
+
+            textView.setText(mDisplayedValues.get(index));
+
+            return textView;
+        }
+
+        @Override
+        public long getItemId(int index) {
+            return 0;
+        }
+    }
+
 }
