@@ -1,8 +1,5 @@
 package com.tonkar.volleyballreferee.ui.stored.rules;
 
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
@@ -21,7 +17,6 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class RulesFragment extends Fragment implements RulesHandler {
 
@@ -55,12 +50,6 @@ public class RulesFragment extends Fragment implements RulesHandler {
 
         TextView substitutionsLimitation = view.findViewById(R.id.rules_substitutions_limitation);
         TextView substitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
-        UiUtils.setDrawableStart(substitutionsLimitationDescription, R.drawable.ic_info);
-        for (Drawable drawable : substitutionsLimitationDescription.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.colorAccent), PorterDuff.Mode.SRC_IN));
-            }
-        }
         TextView teamSubstitutionsPerSet = view.findViewById(R.id.rules_team_substitutions_per_set);
 
         SwitchCompat courtSwitchesSwitch = view.findViewById(R.id.rules_court_switches);

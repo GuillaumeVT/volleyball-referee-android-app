@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/RoundedCard"
+            style="@style/AppTheme.RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
@@ -21,20 +21,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/default_margin_size"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:text="@string/pending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size"
                     android:layout_gravity="end"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textColor="@color/colorAccent"
+                    android:layout_margin="@dimen/small_margin_size"
+                    android:text="@string/pending"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/small_text_size"
-                    android:textStyle="italic"
-                    android:textAllCaps="true"/>
+                    android:textStyle="italic" />
 
         </LinearLayout>
 

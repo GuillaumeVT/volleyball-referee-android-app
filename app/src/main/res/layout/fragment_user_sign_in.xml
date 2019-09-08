@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="top|center"
-              android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/RoundedCard"
+            style="@style/AppTheme.RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
             app:contentPadding="@dimen/default_margin_size">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:gravity="top|center"
-                      android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|center"
+                android:orientation="vertical">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -29,17 +30,17 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_weight="1"
-                        android:paddingBottom="@dimen/default_margin_size"
                         android:paddingTop="@dimen/default_margin_size"
+                        android:paddingBottom="@dimen/default_margin_size"
                         android:text="@string/user_sign_in_why_title"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/big_text_size"/>
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/big_text_size" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitEnd"
-                        app:srcCompat="@mipmap/ic_launcher_foreground"/>
+                        app:srcCompat="@mipmap/ic_launcher_foreground" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -47,28 +48,29 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:text="@string/user_sign_in_why_message"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/small_text_size"/>
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/small_text_size" />
 
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/RoundedCard"
+            style="@style/AppTheme.RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
             app:contentPadding="@dimen/default_margin_size">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:gravity="top|center"
-                      android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|center"
+                android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_email_input_layout"
+                    style="@style/AppTheme.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size">
@@ -77,20 +79,20 @@
                         android:id="@+id/user_email_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/default_margin_size"
-                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_email_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/default_text_size"
-                        android:inputType="textEmailAddress"/>
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/default_text_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_pseudo_input_layout"
+                    style="@style/AppTheme.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size">
@@ -99,20 +101,20 @@
                         android:id="@+id/user_pseudo_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/default_margin_size"
-                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_pseudo_hint"
                         android:imeOptions="actionNext"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/default_text_size"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/default_text_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AppTheme.TextInputLayout"
                     android:id="@+id/user_new_password_input_layout"
+                    style="@style/AppTheme.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
@@ -122,32 +124,32 @@
                         android:id="@+id/user_new_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/default_margin_size"
-                        android:paddingEnd="@dimen/default_margin_size"
                         android:ems="10"
                         android:hint="@string/user_password_hint"
                         android:imeOptions="actionDone"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/default_text_size"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/default_text_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/user_sign_in_button"
-                    style="@style/VbrButton"
+                    style="@style/AppTheme.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/user_sign_in"
-                    app:icon="@drawable/ic_account"/>
+                    app:icon="@drawable/ic_account" />
 
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/RoundedCard"
+            style="@style/AppTheme.RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/big_margin_size"
@@ -155,14 +157,14 @@
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/lost_password_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/user_lost_password"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textColor="@color/colorAccent"
-                app:strokeColor="@color/colorAccent"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                app:strokeColor="@color/colorPrimary" />
 
     </com.google.android.material.card.MaterialCardView>
 

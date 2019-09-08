@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:descendantFocusability="blocksDescendants"
-             android:transitionName="listItemToDetails">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:transitionName="listItemToDetails">
 
     <com.google.android.material.card.MaterialCardView
             android:id="@+id/list_item_card"
-            style="@style/RoundedCard"
+            style="@style/AppTheme.RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
@@ -27,8 +27,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center|start"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
             <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
@@ -36,12 +36,12 @@
                     app:chipSpacing="@dimen/default_margin_size">
 
                 <com.google.android.material.chip.Chip
-                        style="@style/IconChip"
                         android:id="@+id/rules_kind_item"
+                        style="@style/AppTheme.IconChip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipIcon="@drawable/ic_beach"
-                        app:chipBackgroundColor="@color/colorBeachLight"/>
+                        app:chipBackgroundColor="@color/colorBeachLight"
+                        app:chipIcon="@drawable/ic_beach" />
 
             </com.google.android.material.chip.ChipGroup>
 

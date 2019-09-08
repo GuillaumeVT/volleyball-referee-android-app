@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:orientation="horizontal"
-              android:padding="@dimen/small_margin_size"
-              android:weightSum="13">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/small_margin_size"
+        android:weightSum="13">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/set_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:gravity="center"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/default_text_size"/>
+            android:id="@+id/set_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/score_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:gravity="center"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/default_text_size"/>
+            android:id="@+id/score_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/sanction_type_image"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="4"
-        app:srcCompat="@drawable/yellow_card"/>
+            android:id="@+id/sanction_type_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            app:srcCompat="@drawable/yellow_card" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/player_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:background="@drawable/text_round_background"
-        android:elevation="@dimen/number_text_elevation"
-        android:gravity="center"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/default_text_size"/>
+            android:id="@+id/player_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/text_round_background"
+            android:elevation="@dimen/number_text_elevation"
+            android:gravity="center"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

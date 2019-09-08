@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">@color/colorSecondary</color>
+    <color name="colorPrimary">#fac511</color>
+    <color name="colorPrimaryVariant">#1d1600</color>
+    <color name="colorOnPrimary">#1f1f1f</color>
+    <color name="colorSecondary">#1f4294</color>
+    <color name="colorSecondaryVariant">#cedaf5</color>
+    <color name="colorOnSecondary">@android:color/white</color>
 
     <color name="colorBackground">#060606</color>
     <color name="colorOnBackground">#f3f3f3</color>
     <color name="colorSurface">#1f1f1f</color>
 
-    <color name="colorSelectedItem">@color/colorSeparator</color>
     <color name="colorSeparator">#757368</color>
 
     <color name="colorToolbar">@color/colorSurface</color>

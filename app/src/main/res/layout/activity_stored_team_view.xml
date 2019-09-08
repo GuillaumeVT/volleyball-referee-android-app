@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
@@ -14,7 +13,7 @@
             android:gravity="top|center"
             android:orientation="vertical">
 
-        <include layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -26,39 +25,39 @@
                     android:gravity="top|center"
                     android:orientation="vertical">
 
-                <include layout="@layout/stored_teams_list_item"/>
+                <include layout="@layout/stored_teams_list_item" />
 
                 <ListView
                         android:id="@+id/players_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_size"
-                        android:gravity="top|start"
-                        android:divider="@android:color/transparent"
                         android:clipToPadding="false"
-                        android:paddingBottom="@dimen/empty_fab_space"/>
+                        android:divider="@android:color/transparent"
+                        android:gravity="top|start"
+                        android:paddingBottom="@dimen/empty_fab_space" />
 
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/edit_team_button"
-                    style="@style/VbrExtendedFab"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:text="@string/edit"
-                    app:icon="@drawable/ic_edit"
-                    android:onClick="editTeam"
-                    android:layout_marginTop="@dimen/fab_shift_default"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/fab_shift_default"
+                    android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginEnd="@dimen/fab_shift_default"
-                    android:layout_marginBottom="@dimen/fab_shift_default"/>
+                    android:layout_marginBottom="@dimen/fab_shift_default"
+                    android:onClick="editTeam"
+                    android:text="@string/edit"
+                    app:icon="@drawable/ic_edit" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
-    <include layout="@layout/navigation_drawer"/>
+    <include layout="@layout/navigation_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

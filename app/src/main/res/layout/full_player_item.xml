@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center|start">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_number"
@@ -13,15 +13,15 @@
             android:background="@drawable/text_round_background"
             android:elevation="@dimen/number_text_elevation"
             android:gravity="center"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/default_text_size"/>
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin_size"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/default_text_size"/>
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

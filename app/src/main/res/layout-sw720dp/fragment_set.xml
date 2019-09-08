@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size">
+            android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+                style="@style/AppTheme.RoundedCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size">
 
             <FrameLayout
-                android:id="@+id/ladder_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center">
+                    android:id="@+id/ladder_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
 
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/set_lineup_card"
-            style="@style/RoundedCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size">
+                android:id="@+id/set_lineup_card"
+                style="@style/AppTheme.RoundedCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/tiny_margin_size"
-                    android:layout_marginStart="@dimen/set_title_margin_size"
-                    android:layout_marginTop="@dimen/tiny_margin_size"
-                    android:gravity="center|start"
-                    android:text="@string/confirm_lineup_title"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/set_title_margin_size"
+                        android:layout_marginTop="@dimen/tiny_margin_size"
+                        android:layout_marginBottom="@dimen/tiny_margin_size"
+                        android:gravity="center|start"
+                        android:text="@string/confirm_lineup_title"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
                     <view
-                        android:id="@+id/home_team_lineup"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/big_margin_size"
-                        android:layout_marginStart="@dimen/big_margin_size"
-                        android:layout_weight="1"
-                        android:numColumns="3" />
+                            android:id="@+id/home_team_lineup"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_weight="1"
+                            android:numColumns="3" />
 
                     <view
-                        android:id="@+id/guest_team_lineup"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/big_margin_size"
-                        android:layout_marginStart="@dimen/big_margin_size"
-                        android:layout_weight="1"
-                        android:numColumns="3" />
+                            android:id="@+id/guest_team_lineup"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/big_margin_size"
+                            android:layout_marginEnd="@dimen/big_margin_size"
+                            android:layout_weight="1"
+                            android:numColumns="3" />
 
                 </LinearLayout>
 
@@ -80,55 +80,55 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/set_substitutions_card"
-            style="@style/RoundedCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size">
+                android:id="@+id/set_substitutions_card"
+                style="@style/AppTheme.RoundedCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/tiny_margin_size"
-                    android:layout_marginStart="@dimen/set_title_margin_size"
-                    android:layout_marginTop="@dimen/tiny_margin_size"
-                    android:gravity="center|start"
-                    android:text="@string/sanctions_tab"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/set_title_margin_size"
+                        android:layout_marginTop="@dimen/tiny_margin_size"
+                        android:layout_marginBottom="@dimen/tiny_margin_size"
+                        android:gravity="center|start"
+                        android:text="@string/sanctions_tab"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
                     <view
-                        android:id="@+id/home_team_substitutions"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/default_margin_size"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:divider="@android:color/transparent"
-                        android:layout_weight="1" />
+                            android:id="@+id/home_team_substitutions"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/default_margin_size"
+                            android:layout_marginEnd="@dimen/default_margin_size"
+                            android:layout_weight="1"
+                            android:divider="@android:color/transparent" />
 
                     <view
-                        android:id="@+id/guest_team_substitutions"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/default_margin_size"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:divider="@android:color/transparent"
-                        android:layout_weight="1" />
+                            android:id="@+id/guest_team_substitutions"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/default_margin_size"
+                            android:layout_marginEnd="@dimen/default_margin_size"
+                            android:layout_weight="1"
+                            android:divider="@android:color/transparent" />
 
                 </LinearLayout>
 
@@ -136,55 +136,55 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/set_timeouts_card"
-            style="@style/RoundedCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size">
+                android:id="@+id/set_timeouts_card"
+                style="@style/AppTheme.RoundedCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/tiny_margin_size"
-                    android:layout_marginStart="@dimen/set_title_margin_size"
-                    android:layout_marginTop="@dimen/tiny_margin_size"
-                    android:gravity="center|start"
-                    android:text="@string/timeouts_tab"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/set_title_margin_size"
+                        android:layout_marginTop="@dimen/tiny_margin_size"
+                        android:layout_marginBottom="@dimen/tiny_margin_size"
+                        android:gravity="center|start"
+                        android:text="@string/timeouts_tab"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
                     <view
-                        android:id="@+id/home_team_timeouts"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_weight="1"
-                        android:numColumns="auto_fit" />
+                            android:id="@+id/home_team_timeouts"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/small_margin_size"
+                            android:layout_marginEnd="@dimen/small_margin_size"
+                            android:layout_weight="1"
+                            android:numColumns="auto_fit" />
 
                     <view
-                        android:id="@+id/guest_team_timeouts"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_weight="1"
-                        android:numColumns="auto_fit" />
+                            android:id="@+id/guest_team_timeouts"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/small_margin_size"
+                            android:layout_marginEnd="@dimen/small_margin_size"
+                            android:layout_weight="1"
+                            android:numColumns="auto_fit" />
 
                 </LinearLayout>
 
@@ -192,55 +192,55 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/set_sanctions_card"
-            style="@style/RoundedCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size">
+                android:id="@+id/set_sanctions_card"
+                style="@style/AppTheme.RoundedCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin_size">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/tiny_margin_size"
-                    android:layout_marginStart="@dimen/set_title_margin_size"
-                    android:layout_marginTop="@dimen/tiny_margin_size"
-                    android:gravity="center|start"
-                    android:text="@string/sanctions_tab"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/set_title_margin_size"
+                        android:layout_marginTop="@dimen/tiny_margin_size"
+                        android:layout_marginBottom="@dimen/tiny_margin_size"
+                        android:gravity="center|start"
+                        android:text="@string/sanctions_tab"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
                     <view
-                        android:id="@+id/home_team_sanctions"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/default_margin_size"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:divider="@android:color/transparent"
-                        android:layout_weight="1" />
+                            android:id="@+id/home_team_sanctions"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/default_margin_size"
+                            android:layout_marginEnd="@dimen/default_margin_size"
+                            android:layout_weight="1"
+                            android:divider="@android:color/transparent" />
 
                     <view
-                        android:id="@+id/guest_team_sanctions"
-                        class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/default_margin_size"
-                        android:layout_marginStart="@dimen/default_margin_size"
-                        android:divider="@android:color/transparent"
-                        android:layout_weight="1" />
+                            android:id="@+id/guest_team_sanctions"
+                            class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/default_margin_size"
+                            android:layout_marginEnd="@dimen/default_margin_size"
+                            android:layout_weight="1"
+                            android:divider="@android:color/transparent" />
 
                 </LinearLayout>
 

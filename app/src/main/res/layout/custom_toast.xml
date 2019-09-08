@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/custom_toast_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+        android:id="@+id/custom_toast_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/toast_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dialog_round_background"
-        android:gravity="center"
-        android:padding="@dimen/big_margin_size"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/default_text_size" />
+            android:id="@+id/toast_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_round_background"
+            android:gravity="center"
+            android:padding="@dimen/big_margin_size"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

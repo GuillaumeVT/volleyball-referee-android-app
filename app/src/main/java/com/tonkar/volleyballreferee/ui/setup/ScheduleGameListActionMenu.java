@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -95,16 +91,6 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                 startGameText.setText(R.string.resume_match);
             }
 
-            UiUtils.setDrawableStart(rescheduleGameText, R.drawable.ic_schedule);
-            UiUtils.setDrawableStart(startGameText, R.drawable.ic_play);
-            UiUtils.setDrawableStart(editAndStartGameText, R.drawable.ic_edit_and_play);
-            UiUtils.setDrawableStart(deleteGameText, R.drawable.ic_delete);
-
-            colorIcon(context, rescheduleGameText);
-            colorIcon(context, startGameText);
-            colorIcon(context, editAndStartGameText);
-            colorIcon(context, deleteGameText);
-
             rescheduleGameText.setOnClickListener(textView -> rescheduleGame());
             startGameText.setOnClickListener(textView -> startGame());
             editAndStartGameText.setOnClickListener(textView -> configureAndStartGame());
@@ -164,14 +150,6 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
         mStoredGamesService.deleteGame(mGameDescription.getId());
         mActivity.recreate();
         dismiss();
-    }
-
-    private void colorIcon(Context context, TextView textView) {
-        for (Drawable drawable : textView.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorAccent), PorterDuff.Mode.SRC_IN));
-            }
-        }
     }
 
     @Override

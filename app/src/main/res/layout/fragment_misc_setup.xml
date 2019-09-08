@@ -19,13 +19,13 @@
                 android:id="@+id/league_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
                 android:ems="10"
                 android:hint="@string/league_name"
                 android:imeOptions="actionNext"
                 android:inputType="textCapWords"
-                android:textColor="@color/colorAccent"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,13 +43,13 @@
                 android:id="@+id/division_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
                 android:ems="10"
                 android:hint="@string/division_name"
                 android:imeOptions="actionDone"
                 android:inputType="textCapWords"
-                android:textColor="@color/colorAccent"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -63,7 +63,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/small_margin_size"
             android:text="@string/referee"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner

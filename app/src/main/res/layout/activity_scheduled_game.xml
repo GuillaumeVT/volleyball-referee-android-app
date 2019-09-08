@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:importantForAutofill="noExcludeDescendants"
-              tools:context="com.tonkar.volleyballreferee.ui.setup.ScheduledGameActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="noExcludeDescendants"
+        android:orientation="vertical"
+        tools:context="com.tonkar.volleyballreferee.ui.setup.ScheduledGameActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -22,9 +22,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin_size"
+                    android:clipToPadding="false"
                     android:gravity="top|center"
                     android:orientation="vertical"
-                    android:clipToPadding="false"
                     android:paddingBottom="@dimen/empty_fab_space">
 
                 <LinearLayout
@@ -36,23 +36,23 @@
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/date_input_button"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/default_margin_size"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:textColor="@color/colorAccent"
-                            app:strokeColor="@color/colorAccent"
-                            android:textAllCaps="false"/>
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            app:strokeColor="@color/colorPrimary" />
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/time_input_button"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/default_margin_size"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:textColor="@color/colorAccent"
-                            app:strokeColor="@color/colorAccent"
-                            android:textAllCaps="false"/>
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            app:strokeColor="@color/colorPrimary" />
 
                 </LinearLayout>
 
@@ -67,47 +67,47 @@
                             android:id="@+id/league_name_input_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/default_margin_size"
-                            android:paddingEnd="@dimen/default_margin_size"
                             android:ems="10"
                             android:hint="@string/league_name"
                             android:imeOptions="actionNext"
                             android:inputType="textCapWords"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/default_text_size"/>
+                            android:paddingStart="@dimen/default_margin_size"
+                            android:paddingEnd="@dimen/default_margin_size"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AppTheme.TextInputLayout"
                         android:id="@+id/division_name_input_layout"
+                        style="@style/AppTheme.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/small_margin_size"
-                        app:endIconMode="clear_text"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        app:endIconMode="clear_text">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/division_name_input_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/default_margin_size"
-                            android:paddingEnd="@dimen/default_margin_size"
                             android:ems="10"
                             android:hint="@string/division_name"
                             android:imeOptions="actionDone"
                             android:inputType="textCapWords"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/default_text_size"/>
+                            android:paddingStart="@dimen/default_margin_size"
+                            android:paddingEnd="@dimen/default_margin_size"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/default_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:baselineAligned="false"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
+                        android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/gender_title"
@@ -116,19 +116,19 @@
                             android:layout_margin="@dimen/small_margin_size"
                             android:layout_weight="1"
                             android:text="@string/gender_description"
-                            android:textAppearance="@style/TextViewTheme"
-                            android:textSize="@dimen/default_text_size"/>
+                            android:textAppearance="@style/AppTheme.TextView"
+                            android:textSize="@dimen/default_text_size" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/switch_gender_button"
-                            style="@style/VbrRoundButton"
+                            style="@style/AppTheme.RoundButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin_size"
                             android:contentDescription="@string/gender_description"
                             app:fabSize="normal"
                             app:maxImageSize="@dimen/form_fab_icon_size"
-                            app:srcCompat="@drawable/ic_mixed"/>
+                            app:srcCompat="@drawable/ic_mixed" />
 
                 </LinearLayout>
 
@@ -137,11 +137,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:text="@string/home_team_tab"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/home_team_name_spinner"
@@ -154,18 +154,18 @@
                         android:prompt="@string/home_team_tab"
                         android:spinnerMode="dialog"
                         android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/guest_team_tab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:text="@string/guest_team_hint"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/guest_team_name_spinner"
@@ -178,18 +178,18 @@
                         android:prompt="@string/guest_team_tab"
                         android:spinnerMode="dialog"
                         android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/rules_tab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:text="@string/rules_name_hint"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/rules_name_spinner"
@@ -202,18 +202,18 @@
                         android:prompt="@string/rules_name_hint"
                         android:spinnerMode="dialog"
                         android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/referee_spinner_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:layout_marginTop="@dimen/default_margin_size"
+                        android:layout_marginEnd="@dimen/small_margin_size"
                         android:text="@string/referee"
-                        android:textAppearance="@style/TextViewTheme"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/referee_spinner"
@@ -225,30 +225,31 @@
                         android:prompt="@string/referee"
                         android:spinnerMode="dialog"
                         android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size"/>
+                        android:textSize="@dimen/default_text_size" />
 
             </LinearLayout>
 
         </ScrollView>
 
-        <LinearLayout android:layout_width="wrap_content"
-                      android:id="@+id/schedule_game_layout"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="@dimen/default_margin_size"
-                      android:layout_alignParentBottom="true"
-                      android:layout_alignParentEnd="true">
+        <LinearLayout
+                android:id="@+id/schedule_game_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/default_margin_size">
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    style="@style/VbrExtendedFab"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/save"
-                    app:icon="@drawable/ic_schedule"
-                    android:onClick="scheduleGame"
-                    android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"
+                    android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginEnd="@dimen/fab_shift_default"
-                    android:layout_marginBottom="@dimen/fab_shift_default"/>
+                    android:layout_marginBottom="@dimen/fab_shift_default"
+                    android:onClick="scheduleGame"
+                    android:text="@string/save"
+                    app:icon="@drawable/ic_schedule" />
 
         </LinearLayout>
 

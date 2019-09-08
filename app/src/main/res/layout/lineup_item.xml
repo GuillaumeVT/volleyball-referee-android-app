@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="@dimen/small_margin_size">
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/position_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/tiny_margin_size"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextViewTheme"
-        android:textSize="@dimen/default_text_size"/>
+        android:orientation="vertical"
+        android:padding="@dimen/small_margin_size">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/text_round_background"
-        android:elevation="@dimen/number_text_elevation"
-        android:padding="@dimen/tiny_margin_size"
-        android:textAlignment="center"
-        android:textSize="@dimen/default_text_size"/>
+            android:id="@+id/position_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/tiny_margin_size"
+            android:textAlignment="center"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/text_round_background"
+            android:elevation="@dimen/number_text_elevation"
+            android:padding="@dimen/tiny_margin_size"
+            android:textAlignment="center"
+            android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

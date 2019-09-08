@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="top|center"
-              android:orientation="vertical"
-              android:importantForAutofill="noExcludeDescendants"
-              android:clipToPadding="false">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:gravity="top|center"
+        android:importantForAutofill="noExcludeDescendants"
+        android:orientation="vertical">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-                style="@style/AppTheme.TextInputLayout"
                 android:id="@+id/home_team_name_input_layout"
+                style="@style/AppTheme.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
-                app:endIconMode="clear_text"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:endIconMode="clear_text">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/home_team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/default_margin_size"
-                    android:paddingEnd="@dimen/default_margin_size"
                     android:ems="10"
                     android:hint="@string/home_team_hint"
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:paddingStart="@dimen/default_margin_size"
+                    android:paddingEnd="@dimen/default_margin_size"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/default_text_size" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/home_team_color_button"
-                style="@style/VbrRoundButton"
+                style="@style/AppTheme.RoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
                 app:fabCustomSize="@dimen/form_button_size"
                 app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_shirt_color"/>
+                app:srcCompat="@drawable/ic_shirt_color" />
 
     </LinearLayout>
 
@@ -55,9 +55,9 @@
             android:id="@+id/home_team_captain_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_team_captain_number_title"
@@ -66,18 +66,18 @@
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/select_captain"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_team_captain_number_button"
+                style="@style/AppTheme.Button"
                 android:layout_width="@dimen/form_button_size"
                 android:layout_height="@dimen/form_button_size"
-                android:layout_margin="@dimen/small_margin_size"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/small_margin_size"
                 android:textSize="@dimen/default_text_size"
-                app:cornerRadius="@dimen/form_button_radius"
-                style="@style/VbrButton"/>
+                app:cornerRadius="@dimen/form_button_radius" />
 
     </LinearLayout>
 
@@ -85,9 +85,9 @@
             android:id="@+id/home_team_player_names_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_team_player_names_title"
@@ -96,61 +96,61 @@
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/input_player_names"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/home_team_player_names_button"
-                style="@style/VbrRoundButton"
+                style="@style/AppTheme.RoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
                 app:fabCustomSize="@dimen/form_button_size"
                 app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_player_name"/>
+                app:srcCompat="@drawable/ic_player_name" />
 
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-                style="@style/AppTheme.TextInputLayout"
                 android:id="@+id/guest_team_name_input_layout"
+                style="@style/AppTheme.TextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
-                app:endIconMode="clear_text"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:endIconMode="clear_text">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/guest_team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/default_margin_size"
-                    android:paddingEnd="@dimen/default_margin_size"
                     android:ems="10"
                     android:hint="@string/guest_team_hint"
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:paddingStart="@dimen/default_margin_size"
+                    android:paddingEnd="@dimen/default_margin_size"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/default_text_size" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/guest_team_color_button"
-                style="@style/VbrRoundButton"
+                style="@style/AppTheme.RoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
                 app:fabCustomSize="@dimen/form_button_size"
                 app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_shirt_color"/>
+                app:srcCompat="@drawable/ic_shirt_color" />
 
     </LinearLayout>
 
@@ -158,9 +158,9 @@
             android:id="@+id/guest_team_captain_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/guest_team_captain_number_title"
@@ -169,18 +169,18 @@
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/select_captain"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/guest_team_captain_number_button"
+                style="@style/AppTheme.Button"
                 android:layout_width="@dimen/form_button_size"
                 android:layout_height="@dimen/form_button_size"
-                android:layout_margin="@dimen/small_margin_size"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/small_margin_size"
                 android:textSize="@dimen/default_text_size"
-                app:cornerRadius="@dimen/form_button_radius"
-                style="@style/VbrButton"/>
+                app:cornerRadius="@dimen/form_button_radius" />
 
     </LinearLayout>
 
@@ -188,9 +188,9 @@
             android:id="@+id/guest_team_player_names_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/guest_team_player_names_title"
@@ -199,27 +199,27 @@
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/input_player_names"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/guest_team_player_names_button"
-                style="@style/VbrRoundButton"
+                style="@style/AppTheme.RoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
                 app:fabCustomSize="@dimen/form_button_size"
                 app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_player_name"/>
+                app:srcCompat="@drawable/ic_player_name" />
 
     </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/gender_title"
@@ -228,19 +228,19 @@
                 android:layout_margin="@dimen/small_margin_size"
                 android:layout_weight="1"
                 android:text="@string/gender_description"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/switch_gender_button"
-                style="@style/VbrRoundButton"
+                style="@style/AppTheme.RoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
                 android:contentDescription="@string/gender_description"
                 app:fabCustomSize="@dimen/form_button_size"
                 app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_mixed"/>
+                app:srcCompat="@drawable/ic_mixed" />
 
     </LinearLayout>
 
@@ -255,38 +255,38 @@
                 android:id="@+id/league_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
                 android:ems="10"
                 android:hint="@string/league_name"
                 android:imeOptions="actionNext"
                 android:inputType="textCapWords"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/default_text_size"/>
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/AppTheme.TextInputLayout"
             android:id="@+id/division_name_input_layout"
+            style="@style/AppTheme.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
-            app:endIconMode="clear_text"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:endIconMode="clear_text">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/division_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
                 android:ems="10"
                 android:hint="@string/division_name"
                 android:imeOptions="actionDone"
                 android:inputType="textCapWords"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/default_text_size"/>
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -295,32 +295,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginEnd="@dimen/small_margin_size"
             android:layout_marginStart="@dimen/small_margin_size"
             android:layout_marginTop="@dimen/small_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
             android:text="@string/referee"
-            android:textAppearance="@style/TextViewTheme"
-            android:textSize="@dimen/default_text_size"/>
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/referee_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/small_margin_size"
             android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/big_margin_size"
             android:prompt="@string/referee"
             android:spinnerMode="dialog"
             android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size"/>
+            android:textSize="@dimen/default_text_size" />
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
+            android:baselineAligned="false"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/match_duration_text"
@@ -328,8 +328,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/match_duration_text"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/default_text_size"/>
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
         <NumberPicker
                 android:id="@+id/match_duration_picker"
@@ -337,7 +337,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:descendantFocusability="blocksDescendants"
-                android:theme="@style/NumberPickerTheme"/>
+                android:theme="@style/AppTheme.NumberPicker" />
 
     </LinearLayout>
 

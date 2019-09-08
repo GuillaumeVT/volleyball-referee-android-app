@@ -27,6 +27,8 @@
 
     <color name="colorToolbar">@color/colorPrimary</color>
     <color name="colorOnToolbar">@color/colorOnPrimary</color>
+    <color name="colorFab">#fac511</color>
+    <color name="colorOnFab">#1f4294</color>
 
     <color name="colorLive">#ffcc0000</color>
     <color name="colorLiveLight">#faa</color>
@@ -55,6 +57,7 @@
     <color name="colorTimeout">@android:color/holo_orange_dark</color>
     <color name="colorYellowCard">#f3bc07</color>
     <color name="colorRedCard">#bc0019</color>
+    <color name="colorService">#1f4294</color>
     <color name="colorStart">@android:color/holo_green_dark</color>
     <color name="colorStop">@android:color/holo_red_dark</color>
     <color name="colorReportDuplicate">#d6d7d7</color>

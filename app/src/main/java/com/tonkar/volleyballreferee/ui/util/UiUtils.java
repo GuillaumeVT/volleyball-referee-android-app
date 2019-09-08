@@ -38,7 +38,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
@@ -168,14 +167,14 @@ public class UiUtils {
 
     public static void colorPlusIconButton(Context context, FloatingActionButton button) {
         button.setImageResource(R.drawable.ic_plus);
-        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorSecondary)));
-        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorFab)));
+        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
     }
 
     public static void colorCloseIconButton(Context context, FloatingActionButton button) {
         button.setImageResource(R.drawable.ic_close);
-        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorSecondary)));
-        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN));
+        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorFab)));
+        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
     }
 
     public static void colorIconButtonInWhite(FloatingActionButton button) {
@@ -473,14 +472,6 @@ public class UiUtils {
             case DELAY_PENALTY:
                 imageView.setImageResource(R.drawable.delay_penalty);
                 break;
-        }
-    }
-
-    public static void setDrawableStart(TextView textView, @DrawableRes int drawableId) {
-        if (TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_LTR) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
-        } else {
-            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableId, 0);
         }
     }
 

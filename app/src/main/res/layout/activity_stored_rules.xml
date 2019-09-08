@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="top|center"
-              android:orientation="vertical"
-              tools:context="com.tonkar.volleyballreferee.ui.stored.rules.StoredRulesActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:orientation="vertical"
+        tools:context="com.tonkar.volleyballreferee.ui.stored.rules.StoredRulesActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -24,28 +24,29 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/big_margin_size"
                     android:gravity="top|center"
-                    android:paddingBottom="@dimen/empty_fab_space"/>
+                    android:paddingBottom="@dimen/empty_fab_space" />
 
         </ScrollView>
 
-        <LinearLayout android:layout_width="wrap_content"
-                      android:id="@+id/save_rules_layout"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="@dimen/default_margin_size"
-                      android:layout_alignParentBottom="true"
-                      android:layout_alignParentEnd="true">
+        <LinearLayout
+                android:id="@+id/save_rules_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/default_margin_size">
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    style="@style/VbrExtendedFab"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/save_rules"
-                    app:icon="@drawable/ic_save"
-                    android:onClick="saveRules"
-                    android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginStart="@dimen/fab_shift_default"
+                    android:layout_marginTop="@dimen/fab_shift_default"
                     android:layout_marginEnd="@dimen/fab_shift_default"
-                    android:layout_marginBottom="@dimen/fab_shift_default"/>
+                    android:layout_marginBottom="@dimen/fab_shift_default"
+                    android:onClick="saveRules"
+                    android:text="@string/save_rules"
+                    app:icon="@drawable/ic_save" />
 
         </LinearLayout>
 

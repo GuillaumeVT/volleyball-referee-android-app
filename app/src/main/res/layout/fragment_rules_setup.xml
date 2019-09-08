@@ -14,8 +14,8 @@
             android:layout_marginBottom="@dimen/big_margin_size"
             android:text="@string/general_rules"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextViewTheme"
-            android:textColor="@color/colorAccent"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
 
@@ -31,14 +31,14 @@
                 android:id="@+id/rules_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
                 android:ems="10"
                 android:hint="@string/rules_name_hint"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                android:textColor="@color/colorAccent"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,7 +51,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_sets_per_game"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -74,7 +74,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_points_per_set"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -106,7 +106,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_points_in_tie_break"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -147,8 +147,8 @@
             android:layout_marginBottom="@dimen/big_margin_size"
             android:text="@string/timeout_rules"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextViewTheme"
-            android:textColor="@color/colorAccent"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
 
@@ -169,7 +169,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_team_timeouts_per_set"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -192,7 +192,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_team_timeout_duration"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -224,7 +224,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_technical_timeout_duration"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -256,7 +256,7 @@
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginEnd="@dimen/big_margin_size"
             android:text="@string/rules_game_intervals_duration"
-            android:textAppearance="@style/TextViewTheme"
+            android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -286,8 +286,8 @@
                 android:layout_marginBottom="@dimen/big_margin_size"
                 android:text="@string/indoor_rules"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextViewTheme"
-                android:textColor="@color/colorAccent"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size"
                 android:textStyle="bold" />
 
@@ -299,7 +299,7 @@
                 android:layout_marginTop="@dimen/big_margin_size"
                 android:layout_marginEnd="@dimen/big_margin_size"
                 android:text="@string/rules_substitutions_limitation"
-                android:textAppearance="@style/TextViewTheme"
+                android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -323,9 +323,9 @@
                 android:layout_marginTop="@dimen/small_margin_size"
                 android:layout_marginEnd="@dimen/big_margin_size"
                 android:drawablePadding="@dimen/default_margin_size"
-                android:drawableTint="@color/colorAccent"
-                android:textAppearance="@style/TextViewTheme"
-                android:textSize="@dimen/small_text_size" />
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/small_text_size"
+                app:drawableStartCompat="@drawable/ic_info" />
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -335,7 +335,7 @@
                 android:layout_marginTop="@dimen/big_margin_size"
                 android:layout_marginEnd="@dimen/big_margin_size"
                 android:text="@string/rules_team_substitutions_per_set"
-                android:textAppearance="@style/TextViewTheme"
+                android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -358,7 +358,7 @@
                 android:layout_marginTop="@dimen/big_margin_size"
                 android:layout_marginEnd="@dimen/big_margin_size"
                 android:text="@string/rules_consecutive_serves_per_player"
-                android:textAppearance="@style/TextViewTheme"
+                android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -390,8 +390,8 @@
                 android:layout_marginBottom="@dimen/big_margin_size"
                 android:text="@string/beach_rules"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextViewTheme"
-                android:textColor="@color/colorAccent"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size"
                 android:textStyle="bold" />
 
@@ -412,7 +412,7 @@
                 android:layout_marginTop="@dimen/big_margin_size"
                 android:layout_marginEnd="@dimen/big_margin_size"
                 android:text="@string/rules_court_switch_frequency"
-                android:textAppearance="@style/TextViewTheme"
+                android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -435,7 +435,7 @@
                 android:layout_marginTop="@dimen/big_margin_size"
                 android:layout_marginEnd="@dimen/big_margin_size"
                 android:text="@string/rules_court_switch_frequency_tie_break"
-                android:textAppearance="@style/TextViewTheme"
+                android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner

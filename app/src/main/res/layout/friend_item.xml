@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/RoundedCard"
+            style="@style/AppTheme.RoundedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin_size"
@@ -21,22 +21,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/default_margin_size"
-                    android:textAppearance="@style/TextViewTheme"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/remove_friend_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/remove"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:textAllCaps="false"
                     android:textColor="@color/colorError"
-                    app:iconTint="@color/colorError"
-                    app:strokeColor="@color/colorError"
-                    app:icon="@drawable/ic_delete"
                     android:textSize="@dimen/small_text_size"
-                    android:textAllCaps="false"/>
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="@color/colorError"
+                    app:strokeColor="@color/colorError" />
 
         </LinearLayout>
 

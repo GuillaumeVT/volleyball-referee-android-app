@@ -18,10 +18,10 @@
             android:layout_marginTop="@dimen/default_margin_size"
             android:background="@color/colorSurface"
             app:tabBackground="@color/colorSurface"
-            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextAppearance="@style/DynamicTabText" />
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextAppearance="@style/AppTheme.DynamicTabText" />
 
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/stored_game_pager"
