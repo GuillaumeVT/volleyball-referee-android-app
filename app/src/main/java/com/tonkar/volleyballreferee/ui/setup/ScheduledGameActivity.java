@@ -481,7 +481,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         @Override
         public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
             Calendar scheduleDate = mActivity.getScheduleDate();
-            return new DatePickerDialog(mActivity, R.style.AppTheme_Dialog,this,
+            return new DatePickerDialog(mActivity,this,
                     scheduleDate.get(Calendar.YEAR), scheduleDate.get(Calendar.MONTH), scheduleDate.get(Calendar.DAY_OF_MONTH));
         }
 
@@ -502,7 +502,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         @Override
         public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
             Calendar scheduleDate = mActivity.getScheduleDate();
-            return new TimePickerDialog(mActivity, R.style.AppTheme_Dialog,this, scheduleDate.get(Calendar.HOUR_OF_DAY), scheduleDate.get(Calendar.MINUTE),true);
+            return new TimePickerDialog(mActivity,this, scheduleDate.get(Calendar.HOUR_OF_DAY), scheduleDate.get(Calendar.MINUTE),true);
         }
 
         public void onTimeSet(TimePicker view, int hour, int minute) {
