@@ -33,8 +33,6 @@
     <dimen name="sanction_half_size">12dp</dimen>
     <dimen name="sanction_max_width">48dp</dimen>
 
-    <dimen name="main_image_height">120dp</dimen>
-
     <dimen name="indoor_court_y_margin">32dp</dimen>
     <dimen name="beach_court_y_padding">32dp</dimen>
     <dimen name="court_x_padding">16dp</dimen>

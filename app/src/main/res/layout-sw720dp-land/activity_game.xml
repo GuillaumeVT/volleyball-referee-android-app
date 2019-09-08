@@ -73,8 +73,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/big_margin_size"
-                    android:layout_marginBottom="@dimen/big_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="6">
@@ -174,7 +173,7 @@
             <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/big_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
                     app:alignContent="center"
                     app:alignItems="center"
                     app:justifyContent="space_around">
