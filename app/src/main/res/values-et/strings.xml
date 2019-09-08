@@ -187,6 +187,7 @@
     <string name="settings">Seaded</string>
     <string name="pref_keep_screen_on">Jäta mängu ajaks aktiivseks ekraani</string>
     <string name="pref_interactive_notification">Aktiveeri interaktiivsed teated</string>
+    <string name="pref_night_mode">Teema</string>
 
     <string name="synchronize">Sünkroniseerida</string>
     <string name="sync_succeeded_message">Andmed edukalt sünkroniseeritud</string>
@@ -335,6 +336,11 @@
         <item>4 pallingut</item>
         <item>3 pallingut</item>
         <item>2 pallingut</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Süsteemi vaikeseade</item>
+        <item>Hele</item>
+        <item>Tume</item>
     </string-array>
 
 </resources>

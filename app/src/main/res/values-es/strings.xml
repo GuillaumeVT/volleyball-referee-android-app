@@ -187,6 +187,7 @@
     <string name="settings">Ajustes</string>
     <string name="pref_keep_screen_on">No apagar la pantalla durante los partidos</string>
     <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
+    <string name="pref_night_mode">Tema</string>
 
     <string name="synchronize">Sincronizar</string>
     <string name="sync_succeeded_message">Sincronización de datos completa</string>
@@ -335,6 +336,11 @@
         <item>4 saques</item>
         <item>3 saques</item>
         <item>2 saques</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Perderteminado del sistema</item>
+        <item>Claro</item>
+        <item>Oscuro</item>
     </string-array>
 
 </resources>

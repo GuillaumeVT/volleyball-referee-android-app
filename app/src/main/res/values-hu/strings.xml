@@ -188,6 +188,7 @@
     <string name="settings">Beállítások</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>
     <string name="pref_interactive_notification">Interaktív értesítések használata</string>
+    <string name="pref_night_mode">Téma</string>
 
     <string name="synchronize">Szinkronizálás</string>
     <string name="sync_succeeded_message">Sikeres adat szinkronizáció</string>
@@ -336,6 +337,11 @@
         <item>4 nyitás</item>
         <item>3 nyitás</item>
         <item>2 nyitás</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Alapértelmezett</item>
+        <item>Világos</item>
+        <item>Sötét</item>
     </string-array>
 
 </resources>

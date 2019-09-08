@@ -187,6 +187,7 @@
     <string name="settings">Configurações</string>
     <string name="pref_keep_screen_on">Manter écran ligado durante os jogos</string>
     <string name="pref_interactive_notification">Usar notificações interativas</string>
+    <string name="pref_night_mode">Tema</string>
 
     <string name="synchronize">Sincronizar</string>
     <string name="sync_succeeded_message">Sincronização de dados com sucesso</string>
@@ -335,6 +336,11 @@
         <item>4 serviços</item>
         <item>3 serviços</item>
         <item>2 serviços</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Predefinição do sistema</item>
+        <item>Claro</item>
+        <item>Escuro</item>
     </string-array>
 
 </resources>

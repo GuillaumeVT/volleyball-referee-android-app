@@ -186,6 +186,7 @@
     <string name="settings">Параметры</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
     <string name="pref_interactive_notification">Включить интерактивные уведомления</string>
+    <string name="pref_night_mode">Тема</string>
 
     <string name="synchronize">Синхронизировать</string>
     <string name="sync_succeeded_message">Синхронизация закончена</string>
@@ -334,6 +335,11 @@
         <item>4 подачи</item>
         <item>3 подачи</item>
         <item>2 подачи</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>По умолчанию</item>
+        <item>Светлая</item>
+        <item>Темная</item>
     </string-array>
 
 </resources>

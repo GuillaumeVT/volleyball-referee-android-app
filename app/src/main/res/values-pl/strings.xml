@@ -187,6 +187,7 @@
     <string name="settings">Ustawienia</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
     <string name="pref_interactive_notification">Użyj powiadomień interaktywnych</string>
+    <string name="pref_night_mode">Motyw</string>
 
     <string name="synchronize">Zsynchronizuj</string>
     <string name="sync_succeeded_message">Synchronizacja danych przebiegła pomyślnie</string>
@@ -335,6 +336,11 @@
         <item>4 zagrywki</item>
         <item>3 zagrywki</item>
         <item>2 zagrywki</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Donwśmysymemowy</item>
+        <item>Jasny</item>
+        <item>Ciemny</item>
     </string-array>
 
 </resources>

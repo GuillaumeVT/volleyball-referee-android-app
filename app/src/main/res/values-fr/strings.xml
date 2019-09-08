@@ -186,6 +186,7 @@
     <string name="settings">Paramètres</string>
     <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
     <string name="pref_interactive_notification">Utiliser les notifications interactives</string>
+    <string name="pref_night_mode">Thème</string>
 
     <string name="synchronize">Synchroniser</string>
     <string name="sync_succeeded_message">Synchronisation terminée</string>
@@ -334,6 +335,11 @@
         <item>4 services</item>
         <item>3 services</item>
         <item>2 services</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Thème par défaut du système</item>
+        <item>Mode clair</item>
+        <item>Mode sombre</item>
     </string-array>
 
 </resources>

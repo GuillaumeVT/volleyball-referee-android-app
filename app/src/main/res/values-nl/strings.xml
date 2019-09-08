@@ -187,6 +187,7 @@
     <string name="settings">Instellingen</string>
     <string name="pref_keep_screen_on">Houd het scherm aan tijdens wedstrijden</string>
     <string name="pref_interactive_notification">Gebruik interactieve meldingen</string>
+    <string name="pref_night_mode">Thema</string>
 
     <string name="synchronize">Synchroniseer</string>
     <string name="sync_succeeded_message">Gegevenssynchronisatie is gelukt</string>
@@ -335,6 +336,11 @@
         <item>4 opslagen</item>
         <item>3 opslagen</item>
         <item>2 opslagen</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Systeemstandaard</item>
+        <item>Licht</item>
+        <item>Donker</item>
     </string-array>
 
 </resources>

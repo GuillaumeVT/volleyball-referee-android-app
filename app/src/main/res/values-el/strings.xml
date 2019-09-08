@@ -76,7 +76,7 @@
     <string name="user_request_error">Σφάλμα κατά την επεξεργασία του αιτήματος</string>
     <string name="user_signed_in_as_pseudo">Συνδέθηκες σαν %s</string>
     <string name="user_password_recovery_initiated">Ένα σύνδεσμος επαναφοράς στάλθηκε με ηλεκτρονικό μήνυμα στον %s</string>
-    <string name="password_strength">Ο κωδικός πρέπει να περιλαμβάνει τουλάχιστον 8 χαρακτήρες, συμπεριλαμβανομένου 1 κεφαλαίου χαρακτήρα, 1 ψηφίου και 1 ειδικού χαρακτήρα.</string>
+    <string name="password_strength">Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες, να περιλαμβάνει τουλάχιστον 1 κεφαλαίο γράμμα, 1 αριθμό και 1 σύμβολο.</string>
     <string name="password_strength_error">Ο κωδικός δεν πληροί τα προαναφερθέντα κριτήρια</string>
     <string name="user_signed_out">Αποσυνδέθηκες</string>
     <string name="search_colleague">Ψάξε συναδέλφους</string>
@@ -187,6 +187,7 @@
     <string name="settings">Ρυθμίσεις</string>
     <string name="pref_keep_screen_on">Κράτα την οθόνη ανοιχτή κατά τη διάρκεια των αγώνων</string>
     <string name="pref_interactive_notification">Χρήση ειδοποιήσεων με αλληλεπίδραση</string>
+    <string name="pref_night_mode">Θέμο</string>
 
     <string name="synchronize">Συγχρονισμός</string>
     <string name="sync_succeeded_message">Επιτυχής συγχρονισμός δεδομένων</string>
@@ -335,6 +336,11 @@
         <item>4 σερβίς</item>
         <item>3 σερβίς</item>
         <item>2 σερβίς</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Προεπιλογή συστήματος</item>
+        <item>Φως</item>
+        <item>Σκούρο</item>
     </string-array>
 
 </resources>

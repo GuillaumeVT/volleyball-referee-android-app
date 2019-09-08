@@ -187,6 +187,7 @@
     <string name="settings">Opzioni</string>
     <string name="pref_keep_screen_on">Mantenere lo schermo acceso durante le partite</string>
     <string name="pref_interactive_notification">Utilizzare le notifiche interattive</string>
+    <string name="pref_night_mode">Tema</string>
 
     <string name="synchronize">Sincronizzare</string>
     <string name="sync_succeeded_message">Sincronizzazione terminata</string>
@@ -335,6 +336,11 @@
         <item>4 servizi</item>
         <item>3 servizi</item>
         <item>2 servizi</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Predefinito di sistema</item>
+        <item>Chiaro</item>
+        <item>Scuro</item>
     </string-array>
 
 </resources>
