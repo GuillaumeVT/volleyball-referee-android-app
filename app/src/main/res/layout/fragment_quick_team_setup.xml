@@ -21,6 +21,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
+                android:layout_weight="1"
                 app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
