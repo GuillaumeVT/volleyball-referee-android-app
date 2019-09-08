@@ -343,4 +343,7 @@
         <item>Escuro</item>
     </string-array>
 
+    <!-- Credits activity -->
+    <string name="credit_title">About the VBR Team</string>
+
 </resources>

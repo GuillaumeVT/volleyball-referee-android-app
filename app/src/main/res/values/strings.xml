@@ -344,7 +344,7 @@
     </string-array>
 
     <!-- Credits activity -->
-    <string name="credit_title" translatable="false">About the VBR Team</string>
+    <string name="credit_title">About the VBR Team</string>
     <string name="credit_designers" translatable="false">Volleyball Referee is designed and developped by Guillaume VT and Polina P as a hobby project.\nYou can contact us at vbr.app.team@gmail.com.</string>
     <string name="credit_translators_intro" translatable="false">Our translations are made by voluntary referees and players. A huge thanks to them all:</string>
     <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>

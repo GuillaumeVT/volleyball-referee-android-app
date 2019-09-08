@@ -342,4 +342,7 @@
         <item>Mode sombre</item>
     </string-array>
 
+    <!-- Credits activity -->
+    <string name="credit_title">À propos de l\'équipe VBR</string>
+
 </resources>

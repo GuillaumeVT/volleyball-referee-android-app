@@ -343,4 +343,7 @@
         <item>Σκούρο</item>
     </string-array>
 
+    <!-- Credits activity -->
+    <string name="credit_title">Σχετικά με την ομάδα VBR</string>
+
 </resources>
