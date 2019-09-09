@@ -4,7 +4,7 @@
     <color name="colorPrimaryVariant">#cedaf5</color>
     <color name="colorOnPrimary">@android:color/white</color>
     <color name="colorSecondary">#fac511</color>
-    <color name="colorSecondaryVariant">#503d00</color>
+    <color name="colorSecondaryVariant">#3f3e38</color>
     <color name="colorOnSecondary">#1f1f1f</color>
     <color name="colorAccent">@color/colorPrimary</color>
 
