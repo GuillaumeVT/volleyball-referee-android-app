@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Częstotliwość zmiany stron w tie-breaku</string>
 
     <string-array name="points_per_set_entries">
+        <item>Set do 40 punktów</item>
+        <item>Set do 39 punktów</item>
+        <item>Set do 38 punktów</item>
+        <item>Set do 37 punktów</item>
+        <item>Set do 36 punktów</item>
+        <item>Set do 35 punktów</item>
+        <item>Set do 34 punktów</item>
+        <item>Set do 33 punktów</item>
+        <item>Set do 32 punktów</item>
+        <item>Set do 31 punktów</item>
         <item>Set do 30 punktów</item>
         <item>Set do 29 punktów</item>
         <item>Set do 28 punktów</item>

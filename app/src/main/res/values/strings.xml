@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Court switch frequency in tie break</string>
 
     <string-array name="points_per_set_entries">
+        <item>Set of 40 points</item>
+        <item>Set of 39 points</item>
+        <item>Set of 38 points</item>
+        <item>Set of 37 points</item>
+        <item>Set of 36 points</item>
+        <item>Set of 35 points</item>
+        <item>Set of 34 points</item>
+        <item>Set of 33 points</item>
+        <item>Set of 32 points</item>
+        <item>Set of 31 points</item>
         <item>Set of 30 points</item>
         <item>Set of 29 points</item>
         <item>Set of 28 points</item>
@@ -350,6 +360,16 @@
     <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>
 
     <string-array name="points_per_set_values" translatable="false">
+        <item>40</item>
+        <item>39</item>
+        <item>38</item>
+        <item>37</item>
+        <item>36</item>
+        <item>35</item>
+        <item>34</item>
+        <item>33</item>
+        <item>32</item>
+        <item>31</item>
         <item>30</item>
         <item>29</item>
         <item>28</item>

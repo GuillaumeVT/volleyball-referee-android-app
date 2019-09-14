@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Συχνότητα αλλαγής γηπέδου σε τάι μπρέικ</string>
 
     <string-array name="points_per_set_entries">
+        <item>Σετ των 40 πόντων</item>
+        <item>Σετ των 39 πόντων</item>
+        <item>Σετ των 38 πόντων</item>
+        <item>Σετ των 37 πόντων</item>
+        <item>Σετ των 36 πόντων</item>
+        <item>Σετ των 35 πόντων</item>
+        <item>Σετ των 34 πόντων</item>
+        <item>Σετ των 33 πόντων</item>
+        <item>Σετ των 32 πόντων</item>
+        <item>Σετ των 31 πόντων</item>
         <item>Σετ των 30 πόντων</item>
         <item>Σετ των 29 πόντων</item>
         <item>Σετ των 28 πόντων</item>

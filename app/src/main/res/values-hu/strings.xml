@@ -258,6 +258,16 @@
     <string name="rules_court_switch_frequency_tie_break">Térfélcsere gyakorisága döntő játszmában</string>
 
     <string-array name="points_per_set_entries">
+        <item>40 pontos játszmák</item>
+        <item>39 pontos játszmák</item>
+        <item>38 pontos játszmák</item>
+        <item>37 pontos játszmák</item>
+        <item>36 pontos játszmák</item>
+        <item>35 pontos játszmák</item>
+        <item>34 pontos játszmák</item>
+        <item>33 pontos játszmák</item>
+        <item>32 pontos játszmák</item>
+        <item>31 pontos játszmák</item>
         <item>30 pontos játszmák</item>
         <item>29 pontos játszmák</item>
         <item>28 pontos játszmák</item>

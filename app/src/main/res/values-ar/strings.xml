@@ -251,6 +251,16 @@
     <string name="rules_court_switch_frequency_tie_break">معدل النقاط لتغير الساحة في الأشواط العادية</string>
 
     <string-array name="points_per_set_entries">
+        <item>شوط من 40 نقطة</item>
+        <item>شوط من 39 نقطة</item>
+        <item>شوط من 38 نقطة</item>
+        <item>شوط من 37 نقطة</item>
+        <item>شوط من 36 نقطة</item>
+        <item>شوط من 35 نقطة</item>
+        <item>شوط من 34 نقطة</item>
+        <item>شوط من 33 نقطة</item>
+        <item>شوط من 32 نقطة</item>
+        <item>شوط من 31 نقطة</item>
         <item>شوط من 30 نقطة</item>
         <item>شوط من 29 نقطة</item>
         <item>شوط من 28 نقطة</item>

@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Frequentie kampwissels in tie-break</string>
 
     <string-array name="points_per_set_entries">
+        <item>Set van 40 punten</item>
+        <item>Set van 39 punten</item>
+        <item>Set van 38 punten</item>
+        <item>Set van 37 punten</item>
+        <item>Set van 36 punten</item>
+        <item>Set van 35 punten</item>
+        <item>Set van 34 punten</item>
+        <item>Set van 33 punten</item>
+        <item>Set van 32 punten</item>
+        <item>Set van 31 punten</item>
         <item>Set van 30 punten</item>
         <item>Set van 29 punten</item>
         <item>Set van 28 punten</item>

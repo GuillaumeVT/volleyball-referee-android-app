@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Frequenza di cambio campo nel tie break</string>
 
     <string-array name="points_per_set_entries">
+        <item>Set a 40 punti</item>
+        <item>Set a 39 punti</item>
+        <item>Set a 38 punti</item>
+        <item>Set a 37 punti</item>
+        <item>Set a 36 punti</item>
+        <item>Set a 35 punti</item>
+        <item>Set a 34 punti</item>
+        <item>Set a 33 punti</item>
+        <item>Set a 32 punti</item>
+        <item>Set a 31 punti</item>
         <item>Set a 30 punti</item>
         <item>Set a 29 punti</item>
         <item>Set a 28 punti</item>

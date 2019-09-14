@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Otsustava geimis poolte vahetuste sagedus</string>
 
     <string-array name="points_per_set_entries">
+        <item>40-punktiline geim</item>
+        <item>39-punktiline geim</item>
+        <item>38-punktiline geim</item>
+        <item>37-punktiline geim</item>
+        <item>36-punktiline geim</item>
+        <item>35-punktiline geim</item>
+        <item>34-punktiline geim</item>
+        <item>33-punktiline geim</item>
+        <item>32-punktiline geim</item>
+        <item>31-punktiline geim</item>
         <item>30-punktiline geim</item>
         <item>29-punktiline geim</item>
         <item>28-punktiline geim</item>

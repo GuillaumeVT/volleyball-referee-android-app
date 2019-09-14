@@ -257,6 +257,16 @@
     <string name="rules_court_switch_frequency_tie_break">Frequenz des Seitenwechsel im Tie break</string>
 
     <string-array name="points_per_set_entries">
+        <item>Satz mit 40 Punkten</item>
+        <item>Satz mit 39 Punkten</item>
+        <item>Satz mit 38 Punkten</item>
+        <item>Satz mit 37 Punkten</item>
+        <item>Satz mit 36 Punkten</item>
+        <item>Satz mit 35 Punkten</item>
+        <item>Satz mit 34 Punkten</item>
+        <item>Satz mit 33 Punkten</item>
+        <item>Satz mit 32 Punkten</item>
+        <item>Satz mit 31 Punkten</item>
         <item>Satz mit 30 Punkten</item>
         <item>Satz mit 29 Punkten</item>
         <item>Satz mit 28 Punkten</item>

@@ -256,6 +256,16 @@
     <string name="rules_court_switch_frequency_tie_break">Частота смены сторон в тай-брейке</string>
 
     <string-array name="points_per_set_entries">
+        <item>Партия из 40 очков</item>
+        <item>Партия из 39 очков</item>
+        <item>Партия из 38 очков</item>
+        <item>Партия из 37 очков</item>
+        <item>Партия из 36 очков</item>
+        <item>Партия из 35 очков</item>
+        <item>Партия из 34 очков</item>
+        <item>Партия из 33 очков</item>
+        <item>Партия из 32 очков</item>
+        <item>Партия из 31 очков</item>
         <item>Партия из 30 очков</item>
         <item>Партия из 29 очков</item>
         <item>Партия из 28 очков</item>
