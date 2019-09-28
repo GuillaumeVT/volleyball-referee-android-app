@@ -36,6 +36,8 @@ public class ApiRules {
     private boolean  twoPointsDifference;
     @SerializedName("sanctions")
     private boolean  sanctions;
+    @SerializedName("matchTermination")
+    private int      matchTermination;
     @SerializedName("teamTimeouts")
     private boolean  teamTimeouts;
     @SerializedName("teamTimeoutsPerSet")
@@ -76,6 +78,7 @@ public class ApiRules {
         pointsInTieBreak = 0;
         twoPointsDifference = false;
         sanctions = false;
+        matchTermination = 1;
         teamTimeouts = false;
         teamTimeoutsPerSet = 0;
         teamTimeoutDuration = 0;
@@ -83,7 +86,7 @@ public class ApiRules {
         technicalTimeoutDuration = 0;
         gameIntervals = false;
         gameIntervalDuration = 0;
-        substitutionsLimitation = 0;
+        substitutionsLimitation = 1;
         teamSubstitutionsPerSet = 0;
         beachCourtSwitches = false;
         beachCourtSwitchFreq = 0;

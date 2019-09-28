@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Liczba punktów w tie-breaku</string>
     <string name="rules_two_points_difference">Gra na przewagi (potrzebne 2 punkty przewagi aby wygrać set)</string>
     <string name="rules_sanctions">Sankcje</string>
+    <string name="rules_match_termination">Zakończenie meczu</string>
     <string name="rules_team_timeouts">Przerwa na zadanie</string>
     <string name="rules_team_timeouts_per_set">Ilosc przerw na set</string>
     <string name="rules_team_timeout_duration">Czas trwania przerwy na zadanie</string>
@@ -294,6 +295,10 @@
         <item>Mecz 5 setowy</item>
         <item>Mecz 3 setowy</item>
         <item>Mecz 1 setowy</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Zakończ mecz, gdy drużyna wygra</item>
+        <item>Zakończ mecz, gdy wszystkie sety zostaną rozegrane</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 przerwy na zadanie na set</item>

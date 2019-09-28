@@ -23,8 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|center"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/empty_fab_space">
+                    android:orientation="vertical">
 
                 <include layout="@layout/stored_rules_list_item" />
 
@@ -32,7 +31,7 @@
                         android:id="@+id/fragment_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/big_margin_size" />
+                        android:layout_margin="@dimen/big_margin_size"/>
 
             </LinearLayout>
 

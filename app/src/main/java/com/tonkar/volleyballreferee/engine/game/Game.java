@@ -289,19 +289,40 @@ public abstract class Game extends BaseGame {
     @Override
     public void resetCurrentSet() {
         if (!isMatchCompleted() && currentSetIndex() >= 0) {
+            resetCurrentSetSanctions(mHomeTeamSanctions);
+            resetCurrentSetSanctions(mGuestTeamSanctions);
             mSets.set(currentSetIndex(), createSet(mRules, isTieBreakSet() ? mRules.getPointsInTieBreak() : mRules.getPointsPerSet(), mServingTeamAtStart));
             notifySetStarted();
         }
     }
 
+    private void resetCurrentSetSanctions(List<ApiSanction> sanctions) {
+        for (Iterator<ApiSanction> it = sanctions.iterator(); it.hasNext() ;) {
+            ApiSanction sanction = it.next();
+            if (sanction.getSet() == currentSetIndex()) {
+                it.remove();
+            }
+        }
+    }
+
     @Override
     public boolean isMatchCompleted() {
+        boolean completed;
         final int homeTeamSetCount = getSets(TeamType.HOME);
         final int guestTeamSetCount = getSets(TeamType.GUEST);
 
-        // Match is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
-        return (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame())
-                || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
+        switch (mRules.getMatchTermination()) {
+            case Rules.ALL_SETS_TERMINATION:
+                completed = (homeTeamSetCount + guestTeamSetCount == mRules.getSetsPerGame());
+                break;
+            case Rules.WIN_TERMINATION:
+            default:
+                // Match is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
+                completed = (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
+                break;
+        }
+
+        return completed;
     }
 
     private void notifyMatchCompleted(final TeamType winner) {

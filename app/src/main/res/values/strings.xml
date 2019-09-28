@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Number of points in tie break</string>
     <string name="rules_two_points_difference">2 points difference to win set</string>
     <string name="rules_sanctions">Sanctions</string>
+    <string name="rules_match_termination">Termination of match</string>
     <string name="rules_team_timeouts">Team timeouts</string>
     <string name="rules_team_timeouts_per_set">Number of team timeouts per set</string>
     <string name="rules_team_timeout_duration">Duration of a team timeout</string>
@@ -294,6 +295,10 @@
         <item>Game of 5 sets</item>
         <item>Game of 3 sets</item>
         <item>Game of 1 set</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Finish the match when a team wins</item>
+        <item>Finish the match when all the sets have been played</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 team timeouts per set</item>
@@ -397,6 +402,10 @@
         <item>5</item>
         <item>3</item>
         <item>1</item>
+    </string-array>
+    <string-array name="match_termination_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
     </string-array>
     <string-array name="team_timeouts_per_set_values" translatable="false">
         <item>3</item>

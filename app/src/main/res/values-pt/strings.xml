@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Número de pontos no tie break</string>
     <string name="rules_two_points_difference">São necessários 2 pontos de diferença para vencer o set</string>
     <string name="rules_sanctions">Sanções</string>
+    <string name="rules_match_termination">Término do jogo</string>
     <string name="rules_team_timeouts">Tempos por equipa</string>
     <string name="rules_team_timeouts_per_set">Número de tempos por set</string>
     <string name="rules_team_timeout_duration">Duração do tempo solicitado</string>
@@ -294,6 +295,10 @@
         <item>Jogo de 5 sets</item>
         <item>Jogo de 3 sets</item>
         <item>Jogo de 1 set</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Terminar o jogo quando uma equipa ganha</item>
+        <item>Terminar o jogo quando todos os sets forem jogados</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 tempos por set</item>

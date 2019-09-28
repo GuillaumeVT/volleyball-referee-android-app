@@ -107,7 +107,7 @@ public class BeachSetTest {
         Rules rules = new Rules(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID,
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
                 "My rules", GameType.BEACH,
-                3, 21, true, 15, false, true,
+                3, 21, true, 15, false, true, Rules.WIN_TERMINATION,
                 true, 1, 30,true, 30, true, 180,
                 Rules.FIVB_LIMITATION, 0, true, 7, 5, 9999);
         BeachSet set = new BeachSet(rules, rules.getPointsPerSet(), TeamType.GUEST, null, null);

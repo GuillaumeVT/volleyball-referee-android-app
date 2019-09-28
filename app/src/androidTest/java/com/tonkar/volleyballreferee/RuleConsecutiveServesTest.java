@@ -95,7 +95,7 @@ public class RuleConsecutiveServesTest {
         Rules rules = new Rules(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID,
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
                 "My rules", GameType.INDOOR,
-                5, 25, true, 15, true, true,
+                5, 25, true, 15, true, true, Rules.WIN_TERMINATION,
                 true,2, 30,true, 60, true, 180,
                 Rules.FIVB_LIMITATION, 6, false, 0, 0, consecutiveServes);
 

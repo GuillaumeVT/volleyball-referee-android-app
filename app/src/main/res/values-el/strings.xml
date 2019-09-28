@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Αριθμός πόντων στο τάι μπρέικ</string>
     <string name="rules_two_points_difference">2 πόντοι διαφορά για νίκη του σετ</string>
     <string name="rules_sanctions">Τιμωρίες</string>
+    <string name="rules_match_termination">Τέλος ενός αγώνα</string>
     <string name="rules_team_timeouts">Ομαδικά τάιμ άουτ</string>
     <string name="rules_team_timeouts_per_set">Αριθμός ομαδικών τάιμ άουτ ανά σετ</string>
     <string name="rules_team_timeout_duration">Διάρκεια ομαδικού τάιμ άουτ</string>
@@ -294,6 +295,10 @@
         <item>Αγώνας των 5 σετ</item>
         <item>Αγώνας των 3 σετ</item>
         <item>Αγώνας του 1 σετ</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Ο αγώνας τελειώνει όταν μία ομάδα κερδίσει</item>
+        <item>Ο αγώνας τελειώνει όταν παιχτούν όλα τα σετ</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 ομαδικά τάιμ άουτ ανά σετ</item>
@@ -349,8 +354,8 @@
     </string-array>
     <string-array name="night_mode_entries">
         <item>Προεπιλογή συστήματος</item>
-        <item>Φως</item>
-        <item>Σκούρο</item>
+        <item>Θέμα ανοιχτόχρωμο</item>
+        <item>Θέμα σκουρόχρωμο</item>
     </string-array>
 
     <!-- Credits activity -->

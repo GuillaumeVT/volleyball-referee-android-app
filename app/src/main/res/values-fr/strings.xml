@@ -241,6 +241,7 @@
     <string name="rules_points_in_tie_break">Nombre de points dans le tie break</string>
     <string name="rules_two_points_difference">2 points d\'écart pour gagner un set</string>
     <string name="rules_sanctions">Sanctions</string>
+    <string name="rules_match_termination">Fin du match</string>
     <string name="rules_team_timeouts">Temps morts d\'équipe</string>
     <string name="rules_team_timeouts_per_set">Nombre de temps morts d\'équipe par set</string>
     <string name="rules_team_timeout_duration">Durée d\'un temps mort d\'équipe</string>
@@ -293,6 +294,10 @@
         <item>Match en 5 sets</item>
         <item>Match en 3 sets</item>
         <item>Match en 1 set</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Terminer le match quand un équipe le remporte</item>
+        <item>Terminer le match quand tous les sets ont été joués</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 temps morts d\'équipe par set</item>

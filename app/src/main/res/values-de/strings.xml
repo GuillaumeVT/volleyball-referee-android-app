@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Anzahl der Punkte im Tie break</string>
     <string name="rules_two_points_difference">2 Punkte Unterschied, um den Satz zu gewinnen</string>
     <string name="rules_sanctions">Sanktionen</string>
+    <string name="rules_match_termination">Beenden des Spiels durch</string>
     <string name="rules_team_timeouts">Auszeiten</string>
     <string name="rules_team_timeouts_per_set">Anzahl der Auszeiten pro Satz</string>
     <string name="rules_team_timeout_duration">Dauer einer Auszeit</string>
@@ -294,6 +295,10 @@
         <item>Spiel aus 5 Sätzen</item>
         <item>Spiel aus 3 Sätzen</item>
         <item>Spiel aus einem Satz</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Ein Team hat gewonnen</item>
+        <item>Alle Sätze wurden gespielt</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 Mannschaftsauszeiten pro Satz</item>

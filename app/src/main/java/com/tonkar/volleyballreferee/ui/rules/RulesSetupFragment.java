@@ -43,6 +43,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     private Spinner              mPointsInTieBreakSpinner;
     private SwitchCompat         mTwoPointsDifferenceSwitch;
     private SwitchCompat         mSanctionsSwitch;
+    private Spinner              mMatchTerminationSpinner;
     private SwitchCompat         mTeamTimeoutsSwitch;
     private Spinner              mTeamTimeoutsPerSetSpinner;
     private Spinner              mTeamTimeoutDurationSpinner;
@@ -60,6 +61,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     private IntegerRuleAdapter mSetsPerGameAdapter;
     private IntegerRuleAdapter mPointsPerSetAdapter;
     private IntegerRuleAdapter mPointsInTieBreakAdapter;
+    private IntegerRuleAdapter mMatchTerminationAdapter;
     private IntegerRuleAdapter mTeamTimeoutsPerSetAdapter;
     private IntegerRuleAdapter mTeamTimeoutDurationAdapter;
     private IntegerRuleAdapter mTechnicalTimeoutDurationAdapter;
@@ -114,6 +116,10 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mTwoPointsDifferenceSwitch = view.findViewById(R.id.rules_two_points_difference);
 
         mSanctionsSwitch = view.findViewById(R.id.rules_sanctions);
+
+        mMatchTerminationSpinner = view.findViewById(R.id.rules_match_termination);
+        mMatchTerminationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.match_termination_entries), getResources().getStringArray(R.array.match_termination_values));
+        mMatchTerminationSpinner.setAdapter(mMatchTerminationAdapter);
 
         mTeamTimeoutsSwitch = view.findViewById(R.id.rules_team_timeouts);
 
@@ -250,6 +256,16 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
         mSanctionsSwitch.setOnCheckedChangeListener((button, isChecked) -> mRules.setSanctions(isChecked));
 
+        mMatchTerminationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                mRules.setMatchTermination(mMatchTerminationAdapter.getItem(index));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
         mTeamTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
             mRules.setTeamTimeouts(isChecked);
             mTeamTimeoutsPerSetSpinner.setEnabled(isChecked);
@@ -383,6 +399,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mPointsInTieBreakSpinner.setEnabled(mRules.isTieBreakInLastSet());
         mTwoPointsDifferenceSwitch.setChecked(mRules.isTwoPointsDifference());
         mSanctionsSwitch.setChecked(mRules.isSanctions());
+        mMatchTerminationSpinner.setSelection(mMatchTerminationAdapter.getPosition(mRules.getMatchTermination()));
         mTeamTimeoutsSwitch.setChecked(mRules.isTeamTimeouts());
         mTeamTimeoutsPerSetSpinner.setSelection(mTeamTimeoutsPerSetAdapter.getPosition(mRules.getTeamTimeoutsPerSet()));
         mTeamTimeoutsPerSetSpinner.setEnabled(mRules.isTeamTimeouts());

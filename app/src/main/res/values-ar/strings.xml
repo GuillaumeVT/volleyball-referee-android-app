@@ -236,6 +236,7 @@
     <string name="rules_points_in_tie_break">عدد النقاط في كسر التعادل</string>
     <string name="rules_two_points_difference">فارق نقطتين للفوز بالمجموعة</string>
     <string name="rules_sanctions">العقوبات</string>
+    <string name="rules_match_termination">إنهاء المباراة</string>
     <string name="rules_team_timeouts">الوقت المستقطع للفريق</string>
     <string name="rules_team_timeouts_per_set">عدد الأوقات المستقطعة للفريق لكل شوط</string>
     <string name="rules_team_timeout_duration">مدة الوقت المستقطع للفريق</string>
@@ -288,6 +289,10 @@
         <item>مباراة من خمس اشواط</item>
         <item>مباراة من ثلاث أشواط</item>
         <item>مباراة من شوط واحد</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>إنهاء المباراة عندما يفوز الفريق</item>
+        <item>إنهاء المباراة عندما يتم لعب كل الاشواط</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>وقت مستقطع ثلاثة للفريق كل شوط</item>

@@ -143,6 +143,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:layout_marginTop="@dimen/big_margin_size"
+            android:layout_marginEnd="@dimen/big_margin_size"
+            android:text="@string/rules_match_termination"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/rules_match_termination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:layout_marginEnd="@dimen/big_margin_size"
+            android:layout_marginBottom="@dimen/big_margin_size"
+            android:prompt="@string/rules_match_termination"
+            android:spinnerMode="dialog"
+            android:textColor="@color/colorDisabledText"
+            android:textSize="@dimen/default_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginTop="@dimen/big_margin_size"
             android:layout_marginBottom="@dimen/big_margin_size"
             android:text="@string/timeout_rules"

@@ -39,6 +39,7 @@ public class RulesFragment extends Fragment implements RulesHandler {
         TextView pointsInTieBreak = view.findViewById(R.id.rules_points_in_tie_break);
         SwitchCompat twoPointsDifferenceSwitch = view.findViewById(R.id.rules_two_points_difference);
         SwitchCompat sanctionsSwitch = view.findViewById(R.id.rules_sanctions);
+        TextView matchTermination = view.findViewById(R.id.rules_match_termination);
 
         SwitchCompat teamTimeoutsSwitch = view.findViewById(R.id.rules_team_timeouts);
         TextView teamTimeoutsPerSet = view.findViewById(R.id.rules_team_timeouts_per_set);
@@ -63,6 +64,8 @@ public class RulesFragment extends Fragment implements RulesHandler {
         pointsInTieBreak.setText(findRuleEntry(mRules.getPointsInTieBreak(), R.array.points_per_set_entries, R.array.points_per_set_values));
         twoPointsDifferenceSwitch.setChecked(mRules.isTwoPointsDifference());
         sanctionsSwitch.setChecked(mRules.isSanctions());
+
+        matchTermination.setText(findRuleEntry(mRules.getMatchTermination(), R.array.match_termination_entries, R.array.match_termination_values));
 
         teamTimeoutsSwitch.setChecked(mRules.isTeamTimeouts());
         teamTimeoutsPerSet.setText(findRuleEntry(mRules.getTeamTimeoutsPerSet(), R.array.team_timeouts_per_set_entries, R.array.team_timeouts_per_set_values));
