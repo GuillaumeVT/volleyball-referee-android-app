@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Aantal punten in tie-break</string>
     <string name="rules_two_points_difference">2 punten verschil om set te winnen</string>
     <string name="rules_sanctions">Sancties</string>
+    <string name="rules_match_termination">Beëindiging van de wedstrijd</string>
     <string name="rules_team_timeouts">Ploeg time-outs</string>
     <string name="rules_team_timeouts_per_set">Aantal ploeg time-outs per set</string>
     <string name="rules_team_timeout_duration">Duur van een ploeg time-out</string>
@@ -294,6 +295,10 @@
         <item>Wedstrijd van 5 sets</item>
         <item>Wedstrijd van 3 sets</item>
         <item>Wedstrijd van 1 set</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Voltooi de wedstrijd wanneer een team wint</item>
+        <item>Voltooi de wedstrijd wanneer alle sets zijn gespeeld</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 ploeg time-outs per set</item>

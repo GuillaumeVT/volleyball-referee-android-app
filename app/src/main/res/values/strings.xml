@@ -297,7 +297,7 @@
         <item>Game of 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">
-        <item>Finish the match when a team wins</item>
+        <item>Finish the match as soon as a team wins</item>
         <item>Finish the match when all the sets have been played</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">

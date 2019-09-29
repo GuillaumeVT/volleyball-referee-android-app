@@ -296,7 +296,7 @@
         <item>Match en 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">
-        <item>Terminer le match quand un équipe le remporte</item>
+        <item>Terminer le match dès qu\'une équipe le remporte</item>
         <item>Terminer le match quand tous les sets ont été joués</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">

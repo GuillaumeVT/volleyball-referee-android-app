@@ -243,6 +243,7 @@
     <string name="rules_points_in_tie_break">Pontok száma döntő játszmában</string>
     <string name="rules_two_points_difference">Két pontos különbséggel lehet nyerni</string>
     <string name="rules_sanctions">Szankciók</string>
+    <string name="rules_match_termination">Termination of match</string>
     <string name="rules_team_timeouts">Csapat időkérések</string>
     <string name="rules_team_timeouts_per_set">Csapat időkérések száma játszmánként</string>
     <string name="rules_team_timeout_duration">Csapat időkérés hossza</string>
@@ -295,6 +296,10 @@
         <item>5 játszmás mérkőzések</item>
         <item>3 játszmás mérkőzések</item>
         <item>1 játszmás mérkőzések</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Finish the match when a team wins</item>
+        <item>Finish the match when all the sets have been played</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 időkérés játszmánként</item>

@@ -241,6 +241,7 @@
     <string name="rules_points_in_tie_break">Количество очков в тай-брейке</string>
     <string name="rules_two_points_difference">Разница в счёте в 2 очка для победы в партии</string>
     <string name="rules_sanctions">Санкции</string>
+    <string name="rules_match_termination">Конец матча</string>
     <string name="rules_team_timeouts">Командные перерывы</string>
     <string name="rules_team_timeouts_per_set">Количество командных перерывов в партии</string>
     <string name="rules_team_timeout_duration">Длительность командных перерывов</string>
@@ -293,6 +294,10 @@
         <item>Матч из 5 партий</item>
         <item>Матч из 3 партий</item>
         <item>Матч из 1 партии</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Завершить матч когда одна из команд одержала победу</item>
+        <item>Завершить матч когда все партии сыграны</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 командных перерыва в партии</item>

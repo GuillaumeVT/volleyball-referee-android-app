@@ -242,6 +242,7 @@
     <string name="rules_points_in_tie_break">Otsustava geimi punktide arv</string>
     <string name="rules_two_points_difference">2-punktiline vahe seisus geimi võitmiseks</string>
     <string name="rules_sanctions">Karistused</string>
+    <string name="rules_match_termination">Mängu lõpetamine</string>
     <string name="rules_team_timeouts">Võistkonna vaheajad</string>
     <string name="rules_team_timeouts_per_set">Võistkonna vaheajade arv geimi kohta</string>
     <string name="rules_team_timeout_duration">Võistkonna vaheaja kestvus</string>
@@ -294,6 +295,10 @@
         <item>5-geimiline mäng</item>
         <item>3-geimiline mäng</item>
         <item>1-geimiline mäng</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>Lõpeta mängu siis, kui võistkond võidab</item>
+        <item>Lõpeta mängu siis, kui kõik geimid on mängitud</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 võistkonna vaheaega geimis</item>
