@@ -19,7 +19,7 @@
     <!-- Main activity -->
     <string name="new_volleyball_game">Voleibol</string>
     <string name="new_beach_volleyball_game">Voley-Playa</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
+    <string name="new_snow_volleyball_game">¡Dentro de poco!</string>
     <string name="new_score_based_game">Marcador</string>
     <string name="new_time_based_game">Por tiempo</string>
     <string name="permission_title">Permisos</string>
@@ -63,7 +63,7 @@
     <string name="user_pseudo_hint">Pseudónimo de árbitro</string>
     <string name="user_email_hint">Email</string>
     <string name="user_confirm_email_hint">Confirmar email</string>
-    <string name="user_email_not_matching">Las direcciones de mail no coinciden</string>
+    <string name="user_email_not_matching">Las direcciones de email no coinciden</string>
     <string name="user_current_password_hint">Contraseña actual</string>
     <string name="user_password_hint">Contraseña</string>
     <string name="user_confirm_password_hint">Confirmar contraseña</string>
@@ -199,7 +199,7 @@
     <string name="delete_game">Borrar partido</string>
     <string name="delete_selected_games_question">¿Quieres borrar todos los partidos?</string>
     <string name="delete_game_question">¿Quieres borrar este partido?</string>
-    <string name="deleted_game">Partido borrardo</string>
+    <string name="deleted_game">Partido borrado</string>
     <string name="deleted_selected_games">Todos los partidos borrados</string>
     <string name="players">Jugadores</string>
     <string name="report_game">Generar informe de partido</string>
@@ -242,7 +242,7 @@
     <string name="rules_points_in_tie_break">Puntos en el tie-break</string>
     <string name="rules_two_points_difference">Diferencia de 2 puntos para ganar el set</string>
     <string name="rules_sanctions">Sanciones</string>
-    <string name="rules_match_termination">Termination of match</string>
+    <string name="rules_match_termination">Finalización del partido</string>
     <string name="rules_team_timeouts">Tiempos muertos de equipo</string>
     <string name="rules_team_timeouts_per_set">Tiempos muertos por set</string>
     <string name="rules_team_timeout_duration">Duración del tiempo muerto</string>
@@ -297,8 +297,8 @@
         <item>Partido de 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">
-        <item>Finish the match when a team wins</item>
-        <item>Finish the match when all the sets have been played</item>
+        <item>El partido acaba cuando un equipo gana</item>
+        <item>El partido acaba cuando se han jugado todos los sets</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
         <item>3 tiempos muertos por set</item>
@@ -353,12 +353,12 @@
         <item>2 saques</item>
     </string-array>
     <string-array name="night_mode_entries">
-        <item>Perderteminado del sistema</item>
+        <item>Predeterminado del sistema</item>
         <item>Claro</item>
         <item>Oscuro</item>
     </string-array>
 
     <!-- Credits activity -->
-    <string name="credit_title">About the VBR Team</string>
+    <string name="credit_title">Sobre el Equipo VBR</string>
 
 </resources>
