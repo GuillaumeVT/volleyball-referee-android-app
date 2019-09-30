@@ -287,13 +287,14 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 button = (PlayerToggleButton) view;
             }
 
+            button.clearOnCheckedChangeListeners();
+
             final boolean isShirt = isShirt(position);
             final boolean isLess = isLess(position);
 
             if (isShirt) {
                 button.setText(UiUtils.formatNumberFromLocale(playerShirtNumber));
                 button.setChecked(mTeamService.hasPlayer(mTeamType, playerShirtNumber));
-                button.setColor(mContext, mColor);
             } else if (isLess) {
                 button.setText("-");
                 button.setChecked(false);
@@ -301,6 +302,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 button.setText("+");
                 button.setChecked(false);
             }
+
+            button.setColor(mContext, mColor);
 
             button.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);
@@ -327,6 +330,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                     initCount();
                     notifyDataSetChanged();
                 }
+                ((PlayerToggleButton) cButton).setColor(mContext, mColor);
             });
 
             return button;
@@ -482,6 +486,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 button = (PlayerToggleButton) view;
             }
 
+            button.clearOnCheckedChangeListeners();
+
             button.setText(UiUtils.formatNumberFromLocale(playerShirtNumber));
             button.setChecked(mTeamService.isLibero(mTeamType, playerShirtNumber));
             button.setColor(mContext, mColor);
@@ -502,6 +508,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                     mTeamService.removeLibero(mTeamType, number);
                     updateCaptain();
                 }
+                ((PlayerToggleButton) cButton).setColor(mContext, mColor);
             });
 
             return button;
