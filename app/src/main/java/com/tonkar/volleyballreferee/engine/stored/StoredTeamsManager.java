@@ -137,9 +137,9 @@ public class StoredTeamsManager implements StoredTeamsService {
                 for (String id : ids) {
                     AppDatabase.getInstance(mContext).teamDao().deleteById(id);
                     deleteTeamOnServer(id);
-                    if (listener != null) {
-                        listener.onSynchronizationSucceeded();
-                    }
+                }
+                if (listener != null) {
+                    listener.onSynchronizationSucceeded();
                 }
             }
         }.start();

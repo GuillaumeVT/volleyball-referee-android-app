@@ -2,7 +2,9 @@ package com.tonkar.volleyballreferee.ui;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,8 +21,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.google.gson.JsonParseException;
+import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -36,7 +40,6 @@ import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiCount;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiMessage;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
@@ -144,15 +147,14 @@ public class MainActivity extends NavigationActivity {
                 });
             }
         }
+
+        showReleaseNotes();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-
-        final MenuItem messageItem = menu.findItem(R.id.action_news_menu);
-        messageItem.setVisible(ApiUtils.isConnectedToInternet(this));
 
         final MenuItem purchaseItem = menu.findItem(R.id.action_purchase_menu);
         computePurchaseItemVisibility(purchaseItem);
@@ -166,10 +168,6 @@ public class MainActivity extends NavigationActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_news_menu:
-                Log.i(Tags.WEB, "VBR News");
-                fetchAndShowNews();
-                return true;
             case R.id.action_purchase_menu:
                 Log.i(Tags.BILLING, "Purchase");
                 Intent intent = new Intent(this, PurchasesListActivity.class);
@@ -373,41 +371,26 @@ public class MainActivity extends NavigationActivity {
         });
     }
 
-    private void fetchAndShowNews() {
-        if (ApiUtils.isConnectedToInternet(this)) {
-            Request request = ApiUtils.buildGet(String.format("%s/public/messages", ApiUtils.BASE_URL));
+    private void showReleaseNotes() {
+        String releaseNotesKey = String.format("rn_%s", BuildConfig.VERSION_CODE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-            ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    showNews(getString(R.string.no_news));
-                }
+        if (!sharedPreferences.getBoolean(releaseNotesKey, false)) {
+            try {
+                int resourceId = getResources().getIdentifier(releaseNotesKey, "string", getPackageName());
+                String releaseNotes = getString(resourceId);
 
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiMessage message = JsonIOUtils.GSON.fromJson(response.body().string(), ApiMessage.class);
-                        showNews(message.getContent());
-                    } else {
-                        showNews(getString(R.string.no_news));
-                    }
-                }
-            });
-        }
-    }
-
-    private void showNews(String message) {
-        runOnUiThread(() -> {
-            if (!isFinishing()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                        .setTitle(R.string.news).setMessage(message)
+                        .setTitle(String.format("Welcome to Volleyball Referee %s", BuildConfig.VERSION_NAME)).setMessage(releaseNotes)
                         .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply();
                         });
                 AlertDialog alertDialog = builder.show();
                 UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+            } catch (Resources.NotFoundException e) {
+                Log.i(Tags.MAIN_UI, String.format("There is no release note %s", releaseNotesKey));
             }
-        });
+        }
     }
 
 }

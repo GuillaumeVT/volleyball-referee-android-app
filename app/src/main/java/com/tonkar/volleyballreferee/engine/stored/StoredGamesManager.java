@@ -154,9 +154,9 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 for (String id : ids) {
                     AppDatabase.getInstance(mContext).gameDao().deleteById(id);
                     deleteGameOnServer(id);
-                    if (listener != null) {
-                        listener.onSynchronizationSucceeded();
-                    }
+                }
+                if (listener != null) {
+                    listener.onSynchronizationSucceeded();
                 }
             }
         }.start();

@@ -134,9 +134,9 @@ public class StoredRulesManager implements StoredRulesService {
                 for (String id : ids) {
                     AppDatabase.getInstance(mContext).rulesDao().deleteById(id);
                     deleteRulesOnServer(id);
-                    if (listener != null) {
-                        listener.onSynchronizationSucceeded();
-                    }
+                }
+                if (listener != null) {
+                    listener.onSynchronizationSucceeded();
                 }
             }
         }.start();

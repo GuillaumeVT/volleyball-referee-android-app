@@ -37,8 +37,6 @@
     <string name="colleagues">Kolleegid</string>
     <string name="live_games_vbr_com">Live-mängu veebilehelt</string>
     <string name="my_account">Minu konto</string>
-    <string name="news">Uudised</string>
-    <string name="no_news">Puuduvad uudised</string>
     <string name="privacy_policy">Isikuandmete kaitse</string>
 
     <!-- Purchase activity -->

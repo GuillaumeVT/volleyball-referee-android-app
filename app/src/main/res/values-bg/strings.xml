@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30109" translatable="false">Try out the new dark theme available in settings!\n\nWe are looking for someone motivated to take over the Polish translation.\nIf interested please email us at vbr.app.team@gmail.com.\n\nNew in 3.1.9:\n- Rules: Up to 40 points per set\n- Rules: New rule for match termination condition\n- Fixed a bug in the player selection when setting up a team\n-Fixed a bug in games/teams/rules multiple selection and deletion</string>
 
     <!-- General actions -->
     <string name="yes">Yes</string>
@@ -75,7 +74,7 @@
     <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Signed in as %s</string>
     <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
+    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character.</string>
     <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Signed out</string>
     <string name="search_colleague">Search in colleagues</string>
@@ -359,118 +358,5 @@
 
     <!-- Credits activity -->
     <string name="credit_title">About the VBR Team</string>
-    <string name="credit_designers" translatable="false">Volleyball Referee is designed and developped by Guillaume VT and Polina P as a hobby project.\nYou can contact us at vbr.app.team@gmail.com.</string>
-    <string name="credit_translators_intro" translatable="false">Our translations are made by voluntary referees and players. A huge thanks to them all:</string>
-    <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>
-
-    <string-array name="points_per_set_values" translatable="false">
-        <item>40</item>
-        <item>39</item>
-        <item>38</item>
-        <item>37</item>
-        <item>36</item>
-        <item>35</item>
-        <item>34</item>
-        <item>33</item>
-        <item>32</item>
-        <item>31</item>
-        <item>30</item>
-        <item>29</item>
-        <item>28</item>
-        <item>27</item>
-        <item>26</item>
-        <item>25</item>
-        <item>24</item>
-        <item>23</item>
-        <item>22</item>
-        <item>21</item>
-        <item>20</item>
-        <item>19</item>
-        <item>18</item>
-        <item>17</item>
-        <item>16</item>
-        <item>15</item>
-        <item>14</item>
-        <item>13</item>
-        <item>12</item>
-        <item>11</item>
-        <item>10</item>
-        <item>9</item>
-    </string-array>
-    <string-array name="sets_per_game_values" translatable="false">
-        <item>5</item>
-        <item>3</item>
-        <item>1</item>
-    </string-array>
-    <string-array name="match_termination_values" translatable="false">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-    <string-array name="team_timeouts_per_set_values" translatable="false">
-        <item>3</item>
-        <item>2</item>
-        <item>1</item>
-        <item>0</item>
-    </string-array>
-    <string-array name="timeout_duration_values" translatable="false">
-        <item>60</item>
-        <item>45</item>
-        <item>30</item>
-    </string-array>
-    <string-array name="game_interval_duration_values" translatable="false">
-        <item>180</item>
-        <item>120</item>
-        <item>60</item>
-    </string-array>
-    <string-array name="substitutions_limitation_values" translatable="false">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-    <string-array name="team_substitutions_per_set_values" translatable="false">
-        <item>18</item>
-        <item>15</item>
-        <item>12</item>
-        <item>6</item>
-        <item>5</item>
-        <item>4</item>
-        <item>3</item>
-    </string-array>
-    <string-array name="court_switch_frequency_values" translatable="false">
-        <item>10</item>
-        <item>9</item>
-        <item>8</item>
-        <item>7</item>
-        <item>6</item>
-        <item>5</item>
-    </string-array>
-    <string-array name="consecutive_serves_per_player_values" translatable="false">
-        <item>9999</item>
-        <item>5</item>
-        <item>4</item>
-        <item>3</item>
-        <item>2</item>
-    </string-array>
-    <string-array name="night_mode_values" translatable="false">
-        <item>system</item>
-        <item>light</item>
-        <item>dark</item>
-    </string-array>
-
-    <string-array name="shirt_colors" translatable="false">
-        <item>#2980b9</item>
-        <item>#3b5999</item>
-        <item>#034694</item>
-        <item>#052443</item>
-        <item>#006032</item>
-        <item>#6a1b9a</item>
-        <item>#c2185b</item>
-        <item>#bc0019</item>
-        <item>#e25618</item>
-        <item>#f3bc07</item>
-        <item>#ffffff</item>
-        <item>#0d1017</item>
-    </string-array>
 
 </resources>

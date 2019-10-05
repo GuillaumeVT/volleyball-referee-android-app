@@ -36,8 +36,6 @@
     <string name="colleagues">Коллеги</string>
     <string name="live_games_vbr_com">Матчи в процессе (на веб-сайте)</string>
     <string name="my_account">Мой аккаунт</string>
-    <string name="news">Информация</string>
-    <string name="no_news">Нет информации для отображения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 
     <!-- Purchase activity -->
