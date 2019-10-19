@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.game.GameEvent;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
@@ -26,21 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class LadderEventsDialog {
 
     private       AlertDialog    mAlertDialog;
     private final LayoutInflater mLayoutInflater;
     private final Context        mContext;
-    private final TeamType       mTeamType;
     private final IBaseTeam      mBaseTeam;
 
     LadderEventsDialog(LayoutInflater layoutInflater, final Context context, final TeamType teamType, final LadderItem ladderItem, final IBaseTeam baseTeam) {
         mLayoutInflater = layoutInflater;
         mContext = context;
-        mTeamType = teamType;
         mBaseTeam = baseTeam;
 
         View view = layoutInflater.inflate(R.layout.ladder_events_dialog, null);
@@ -48,32 +45,27 @@ public class LadderEventsDialog {
         TextView title = view.findViewById(R.id.ladder_dialog_title);
         title.setText(String.format(Locale.getDefault(), "%d - %d", ladderItem.getHomePoints(), ladderItem.getGuestPoints()));
 
-        List<LadderEvent> ladderEvents = new ArrayList<>();
+        List<GameEvent> gameEvents = new ArrayList<>();
 
-        if (TeamType.HOME.equals(mTeamType)) {
+        if (TeamType.HOME.equals(teamType)) {
             if (ladderItem.getHomeTimeouts().size() > 0) {
-                ladderEvents.add(new LadderEvent());
-            }
-            for (ApiSubstitution substitution : ladderItem.getHomeSubstitutions()) {
-                ladderEvents.add(new LadderEvent(substitution));
-            }
-            for (ApiSanction sanction : ladderItem.getHomeSanctions()) {
-                ladderEvents.add(new LadderEvent(sanction));
+                gameEvents.add(GameEvent.newTimeoutEvent(teamType));
             }
         } else {
             if (ladderItem.getGuestTimeouts().size() > 0) {
-                ladderEvents.add(new LadderEvent());
-            }
-            for (ApiSubstitution substitution : ladderItem.getGuestSubstitutions()) {
-                ladderEvents.add(new LadderEvent(substitution));
-            }
-            for (ApiSanction sanction : ladderItem.getGuestSanctions()) {
-                ladderEvents.add(new LadderEvent(sanction));
+                gameEvents.add(GameEvent.newTimeoutEvent(teamType));
             }
         }
 
+        for (ApiSubstitution substitution : (TeamType.HOME.equals(teamType) ? ladderItem.getHomeSubstitutions() : ladderItem.getGuestSubstitutions())) {
+            gameEvents.add(GameEvent.newSubstitutionEvent(teamType, substitution));
+        }
+        for (ApiSanction sanction : (TeamType.HOME.equals(teamType) ? ladderItem.getHomeSanctions() : ladderItem.getGuestSanctions())) {
+            gameEvents.add(GameEvent.newSanctionEvent(teamType, sanction));
+        }
+
         ListView eventList = view.findViewById(R.id.ladder_event_list);
-        LadderEventListAdapter eventListAdapter = new LadderEventListAdapter(context, ladderEvents);
+        GameEventListAdapter eventListAdapter = new GameEventListAdapter(context, gameEvents);
         eventList.setAdapter(eventListAdapter);
 
         mAlertDialog = new AlertDialog.Builder(context)
@@ -87,23 +79,23 @@ public class LadderEventsDialog {
         }
     }
 
-    private class LadderEventListAdapter extends ArrayAdapter<LadderEvent> {
+    private class GameEventListAdapter extends ArrayAdapter<GameEvent> {
 
-        private final List<LadderEvent> mLadderEvents;
+        private final List<GameEvent> mGameEvents;
 
-        private LadderEventListAdapter(Context context, List<LadderEvent> ladderEvents) {
-            super(context, android.R.layout.simple_list_item_1, ladderEvents);
-            mLadderEvents = ladderEvents;
+        private GameEventListAdapter(Context context, List<GameEvent> gameEvents) {
+            super(context, android.R.layout.simple_list_item_1, gameEvents);
+            mGameEvents = gameEvents;
         }
 
         @Override
         public int getCount() {
-            return mLadderEvents.size();
+            return mGameEvents.size();
         }
 
         @Override
-        public LadderEvent getItem(int index) {
-            return mLadderEvents.get(index);
+        public GameEvent getItem(int index) {
+            return mGameEvents.get(index);
         }
 
         @Override
@@ -113,19 +105,29 @@ public class LadderEventsDialog {
 
         @Override
         public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
-            LadderEvent ladderEvent = mLadderEvents.get(index);
+            view = mLayoutInflater.inflate(R.layout.game_event_item, null);
+
+            GameEvent ladderEvent = mGameEvents.get(index);
+
+            TextView textView = view.findViewById(R.id.game_event_text);
+            LinearLayout layout = view.findViewById(R.id.game_event_layout);
 
             switch (ladderEvent.getEventType()) {
                 case TIMEOUT:
-                    view = createTimeoutEvent();
+                    textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                    layout.addView(createTimeoutEvent());
                     break;
                 case SUBSTITUTION:
-                    view = createSubstitutionEvent(ladderEvent);
+                    textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                    layout.addView(createSubstitutionEvent(ladderEvent));
                     break;
                 case SANCTION:
-                    view = createSanctionEvent(ladderEvent);
-                    break;
-                default:
+                    if (ladderEvent.getSanction().getCard().isDelaySanctionType()) {
+                        textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                    } else {
+                        textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.misconduct_sanction), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                    }
+                    layout.addView(createSanctionEvent(ladderEvent));
                     break;
             }
 
@@ -133,17 +135,15 @@ public class LadderEventsDialog {
         }
 
         private View createTimeoutEvent() {
-            ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.ladder_event_item, null);
+            ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.simple_event_item, null);
             imageView.setImageResource(R.drawable.ic_timeout);
             imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
             return imageView;
         }
 
-        private View createSubstitutionEvent(LadderEvent ladderEvent) {
-            View substitutionView = mLayoutInflater.inflate(R.layout.substitution_list_item, null);
+        private View createSubstitutionEvent(GameEvent ladderEvent) {
+            View substitutionView = mLayoutInflater.inflate(R.layout.substitution_list_item_no_score, null);
 
-            TextView scoreText = substitutionView.findViewById(R.id.score_text);
-            scoreText.setVisibility(View.GONE);
             TextView playerInText = substitutionView.findViewById(R.id.player_in_text);
             TextView playerOutText = substitutionView.findViewById(R.id.player_out_text);
 
@@ -151,19 +151,15 @@ public class LadderEventsDialog {
             playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
             playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
-            UiUtils.styleTeamText(mContext, mBaseTeam, mTeamType, substitution.getPlayerIn(), playerInText);
-            UiUtils.styleTeamText(mContext, mBaseTeam, mTeamType, substitution.getPlayerOut(), playerOutText);
+            UiUtils.styleTeamText(mContext, mBaseTeam, ladderEvent.getTeamType(), substitution.getPlayerIn(), playerInText);
+            UiUtils.styleTeamText(mContext, mBaseTeam, ladderEvent.getTeamType(), substitution.getPlayerOut(), playerOutText);
 
             return substitutionView;
         }
 
-        private View createSanctionEvent(LadderEvent ladderEvent) {
-            View sanctionView = mLayoutInflater.inflate(R.layout.sanction_list_item, null);
+        private View createSanctionEvent(GameEvent ladderEvent) {
+            View sanctionView = mLayoutInflater.inflate(R.layout.sanction_list_item_no_score, null);
 
-            TextView setText = sanctionView.findViewById(R.id.set_text);
-            setText.setVisibility(View.GONE);
-            TextView scoreText = sanctionView.findViewById(R.id.score_text);
-            scoreText.setVisibility(View.GONE);
             TextView playerText = sanctionView.findViewById(R.id.player_text);
             ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
@@ -179,41 +175,11 @@ public class LadderEventsDialog {
                     playerText.setText(mContext.getString(R.string.coach_abbreviation));
                 }
 
-                UiUtils.styleTeamText(mContext, mBaseTeam, mTeamType, sanction.getNum(), playerText);
+                UiUtils.styleTeamText(mContext, mBaseTeam, ladderEvent.getTeamType(), sanction.getNum(), playerText);
             }
 
             return sanctionView;
         }
     }
 
-    private enum EventType {
-        TIMEOUT, SUBSTITUTION, SANCTION
-    }
-
-    @Getter @Setter
-    private class LadderEvent {
-
-        private final EventType       eventType;
-        private final ApiSubstitution substitution;
-        private final ApiSanction     sanction;
-
-        LadderEvent() {
-            this.eventType = EventType.TIMEOUT;
-            this.substitution = null;
-            this.sanction = null;
-        }
-
-        LadderEvent(ApiSubstitution substitution) {
-            this.eventType = EventType.SUBSTITUTION;
-            this.substitution = substitution;
-            this.sanction = null;
-        }
-
-        LadderEvent(ApiSanction sanction) {
-            this.eventType = EventType.SANCTION;
-            this.substitution = null;
-            this.sanction = sanction;
-        }
-
-    }
 }

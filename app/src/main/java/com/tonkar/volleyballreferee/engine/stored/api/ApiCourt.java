@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.stored.api;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import lombok.EqualsAndHashCode;
@@ -32,8 +33,17 @@ public class ApiCourt {
         this.p6 = -1;
     }
 
-    public boolean isFilled() {
-        return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0 && p5 >= 0 && p6 >= 0;
+    public boolean isFilled(GameType kind) {
+        switch (kind) {
+            case INDOOR:
+                return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0 && p5 >= 0 && p6 >= 0;
+            case INDOOR_4X4:
+                return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0;
+            case BEACH:
+            case TIME:
+            default:
+                return true;
+        }
     }
 
     public PositionType getPositionOf(int number) {

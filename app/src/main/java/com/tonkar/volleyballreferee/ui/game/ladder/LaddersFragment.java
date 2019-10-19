@@ -125,6 +125,11 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     }
 
     @Override
+    public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        mLadderListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void setGameService(IGame game) {
         mGame = game;
     }

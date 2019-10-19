@@ -15,6 +15,7 @@
     <string name="edit">Bearbeiten</string>
     <string name="save">Speichern</string>
     <string name="start">Start</string>
+    <string name="undo">Rückgängig machen</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Hallenvolleyball</string>
@@ -34,7 +35,7 @@
     <string name="available_games">geplante &amp; live Spiele</string>
     <string name="teams">Mannschaften</string>
     <string name="rules">Regeln</string>
-    <string name="colleagues">Schulen / Hochschulen</string>
+    <string name="colleagues">Schiedsrichterkollege(in)</string>
     <string name="live_games_vbr_com">Live Spiele auf der Webseite</string>
     <string name="my_account">Mein Konto</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
@@ -48,7 +49,7 @@
         \n\u2022 Planen Sie Ihre Spiele.
         \n\u2022 Ihr Spiel wurde versehentlich gelöscht? Setzen Sie Ihre Spiele von der Serversicherung fort.
         \n\u2022 Profitieren Sie von den zukünftigen neuen Webfunktionen.
-    </string>
+   </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Anmelden</string>
@@ -57,7 +58,7 @@
     <string name="user_lost_password">Kennwort vergessen</string>
     <string name="user_sign_out">Abmelden</string>
     <string name="user_sign_in_why_title">Warum muss ich mich anmelden?</string>
-    <string name="user_sign_in_why_message">Ihre Volleyball Referee Daten (Spiele, Mannschaften, Regeln, Ligen, Schulen / Hochschulen) werden mit unserem Server synchronisiert. Durch das Anmelden können wir die mit dem Konto verknüpften Daten speichern.</string>
+    <string name="user_sign_in_why_message">Ihre Volleyball Referee Daten (Spiele, Mannschaften, Regeln, Ligen, Schiedsrichterkollege(in)) werden mit unserem Server synchronisiert. Durch das Anmelden können wir die mit dem Konto verknüpften Daten speichern.</string>
     <string name="user_pseudo_hint">Schiedsrichter Pseudonym</string>
     <string name="user_email_hint">E-Mail</string>
     <string name="user_confirm_email_hint">E-Mail Adresse bestätigen</string>
@@ -77,14 +78,14 @@
     <string name="password_strength">Das Kennwort muss mindestens 8 Zeichen lang sein und mindestens ein Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.</string>
     <string name="password_strength_error">Das Kennwort erfüllt nicht die Komplexitätsrichtlinien.</string>
     <string name="user_signed_out">Abgemeldet</string>
-    <string name="search_colleague">Schule / Hochschule suchen</string>
-    <string name="add_colleague">Schule / Hochschule hinzufügen</string>
-    <string name="received_colleague_request">Sie haben eine Schule / Hochschule Anfrage von %s erhalten.</string>
-    <string name="sent_colleague_request">Sie haben eine Schule / Hochschule Anfrage an %s gesendet.</string>
+    <string name="search_colleague">Schiedsrichterkollege(in) suchen</string>
+    <string name="add_colleague">Schiedsrichterkollege(in) hinzufügen</string>
+    <string name="received_colleague_request">Sie haben eine Anfrage von %s erhalten.</string>
+    <string name="sent_colleague_request">Sie haben eine Anfrage an %s gesendet.</string>
     <string name="pending">Ausstehend</string>
-    <string name="accept_colleague_question">Anfrage der Schule / Hochschule %s annehmen?</string>
-    <string name="reject_colleague_question">Anfrage der Schule / Hochschule %s ablehnen?</string>
-    <string name="remove_colleague_question">Anfragen der Schule / Hochschule %s entfernen?</string>
+    <string name="accept_colleague_question">Anfrage des Schiedsrichterkollege(in) %s annehmen?</string>
+    <string name="reject_colleague_question">Anfrage des Schiedsrichterkollege(in) %s ablehnen?</string>
+    <string name="remove_colleague_question">Anfragen des Schiedsrichterkollege(in) %s entfernen?</string>
 
     <!-- Setup activities -->
     <string name="game_setup_title">Spieleinstellungen</string>
@@ -172,6 +173,8 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+    <string name="timeout">Auszeit</string>
+    <string name="substitution">Auswechslung</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Spiel löschen</string>

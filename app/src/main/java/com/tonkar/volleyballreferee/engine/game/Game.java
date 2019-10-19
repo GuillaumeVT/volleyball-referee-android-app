@@ -13,6 +13,7 @@ import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamListener;
@@ -389,8 +390,7 @@ public abstract class Game extends BaseGame {
         }
     }
 
-    @Override
-    public void removeLastPoint() {
+    protected void removeLastPoint() {
         final TeamType oldServingTeam = currentSet().getServingTeam();
         final TeamType teamLosingOnePoint = currentSet().removeLastPoint();
 
@@ -414,6 +414,8 @@ public abstract class Game extends BaseGame {
             listener.onPointsUpdated(teamType, newCount);
         }
     }
+
+    protected abstract void undoSubstitution(TeamType teamType, ApiSubstitution substitution);
 
     // Score
 
@@ -591,15 +593,7 @@ public abstract class Game extends BaseGame {
     // TeamComposition
 
     TeamDefinition getTeamDefinition(final TeamType teamType) {
-        TeamDefinition teamDefinition;
-
-        if (TeamType.HOME.equals(teamType)) {
-            teamDefinition = mHomeTeam;
-        } else {
-            teamDefinition = mGuestTeam;
-        }
-
-        return teamDefinition;
+        return TeamType.HOME.equals(teamType) ? mHomeTeam: mGuestTeam;
     }
 
     @Override
@@ -896,6 +890,11 @@ public abstract class Game extends BaseGame {
         }
     }
 
+    private void undoTimeout(TeamType teamType) {
+        final int newCount = currentSet().undoTimeout(teamType);
+        notifyTimeoutUpdated(teamType, mRules.getTeamTimeoutsPerSet(), newCount);
+    }
+
     private void notifyTimeoutCalled(TeamType teamType) {
         Log.i(Tags.TIMEOUT, "Team timeout is called");
         for (final TimeoutListener listener : mTimeoutListeners) {
@@ -940,6 +939,19 @@ public abstract class Game extends BaseGame {
         notifySanctionGiven(teamType, sanctionType, number);
     }
 
+    private void undoSanction(TeamType teamType, ApiSanction sanction) {
+        for (ApiSanction tmpSanction : getAllSanctions(teamType)) {
+            if (tmpSanction.equals(sanction)) {
+                if (TeamType.HOME.equals(teamType)) {
+                    mHomeTeamSanctions.remove(tmpSanction);
+                } else {
+                    mGuestTeamSanctions.remove(tmpSanction);
+                }
+                notifySanctionUndone(teamType, sanction.getCard(), sanction.getNum());
+            }
+        }
+    }
+
     private void notifySanctionGiven(TeamType teamType, SanctionType sanctionType, int number) {
         Log.i(Tags.SANCTION, String.format("Player %d of %s team was given a %s sanction", number, teamType.toString(), sanctionType.toString()));
         for (final SanctionListener listener : mSanctionListeners) {
@@ -947,17 +959,16 @@ public abstract class Game extends BaseGame {
         }
     }
 
+    private void notifySanctionUndone(TeamType teamType, SanctionType sanctionType, int number) {
+        Log.i(Tags.SANCTION, String.format("Player %d of %s team had a %s sanction undone", number, teamType.toString(), sanctionType.toString()));
+        for (final SanctionListener listener : mSanctionListeners) {
+            listener.onUndoSanction(teamType, sanctionType, number);
+        }
+    }
+
     @Override
     public List<ApiSanction> getAllSanctions(TeamType teamType) {
-        List<ApiSanction> sanctions;
-
-        if (TeamType.HOME.equals(teamType)) {
-            sanctions = new ArrayList<>(mHomeTeamSanctions);
-        } else {
-            sanctions = new ArrayList<>(mGuestTeamSanctions);
-        }
-
-        return sanctions;
+        return new ArrayList<>(TeamType.HOME.equals(teamType) ? mHomeTeamSanctions : mGuestTeamSanctions);
     }
 
     @Override
@@ -1134,6 +1145,84 @@ public abstract class Game extends BaseGame {
     @Override
     public boolean areNotificationsEnabled() {
         return mEnableNotifications;
+    }
+
+    @Override
+    public List<GameEvent> getLatestGameEvents() {
+        int currentSetIndex = currentSetIndex();
+        int homePoints = getPoints(TeamType.HOME, currentSetIndex);
+        int guestPoints = getPoints(TeamType.GUEST, currentSetIndex);
+        List<GameEvent> gameEvents = new ArrayList<>();
+
+        if (!getPointsLadder(currentSetIndex).isEmpty()) {
+            gameEvents.add(GameEvent.newPointEvent(getServingTeam()));
+        }
+
+        for (ApiTimeout timeout : getCalledTimeouts(TeamType.HOME, currentSetIndex)) {
+            if (timeout.getHomePoints() == homePoints && timeout.getGuestPoints() == guestPoints) {
+                gameEvents.add(GameEvent.newTimeoutEvent(TeamType.HOME));
+            }
+        }
+
+        for (ApiTimeout timeout : getCalledTimeouts(TeamType.GUEST, currentSetIndex)) {
+            if (timeout.getHomePoints() == homePoints && timeout.getGuestPoints() == guestPoints) {
+                gameEvents.add(GameEvent.newTimeoutEvent(TeamType.GUEST));
+            }
+        }
+
+        java.util.Set<Integer> expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType.HOME);
+
+        for (ApiSubstitution substitution : getSubstitutions (TeamType.HOME, currentSetIndex)) {
+            if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints
+                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerIn())
+                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())) {
+                gameEvents.add(GameEvent.newSubstitutionEvent(TeamType.HOME, substitution));
+            }
+        }
+
+        expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType.GUEST);
+
+        for (ApiSubstitution substitution : getSubstitutions (TeamType.GUEST, currentSetIndex)) {
+            if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints
+                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerIn())
+                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())) {
+                gameEvents.add(GameEvent.newSubstitutionEvent(TeamType.GUEST, substitution));
+            }
+        }
+
+        for (ApiSanction sanction : getAllSanctions(TeamType.HOME, currentSetIndex)) {
+            if (sanction.getHomePoints() == homePoints && sanction.getGuestPoints() == guestPoints && !sanction.getCard().isMisconductDisqualificationCard()) {
+                gameEvents.add(GameEvent.newSanctionEvent(TeamType.HOME, sanction));
+            }
+        }
+
+        for (ApiSanction sanction : getAllSanctions(TeamType.GUEST, currentSetIndex)) {
+            if (sanction.getHomePoints() == homePoints && sanction.getGuestPoints() == guestPoints && !sanction.getCard().isMisconductDisqualificationCard()) {
+                gameEvents.add(GameEvent.newSanctionEvent(TeamType.GUEST, sanction));
+            }
+        }
+
+        return gameEvents;
+    }
+
+    @Override
+    public void undoGameEvent(GameEvent gameEvent) {
+        switch (gameEvent.getEventType()) {
+            case POINT:
+                removeLastPoint();
+                break;
+            case TIMEOUT:
+               undoTimeout(gameEvent.getTeamType());
+                break;
+            case SUBSTITUTION:
+                undoSubstitution(gameEvent.getTeamType(), gameEvent.getSubstitution());
+                break;
+            case SANCTION:
+                undoSanction(gameEvent.getTeamType(), gameEvent.getSanction());
+                break;
+            default:
+                break;
+        }
     }
 
     void forceFinishSet(TeamType teamType) {

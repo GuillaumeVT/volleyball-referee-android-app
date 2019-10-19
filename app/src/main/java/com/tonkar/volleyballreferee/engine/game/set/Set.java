@@ -146,18 +146,7 @@ public abstract class Set {
     }
 
     public int getPoints(final TeamType teamType) {
-        int points = 0;
-
-        switch (teamType) {
-            case HOME:
-                points = mHomePoints;
-                break;
-            case GUEST:
-                points = mGuestPoints;
-                break;
-        }
-
-        return points;
+        return TeamType.HOME.equals(teamType) ? mHomePoints : mGuestPoints;
     }
 
     public List<TeamType> getPointsLadder() {
@@ -165,49 +154,44 @@ public abstract class Set {
     }
 
     public int getRemainingTimeouts(final TeamType teamType) {
-        int timeouts = 0;
-
-        switch (teamType) {
-            case HOME:
-                timeouts = mHomeRemainingTimeouts;
-                break;
-            case GUEST:
-                timeouts = mGuestRemainingTimeouts;
-                break;
-        }
-
-        return timeouts;
+        return TeamType.HOME.equals(teamType) ? mHomeRemainingTimeouts : mGuestRemainingTimeouts;
     }
 
     public List<ApiTimeout> getCalledTimeouts(final TeamType teamType) {
-        List<ApiTimeout> timeouts = new ArrayList<>();
+        return new ArrayList<>(TeamType.HOME.equals(teamType) ? mHomeCalledTimeouts : mGuestCalledTimeouts);
+    }
 
-        switch (teamType) {
-            case HOME:
-                timeouts = new ArrayList<>(mHomeCalledTimeouts);
-                break;
-            case GUEST:
-                timeouts = new ArrayList<>(mGuestCalledTimeouts);
-                break;
+    public int removeTimeout(final TeamType teamType) {
+        int timeouts;
+
+        if (TeamType.HOME.equals(teamType)) {
+            mHomeRemainingTimeouts--;
+            timeouts = mHomeRemainingTimeouts;
+            mHomeCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
+        } else {
+            mGuestRemainingTimeouts--;
+            timeouts = mGuestRemainingTimeouts;
+            mGuestCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
         }
 
         return timeouts;
     }
 
-    public int removeTimeout(final TeamType teamType) {
-        int timeouts = 0;
+    public int undoTimeout(TeamType teamType) {
+        int timeouts = TeamType.HOME.equals(teamType) ? mHomeRemainingTimeouts : mGuestRemainingTimeouts;
 
-        switch (teamType) {
-            case HOME:
-                mHomeRemainingTimeouts--;
-                timeouts = mHomeRemainingTimeouts;
-                mHomeCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
-                break;
-            case GUEST:
-                mGuestRemainingTimeouts--;
-                timeouts = mGuestRemainingTimeouts;
-                mGuestCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
-                break;
+        for (ApiTimeout timeout : getCalledTimeouts(teamType)) {
+            if (timeout.getHomePoints() == mHomePoints && timeout.getGuestPoints() == mGuestPoints) {
+                if (TeamType.HOME.equals(teamType)) {
+                    mHomeRemainingTimeouts++;
+                    timeouts = mHomeRemainingTimeouts;
+                    mHomeCalledTimeouts.remove(timeout);
+                } else {
+                    mGuestRemainingTimeouts++;
+                    timeouts = mGuestRemainingTimeouts;
+                    mGuestCalledTimeouts.remove(timeout);
+                }
+            }
         }
 
         return timeouts;
@@ -250,15 +234,7 @@ public abstract class Set {
     }
 
     public TeamComposition getTeamComposition(final TeamType teamType) {
-        TeamComposition teamComposition;
-
-        if (TeamType.HOME.equals(teamType)) {
-            teamComposition = mHomeComposition;
-        } else {
-            teamComposition = mGuestComposition;
-        }
-
-        return teamComposition;
+        return TeamType.HOME.equals(teamType) ? mHomeComposition : mGuestComposition;
     }
 
 }

@@ -210,16 +210,16 @@
                     app:srcCompat="@drawable/ic_penalty_card" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/score_remove_button"
+                    android:id="@+id/undo_game_event_button"
                     style="@style/AppTheme.RoundButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
-                    android:contentDescription="@string/remove_point_description"
-                    android:onClick="removeLastPoint"
+                    android:contentDescription="@string/undo"
+                    android:onClick="undoGameEvent"
                     app:fabCustomSize="@dimen/game_fab_size"
                     app:maxImageSize="@dimen/game_fab_icon_size"
-                    app:srcCompat="@drawable/ic_score_revert" />
+                    app:srcCompat="@drawable/ic_undo" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/right_team_cards_button"

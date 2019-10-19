@@ -310,7 +310,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
     @Override
     public boolean isStartingLineupConfirmed(TeamType teamType, int setIndex) {
         ApiSet set = getSets().get(setIndex);
-        return set.getStartingPlayers(teamType).isFilled();
+        return set.getStartingPlayers(teamType).isFilled(getKind());
     }
 
     @Override

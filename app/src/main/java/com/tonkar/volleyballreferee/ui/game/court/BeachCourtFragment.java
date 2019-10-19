@@ -202,6 +202,11 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     }
 
     @Override
+    public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        update(teamType);
+    }
+
+    @Override
     public void setGameService(IGame game) {
         mGame = game;
         mBeachTeam = (IBeachTeam) game;

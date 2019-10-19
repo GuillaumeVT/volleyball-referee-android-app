@@ -14,6 +14,7 @@
     <string name="edit">Éditer</string>
     <string name="save">Enregistrer</string>
     <string name="start">Démarrer</string>
+    <string name="undo">Annuler</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Volley-ball</string>
@@ -171,6 +172,8 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+    <string name="timeout">Temps mort</string>
+    <string name="substitution">Remplacement</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Supprimer le match</string>

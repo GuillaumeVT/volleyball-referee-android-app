@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.engine.game.GameEvent;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
@@ -27,7 +28,7 @@ public class GameTest {
         game.startMatch();
 
         assertEquals(0, game.getPoints(TeamType.HOME));
-        game.removeLastPoint();
+        game.undoGameEvent(GameEvent.newPointEvent(TeamType.HOME));
         assertEquals(0, game.getPoints(TeamType.HOME));
     }
 
@@ -73,7 +74,7 @@ public class GameTest {
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.HOME);
         assertEquals(TeamType.HOME, game.getServingTeam());
-        game.removeLastPoint();
+        game.undoGameEvent(GameEvent.newPointEvent(TeamType.HOME));
         assertEquals(TeamType.HOME, game.getServingTeam());
     }
 
@@ -86,7 +87,7 @@ public class GameTest {
         game.addPoint(TeamType.HOME);
         game.addPoint(TeamType.GUEST);
         assertEquals(TeamType.GUEST, game.getServingTeam());
-        game.removeLastPoint();
+        game.undoGameEvent(GameEvent.newPointEvent(TeamType.GUEST));
         assertEquals(TeamType.HOME, game.getServingTeam());
     }
 

@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.Indoor4x4TeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
@@ -24,7 +25,7 @@ public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME), 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME), Rules.NO_LIMITATION, 4);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -44,7 +45,7 @@ public class Indoor4x4TeamCompositionTest {
             assertTrue(teamDefinition.hasPlayer(index));
         }
 
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(teamDefinition, 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(teamDefinition, Rules.NO_LIMITATION, 4);
         assertEquals(0, team.getPlayersOnCourt().size());
 
         for (int index = 1; index <= playerCount; index++) {
@@ -65,7 +66,7 @@ public class Indoor4x4TeamCompositionTest {
     private Indoor4x4TeamComposition createTeamWithNPlayersAndFillCourt(int playerCount) {
         IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(playerCount);
         teamDefinition.setCaptain(3);
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(teamDefinition, 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(teamDefinition, Rules.NO_LIMITATION, 4);
         int playersOnCourt = 4;
 
         for (int index = 1; index <= playersOnCourt; index++) {
@@ -78,7 +79,7 @@ public class Indoor4x4TeamCompositionTest {
     @Test
     public void substitution_fillCourt() {
         IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(10);
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(teamDefinition, 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(teamDefinition, Rules.NO_LIMITATION, 4);
         int playerCount = 4;
 
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -133,15 +134,6 @@ public class Indoor4x4TeamCompositionTest {
         assertTrue(team.substitutePlayer(8, PositionType.POSITION_2, 0, 0));
         assertTrue(team.substitutePlayer(2, PositionType.POSITION_2, 0, 0));
         assertFalse(team.substitutePlayer(5, PositionType.POSITION_4, 0, 0));
-    }
-
-    @Test
-    public void substitution_abnormal() {
-        Indoor4x4TeamComposition team = createTeamWithNPlayersAndFillCourt(8);
-        assertFalse(team.substitutePlayer(18, PositionType.POSITION_1, 0, 0));
-
-        assertFalse(team.substitutePlayer(7, PositionType.POSITION_6, 0, 0));
-        assertEquals(PositionType.BENCH, team.getPlayerPosition(7));
     }
 
     @Test

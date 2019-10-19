@@ -19,7 +19,7 @@ public class Indoor4x4Set extends Set {
 
     @Override
     protected TeamComposition createTeamComposition(Rules rules, TeamDefinition teamDefinition) {
-        return new Indoor4x4TeamComposition(teamDefinition, rules.getTeamSubstitutionsPerSet());
+        return new Indoor4x4TeamComposition(teamDefinition, rules.getSubstitutionsLimitation(), rules.getTeamSubstitutionsPerSet());
     }
 
 

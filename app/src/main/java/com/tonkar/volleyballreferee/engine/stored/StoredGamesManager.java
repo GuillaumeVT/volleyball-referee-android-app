@@ -296,7 +296,10 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     @Override
-    public void onTimeoutUpdated(TeamType teamType, int maxCount, int newCount) {}
+    public void onTimeoutUpdated(TeamType teamType, int maxCount, int newCount) {
+        saveCurrentGame();
+        pushCurrentGameToServer();
+    }
 
     @Override
     public void onTimeout(TeamType teamType, int duration) {
@@ -315,6 +318,12 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        saveCurrentGame();
+        pushCurrentGameToServer();
+    }
+
+    @Override
+    public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {
         saveCurrentGame();
         pushCurrentGameToServer();
     }

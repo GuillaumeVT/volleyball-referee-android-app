@@ -14,8 +14,6 @@ public interface IScore extends IBaseScore {
 
     void addPoint(TeamType teamType);
 
-    void removeLastPoint();
-
     TeamType getLeadingTeam();
 
     void swapServiceAtStart();

@@ -167,15 +167,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     private TeamDefinition getTeamDefinition(final TeamType teamType) {
-        TeamDefinition teamDefinition;
-
-        if (TeamType.HOME.equals(teamType)) {
-            teamDefinition = mHomeTeam;
-        } else {
-            teamDefinition = mGuestTeam;
-        }
-
-        return teamDefinition;
+        return TeamType.HOME.equals(teamType) ? mHomeTeam : mGuestTeam;
     }
 
     @Override
@@ -521,18 +513,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
 
     @Override
     public int getPoints(TeamType teamType) {
-        int points = 0;
-
-        switch (teamType) {
-            case HOME:
-                points = mHomeTeamPoints;
-                break;
-            case GUEST:
-                points = mGuestTeamPoints;
-                break;
-        }
-
-        return points;
+        return TeamType.HOME.equals(teamType) ? mHomeTeamPoints : mGuestTeamPoints;
     }
 
     @Override
@@ -675,17 +656,14 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     @Override
     public void addPoint(TeamType teamType) {
         final TeamType oldServingTeam = getServingTeam();
-        int newCount = 0;
+        int newCount;
 
-        switch (teamType) {
-            case HOME:
-                mHomeTeamPoints++;
-                newCount = mHomeTeamPoints;
-                break;
-            case GUEST:
-                mGuestTeamPoints++;
-                newCount = mGuestTeamPoints;
-                break;
+        if (TeamType.HOME.equals(teamType)) {
+            mHomeTeamPoints++;
+            newCount = mHomeTeamPoints;
+        } else {
+            mGuestTeamPoints++;
+            newCount = mGuestTeamPoints;
         }
 
         mPointsLadder.add(teamType);
@@ -699,8 +677,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
         }
     }
 
-    @Override
-    public void removeLastPoint() {
+    private void removeLastPoint() {
         final TeamType oldServingTeam = getServingTeam();
         TeamType teamLosingOnePoint;
 
@@ -897,6 +874,16 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
 
     @Override
     public void restoreGame(IStoredGame storedGame) {}
+
+    @Override
+    public List<GameEvent> getLatestGameEvents() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void undoGameEvent(GameEvent gameEvent) {
+        removeLastPoint();
+    }
 
     @Override
     public void startMatch() {

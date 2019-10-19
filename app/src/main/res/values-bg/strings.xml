@@ -1,362 +1,365 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Volleyball Referee</string>
+    <string name="app_name">Съдия по волейбол</string>
 
     <!-- General actions -->
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="resume">Resume</string>
-    <string name="delete">Delete</string>
-    <string name="ignore">Ignore</string>
-    <string name="accept">Accept</string>
-    <string name="reject">Discard</string>
-    <string name="remove">Remove</string>
-    <string name="create">Create</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
-    <string name="start">Start</string>
+    <string name="yes">Да</string>
+    <string name="no">Не</string>
+    <string name="resume">Продължи</string>
+    <string name="delete">Изтрий</string>
+    <string name="ignore">Игнорирай</string>
+    <string name="accept">Приеми</string>
+    <string name="reject">Отхвърли</string>
+    <string name="remove">Премахни</string>
+    <string name="create">Създай</string>
+    <string name="edit">Редактирай</string>
+    <string name="save">Запази</string>
+    <string name="start">Старт</string>
+    <string name="undo">Отмяна</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Volleyball</string>
-    <string name="new_beach_volleyball_game">Beach Volleyball</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Scoreboard</string>
-    <string name="new_time_based_game">Time-based</string>
-    <string name="permission_title">About permissions</string>
-    <string name="permission_message">This application needs the storage permissions in order to share the match results.</string>
-    <string name="resume_game_title">Resume match</string>
-    <string name="resume_game_question">The application found a match in progress. Do you wish to resume it or to delete it?</string>
-    <string name="resume_game_error">The match could not be resumed.</string>
+    <string name="new_volleyball_game">Волейбол</string>
+    <string name="new_beach_volleyball_game">Плажен волейбол</string>
+    <string name="new_snow_volleyball_game">Очаквайте скоро!</string>
+    <string name="new_score_based_game">Табло</string>
+    <string name="new_time_based_game">За време</string>
+    <string name="permission_title">Относно разрешенията</string>
+    <string name="permission_message">Това приложение се нуждае от разрешение за достъп до паметта за да е възможно споделяне на резултатите от мачовете.</string>
+    <string name="resume_game_title">Продължи мач</string>
+    <string name="resume_game_question">Приложението намира неприключен мач. Искаш ли да го продължиш или да го изтриеш?</string>
+    <string name="resume_game_error">Мачът не може да бъде продължен.</string>
     <string name="facebook">Facebook</string>
-    <string name="my_data_group">My data</string>
-    <string name="configuration_group">Configuration</string>
-    <string name="completed_games">Completed matches</string>
-    <string name="available_games">Scheduled &amp; live matches</string>
-    <string name="teams">Teams</string>
-    <string name="rules">Rules</string>
-    <string name="colleagues">Colleagues</string>
-    <string name="live_games_vbr_com">All live matches on website</string>
-    <string name="my_account">My account</string>
-    <string name="privacy_policy">Privacy policy</string>
+    <string name="my_data_group">Моите данни</string>
+    <string name="configuration_group">Конфигурация</string>
+    <string name="completed_games">Приключени мачове</string>
+    <string name="available_games">Планирани &amp; мачове на живо</string>
+    <string name="teams">Отбори</string>
+    <string name="rules">Правила</string>
+    <string name="colleagues">Колеги</string>
+    <string name="live_games_vbr_com">Всички мачове на живо</string>
+    <string name="my_account">Моят акаунт</string>
+    <string name="privacy_policy">Политика за поверителност</string>
 
     <!-- Purchase activity -->
-    <string name="purchase">Purchase</string>
-    <string name="already_purchased">Already purchased</string>
+    <string name="purchase">Купи</string>
+    <string name="already_purchased">Вече закупено</string>
     <string name="purchase_web_premium_summary">
-        \n\u2022 Keep your games, teams and rules synchronized between your devices.
-        \n\u2022 Enjoy the unlimited storage for your data and the better streaming quality for your live games.
-        \n\u2022 Schedule your games to be played later.
-        \n\u2022 Deleted your game by mistake? Resume your games from the server backup.
-        \n\u2022 Automatically benefit from the future new web features.
-    </string>
+       \n\u2022 Запазване на твоите срещи, отбори и правила синхронизирани на всичките ти устройства.
+       \n\u2022 Наслади се на неограничено място за съхранение на твоите данни и по-добро качество на онлайн срещите.
+       \n\u2022 Планиране твоите мачове да се играят на по-късен етап.
+       \n\u2022 Изтрили сте мач погрешка? Възстановяване на вашите мачове от резервното копие на сървъра.
+       \n\u2022 Автоматично получаване в бъдеще на нови уеб функции.
+   </string>
 
     <!-- User activity -->
-    <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
-    <string name="user_sign_out">Sign out</string>
-    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
-    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many failed attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
-    <string name="user_signed_in_as_pseudo">Signed in as %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character.</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
-    <string name="user_signed_out">Signed out</string>
-    <string name="search_colleague">Search in colleagues</string>
-    <string name="add_colleague">Add colleague</string>
-    <string name="received_colleague_request">You received a request from %s</string>
-    <string name="sent_colleague_request">You sent a request to %s</string>
-    <string name="pending">Pending</string>
-    <string name="accept_colleague_question">Accept %s as colleague?</string>
-    <string name="reject_colleague_question">Discard request from %s?</string>
-    <string name="remove_colleague_question">Remove %s?</string>
+    <string name="user_sign_in">Вход</string>
+    <string name="user_sign_up">Регистрация</string>
+    <string name="user_password_update">Актуализация на паролата</string>
+    <string name="user_lost_password">Забравена парола</string>
+    <string name="user_sign_out">Изход</string>
+    <string name="user_sign_in_why_title">Защо трябва да се впиша?</string>
+    <string name="user_sign_in_why_message">Вашите данни от положението (мачове, отбори, правила, първенства, колеги) ще бъдат синхронизирани на нашия сървър. Чрез вписването Ви, ние ще знаем кой сте Вие и ще запазим Вашите данни свързани с акаунта Ви.</string>
+    <string name="user_pseudo_hint">Съдийски псевдоним</string>
+    <string name="user_email_hint">Електронна поща</string>
+    <string name="user_confirm_email_hint">Потвърди електронната поща</string>
+    <string name="user_email_not_matching">Електронната Ви поща не съвпада</string>
+    <string name="user_current_password_hint">Настояща парола</string>
+    <string name="user_password_hint">Парола</string>
+    <string name="user_confirm_password_hint">Потвърди паролата</string>
+    <string name="user_new_password_hint">Нова парола</string>
+    <string name="user_confirm_new_password_hint">Потвърдете новата парола</string>
+    <string name="user_password_not_matching">Паролата не съвпада</string>
+    <string name="user_password_error">Грешна парола</string>
+    <string name="user_locked_error">Акаунта Ви е заключен за 30 минути поради многото неуспешни опити за вписване</string>
+    <string name="user_email_pseudo_conflict">Този съдийски псевдоним или имейл вече съществува</string>
+    <string name="user_request_error">Грешка при изпълнение на искането</string>
+    <string name="user_signed_in_as_pseudo">Влезли сте като %s</string>
+    <string name="user_password_recovery_initiated">Имейл с линк за възстановяване бе изпратен на %s</string>
+    <string name="password_strength">Паролата трябва да съдържа най-малко 8 знака, включително 1 главна буква, 1 цифра и 1 специален символ.</string>
+    <string name="password_strength_error">Паролата не покрива гореспоменатите критерии</string>
+    <string name="user_signed_out">Отписан сте</string>
+    <string name="search_colleague">Търси колеги</string>
+    <string name="add_colleague">Добави колега</string>
+    <string name="received_colleague_request">Получихте заявка от %s</string>
+    <string name="sent_colleague_request">Изпратихте заявка до %s</string>
+    <string name="pending">В очакване</string>
+    <string name="accept_colleague_question">Приемете %s като колега?</string>
+    <string name="reject_colleague_question">Отхвърлете заявката от %s?</string>
+    <string name="remove_colleague_question">Премахнете %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Setup game</string>
-    <string name="home_team_tab">Home team</string>
-    <string name="home_team_hint">Home team name</string>
-    <string name="guest_team_tab">Guest team</string>
-    <string name="guest_team_hint">Guest team name</string>
-    <string name="select_players">Select the players (including the liberos)</string>
-    <string name="select_shirts_color">Select the shirts colour</string>
-    <string name="select_captain">Select the captain</string>
-    <string name="select_libero">Select the liberos (optional)</string>
-    <string name="select_gender">Select the gender</string>
-    <string name="input_player_names">Input the player names (optional)</string>
-    <string name="confirm">Confirm</string>
-    <string name="confirm_game_setup_question">Do you confirm this setup?</string>
-    <string name="gender_description">Gender</string>
-    <string name="match_duration_text">Select the match duration</string>
-    <string name="league_name">League / tournament name</string>
-    <string name="division_name">Division / pool name</string>
-    <string name="misc_tab">Misc.</string>
-    <string name="rules_tab">Rules</string>
-    <string name="teams_tab">Teams</string>
-    <string name="referee">Referee</string>
-    <string name="leave_game_setup_question">This match setup will be lost. Leave anyway?</string>
-    <string name="must_provide_at_least_n_characters">You must provide at least %d characters</string>
+    <string name="game_setup_title">Създаване на мач</string>
+    <string name="home_team_tab">Отбор домакин</string>
+    <string name="home_team_hint">Отбор домакин - Име</string>
+    <string name="guest_team_tab">Отбор гост</string>
+    <string name="guest_team_hint">Отбор гост - Име</string>
+    <string name="select_players">Изберете играчите (включително либерата)</string>
+    <string name="select_shirts_color">Изберете цвят на екипа</string>
+    <string name="select_captain">Изберете капитан</string>
+    <string name="select_libero">Изберете либерата (опция)</string>
+    <string name="select_gender">Изберете пола на играчите</string>
+    <string name="input_player_names">Въведете имената на играчите (опция)</string>
+    <string name="confirm">Потвърди</string>
+    <string name="confirm_game_setup_question">Потвърждавате ли въведените данни?</string>
+    <string name="gender_description">Пол</string>
+    <string name="match_duration_text">Изберете продължителност на мача</string>
+    <string name="league_name">Наименование на първенството/турнира</string>
+    <string name="division_name">Лига / Група</string>
+    <string name="misc_tab">Други</string>
+    <string name="rules_tab">Правила</string>
+    <string name="teams_tab">Отбори</string>
+    <string name="referee">Съдия</string>
+    <string name="leave_game_setup_question">Така създаденият мач ще бъде изтрит. Напуснете въпреки това?</string>
+    <string name="must_provide_at_least_n_characters">Трябва да осигурите най-малко %d символа</string>
 
     <!-- Game activity -->
-    <string name="toss_tails">Tails</string>
-    <string name="toss_heads">Heads</string>
-    <string name="toss_coin">Toss a coin</string>
-    <string name="swap_first_service">Swap first service</string>
-    <string name="navigate_home">Back to home page</string>
-    <string name="reset_set">Reset current set</string>
-    <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
+    <string name="toss_tails">Тура</string>
+    <string name="toss_heads">Ези</string>
+    <string name="toss_coin">Жребий</string>
+    <string name="swap_first_service">Променете първия сервис</string>
+    <string name="navigate_home">Връщане към началната страница</string>
+    <string name="reset_set">Нулиране на текущия гейм</string>
+    <string name="reset_set_question">Текущият гейм ще се рестартира, всички разигравания ще бъдат загубени. Нулиране?</string>
     <string name="share">Share</string>
-    <string name="share_exception">Failed to share the game</string>
-    <string name="navigate_home_question">You may resume the current match later. Leave?</string>
-    <string name="select_player_title">Select a player from the bench</string>
-    <string name="court_position_tab">Positions</string>
-    <string name="ladder_tab">Points</string>
-    <string name="substitutions_tab">Substitutions</string>
-    <string name="timeouts_tab">Timeouts</string>
-    <string name="set_number">Set %d</string>
-    <string name="set_duration">%d min</string>
-    <string name="switch_sides">Switch court</string>
-    <string name="won_game">%s won the match</string>
-    <string name="timeout_title">Timeout (%s)</string>
-    <string name="timeout_question">Call a timeout?</string>
-    <string name="technical_timeout_title">Technical timeout</string>
-    <string name="game_interval_title">Game interval</string>
-    <string name="skip">Skip</string>
-    <string name="run_background">Run in background</string>
-    <string name="switch_sides_description">Manually switch court</string>
-    <string name="remove_point_description">Remove last point</string>
-    <string name="call_timeout_description">Call timeout</string>
-    <string name="match_point">Match point</string>
-    <string name="set_point">Set point</string>
-    <string name="confirm_lineup_title">Starting line-up</string>
-    <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
-    <string name="no_substitution_message">No substitution available</string>
-    <string name="confirm_set_question">Do you confirm this point?</string>
-    <string name="start_match_description">Start the match</string>
-    <string name="stop_match_description">Stop the match</string>
-    <string name="confirm_start_match_question">Do you want to start the match?</string>
-    <string name="confirm_stop_match_question">Do you want to stop the match?</string>
+    <string name="share_exception">Споделянето на мача е неуспешно</string>
+    <string name="navigate_home_question">Можете да подновите текущия мач по-късно. Напускане?</string>
+    <string name="select_player_title">Избиране играч от резервите</string>
+    <string name="court_position_tab">Позиции</string>
+    <string name="ladder_tab">Точки</string>
+    <string name="substitutions_tab">Смени</string>
+    <string name="timeouts_tab">Прекъсвания</string>
+    <string name="set_number">Гейм %d</string>
+    <string name="set_duration">%d мин.</string>
+    <string name="switch_sides">Смени полетата</string>
+    <string name="won_game">%s печели мача</string>
+    <string name="timeout_title">Прекъсване (%s)</string>
+    <string name="timeout_question">Искане за прекъсване?</string>
+    <string name="technical_timeout_title">Техническо прекъсване</string>
+    <string name="game_interval_title">Интервал</string>
+    <string name="skip">Пропусни</string>
+    <string name="run_background">Изпълнение във фонов режим</string>
+    <string name="switch_sides_description">Ръчна смяна на полетата</string>
+    <string name="remove_point_description">Върни последната точка</string>
+    <string name="call_timeout_description">Задай прекъсване</string>
+    <string name="match_point">Мачбол</string>
+    <string name="set_point">Геймбол</string>
+    <string name="confirm_lineup_title">Стартово нареждане</string>
+    <string name="confirm_team_lineup_question">Потвърждавате ли стартовото нареждане за %s в този гейм?</string>
+    <string name="no_substitution_message">Няма налични смени</string>
+    <string name="confirm_set_question">Потвърждавате ли тази точка?</string>
+    <string name="start_match_description">Започнете мача</string>
+    <string name="stop_match_description">Спрете мача</string>
+    <string name="confirm_start_match_question">Искате ли да стартирате мача?</string>
+    <string name="confirm_stop_match_question">Искате ли да спрете мача?</string>
     <string name="index_game">Toggle public / private match</string>
-    <string name="public_game_message">The match is now public</string>
-    <string name="private_game_message">The match is now private</string>
-    <string name="all_timeouts_called">%s has no more available timeout</string>
-    <string name="all_substitutions_used">%s has no more available substitution</string>
-    <string name="sanctions_tab">Sanctions</string>
-    <string name="sanction">Sanction (%s)</string>
-    <string name="delay_sanction">Delay</string>
-    <string name="misconduct_sanction">Misconduct</string>
-    <string name="yellow_card">Simple warning</string>
-    <string name="red_card">A point and service to the opponent</string>
-    <string name="red_card_expulsion">Expulsion for the remainder of the set</string>
-    <string name="red_card_disqualification">Disqualification for the remainder of the match</string>
-    <string name="coach_abbreviation">C.</string>
-    <string name="set_lost_incomplete">%s lost the set because the team is incomplete</string>
-    <string name="match_lost_incomplete">%s lost the match because the team is incomplete</string>
+    <string name="public_game_message">Мачът е общодостъпен</string>
+    <string name="private_game_message">Мачът е личен</string>
+    <string name="all_timeouts_called">%s няма повече почивки</string>
+    <string name="all_substitutions_used">%s няма повече смени</string>
+    <string name="sanctions_tab">Наказания</string>
+    <string name="sanction">Наказания (%s)</string>
+    <string name="delay_sanction">Забавяне</string>
+    <string name="misconduct_sanction">Лошо поведение</string>
+    <string name="yellow_card">Официално предупреждение</string>
+    <string name="red_card">Точка и сервис за противника</string>
+    <string name="red_card_expulsion">Отстраняване до края на гейма</string>
+    <string name="red_card_disqualification">Дисквалификация до края на мача</string>
+    <string name="coach_abbreviation">Треньор</string>
+    <string name="set_lost_incomplete">%s губи гейма, защото отборът е непълен</string>
+    <string name="match_lost_incomplete">%s губи мача, защото отборът е непълен</string>
     <string name="position_1_title">I</string>
     <string name="position_2_title">II</string>
     <string name="position_3_title">III</string>
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+    <string name="timeout">Прекъсване</string>
+    <string name="substitution">Смена</string>
 
     <!-- Scheduled games activity -->
-    <string name="delete_match">Delete the match</string>
-    <string name="reschedule_match">Reschedule the match</string>
-    <string name="edit_start_match">Edit and then start the match</string>
+    <string name="delete_match">Изтрийте мач</string>
+    <string name="reschedule_match">Подгответе мач отново</string>
+    <string name="edit_start_match">Редактирайте и след това започнете мач</string>
     <string name="start_match">@string/start_match_description</string>
-    <string name="resume_match">Resume the match</string>
-    <string name="download_match_error">Error while downloading the match</string>
+    <string name="resume_match">Възобновете мач</string>
+    <string name="download_match_error">Грешка при сваляне на мача</string>
 
     <!-- Settings activity -->
-    <string name="settings">Settings</string>
-    <string name="pref_keep_screen_on">Keep the screen on during games</string>
-    <string name="pref_interactive_notification">Use interactive notifications</string>
-    <string name="pref_night_mode">Theme</string>
+    <string name="settings">Настройки</string>
+    <string name="pref_keep_screen_on">Екранът да остане включен по време на мач</string>
+    <string name="pref_interactive_notification">Използвайте интерактивни уведомления</string>
+    <string name="pref_night_mode">Тема</string>
 
-    <string name="synchronize">Synchronize</string>
-    <string name="sync_succeeded_message">Data synchronization succeeded</string>
-    <string name="sync_failed_message">Data synchronization failed</string>
+    <string name="synchronize">Синхронизирай</string>
+    <string name="sync_succeeded_message">Успешна синхронизация на данни</string>
+    <string name="sync_failed_message">Неуспешна синхронизация на данни</string>
 
     <!-- Stored games activity -->
-    <string name="search_games">Search games</string>
-    <string name="delete_selected_games">Delete selected games</string>
-    <string name="delete_game">Delete game</string>
-    <string name="delete_selected_games_question">Do you want to delete the selected games?</string>
-    <string name="delete_game_question">Do you want to delete this game?</string>
-    <string name="deleted_game">Game was deleted</string>
-    <string name="deleted_selected_games">All selected games were deleted</string>
-    <string name="players">Players</string>
-    <string name="report_game">Generate game report</string>
-    <string name="report_exception">Failed to generate or to display the game report</string>
+    <string name="search_games">Търсене на мач</string>
+    <string name="delete_selected_games">Изтрийте избраните мачове</string>
+    <string name="delete_game">Изтрийте мач</string>
+    <string name="delete_selected_games_question">Искате ли да изтриете избраните мачове?</string>
+    <string name="delete_game_question">Искате ли да изтриете този мач?</string>
+    <string name="deleted_game">Мачът е изтрит</string>
+    <string name="deleted_selected_games">Всички избрани мачове бяха изтрити</string>
+    <string name="players">Играчи</string>
+    <string name="report_game">Създай рапорт за мач</string>
+    <string name="report_exception">Невъзможно създаване или показване на рапорт за мач</string>
 
     <!-- Stored teams activity -->
-    <string name="search_teams">Search teams</string>
-    <string name="delete_selected_teams">Delete selected teams</string>
-    <string name="delete_team">Delete team</string>
-    <string name="save_team">Save team</string>
-    <string name="delete_selected_teams_question">Do you want to delete the selected teams?</string>
-    <string name="delete_team_question">Do you want to delete this team?</string>
-    <string name="deleted_team">Team was deleted</string>
-    <string name="saved_team">Team was saved</string>
-    <string name="deleted_teams">All selected teams were deleted</string>
-    <string name="leave_team_creation_title">Leaving team creation</string>
-    <string name="leave_team_creation_question">This team will not be saved. Leave anyway?</string>
+    <string name="search_teams">Търси отбор</string>
+    <string name="delete_selected_teams">Изтрийте избраните отбори</string>
+    <string name="delete_team">Изтрийте отбор</string>
+    <string name="save_team">Запазете отбор</string>
+    <string name="delete_selected_teams_question">Искате ли да се изтрият избраните отбори?</string>
+    <string name="delete_team_question">Искате ли да се изтрие този отбор?</string>
+    <string name="deleted_team">Отборът беше изтрит</string>
+    <string name="saved_team">Отборът беше запазен</string>
+    <string name="deleted_teams">Всички избрани отбори бяха изтрити</string>
+    <string name="leave_team_creation_title">Напуснете създаване на отбор</string>
+    <string name="leave_team_creation_question">Този отбор няма да бъде запазен. Напускане въпреки това?</string>
 
     <!-- Stored rules activity -->
-    <string name="delete_selected_rules">Delete selected rules</string>
-    <string name="delete_rules">Delete rules</string>
-    <string name="save_rules">Save rules</string>
-    <string name="search_rules">Search rules</string>
-    <string name="delete_selected_rules_question">Do you want to delete the selected rules?</string>
-    <string name="delete_rules_question">Do you want to delete these rules?</string>
-    <string name="deleted_rules">Rules were deleted</string>
-    <string name="saved_rules">Rules were saved</string>
-    <string name="deleted_selected_rules">All selected rules were deleted</string>
-    <string name="leave_rules_creation_title">Leaving rules creation</string>
-    <string name="leave_rules_creation_question">These rules will not be saved. Leave anyway?</string>
-    <string name="rules_name_hint">Rules name</string>
-    <string name="general_rules">General</string>
-    <string name="timeout_rules">Timeout</string>
-    <string name="indoor_rules">Indoor volleyball</string>
-    <string name="beach_rules">Beach volleyball</string>
+    <string name="delete_selected_rules">Изтрийте избраните правила</string>
+    <string name="delete_rules">Изтрийте правилата</string>
+    <string name="save_rules">Запазете правилата</string>
+    <string name="search_rules">Търсете правила</string>
+    <string name="delete_selected_rules_question">Искате ли да се изтрият избраните правила?</string>
+    <string name="delete_rules_question">Искате ли да се изтрият тези правила?</string>
+    <string name="deleted_rules">Правилата бяха изтрити</string>
+    <string name="saved_rules">Правилата бяха запазени</string>
+    <string name="deleted_selected_rules">Всички избрани правила бяха изтрити</string>
+    <string name="leave_rules_creation_title">Напуснете създаване на правила</string>
+    <string name="leave_rules_creation_question">Тези правила няма да бъдат запазени. Напуснете въпреки това?</string>
+    <string name="rules_name_hint">Правила</string>
+    <string name="general_rules">Общи</string>
+    <string name="timeout_rules">Прекъсване</string>
+    <string name="indoor_rules">Волейбол</string>
+    <string name="beach_rules">Плажен волейбол</string>
 
-    <string name="rules_points_per_set">Number of points per set</string>
-    <string name="rules_sets_per_game">Number of sets per game</string>
-    <string name="rules_tie_break">Tie break in last set</string>
-    <string name="rules_points_in_tie_break">Number of points in tie break</string>
-    <string name="rules_two_points_difference">2 points difference to win set</string>
-    <string name="rules_sanctions">Sanctions</string>
-    <string name="rules_match_termination">Termination of match</string>
-    <string name="rules_team_timeouts">Team timeouts</string>
-    <string name="rules_team_timeouts_per_set">Number of team timeouts per set</string>
-    <string name="rules_team_timeout_duration">Duration of a team timeout</string>
-    <string name="rules_technical_timeouts">Technical timeouts</string>
-    <string name="rules_technical_timeout_duration">Duration of a technical timeout</string>
-    <string name="rules_game_intervals">Game intervals</string>
-    <string name="rules_game_intervals_duration">Duration of a game interval</string>
-    <string name="rules_substitutions_limitation">Limitation of substitutions</string>
-    <string name="rules_team_substitutions_per_set">Number of team substitutions per set</string>
-    <string name="rules_consecutive_serves_per_player">Limit of consecutive serves per player</string>
-    <string name="rules_court_switches">Court switches</string>
-    <string name="rules_court_switch_frequency">Court switch frequency in normal set</string>
-    <string name="rules_court_switch_frequency_tie_break">Court switch frequency in tie break</string>
+    <string name="rules_points_per_set">Брой точки за гейм</string>
+    <string name="rules_sets_per_game">Брой геймове за мач</string>
+    <string name="rules_tie_break">Тайбрек в последния гейм</string>
+    <string name="rules_points_in_tie_break">Брой точки в тайбрека</string>
+    <string name="rules_two_points_difference">2 точки разлика за спечелване на гейма</string>
+    <string name="rules_sanctions">Санкции</string>
+    <string name="rules_match_termination">Приключване на мач</string>
+    <string name="rules_team_timeouts">Отборни прекъсвания</string>
+    <string name="rules_team_timeouts_per_set">Брой отборни прекъсвания за гейм</string>
+    <string name="rules_team_timeout_duration">Продължителност на отборните прекъсвания</string>
+    <string name="rules_technical_timeouts">Технически прекъсвания</string>
+    <string name="rules_technical_timeout_duration">Продължителност на техническите прекъсвания</string>
+    <string name="rules_game_intervals">Интервали</string>
+    <string name="rules_game_intervals_duration">Продължителност на интервалите</string>
+    <string name="rules_substitutions_limitation">Ограничения при смените</string>
+    <string name="rules_team_substitutions_per_set">Брой на отборните смени за гейм</string>
+    <string name="rules_consecutive_serves_per_player">Ограничаване на последователните начални удари за играч</string>
+    <string name="rules_court_switches">Смяна на полетата</string>
+    <string name="rules_court_switch_frequency">Честота на смяна на полетата в нормален гейм</string>
+    <string name="rules_court_switch_frequency_tie_break">Честота на смяна на полетата в тайбрека</string>
 
     <string-array name="points_per_set_entries">
-        <item>Set of 40 points</item>
-        <item>Set of 39 points</item>
-        <item>Set of 38 points</item>
-        <item>Set of 37 points</item>
-        <item>Set of 36 points</item>
-        <item>Set of 35 points</item>
-        <item>Set of 34 points</item>
-        <item>Set of 33 points</item>
-        <item>Set of 32 points</item>
-        <item>Set of 31 points</item>
-        <item>Set of 30 points</item>
-        <item>Set of 29 points</item>
-        <item>Set of 28 points</item>
-        <item>Set of 27 points</item>
-        <item>Set of 26 points</item>
-        <item>Set of 25 points</item>
-        <item>Set of 24 points</item>
-        <item>Set of 23 points</item>
-        <item>Set of 22 points</item>
-        <item>Set of 21 points</item>
-        <item>Set of 20 points</item>
-        <item>Set of 19 points</item>
-        <item>Set of 18 points</item>
-        <item>Set of 17 points</item>
-        <item>Set of 16 points</item>
-        <item>Set of 15 points</item>
-        <item>Set of 14 points</item>
-        <item>Set of 13 points</item>
-        <item>Set of 12 points</item>
-        <item>Set of 11 points</item>
-        <item>Set of 10 points</item>
-        <item>Set of 9 points</item>
+        <item>Гейм от 40 точки</item>
+        <item>Гейм от 39 точки</item>
+        <item>Гейм от 38 точки</item>
+        <item>Гейм от 37 точки</item>
+        <item>Гейм от 36 точки</item>
+        <item>Гейм от 35 точки</item>
+        <item>Гейм от 34 точки</item>
+        <item>Гейм от 33 точки</item>
+        <item>Гейм от 32 точки</item>
+        <item>Гейм от 31 точки</item>
+        <item>Гейм от 30 точки</item>
+        <item>Гейм от 29 точки</item>
+        <item>Гейм от 28 точки</item>
+        <item>Гейм от 27 точки</item>
+        <item>Гейм от 26 точки</item>
+        <item>Гейм от 25 точки</item>
+        <item>Гейм от 24 точки</item>
+        <item>Гейм от 23 точки</item>
+        <item>Гейм от 22 точки</item>
+        <item>Гейм от 21 точки</item>
+        <item>Гейм от 20 точки</item>
+        <item>Гейм от 19 точки</item>
+        <item>Гейм от 18 точки</item>
+        <item>Гейм от 17 точки</item>
+        <item>Гейм от 16 точки</item>
+        <item>Гейм от 15 точки</item>
+        <item>Гейм от 14 точки</item>
+        <item>Гейм от 13 точки</item>
+        <item>Гейм от 12 точки</item>
+        <item>Гейм от 11 точки</item>
+        <item>Гейм от 10 точки</item>
+        <item>Гейм от 9 точки</item>
     </string-array>
     <string-array name="sets_per_game_entries">
-        <item>Game of 5 sets</item>
-        <item>Game of 3 sets</item>
-        <item>Game of 1 set</item>
+        <item>Мач 3 от 5 гейма</item>
+        <item>Мач 2 от 3 гейма</item>
+        <item>Мач от 1 гейм</item>
     </string-array>
     <string-array name="match_termination_entries">
-        <item>Finish the match as soon as a team wins</item>
-        <item>Finish the match when all the sets have been played</item>
+        <item>Приключване на мача веднага когато някой от отборите спечели</item>
+        <item>Приключване на мача когато всички геймове се изиграят</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
-        <item>3 team timeouts per set</item>
-        <item>2 team timeouts per set</item>
-        <item>1 team timeout per set</item>
-        <item>No team timeout per set</item>
+        <item>3 отборни почивки за гейм</item>
+        <item>2 отборни почивки за гейм</item>
+        <item>1 отборна почивка за гейм</item>
+        <item>Без отборни почивки за гейма</item>
     </string-array>
     <string-array name="timeout_duration_entries">
-        <item>60 seconds</item>
-        <item>45 seconds</item>
-        <item>30 seconds</item>
+        <item>60 сек.</item>
+        <item>45 сек.</item>
+        <item>30 сек.</item>
     </string-array>
     <string-array name="game_interval_duration_entries">
-        <item>3 minutes</item>
-        <item>2 minutes</item>
-        <item>1 minute</item>
+        <item>3 мин.</item>
+        <item>2 мин.</item>
+        <item>1 мин.</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>FIVB limitation</item>
-        <item>Alternative limitation 1</item>
-        <item>Alternative limitation 2</item>
-        <item>No limitation</item>
+        <item>Според правилата на FIVB</item>
+        <item>Алтернативно ограничение 1</item>
+        <item>Алтернативно ограничение 2</item>
+        <item>Без ограничения</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
-        <item>A player of the starting line-up may leave the game, but only once in a set, and re-enter, but only once in a set, and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, but only once per set, and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions), and he/she can only be substituted by the same starting player.</item>
-        <item>A player of the starting line-up may leave the game, several times in a set, and re-enter, an unlimited amount of times per set (within the number of allowed team substitutions), and only to his/her previous position in the line-up.\n\nA substitute player may enter the game in place of a player of the starting line-up, an unlimited amount of times per set (within the number of allowed team substitutions).\n\nMore than one substitute may enter the set in each position.</item>
-        <item>Players can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
+        <item>Играч от стартовото нареждане може да бъде сменен, но само веднъж за гейма и да се завърне, но само  веднъж за гейма и то на същата позиция според нареждането.\n\nРезервен състезател може да влезе в игра на мястото на играч от стартовия състав, но само веднъж за гейма и той трябва да бъде сменен от същия играч от стартовия състав.</item>
+        <item>Играч от стартовото нареждане може да бъде сменян няколко пъти за гейма и да се завръща няколко пъти (според броя на разрешените отборни смени) но само на неговата/нейната предишна позиция според нареждането.\n\nРезервен състезател може да влезе в игра на мястото на играч от стартовия състав няколко пъти за гейма (според броя на разрешените отборни смени) и той/тя трябва да бъде сменян от същия играч от стартовия състав.</item>
+        <item>Играч от стартовия състав може да бъде сменян няколко пъти в гейма и да се завръща в игра няколко пъти (съобразено с броя разрешени отборни смени) и само на неговата/нейната предишна позиция.\n\nРезервен играч може да влиза в игра на мястото на играч от стартовия състав неограничен брой пъти в гейма (съобразено с разрешените за гейма брой смени).\n\nПовече от един резервен играч може да влиза на всяка от позиците за гейма.</item>
+        <item>Играчите могат да бъдат заменяни и да се завръщат на всяка от позициите, неограничено за гейма layers can leave and re-enter the game on any position, an unlimited amount of times per set (within the number of allowed team substitutions).</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 substitutions per set (according to substitutions limitation)</item>
-        <item>15 substitutions per set (according to substitutions limitation)</item>
-        <item>12 substitutions per set</item>
-        <item>6 substitutions per set</item>
-        <item>5 substitutions per set</item>
-        <item>4 substitutions per set</item>
-        <item>3 substitutions per set</item>
+        <item>18 смени за гейм (според ограниченията за смени)</item>
+        <item>15 смени за гейм (според ограниченията за смени)</item>
+        <item>12 смени за гейм</item>
+        <item>6 смени за гейм</item>
+        <item>5 смени за гейм</item>
+        <item>4 смени за гейм</item>
+        <item>3 смени за гейм</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
-        <item>Switch court every 10 points</item>
-        <item>Switch court every 9 points</item>
-        <item>Switch court every 8 points</item>
-        <item>Switch court every 7 points</item>
-        <item>Switch court every 6 points</item>
-        <item>Switch court every 5 points</item>
+        <item>Смяна на полетата на всеки 10 точки</item>
+        <item>Смяна на полетата на всеки 9 точки</item>
+        <item>Смяна на полетата на всеки 8 точки</item>
+        <item>Смяна на полетата на всеки 7 точки</item>
+        <item>Смяна на полетата на всеки 6 точки</item>
+        <item>Смяна на полетата на всеки 5 точки</item>
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
-        <item>Unlimited</item>
-        <item>5 serves</item>
-        <item>4 serves</item>
-        <item>3 serves</item>
-        <item>2 serves</item>
+        <item>Неограничено</item>
+        <item>5 сервиса</item>
+        <item>4 сервиса</item>
+        <item>3 сервиса</item>
+        <item>2 сервиса</item>
     </string-array>
     <string-array name="night_mode_entries">
-        <item>System default</item>
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Системни настройки по подразбиране</item>
+        <item>Светла</item>
+        <item>Тъмна</item>
     </string-array>
 
     <!-- Credits activity -->
-    <string name="credit_title">About the VBR Team</string>
+    <string name="credit_title">За VBR Team</string>
 
 </resources>

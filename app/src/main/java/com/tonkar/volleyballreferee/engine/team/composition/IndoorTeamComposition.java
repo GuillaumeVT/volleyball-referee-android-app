@@ -21,6 +21,7 @@ import com.tonkar.volleyballreferee.engine.team.substitution.SubstitutionsLimita
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -94,6 +95,29 @@ public class IndoorTeamComposition extends TeamComposition {
 
         if (isPossibleSubstitution(number, positionType)) {
             result = super.substitutePlayer(number, positionType, homeTeamPoints, guestTeamPoints);
+        }
+
+        return result;
+    }
+
+    public boolean undoSubstitution(ApiSubstitution substitution) {
+        boolean result = false;
+
+        if (isStartingLineupConfirmed()) {
+            PositionType positionType = getPlayerPosition(substitution.getPlayerIn());
+
+            if (!PositionType.BENCH.equals(positionType) && PositionType.BENCH.equals(getPlayerPosition(substitution.getPlayerOut()))) {
+                for (Iterator<ApiSubstitution> iterator = mSubstitutions.iterator(); iterator.hasNext(); ) {
+                    ApiSubstitution tmpSubstitution = iterator.next();
+                    if (tmpSubstitution.equals(substitution)) {
+                        iterator.remove();
+                        mStartingLineupConfirmed = false;
+                        substitutePlayer(substitution.getPlayerOut(), positionType, substitution.getHomePoints(), substitution.getGuestPoints());
+                        mStartingLineupConfirmed = true;
+                        result = true;
+                    }
+                }
+            }
         }
 
         return result;
@@ -184,7 +208,7 @@ public class IndoorTeamComposition extends TeamComposition {
                     availablePlayers.add(mWaitingMiddleBlocker);
                 }
             } else {
-                // Can only do a fix number of substitutions
+                // Can only do a fixed number of substitutions
                 if (canSubstitute()) {
                     // A player who was replaced can only do one return trip with his regular substitute player
                     if (isInvolvedInPastSubstitution(number)) {

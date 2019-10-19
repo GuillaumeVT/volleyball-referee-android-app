@@ -82,7 +82,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private FloatingActionButton mLeftTeamServiceButton;
     private FloatingActionButton mRightTeamServiceButton;
     private TextView             mSetsText;
-    private FloatingActionButton mScoreRemoveButton;
+    private FloatingActionButton mUndoGameEventButton;
     private FloatingActionButton mLeftTeamTimeoutButton;
     private FloatingActionButton mRightTeamTimeoutButton;
     private LinearLayout         mLeftTeamTimeoutLayout;
@@ -144,7 +144,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
             mSetsText = findViewById(R.id.set_text);
 
-            mScoreRemoveButton = findViewById(R.id.score_remove_button);
+            mUndoGameEventButton = findViewById(R.id.undo_game_event_button);
 
             mLeftTeamTimeoutButton = findViewById(R.id.left_team_timeout_button);
             mRightTeamTimeoutButton = findViewById(R.id.right_team_timeout_button);
@@ -158,7 +158,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             UiUtils.fixFabCompatPadding(mSwapTeamsButton);
             UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
             UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
-            UiUtils.fixFabCompatPadding(mScoreRemoveButton);
+            UiUtils.fixFabCompatPadding(mUndoGameEventButton);
             UiUtils.fixFabCompatPadding(mLeftTeamTimeoutButton);
             UiUtils.fixFabCompatPadding(mLeftTeamCardsButton);
             UiUtils.fixFabCompatPadding(mRightTeamTimeoutButton);
@@ -288,10 +288,10 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         mGame.swapServiceAtStart();
     }
 
-    public void removeLastPoint(View view) {
-        Log.i(Tags.GAME_UI, "Remove last point");
-        UiUtils.animate(this, mScoreRemoveButton);
-        mGame.removeLastPoint();
+    public void undoGameEvent(View view) {
+        Log.i(Tags.GAME_UI, "Undo game event");
+        UiUtils.animate(this, mUndoGameEventButton);
+        showUndoDialog();
     }
 
     public void increaseLeftScore(View view) {
@@ -368,6 +368,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         final String title = String.format(Locale.getDefault(), getString(R.string.sanction), mGame.getTeamName(teamType));
         SanctionSelectionDialogFragment sanctionSelectionDialogFragment = SanctionSelectionDialogFragment.newInstance(title, teamType);
         sanctionSelectionDialogFragment.show(getSupportFragmentManager(), "sanction_dialog");
+    }
+
+    private void showUndoDialog() {
+        UndoDialogFragment undoDialogFragment = UndoDialogFragment.newInstance();
+        undoDialogFragment.show(getSupportFragmentManager(), "undo_dialog");
     }
 
     // Listeners
@@ -611,7 +616,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         mSwapTeamsButton.setEnabled(false);
         mLeftTeamScoreButton.setEnabled(false);
         mRightTeamScoreButton.setEnabled(false);
-        mScoreRemoveButton.setEnabled(false);
+        mUndoGameEventButton.setEnabled(false);
         mLeftTeamTimeoutButton.setEnabled(false);
         mRightTeamTimeoutButton.setEnabled(false);
         mLeftTeamCardsButton.setEnabled(false);
@@ -645,6 +650,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         UiUtils.makeText(this, sanctionText, Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {}
 
     private void initGameNavigation(final BottomNavigationView gameNavigation, Bundle savedInstanceState) {
         gameNavigation.setOnNavigationItemSelectedListener(item -> {

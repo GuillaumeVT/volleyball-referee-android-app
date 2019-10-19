@@ -205,7 +205,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         Log.i(Tags.GAME_UI, "Remove last point");
         UiUtils.animate(this, mScoreRemoveButton);
         if (mGameService.isMatchRunning()) {
-            mGameService.removeLastPoint();
+            mGameService.undoGameEvent(null);
         }
     }
 

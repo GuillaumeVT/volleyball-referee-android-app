@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class Indoor4x4Game extends Game implements IIndoorTeam {
@@ -55,19 +56,10 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
 
     @Override
     public void addPoint(final TeamType teamType) {
-        final TeamType oldServingTeam = currentSet().getServingTeam();
-
         super.addPoint(teamType);
 
         if (!currentSet().isSetCompleted()) {
             // Record the last server so we can prevent him from coming back on position 1 for serving
-            final TeamType newServingTeam = currentSet().getServingTeam();
-            if (oldServingTeam.equals(newServingTeam)) {
-                getIndoorTeamComposition(oldServingTeam).forbidPosition2ToCurrentServer();
-            } else {
-                getIndoorTeamComposition(oldServingTeam).allowPosition1();
-            }
-
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
             // In indoor volley, the teams change sides after the 8th during the tie break
@@ -119,7 +111,17 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     }
 
     @Override
-    public java.util.Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
+    protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {
+        Set<Integer> expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+        if (!expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerIn())
+                && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())
+                && getIndoorTeamComposition(teamType).undoSubstitution(substitution)) {
+            notifyPlayerChanged(teamType, substitution.getPlayerOut(), getIndoorTeamComposition(teamType).getPlayerPosition(substitution.getPlayerOut()), ActionOriginType.APPLICATION);
+        }
+    }
+
+    @Override
+    public Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType) {
         return getIndoorTeamComposition(teamType).getPossibleSubstitutions(positionType);
     }
 
@@ -159,7 +161,7 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     }
 
     @Override
-    public java.util.Set<Integer> getPossibleActingCaptains(TeamType teamType) {
+    public Set<Integer> getPossibleActingCaptains(TeamType teamType) {
         return getIndoorTeamComposition(teamType).getPossibleActingCaptains();
     }
 
@@ -169,9 +171,9 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     }
 
     @Override
-    public java.util.Set<Integer> filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType, int excludedNumber, java.util.Set<Integer> possibleSubstitutions) {
-        final java.util.Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
-        final java.util.Set<Integer> excludedNumbers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+    public Set<Integer> filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType, int excludedNumber, Set<Integer> possibleSubstitutions) {
+        final Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
+        final Set<Integer> excludedNumbers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
 
         for (Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
             int possibleReplacement = iterator.next();
@@ -260,7 +262,7 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     }
 
     @Override
-    public java.util.Set<ApiPlayer> getLiberos(TeamType teamType) {
+    public Set<ApiPlayer> getLiberos(TeamType teamType) {
         return new HashSet<>();
     }
 
@@ -294,7 +296,7 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
     }
 
     @Override
-    public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
+    public Set<Integer> getPossibleCaptains(TeamType teamType) {
         return getTeamDefinition(teamType).getPossibleCaptains();
     }
 
@@ -312,8 +314,8 @@ public class Indoor4x4Game extends Game implements IIndoorTeam {
             PositionType positionType = getPlayerPosition(teamType, number);
 
             if (!PositionType.BENCH.equals(positionType)) {
-                final java.util.Set<Integer> possibleSubstitutions = getPossibleSubstitutions(teamType, positionType);
-                final java.util.Set<Integer> filteredSubstitutions = filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+                final Set<Integer> possibleSubstitutions = getPossibleSubstitutions(teamType, positionType);
+                final Set<Integer> filteredSubstitutions = filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
 
                 // If there is no possible legal substituion, the set is lost
                 if (filteredSubstitutions.size() == 0) {

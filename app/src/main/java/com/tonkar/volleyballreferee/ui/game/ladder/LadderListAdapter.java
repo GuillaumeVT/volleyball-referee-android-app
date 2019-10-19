@@ -137,7 +137,7 @@ public class LadderListAdapter extends BaseAdapter {
     private void createLadderEventRow(TableRow ladderRow) {
         int width = measureTextWidth();
         for (int index = 0; index < sMaxLadderItems; index++) {
-            ImageView image = (ImageView) mLayoutInflater.inflate(R.layout.ladder_event_item, null);
+            ImageView image = (ImageView) mLayoutInflater.inflate(R.layout.simple_event_item, null);
             image.setLayoutParams(createTableRowLayoutParams(image.getContext(), width, index));
             ladderRow.addView(image);
             image.setVisibility(View.GONE);

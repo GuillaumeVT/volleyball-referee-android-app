@@ -93,6 +93,15 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     }
 
     @Override
+    public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        if (teamType.equals(mLeftTeamSanctionsListAdapter.getTeamType())) {
+            mLeftTeamSanctionsListAdapter.notifyDataSetChanged();
+        } else {
+            mRightTeamSanctionsListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void setGameService(IGame game) {
         mGame = game;
     }

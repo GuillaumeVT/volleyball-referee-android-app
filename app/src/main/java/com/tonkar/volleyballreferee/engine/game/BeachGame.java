@@ -187,6 +187,9 @@ public class BeachGame extends Game implements IBeachTeam {
     }
 
     @Override
+    protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {}
+
+    @Override
     public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
         return new ArrayList<>();
     }

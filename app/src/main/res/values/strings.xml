@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30109" translatable="false">Try out the new dark theme available in settings!\n\nWe are looking for someone motivated to take over the Polish translation.\nIf interested please email us at vbr.app.team@gmail.com.\n\nNew in 3.1.9:\n- Rules: Up to 40 points per set\n- Rules: New rule for match termination condition\n- Fixed a bug in the player selection when setting up a team\n-Fixed a bug in games/teams/rules multiple selection and deletion</string>
+    <string name="rn_30110" translatable="false">Try out the new dark theme available in settings!\n\nWe are looking for someone motivated to take over the Polish translation.\nIf interested please email us at vbr.app.team@gmail.com.\n\nNew in 3.1.10:\n-Fixed a bug where the team compositions would not be reloaded when resuming 4x4 games.\nThe 4x4 games are now using the substitution limitation rules.</string>
 
     <!-- General actions -->
     <string name="yes">Yes</string>
@@ -16,6 +16,7 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="start">Start</string>
+    <string name="undo">Undo</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Volleyball</string>
@@ -173,6 +174,8 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+    <string name="substitution">Substitution</string>
+    <string name="timeout">Timeout</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Delete the match</string>
@@ -361,7 +364,7 @@
     <string name="credit_title">About the VBR Team</string>
     <string name="credit_designers" translatable="false">Volleyball Referee is designed and developped by Guillaume VT and Polina P as a hobby project.\nYou can contact us at vbr.app.team@gmail.com.</string>
     <string name="credit_translators_intro" translatable="false">Our translations are made by voluntary referees and players. A huge thanks to them all:</string>
-    <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li>\n <li>Przemek K - Polski</li></string>
+    <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bartosz W - Polski</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Polina P - Русский</li></string>
 
     <string-array name="points_per_set_values" translatable="false">
         <item>40</item>

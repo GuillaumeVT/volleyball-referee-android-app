@@ -333,6 +333,11 @@ public class IndoorCourtFragment extends CourtFragment {
         }
     }
 
+    @Override
+    public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {
+        update(teamType);
+    }
+
     private void checkExplusions(TeamType teamType) {
         final Set<Integer> players = mIndoorTeam.getPlayersOnCourt(teamType);
         final Set<Integer> excludedNumbers = mGame.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);

@@ -4,27 +4,28 @@
     <!-- General actions -->
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
-    <string name="resume">"Wznów "</string>
-    <string name="delete">Unsun</string>
+    <string name="resume">Wznów</string>
+    <string name="delete">Usuń</string>
     <string name="ignore">Ignoruj</string>
     <string name="accept">Zaakceptuj</string>
     <string name="reject">Odrzuć</string>
     <string name="remove">Usuń</string>
     <string name="create">Utwórz</string>
-    <string name="edit">Edit</string>
-    <string name="save">Save</string>
+    <string name="edit">Edytuj</string>
+    <string name="save">Zapisz</string>
     <string name="start">Start</string>
+    <string name="undo">Cofnij</string>
 
     <!-- Main activity -->
     <string name="new_volleyball_game">Siatkówka halowa</string>
-    <string name="new_beach_volleyball_game">Siatkówka plazowa</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
+    <string name="new_beach_volleyball_game">Siatkówka plażowa</string>
+    <string name="new_snow_volleyball_game">Wkrótce!</string>
     <string name="new_score_based_game">Tablica wyników</string>
     <string name="new_time_based_game">Rozpocznij grę na czas</string>
     <string name="permission_title">O uprawnieniach</string>
     <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
-    <string name="resume_game_title">Wznów gre</string>
-    <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ja wznowić czy usunąć?</string>
+    <string name="resume_game_title">Wznów grę</string>
+    <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ją wznowić czy usunąć?</string>
     <string name="resume_game_error">Gra nie może zostać wznowiona.</string>
     <string name="facebook">Facebook</string>
     <string name="my_data_group">Moje Dane</string>
@@ -42,39 +43,39 @@
     <string name="purchase">Zakup</string>
     <string name="already_purchased">Już zakupione</string>
     <string name="purchase_web_premium_summary">
-        \n\u2022 Zachowaj synchronizację meczy, drużyn i zasad między swoimi urządzeniami.
-        \n\u2022 Ciesz się nieograniczoną ilością miejsca na dane i lepszą jakością transmisji na żywo.
-        \n\u2022 Zaplanuj swoje mecze do rozegrania później.
-        \n\u2022 Usunąłeś mecz przez pomyłkę? Wznów swoje mecze, korzystając z kopii zapasowej serwera.
-        \n\u2022 Automatycznie korzystaj z przyszłych nowych funkcji sieciowych.
-    </string>
+       \n\u2022 Zachowaj synchronizację meczów, drużyn i zasad między swoimi urządzeniami.
+       \n\u2022 Ciesz się nieograniczoną ilością miejsca na dane i lepszą jakością transmisji na żywo.
+       \n\u2022 Zaplanuj swoje mecze do rozegrania później.
+       \n\u2022 Usunąłeś mecz przez pomyłkę? Wznów swoje mecze, korzystając z kopii zapasowej serwera.
+       \n\u2022 Automatycznie korzystaj z przyszłych nowych funkcji sieciowych.
+   </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>
     <string name="user_sign_up">Sign up</string>
-    <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
+    <string name="user_password_update">Zaktualizuj hasło</string>
+    <string name="user_lost_password">Zagubiłem hasło</string>
     <string name="user_sign_out">Wyloguj się</string>
     <string name="user_sign_in_why_title">Dlaczego muszę się zalogować?</string>
-    <string name="user_sign_in_why_message">Twoje dane Volleyball Referee (gry, drużyny, zasady, ligi, znajomi) zostaną zsynchronizowane z naszym serwerem. Po zalogowaniu się będziemy wiedzieli że to ty i będziemy przechowywać Twoje dane powiązane z Twoim kontem.</string>
-    <string name="user_pseudo_hint">Referee pseudonym</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
-    <string name="user_current_password_hint">Current password</string>
-    <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
-    <string name="user_new_password_hint">New password</string>
-    <string name="user_confirm_new_password_hint">Confirm new password</string>
-    <string name="user_password_not_matching">Passwords don\'t match</string>
-    <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
-    <string name="user_request_error">Error while processing request</string>
+    <string name="user_sign_in_why_message">Twoje dane Volleyball Referee (gry, drużyny, zasady, ligi, znajomi) zostaną zsynchronizowane z naszym serwerem. Po zalogowaniu się będziemy wiedzieli, że to ty i będziemy przechowywać Twoje dane powiązane z Twoim kontem.</string>
+    <string name="user_pseudo_hint">Pseudonim sędziego</string>
+    <string name="user_email_hint">e-mail</string>
+    <string name="user_confirm_email_hint">Potwierdź e-mail</string>
+    <string name="user_email_not_matching">Adres e-mail nie pasuje</string>
+    <string name="user_current_password_hint">Aktualne hasło</string>
+    <string name="user_password_hint">Hasło</string>
+    <string name="user_confirm_password_hint">Potwierdź hasło</string>
+    <string name="user_new_password_hint">Nowe hasło</string>
+    <string name="user_confirm_new_password_hint">Potwierdź nowe hasło</string>
+    <string name="user_password_not_matching">Hasło nie pasuje</string>
+    <string name="user_password_error">Niewłaściwe hasło</string>
+    <string name="user_locked_error">Konto zablokowane na 30 minut ze względu na zbyt wiele nieudanych prób logowania</string>
+    <string name="user_email_pseudo_conflict">Ten pseudonim sędziego lub e-mail już istnieją</string>
+    <string name="user_request_error">Błąd podczas próby przetwarzania</string>
     <string name="user_signed_in_as_pseudo">Zalogowany jako %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
-    <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
-    <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
+    <string name="user_password_recovery_initiated">Link do odzyskiwania został wysłany na adres e-mail %s</string>
+    <string name="password_strength">Hasło musi zawierać co najmniej 8 znaków, w tym 1 wielką literę, 1 cyfrę i 1 znak specjalny</string>
+    <string name="password_strength_error">Hasło nie spełnia wyżej wymienionych kryteriów</string>
     <string name="user_signed_out">Wylogowano</string>
     <string name="search_colleague">Szukaj w znajomych</string>
     <string name="add_colleague">Dodaj znajomych</string>
@@ -87,24 +88,24 @@
     <string name="remove_colleague_question">Usuń %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Skonfiguruj gra</string>
+    <string name="game_setup_title">Skonfiguruj grę</string>
     <string name="home_team_tab">Drużyna gospodarzy</string>
-    <string name="home_team_hint">Nazwa druzyny gospodarzy</string>
-    <string name="guest_team_tab">Drużyna gosci</string>
-    <string name="guest_team_hint">Nazwa druzyny gosci</string>
+    <string name="home_team_hint">Nazwa drużyny gospodarzy</string>
+    <string name="guest_team_tab">Drużyna gości</string>
+    <string name="guest_team_hint">Nazwa drużyny gości</string>
     <string name="select_players">Wybierz graczy (w tym libero)</string>
     <string name="select_shirts_color">Wybierz kolor koszulki</string>
     <string name="select_captain">Wybierz kapitana</string>
     <string name="select_libero">Wybierz libero (opcjonalnie)</string>
     <string name="select_gender">Wybierz płeć</string>
-    <string name="input_player_names">Set the player names (optional)</string>
-    <string name="confirm">Potwierdz</string>
+    <string name="input_player_names">Wpisz graczy (opcjonalnie)</string>
+    <string name="confirm">Potwierdź</string>
     <string name="confirm_game_setup_question">Czy potwierdzasz te ustawienia?</string>
     <string name="gender_description">Płeć</string>
     <string name="match_duration_text">Wybierz czas trwania meczu</string>
     <string name="league_name">Liga / turniej</string>
-    <string name="division_name">Nazwa dywizji / grupy</string>
-    <string name="rules_tab">Zasasdy</string>
+    <string name="division_name">Nazwa ligi / grupy</string>
+    <string name="rules_tab">Zasady</string>
     <string name="teams_tab">Zespoły</string>
     <string name="misc_tab">Różne</string>
     <string name="referee">Sędzia</string>
@@ -113,15 +114,15 @@
 
     <!-- Game activity -->
     <string name="toss_tails">Reszka</string>
-    <string name="toss_heads">Orzel</string>
-    <string name="toss_coin">Rzut moneta</string>
-    <string name="swap_first_service">Zmien druzyne serwujaca</string>
-    <string name="navigate_home">Powrot na strone glowna</string>
+    <string name="toss_heads">Orzeł</string>
+    <string name="toss_coin">Rzut monetą</string>
+    <string name="swap_first_service">Zmień drużynę serwującą</string>
+    <string name="navigate_home">Powrót na stronę główną</string>
     <string name="reset_set">Zrestartuj set</string>
     <string name="reset_set_question">Bieżący set zostanie uruchomiony ponownie i wszystkie czynności zostaną utracone. Zresetować?</string>
     <string name="share">Udostepnij</string>
     <string name="share_exception">Nie udało się udostępnić meczu</string>
-    <string name="navigate_home_question">Możesz wznowić bieżący mecz później, kontynuowac?</string>
+    <string name="navigate_home_question">Możesz wznowić bieżący mecz później, kontynuować?</string>
     <string name="select_player_title">Wybierz zawodnika z ławki</string>
     <string name="court_position_tab">Pozycje</string>
     <string name="ladder_tab">Punkty</string>
@@ -129,21 +130,21 @@
     <string name="timeouts_tab">Czas</string>
     <string name="set_number">Set %d</string>
     <string name="set_duration">%d min</string>
-    <string name="switch_sides">Zmien strone</string>
-    <string name="won_game">%s wygrali mecz</string>
+    <string name="switch_sides">Zmień stronę</string>
+    <string name="won_game">%s wygrał mecz</string>
     <string name="timeout_title">Czas (%s)</string>
-    <string name="timeout_question">Czy chcesz wziac czas?</string>
+    <string name="timeout_question">Czy chcesz wziąć czas?</string>
     <string name="technical_timeout_title">Przerwa techniczna</string>
-    <string name="game_interval_title">Przerwa miedzy setami</string>
-    <string name="skip">Pomin</string>
+    <string name="game_interval_title">Przerwa między setami</string>
+    <string name="skip">Pomiń</string>
     <string name="run_background">Praca w tle</string>
-    <string name="switch_sides_description">Zmien strony recznie</string>
+    <string name="switch_sides_description">Zmień strony ręcznie</string>
     <string name="remove_point_description">Odejmij ostatni punkt</string>
-    <string name="call_timeout_description">Wez czas</string>
-    <string name="match_point">Pilka meczowa</string>
-    <string name="set_point">Pilka setowa</string>
-    <string name="confirm_lineup_title">Sklad wyjsciowy</string>
-    <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
+    <string name="call_timeout_description">Weź czas</string>
+    <string name="match_point">Piłka meczowa</string>
+    <string name="set_point">Piłka setowa</string>
+    <string name="confirm_lineup_title">Skład wyjściowy</string>
+    <string name="confirm_team_lineup_question">Czy potwierdzasz ustawienie początkowe %s w tym secie?</string>
     <string name="no_substitution_message">Brak zmiany</string>
     <string name="confirm_set_question">Czy potwierdzasz ten punkt</string>
     <string name="start_match_description">Rozpocznij mecz</string>
@@ -157,11 +158,11 @@
     <string name="all_substitutions_used">%s brak dostępnych zmian</string>
     <string name="sanctions_tab">Sankcje</string>
     <string name="sanction">Sankcja (%s)</string>
-    <string name="delay_sanction">Delay</string>
-    <string name="misconduct_sanction">Misconduct</string>
+    <string name="delay_sanction">Opóźnianie</string>
+    <string name="misconduct_sanction">Niewłaściwe zachowanie</string>
     <string name="yellow_card">Upomnienie</string>
-    <string name="red_card">Punkt i serwis dla przeciwnika</string>
-    <string name="red_card_expulsion">Wykluczenie na resztę seta</string>
+    <string name="red_card">Kara - punkt i serwis dla przeciwnika</string>
+    <string name="red_card_expulsion">Wykluczenie do końca seta</string>
     <string name="red_card_disqualification">Dyskwalifikacja do końca meczu</string>
     <string name="coach_abbreviation">C.</string>
     <string name="set_lost_incomplete">%s przegrany set - drużyna niekompletna</string>
@@ -172,6 +173,8 @@
     <string name="position_4_title">IV</string>
     <string name="position_5_title">V</string>
     <string name="position_6_title">VI</string>
+    <string name="timeout">Czas</string>
+    <string name="substitution">Zmiana</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Usuń mecz</string>
@@ -192,13 +195,13 @@
     <string name="sync_failed_message">Synchronizacja danych nie powiodła się</string>
 
     <!-- Stored games activity -->
-    <string name="search_games">Szukaj meczy</string>
-    <string name="delete_selected_games">Usun wszystkie mecze</string>
-    <string name="delete_game">Usun mecz</string>
+    <string name="search_games">Szukaj meczów</string>
+    <string name="delete_selected_games">Usuń wszystkie mecze</string>
+    <string name="delete_game">Usuń mecz</string>
     <string name="delete_selected_games_question">Czy chcesz usunąć ten mecz?</string>
     <string name="delete_game_question">Czy chcesz usunąć wszystkie mecze?</string>
-    <string name="deleted_game">Mecz usuniety</string>
-    <string name="deleted_selected_games">Wszystkie mecze usuniete</string>
+    <string name="deleted_game">Mecz usunięty</string>
+    <string name="deleted_selected_games">Wszystkie mecze usunięte</string>
     <string name="players">Gracze</string>
     <string name="report_game">Wygeneruj raport meczowy</string>
     <string name="report_exception">Nie udało się wygenerować ani wyświetlić raportu meczowego</string>
@@ -232,28 +235,28 @@
     <string name="general_rules">Ogólne</string>
     <string name="timeout_rules">Czas</string>
     <string name="indoor_rules">Siatkówka halowa</string>
-    <string name="beach_rules">Siatkówka plazowa</string>
+    <string name="beach_rules">Siatkówka plażowa</string>
 
-    <string name="rules_points_per_set">Ilosc punktów na set</string>
-    <string name="rules_sets_per_game">Ilosc punktów na mecz</string>
-    <string name="rules_tie_break">Tie Break w ostatnim secie</string>
-    <string name="rules_points_in_tie_break">Liczba punktów w tie-breaku</string>
+    <string name="rules_points_per_set">Ilość punktów na set</string>
+    <string name="rules_sets_per_game">Ilość punktów na mecz</string>
+    <string name="rules_tie_break">Tie-break w ostatnim secie</string>
+    <string name="rules_points_in_tie_break">Liczba punktów w tie-break\'u</string>
     <string name="rules_two_points_difference">Gra na przewagi (potrzebne 2 punkty przewagi aby wygrać set)</string>
     <string name="rules_sanctions">Sankcje</string>
     <string name="rules_match_termination">Zakończenie meczu</string>
-    <string name="rules_team_timeouts">Przerwa na zadanie</string>
-    <string name="rules_team_timeouts_per_set">Ilosc przerw na set</string>
-    <string name="rules_team_timeout_duration">Czas trwania przerwy na zadanie</string>
+    <string name="rules_team_timeouts">Przerwa na żądanie</string>
+    <string name="rules_team_timeouts_per_set">Ilość przerw w secie</string>
+    <string name="rules_team_timeout_duration">Czas trwania przerwy na żądanie</string>
     <string name="rules_technical_timeouts">Przerwa Techniczna</string>
     <string name="rules_technical_timeout_duration">Czas trwania przerwy technicznej</string>
-    <string name="rules_game_intervals">Przerwa miedzy setami</string>
-    <string name="rules_game_intervals_duration">Czas trwania przerwy miedzy setami</string>
+    <string name="rules_game_intervals">Przerwa między setami</string>
+    <string name="rules_game_intervals_duration">Czas trwania przerwy między setami</string>
     <string name="rules_substitutions_limitation">Limit zmian</string>
-    <string name="rules_team_substitutions_per_set">Ilosc zmian na set</string>
-    <string name="rules_consecutive_serves_per_player">Limit ilosci zagrywek na gracza</string>
+    <string name="rules_team_substitutions_per_set">Ilość zmian w secie</string>
+    <string name="rules_consecutive_serves_per_player">Limit ilości zagrywek na gracza</string>
     <string name="rules_court_switches">Zmiana stron</string>
-    <string name="rules_court_switch_frequency">Częstotliwość zmiany stron w standardowym secie</string>
-    <string name="rules_court_switch_frequency_tie_break">Częstotliwość zmiany stron w tie-breaku</string>
+    <string name="rules_court_switch_frequency">Częstotliwość zmiany stron w secie</string>
+    <string name="rules_court_switch_frequency_tie_break">Częstotliwość zmiany stron w tie-break\'u</string>
 
     <string-array name="points_per_set_entries">
         <item>Set do 40 punktów</item>
@@ -299,10 +302,10 @@
         <item>Zakończ mecz, gdy wszystkie sety zostaną rozegrane</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
-        <item>3 przerwy na zadanie na set</item>
-        <item>2 przerwy na zadanie na set</item>
-        <item>1 przerwa na zadanie na set</item>
-        <item>Brak przerw na zadanie w secie</item>
+        <item>3 przerwy na żądanie w secie</item>
+        <item>2 przerwy na żądanie w secie</item>
+        <item>1 przerwa na żądanie w secie</item>
+        <item>Brak przerw na żądanie w secie</item>
     </string-array>
     <string-array name="timeout_duration_entries">
         <item>60 sekund</item>
@@ -321,10 +324,10 @@
         <item>Bez Ograniczeń</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
-        <item>Zawodnik z wyjściowego składu może opuścić grę, ale tylko raz w secie i wejść ponownie, ale tylko raz w secie i tylko do swojej / jej poprzedniej pozycji w składzie.\n\nZawodnik zmianowy może wejść do gry w miejsce gracza z wyjściowego składu, ale tylko raz na set, oraz on / ona może być zastąpiony tylko przez tego samego zawodnika wyjściowego.</item>
-        <item>Zawodnik z wyjściowego składu może opuścić grę kilka razy w secie i ponownie wejść nieograniczoną ilość razy na set w ramach liczby dozwolonych zmian drużynowych i tylko na swoją poprzednią pozycę w składzie.\n\nZawodnik zmianowy może wejść do gry w miejsce gracza z wyjściowego składu, nieograniczoną liczbę razy w secie w ramach liczby dozwolonych zmian drużynowych, a on / ona może być zastąpieni tylko przez tego samego gracza rozpoczynającego.</item>
-        <item>Zawodnik z wyjściowego składu może opuścić grę kilka razy w secie i ponownie wejść nieograniczoną ilość razy na set w ramach liczby dozwolonych zmian drużynowych i tylko na swoją poprzednią pozycę w składzie.\n\nZawodnik zmianowy może wejść do gry w miejsce gracza z wyjściowego składu, nieograniczoną ilość razy w secie w w ramach liczby dozwolonych zmian drużynowych.\n\nWięcej niż jeden zawodnik zmianowy może wejść w secie na danąj pozycję.</item>
-        <item>Zawodnicy mogą opuścić i ponownie wejść do gry na dowolnej pozycji, nieograniczoną liczbę razy w seciew ramach liczby dozwolonych zmian drużynowych.</item>
+        <item>Zawodnik ustawienia początkowego może opuścić boisk tylko raz w secie i wejść ponownie w ramach zmiany powrotnej\n\nZawodnik rezerwowy może wejść do gry w miejsce gracza ustawienia początkowego tylko raz w secie oraz może być zastąpiony tylko w ramach zmiany powrotnej</item>
+        <item>Zawodnik ustawienia początkowego może opuścić grę kilka razy w secie i ponownie wejść nieograniczoną ilość razy w secie w ramach liczby dozwolonych zmian drużynowych i tylko na swoją poprzednią pozycję w składzie.\n\nZawodnik rezerwowy może wejść do gry w miejsce gracza z ustawienia początkowego, nieograniczoną liczbę razy w secie w ramach liczby dozwolonych zmian drużynowych, a on / ona może być zastąpiony tylko przez tego samego gracza ustawienia początkowego.</item>
+        <item>Zawodnik ustawienia początkowego może opuścić grę kilka razy w secie i ponownie wejść nieograniczoną ilość razy na set w ramach liczby dozwolonych zmian drużynowych i tylko na swoją poprzednią pozycję w składzie.\n\nZawodnik rezerwowy może wejść do gry w miejsce gracza ustawienia początkowego, nieograniczoną ilość razy w secie w ramach liczby dozwolonych zmian drużynowych.\n\nWięcej niż jeden zawodnik rezerwowy może wejść w secie na daną pozycję.</item>
+        <item>Zawodnicy mogą opuścić i ponownie wejść do gry na dowolnej pozycji, nieograniczoną liczbę razy w secie w ramach liczby dozwolonych zmian drużynowych.</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
         <item>18 zmian na set (zgodnie z ograniczeniem zmian)</item>
@@ -332,8 +335,8 @@
         <item>12 zmian na set</item>
         <item>6 zmian na set</item>
         <item>5 zmian na set</item>
-        <item>4 zmian na set</item>
-        <item>3 zmian na set</item>
+        <item>4 zmiany na set</item>
+        <item>3 zmiany na set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Zmień strony co 10 punktów</item>
@@ -351,12 +354,12 @@
         <item>2 zagrywki</item>
     </string-array>
     <string-array name="night_mode_entries">
-        <item>Donwśmysymemowy</item>
+        <item>Domyślny</item>
         <item>Jasny</item>
         <item>Ciemny</item>
     </string-array>
 
     <!-- Credits activity -->
-    <string name="credit_title">About the VBR Team</string>
+    <string name="credit_title">O nas - VBR Team</string>
 
 </resources>
