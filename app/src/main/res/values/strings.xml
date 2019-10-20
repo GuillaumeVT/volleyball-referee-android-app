@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30110" translatable="false">Try out the new dark theme available in settings!\n\nNew in 3.1.10:\n-Added the \'undo\' action during games\n-Fixed a bug where the team compositions would not be reloaded when resuming 4x4 games.\nThe 4x4 games are now using the substitution limitation rules.</string>
+    <string name="rn_30110" translatable="false">Try out the new dark theme available in settings!\n\nNew in 3.1.10:\n-Added the \'undo\' action during games.\n-Added a Bulgarian translation, thanks to Petar!\n-Fixed a bug where the team compositions would not be reloaded when resuming 4x4 games.\nThe 4x4 games are now using the substitution limitation rules.</string>
 
     <!-- General actions -->
     <string name="yes">Yes</string>
