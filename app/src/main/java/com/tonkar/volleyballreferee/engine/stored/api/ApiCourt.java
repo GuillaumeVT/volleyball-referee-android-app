@@ -39,6 +39,8 @@ public class ApiCourt {
                 return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0 && p5 >= 0 && p6 >= 0;
             case INDOOR_4X4:
                 return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0;
+            case SNOW:
+                return p1 >= 0 && p2 >= 0 && p3 >= 0;
             case BEACH:
             case TIME:
             default:

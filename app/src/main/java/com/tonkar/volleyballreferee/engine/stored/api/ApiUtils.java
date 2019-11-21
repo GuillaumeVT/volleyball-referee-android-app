@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -20,7 +21,7 @@ import okhttp3.Response;
 
 public class ApiUtils {
 
-    public static final  String    BASE_URL        = BuildConfig.SERVER_ADDRESS + "/api/v3.1";
+    public static final  String    BASE_URL        = BuildConfig.SERVER_ADDRESS + "/api/v3.2";
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
 
     private static ApiUtils                sApiUtils;
@@ -61,6 +62,16 @@ public class ApiUtils {
     public static Request buildGet(String url, ApiUserToken userToken) {
         return new Request.Builder()
                 .url(url)
+                .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
+                .build();
+    }
+
+    public static Request buildGet(String url, int page, int size, ApiUserToken userToken) {
+        return new Request.Builder()
+                .url(HttpUrl.parse(url).newBuilder()
+                        .addQueryParameter("page", Integer.toString(page))
+                        .addQueryParameter("size", Integer.toString(size))
+                        .build())
                 .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
                 .build();
     }

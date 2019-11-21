@@ -5,7 +5,7 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import java.util.Set;
 
-public interface IIndoorTeam extends ITeam {
+public interface IClassicTeam extends ITeam {
 
     Set<Integer> getPossibleSubstitutions(TeamType teamType, PositionType positionType);
 

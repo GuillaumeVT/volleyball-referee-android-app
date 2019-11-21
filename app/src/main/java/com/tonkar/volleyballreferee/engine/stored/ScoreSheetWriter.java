@@ -74,6 +74,9 @@ public class ScoreSheetWriter {
                 case INDOOR_4X4:
                     scoreSheetWriter.writeStoredIndoor4x4Game();
                     break;
+                case SNOW:
+                    scoreSheetWriter.writeStoredSnowGame();
+                    break;
                 case TIME:
                     scoreSheetWriter.writeStoredTimeGame();
                     break;
@@ -746,6 +749,79 @@ public class ScoreSheetWriter {
         setInfoDiv.appendChild(setInfoLine2Div);
 
         return setInfoDiv;
+    }
+
+    private void writeStoredSnowGame() {
+        mBody.appendChild(createStoredGameHeader());
+
+        if (UsageType.NORMAL.equals(mStoredGame.getUsage())) {
+            mBody.appendChild(createStoredTeams());
+        }
+
+        for (int setIndex = 0; setIndex < mStoredGame.getNumberOfSets(); setIndex++) {
+            Element cardDiv = new Element("div");
+            cardDiv.addClass("div-card").addClass("spacing-before");
+            cardDiv.attr("id", String.format(Locale.getDefault(), "div-set-%d", (1 + setIndex)));
+            cardDiv.appendChild(createStoredIndoorSetHeader(setIndex));
+
+            if (UsageType.NORMAL.equals(mStoredGame.getUsage()) && (mStoredGame.isStartingLineupConfirmed(TeamType.HOME, setIndex) || mStoredGame.isStartingLineupConfirmed(TeamType.GUEST, setIndex))) {
+                Element teamDiv = new Element("div");
+                teamDiv.addClass("div-flex-row");
+                teamDiv.appendChild(createStoredStartingLineupSnow(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+                teamDiv.appendChild(createStoredSubstitutions(setIndex));
+                cardDiv.appendChild(teamDiv);
+            }
+
+            Element timeoutAndSanctionDiv = new Element("div");
+            timeoutAndSanctionDiv.addClass("div-flex-row");
+
+            if ((UsageType.NORMAL.equals(mStoredGame.getUsage()) || UsageType.POINTS_SCOREBOARD.equals(mStoredGame.getUsage()))
+                    && mStoredGame.getRules().isTeamTimeouts()
+                    && (!mStoredGame.getCalledTimeouts(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getCalledTimeouts(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createStoredTimeouts(setIndex)).appendChild(createSpacingDiv()).appendChild(createSpacingDiv());
+            }
+
+            if (UsageType.NORMAL.equals(mStoredGame.getUsage())
+                    && mStoredGame.getRules().isSanctions()
+                    && (!mStoredGame.getAllSanctions(TeamType.HOME, setIndex).isEmpty() || !mStoredGame.getAllSanctions(TeamType.GUEST, setIndex).isEmpty())) {
+                timeoutAndSanctionDiv.appendChild(createStoredSanctions(setIndex));
+            }
+
+            cardDiv.appendChild(timeoutAndSanctionDiv);
+            cardDiv.appendChild(createStoredLadder(setIndex));
+
+            mBody.appendChild(cardDiv);
+        }
+    }
+
+    private Element createStoredStartingLineupSnow(int setIndex) {
+        Element wrapperDiv = new Element("div");
+
+        wrapperDiv.appendChild(createTitleDiv(mContext.getString(R.string.confirm_lineup_title)).addClass("spacing-before"));
+
+        Element lineupsDiv = new Element("div");
+        lineupsDiv.addClass("div-grid-h-g");
+        lineupsDiv.appendChild(createLineupDivSnow(TeamType.HOME, setIndex)).appendChild(createEmptyDiv()).appendChild(createLineupDivSnow(TeamType.GUEST, setIndex));
+        wrapperDiv.appendChild(lineupsDiv);
+
+        return wrapperDiv;
+    }
+
+    private Element createLineupDivSnow(TeamType teamType, int setIndex) {
+        Element lineupDiv = new Element("div");
+        lineupDiv.addClass("div-grid-lineup").addClass("border");
+
+        if (mStoredGame.isStartingLineupConfirmed(teamType, setIndex)) {
+            lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_1_title), false, false));
+            lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_2_title), false, false));
+            lineupDiv.appendChild(createCellSpan(mContext.getString(R.string.position_3_title), false, false));
+
+            lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGame.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_1, setIndex), false));
+            lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGame.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_2, setIndex), false));
+            lineupDiv.appendChild(createPlayerSpan(teamType, mStoredGame.getPlayerAtPositionInStartingLineup(teamType, PositionType.POSITION_3, setIndex), false));
+        }
+
+        return lineupDiv;
     }
 
     private void writeStoredTimeGame() {

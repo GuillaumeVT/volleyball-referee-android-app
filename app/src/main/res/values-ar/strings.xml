@@ -18,11 +18,11 @@
     <string name="undo">تراجع</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">الكرة الطائرة</string>
-    <string name="new_beach_volleyball_game">الكرة الطائرة الشاطئية</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">لوحة النتائج</string>
-    <string name="new_time_based_game">محدد الوقت</string>
+    <string name="volleyball_game">الكرة الطائرة داخل الصالات</string>
+    <string name="beach_volleyball_game">الكرة الطائرة الشاطئية</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">لوحة النتائج</string>
+    <string name="time_based_game">محدد الوقت</string>
     <string name="permission_title">حول صلاحيات التطبيق</string>
     <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
@@ -87,7 +87,8 @@
     <string name="home_team_hint">اسم الفريق المضيف</string>
     <string name="guest_team_tab">الفريق الضيف</string>
     <string name="guest_team_hint">اسم الفريق الضيف</string>
-    <string name="select_players">حدد اللاعبين (من ضمنهم اللاعب الحر)</string>
+    <string name="select_players">حدد اللاعبين</string>
+    <string name="select_players_with_liberos">حدد اللاعبين (من ضمنهم اللاعب الحر)</string>
     <string name="select_shirts_color">حدد لون ملابس الفريق</string>
     <string name="select_captain">حدد قائد الفريق</string>
     <string name="select_libero">حدد اللاعب الحر (اختياري)</string>
@@ -227,9 +228,6 @@
     <string name="leave_rules_creation_question">لن يتم حفظ هذه القوانين. اترك على أي حال؟</string>
     <string name="rules_name_hint">اسم القانون</string>
     <string name="general_rules">عام</string>
-    <string name="timeout_rules">قوانين الوقت المستقطع</string>
-    <string name="indoor_rules">الكرة الطائرة داخل الصالات</string>
-    <string name="beach_rules">الكرة الطائرة الشاطئية</string>
 
     <string name="rules_points_per_set">عدد النقاط لكل شوط</string>
     <string name="rules_sets_per_game">عدد الأشواط لكل مباراة</string>
@@ -331,6 +329,7 @@
         <item>5 تبديلات لكل شوط</item>
         <item>4 تبديلات لكل شوط</item>
         <item>3 تبديلات لكل شوط</item>
+        <item>2 تبديلات لكل شوط</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>تبديل جانب الملعب كل 10 نقاط</item>

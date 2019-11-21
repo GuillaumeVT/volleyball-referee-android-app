@@ -35,6 +35,7 @@
 
     <dimen name="indoor_court_y_margin">24dp</dimen>
     <dimen name="beach_court_y_padding">24dp</dimen>
+    <dimen name="snow_court_y_padding">20dp</dimen>
     <dimen name="court_x_padding">16dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
@@ -43,6 +44,7 @@
     <dimen name="fab_shift_first">70dp</dimen>
     <dimen name="fab_shift_second">140dp</dimen>
     <dimen name="fab_shift_third">210dp</dimen>
+    <dimen name="fab_shift_fourth">280dp</dimen>
     <dimen name="fab_shift_default">16dp</dimen>
 
     <dimen name="form_button_size">56dp</dimen>

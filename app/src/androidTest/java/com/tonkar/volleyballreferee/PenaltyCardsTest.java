@@ -9,7 +9,7 @@ import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
@@ -179,7 +179,7 @@ public class PenaltyCardsTest {
 
         game.startMatch();
 
-        fillCourt((IIndoorTeam) game);
+        fillCourt((IClassicTeam) game);
 
         assertTrue(game.getPossibleMisconductSanctions(TeamType.HOME, 3).contains(SanctionType.YELLOW));
         assertTrue(game.getPossibleMisconductSanctions(TeamType.HOME, 3).contains(SanctionType.RED));
@@ -213,7 +213,7 @@ public class PenaltyCardsTest {
 
         game.startMatch();
 
-        fillCourt((IIndoorTeam) game);
+        fillCourt((IClassicTeam) game);
 
         assertEquals(TeamType.HOME, game.getServingTeam());
         assertEquals(0, game.getPoints(TeamType.HOME));
@@ -275,7 +275,7 @@ public class PenaltyCardsTest {
     public void indoorGame_redExpulsionCard() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
-        IIndoorTeam indoorTeam = (IIndoorTeam) game;
+        IClassicTeam indoorTeam = (IClassicTeam) game;
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 8);
@@ -358,7 +358,7 @@ public class PenaltyCardsTest {
     public void indoorGame_redDisqualificationCard() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
-        IIndoorTeam indoorTeam = (IIndoorTeam) game;
+        IClassicTeam indoorTeam = (IClassicTeam) game;
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 8);
@@ -418,7 +418,7 @@ public class PenaltyCardsTest {
         }
     }
 
-    private void fillCourt(IIndoorTeam indoorTeam) {
+    private void fillCourt(IClassicTeam indoorTeam) {
         for (int number = 1; number <= 6; number++) {
             indoorTeam.substitutePlayer(TeamType.HOME, number, PositionType.fromInt(number), ActionOriginType.USER);
             indoorTeam.substitutePlayer(TeamType.GUEST, number, PositionType.fromInt(number), ActionOriginType.USER);

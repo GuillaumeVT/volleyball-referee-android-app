@@ -22,15 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public abstract class IndoorPlayerSelectionDialog {
+public abstract class PlayerSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IBaseTeam teamService, TeamType teamType, Set<Integer> players) {
+    PlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IBaseTeam teamService, TeamType teamType, Set<Integer> players) {
         this(layoutInflater, context, title, teamService, null, teamType, players);
     }
 
-    protected IndoorPlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IBaseTeam teamService, ISanction sanction, TeamType teamType, Set<Integer> players) {
+    protected PlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IBaseTeam teamService, ISanction sanction, TeamType teamType, Set<Integer> players) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
@@ -39,10 +39,10 @@ public abstract class IndoorPlayerSelectionDialog {
         gridView.setVerticalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        IndoorPlayerSelectionAdapter playerSelectionAdapter = new IndoorPlayerSelectionAdapter(layoutInflater, context, teamService, sanction, teamType, players) {
+        PlayerSelectionAdapter playerSelectionAdapter = new PlayerSelectionAdapter(layoutInflater, context, teamService, sanction, teamType, players) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
-                IndoorPlayerSelectionDialog.this.onPlayerSelected(selectedNumber);
+                PlayerSelectionDialog.this.onPlayerSelected(selectedNumber);
 
                 if (mAlertDialog != null) {
                     mAlertDialog.dismiss();
@@ -66,7 +66,7 @@ public abstract class IndoorPlayerSelectionDialog {
 
     public abstract void onPlayerSelected(int selectedNumber);
 
-    private abstract class IndoorPlayerSelectionAdapter extends BaseAdapter {
+    private abstract class PlayerSelectionAdapter extends BaseAdapter {
 
         private final LayoutInflater mLayoutInflater;
         private final Context        mContext;
@@ -75,7 +75,7 @@ public abstract class IndoorPlayerSelectionDialog {
         private final TeamType       mTeamType;
         private final List<Integer>  mPlayers;
 
-        IndoorPlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, IBaseTeam teamService, ISanction sanction, TeamType teamType, Set<Integer> players) {
+        PlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, IBaseTeam teamService, ISanction sanction, TeamType teamType, Set<Integer> players) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mTeamService = teamService;

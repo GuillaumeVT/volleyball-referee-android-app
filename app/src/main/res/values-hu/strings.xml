@@ -18,11 +18,11 @@
     <string name="undo">Visszavonás</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Teremröplabda</string>
-    <string name="new_beach_volleyball_game">Strandröplabda</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Eredménytábla</string>
-    <string name="new_time_based_game">Időalapú</string>
+    <string name="volleyball_game">Teremröplabda</string>
+    <string name="beach_volleyball_game">Strandröplabda</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">Eredménytábla</string>
+    <string name="time_based_game">Időalapú</string>
     <string name="permission_title">App jogosultságok</string>
     <string name="permission_message">Tárhely jogosultság szükséges a mérkőzés eredmények megosztásához.</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
@@ -94,6 +94,7 @@
     <string name="guest_team_tab">Vendég csapat</string>
     <string name="guest_team_hint">Vendég csapat neve</string>
     <string name="select_players">Válaszd ki az összes játékost</string>
+    <string name="select_players_with_liberos">Válaszd ki az összes játékost</string>
     <string name="select_shirts_color">Válaszd ki a mez színét</string>
     <string name="select_captain">Jelöld ki a kapitányt</string>
     <string name="select_libero">Jelöld ki a liberókat (nem kötelező)</string>
@@ -234,9 +235,6 @@
     <string name="leave_rules_creation_question">A szabályok nem lesznek mentve. Biztosan kilépsz?</string>
     <string name="rules_name_hint">Szabály neve</string>
     <string name="general_rules">Általános</string>
-    <string name="timeout_rules">Időkérés</string>
-    <string name="indoor_rules">Teremröplabda</string>
-    <string name="beach_rules">Strandröplabda</string>
 
     <string name="rules_points_per_set">Játszmánkénti pontok</string>
     <string name="rules_sets_per_game">Játszmák száma</string>
@@ -338,6 +336,7 @@
         <item>5 csere játszmánként</item>
         <item>4 csere játszmánként</item>
         <item>3 csere játszmánként</item>
+        <item>2 csere játszmánként</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Térfélcsere 10 pontonként</item>

@@ -46,6 +46,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private FloatingActionButton      mScheduleIndoorGameButton;
     private FloatingActionButton      mScheduleIndoor4x4GameButton;
     private FloatingActionButton      mScheduleBeachGameButton;
+    private FloatingActionButton      mScheduleSnowGameButton;
 
     @Override
     protected String getToolbarTitle() {
@@ -96,9 +97,11 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoorGameButton = findViewById(R.id.schedule_indoor_game_button);
         mScheduleIndoor4x4GameButton = findViewById(R.id.schedule_indoor_4x4_game_button);
         mScheduleBeachGameButton = findViewById(R.id.schedule_beach_game_button);
+        mScheduleSnowGameButton = findViewById(R.id.schedule_snow_game_button);
         mScheduleIndoorGameButton.hide();
         mScheduleIndoor4x4GameButton.hide();
         mScheduleBeachGameButton.hide();
+        mScheduleSnowGameButton.hide();
         mScheduleGameButton = findViewById(R.id.schedule_game_button);
         mScheduleGameButton.setOnClickListener(button -> {
             if(mIsFabOpen){
@@ -188,6 +191,10 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         scheduleGame(GameType.BEACH, view);
     }
 
+    public void scheduleSnowGame(View view) {
+        scheduleGame(GameType.SNOW, view);
+    }
+
     private void scheduleGame(GameType kind, View view) {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
         ApiUserSummary user = PrefUtils.getUser(this);
@@ -215,9 +222,11 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoorGameButton.show();
         mScheduleIndoor4x4GameButton.show();
         mScheduleBeachGameButton.show();
+        mScheduleSnowGameButton.show();
         mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
+        mScheduleSnowGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
     }
 
     private void closeFABMenu(){
@@ -227,9 +236,11 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoorGameButton.animate().translationY(0);
         mScheduleIndoor4x4GameButton.animate().translationY(0);
         mScheduleBeachGameButton.animate().translationY(0);
+        mScheduleSnowGameButton.animate().translationY(0);
         mScheduleIndoorGameButton.hide();
         mScheduleIndoor4x4GameButton.hide();
         mScheduleBeachGameButton.hide();
+        mScheduleSnowGameButton.hide();
     }
 
     @Override

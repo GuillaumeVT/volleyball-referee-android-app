@@ -11,7 +11,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
-import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.Indoor4x4TeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public class Indoor4x4Game extends Game implements IIndoorTeam {
+public class Indoor4x4Game extends Game implements IClassicTeam {
 
     Indoor4x4Game(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         super(GameType.INDOOR_4X4, id, createdBy, refereeName, createdAt, scheduledAt, rules);

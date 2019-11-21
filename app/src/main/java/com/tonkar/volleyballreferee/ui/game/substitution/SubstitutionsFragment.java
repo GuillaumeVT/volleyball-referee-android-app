@@ -13,7 +13,7 @@ import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamListener;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -21,7 +21,7 @@ import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
 public class SubstitutionsFragment extends Fragment implements TeamListener, GameServiceHandler {
 
-    private IIndoorTeam              mIndoorTeam;
+    private IClassicTeam             mIndoorTeam;
     private SubstitutionsListAdapter mLeftTeamSubstitutionsListAdapter;
     private SubstitutionsListAdapter mRightTeamSubstitutionsListAdapter;
 
@@ -90,6 +90,6 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
 
     @Override
     public void setGameService(IGame game) {
-        mIndoorTeam = (IIndoorTeam) game;
+        mIndoorTeam = (IClassicTeam) game;
     }
 }

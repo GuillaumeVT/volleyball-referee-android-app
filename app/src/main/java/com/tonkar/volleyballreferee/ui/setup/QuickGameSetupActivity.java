@@ -184,7 +184,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                             if (GameType.TIME.equals(mGame.getKind())) {
                                 fragment = null;
                             } else {
-                                fragment = RulesSetupFragment.newInstance(true, create);
+                                fragment = RulesSetupFragment.newInstance(true);
                             }
                             break;
                         default:

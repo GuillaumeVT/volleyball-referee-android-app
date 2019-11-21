@@ -9,7 +9,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
-import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.IndoorTeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class IndoorGame extends Game implements IIndoorTeam {
+public class IndoorGame extends Game implements IClassicTeam {
 
     public IndoorGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         super(GameType.INDOOR, id, createdBy, refereeName, createdAt, scheduledAt, rules);

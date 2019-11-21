@@ -33,7 +33,7 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
 
         initView();
 
-        if (mIndoorTeam != null) {
+        if (mClassTeam != null) {
             mLayoutInflater = inflater;
 
             addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));

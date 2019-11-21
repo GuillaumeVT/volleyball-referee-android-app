@@ -24,6 +24,7 @@ import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiCourt;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiGame;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiPage;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
@@ -37,7 +38,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
 import com.tonkar.volleyballreferee.engine.stored.database.AppDatabase;
 import com.tonkar.volleyballreferee.engine.stored.database.FullGameEntity;
 import com.tonkar.volleyballreferee.engine.stored.database.GameEntity;
-import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamListener;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -50,6 +51,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -443,8 +445,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                     set.setRemainingTime(timeBasedGameService.getRemainingTime(setIndex));
                 }
 
-                if (mGame instanceof IIndoorTeam) {
-                    IIndoorTeam indoorTeam = (IIndoorTeam) mGame;
+                if (mGame instanceof IClassicTeam) {
+                    IClassicTeam indoorTeam = (IClassicTeam) mGame;
 
                     ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
                     for (PositionType position : PositionType.listPositions(mGame.getKind())) {
@@ -646,7 +648,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        List<ApiGameSummary> games = readGames(response.body().string());
+                        List<ApiGameSummary> games = readGamesAsList(response.body().string());
                         listener.onAvailableGamesReceived(games);
                     } else {
                         Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting available games list", response.code()));
@@ -725,8 +727,12 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
 
     // Read game descriptions
 
-    private List<ApiGameSummary> readGames(String json) {
+    private List<ApiGameSummary> readGamesAsList(String json) {
         return JsonIOUtils.GSON.fromJson(json, new TypeToken<List<ApiGameSummary>>(){}.getType());
+    }
+
+    private ApiPage<ApiGameSummary> readGamesAsPage(String json) {
+        return JsonIOUtils.GSON.fromJson(json, new TypeToken<ApiPage<ApiGameSummary>>(){}.getType());
     }
 
     private void deleteGameOnServer(final String id) {
@@ -872,35 +878,44 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     @Override
     public void syncGames(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/completed", ApiUtils.BASE_URL), PrefUtils.getUserToken(mContext));
-
-            ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    if (listener != null){
-                        listener.onSynchronizationFailed();
-                    }
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        List<ApiGameSummary> gameList = readGames(response.body().string());
-                        syncGames(gameList, listener);
-                    } else {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", response.code()));
-                        if (listener != null){
-                            listener.onSynchronizationFailed();
-                        }
-                    }
-                }
-            });
+            syncGames(new ArrayList<>(), 0, 100, listener);
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();
             }
         }
+    }
+
+    private void syncGames(List<ApiGameSummary> remoteGameList, int page, int size, DataSynchronizationListener listener) {
+        Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/games/completed", ApiUtils.BASE_URL), page, size, PrefUtils.getUserToken(mContext));
+
+        ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                call.cancel();
+                if (listener != null){
+                    listener.onSynchronizationFailed();
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.code() == HttpURLConnection.HTTP_OK) {
+                    ApiPage<ApiGameSummary> gamesPage = readGamesAsPage(response.body().string());
+                    remoteGameList.addAll(gamesPage.getContent());
+                    if (gamesPage.isLast()) {
+                        syncGames(remoteGameList, listener);
+                    } else {
+                        syncGames(remoteGameList, page + 1, size, listener);
+                    }
+                } else {
+                    Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", response.code()));
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+            }
+        });
     }
 
     private void syncGames(List<ApiGameSummary> remoteGameList, DataSynchronizationListener listener) {

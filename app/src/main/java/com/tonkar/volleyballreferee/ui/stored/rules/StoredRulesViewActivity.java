@@ -62,6 +62,9 @@ public class StoredRulesViewActivity extends AppCompatActivity {
             case BEACH:
                 UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
                 break;
+            case SNOW:
+                UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
+                break;
             case INDOOR:
             default:
                 UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);

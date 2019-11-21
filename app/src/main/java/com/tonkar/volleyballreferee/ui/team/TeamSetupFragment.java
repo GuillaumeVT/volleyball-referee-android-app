@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
@@ -57,14 +58,13 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     public TeamSetupFragment() {}
 
-    public static TeamSetupFragment newInstance(TeamType teamType, boolean isGameContext, boolean create) {
+    public static TeamSetupFragment newInstance(GameType gameType, TeamType teamType, boolean isGameContext) {
         TeamSetupFragment fragment = new TeamSetupFragment();
 
         Bundle args = new Bundle();
+        args.putString(GameType.class.getName(), gameType.toString());
         args.putString(TeamType.class.getName(), teamType.toString());
         args.putBoolean("is_game", isGameContext);
-        args.putBoolean("create", create);
-        args.putInt("number_of_shirts", 26);
 
         fragment.setArguments(args);
         return fragment;
@@ -79,11 +79,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
-        final boolean create = getArguments().getBoolean("create");
         final boolean isGameContext = getArguments().getBoolean("is_game");
 
         if (savedInstanceState == null) {
-            mNumberOfShirts = getArguments().getInt("number_of_shirts");
+            mNumberOfShirts = GameType.SNOW.equals(mTeamService.getTeamsKind()) ? 4 : 26;
         } else {
             mNumberOfShirts = savedInstanceState.getInt("number_of_shirts");
         }
@@ -123,7 +122,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 updateGender(mTeamService.getGender(mTeamType));
                 mPlayerAdapter.notifyDataSetChanged();
                 captainUpdated(mTeamType, mTeamService.getCaptain(mTeamType));
-                if (manageLiberos()) {
+                if (GameType.INDOOR.equals(mTeamService.getTeamsKind())) {
                     liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
                     mLiberoAdapter.notifyDataSetChanged();
                 }
@@ -173,7 +172,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             selectCaptain();
         });
 
-        if (manageLiberos()) {
+        if (GameType.INDOOR.equals(mTeamService.getTeamsKind())) {
             mLiberoAdapter = new LiberoAdapter(getLayoutInflater(), getActivity(), mTeamService.getLiberoColor(mTeamType));
             liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
@@ -186,6 +185,9 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 UiUtils.animate(getContext(), mLiberoColorButton);
                 selectLiberoColor();
             });
+
+            TextView teamNumbersGridTitle = view.findViewById(R.id.team_member_numbers_title);
+            teamNumbersGridTitle.setText(getString(R.string.select_players_with_liberos));
         } else {
             liberoNumbersGrid.setVisibility(View.GONE);
             mLiberoColorButton.hide();
@@ -278,7 +280,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
-            final int playerShirtNumber = position;
+            // Snow volley: start shirts at 1 instead of 0
+            final int playerShirtNumber = GameType.SNOW.equals(mTeamService.getTeamsKind()) ? position + 1 : position;
             PlayerToggleButton button;
 
             if (view == null) {
@@ -305,6 +308,9 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
             button.setColor(mContext, mColor);
 
+            // Snow volley: Cannot deselect players 1,2,3
+            button.setEnabled(!GameType.SNOW.equals(mTeamService.getTeamsKind()) || playerShirtNumber == 4);
+
             button.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(mContext, cButton);
                 if (isShirt) {
@@ -317,7 +323,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                         mTeamService.removePlayer(mTeamType, number);
                     }
                     updateCaptain();
-                    if (manageLiberos()) {
+                    if (GameType.INDOOR.equals(mTeamService.getTeamsKind())) {
                         mLiberoAdapter.notifyDataSetChanged();
                     }
                     computeConfirmItemVisibility();
@@ -343,6 +349,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         private void initCount() {
             switch (mNumberOfShirts) {
+                case 4:
+                    // Snow volley: at most 4 players
+                    mCount = 4;
+                    break;
                 case 100:
                     mCount = 101;
                     break;
@@ -436,7 +446,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectCaptain() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team captain", mTeamType.toString()));
-        IndoorPlayerSelectionDialog playerSelectionDialog = new IndoorPlayerSelectionDialog(mLayoutInflater, getContext(), getString(R.string.select_captain), mTeamService,
+        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, getContext(), getString(R.string.select_captain), mTeamService,
                 mTeamType, mTeamService.getPossibleCaptains(mTeamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
@@ -549,9 +559,5 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         } else if (getActivity() instanceof StoredTeamActivity) {
             ((StoredTeamActivity) getActivity()).computeSaveLayoutVisibility();
         }
-    }
-
-    private boolean manageLiberos() {
-        return mTeamService.getExpectedNumberOfPlayersOnCourt() == 6;
     }
 }

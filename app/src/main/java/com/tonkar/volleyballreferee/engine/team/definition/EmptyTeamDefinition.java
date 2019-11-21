@@ -42,4 +42,9 @@ public class EmptyTeamDefinition extends TeamDefinition {
     public Set<Integer> getPossibleCaptains() {
         return new HashSet<>();
     }
+
+    @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        return 0;
+    }
 }

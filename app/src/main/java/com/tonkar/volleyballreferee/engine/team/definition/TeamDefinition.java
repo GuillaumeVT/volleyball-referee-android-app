@@ -88,27 +88,7 @@ public abstract class TeamDefinition extends ApiTeam {
         }
     }
 
-    public int getExpectedNumberOfPlayersOnCourt() {
-        int number;
-
-        switch (getKind()) {
-            case INDOOR:
-                number = 6;
-                break;
-            case INDOOR_4X4:
-                number = 4;
-                break;
-            case BEACH:
-                number = 2;
-                break;
-            case TIME:
-            default:
-                number = 0;
-                break;
-        }
-
-        return number;
-    }
+    public abstract int getExpectedNumberOfPlayersOnCourt();
 
     public abstract boolean isLibero(int number);
 

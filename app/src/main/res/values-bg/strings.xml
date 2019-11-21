@@ -18,11 +18,11 @@
     <string name="undo">Отмяна</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Волейбол</string>
-    <string name="new_beach_volleyball_game">Плажен волейбол</string>
-    <string name="new_snow_volleyball_game">Очаквайте скоро!</string>
-    <string name="new_score_based_game">Табло</string>
-    <string name="new_time_based_game">За време</string>
+    <string name="volleyball_game">Волейбол</string>
+    <string name="beach_volleyball_game">Плажен волейбол</string>
+    <string name="snow_volleyball_game">Очаквайте скоро!</string>
+    <string name="score_based_game">Табло</string>
+    <string name="time_based_game">За време</string>
     <string name="permission_title">Относно разрешенията</string>
     <string name="permission_message">Това приложение се нуждае от разрешение за достъп до паметта за да е възможно споделяне на резултатите от мачовете.</string>
     <string name="resume_game_title">Продължи мач</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Отбор домакин - Име</string>
     <string name="guest_team_tab">Отбор гост</string>
     <string name="guest_team_hint">Отбор гост - Име</string>
-    <string name="select_players">Изберете играчите (включително либерата)</string>
+    <string name="select_players">Изберете играчите</string>
+    <string name="select_players_with_liberos">Изберете играчите (включително либерата)</string>
     <string name="select_shirts_color">Изберете цвят на екипа</string>
     <string name="select_captain">Изберете капитан</string>
     <string name="select_libero">Изберете либерата (опция)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Тези правила няма да бъдат запазени. Напуснете въпреки това?</string>
     <string name="rules_name_hint">Правила</string>
     <string name="general_rules">Общи</string>
-    <string name="timeout_rules">Прекъсване</string>
-    <string name="indoor_rules">Волейбол</string>
-    <string name="beach_rules">Плажен волейбол</string>
 
     <string name="rules_points_per_set">Брой точки за гейм</string>
     <string name="rules_sets_per_game">Брой геймове за мач</string>
@@ -337,6 +335,7 @@
         <item>5 смени за гейм</item>
         <item>4 смени за гейм</item>
         <item>3 смени за гейм</item>
+        <item>2 смени за гейм</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Смяна на полетата на всеки 10 точки</item>

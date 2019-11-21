@@ -18,11 +18,11 @@
     <string name="undo">Annulla</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Pallavolo</string>
-    <string name="new_beach_volleyball_game">Beach volley</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">A punti</string>
-    <string name="new_time_based_game">A tempo</string>
+    <string name="volleyball_game">Pallavolo</string>
+    <string name="beach_volleyball_game">Beach volley</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">A punti</string>
+    <string name="time_based_game">A tempo</string>
     <string name="permission_title">Autorizzazioni</string>
     <string name="permission_message">Questa applicazione richiede l\'autorizzazione al salvataggio dei risultati delle partite per la condivisione.</string>
     <string name="resume_game_title">Riprendi la partita</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Nome della squadra ospitante</string>
     <string name="guest_team_tab">Squadra avversaria</string>
     <string name="guest_team_hint">Nome della squadra avversaria</string>
-    <string name="select_players">Seleziona i giocatori (anche i liberi)</string>
+    <string name="select_players">Seleziona i giocatori</string>
+    <string name="select_players_with_liberos">Seleziona i giocatori (anche i liberi)</string>
     <string name="select_shirts_color">Seleziona il colore della divisa</string>
     <string name="select_captain">Seleziona il capitano</string>
     <string name="select_libero">Seleziona il libero (facoltativo)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Queste regole non saranno salvate. Uscire?</string>
     <string name="rules_name_hint">Nome delle regole</string>
     <string name="general_rules">Generali</string>
-    <string name="timeout_rules">Tempo di riposo</string>
-    <string name="indoor_rules">Pallavolo</string>
-    <string name="beach_rules">Beach volley</string>
 
     <string name="rules_points_per_set">Numero di punti per set</string>
     <string name="rules_sets_per_game">Numero di set per partita</string>
@@ -337,6 +335,7 @@
         <item>5 sostituzioni per set</item>
         <item>4 sostituzioni per set</item>
         <item>3 sostituzioni per set</item>
+        <item>2 sostituzioni per set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Cambio campo ogni 10 punti</item>

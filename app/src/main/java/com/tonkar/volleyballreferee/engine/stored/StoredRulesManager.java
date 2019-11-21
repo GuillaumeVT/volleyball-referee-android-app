@@ -94,6 +94,9 @@ public class StoredRulesManager implements StoredRulesService {
             case BEACH:
                 rules = Rules.officialBeachRules();
                 break;
+            case SNOW:
+                rules = Rules.officialSnowRules();
+                break;
             default:
                 rules = Rules.officialIndoorRules();
                 break;
@@ -149,9 +152,11 @@ public class StoredRulesManager implements StoredRulesService {
                 && !rules.getName().equals(Rules.DEFAULT_BEACH_NAME)
                 && !rules.getName().equals(Rules.DEFAULT_INDOOR_NAME)
                 && !rules.getName().equals(Rules.DEFAULT_INDOOR_4X4_NAME)
+                && !rules.getName().equals(Rules.DEFAULT_SNOW_NAME)
                 && !rules.getId().equals(Rules.DEFAULT_BEACH_ID)
                 && !rules.getId().equals(Rules.DEFAULT_INDOOR_ID)
                 && !rules.getId().equals(Rules.DEFAULT_INDOOR_4X4_ID)
+                && !rules.getId().equals(Rules.DEFAULT_SNOW_ID)
                 && AppDatabase.getInstance(mContext).rulesDao().countByNameAndKind(rules.getName(), rules.getKind()) == 0
                 && AppDatabase.getInstance(mContext).rulesDao().countById(rules.getId()) == 0) {
             saveRules(rules, true);

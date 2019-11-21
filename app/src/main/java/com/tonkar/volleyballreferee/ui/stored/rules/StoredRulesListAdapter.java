@@ -94,6 +94,9 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
             case BEACH:
                 UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
                 break;
+            case SNOW:
+                UiUtils.colorChipIcon(getContext(), R.color.colorSnowLight, R.drawable.ic_snow, viewHolder.kindItem);
+                break;
             case INDOOR:
             default:
                 UiUtils.colorChipIcon(getContext(), R.color.colorIndoorLight, R.drawable.ic_6x6_small, viewHolder.kindItem);

@@ -86,6 +86,23 @@
                     app:tint="@color/colorOnDarkSurface" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/schedule_snow_game_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="scheduleSnowGame"
+                    android:transitionName="gameKindToToolbar"
+                    app:backgroundTint="@color/colorSnow"
+                    app:fabCustomSize="@dimen/form_button_size"
+                    app:maxImageSize="@dimen/form_fab_icon_size"
+                    app:srcCompat="@drawable/ic_snow"
+                    app:tint="@color/colorOnDarkSurface" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_game_button"
                     style="@style/AppTheme.Fab"
                     android:layout_width="wrap_content"

@@ -108,6 +108,25 @@ public class IndoorTeamDefinition extends TeamDefinition {
     }
 
     @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        int number;
+
+        switch (getKind()) {
+            case INDOOR:
+                number = 6;
+                break;
+            case INDOOR_4X4:
+                number = 4;
+                break;
+            default:
+                number = 0;
+                break;
+        }
+
+        return number;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
 

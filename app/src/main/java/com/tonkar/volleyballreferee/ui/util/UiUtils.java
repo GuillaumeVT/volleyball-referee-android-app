@@ -57,7 +57,7 @@ import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.IIndoorTeam;
+import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
@@ -83,7 +83,7 @@ public class UiUtils {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
     }
 
-    public static void styleIndoorTeamButton(Context context, IIndoorTeam indoorTeam, TeamType teamType, int number, MaterialButton button) {
+    public static void styleIndoorTeamButton(Context context, IClassicTeam indoorTeam, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
         if (indoorTeam.isLibero(teamType, number)) {
@@ -490,6 +490,9 @@ public class UiUtils {
                 break;
             case BEACH:
                 imageView.setImageResource(R.drawable.ic_beach);
+                break;
+            case SNOW:
+                imageView.setImageResource(R.drawable.ic_snow);
                 break;
             case TIME:
                 imageView.setImageResource(R.drawable.ic_time_based);

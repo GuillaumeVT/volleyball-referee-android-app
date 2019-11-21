@@ -40,11 +40,10 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     public QuickTeamSetupFragment() {}
 
-    public static QuickTeamSetupFragment newInstance(TeamType teamType, boolean create) {
+    public static QuickTeamSetupFragment newInstance(TeamType teamType) {
         QuickTeamSetupFragment fragment = new QuickTeamSetupFragment();
         Bundle args = new Bundle();
         args.putString(TeamType.class.getName(), teamType.toString());
-        args.putBoolean("create", create);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +55,6 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
         final String teamTypeStr = getArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
-
-        final boolean create = getArguments().getBoolean("create");
 
         final TextInputEditText teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);

@@ -40,6 +40,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private FloatingActionButton   mAddIndoorRulesButton;
     private FloatingActionButton   mAddIndoor4x4RulesButton;
     private FloatingActionButton   mAddBeachRulesButton;
+    private FloatingActionButton   mAddSnowRulesButton;
     private MenuItem               mDeleteSelectedRulesItem;
 
     @Override
@@ -99,9 +100,11 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoorRulesButton = findViewById(R.id.add_indoor_rules_button);
         mAddIndoor4x4RulesButton = findViewById(R.id.add_indoor_4x4_rules_button);
         mAddBeachRulesButton = findViewById(R.id.add_beach_rules_button);
+        mAddSnowRulesButton = findViewById(R.id.add_snow_rules_button);
         mAddIndoorRulesButton.hide();
         mAddIndoor4x4RulesButton.hide();
         mAddBeachRulesButton.hide();
+        mAddSnowRulesButton.hide();
         mAddRulesButton = findViewById(R.id.add_rules_button);
         mAddRulesButton.setOnClickListener(view -> {
             if(mIsFabOpen){
@@ -127,6 +130,11 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     public void addBeachRules(View view) {
         Log.i(Tags.STORED_RULES, "Start activity to create new beach rules");
         addRules(GameType.BEACH, view);
+    }
+
+    public void addSnowRules(View view) {
+        Log.i(Tags.STORED_RULES, "Start activity to create new snow rules");
+        addRules(GameType.SNOW, view);
     }
 
     private void addRules(GameType gameType, View view) {
@@ -203,9 +211,11 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoorRulesButton.show();
         mAddIndoor4x4RulesButton.show();
         mAddBeachRulesButton.show();
+        mAddSnowRulesButton.show();
         mAddIndoorRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
+        mAddSnowRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
     }
 
     private void closeFABMenu(){
@@ -214,9 +224,11 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoorRulesButton.animate().translationY(0);
         mAddIndoor4x4RulesButton.animate().translationY(0);
         mAddBeachRulesButton.animate().translationY(0);
+        mAddSnowRulesButton.animate().translationY(0);
         mAddIndoorRulesButton.hide();
         mAddIndoor4x4RulesButton.hide();
         mAddBeachRulesButton.hide();
+        mAddSnowRulesButton.hide();
     }
 
     @Override

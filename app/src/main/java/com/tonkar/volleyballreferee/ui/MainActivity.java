@@ -34,6 +34,7 @@ import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.engine.game.IndoorGame;
+import com.tonkar.volleyballreferee.engine.game.SnowGame;
 import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
@@ -206,7 +207,6 @@ public class MainActivity extends NavigationActivity {
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
-        intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
@@ -219,12 +219,19 @@ public class MainActivity extends NavigationActivity {
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
-        intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void startSnowGame(View view) {
         Log.i(Tags.GAME_UI, "Start a snow game");
+        ApiUserSummary user = PrefUtils.getUser(this);
+        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
+                System.currentTimeMillis(), 0L, Rules.officialSnowRules());
+        mStoredGamesService.saveSetupGame(game);
+
+        Log.i(Tags.GAME_UI, "Start activity to setup game");
+        final Intent intent = new Intent(this, GameSetupActivity.class);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
     public void startIndoor4x4Game(View view) {
@@ -236,7 +243,6 @@ public class MainActivity extends NavigationActivity {
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
         final Intent intent = new Intent(this, GameSetupActivity.class);
-        intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
@@ -249,7 +255,6 @@ public class MainActivity extends NavigationActivity {
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
-        intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 
@@ -262,7 +267,6 @@ public class MainActivity extends NavigationActivity {
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
         final Intent intent = new Intent(this, QuickGameSetupActivity.class);
-        intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }
 

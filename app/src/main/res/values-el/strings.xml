@@ -18,11 +18,11 @@
     <string name="undo">Αναίρεση</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Βόλεϊ Σάλας</string>
-    <string name="new_beach_volleyball_game">Βόλεϊ Άμμου</string>
-    <string name="new_snow_volleyball_game">Έρχεται σύντομα!</string>
-    <string name="new_score_based_game">Πίνακας Σκορ</string>
-    <string name="new_time_based_game">Με Χρόνο</string>
+    <string name="volleyball_game">Βόλεϊ Σάλας</string>
+    <string name="beach_volleyball_game">Βόλεϊ Άμμου</string>
+    <string name="snow_volleyball_game">Έρχεται σύντομα!</string>
+    <string name="score_based_game">Πίνακας Σκορ</string>
+    <string name="time_based_game">Με Χρόνο</string>
     <string name="permission_title">Σχετικά με τις άδειες</string>
     <string name="permission_message">Αυτή η εφαρμογή χρειάζεται άδεια αποθήκευσης για να μπορείς να μοιραστείς τα αποτελέσματα του αγώνα.</string>
     <string name="resume_game_title">Συνέχεια αγώνα</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Όνομα γηπεδούχου ομάδας</string>
     <string name="guest_team_tab">Φιλοξενούμενη ομάδα</string>
     <string name="guest_team_hint">Όνομα φιλοξενούμενης ομάδας</string>
-    <string name="select_players">Επέλεξε τους παίκτες (συμπεριλαμβανομένων των λίμπερο)</string>
+    <string name="select_players">Επέλεξε τους παίκτες</string>
+    <string name="select_players_with_liberos">Επέλεξε τους παίκτες (συμπεριλαμβανομένων των λίμπερο)</string>
     <string name="select_shirts_color">Επέλεξε χρώμα στολής</string>
     <string name="select_captain">Επέλεξε αρχηγό</string>
     <string name="select_libero">Επέλεξε τα λίμπερο (προαιρετικά)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Αυτοί οι κανόνες δεν θα αποθηκευτούν. Αποχώρηση;</string>
     <string name="rules_name_hint">Όνομα κανόνων</string>
     <string name="general_rules">Γενικά</string>
-    <string name="timeout_rules">Τάιμ άουτ</string>
-    <string name="indoor_rules">Βόλεϊ σάλας</string>
-    <string name="beach_rules">Βόλεϊ άμμου</string>
 
     <string name="rules_points_per_set">Αριθμός πόντων ανά σετ</string>
     <string name="rules_sets_per_game">Αριθμός σετ ανά αγώνα</string>
@@ -337,6 +335,7 @@
         <item>5 αλλαγές ανά σετ</item>
         <item>4 αλλαγές ανά σετ</item>
         <item>3 αλλαγές ανά σετ</item>
+        <item>2 αλλαγές ανά σετ</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Αλλαγή γηπέδου κάθε 10 πόντους</item>

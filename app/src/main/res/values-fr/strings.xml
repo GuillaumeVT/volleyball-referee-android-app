@@ -17,11 +17,11 @@
     <string name="undo">Annuler</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Volley-ball</string>
-    <string name="new_beach_volleyball_game">Beach Volley-ball</string>
-    <string name="new_snow_volleyball_game">Bientôt dans votre appli!</string>
-    <string name="new_score_based_game">Panneau de score</string>
-    <string name="new_time_based_game">En temps</string>
+    <string name="volleyball_game">Volley-ball en salle</string>
+    <string name="beach_volleyball_game">Beach Volley-ball</string>
+    <string name="snow_volleyball_game">Snow Volley-ball</string>
+    <string name="score_based_game">Panneau de score</string>
+    <string name="time_based_game">En temps</string>
     <string name="permission_title">À propos des autorisations</string>
     <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Continuer le match</string>
@@ -92,7 +92,8 @@
     <string name="home_team_hint">Nom de l\'équipe à domicile</string>
     <string name="guest_team_tab">Équipe à l\'extérieur</string>
     <string name="guest_team_hint">Nom de l\'équipe à l\'extérieur</string>
-    <string name="select_players">Sélectionner les joueurs (dont les libéros)</string>
+    <string name="select_players">Sélectionner les joueurs</string>
+    <string name="select_players_with_liberos">Sélectionner les joueurs (dont les libéros)</string>
     <string name="select_shirts_color">Sélectionner la couleur des maillots</string>
     <string name="select_captain">Sélectionner le capitaine</string>
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
@@ -232,9 +233,6 @@
     <string name="leave_rules_creation_question">Ces règles ne seront pas enregistrées. Quitter?</string>
     <string name="rules_name_hint">Nom des règles</string>
     <string name="general_rules">Générales</string>
-    <string name="timeout_rules">Temps morts</string>
-    <string name="indoor_rules">Volley-ball en salle</string>
-    <string name="beach_rules">Beach volley-ball</string>
 
     <string name="rules_points_per_set">Nombre de points par set</string>
     <string name="rules_sets_per_game">Nombre de sets par match</string>
@@ -336,6 +334,7 @@
         <item>5 remplacements par set</item>
         <item>4 remplacements par set</item>
         <item>3 remplacements par set</item>
+        <item>2 remplacements par set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Changement de côté tous les 10 points</item>

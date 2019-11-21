@@ -18,11 +18,11 @@
     <string name="undo">Desfazer</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Voleibol</string>
-    <string name="new_beach_volleyball_game">Voleibol de praia</string>
-    <string name="new_snow_volleyball_game">Brevemente!</string>
-    <string name="new_score_based_game">Marcador</string>
-    <string name="new_time_based_game">Jogo por tempo</string>
+    <string name="volleyball_game">Voleibol</string>
+    <string name="beach_volleyball_game">Voleibol de praia</string>
+    <string name="snow_volleyball_game">Brevemente!</string>
+    <string name="score_based_game">Marcador</string>
+    <string name="time_based_game">Jogo por tempo</string>
     <string name="permission_title">Permissões</string>
     <string name="permission_message">A aplicação necessita de permissões de armazenamento para partilhar resultados dos jogos.</string>
     <string name="resume_game_title">Continuar jogo</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Nome da Equipa da casa</string>
     <string name="guest_team_tab">Equipa visitante</string>
     <string name="guest_team_hint">Nome da Equipa visitante</string>
-    <string name="select_players">Selecionar jogadores (incluíndo líberos)</string>
+    <string name="select_players">Selecionar jogadores</string>
+    <string name="select_players_with_liberos">Selecionar jogadores (incluíndo líberos)</string>
     <string name="select_shirts_color">Selecionar cor das camisolas</string>
     <string name="select_captain">Selecionar Capitão</string>
     <string name="select_libero">Selecionar líberos (opcional)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Estas regras não serão gravadas. Sair mesmo assim?</string>
     <string name="rules_name_hint">Nome das regras</string>
     <string name="general_rules">Preferências</string>
-    <string name="timeout_rules">Tempo</string>
-    <string name="indoor_rules">Voleibol</string>
-    <string name="beach_rules">Voleibol de praia</string>
 
     <string name="rules_points_per_set">Número de pontos por set</string>
     <string name="rules_sets_per_game">Número de sets por jogo</string>
@@ -337,6 +335,7 @@
         <item>5 substituições por set</item>
         <item>4 substituições por set</item>
         <item>3 substituições por set</item>
+        <item>2 substituições por set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Mudança de campo a cada 10 pontos</item>

@@ -10,7 +10,7 @@ public enum PositionType {
     POSITION_1, POSITION_2, POSITION_3, POSITION_4, POSITION_5, POSITION_6, BENCH;
 
     public PositionType previousPosition(GameType gameType) {
-        final PositionType previous;
+        PositionType previous = BENCH;
 
         if (GameType.INDOOR.equals(gameType)) {
             switch (this) {
@@ -33,8 +33,17 @@ public enum PositionType {
                     previous = POSITION_1;
                     break;
                 default:
-                case BENCH:
-                    previous = BENCH;
+                    break;
+            }
+        } else if (GameType.BEACH.equals(gameType)) {
+            switch (this) {
+                case POSITION_1:
+                    previous = POSITION_2;
+                    break;
+                case POSITION_2:
+                    previous = POSITION_1;
+                    break;
+                default:
                     break;
             }
         } else if (GameType.INDOOR_4X4.equals(gameType)) {
@@ -51,28 +60,21 @@ public enum PositionType {
                 case POSITION_4:
                     previous = POSITION_1;
                     break;
-                case POSITION_5:
-                case POSITION_6:
-                case BENCH:
                 default:
-                    previous = BENCH;
                     break;
             }
-        } else {
+        } else if (GameType.SNOW.equals(gameType)) {
             switch (this) {
                 case POSITION_1:
                     previous = POSITION_2;
                     break;
                 case POSITION_2:
-                    previous = POSITION_1;
+                    previous = POSITION_3;
                     break;
                 case POSITION_3:
-                case POSITION_4:
-                case POSITION_5:
-                case POSITION_6:
-                case BENCH:
+                    previous = POSITION_1;
+                    break;
                 default:
-                    previous = BENCH;
                     break;
             }
         }
@@ -81,7 +83,7 @@ public enum PositionType {
     }
 
     public PositionType nextPosition(GameType gameType) {
-        final PositionType next;
+        PositionType next = BENCH;
 
         if (GameType.INDOOR.equals(gameType)) {
             switch (this) {
@@ -104,8 +106,17 @@ public enum PositionType {
                     next = POSITION_5;
                     break;
                 default:
-                case BENCH:
-                    next = BENCH;
+                    break;
+            }
+        } else if (GameType.BEACH.equals(gameType)) {
+            switch (this) {
+                case POSITION_1:
+                    next = POSITION_2;
+                    break;
+                case POSITION_2:
+                    next = POSITION_1;
+                    break;
+                default:
                     break;
             }
         } else if (GameType.INDOOR_4X4.equals(gameType)) {
@@ -122,28 +133,21 @@ public enum PositionType {
                 case POSITION_4:
                     next = POSITION_3;
                     break;
-                case POSITION_5:
-                case POSITION_6:
-                case BENCH:
                 default:
-                    next = BENCH;
                     break;
             }
-        } else {
+        } else if (GameType.SNOW.equals(gameType)) {
             switch (this) {
                 case POSITION_1:
-                    next = POSITION_2;
+                    next = POSITION_3;
                     break;
                 case POSITION_2:
                     next = POSITION_1;
                     break;
                 case POSITION_3:
-                case POSITION_4:
-                case POSITION_5:
-                case POSITION_6:
-                case BENCH:
+                    next = POSITION_2;
+                    break;
                 default:
-                    next = BENCH;
                     break;
             }
         }
@@ -156,25 +160,15 @@ public enum PositionType {
 
         switch (this) {
             case POSITION_1:
-                back = true;
-                break;
-            case POSITION_2:
-                back = false;
-                break;
-            case POSITION_3:
-                back = false;
-                break;
-            case POSITION_4:
-                back = false;
-                break;
             case POSITION_5:
-                back = true;
-                break;
             case POSITION_6:
                 back = true;
                 break;
-            default:
+            case POSITION_2:
+            case POSITION_3:
+            case POSITION_4:
             case BENCH:
+            default:
                 back = false;
                 break;
         }
@@ -277,17 +271,32 @@ public enum PositionType {
     public static List<PositionType> listPositions(GameType gameType) {
         List<PositionType> positions = new ArrayList<>();
 
-        if (GameType.BEACH.equals(gameType) || GameType.INDOOR.equals(gameType) || GameType.INDOOR_4X4.equals(gameType)) {
-            positions.add(PositionType.POSITION_1);
-            positions.add(PositionType.POSITION_2);
-        }
-        if (GameType.INDOOR.equals(gameType) || GameType.INDOOR_4X4.equals(gameType)) {
-            positions.add(PositionType.POSITION_3);
-            positions.add(PositionType.POSITION_4);
-        }
-        if (GameType.INDOOR.equals(gameType)) {
-            positions.add(PositionType.POSITION_5);
-            positions.add(PositionType.POSITION_6);
+        switch (gameType) {
+            case BEACH:
+                positions.add(PositionType.POSITION_1);
+                positions.add(PositionType.POSITION_2);
+                break;
+            case INDOOR:
+                positions.add(PositionType.POSITION_1);
+                positions.add(PositionType.POSITION_2);
+                positions.add(PositionType.POSITION_3);
+                positions.add(PositionType.POSITION_4);
+                positions.add(PositionType.POSITION_5);
+                positions.add(PositionType.POSITION_6);
+                break;
+            case INDOOR_4X4:
+                positions.add(PositionType.POSITION_1);
+                positions.add(PositionType.POSITION_2);
+                positions.add(PositionType.POSITION_3);
+                positions.add(PositionType.POSITION_4);
+                break;
+            case SNOW:
+                positions.add(PositionType.POSITION_1);
+                positions.add(PositionType.POSITION_2);
+                positions.add(PositionType.POSITION_3);
+                break;
+            default:
+                break;
         }
 
         return positions;

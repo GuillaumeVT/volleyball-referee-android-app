@@ -137,6 +137,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
             case TIME:
                 UiUtils.colorChipIcon(this, R.color.colorTimeLight, R.drawable.ic_time_based, kindItem);
                 break;
+            case SNOW:
+                UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
+                break;
             case INDOOR:
             default:
                 UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);

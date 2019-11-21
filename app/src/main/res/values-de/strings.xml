@@ -18,11 +18,11 @@
     <string name="undo">Rückgängig machen</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Hallenvolleyball</string>
-    <string name="new_beach_volleyball_game">Beachvolleyball</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Anzeigetafel</string>
-    <string name="new_time_based_game">Zeitbasiert</string>
+    <string name="volleyball_game">Hallenvolleyball</string>
+    <string name="beach_volleyball_game">Beachvolleyball</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">Anzeigetafel</string>
+    <string name="time_based_game">Zeitbasiert</string>
     <string name="permission_title">Berechtigungen</string>
     <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Name Heimmannschaft</string>
     <string name="guest_team_tab">Gastmannschaft</string>
     <string name="guest_team_hint">Name Gastmannschaft</string>
-    <string name="select_players">Spieler auswählen (inklusive Liberos)</string>
+    <string name="select_players">Spieler auswählen</string>
+    <string name="select_players_with_liberos">Spieler auswählen (inklusive Liberos)</string>
     <string name="select_shirts_color">Trikotfarbe auswählen</string>
     <string name="select_captain">Mannschaftskapitän auswählen</string>
     <string name="select_libero">Liberos auswählen (optional)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Diese Regeln wird nicht gespeichert. Trotzdem fortfahren?</string>
     <string name="rules_name_hint">Name der Regeln</string>
     <string name="general_rules">Allgemeines</string>
-    <string name="timeout_rules">Auszeit</string>
-    <string name="indoor_rules">Hallenvolleyball</string>
-    <string name="beach_rules">Beachvolleyball</string>
 
     <string name="rules_points_per_set">Anzahl der Punkte pro Satz</string>
     <string name="rules_sets_per_game">Anzahl der Sätze pro Spiel</string>
@@ -337,6 +335,7 @@
         <item>5 Auswechslungen pro Satz</item>
         <item>4 Auswechslungen pro Satz</item>
         <item>3 Auswechslungen pro Satz</item>
+        <item>2 Auswechslungen pro Satz</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Wechsel alle 10 Punkte</item>

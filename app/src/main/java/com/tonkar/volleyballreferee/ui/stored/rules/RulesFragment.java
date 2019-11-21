@@ -31,73 +31,101 @@ public class RulesFragment extends Fragment implements RulesHandler {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.STORED_RULES, "Create rules fragment");
-        View view = inflater.inflate(R.layout.fragment_rules, container, false);
+        View view;
+
+        switch (mRules.getKind()) {
+            case BEACH:
+                view = inflater.inflate(R.layout.fragment_beach_rules, container, false);
+                break;
+            case SNOW:
+                view = inflater.inflate(R.layout.fragment_snow_rules, container, false);
+                break;
+            case INDOOR:
+            case INDOOR_4X4:
+            default:
+                view = inflater.inflate(R.layout.fragment_indoor_rules, container, false);
+                break;
+        }
+
+        // General
 
         TextView setsPerGame = view.findViewById(R.id.rules_sets_per_game);
-        TextView pointsPerSet = view.findViewById(R.id.rules_points_per_set);
-        SwitchCompat tieBreakSwitch = view.findViewById(R.id.rules_tie_break);
-        TextView pointsInTieBreak = view.findViewById(R.id.rules_points_in_tie_break);
-        SwitchCompat twoPointsDifferenceSwitch = view.findViewById(R.id.rules_two_points_difference);
-        SwitchCompat sanctionsSwitch = view.findViewById(R.id.rules_sanctions);
-        TextView matchTermination = view.findViewById(R.id.rules_match_termination);
-
-        SwitchCompat teamTimeoutsSwitch = view.findViewById(R.id.rules_team_timeouts);
-        TextView teamTimeoutsPerSet = view.findViewById(R.id.rules_team_timeouts_per_set);
-        TextView teamTimeoutDuration = view.findViewById(R.id.rules_team_timeout_duration);
-        SwitchCompat technicalTimeoutsSwitch = view.findViewById(R.id.rules_technical_timeouts);
-        TextView technicalTimeoutDuration = view.findViewById(R.id.rules_technical_timeout_duration);
-        SwitchCompat gameIntervalsSwitch = view.findViewById(R.id.rules_game_intervals);
-        TextView gameIntervalDuration = view.findViewById(R.id.rules_game_intervals_duration);
-
-        TextView substitutionsLimitation = view.findViewById(R.id.rules_substitutions_limitation);
-        TextView substitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
-        TextView teamSubstitutionsPerSet = view.findViewById(R.id.rules_team_substitutions_per_set);
-
-        SwitchCompat courtSwitchesSwitch = view.findViewById(R.id.rules_court_switches);
-        TextView courtSwitchFrequency = view.findViewById(R.id.rules_court_switch_frequency);
-        TextView courtSwitchFrequencyTieBreak = view.findViewById(R.id.rules_court_switch_frequency_tie_break);
-        TextView consecutiveServes = view.findViewById(R.id.rules_consecutive_serves_per_player);
-
         setsPerGame.setText(findRuleEntry(mRules.getSetsPerGame(), R.array.sets_per_game_entries, R.array.sets_per_game_values));
+
+        TextView pointsPerSet = view.findViewById(R.id.rules_points_per_set);
         pointsPerSet.setText(findRuleEntry(mRules.getPointsPerSet(), R.array.points_per_set_entries, R.array.points_per_set_values));
+
+        SwitchCompat tieBreakSwitch = view.findViewById(R.id.rules_tie_break);
         tieBreakSwitch.setChecked(mRules.isTieBreakInLastSet());
+
+        TextView pointsInTieBreak = view.findViewById(R.id.rules_points_in_tie_break);
         pointsInTieBreak.setText(findRuleEntry(mRules.getPointsInTieBreak(), R.array.points_per_set_entries, R.array.points_per_set_values));
+
+        SwitchCompat twoPointsDifferenceSwitch = view.findViewById(R.id.rules_two_points_difference);
         twoPointsDifferenceSwitch.setChecked(mRules.isTwoPointsDifference());
+
+        SwitchCompat sanctionsSwitch = view.findViewById(R.id.rules_sanctions);
         sanctionsSwitch.setChecked(mRules.isSanctions());
 
+        TextView matchTermination = view.findViewById(R.id.rules_match_termination);
         matchTermination.setText(findRuleEntry(mRules.getMatchTermination(), R.array.match_termination_entries, R.array.match_termination_values));
 
+        // Timeouts
+
+        SwitchCompat teamTimeoutsSwitch = view.findViewById(R.id.rules_team_timeouts);
         teamTimeoutsSwitch.setChecked(mRules.isTeamTimeouts());
+
+        TextView teamTimeoutsPerSet = view.findViewById(R.id.rules_team_timeouts_per_set);
         teamTimeoutsPerSet.setText(findRuleEntry(mRules.getTeamTimeoutsPerSet(), R.array.team_timeouts_per_set_entries, R.array.team_timeouts_per_set_values));
+
+        TextView teamTimeoutDuration = view.findViewById(R.id.rules_team_timeout_duration);
         teamTimeoutDuration.setText(findRuleEntry(mRules.getTeamTimeoutDuration(), R.array.timeout_duration_entries, R.array.timeout_duration_values));
-        technicalTimeoutsSwitch.setChecked(mRules.isTechnicalTimeouts());
-        technicalTimeoutDuration.setText(findRuleEntry(mRules.getTechnicalTimeoutDuration(), R.array.timeout_duration_entries, R.array.timeout_duration_values));
+
+        if (!GameType.SNOW.equals(mRules.getKind())) {
+            SwitchCompat technicalTimeoutsSwitch = view.findViewById(R.id.rules_technical_timeouts);
+            technicalTimeoutsSwitch.setChecked(mRules.isTechnicalTimeouts());
+
+            TextView technicalTimeoutDuration = view.findViewById(R.id.rules_technical_timeout_duration);
+            technicalTimeoutDuration.setText(findRuleEntry(mRules.getTechnicalTimeoutDuration(), R.array.timeout_duration_entries, R.array.timeout_duration_values));
+        }
+
+        SwitchCompat gameIntervalsSwitch = view.findViewById(R.id.rules_game_intervals);
         gameIntervalsSwitch.setChecked(mRules.isGameIntervals());
+
+        TextView gameIntervalDuration = view.findViewById(R.id.rules_game_intervals_duration);
         gameIntervalDuration.setText(findRuleEntry(mRules.getGameIntervalDuration(), R.array.game_interval_duration_entries, R.array.game_interval_duration_values));
 
-        substitutionsLimitation.setText(findRuleEntry(mRules.getSubstitutionsLimitation(), R.array.substitutions_limitation_entries, R.array.substitutions_limitation_values));
-        substitutionsLimitationDescription.setText(findRuleEntry(mRules.getSubstitutionsLimitation(), R.array.substitutions_limitation_description_entries, R.array.substitutions_limitation_values));
-        teamSubstitutionsPerSet.setText(findRuleEntry(mRules.getTeamSubstitutionsPerSet(), R.array.team_substitutions_per_set_entries, R.array.team_substitutions_per_set_values));
+        // Substitutions
 
-        courtSwitchesSwitch.setChecked(mRules.isBeachCourtSwitches());
-        courtSwitchFrequency.setText(findRuleEntry(mRules.getBeachCourtSwitchFreq(), R.array.court_switch_frequency_entries, R.array.court_switch_frequency_values));
-        courtSwitchFrequencyTieBreak.setText(findRuleEntry(mRules.getBeachCourtSwitchFreqTieBreak(), R.array.court_switch_frequency_entries, R.array.court_switch_frequency_values));
-        consecutiveServes.setText(findRuleEntry(mRules.getCustomConsecutiveServesPerPlayer(), R.array.consecutive_serves_per_player_entries, R.array.consecutive_serves_per_player_values));
+        if (!GameType.BEACH.equals(mRules.getKind())) {
+            TextView substitutionsLimitation = view.findViewById(R.id.rules_substitutions_limitation);
+            substitutionsLimitation.setText(findRuleEntry(mRules.getSubstitutionsLimitation(), R.array.substitutions_limitation_entries, R.array.substitutions_limitation_values));
 
-        View indoorSection = view.findViewById(R.id.indoor_rules_section);
-        View beachSection = view.findViewById(R.id.beach_rules_section);
+            TextView substitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
+            substitutionsLimitationDescription.setText(findRuleEntry(mRules.getSubstitutionsLimitation(), R.array.substitutions_limitation_description_entries, R.array.substitutions_limitation_values));
+
+            TextView teamSubstitutionsPerSet = view.findViewById(R.id.rules_team_substitutions_per_set);
+            teamSubstitutionsPerSet.setText(findRuleEntry(mRules.getTeamSubstitutionsPerSet(), R.array.team_substitutions_per_set_entries, R.array.team_substitutions_per_set_values));
+        }
+
+        // Switches
+
+        if (GameType.BEACH.equals(mRules.getKind()) || GameType.SNOW.equals(mRules.getKind())) {
+            SwitchCompat courtSwitchesSwitch = view.findViewById(R.id.rules_court_switches);
+            courtSwitchesSwitch.setChecked(mRules.isBeachCourtSwitches());
+
+            TextView courtSwitchFrequency = view.findViewById(R.id.rules_court_switch_frequency);
+            courtSwitchFrequency.setText(findRuleEntry(mRules.getBeachCourtSwitchFreq(), R.array.court_switch_frequency_entries, R.array.court_switch_frequency_values));
+
+            TextView courtSwitchFrequencyTieBreak = view.findViewById(R.id.rules_court_switch_frequency_tie_break);
+            courtSwitchFrequencyTieBreak.setText(findRuleEntry(mRules.getBeachCourtSwitchFreqTieBreak(), R.array.court_switch_frequency_entries, R.array.court_switch_frequency_values));
+        }
 
         if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
-            indoorSection.setVisibility(View.VISIBLE);
-            beachSection.setVisibility(View.GONE);
-        } else if (GameType.BEACH.equals(mRules.getKind())) {
-            indoorSection.setVisibility(View.GONE);
-            beachSection.setVisibility(View.VISIBLE);
-        } else {
-            indoorSection.setVisibility(View.GONE);
-            beachSection.setVisibility(View.GONE);
+            TextView consecutiveServes = view.findViewById(R.id.rules_consecutive_serves_per_player);
+            consecutiveServes.setText(findRuleEntry(mRules.getCustomConsecutiveServesPerPlayer(), R.array.consecutive_serves_per_player_entries, R.array.consecutive_serves_per_player_values));
         }
-        
+
         return view;
     }
 

@@ -66,6 +66,11 @@ public class BeachTeamDefinition extends TeamDefinition {
     }
 
     @Override
+    public int getExpectedNumberOfPlayersOnCourt() {
+        return 2;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
 

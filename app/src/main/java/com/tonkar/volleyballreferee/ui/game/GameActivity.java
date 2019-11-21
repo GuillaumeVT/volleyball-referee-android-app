@@ -49,6 +49,7 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.game.court.BeachCourtFragment;
 import com.tonkar.volleyballreferee.ui.game.court.Indoor4x4CourtFragment;
 import com.tonkar.volleyballreferee.ui.game.court.IndoorCourtFragment;
+import com.tonkar.volleyballreferee.ui.game.court.SnowCourtFragment;
 import com.tonkar.volleyballreferee.ui.game.ladder.LaddersFragment;
 import com.tonkar.volleyballreferee.ui.game.sanction.SanctionSelectionDialogFragment;
 import com.tonkar.volleyballreferee.ui.game.sanction.SanctionsFragment;
@@ -423,7 +424,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         UiUtils.animateBounce(this, mRightTeamCardsButton);
 
         if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            if (GameType.BEACH.equals(mGame.getKind())) {
+            if (GameType.BEACH.equals(mGame.getKind()) || GameType.SNOW.equals(mGame.getKind())) {
                 UiUtils.showNotification(this, getString(R.string.switch_sides));
                 UiUtils.playNotificationSound(this);
             } else {
@@ -666,6 +667,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                                     break;
                                 case BEACH:
                                     fragment = BeachCourtFragment.newInstance();
+                                    break;
+                                case SNOW:
+                                    fragment = SnowCourtFragment.newInstance();
                                     break;
                                 case INDOOR:
                                 default:

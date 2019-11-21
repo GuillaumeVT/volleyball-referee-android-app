@@ -54,10 +54,11 @@ public class StoredTeamActivity extends AppCompatActivity {
         switch (gameType) {
             case INDOOR:
             case INDOOR_4X4:
-                fragment = TeamSetupFragment.newInstance(TeamType.HOME, false, mCreate);
+            case SNOW:
+                fragment = TeamSetupFragment.newInstance(mTeamService.getTeamsKind(), TeamType.HOME, false);
                 break;
             case BEACH:
-                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME, mCreate);
+                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME);
                 break;
             case TIME:
             default:

@@ -17,11 +17,11 @@
     <string name="undo">Cofnij</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Siatkówka halowa</string>
-    <string name="new_beach_volleyball_game">Siatkówka plażowa</string>
-    <string name="new_snow_volleyball_game">Wkrótce!</string>
-    <string name="new_score_based_game">Tablica wyników</string>
-    <string name="new_time_based_game">Rozpocznij grę na czas</string>
+    <string name="volleyball_game">Siatkówka halowa</string>
+    <string name="beach_volleyball_game">Siatkówka plażowa</string>
+    <string name="snow_volleyball_game">Wkrótce!</string>
+    <string name="score_based_game">Tablica wyników</string>
+    <string name="time_based_game">Rozpocznij grę na czas</string>
     <string name="permission_title">O uprawnieniach</string>
     <string name="permission_message">Ta aplikacja wymaga uprawnień do przechowywania danych w celu udostępnienia wyników meczów.</string>
     <string name="resume_game_title">Wznów grę</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Nazwa drużyny gospodarzy</string>
     <string name="guest_team_tab">Drużyna gości</string>
     <string name="guest_team_hint">Nazwa drużyny gości</string>
-    <string name="select_players">Wybierz graczy (w tym libero)</string>
+    <string name="select_players">Wybierz graczy</string>
+    <string name="select_players_with_liberos">Wybierz graczy (w tym libero)</string>
     <string name="select_shirts_color">Wybierz kolor koszulki</string>
     <string name="select_captain">Wybierz kapitana</string>
     <string name="select_libero">Wybierz libero (opcjonalnie)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Te zasady nie zostaną zapisane. Wyjść mimo to?</string>
     <string name="rules_name_hint">Nazwa reguły</string>
     <string name="general_rules">Ogólne</string>
-    <string name="timeout_rules">Czas</string>
-    <string name="indoor_rules">Siatkówka halowa</string>
-    <string name="beach_rules">Siatkówka plażowa</string>
 
     <string name="rules_points_per_set">Ilość punktów na set</string>
     <string name="rules_sets_per_game">Ilość punktów na mecz</string>
@@ -337,6 +335,7 @@
         <item>5 zmian na set</item>
         <item>4 zmiany na set</item>
         <item>3 zmiany na set</item>
+        <item>2 zmiany na set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Zmień strony co 10 punktów</item>

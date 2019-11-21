@@ -48,28 +48,44 @@ public class SetFragment extends Fragment implements StoredGameHandler {
         LadderListAdapter ladderListAdapter = new LadderListAdapter(inflater, mStoredGame, mStoredGame, mStoredGame, mStoredGame, false);
         ladderLayout.addView(ladderListAdapter.getView(setIndex, null, ladderLayout));
 
-        if ((mStoredGame.getKind().equals(GameType.INDOOR) || mStoredGame.getKind().equals(GameType.INDOOR_4X4))
+        if ((mStoredGame.getKind().equals(GameType.INDOOR) || mStoredGame.getKind().equals(GameType.INDOOR_4X4) || mStoredGame.getKind().equals(GameType.SNOW))
                 && (mStoredGame.isStartingLineupConfirmed(TeamType.HOME, setIndex) || mStoredGame.isStartingLineupConfirmed(TeamType.GUEST, setIndex))) {
             if (mStoredGame.isStartingLineupConfirmed(TeamType.HOME, setIndex)) {
                 GridView homeTeamLineup = view.findViewById(R.id.home_team_lineup);
-                final LineupAdapter homeTeamLineupAdapter;
-                if (GameType.INDOOR.equals(mStoredGame.getKind())) {
-                    homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mStoredGame, TeamType.HOME, setIndex);
-                } else {
-                    homeTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mStoredGame, TeamType.HOME, setIndex);
+
+                switch (mStoredGame.getKind()) {
+                    case INDOOR:
+                        LineupAdapter homeTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mStoredGame, TeamType.HOME, setIndex);
+                        homeTeamLineup.setAdapter(homeTeamLineupAdapter);
+                        break;
+                    case INDOOR_4X4:
+                        homeTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mStoredGame, TeamType.HOME, setIndex);
+                        homeTeamLineup.setAdapter(homeTeamLineupAdapter);
+                        break;
+                    case SNOW:
+                        homeTeamLineupAdapter = new LineupSnowAdapter(inflater, getActivity(), mStoredGame, TeamType.HOME, setIndex);
+                        homeTeamLineup.setAdapter(homeTeamLineupAdapter);
+                        break;
                 }
-                homeTeamLineup.setAdapter(homeTeamLineupAdapter);
             }
 
             if (mStoredGame.isStartingLineupConfirmed(TeamType.GUEST, setIndex)) {
                 GridView guestTeamLineup = view.findViewById(R.id.guest_team_lineup);
-                final LineupAdapter guestTeamLineupAdapter;
-                if (GameType.INDOOR.equals(mStoredGame.getKind())) {
-                    guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mStoredGame, TeamType.GUEST, setIndex);
-                } else {
-                    guestTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mStoredGame, TeamType.GUEST, setIndex);
+
+                switch (mStoredGame.getKind()) {
+                    case INDOOR:
+                        LineupAdapter guestTeamLineupAdapter = new LineupAdapter(inflater, getActivity(), mStoredGame, TeamType.GUEST, setIndex);
+                        guestTeamLineup.setAdapter(guestTeamLineupAdapter);
+                        break;
+                    case INDOOR_4X4:
+                        guestTeamLineupAdapter = new Lineup4x4Adapter(inflater, getActivity(), mStoredGame, TeamType.GUEST, setIndex);
+                        guestTeamLineup.setAdapter(guestTeamLineupAdapter);
+                        break;
+                    case SNOW:
+                        guestTeamLineupAdapter = new LineupSnowAdapter(inflater, getActivity(), mStoredGame, TeamType.GUEST, setIndex);
+                        guestTeamLineup.setAdapter(guestTeamLineupAdapter);
+                        break;
                 }
-                guestTeamLineup.setAdapter(guestTeamLineupAdapter);
             }
         } else {
             view.findViewById(R.id.set_lineup_card).setVisibility(View.GONE);

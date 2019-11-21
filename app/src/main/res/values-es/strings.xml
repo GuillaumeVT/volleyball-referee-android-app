@@ -18,11 +18,11 @@
     <string name="undo">Deshacer</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Voleibol</string>
-    <string name="new_beach_volleyball_game">Voley-Playa</string>
-    <string name="new_snow_volleyball_game">¡Dentro de poco!</string>
-    <string name="new_score_based_game">Marcador</string>
-    <string name="new_time_based_game">Por tiempo</string>
+    <string name="volleyball_game">Voleibol</string>
+    <string name="beach_volleyball_game">Voley-Playa</string>
+    <string name="snow_volleyball_game">¡Dentro de poco!</string>
+    <string name="score_based_game">Marcador</string>
+    <string name="time_based_game">Por tiempo</string>
     <string name="permission_title">Permisos</string>
     <string name="permission_message">Esta aplicación necesita permisos de almacenamiento para compartir los resultados de los partidos</string>
     <string name="resume_game_title">Continuar partido</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Nombre del equipo local</string>
     <string name="guest_team_tab">Equipo visitante</string>
     <string name="guest_team_hint">Nombre del equipo visitante</string>
-    <string name="select_players">Elige los jugadores (incluyendo los líberos)</string>
+    <string name="select_players">Elige los jugadores</string>
+    <string name="select_players_with_liberos">Elige los jugadores (incluyendo los líberos)</string>
     <string name="select_shirts_color">Selecciona color de la equipación</string>
     <string name="select_captain">Elige al capitán</string>
     <string name="select_libero">Elige los líberos (opcional)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Estas reglas no se guardarán. ¿Salir de todos modos?</string>
     <string name="rules_name_hint">Nombre de las reglas</string>
     <string name="general_rules">General</string>
-    <string name="timeout_rules">Tiempos muertos</string>
-    <string name="indoor_rules">Voleibol (pista)</string>
-    <string name="beach_rules">Voley-Playa</string>
 
     <string name="rules_points_per_set">Puntos para ganar un set</string>
     <string name="rules_sets_per_game">Sets por partido</string>
@@ -337,6 +335,7 @@
         <item>5 sustituciones por set</item>
         <item>4 sustituciones por set</item>
         <item>3 sustituciones por set</item>
+        <item>2 sustituciones por set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Cambio de campo cada 10 puntos</item>

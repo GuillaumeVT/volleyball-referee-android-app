@@ -41,6 +41,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private FloatingActionButton   mAdd6x6TeamButton;
     private FloatingActionButton   mAdd4x4TeamButton;
     private FloatingActionButton   mAddBeachTeamButton;
+    private FloatingActionButton   mAddSnowTeamButton;
     private MenuItem               mDeleteSelectedTeamsItem;
 
     @Override
@@ -100,9 +101,11 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd6x6TeamButton = findViewById(R.id.add_6x6_team_button);
         mAdd4x4TeamButton = findViewById(R.id.add_4x4_team_button);
         mAddBeachTeamButton = findViewById(R.id.add_beach_team_button);
+        mAddSnowTeamButton = findViewById(R.id.add_snow_team_button);
         mAdd6x6TeamButton.hide();
         mAdd4x4TeamButton.hide();
         mAddBeachTeamButton.hide();
+        mAddSnowTeamButton.hide();
         mAddTeamButton = findViewById(R.id.add_team_button);
         mAddTeamButton.setOnClickListener(view -> {
             if(mIsFabOpen){
@@ -116,18 +119,23 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     }
 
     public void addIndoorTeam(View view) {
-        GameType gameType = GameType.INDOOR;
-        addTeam(gameType, view);
+        Log.i(Tags.STORED_RULES, "Start activity to create new indoor team");
+        addTeam(GameType.INDOOR, view);
     }
 
     public void addIndoor4x4Team(View view) {
-        GameType gameType = GameType.INDOOR_4X4;
-        addTeam(gameType, view);
+        Log.i(Tags.STORED_RULES, "Start activity to create new indoor 4x4 team");
+        addTeam(GameType.INDOOR_4X4, view);
     }
 
     public void addBeachTeam(View view) {
-        GameType gameType = GameType.BEACH;
-        addTeam(gameType, view);
+        Log.i(Tags.STORED_RULES, "Start activity to create new beach team");
+        addTeam(GameType.BEACH, view);
+    }
+
+    public void addSnowTeam(View view) {
+        Log.i(Tags.STORED_RULES, "Start activity to create new snow team");
+        addTeam(GameType.SNOW, view);
     }
 
     private void addTeam(GameType gameType, View view) {
@@ -208,9 +216,11 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd6x6TeamButton.show();
         mAdd4x4TeamButton.show();
         mAddBeachTeamButton.show();
+        mAddSnowTeamButton.show();
         mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
+        mAddSnowTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
     }
 
     private void closeFABMenu(){
@@ -219,9 +229,11 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd6x6TeamButton.animate().translationY(0);
         mAdd4x4TeamButton.animate().translationY(0);
         mAddBeachTeamButton.animate().translationY(0);
+        mAddSnowTeamButton.animate().translationY(0);
         mAdd6x6TeamButton.hide();
         mAdd4x4TeamButton.hide();
         mAddBeachTeamButton.hide();
+        mAddSnowTeamButton.hide();
     }
 
     @Override

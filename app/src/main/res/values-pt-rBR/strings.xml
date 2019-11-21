@@ -18,11 +18,11 @@
     <string name="undo">Desfazer</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Voleibol de quadra</string>
-    <string name="new_beach_volleyball_game">Vôlei de praia</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Placar</string>
-    <string name="new_time_based_game">Partida por tempo</string>
+    <string name="volleyball_game">Voleibol de quadra</string>
+    <string name="beach_volleyball_game">Vôlei de praia</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">Placar</string>
+    <string name="time_based_game">Partida por tempo</string>
     <string name="permission_title">Permissões</string>
     <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
     <string name="resume_game_title">Continuar partida</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Nome da Equipe da casa</string>
     <string name="guest_team_tab">Equipe visitante</string>
     <string name="guest_team_hint">Nome da Equipe visitante</string>
-    <string name="select_players">Selecionar jogadores (incluíndo líberos)</string>
+    <string name="select_players">Selecionar jogadores</string>
+    <string name="select_players_with_liberos">Selecionar jogadores (incluíndo líberos)</string>
     <string name="select_shirts_color">Selecionar cor das camisas</string>
     <string name="select_captain">Selecionar Capitão</string>
     <string name="select_libero">Selecionar líberos (opcional)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Essas regras não serão salvas. Sair assim mesmo?</string>
     <string name="rules_name_hint">Definir regras como</string>
     <string name="general_rules">Preferências</string>
-    <string name="timeout_rules">Tempo</string>
-    <string name="indoor_rules">Voleibol de quadra</string>
-    <string name="beach_rules">Vôlei de praia</string>
 
     <string name="rules_points_per_set">Número de pontos por set</string>
     <string name="rules_sets_per_game">Número de sets por partida</string>
@@ -337,6 +335,7 @@
         <item>5 substiuições por set</item>
         <item>4 substiuições por set</item>
         <item>3 substiuições por set</item>
+        <item>2 substiuições por set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Trocar de quadra a cada 10 pontos</item>

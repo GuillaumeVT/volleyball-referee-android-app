@@ -122,8 +122,8 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             case BEACH:
                 UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
                 break;
-            case TIME:
-                UiUtils.colorChipIcon(getContext(), R.color.colorTimeLight, R.drawable.ic_time_based, viewHolder.kindItem);
+            case SNOW:
+                UiUtils.colorChipIcon(getContext(), R.color.colorSnowLight, R.drawable.ic_snow, viewHolder.kindItem);
                 break;
             case INDOOR:
             default:

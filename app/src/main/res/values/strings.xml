@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30110" translatable="false">Try out the new dark theme available in settings!\n\nNew in 3.1.10:\n-Added the \'undo\' action during games.\n-Added a Bulgarian translation, thanks to Petar!\n-Fixed a bug where the team compositions would not be reloaded when resuming 4x4 games.\nThe 4x4 games are now using the substitution limitation rules.</string>
+    <string name="rn_30110" translatable="false">Try out the new dark theme available in settings!\n\nNew in 3.1.10:\n-Added the \'undo\' action during games.\n-Added a Bulgarian translation, thanks to Petar!\n-Fixed a bug where the team compositions would not be reloaded when resuming 4x4 games.\n- The 4x4 games are now using the substitution limitation rules.</string>
 
     <!-- General actions -->
     <string name="yes">Yes</string>
@@ -19,11 +19,11 @@
     <string name="undo">Undo</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Volleyball</string>
-    <string name="new_beach_volleyball_game">Beach Volleyball</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Scoreboard</string>
-    <string name="new_time_based_game">Time-based</string>
+    <string name="volleyball_game">Indoor volleyball</string>
+    <string name="beach_volleyball_game">Beach Volleyball</string>
+    <string name="snow_volleyball_game">Snow Volleyball</string>
+    <string name="score_based_game">Scoreboard</string>
+    <string name="time_based_game">Time-based</string>
     <string name="permission_title">About permissions</string>
     <string name="permission_message">This application needs the storage permissions in order to share the match results.</string>
     <string name="resume_game_title">Resume match</string>
@@ -94,7 +94,8 @@
     <string name="home_team_hint">Home team name</string>
     <string name="guest_team_tab">Guest team</string>
     <string name="guest_team_hint">Guest team name</string>
-    <string name="select_players">Select the players (including the liberos)</string>
+    <string name="select_players">Select the players</string>
+    <string name="select_players_with_liberos">Select the players (including the liberos)</string>
     <string name="select_shirts_color">Select the shirts colour</string>
     <string name="select_captain">Select the captain</string>
     <string name="select_libero">Select the liberos (optional)</string>
@@ -234,9 +235,6 @@
     <string name="leave_rules_creation_question">These rules will not be saved. Leave anyway?</string>
     <string name="rules_name_hint">Rules name</string>
     <string name="general_rules">General</string>
-    <string name="timeout_rules">Timeout</string>
-    <string name="indoor_rules">Indoor volleyball</string>
-    <string name="beach_rules">Beach volleyball</string>
 
     <string name="rules_points_per_set">Number of points per set</string>
     <string name="rules_sets_per_game">Number of sets per game</string>
@@ -338,6 +336,7 @@
         <item>5 substitutions per set</item>
         <item>4 substitutions per set</item>
         <item>3 substitutions per set</item>
+        <item>2 substitutions per set</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Switch court every 10 points</item>
@@ -439,6 +438,7 @@
         <item>5</item>
         <item>4</item>
         <item>3</item>
+        <item>2</item>
     </string-array>
     <string-array name="court_switch_frequency_values" translatable="false">
         <item>10</item>

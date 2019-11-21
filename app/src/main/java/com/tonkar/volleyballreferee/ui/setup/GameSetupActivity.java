@@ -59,9 +59,8 @@ public class GameSetupActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        final boolean create = getIntent().getBooleanExtra("create", true);
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.game_setup_nav);
-        initGameSetupNavigation(gameSetupNavigation, savedInstanceState, create);
+        initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
 
         computeStartLayoutVisibility();
     }
@@ -170,19 +169,19 @@ public class GameSetupActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
-    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
+    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
         gameSetupNavigation.setOnNavigationItemSelectedListener(item -> {
                     final Fragment fragment;
 
                     switch (item.getItemId()) {
                         case R.id.home_team_tab:
-                            fragment = TeamSetupFragment.newInstance(TeamType.HOME, true, create);
+                            fragment = TeamSetupFragment.newInstance(mGame.getTeamsKind(), TeamType.HOME, true);
                             break;
                         case R.id.guest_team_tab:
-                            fragment = TeamSetupFragment.newInstance(TeamType.GUEST, true, create);
+                            fragment = TeamSetupFragment.newInstance(mGame.getTeamsKind(), TeamType.GUEST, true);
                             break;
                         case R.id.rules_tab:
-                            fragment = RulesSetupFragment.newInstance(true, create);
+                            fragment = RulesSetupFragment.newInstance(true);
                             break;
                         case R.id.misc_tab:
                             fragment = MiscSetupFragment.newInstance();

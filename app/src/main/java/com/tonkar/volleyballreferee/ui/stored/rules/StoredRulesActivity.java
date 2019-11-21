@@ -54,7 +54,7 @@ public class StoredRulesActivity extends AppCompatActivity {
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false, mCreate));
+        fragmentTransaction.replace(R.id.fragment_container, RulesSetupFragment.newInstance(false));
         fragmentTransaction.commit();
 
         computeSaveLayoutVisibility();

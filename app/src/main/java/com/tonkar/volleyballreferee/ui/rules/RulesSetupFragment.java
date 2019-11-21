@@ -77,14 +77,13 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     public RulesSetupFragment() {}
 
     public static RulesSetupFragment newInstance() {
-        return newInstance(true, true);
+        return newInstance(true);
     }
 
-    public static RulesSetupFragment newInstance(boolean isGameContext, boolean create) {
+    public static RulesSetupFragment newInstance(boolean isGameContext) {
         RulesSetupFragment fragment = new RulesSetupFragment();
         Bundle args = new Bundle();
         args.putBoolean("is_game", isGameContext);
-        args.putBoolean("create", create);
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,108 +91,25 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.RULES, "Create rules setup fragment");
-        View view = inflater.inflate(R.layout.fragment_rules_setup, container, false);
+        View view;
 
         final boolean isGameContext = getArguments().getBoolean("is_game");
-        final boolean create = getArguments().getBoolean("create");
+
+        switch (mRules.getKind()) {
+            case BEACH:
+                view = inflater.inflate(R.layout.fragment_beach_rules_setup, container, false);
+                break;
+            case SNOW:
+                view = inflater.inflate(R.layout.fragment_snow_rules_setup, container, false);
+                break;
+            case INDOOR:
+            case INDOOR_4X4:
+            default:
+                view = inflater.inflate(R.layout.fragment_indoor_rules_setup, container, false);
+                break;
+        }
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
-
-        mSetsPerGameSpinner = view.findViewById(R.id.rules_sets_per_game);
-        mSetsPerGameAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.sets_per_game_entries), getResources().getStringArray(R.array.sets_per_game_values));
-        mSetsPerGameSpinner.setAdapter(mSetsPerGameAdapter);
-
-        mPointsPerSetSpinner = view.findViewById(R.id.rules_points_per_set);
-        mPointsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.points_per_set_entries), getResources().getStringArray(R.array.points_per_set_values));
-        mPointsPerSetSpinner.setAdapter(mPointsPerSetAdapter);
-
-        mTieBreakSwitch = view.findViewById(R.id.rules_tie_break);
-
-        mPointsInTieBreakSpinner = view.findViewById(R.id.rules_points_in_tie_break);
-        mPointsInTieBreakAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.points_per_set_entries), getResources().getStringArray(R.array.points_per_set_values));
-        mPointsInTieBreakSpinner.setAdapter(mPointsInTieBreakAdapter);
-
-        mTwoPointsDifferenceSwitch = view.findViewById(R.id.rules_two_points_difference);
-
-        mSanctionsSwitch = view.findViewById(R.id.rules_sanctions);
-
-        mMatchTerminationSpinner = view.findViewById(R.id.rules_match_termination);
-        mMatchTerminationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.match_termination_entries), getResources().getStringArray(R.array.match_termination_values));
-        mMatchTerminationSpinner.setAdapter(mMatchTerminationAdapter);
-
-        mTeamTimeoutsSwitch = view.findViewById(R.id.rules_team_timeouts);
-
-        mTeamTimeoutsPerSetSpinner = view.findViewById(R.id.rules_team_timeouts_per_set);
-        mTeamTimeoutsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.team_timeouts_per_set_entries), getResources().getStringArray(R.array.team_timeouts_per_set_values));
-        mTeamTimeoutsPerSetSpinner.setAdapter(mTeamTimeoutsPerSetAdapter);
-
-        mTeamTimeoutDurationSpinner = view.findViewById(R.id.rules_team_timeout_duration);
-        mTeamTimeoutDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.timeout_duration_entries), getResources().getStringArray(R.array.timeout_duration_values));
-        mTeamTimeoutDurationSpinner.setAdapter(mTeamTimeoutDurationAdapter);
-
-        mTechnicalTimeoutsSwitch = view.findViewById(R.id.rules_technical_timeouts);
-
-        mTechnicalTimeoutDurationSpinner = view.findViewById(R.id.rules_technical_timeout_duration);
-        mTechnicalTimeoutDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.timeout_duration_entries), getResources().getStringArray(R.array.timeout_duration_values));
-        mTechnicalTimeoutDurationSpinner.setAdapter(mTechnicalTimeoutDurationAdapter);
-
-        mGameIntervalsSwitch = view.findViewById(R.id.rules_game_intervals);
-
-        mGameIntervalDurationSpinner = view.findViewById(R.id.rules_game_intervals_duration);
-        mGameIntervalDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.game_interval_duration_entries), getResources().getStringArray(R.array.game_interval_duration_values));
-        mGameIntervalDurationSpinner.setAdapter(mGameIntervalDurationAdapter);
-
-        mSubstitutionsLimitationSpinner = view.findViewById(R.id.rules_substitutions_limitation);
-        mSubstitutionsLimitationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitutions_limitation_entries), getResources().getStringArray(R.array.substitutions_limitation_values));
-        mSubstitutionsLimitationSpinner.setAdapter(mSubstitutionsLimitationAdapter);
-
-        mSubstitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
-
-        mTeamSubstitutionsPerSetSpinner = view.findViewById(R.id.rules_team_substitutions_per_set);
-        mTeamSubstitutionsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.team_substitutions_per_set_entries), getResources().getStringArray(R.array.team_substitutions_per_set_values));
-        mTeamSubstitutionsPerSetSpinner.setAdapter(mTeamSubstitutionsPerSetAdapter);
-
-        mCourtSwitchesSwitch = view.findViewById(R.id.rules_court_switches);
-
-        mCourtSwitchFrequencySpinner = view.findViewById(R.id.rules_court_switch_frequency);
-        mCourtSwitchFrequencyAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.court_switch_frequency_entries), getResources().getStringArray(R.array.court_switch_frequency_values));
-        mCourtSwitchFrequencySpinner.setAdapter(mCourtSwitchFrequencyAdapter);
-
-        mCourtSwitchFrequencyTieBreakSpinner = view.findViewById(R.id.rules_court_switch_frequency_tie_break);
-        mCourtSwitchFrequencyTieBreakAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.court_switch_frequency_entries), getResources().getStringArray(R.array.court_switch_frequency_values));
-        mCourtSwitchFrequencyTieBreakSpinner.setAdapter(mCourtSwitchFrequencyTieBreakAdapter);
-
-        mConsecutiveServesSpinner = view.findViewById(R.id.rules_consecutive_serves_per_player);
-        mConsecutiveServesAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.consecutive_serves_per_player_entries), getResources().getStringArray(R.array.consecutive_serves_per_player_values));
-        mConsecutiveServesSpinner.setAdapter(mConsecutiveServesAdapter);
-
-        View indoorSection = view.findViewById(R.id.indoor_rules_section);
-        View beachSection = view.findViewById(R.id.beach_rules_section);
-
-        if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
-            indoorSection.setVisibility(View.VISIBLE);
-            beachSection.setVisibility(View.GONE);
-        } else if (GameType.BEACH.equals(mRules.getKind())) {
-            indoorSection.setVisibility(View.GONE);
-            beachSection.setVisibility(View.VISIBLE);
-        } else {
-            indoorSection.setVisibility(View.GONE);
-            beachSection.setVisibility(View.GONE);
-        }
-
-        if (isGameContext) {
-            StoredRulesService storedRulesService = new StoredRulesManager(getContext());
-
-            mRulesNameInput.setThreshold(2);
-            mRulesNameInput.setAdapter(new AutocompleteRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules(mRules.getKind())));
-            mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiRulesSummary rulesDescription = (ApiRulesSummary) mRulesNameInput.getAdapter().getItem(index);
-                mRulesNameInput.setText(rulesDescription.getName());
-                mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
-                initValues();
-                computeConfirmItemVisibility();
-            });
-        }
 
         if (!mRules.getName().isEmpty()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -216,6 +132,30 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        // General
+
+        mSetsPerGameSpinner = view.findViewById(R.id.rules_sets_per_game);
+        mSetsPerGameAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.sets_per_game_entries), getResources().getStringArray(R.array.sets_per_game_values));
+        mSetsPerGameSpinner.setAdapter(mSetsPerGameAdapter);
+
+        mPointsPerSetSpinner = view.findViewById(R.id.rules_points_per_set);
+        mPointsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.points_per_set_entries), getResources().getStringArray(R.array.points_per_set_values));
+        mPointsPerSetSpinner.setAdapter(mPointsPerSetAdapter);
+
+        mTieBreakSwitch = view.findViewById(R.id.rules_tie_break);
+
+        mPointsInTieBreakSpinner = view.findViewById(R.id.rules_points_in_tie_break);
+        mPointsInTieBreakAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.points_per_set_entries), getResources().getStringArray(R.array.points_per_set_values));
+        mPointsInTieBreakSpinner.setAdapter(mPointsInTieBreakAdapter);
+
+        mTwoPointsDifferenceSwitch = view.findViewById(R.id.rules_two_points_difference);
+
+        mSanctionsSwitch = view.findViewById(R.id.rules_sanctions);
+
+        mMatchTerminationSpinner = view.findViewById(R.id.rules_match_termination);
+        mMatchTerminationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.match_termination_entries), getResources().getStringArray(R.array.match_termination_values));
+        mMatchTerminationSpinner.setAdapter(mMatchTerminationAdapter);
 
         mSetsPerGameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -266,6 +206,18 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
+        // Timeouts
+
+        mTeamTimeoutsSwitch = view.findViewById(R.id.rules_team_timeouts);
+
+        mTeamTimeoutsPerSetSpinner = view.findViewById(R.id.rules_team_timeouts_per_set);
+        mTeamTimeoutsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.team_timeouts_per_set_entries), getResources().getStringArray(R.array.team_timeouts_per_set_values));
+        mTeamTimeoutsPerSetSpinner.setAdapter(mTeamTimeoutsPerSetAdapter);
+
+        mTeamTimeoutDurationSpinner = view.findViewById(R.id.rules_team_timeout_duration);
+        mTeamTimeoutDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.timeout_duration_entries), getResources().getStringArray(R.array.timeout_duration_values));
+        mTeamTimeoutDurationSpinner.setAdapter(mTeamTimeoutDurationAdapter);
+
         mTeamTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
             mRules.setTeamTimeouts(isChecked);
             mTeamTimeoutsPerSetSpinner.setEnabled(isChecked);
@@ -292,20 +244,34 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mTechnicalTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-            mRules.setTechnicalTimeouts(isChecked);
-            mTechnicalTimeoutDurationSpinner.setEnabled(isChecked);
-        });
+        if (!GameType.SNOW.equals(mRules.getKind())) {
+            mTechnicalTimeoutsSwitch = view.findViewById(R.id.rules_technical_timeouts);
 
-        mTechnicalTimeoutDurationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setTechnicalTimeoutDuration(mTechnicalTimeoutDurationAdapter.getItem(index));
-            }
+            mTechnicalTimeoutDurationSpinner = view.findViewById(R.id.rules_technical_timeout_duration);
+            mTechnicalTimeoutDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.timeout_duration_entries), getResources().getStringArray(R.array.timeout_duration_values));
+            mTechnicalTimeoutDurationSpinner.setAdapter(mTechnicalTimeoutDurationAdapter);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+            mTechnicalTimeoutsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+                mRules.setTechnicalTimeouts(isChecked);
+                mTechnicalTimeoutDurationSpinner.setEnabled(isChecked);
+            });
+
+            mTechnicalTimeoutDurationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    mRules.setTechnicalTimeoutDuration(mTechnicalTimeoutDurationAdapter.getItem(index));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+        }
+
+        mGameIntervalsSwitch = view.findViewById(R.id.rules_game_intervals);
+
+        mGameIntervalDurationSpinner = view.findViewById(R.id.rules_game_intervals_duration);
+        mGameIntervalDurationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.game_interval_duration_entries), getResources().getStringArray(R.array.game_interval_duration_values));
+        mGameIntervalDurationSpinner.setAdapter(mGameIntervalDurationAdapter);
 
         mGameIntervalsSwitch.setOnCheckedChangeListener((button, isChecked) -> {
             mRules.setGameIntervals(isChecked);
@@ -322,64 +288,112 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mSubstitutionsLimitationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setSubstitutionsLimitation(mSubstitutionsLimitationAdapter.getItem(index));
-                mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
-                mSubstitutionsLimitationDescription.setText(getResources().getStringArray(R.array.substitutions_limitation_description_entries)[index]);
-            }
+        // Substitutions
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+        if (!GameType.BEACH.equals(mRules.getKind())) {
+            mSubstitutionsLimitationSpinner = view.findViewById(R.id.rules_substitutions_limitation);
+            mSubstitutionsLimitationAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.substitutions_limitation_entries), getResources().getStringArray(R.array.substitutions_limitation_values));
+            mSubstitutionsLimitationSpinner.setAdapter(mSubstitutionsLimitationAdapter);
 
-        mTeamSubstitutionsPerSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setTeamSubstitutionsPerSet(mTeamSubstitutionsPerSetAdapter.getItem(index));
-                mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
-            }
+            mSubstitutionsLimitationDescription = view.findViewById(R.id.rules_substitutions_limitation_description);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+            mTeamSubstitutionsPerSetSpinner = view.findViewById(R.id.rules_team_substitutions_per_set);
+            mTeamSubstitutionsPerSetAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.team_substitutions_per_set_entries), getResources().getStringArray(R.array.team_substitutions_per_set_values));
+            mTeamSubstitutionsPerSetSpinner.setAdapter(mTeamSubstitutionsPerSetAdapter);
 
-        mCourtSwitchesSwitch.setOnCheckedChangeListener((button, isChecked) -> {
-            mRules.setBeachCourtSwitches(isChecked);
-            mCourtSwitchFrequencySpinner.setEnabled(isChecked);
-            mCourtSwitchFrequencyTieBreakSpinner.setEnabled(isChecked);
-        });
+            mSubstitutionsLimitationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    mRules.setSubstitutionsLimitation(mSubstitutionsLimitationAdapter.getItem(index));
+                    mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
+                    mSubstitutionsLimitationDescription.setText(getResources().getStringArray(R.array.substitutions_limitation_description_entries)[index]);
+                }
 
-        mCourtSwitchFrequencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setBeachCourtSwitchFreq(mCourtSwitchFrequencyAdapter.getItem(index));
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+            mTeamSubstitutionsPerSetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    mRules.setTeamSubstitutionsPerSet(mTeamSubstitutionsPerSetAdapter.getItem(index));
+                    mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
+                }
 
-        mCourtSwitchFrequencyTieBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setBeachCourtSwitchFreqTieBreak(mCourtSwitchFrequencyTieBreakAdapter.getItem(index));
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+        // Switches
 
-        mConsecutiveServesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setCustomConsecutiveServesPerPlayer(mConsecutiveServesAdapter.getItem(index));
-            }
+        if (GameType.BEACH.equals(mRules.getKind()) || GameType.SNOW.equals(mRules.getKind())) {
+            mCourtSwitchesSwitch = view.findViewById(R.id.rules_court_switches);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+            mCourtSwitchFrequencySpinner = view.findViewById(R.id.rules_court_switch_frequency);
+            mCourtSwitchFrequencyAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.court_switch_frequency_entries), getResources().getStringArray(R.array.court_switch_frequency_values));
+            mCourtSwitchFrequencySpinner.setAdapter(mCourtSwitchFrequencyAdapter);
+
+            mCourtSwitchFrequencyTieBreakSpinner = view.findViewById(R.id.rules_court_switch_frequency_tie_break);
+            mCourtSwitchFrequencyTieBreakAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.court_switch_frequency_entries), getResources().getStringArray(R.array.court_switch_frequency_values));
+            mCourtSwitchFrequencyTieBreakSpinner.setAdapter(mCourtSwitchFrequencyTieBreakAdapter);
+
+            mCourtSwitchesSwitch.setOnCheckedChangeListener((button, isChecked) -> {
+                mRules.setBeachCourtSwitches(isChecked);
+                mCourtSwitchFrequencySpinner.setEnabled(isChecked);
+                mCourtSwitchFrequencyTieBreakSpinner.setEnabled(isChecked);
+            });
+
+            mCourtSwitchFrequencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    mRules.setBeachCourtSwitchFreq(mCourtSwitchFrequencyAdapter.getItem(index));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+
+            mCourtSwitchFrequencyTieBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    mRules.setBeachCourtSwitchFreqTieBreak(mCourtSwitchFrequencyTieBreakAdapter.getItem(index));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+        }
+
+        if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
+            mConsecutiveServesSpinner = view.findViewById(R.id.rules_consecutive_serves_per_player);
+            mConsecutiveServesAdapter = new IntegerRuleAdapter(getContext(), inflater, getResources().getStringArray(R.array.consecutive_serves_per_player_entries), getResources().getStringArray(R.array.consecutive_serves_per_player_values));
+            mConsecutiveServesSpinner.setAdapter(mConsecutiveServesAdapter);
+
+            mConsecutiveServesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                    mRules.setCustomConsecutiveServesPerPlayer(mConsecutiveServesAdapter.getItem(index));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+        }
+
+        if (isGameContext) {
+            StoredRulesService storedRulesService = new StoredRulesManager(getContext());
+
+            mRulesNameInput.setThreshold(2);
+            mRulesNameInput.setAdapter(new AutocompleteRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules(mRules.getKind())));
+            mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
+                ApiRulesSummary rulesDescription = (ApiRulesSummary) mRulesNameInput.getAdapter().getItem(index);
+                mRulesNameInput.setText(rulesDescription.getName());
+                mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
+                initValues();
+                computeConfirmItemVisibility();
+            });
+        }
 
         initValues();
 
@@ -405,20 +419,28 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mTeamTimeoutsPerSetSpinner.setEnabled(mRules.isTeamTimeouts());
         mTeamTimeoutDurationSpinner.setSelection(mTeamTimeoutDurationAdapter.getPosition(mRules.getTeamTimeoutDuration()));
         mTeamTimeoutDurationSpinner.setEnabled(mRules.isTeamTimeouts());
-        mTechnicalTimeoutsSwitch.setChecked(mRules.isTechnicalTimeouts());
-        mTechnicalTimeoutDurationSpinner.setSelection(mTechnicalTimeoutDurationAdapter.getPosition(mRules.getTechnicalTimeoutDuration()));
-        mTechnicalTimeoutDurationSpinner.setEnabled(mRules.isTechnicalTimeouts());
+        if (!GameType.SNOW.equals(mRules.getKind())) {
+            mTechnicalTimeoutsSwitch.setChecked(mRules.isTechnicalTimeouts());
+            mTechnicalTimeoutDurationSpinner.setSelection(mTechnicalTimeoutDurationAdapter.getPosition(mRules.getTechnicalTimeoutDuration()));
+            mTechnicalTimeoutDurationSpinner.setEnabled(mRules.isTechnicalTimeouts());
+        }
         mGameIntervalsSwitch.setChecked(mRules.isGameIntervals());
         mGameIntervalDurationSpinner.setSelection(mGameIntervalDurationAdapter.getPosition(mRules.getGameIntervalDuration()));
         mGameIntervalDurationSpinner.setEnabled(mRules.isGameIntervals());
-        mSubstitutionsLimitationSpinner.setSelection(mSubstitutionsLimitationAdapter.getPosition(mRules.getSubstitutionsLimitation()));
-        mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
-        mCourtSwitchesSwitch.setChecked(mRules.isBeachCourtSwitches());
-        mCourtSwitchFrequencySpinner.setSelection(mCourtSwitchFrequencyAdapter.getPosition(mRules.getBeachCourtSwitchFreq()));
-        mCourtSwitchFrequencySpinner.setEnabled(mRules.isBeachCourtSwitches());
-        mCourtSwitchFrequencyTieBreakSpinner.setSelection(mCourtSwitchFrequencyTieBreakAdapter.getPosition(mRules.getBeachCourtSwitchFreqTieBreak()));
-        mCourtSwitchFrequencyTieBreakSpinner.setEnabled(mRules.isBeachCourtSwitches());
-        mConsecutiveServesSpinner.setSelection(mConsecutiveServesAdapter.getPosition(mRules.getCustomConsecutiveServesPerPlayer()));
+        if (!GameType.BEACH.equals(mRules.getKind())) {
+            mSubstitutionsLimitationSpinner.setSelection(mSubstitutionsLimitationAdapter.getPosition(mRules.getSubstitutionsLimitation()));
+            mTeamSubstitutionsPerSetSpinner.setSelection(mTeamSubstitutionsPerSetAdapter.getPosition(mRules.getTeamSubstitutionsPerSet()));
+        }
+        if (GameType.BEACH.equals(mRules.getKind()) || GameType.SNOW.equals(mRules.getKind())) {
+            mCourtSwitchesSwitch.setChecked(mRules.isBeachCourtSwitches());
+            mCourtSwitchFrequencySpinner.setSelection(mCourtSwitchFrequencyAdapter.getPosition(mRules.getBeachCourtSwitchFreq()));
+            mCourtSwitchFrequencySpinner.setEnabled(mRules.isBeachCourtSwitches());
+            mCourtSwitchFrequencyTieBreakSpinner.setSelection(mCourtSwitchFrequencyTieBreakAdapter.getPosition(mRules.getBeachCourtSwitchFreqTieBreak()));
+            mCourtSwitchFrequencyTieBreakSpinner.setEnabled(mRules.isBeachCourtSwitches());
+        }
+        if (GameType.INDOOR.equals(mRules.getKind()) || GameType.INDOOR_4X4.equals(mRules.getKind())) {
+            mConsecutiveServesSpinner.setSelection(mConsecutiveServesAdapter.getPosition(mRules.getCustomConsecutiveServesPerPlayer()));
+        }
     }
 
     private void computeConfirmItemVisibility() {

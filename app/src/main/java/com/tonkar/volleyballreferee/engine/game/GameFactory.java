@@ -35,6 +35,11 @@ public class GameFactory {
         return new Indoor4x4Game(id, createdBy, refereeName, createdAt, scheduledAt, rules);
     }
 
+    public static SnowGame createSnowGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
+        Log.i(Tags.FACTORY, "Create snow game");
+        return new SnowGame(id, createdBy, refereeName, createdAt, scheduledAt, rules);
+    }
+
     public static IGame createGame(IStoredGame storedGame) {
         Log.i(Tags.FACTORY, "Create game from web");
         IGame game = null;
@@ -65,6 +70,14 @@ public class GameFactory {
                 indoor4x4Game.getLeague().setAll(storedGame.getLeague());
                 indoor4x4Game.restoreTeams(storedGame);
                 game = indoor4x4Game;
+                break;
+            case SNOW:
+                SnowGame snowGame = createSnowGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
+                        storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
+                snowGame.setIndexed(storedGame.isIndexed());
+                snowGame.getLeague().setAll(storedGame.getLeague());
+                snowGame.restoreTeams(storedGame);
+                game = snowGame;
                 break;
         }
 

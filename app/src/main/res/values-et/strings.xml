@@ -18,11 +18,11 @@
     <string name="undo">Võta tagasi</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Võrkpall</string>
-    <string name="new_beach_volleyball_game">Ranna võrkpall</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Seisu tabloo</string>
-    <string name="new_time_based_game">Ajaline piirang</string>
+    <string name="volleyball_game">Klassikaline võrkpall</string>
+    <string name="beach_volleyball_game">Ranna võrkpall</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">Seisu tabloo</string>
+    <string name="time_based_game">Ajaline piirang</string>
     <string name="permission_title">Õigused</string>
     <string name="permission_message">Antud rakendusele on vajalik andmete salvestamine antud seadmel selleks, et saaks tulemusi jagada.</string>
     <string name="resume_game_title">Jätka mängu</string>
@@ -93,7 +93,8 @@
     <string name="home_team_hint">Koduvõiskonna nimi</string>
     <string name="guest_team_tab">Külalisvõistkond</string>
     <string name="guest_team_hint">Külallisvõistkonna nimi</string>
-    <string name="select_players">Valige mängijate numbreid, k.a libero</string>
+    <string name="select_players">Valige mängijate numbreid</string>
+    <string name="select_players_with_liberos">Valige mängijate numbreid, k.a libero</string>
     <string name="select_shirts_color">Valige võistluse vormi värvi</string>
     <string name="select_captain">Valige kapteni</string>
     <string name="select_libero">Valige libero (valikuline)</string>
@@ -233,9 +234,6 @@
     <string name="leave_rules_creation_question">Need reeglid jäävad salvestamata. Kas soovite lehelt lahkuda?</string>
     <string name="rules_name_hint">Reeglite nimetus</string>
     <string name="general_rules">Üldised</string>
-    <string name="timeout_rules">Vaheajad</string>
-    <string name="indoor_rules">Klassikaline võrkpall</string>
-    <string name="beach_rules">Ranna võrkpall</string>
 
     <string name="rules_points_per_set">Punktide arv geimis</string>
     <string name="rules_sets_per_game">Punktide arv mängus</string>
@@ -337,6 +335,7 @@
         <item>5 vahetust geimis</item>
         <item>4 vahetust geimis</item>
         <item>3 vahetust geimis</item>
+        <item>2 vahetust geimis</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Poolte vahetus iga 10 punkti järel</item>

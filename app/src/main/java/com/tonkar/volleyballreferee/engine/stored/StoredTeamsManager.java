@@ -11,6 +11,7 @@ import com.google.gson.stream.JsonReader;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiPage;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
@@ -26,6 +27,7 @@ import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
+import com.tonkar.volleyballreferee.engine.team.definition.SnowTeamDefinition;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +35,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,6 +100,9 @@ public class StoredTeamsManager implements StoredTeamsService {
                 break;
             case BEACH:
                 teamDefinition = new BeachTeamDefinition(id, userId, TeamType.HOME);
+                break;
+            case SNOW:
+                teamDefinition = new SnowTeamDefinition(id, userId, TeamType.HOME);
                 break;
             case TIME:
             default:
@@ -271,8 +277,8 @@ public class StoredTeamsManager implements StoredTeamsService {
         return JsonIOUtils.GSON.fromJson(json, ApiTeam.class);
     }
 
-    private List<ApiTeamSummary> readTeams(String json) {
-        return JsonIOUtils.GSON.fromJson(json, new TypeToken<List<ApiTeamSummary>>(){}.getType());
+    private ApiPage<ApiTeamSummary> readTeams(String json) {
+        return JsonIOUtils.GSON.fromJson(json, new TypeToken<ApiPage<ApiTeamSummary>>(){}.getType());
     }
 
     // Write saved teams
@@ -321,35 +327,44 @@ public class StoredTeamsManager implements StoredTeamsService {
     @Override
     public void syncTeams(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/teams", ApiUtils.BASE_URL), PrefUtils.getUserToken(mContext));
-
-            ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    if (listener != null){
-                        listener.onSynchronizationFailed();
-                    }
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        List<ApiTeamSummary> teamList = readTeams(response.body().string());
-                        syncTeams(teamList, listener);
-                    } else {
-                        Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
-                        if (listener != null){
-                            listener.onSynchronizationFailed();
-                        }
-                    }
-                }
-            });
+            syncTeams(new ArrayList<>(), 0, 100, listener);
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();
             }
         }
+    }
+
+    private void syncTeams(List<ApiTeamSummary> remoteTeamList, int page, int size, DataSynchronizationListener listener) {
+        Request request = ApiUtils.buildGet(String.format(Locale.US, "%s/teams", ApiUtils.BASE_URL), page, size, PrefUtils.getUserToken(mContext));
+
+        ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                call.cancel();
+                if (listener != null){
+                    listener.onSynchronizationFailed();
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.code() == HttpURLConnection.HTTP_OK) {
+                    ApiPage<ApiTeamSummary> teamsPage = readTeams(response.body().string());
+                    remoteTeamList.addAll(teamsPage.getContent());
+                    if (teamsPage.isLast()) {
+                        syncTeams(remoteTeamList, listener);
+                    } else {
+                        syncTeams(remoteTeamList, page + 1, size, listener);
+                    }
+                } else {
+                    Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
+                    if (listener != null){
+                        listener.onSynchronizationFailed();
+                    }
+                }
+            }
+        });
     }
 
     private void syncTeams(List<ApiTeamSummary> remoteTeamList, DataSynchronizationListener listener) {

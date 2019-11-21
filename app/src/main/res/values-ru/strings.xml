@@ -17,11 +17,11 @@
     <string name="undo">Отменить</string>
 
     <!-- Main activity -->
-    <string name="new_volleyball_game">Волейбол</string>
-    <string name="new_beach_volleyball_game">Пляжный волейбол</string>
-    <string name="new_snow_volleyball_game">Coming Soon!</string>
-    <string name="new_score_based_game">Счётное табло</string>
-    <string name="new_time_based_game">Матч ограниченный по времени</string>
+    <string name="volleyball_game">Классический волейбол</string>
+    <string name="beach_volleyball_game">Пляжный волейбол</string>
+    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="score_based_game">Счётное табло</string>
+    <string name="time_based_game">Матч ограниченный по времени</string>
     <string name="permission_title">Разрешения</string>
     <string name="permission_message">Этому приложению нужно разрешение на хранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
@@ -92,7 +92,8 @@
     <string name="home_team_hint">Имя принимающей команды</string>
     <string name="guest_team_tab">Гости</string>
     <string name="guest_team_hint">Имя гостевой команды</string>
-    <string name="select_players">Выберите номера игроков, включая либеро</string>
+    <string name="select_players">Выберите номера игроков</string>
+    <string name="select_players_with_liberos">Выберите номера игроков, включая либеро</string>
     <string name="select_shirts_color">Выберите цвет игровой формы</string>
     <string name="select_captain">Выберите капитана</string>
     <string name="select_libero">Выберите либеро (факультативно)</string>
@@ -232,9 +233,6 @@
     <string name="leave_rules_creation_question">Эти правила не будут сохранены. Покинуть страницу?</string>
     <string name="rules_name_hint">Название правил</string>
     <string name="general_rules">Общие</string>
-    <string name="timeout_rules">Перерывы</string>
-    <string name="indoor_rules">Классический волейбол</string>
-    <string name="beach_rules">Пляжный волейбол</string>
 
     <string name="rules_points_per_set">Количество очков в партии</string>
     <string name="rules_sets_per_game">Количество партий в матче</string>
@@ -336,6 +334,7 @@
         <item>5 замен в партии</item>
         <item>4 замен в партии</item>
         <item>3 замен в партии</item>
+        <item>2 замен в партии</item>
     </string-array>
     <string-array name="court_switch_frequency_entries">
         <item>Смена сторон каждые 10 очков</item>
