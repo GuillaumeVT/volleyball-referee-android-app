@@ -26,8 +26,8 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.EmptyTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.SnowTeamDefinition;
+import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 
 import java.io.IOException;
 import java.io.InputStream;
