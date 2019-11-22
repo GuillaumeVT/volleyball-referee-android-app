@@ -19,7 +19,7 @@
     <!-- Main activity -->
     <string name="volleyball_game">Siatkówka halowa</string>
     <string name="beach_volleyball_game">Siatkówka plażowa</string>
-    <string name="snow_volleyball_game">Wkrótce!</string>
+    <string name="snow_volleyball_game">Snow volleyball</string>
     <string name="score_based_game">Tablica wyników</string>
     <string name="time_based_game">Rozpocznij grę na czas</string>
     <string name="permission_title">O uprawnieniach</string>

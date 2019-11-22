@@ -20,7 +20,7 @@
     <!-- Main activity -->
     <string name="volleyball_game">Teremröplabda</string>
     <string name="beach_volleyball_game">Strandröplabda</string>
-    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="snow_volleyball_game">Hóröplabda</string>
     <string name="score_based_game">Eredménytábla</string>
     <string name="time_based_game">Időalapú</string>
     <string name="permission_title">App jogosultságok</string>

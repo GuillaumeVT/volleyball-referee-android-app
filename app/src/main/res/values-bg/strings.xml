@@ -20,7 +20,7 @@
     <!-- Main activity -->
     <string name="volleyball_game">Волейбол</string>
     <string name="beach_volleyball_game">Плажен волейбол</string>
-    <string name="snow_volleyball_game">Очаквайте скоро!</string>
+    <string name="snow_volleyball_game">Снежен волейбол</string>
     <string name="score_based_game">Табло</string>
     <string name="time_based_game">За време</string>
     <string name="permission_title">Относно разрешенията</string>

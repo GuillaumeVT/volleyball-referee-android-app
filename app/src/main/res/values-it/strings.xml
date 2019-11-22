@@ -20,7 +20,7 @@
     <!-- Main activity -->
     <string name="volleyball_game">Pallavolo</string>
     <string name="beach_volleyball_game">Beach volley</string>
-    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="snow_volleyball_game">Snow volley</string>
     <string name="score_based_game">A punti</string>
     <string name="time_based_game">A tempo</string>
     <string name="permission_title">Autorizzazioni</string>

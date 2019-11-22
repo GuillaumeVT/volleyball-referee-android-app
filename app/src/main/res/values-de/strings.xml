@@ -20,7 +20,7 @@
     <!-- Main activity -->
     <string name="volleyball_game">Hallenvolleyball</string>
     <string name="beach_volleyball_game">Beachvolleyball</string>
-    <string name="snow_volleyball_game">Coming Soon!</string>
+    <string name="snow_volleyball_game">Schnee Volleyball</string>
     <string name="score_based_game">Anzeigetafel</string>
     <string name="time_based_game">Zeitbasiert</string>
     <string name="permission_title">Berechtigungen</string>

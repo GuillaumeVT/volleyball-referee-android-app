@@ -20,7 +20,7 @@
     <!-- Main activity -->
     <string name="volleyball_game">Βόλεϊ Σάλας</string>
     <string name="beach_volleyball_game">Βόλεϊ Άμμου</string>
-    <string name="snow_volleyball_game">Έρχεται σύντομα!</string>
+    <string name="snow_volleyball_game">Βόλεϊ στο χιόνι</string>
     <string name="score_based_game">Πίνακας Σκορ</string>
     <string name="time_based_game">Με Χρόνο</string>
     <string name="permission_title">Σχετικά με τις άδειες</string>
@@ -189,7 +189,7 @@
     <string name="settings">Ρυθμίσεις</string>
     <string name="pref_keep_screen_on">Κράτα την οθόνη ανοιχτή κατά τη διάρκεια των αγώνων</string>
     <string name="pref_interactive_notification">Χρήση ειδοποιήσεων με αλληλεπίδραση</string>
-    <string name="pref_night_mode">Θέμο</string>
+    <string name="pref_night_mode">Θέμα</string>
 
     <string name="synchronize">Συγχρονισμός</string>
     <string name="sync_succeeded_message">Επιτυχής συγχρονισμός δεδομένων</string>
