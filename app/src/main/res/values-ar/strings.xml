@@ -18,17 +18,17 @@
     <string name="undo">تراجع</string>
 
     <!-- Main activity -->
-    <string name="volleyball_game">الكرة الطائرة داخل الصالات</string>
-    <string name="beach_volleyball_game">الكرة الطائرة الشاطئية</string>
+    <string name="volleyball_game">كرة الطائرة صالات</string>
+    <string name="beach_volleyball_game">كرة الطائرة الشاطئية</string>
     <string name="snow_volleyball_game">كرة الطائرة الثلجية</string>
     <string name="score_based_game">لوحة النتائج</string>
     <string name="time_based_game">محدد الوقت</string>
     <string name="permission_title">حول صلاحيات التطبيق</string>
     <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
-    <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في استئنافها أو حذفها؟</string>
+    <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في إستئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
-    <string name="facebook">الفيسبوك</string>
+    <string name="facebook">فيسبوك</string>
     <string name="my_data_group">بياناتي</string>
     <string name="configuration_group">الإعدادات</string>
     <string name="completed_games">المباريات المكتملة</string>
@@ -38,12 +38,12 @@
     <string name="colleagues">الزملاء</string>
     <string name="live_games_vbr_com">المباريات المباشرة في الموقع</string>
     <string name="my_account">حسابي</string>
-    <string name="privacy_policy">نهج الخصوصية</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
 
     <!-- Purchase activity -->
     <string name="purchase">شراء</string>
     <string name="already_purchased">تم الشراء سابقا</string>
-    <string name="purchase_web_premium_summary">\n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك. \n\u2022 استمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة. \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا. \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم. \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.</string>
+    <string name="purchase_web_premium_summary">\n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك. \n\u2022 إستمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة. \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا. \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم. \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.</string>
 
     <!-- User activity -->
     <string name="user_sign_in">تسجيل الدخول</string>
@@ -58,7 +58,7 @@
     <string name="user_confirm_email_hint">تأكيد عنوان البريد الإلكتروني</string>
     <string name="user_email_not_matching">عناوين البريد الإلكتروني غير متطابق</string>
     <string name="user_current_password_hint">كلمة المرور الحالية</string>
-    <string name="user_password_hint">كلمه المرور</string>
+    <string name="user_password_hint">كلمة المرور</string>
     <string name="user_confirm_password_hint">تأكيد كلمة المرور</string>
     <string name="user_new_password_hint">كلمة المرور الجديدة</string>
     <string name="user_confirm_new_password_hint">تأكيد كلمة المرور الجديدة</string>
@@ -76,7 +76,7 @@
     <string name="add_colleague">أضف زميل</string>
     <string name="received_colleague_request">لقد تلقيت طلبًا من %s</string>
     <string name="sent_colleague_request">لقد أرسلت طلبًا إلى %s</string>
-    <string name="pending">قيد الانتظار</string>
+    <string name="pending">قيد الإنتظار</string>
     <string name="accept_colleague_question">هل تقبل %s كزميل؟</string>
     <string name="reject_colleague_question">رفض الطلب من %s?</string>
     <string name="remove_colleague_question">حذف %s?</string>
@@ -91,9 +91,9 @@
     <string name="select_players_with_liberos">حدد اللاعبين (من ضمنهم اللاعب الحر)</string>
     <string name="select_shirts_color">حدد لون ملابس الفريق</string>
     <string name="select_captain">حدد قائد الفريق</string>
-    <string name="select_libero">حدد اللاعب الحر (اختياري)</string>
+    <string name="select_libero">حدد اللاعب الحر (إختياري)</string>
     <string name="select_gender">حدد الجنس</string>
-    <string name="input_player_names">أدخل أسماء اللاعب (اختياري)</string>
+    <string name="input_player_names">أدخل أسماء اللاعبين (إختياري)</string>
     <string name="confirm">تأكيد</string>
     <string name="confirm_game_setup_question">هل أنت موافق على هذه الإعدادات</string>
     <string name="gender_description">الجنس</string>
@@ -108,8 +108,8 @@
     <string name="must_provide_at_least_n_characters">يجب عليك تقديم %d أحرف على الأقل</string>
 
     <!-- Game activity -->
-    <string name="toss_tails">كتبه</string>
-    <string name="toss_heads">رأس</string>
+    <string name="toss_tails">الذيل</string>
+    <string name="toss_heads">الرأس</string>
     <string name="toss_coin">إرم عملة</string>
     <string name="swap_first_service">مبادلة أول إرسال</string>
     <string name="navigate_home">العودة إلى الصفحة الرئيسية</string>
@@ -117,8 +117,8 @@
     <string name="reset_set_question">سيتم إعادة تشغيل الشوط الحالي وسيتم فقدان كل الإجراءات. إعادة تعيين؟</string>
     <string name="share">مشاركة</string>
     <string name="share_exception">فشل في مشاركة المباراة</string>
-    <string name="navigate_home_question">يمكنك استئناف المباراة الحالية في وقت لاحق. مغادرة؟</string>
-    <string name="select_player_title">اختر لاعب من البدلاء</string>
+    <string name="navigate_home_question">يمكنك إستئناف المباراة الحالية في وقت لاحق. مغادرة؟</string>
+    <string name="select_player_title">إختر لاعب من البدلاء</string>
     <string name="court_position_tab">المواقع</string>
     <string name="ladder_tab">النقط</string>
     <string name="substitutions_tab">التبديلات</string>
@@ -169,7 +169,7 @@
     <string name="position_5_title">5</string>
     <string name="position_6_title">6</string>
     <string name="timeout">وقت مستقطع</string>
-    <string name="substitution">الاستبدال</string>
+    <string name="substitution">الإستبدال</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">حذف المباراة</string>
@@ -248,7 +248,7 @@
     <string name="rules_consecutive_serves_per_player">الحد من الإرسالات المتتالية لكل لاعب</string>
     <string name="rules_court_switches">تبديل الساحة</string>
     <string name="rules_court_switch_frequency">معدل النقاط لتغير الساحة في الأشواط العادية</string>
-    <string name="rules_court_switch_frequency_tie_break">معدل النقاط لتغير الساحة في الأشواط العادية</string>
+    <string name="rules_court_switch_frequency_tie_break">معدل النقاط لتغير الساحة في شوط كسر التعادل</string>
 
     <string-array name="points_per_set_entries">
         <item>شوط من 40 نقطة</item>
@@ -291,11 +291,11 @@
     </string-array>
     <string-array name="match_termination_entries">
         <item>إنهاء المباراة عندما يفوز الفريق</item>
-        <item>إنهاء المباراة عندما يتم لعب كل الاشواط</item>
+        <item>إنهاء المباراة عندما يتم لعب كل الأشواط</item>
     </string-array>
     <string-array name="team_timeouts_per_set_entries">
-        <item>وقت مستقطع ثلاثة للفريق كل شوط</item>
-        <item>وقت مستقطع اثنان للفريق كل شوط</item>
+        <item>ثلاث أوقات مستقطعة للفريق كل شوط</item>
+        <item>وقتين مستقطعين للفريق كل شوط</item>
         <item>وقت مستقطع واحد للفريق كل شوط</item>
         <item>عدم وجود وقت مستقطع للفريق كل شوط</item>
     </string-array>
@@ -341,10 +341,10 @@
     </string-array>
     <string-array name="consecutive_serves_per_player_entries">
         <item>غير محدود</item>
-        <item>5 إرسالات</item>
-        <item>4 إرسالات</item>
-        <item>3 إرسالات</item>
-        <item>2 إرسالات</item>
+        <item>خمس إرسالات</item>
+        <item>أربع إرسالات</item>
+        <item>ثلاث إرسالات</item>
+        <item>إرسالين</item>
     </string-array>
     <string-array name="night_mode_entries">
         <item>الإعداد التلقائي للنظام</item>
@@ -353,6 +353,6 @@
     </string-array>
 
     <!-- Credits activity -->
-    <string name="credit_title">About the VBR Team</string>
+    <string name="credit_title">حول فريق حكم الكرة الطائرة</string>
 
 </resources>
