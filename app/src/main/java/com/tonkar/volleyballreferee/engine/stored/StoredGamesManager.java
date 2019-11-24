@@ -765,7 +765,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     private void pushGameToServer(final IStoredGame storedGame) {
-        if (PrefUtils.canSync(mContext) && storedGame != null) {
+        if (PrefUtils.canSync(mContext) && storedGame != null && !storedGame.getTeamId(TeamType.HOME).equals(storedGame.getTeamId(TeamType.GUEST))) {
             final ApiUserToken userToken = PrefUtils.getUserToken(mContext);
             final ApiGame game = (ApiGame) storedGame;
             final String jsonGame = writeGame(game);
@@ -817,7 +817,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     private synchronized void pushCurrentSetToServer() {
-        if (PrefUtils.canSync(mContext) && mStoredGame != null) {
+        if (PrefUtils.canSync(mContext) && mStoredGame != null && !mStoredGame.getHomeTeam().getId().equals(mStoredGame.getGuestTeam().getId())) {
             int setIndex = mStoredGame.currentSetIndex();
             final ApiSet set = mStoredGame.getSets().get(setIndex);
             final String jsonSet = writeSet(set);
