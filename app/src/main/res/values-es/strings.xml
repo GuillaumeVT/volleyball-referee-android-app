@@ -51,11 +51,11 @@
         \n\u2022 Obtén automáticamente las funcionalidades de la futura web.
     </string>
     <string name="purchase_score_sheets_summary">
-        \n\u2022 Add referees, scorer, captains and coaches signatures
-        \n\u2022 Add your federation logo
-        \n\u2022 Add remarks
-        \n\u2022 Save to PDF format
-        \n\u2022 Share
+        \n\u2022 Añadir árbitros, anotador, firmas de capitanes y entrenadores
+        \n\u2022 Añadir el logo de tu Federación
+        \n\u2022 Añadir observaciones
+        \n\u2022 Guardar en formato PDF
+        \n\u2022 Compartir
     </string>
 
     <!-- User activity -->
@@ -211,14 +211,14 @@
     <string name="deleted_game">Partido borrado</string>
     <string name="deleted_selected_games">Todos los partidos borrados</string>
     <string name="players">Jugadores</string>
-    <string name="create_score_sheet">Create scoresheet</string>
-    <string name="score_sheet_exception">Failed to create or to display the scoresheet</string>
-    <string name="signatures">Signatures</string>
-    <string name="coach">Coach</string>
-    <string name="captain">Captain</string>
-    <string name="scorer">Scorer</string>
-    <string name="name">Name</string>
-    <string name="remarks">Remarks</string>
+    <string name="create_score_sheet">Crear acta</string>
+    <string name="score_sheet_exception">Fallo al crear o mostrar el acta</string>
+    <string name="signatures">Firmas</string>
+    <string name="coach">Entrenador</string>
+    <string name="captain">Capitán</string>
+    <string name="scorer">Anotador</string>
+    <string name="name">Nombre</string>
+    <string name="remarks">Observaciones</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Buscar equipos</string>
