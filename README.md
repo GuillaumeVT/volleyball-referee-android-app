@@ -5,6 +5,7 @@ Volleyball Referee is a user-friendly and complete application for refereeing in
 <ul>
   <li>Create indoor volleyball matches with official or user-defined rules: select the team names, the shirt colours, and the player numbers.</li>
   <li>Create beach volleyball matches with official or user-defined rules: select the pair names and the shirt colours.</li>
+  <li>Create snow volleyball matches with official or user-defined rules.</li>
   <li>Manage the score: whenever the score is updated, Volleyball Referee handles everything for you, including the rotations, the technical timeouts and the serving team.</li>
   <li>View the detailed series of scored points by the teams during each set.</li>
   <li>Keep track of the players positions upon rotation on the court, including the liberos.</li>
@@ -28,6 +29,7 @@ If your language is missing and you feel like helping the community, you may con
 | Languages             |
 |-----------------------|
 | Arabic                |
+| Bulgarian             |
 | Dutch                 |
 | English               |
 | Estonian              |
@@ -46,4 +48,5 @@ If your language is missing and you feel like helping the community, you may con
 
 | Planned Features                  | Status                                 |
 |-----------------------------------|----------------------------------------|
-| Snow volleyball                   | Planned                                |
+| Exceptional substitutions         | Planned                                |
+| 3x3                               | Planned                                |
