@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -32,16 +33,17 @@ import java.util.List;
 
 public class StoredRulesListActivity extends NavigationActivity implements DataSynchronizationListener {
 
-    private StoredRulesService     mStoredRulesService;
-    private StoredRulesListAdapter mStoredRulesListAdapter;
-    private SwipeRefreshLayout     mSyncLayout;
-    private boolean                mIsFabOpen;
-    private FloatingActionButton   mAddRulesButton;
-    private FloatingActionButton   mAddIndoorRulesButton;
-    private FloatingActionButton   mAddIndoor4x4RulesButton;
-    private FloatingActionButton   mAddBeachRulesButton;
-    private FloatingActionButton   mAddSnowRulesButton;
-    private MenuItem               mDeleteSelectedRulesItem;
+    private StoredRulesService           mStoredRulesService;
+    private StoredRulesListAdapter       mStoredRulesListAdapter;
+    private SwipeRefreshLayout           mSyncLayout;
+    private View                         mOverlay;
+    private boolean                      mIsFabOpen;
+    private FloatingActionButton         mAddRulesButton;
+    private ExtendedFloatingActionButton mAddIndoorRulesButton;
+    private ExtendedFloatingActionButton mAddIndoor4x4RulesButton;
+    private ExtendedFloatingActionButton mAddBeachRulesButton;
+    private ExtendedFloatingActionButton mAddSnowRulesButton;
+    private MenuItem                     mDeleteSelectedRulesItem;
 
     @Override
     protected String getToolbarTitle() {
@@ -66,6 +68,8 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredRulesList);
+
+        mOverlay = findViewById(R.id.overlay);
 
         List<ApiRulesSummary> storedRules = mStoredRulesService.listRules();
 
@@ -216,6 +220,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mAddSnowRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
+        mOverlay.setVisibility(View.VISIBLE);
     }
 
     private void closeFABMenu(){
@@ -229,6 +234,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoor4x4RulesButton.hide();
         mAddBeachRulesButton.hide();
         mAddSnowRulesButton.hide();
+        mOverlay.setVisibility(View.GONE);
     }
 
     @Override

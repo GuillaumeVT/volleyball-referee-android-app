@@ -65,4 +65,6 @@
     <color name="colorScoreSheetBackground">#ecebec</color>
     <color name="colorOnScoreSheetBackground">#1f1f1f</color>
 
+    <color name="colorOverlay">#5A000000</color>
+
 </resources>

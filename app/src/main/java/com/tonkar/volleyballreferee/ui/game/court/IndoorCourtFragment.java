@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,9 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -30,7 +33,7 @@ import java.util.Set;
 
 public class IndoorCourtFragment extends CourtFragment {
 
-    protected IClassicTeam   mClassTeam;
+    protected IClassicTeam   mClassicTeam;
     protected LayoutInflater mLayoutInflater;
     private   boolean        mOneStartingLineupDialog;
 
@@ -54,7 +57,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
         initView();
 
-        if (mClassTeam != null) {
+        if (mClassicTeam != null) {
             mLayoutInflater = inflater;
 
             addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
@@ -85,6 +88,20 @@ public class IndoorCourtFragment extends CourtFragment {
             addSanctionImageOnRightSide(PositionType.POSITION_5, mView.findViewById(R.id.right_team_sanction_5));
             addSanctionImageOnRightSide(PositionType.POSITION_6, mView.findViewById(R.id.right_team_sanction_6));
 
+            addSubstitutionOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_substitution_1));
+            addSubstitutionOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_substitution_2));
+            addSubstitutionOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_substitution_3));
+            addSubstitutionOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_substitution_4));
+            addSubstitutionOnLeftSide(PositionType.POSITION_5, mView.findViewById(R.id.left_team_substitution_5));
+            addSubstitutionOnLeftSide(PositionType.POSITION_6, mView.findViewById(R.id.left_team_substitution_6));
+
+            addSubstitutionOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_substitution_1));
+            addSubstitutionOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_substitution_2));
+            addSubstitutionOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_substitution_3));
+            addSubstitutionOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_substitution_4));
+            addSubstitutionOnRightSide(PositionType.POSITION_5, mView.findViewById(R.id.right_team_substitution_5));
+            addSubstitutionOnRightSide(PositionType.POSITION_6, mView.findViewById(R.id.right_team_substitution_6));
+
             initLeftTeamListeners();
             initRightTeamListeners();
 
@@ -98,7 +115,7 @@ public class IndoorCourtFragment extends CourtFragment {
         for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(view -> {
-                final Set<Integer> possibleSubstitutions = mClassTeam.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
+                final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
                 if (possibleSubstitutions.size() > 0) {
                     UiUtils.animate(getContext(), view);
                     Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
@@ -109,11 +126,11 @@ public class IndoorCourtFragment extends CourtFragment {
             });
 
             entry.getValue().setOnLongClickListener(view -> {
-                if (!mClassTeam.isStartingLineupConfirmed(mTeamOnLeftSide)) {
-                    int number = mClassTeam.getPlayerAtPosition(mTeamOnLeftSide, positionType);
+                if (!mClassicTeam.isStartingLineupConfirmed(mTeamOnLeftSide)) {
+                    int number = mClassicTeam.getPlayerAtPosition(mTeamOnLeftSide, positionType);
                     if (number > 0) {
                         UiUtils.animateBounce(getContext(), view);
-                        mClassTeam.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
+                        mClassicTeam.substitutePlayer(mTeamOnLeftSide, number, PositionType.BENCH, ActionOriginType.USER);
                     }
                 }
                 return true;
@@ -125,7 +142,7 @@ public class IndoorCourtFragment extends CourtFragment {
         for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
             final PositionType positionType = entry.getKey();
             entry.getValue().setOnClickListener(view -> {
-                final Set<Integer> possibleSubstitutions = mClassTeam.getPossibleSubstitutions(mTeamOnRightSide, positionType);
+                final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(mTeamOnRightSide, positionType);
                 if (possibleSubstitutions.size() > 0) {
                     UiUtils.animate(getContext(), view);
                     Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
@@ -136,11 +153,11 @@ public class IndoorCourtFragment extends CourtFragment {
             });
 
             entry.getValue().setOnLongClickListener(view -> {
-                if (!mClassTeam.isStartingLineupConfirmed(mTeamOnRightSide)) {
-                    int number = mClassTeam.getPlayerAtPosition(mTeamOnRightSide, positionType);
+                if (!mClassicTeam.isStartingLineupConfirmed(mTeamOnRightSide)) {
+                    int number = mClassicTeam.getPlayerAtPosition(mTeamOnRightSide, positionType);
                     if (number > 0) {
                         UiUtils.animateBounce(getContext(), view);
-                        mClassTeam.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
+                        mClassicTeam.substitutePlayer(mTeamOnRightSide, number, PositionType.BENCH, ActionOriginType.USER);
                     }
                 }
                 return true;
@@ -162,8 +179,10 @@ public class IndoorCourtFragment extends CourtFragment {
             update(teamType);
         } else {
             MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
+            updateService(teamType, positionType, positionButton);
             updatePosition(teamType, number, positionButton);
             updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
+            updateSubstitution(teamType, number, getTeamSubstitutions(teamType).get(positionType));
             UiUtils.animateBounce(mView.getContext(), positionButton);
 
             checkCaptain(teamType, number);
@@ -172,15 +191,15 @@ public class IndoorCourtFragment extends CourtFragment {
         if (ActionOriginType.USER.equals(actionOriginType)) {
             confirmStartingLineup(teamType);
 
-            if (mClassTeam.isStartingLineupConfirmed(teamType) && !mClassTeam.hasRemainingSubstitutions(teamType) && !mClassTeam.isLibero(teamType, number)) {
-                UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mClassTeam.getTeamName(teamType)));
+            if (mClassicTeam.isStartingLineupConfirmed(teamType) && !mClassicTeam.hasRemainingSubstitutions(teamType) && !mClassicTeam.isLibero(teamType, number)) {
+                UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
             }
         }
     }
 
     @Override
     public void onTeamRotated(TeamType teamType, boolean clockwise) {
-        if (mClassTeam.isStartingLineupConfirmed(teamType)) {
+        if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
             rotateAnimation(teamType, clockwise);
         } else {
             update(teamType);
@@ -219,22 +238,30 @@ public class IndoorCourtFragment extends CourtFragment {
     protected void update(TeamType teamType) {
         final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
         final Map<PositionType, ImageView> teamSanctionImages = getTeamSanctionImages(teamType);
+        final Map<PositionType, TextView> teamSubstitutions = getTeamSubstitutions(teamType);
 
         for (final Map.Entry<PositionType, MaterialButton> teamPosition : teamPositions.entrySet()) {
             teamPosition.getValue().setText(UiUtils.getPositionTitle(mView.getContext(), teamPosition.getKey()));
-            UiUtils.styleBaseTeamButton(mView.getContext(), mClassTeam, teamType, teamPosition.getValue());
+            UiUtils.styleBaseTeamButton(mView.getContext(), mClassicTeam, teamType, teamPosition.getValue());
         }
 
         for (final ImageView imageView : teamSanctionImages.values()) {
             imageView.setVisibility(View.INVISIBLE);
         }
 
-        final Set<Integer> players = mClassTeam.getPlayersOnCourt(teamType);
+        for (final View view : teamSubstitutions.values()) {
+            view.setVisibility(View.INVISIBLE);
+        }
+
+        final Set<Integer> players = mClassicTeam.getPlayersOnCourt(teamType);
 
         for (Integer number : players) {
-            final PositionType positionType = mClassTeam.getPlayerPosition(teamType, number);
-            updatePosition(teamType, number, teamPositions.get(positionType));
+            final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
+            MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
+            updateService(teamType, positionType, positionButton);
+            updatePosition(teamType, number, positionButton);
             updateSanction(teamType, number, teamSanctionImages.get(positionType));
+            updateSubstitution(teamType, number, teamSubstitutions.get(positionType));
         }
 
         confirmStartingLineup(teamType);
@@ -244,11 +271,11 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void confirmStartingLineup(TeamType teamType) {
-        if (!mClassTeam.isStartingLineupConfirmed(teamType) && mClassTeam.getPlayersOnCourt(teamType).size() == mClassTeam.getExpectedNumberOfPlayersOnCourt()) {
+        if (!mClassicTeam.isStartingLineupConfirmed(teamType) && mClassicTeam.getPlayersOnCourt(teamType).size() == mClassicTeam.getExpectedNumberOfPlayersOnCourt()) {
             AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
                 if (!mOneStartingLineupDialog) {
-                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), String.format(Locale.getDefault(), getString(R.string.confirm_team_lineup_question), mClassTeam.getTeamName(teamType)),
+                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), String.format(Locale.getDefault(), getString(R.string.confirm_team_lineup_question), mClassicTeam.getTeamName(teamType)),
                             getString(android.R.string.no), getString(android.R.string.yes));
                     setStartingLineupDialogListener(alertDialogFragment, teamType);
                     alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
@@ -270,7 +297,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
             @Override
             public void onPositiveButtonClicked() {
-                mClassTeam.confirmStartingLineup(teamType);
+                mClassicTeam.confirmStartingLineup(teamType);
                 checkCaptain(teamType, -1);
                 mOneStartingLineupDialog = false;
             }
@@ -282,22 +309,22 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
         PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(getActivity(), positionType) + ")",
-                mClassTeam, mGame, teamType, possibleReplacements) {
+                mClassicTeam, mGame, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position by #%d player", teamType.toString(), positionType.toString(), selectedNumber));
-                mClassTeam.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
+                mClassicTeam.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
             }
         };
         playerSelectionDialog.show();
     }
 
     private void checkCaptain(TeamType teamType, int number) {
-        if (mClassTeam.isStartingLineupConfirmed(teamType)) {
-            if (mClassTeam.isCaptain(teamType, number)) {
+        if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
+            if (mClassicTeam.isCaptain(teamType, number)) {
                 // the captain is back on court, refresh the team
                 update(teamType);
-            } else if (!mClassTeam.hasActingCaptainOnCourt(teamType)) {
+            } else if (!mClassicTeam.hasActingCaptainOnCourt(teamType)) {
                 // there is no captain on court, request one
                 showCaptainSelectionDialog(teamType);
             }
@@ -306,11 +333,11 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showCaptainSelectionDialog(final TeamType teamType) {
         PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_captain),
-                mClassTeam, mGame, teamType, mClassTeam.getPossibleActingCaptains(teamType)) {
+                mClassicTeam, mGame, teamType, mClassicTeam.getPossibleActingCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
-                mClassTeam.setActingCaptain(teamType, selectedNumber);
+                mClassicTeam.setActingCaptain(teamType, selectedNumber);
                 // refresh the team with the new captain
                 update(teamType);
             }
@@ -321,7 +348,7 @@ public class IndoorCourtFragment extends CourtFragment {
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (ApiSanction.isPlayer(number)) {
-            PositionType positionType = mClassTeam.getPlayerPosition(teamType, number);
+            PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
 
             if (!PositionType.BENCH.equals(positionType)) {
                 updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
@@ -339,20 +366,20 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void checkExplusions(TeamType teamType) {
-        final Set<Integer> players = mClassTeam.getPlayersOnCourt(teamType);
+        final Set<Integer> players = mClassicTeam.getPlayersOnCourt(teamType);
         final Set<Integer> excludedNumbers = mGame.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
 
         for (Integer number : players) {
             if (excludedNumbers.contains(number)) {
-                final PositionType positionType = mClassTeam.getPlayerPosition(teamType, number);
+                final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
                 showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
             }
         }
     }
 
     private void showPlayerSelectionDialogAfterExpulsion(TeamType teamType, int number, PositionType positionType) {
-        final Set<Integer> possibleSubstitutions = mClassTeam.getPossibleSubstitutions(teamType, positionType);
-        final Set<Integer> filteredSubstitutions = mClassTeam.filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+        final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(teamType, positionType);
+        final Set<Integer> filteredSubstitutions = mClassicTeam.filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
 
         if (filteredSubstitutions.size() > 0) {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
@@ -361,7 +388,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mClassTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -389,14 +416,77 @@ public class IndoorCourtFragment extends CourtFragment {
         return teamSanctionImages;
     }
 
+    private Map<PositionType, TextView> getTeamSubstitutions(TeamType teamType) {
+        final Map<PositionType, TextView> teamSubstitutions;
+
+        if (mTeamOnLeftSide.equals(teamType)) {
+            teamSubstitutions = mLeftTeamSubstitutions;
+        } else {
+            teamSubstitutions = mRightTeamSubstitutions;
+        }
+
+        return teamSubstitutions;
+    }
+
     private void updatePosition(TeamType teamType, int number, MaterialButton positionButton) {
         positionButton.setText(UiUtils.formatNumberFromLocale(number));
-        UiUtils.styleIndoorTeamButton(mView.getContext(), mClassTeam, teamType, number, positionButton);
+        UiUtils.styleIndoorTeamButton(mView.getContext(), mClassicTeam, teamType, number, positionButton);
+    }
+
+    protected void updateService(TeamType teamType, PositionType positionType, MaterialButton positionButton) {
+        if (mGame.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
+            positionButton.setIconResource(R.drawable.ic_service);
+        } else {
+            positionButton.setIcon(null);
+        }
+    }
+
+    private void updateSubstitution(TeamType teamType, int number, TextView substitutionView) {
+        if (Rules.FIVB_LIMITATION == mGame.getRules().getSubstitutionsLimitation() && mClassicTeam.isStartingLineupConfirmed(teamType)) {
+            boolean isLibero = mClassicTeam.isLibero(teamType, number);
+
+            if (mClassicTeam.hasRemainingSubstitutions(teamType) || isLibero) {
+                if (isLibero) {
+                    int middleBlockerNumber = mClassicTeam.getWaitingMiddleBlocker(teamType);
+                    substitutionView.setText(UiUtils.formatNumberFromLocale(middleBlockerNumber));
+                    UiUtils.styleTeamText(getContext(), mClassicTeam, teamType, middleBlockerNumber, substitutionView);
+                    substitutionView.setVisibility(View.VISIBLE);
+                } else {
+                    for (ApiSubstitution substitution : mClassicTeam.getSubstitutions(teamType)) {
+                        if (number == substitution.getPlayerIn()) {
+                            substitutionView.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
+                            UiUtils.styleTeamText(getContext(), mClassicTeam, teamType, substitution.getPlayerOut(), substitutionView);
+                            substitutionView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            } else {
+                substitutionView.setVisibility(View.GONE);
+            }
+        } else {
+            substitutionView.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void setGameService(IGame game) {
         mGame = game;
-        mClassTeam = (IClassicTeam) game;
+        mClassicTeam = (IClassicTeam) game;
+    }
+
+    @Override
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {
+        if (isStart) {
+            if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
+                updateService(teamType, PositionType.POSITION_1, getTeamPositions(teamType).get(PositionType.POSITION_1));
+                updatePosition(teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), getTeamPositions(teamType).get(PositionType.POSITION_1));
+            }
+
+            TeamType otherTeamType = teamType.other();
+            if (mClassicTeam.isStartingLineupConfirmed(otherTeamType)) {
+                updateService(otherTeamType, PositionType.POSITION_1, getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
+                updatePosition(otherTeamType, mClassicTeam.getPlayerAtPosition(otherTeamType, PositionType.POSITION_1), getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
+            }
+        }
     }
 }

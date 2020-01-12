@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -16,12 +14,11 @@ import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserToken;
+import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
 
 import java.net.HttpURLConnection;
 
-public class UserActivity extends AppCompatActivity {
-
-    private SwipeRefreshLayout mSyncLayout;
+public class UserActivity extends ProgressIndicatorActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +71,6 @@ public class UserActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    public void showProgressIndicator() {
-        mSyncLayout.setRefreshing(true);
-    }
-
-    public void hideProgressIndicator() {
-        mSyncLayout.setRefreshing(false);
     }
 
 }

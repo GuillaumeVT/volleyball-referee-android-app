@@ -19,6 +19,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+            <View
+                    android:id="@+id/overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorOverlay"
+                    android:elevation="1dp"
+                    android:visibility="gone"/>
+
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:id="@+id/sync_layout"
                     android:layout_width="match_parent"
@@ -34,8 +42,9 @@
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/schedule_indoor_game_button"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -45,14 +54,15 @@
                     android:focusable="true"
                     android:onClick="scheduleIndoorGame"
                     android:transitionName="gameKindToToolbar"
+                    android:text="@string/volleyball_game"
+                    android:textColor="@color/colorOnDarkSurface"
                     app:backgroundTint="@color/colorIndoor"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_6x6_small"
-                    app:tint="@color/colorOnDarkSurface" />
+                    app:icon="@drawable/ic_6x6_small"
+                    app:iconTint="@color/colorOnDarkSurface" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/schedule_beach_game_button"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -62,14 +72,15 @@
                     android:focusable="true"
                     android:onClick="scheduleBeachGame"
                     android:transitionName="gameKindToToolbar"
+                    android:text="@string/beach_volleyball_game"
+                    android:textColor="@color/colorOnLightSurface"
                     app:backgroundTint="@color/colorBeach"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_beach"
-                    app:tint="@color/colorOnLightSurface" />
+                    app:icon="@drawable/ic_beach"
+                    app:iconTint="@color/colorOnLightSurface" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/schedule_indoor_4x4_game_button"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -79,14 +90,15 @@
                     android:focusable="true"
                     android:onClick="scheduleIndoor4x4Game"
                     android:transitionName="gameKindToToolbar"
+                    android:text="@string/volleyball_game"
+                    android:textColor="@color/colorOnDarkSurface"
                     app:backgroundTint="@color/colorIndoor4x4"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_4x4_small"
-                    app:tint="@color/colorOnDarkSurface" />
+                    app:icon="@drawable/ic_4x4_small"
+                    app:iconTint="@color/colorOnDarkSurface" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/schedule_snow_game_button"
+                    style="@style/AppTheme.ExtendedFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -96,11 +108,11 @@
                     android:focusable="true"
                     android:onClick="scheduleSnowGame"
                     android:transitionName="gameKindToToolbar"
+                    android:text="@string/snow_volleyball_game"
+                    android:textColor="@color/colorOnDarkSurface"
                     app:backgroundTint="@color/colorSnow"
-                    app:fabCustomSize="@dimen/form_button_size"
-                    app:maxImageSize="@dimen/form_fab_icon_size"
-                    app:srcCompat="@drawable/ic_snow"
-                    app:tint="@color/colorOnDarkSurface" />
+                    app:icon="@drawable/ic_snow"
+                    app:iconTint="@color/colorOnDarkSurface" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/schedule_game_button"

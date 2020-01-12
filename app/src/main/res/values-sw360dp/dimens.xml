@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <dimen name="big_text_size">18sp</dimen>
-    <dimen name="default_text_size">16sp</dimen>
-    <dimen name="small_text_size">14sp</dimen>
+    <dimen name="big_text_size">17sp</dimen>
+    <dimen name="default_text_size">15sp</dimen>
+    <dimen name="small_text_size">13sp</dimen>
 
     <dimen name="big_margin_size">16dp</dimen>
     <dimen name="default_margin_size">8dp</dimen>
@@ -37,6 +37,8 @@
     <dimen name="beach_court_y_padding">24dp</dimen>
     <dimen name="snow_court_y_padding">20dp</dimen>
     <dimen name="court_x_padding">16dp</dimen>
+    <dimen name="court_event_size">22dp</dimen>
+    <dimen name="court_service_size">16dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
@@ -51,5 +53,8 @@
     <dimen name="form_fab_icon_size">32dp</dimen>
 
     <dimen name="elevation">2dp</dimen>
+
+    <dimen name="signature_width">320dp</dimen>
+    <dimen name="signature_height">170dp</dimen>
 
 </resources>

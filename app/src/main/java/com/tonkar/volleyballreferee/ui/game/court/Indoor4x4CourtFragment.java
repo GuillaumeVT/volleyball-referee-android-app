@@ -33,7 +33,7 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
 
         initView();
 
-        if (mClassTeam != null) {
+        if (mClassicTeam != null) {
             mLayoutInflater = inflater;
 
             addButtonOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_position_1));
@@ -55,6 +55,16 @@ public class Indoor4x4CourtFragment extends IndoorCourtFragment {
             addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
             addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
             addSanctionImageOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_sanction_4));
+
+            addSubstitutionOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_substitution_1));
+            addSubstitutionOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_substitution_2));
+            addSubstitutionOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_substitution_3));
+            addSubstitutionOnLeftSide(PositionType.POSITION_4, mView.findViewById(R.id.left_team_substitution_4));
+
+            addSubstitutionOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_substitution_1));
+            addSubstitutionOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_substitution_2));
+            addSubstitutionOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_substitution_3));
+            addSubstitutionOnRightSide(PositionType.POSITION_4, mView.findViewById(R.id.right_team_substitution_4));
 
             initLeftTeamListeners();
             initRightTeamListeners();

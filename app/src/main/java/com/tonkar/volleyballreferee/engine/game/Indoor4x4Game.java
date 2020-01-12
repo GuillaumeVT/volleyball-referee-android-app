@@ -186,6 +186,11 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
     }
 
     @Override
+    public int getWaitingMiddleBlocker(TeamType teamType) {
+        return -1;
+    }
+
+    @Override
     public boolean isStartingLineupConfirmed(TeamType teamType) {
         return getIndoorTeamComposition(teamType).isStartingLineupConfirmed();
     }

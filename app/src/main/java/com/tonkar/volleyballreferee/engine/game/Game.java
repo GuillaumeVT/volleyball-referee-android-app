@@ -78,6 +78,10 @@ public abstract class Game extends BaseGame {
     private final List<ApiSanction> mHomeTeamSanctions;
     @SerializedName("guestTeamCards")
     private final List<ApiSanction> mGuestTeamSanctions;
+    @SerializedName("startTime")
+    private       long              mStartTime;
+    @SerializedName("endTime")
+    private       long              mEndTime;
 
     private transient boolean mEnableNotifications;
 
@@ -117,6 +121,8 @@ public abstract class Game extends BaseGame {
         mSets = new ArrayList<>();
         mHomeTeamSanctions = new ArrayList<>();
         mGuestTeamSanctions = new ArrayList<>();
+        mStartTime = mScheduledAt;
+        mEndTime = 0L;
 
         mServingTeamAtStart = TeamType.HOME;
 
@@ -281,6 +287,7 @@ public abstract class Game extends BaseGame {
             mScheduledAt = System.currentTimeMillis();
         }
 
+        mStartTime = System.currentTimeMillis();
         mUpdatedAt = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
         mSets.add(createSet(mRules, mRules.getPointsPerSet(), mServingTeamAtStart));
@@ -381,7 +388,7 @@ public abstract class Game extends BaseGame {
 
         // In volley, the team obtaining the service rotates to next positions
         if (!oldServingTeam.equals(newServingTeam)) {
-            notifyServiceSwapped(newServingTeam);
+            notifyServiceSwapped(newServingTeam, false);
             rotateToNextPositions(newServingTeam);
         }
 
@@ -401,7 +408,7 @@ public abstract class Game extends BaseGame {
             final TeamType newServingTeam = currentSet().getServingTeam();
 
             if (!oldServingTeam.equals(newServingTeam)) {
-                notifyServiceSwapped(newServingTeam);
+                notifyServiceSwapped(newServingTeam, false);
                 rotateToPreviousPositions(oldServingTeam);
             }
         }
@@ -471,6 +478,16 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public long getStartTime() {
+        return mStartTime;
+    }
+
+    @Override
+    public long getEndTime() {
+        return mEndTime;
+    }
+
+    @Override
     public long getSetDuration(int setIndex) {
         long duration = 0L;
         com.tonkar.volleyballreferee.engine.game.set.Set set = mSets.get(setIndex);
@@ -482,10 +499,21 @@ public abstract class Game extends BaseGame {
         return duration;
     }
 
+    @Override
+    public long getSetStartTime(int setIndex) {
+        return getSet(setIndex).getStartTime();
+    }
+
+    @Override
+    public long getSetEndTime(int setIndex) {
+        return getSet(setIndex).getEndTime();
+    }
+
     private void completeCurrentSet() {
         notifySetCompleted();
 
         if (isMatchCompleted()) {
+            mEndTime = System.currentTimeMillis();
             mGameStatus = GameStatus.COMPLETED;
             final TeamType winner = getSets(TeamType.HOME) > getSets(TeamType.GUEST) ? TeamType.HOME : TeamType.GUEST;
             notifyMatchCompleted(winner);
@@ -578,15 +606,15 @@ public abstract class Game extends BaseGame {
             }
 
             currentSet().setServingTeamAtStart(mServingTeamAtStart);
-            notifyServiceSwapped(currentSet().getServingTeam());
+            notifyServiceSwapped(currentSet().getServingTeam(), true);
         }
     }
 
-    private void notifyServiceSwapped(final TeamType servingTeam) {
+    private void notifyServiceSwapped(final TeamType servingTeam, boolean isStart) {
         Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam.toString()));
 
         for (final ScoreListener listener : mScoreListeners) {
-            listener.onServiceSwapped(servingTeam);
+            listener.onServiceSwapped(servingTeam, isStart);
         }
     }
 

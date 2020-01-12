@@ -18,7 +18,7 @@ public abstract class NameSpinnerAdapter<T> extends ArrayAdapter<T> {
     private final LayoutInflater mLayoutInflater;
     private final List<T>        mItems;
 
-    NameSpinnerAdapter(@NonNull Context context, LayoutInflater layoutInflater, @NonNull List<T> items) {
+    public NameSpinnerAdapter(@NonNull Context context, LayoutInflater layoutInflater, @NonNull List<T> items) {
         super(context, R.layout.vbr_spinner, items);
         mLayoutInflater = layoutInflater;
         mItems = items;

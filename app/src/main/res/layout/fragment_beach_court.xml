@@ -12,28 +12,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vertical_left_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.33" />
+            app:layout_constraintGuide_percent="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vertical_right_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.9" />
+            app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vertical_right_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.66" />
+            app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_horizontal_top"
@@ -60,22 +60,25 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left_2"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_team_position_2"
                 style="@style/AppTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
+                android:clickable="false"
+                android:longClickable="false"
                 android:text="@string/position_2_title"
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_2"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/left_team_position_2"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
 
     </RelativeLayout>
 
@@ -90,22 +93,25 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left_2"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_team_position_1"
                 style="@style/AppTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
+                android:clickable="false"
+                android:longClickable="false"
                 android:text="@string/position_1_title"
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_1"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/left_team_position_1"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
 
     </RelativeLayout>
 
@@ -120,22 +126,25 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right_1"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_team_position_2"
                 style="@style/AppTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
+                android:clickable="false"
+                android:longClickable="false"
                 android:text="@string/position_2_title"
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_2"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/right_team_position_2"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
 
     </RelativeLayout>
 
@@ -150,31 +159,34 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right_1"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_team_position_1"
                 style="@style/AppTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_size"
+                android:clickable="false"
+                android:longClickable="false"
                 android:text="@string/position_1_title"
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_1"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/right_team_position_1"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
     </RelativeLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/left_team_service_2"
+            style="@style/AppTheme.RoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:tint="@color/colorService"
+            app:fabSize="mini"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_top"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -182,12 +194,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top"
             app:srcCompat="@drawable/ic_service" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/left_team_service_1"
+            style="@style/AppTheme.RoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:tint="@color/colorService"
+            app:fabSize="mini"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -195,12 +207,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_bottom"
             app:srcCompat="@drawable/ic_service" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/right_team_service_1"
+            style="@style/AppTheme.RoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:tint="@color/colorService"
+            app:fabSize="mini"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_top"
             app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right_1"
@@ -208,12 +220,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top"
             app:srcCompat="@drawable/ic_service" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/right_team_service_2"
+            style="@style/AppTheme.RoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:tint="@color/colorService"
+            app:fabSize="mini"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal_bottom"
             app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right_1"

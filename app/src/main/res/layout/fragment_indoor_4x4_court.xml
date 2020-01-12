@@ -46,13 +46,6 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_team_position_1"
                 style="@style/AppTheme.Button"
@@ -64,7 +57,26 @@
                 android:layout_marginBottom="@dimen/default_margin_size"
                 android:text="@string/position_1_title"
                 android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+                app:cornerRadius="@dimen/form_button_radius"
+                app:iconGravity="start"
+                app:iconPadding="0dp"
+                app:iconSize="@dimen/court_service_size" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_1"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/left_team_position_1"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/left_team_substitution_1"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/left_team_position_1"
+                android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
@@ -78,13 +90,6 @@
             app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_team_position_4"
                 style="@style/AppTheme.Button"
@@ -97,6 +102,22 @@
                 android:text="@string/position_4_title"
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_4"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/left_team_position_4"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/left_team_substitution_4"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/left_team_position_4"
+                android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
@@ -112,13 +133,6 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_team_position_3"
                 style="@style/AppTheme.Button"
@@ -132,6 +146,22 @@
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_3"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/left_team_position_3"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/left_team_substitution_3"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/left_team_position_3"
+                android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -143,13 +173,6 @@
             app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical"
             app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
-
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_team_position_2"
@@ -164,6 +187,22 @@
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_team_sanction_2"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/left_team_position_2"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/left_team_substitution_2"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/left_team_position_2"
+                android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -175,13 +214,6 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
             app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right">
-
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_team_position_2"
@@ -195,6 +227,22 @@
                 android:text="@string/position_2_title"
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_2"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/right_team_position_2"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/right_team_substitution_2"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/right_team_position_2"
+                android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
@@ -210,13 +258,6 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_team_position_3"
                 style="@style/AppTheme.Button"
@@ -230,6 +271,22 @@
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_3"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/right_team_position_3"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/right_team_substitution_3"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/right_team_position_3"
+                android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -241,13 +298,6 @@
             app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
             app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right"
             app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
-
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_team_position_4"
@@ -262,6 +312,22 @@
                 android:textSize="@dimen/court_position_size"
                 app:cornerRadius="@dimen/form_button_radius" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_4"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/right_team_position_4"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/right_team_substitution_4"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/right_team_position_4"
+                android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -275,13 +341,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
-
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_team_position_1"
                 style="@style/AppTheme.Button"
@@ -293,7 +352,26 @@
                 android:layout_marginBottom="@dimen/default_margin_size"
                 android:text="@string/position_1_title"
                 android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+                app:cornerRadius="@dimen/form_button_radius"
+                app:iconGravity="end"
+                app:iconPadding="0dp"
+                app:iconSize="@dimen/court_service_size" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_team_sanction_1"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignTop="@+id/right_team_position_1"
+                android:layout_alignParentStart="true"
+                android:elevation="@dimen/court_event_elevation" />
+
+        <include
+                android:id="@+id/right_team_substitution_1"
+                layout="@layout/substitution_player_item"
+                android:layout_width="@dimen/court_event_size"
+                android:layout_height="@dimen/court_event_size"
+                android:layout_alignBottom="@+id/right_team_position_1"
+                android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

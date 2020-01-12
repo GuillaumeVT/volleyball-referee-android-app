@@ -78,7 +78,7 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     public void onSetsUpdated(TeamType teamType, int newCount) {}
 
     @Override
-    public void onServiceSwapped(TeamType teamType) {}
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {}
 
     @Override
     public void onSetStarted() {}

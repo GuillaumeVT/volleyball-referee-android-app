@@ -9,13 +9,13 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-public class SnowCourtFragment extends IndoorCourtFragment implements ScoreListener {
+public class SnowCourtFragment extends IndoorCourtFragment {
 
     private ImageView mLeftServiceImage1;
     private ImageView mLeftServiceImage2;
@@ -42,7 +42,7 @@ public class SnowCourtFragment extends IndoorCourtFragment implements ScoreListe
 
         initView();
 
-        if (mClassTeam != null && mGame != null) {
+        if (mClassicTeam != null && mGame != null) {
             mGame.addScoreListener(this);
             mLayoutInflater = inflater;
 
@@ -61,6 +61,14 @@ public class SnowCourtFragment extends IndoorCourtFragment implements ScoreListe
             addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
             addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
             addSanctionImageOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_sanction_3));
+
+            addSubstitutionOnLeftSide(PositionType.POSITION_1, mView.findViewById(R.id.left_team_substitution_1));
+            addSubstitutionOnLeftSide(PositionType.POSITION_2, mView.findViewById(R.id.left_team_substitution_2));
+            addSubstitutionOnLeftSide(PositionType.POSITION_3, mView.findViewById(R.id.left_team_substitution_3));
+
+            addSubstitutionOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_substitution_1));
+            addSubstitutionOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_substitution_2));
+            addSubstitutionOnRightSide(PositionType.POSITION_3, mView.findViewById(R.id.right_team_substitution_3));
 
             initLeftTeamListeners();
             initRightTeamListeners();
@@ -134,22 +142,10 @@ public class SnowCourtFragment extends IndoorCourtFragment implements ScoreListe
     }
 
     @Override
-    public void onPointsUpdated(TeamType teamType, int newCount) {}
+    protected void updateService(TeamType teamType, PositionType positionType, MaterialButton positionButton) {}
 
     @Override
-    public void onSetsUpdated(TeamType teamType, int newCount) {}
-
-    @Override
-    public void onServiceSwapped(TeamType teamType) {
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {
         updateService();
     }
-
-    @Override
-    public void onSetStarted() {}
-
-    @Override
-    public void onSetCompleted() {}
-
-    @Override
-    public void onMatchCompleted(TeamType winner) {}
 }

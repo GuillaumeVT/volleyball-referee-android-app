@@ -188,6 +188,11 @@ public class SnowGame extends Game implements IClassicTeam {
     }
 
     @Override
+    public int getWaitingMiddleBlocker(TeamType teamType) {
+        return -1;
+    }
+
+    @Override
     public boolean isStartingLineupConfirmed(TeamType teamType) {
         return getSnowTeamComposition(teamType).isStartingLineupConfirmed();
     }

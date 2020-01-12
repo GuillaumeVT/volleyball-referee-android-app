@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.engine.billing;
 
 import android.app.Activity;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -18,7 +19,6 @@ import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +30,7 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     private       Activity             mActivity;
     private       BillingClient        mBillingClient;
     private       boolean              mIsServiceConnected;
+    private final List<String>         mInAppSkus;
     private final List<SkuDetails>     mSkuDetailsList;
     private final Map<String, Boolean> mPurchasedSkus;
     private final Set<BillingListener> mBillingListeners;
@@ -37,11 +38,18 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     public BillingManager(Activity activity) {
         mActivity = activity;
         mIsServiceConnected = false;
+        mInAppSkus = new ArrayList<>();
         mSkuDetailsList = new ArrayList<>();
         mPurchasedSkus = new HashMap<>();
         mBillingListeners = new HashSet<>();
 
+        mInAppSkus.add(WEB_PREMIUM);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mInAppSkus.add(SCORE_SHEETS);
+        }
+
         mPurchasedSkus.put(WEB_PREMIUM, false);
+        mPurchasedSkus.put(SCORE_SHEETS, false);
 
         mBillingClient = BillingClient.newBuilder(mActivity).enablePendingPurchases().setListener(this).build();
 
@@ -106,7 +114,7 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
 
     private void querySkuList() {
         SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
-        params.setSkusList(Arrays.asList(BillingService.IN_APP_SKUS)).setType(BillingClient.SkuType.INAPP);
+        params.setSkusList(mInAppSkus).setType(BillingClient.SkuType.INAPP);
         mBillingClient.querySkuDetailsAsync(
                 params.build(),
                 (billingResult, skuDetailsList) -> {
@@ -136,6 +144,12 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
                 mPurchasedSkus.put(WEB_PREMIUM, true);
                 if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
                     PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
+                    mActivity.recreate();
+                }
+            } else if (purchase.getSku().equals(BillingService.SCORE_SHEETS)) {
+                mPurchasedSkus.put(SCORE_SHEETS, true);
+                if (!PrefUtils.isScoreSheetsPurchased(mActivity)) {
+                    PrefUtils.purchaseScoreSheets(mActivity, purchase.getPurchaseToken());
                     mActivity.recreate();
                 }
             }
@@ -174,7 +188,7 @@ public class BillingManager implements BillingService, PurchasesUpdatedListener 
     public boolean isAllPurchased() {
         boolean allPurchased = true;
 
-        for (String sku : IN_APP_SKUS) {
+        for (String sku : mInAppSkus) {
             allPurchased = allPurchased && mPurchasedSkus.get(sku);
         }
 

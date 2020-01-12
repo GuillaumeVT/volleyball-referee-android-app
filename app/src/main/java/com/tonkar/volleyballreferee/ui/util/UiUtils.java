@@ -1,12 +1,10 @@
 package com.tonkar.volleyballreferee.ui.util;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -15,7 +13,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
@@ -37,7 +34,6 @@ import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
@@ -55,7 +51,6 @@ import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
@@ -64,7 +59,6 @@ import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
 
-import java.io.File;
 import java.util.Locale;
 import java.util.Random;
 
@@ -208,39 +202,6 @@ public class UiUtils {
                 UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
             }
 
-        }
-    }
-
-    public static void shareStoredGame(Context context, IStoredGame storedGame) {
-        Log.i(Tags.UTILS_UI, "Share stored game");
-
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-            File file = ScoreSheetWriter.writeStoredGame(context, storedGame);
-            if (file == null) {
-                UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
-            } else {
-                Uri uri = FileProvider.getUriForFile(context, "com.tonkar.volleyballreferee.fileprovider", file);
-                context.grantUriPermission("com.tonkar.volleyballreferee.fileprovider", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_SUBJECT, String.format(Locale.getDefault(), "%s - %s", context.getString(R.string.app_name), file.getName()));
-
-                String summary = storedGame.getGameSummary();
-                if (PrefUtils.canSync(context)) {
-                    summary = summary + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS, storedGame.getId());
-                }
-
-                intent.putExtra(Intent.EXTRA_TEXT, summary);
-                intent.setType("text/html");
-                intent.putExtra(Intent.EXTRA_STREAM, uri);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                try {
-                    context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
-                } catch (ActivityNotFoundException e) {
-                    Log.e(Tags.UTILS_UI, "Exception while sharing stored game", e);
-                    UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
-                }
-            }
         }
     }
 

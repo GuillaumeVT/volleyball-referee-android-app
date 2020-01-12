@@ -202,6 +202,11 @@ public class IndoorGame extends Game implements IClassicTeam {
     }
 
     @Override
+    public int getWaitingMiddleBlocker(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).getWaitingMiddleBlocker();
+    }
+
+    @Override
     public boolean isStartingLineupConfirmed(TeamType teamType) {
         return getIndoorTeamComposition(teamType).isStartingLineupConfirmed();
     }

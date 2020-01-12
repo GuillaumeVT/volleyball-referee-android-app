@@ -27,4 +27,5 @@ public interface IClassicTeam extends ITeam {
 
     Set<Integer> filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType, int excludedNumber, Set<Integer> possibleSubstitutions);
 
+    int getWaitingMiddleBlocker(TeamType teamType);
 }

@@ -409,7 +409,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         onSetsUpdated(mTeamOnRightSide, mGame.getSets(mTeamOnRightSide));
         onTimeoutUpdated(mTeamOnRightSide, mGame.getRules().getTeamTimeoutsPerSet(), mGame.getRemainingTimeouts(mTeamOnRightSide));
 
-        onServiceSwapped(mGame.getServingTeam());
+        onServiceSwapped(mGame.getServingTeam(), false);
 
         UiUtils.animateBounce(this, mLeftTeamNameText);
         UiUtils.animateBounce(this, mRightTeamNameText);
@@ -483,7 +483,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     @Override
-    public void onServiceSwapped(TeamType teamType) {
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {
         if (mTeamOnLeftSide.equals(teamType)) {
             mLeftTeamServiceButton.show();
             mRightTeamServiceButton.hide();

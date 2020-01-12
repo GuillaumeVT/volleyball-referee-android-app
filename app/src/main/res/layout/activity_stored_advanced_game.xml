@@ -9,25 +9,59 @@
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/stored_games_list_item" />
-
-    <com.google.android.material.tabs.TabLayout
-            android:id="@+id/stored_game_tabs"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin_size"
-            android:background="@color/colorSurface"
-            app:tabBackground="@color/colorSurface"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextAppearance="@style/AppTheme.DynamicTabText" />
+            android:layout_height="match_parent">
 
-    <androidx.viewpager.widget.ViewPager
-            android:id="@+id/stored_game_pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_margin="@dimen/default_margin_size" />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|center"
+                android:orientation="vertical">
+
+            <include layout="@layout/stored_games_list_item" />
+
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/stored_game_tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:background="@color/colorSurface"
+                    app:tabBackground="@color/colorSurface"
+                    app:tabIndicatorColor="@color/colorPrimary"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/colorPrimary"
+                    app:tabTextAppearance="@style/AppTheme.DynamicTabText" />
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/stored_game_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:layout_margin="@dimen/default_margin_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/generate_score_sheet_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/default_margin_size"
+                android:visibility="gone">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    style="@style/AppTheme.ExtendedFab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_shift_default"
+                    android:onClick="generateScoreSheet"
+                    android:text="@string/create_score_sheet"
+                    app:icon="@drawable/ic_score_sheet" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

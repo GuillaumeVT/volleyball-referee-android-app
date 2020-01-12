@@ -1,0 +1,153 @@
+package com.tonkar.volleyballreferee.ui.stored.game.scoresheet;
+
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.print.ScoreSheetPdfConverter;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
+import android.webkit.WebView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.UsageType;
+import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+public class ScoreSheetActivity extends ProgressIndicatorActivity {
+
+    private IStoredGame       mStoredGame;
+    private ScoreSheetBuilder mScoreSheetBuilder;
+    private WebView           mWebView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        String gameId = getIntent().getStringExtra("game");
+        StoredGamesService storedGamesService = new StoredGamesManager(this);
+        mStoredGame = storedGamesService.getGame(gameId);
+        mScoreSheetBuilder = new ScoreSheetBuilder(this, mStoredGame);
+
+        super.onCreate(savedInstanceState);
+
+        Log.i(Tags.SCORE_SHEET, "Create scoresheet activity");
+        setContentView(R.layout.activity_score_sheet);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        UiUtils.updateToolbarLogo(toolbar, mStoredGame.getKind(), UsageType.NORMAL);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout.setEnabled(false);
+
+        mWebView = findViewById(R.id.score_sheet);
+
+        loadScoreSheet(false);
+
+        FloatingActionButton logoButton = findViewById(R.id.score_sheet_logo_button);
+        logoButton.setOnClickListener(v -> selectScoreSheetLogo());
+
+        FloatingActionButton signatureButton = findViewById(R.id.sign_score_sheet_button);
+        signatureButton.setOnClickListener(v -> showSignatureDialog());
+
+        FloatingActionButton observationButton = findViewById(R.id.score_sheet_observation_button);
+        observationButton.setOnClickListener(v -> showObservationDialog());
+
+        FloatingActionButton saveButton = findViewById(R.id.save_score_sheet_button);
+        saveButton.setOnClickListener(v -> createPdfScoreSheet());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null && requestCode == 51) {
+            try {
+                Uri imageUri = data.getData();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+
+                String base64Image = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
+                mScoreSheetBuilder.setLogo(base64Image);
+                loadScoreSheet(false);
+
+            } catch (IOException e) {
+                Log.e(Tags.SCORE_SHEET, "Exception while opening the logo", e);
+            }
+        } else if (data != null && requestCode == 52) {
+            ScoreSheetPdfConverter scoreSheetPdfConverter = new ScoreSheetPdfConverter(ScoreSheetActivity.this, data.getData());
+            scoreSheetPdfConverter.convert(mScoreSheetBuilder.createScoreSheet());
+        }
+    }
+
+    private void selectScoreSheetLogo() {
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+        chooseFile.setType("image/*");
+
+        Intent intent = Intent.createChooser(chooseFile, "");
+        startActivityForResult(intent, 51);
+    }
+
+    private void showSignatureDialog() {
+        String homeTeamName = mStoredGame.getTeamName(TeamType.HOME);
+        String guestTeamName = mStoredGame.getTeamName(TeamType.GUEST);
+        String homeCaptainName = mStoredGame.getPlayerName(TeamType.HOME, mStoredGame.getCaptain(TeamType.HOME));
+        String guestCaptainName = mStoredGame.getPlayerName(TeamType.GUEST, mStoredGame.getCaptain(TeamType.GUEST));
+
+        SignatureDialogFragment signatureDialogFragment = SignatureDialogFragment.newInstance(homeTeamName, guestTeamName, homeCaptainName, guestCaptainName);
+        signatureDialogFragment.show(getSupportFragmentManager(), "signature_dialog");
+    }
+
+    private void showObservationDialog() {
+        RemarksDialogFragment remarksDialogFragment = RemarksDialogFragment.newInstance();
+        remarksDialogFragment.show(getSupportFragmentManager(), "remarks_dialog");
+    }
+
+    private void createPdfScoreSheet() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_TITLE, mScoreSheetBuilder.getFilename().replace(".html", ".pdf"));
+
+        startActivityForResult(intent, 52);
+    }
+
+    void loadScoreSheet(boolean scrollBottom) {
+        ScoreSheetBuilder.ScoreSheet scoreSheet = mScoreSheetBuilder.createScoreSheet();
+        mWebView.loadDataWithBaseURL(null, scoreSheet.getContent(), "text/html", "UTF-8", null);
+        if (scrollBottom) {
+            mWebView.pageDown(true);
+        }
+    }
+
+    ScoreSheetBuilder getScoreSheetBuilder() {
+        return mScoreSheetBuilder;
+    }
+}

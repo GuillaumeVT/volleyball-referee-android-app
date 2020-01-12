@@ -290,7 +290,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
         onPointsUpdated(mTeamOnLeftSide, mGameService.getPoints(mTeamOnLeftSide));
         onPointsUpdated(mTeamOnRightSide, mGameService.getPoints(mTeamOnRightSide));
-        onServiceSwapped(mGameService.getServingTeam());
+        onServiceSwapped(mGameService.getServingTeam(), false);
 
         UiUtils.animateBounce(this, mLeftTeamNameText);
         UiUtils.animateBounce(this, mRightTeamNameText);
@@ -321,7 +321,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     public void onSetsUpdated(TeamType teamType, int newCount) {}
 
     @Override
-    public void onServiceSwapped(TeamType teamType) {
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {
         if (mTeamOnLeftSide.equals(teamType)) {
             mLeftTeamServiceButton.show();
             mRightTeamServiceButton.hide();

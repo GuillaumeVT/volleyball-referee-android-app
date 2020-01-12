@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,10 +32,9 @@ import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
+import com.tonkar.volleyballreferee.ui.util.StringArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class GameActionMenu extends BottomSheetDialogFragment implements GameServiceHandler, StoredGamesServiceHandler {
@@ -180,71 +178,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
     @Override
     public void setStoredGamesService(StoredGamesService storedGamesService) {
         mStoredGamesService = storedGamesService;
-    }
-
-    private class StringArrayAdapter extends ArrayAdapter<String> {
-
-        private final LayoutInflater mLayoutInflater;
-        private final List<String>   mDisplayedValues;
-        private final List<String>   mActualValues;
-
-        private StringArrayAdapter(Context context, LayoutInflater layoutInflater, String[] displayedValues, String[] actualValues) {
-            super(context, R.layout.vbr_spinner);
-            mLayoutInflater = layoutInflater;
-            mDisplayedValues = Arrays.asList(displayedValues);
-            mActualValues = Arrays.asList(actualValues);
-        }
-
-        @Override
-        public int getCount() {
-            return mActualValues.size();
-        }
-
-        @Override
-        public String getItem(int index) {
-            return mActualValues.get(index);
-        }
-
-        @Override
-        public int getPosition(String value) {
-            return mActualValues.indexOf(value);
-        }
-
-        @Override
-        public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
-            TextView textView;
-
-            if (view == null) {
-                textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_spinner, null);
-            } else {
-                textView = (TextView) view;
-            }
-
-            textView.setText(mDisplayedValues.get(index));
-            textView.setTextColor(getResources().getColor(R.color.colorOnSurface));
-
-            return textView;
-        }
-
-        @Override
-        public View getDropDownView(int index, View view, @NonNull ViewGroup parent) {
-            TextView textView;
-
-            if (view == null) {
-                textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_checked_spinner_entry, null);
-            } else {
-                textView = (TextView) view;
-            }
-
-            textView.setText(mDisplayedValues.get(index));
-
-            return textView;
-        }
-
-        @Override
-        public long getItemId(int index) {
-            return 0;
-        }
     }
 
 }

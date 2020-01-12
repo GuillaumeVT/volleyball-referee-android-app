@@ -12,8 +12,6 @@ import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.IndoorGame;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
@@ -66,9 +64,6 @@ public class PointsScoreBoardGameTest {
         }
 
         playSet(game);
-
-        IStoredGame storedGame = mStoredGamesService.getGame(game.getId());
-        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGame);
     }
 
     private void defineTeams(IndoorGame game) {

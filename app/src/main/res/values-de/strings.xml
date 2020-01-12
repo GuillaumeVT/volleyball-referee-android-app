@@ -50,6 +50,13 @@
         \n\u2022 Ihr Spiel wurde versehentlich gelöscht? Setzen Sie Ihre Spiele von der Serversicherung fort.
         \n\u2022 Profitieren Sie von den zukünftigen neuen Webfunktionen.
    </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 Schiedsrichter, Schreiber, Kapitäne und Trainer hinzufügen
+        \n\u2022 Verbandslogo hinzufügen
+        \n\u2022 Bemerkung hinzufügen
+        \n\u2022 Als PDF Datei speichern
+        \n\u2022 Teilen
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Anmelden</string>
@@ -204,8 +211,14 @@
     <string name="deleted_game">Spiel wurde gelöscht</string>
     <string name="deleted_selected_games">Alle Spiele wurden gelöscht</string>
     <string name="players">Spieler</string>
-    <string name="report_game">Generiere einen Spielbericht</string>
-    <string name="report_exception">Erstellen bzw. Ansicht des Spielberichts ist fehlgeschlagen</string>
+    <string name="create_score_sheet">Spielberichtsbogen erstellen</string>
+    <string name="score_sheet_exception">Fehler beim Erstellen oder Anzeigen des Spielberichtbogens.</string>
+    <string name="signatures">Unterschriften</string>
+    <string name="coach">Trainer</string>
+    <string name="captain">Kapitän</string>
+    <string name="scorer">Schreiber</string>
+    <string name="name">Name</string>
+    <string name="remarks">Bemerkungen</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Mannschaftssuche</string>

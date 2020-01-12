@@ -151,18 +151,18 @@ public class IndoorTeamComposition extends TeamComposition {
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
                 }
+            }
 
-                // A captain on the bench can no longer be acting captain
-                if (indoorTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d acting captain of %s team leaves the court", oldNumber, indoorTeamDefinition().getTeamType().toString()));
-                    mActingCaptain = -1;
-                }
+            // A captain on the bench can no longer be acting captain
+            if (indoorTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
+                Log.i(Tags.TEAM, String.format("Player #%d acting captain of %s team leaves the court", oldNumber, indoorTeamDefinition().getTeamType().toString()));
+                mActingCaptain = -1;
+            }
 
-                // The game captain coming back on the court is automatically the captain again
-                if (indoorTeamDefinition().isCaptain(newNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d captain of %s team is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
-                    setActingCaptain(indoorTeamDefinition().getCaptain());
-                }
+            // The game captain coming back on the court is automatically the captain again
+            if (indoorTeamDefinition().isCaptain(newNumber)) {
+                Log.i(Tags.TEAM, String.format("Player #%d captain of %s team is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
+                setActingCaptain(indoorTeamDefinition().getCaptain());
             }
         }
     }
@@ -406,12 +406,13 @@ public class IndoorTeamComposition extends TeamComposition {
                     players.add(number);
                 }
             }
-            if (hasWaitingMiddleBlocker()) {
-                players.add(mWaitingMiddleBlocker);
-            }
         }
 
         return players;
+    }
+
+    public int getWaitingMiddleBlocker() {
+        return mWaitingMiddleBlocker;
     }
 
     @Override

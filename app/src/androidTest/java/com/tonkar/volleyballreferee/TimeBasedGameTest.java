@@ -9,8 +9,6 @@ import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
@@ -35,8 +33,6 @@ public class TimeBasedGameTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private StoredGamesService mStoredGamesService;
-
     @Test
     public void playGame_complete() {
         ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
@@ -54,9 +50,6 @@ public class TimeBasedGameTest {
         }
 
         game.stop();
-
-        IStoredGame storedGame = mStoredGamesService.getGame(game.getId());
-        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGame);
     }
 
     private void defineTeamsAndLeague(TimeBasedGame game) {
@@ -86,8 +79,8 @@ public class TimeBasedGameTest {
 
         game.startMatch();
 
-        mStoredGamesService = new StoredGamesManager(mActivityRule.getActivity());
-        mStoredGamesService.connectGameRecorder(game);
+        StoredGamesService storedGamesService = new StoredGamesManager(mActivityRule.getActivity());
+        storedGamesService.connectGameRecorder(game);
     }
 
 }

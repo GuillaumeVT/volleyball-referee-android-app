@@ -67,11 +67,6 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public long getSetDuration(int setIndex) {
-        return getSets().get(setIndex).getDuration();
-    }
-
-    @Override
     public int getPoints(TeamType teamType) {
         return getPoints(teamType, currentSetIndex());
     }
@@ -109,6 +104,21 @@ public class StoredGame extends ApiGame implements IStoredGame {
     @Override
     public TeamType getFirstServingTeam(int setIndex) {
         return getSets().get(setIndex).getFirstServing();
+    }
+
+    @Override
+    public long getSetDuration(int setIndex) {
+        return getSets().get(setIndex).getDuration();
+    }
+
+    @Override
+    public long getSetStartTime(int setIndex) {
+        return getSets().get(setIndex).getStartTime();
+    }
+
+    @Override
+    public long getSetEndTime(int setIndex) {
+        return getSets().get(setIndex).getEndTime();
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface ScoreListener {
 
     void onSetsUpdated(TeamType teamType, int newCount);
 
-    void onServiceSwapped(TeamType teamType);
+    void onServiceSwapped(TeamType teamType, boolean isStart);
 
     void onSetStarted();
 

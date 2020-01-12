@@ -50,6 +50,13 @@
         \n\u2022 Avete cancellato una partita per sbaglio? Recuperate le vostre partite dal backup del server.
         \n\u2022 Beneficiare automaticamente delle future funzioni web dell\'applicazione
     </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 Aggiungere le firme degli arbitri, segnapunti, capitani e allenatori
+        \n\u2022 Aggiungere il logo della vostra federazione
+        \n\u2022 Aggiungere le osservazioni
+        \n\u2022 Salvare in formato PDF
+        \n\u2022 Condividere
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Connettiti</string>
@@ -204,8 +211,14 @@
     <string name="deleted_game">La partita è stata cancellata</string>
     <string name="deleted_selected_games">Tutte le partite son state cancellate</string>
     <string name="players">Giocatori</string>
-    <string name="report_game">Generare il referto della partita</string>
-    <string name="report_exception">Errore di generazione o visualizzazione del referto della partita</string>
+    <string name="create_score_sheet">Creare il referto di gara</string>
+    <string name="score_sheet_exception">Errore nella creazione del referto di gara</string>
+    <string name="signatures">Firme</string>
+    <string name="coach">Allenatore</string>
+    <string name="scorer">Segnapunti</string>
+    <string name="captain">Capitano</string>
+    <string name="name">Nome</string>
+    <string name="remarks">Osservazioni</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Cerca le squadre</string>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/signature_type_spinner"
+            android:layout_width="@dimen/signature_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:prompt="@string/signatures"
+            android:spinnerMode="dialog"
+            android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="@dimen/signature_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin_size"
+            app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.tonkar.volleyballreferee.ui.stored.game.scoresheet.SignatureView
+            android:id="@+id/signature_canvas"
+            android:layout_width="@dimen/signature_width"
+            android:layout_height="@dimen/signature_height"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:background="@color/colorScoreSheetBackground" />
+
+</LinearLayout>

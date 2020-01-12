@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -38,15 +39,16 @@ import java.util.UUID;
 
 public class ScheduledGamesListActivity extends NavigationActivity implements AsyncGameRequestListener {
 
-    private StoredGamesService        mStoredGamesService;
-    private SwipeRefreshLayout        mSyncLayout;
-    private ScheduledGamesListAdapter mScheduledGamesListAdapter;
-    private boolean                   mIsFabOpen;
-    private FloatingActionButton      mScheduleGameButton;
-    private FloatingActionButton      mScheduleIndoorGameButton;
-    private FloatingActionButton      mScheduleIndoor4x4GameButton;
-    private FloatingActionButton      mScheduleBeachGameButton;
-    private FloatingActionButton      mScheduleSnowGameButton;
+    private StoredGamesService           mStoredGamesService;
+    private SwipeRefreshLayout           mSyncLayout;
+    private View                         mOverlay;
+    private ScheduledGamesListAdapter    mScheduledGamesListAdapter;
+    private boolean                      mIsFabOpen;
+    private FloatingActionButton         mScheduleGameButton;
+    private ExtendedFloatingActionButton mScheduleIndoorGameButton;
+    private ExtendedFloatingActionButton mScheduleIndoor4x4GameButton;
+    private ExtendedFloatingActionButton mScheduleBeachGameButton;
+    private ExtendedFloatingActionButton mScheduleSnowGameButton;
 
     @Override
     protected String getToolbarTitle() {
@@ -71,6 +73,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateScheduledGamesList);
+
+        mOverlay = findViewById(R.id.overlay);
 
         final ListView scheduledGamesList = findViewById(R.id.scheduled_games_list);
         mScheduledGamesListAdapter = new ScheduledGamesListAdapter(getLayoutInflater());
@@ -227,6 +231,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mScheduleSnowGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
+        mOverlay.setVisibility(View.VISIBLE);
     }
 
     private void closeFABMenu(){
@@ -241,6 +246,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoor4x4GameButton.hide();
         mScheduleBeachGameButton.hide();
         mScheduleSnowGameButton.hide();
+        mOverlay.setVisibility(View.GONE);
     }
 
     @Override

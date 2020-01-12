@@ -22,6 +22,7 @@ import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiNewUser;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserToken;
+import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.net.HttpURLConnection;
@@ -158,15 +159,15 @@ public class UserSignUpFragment extends Fragment {
         }
     }
 
-    public void showProgressIndicator() {
+    private void showProgressIndicator() {
         if (isAdded()) {
-            ((UserActivity) getActivity()).showProgressIndicator();
+            ((ProgressIndicatorActivity) getActivity()).showProgressIndicator();
         }
     }
 
-    public void hideProgressIndicator() {
+    private void hideProgressIndicator() {
         if (isAdded()) {
-            ((UserActivity) getActivity()).hideProgressIndicator();
+            ((ProgressIndicatorActivity) getActivity()).hideProgressIndicator();
         }
     }
 

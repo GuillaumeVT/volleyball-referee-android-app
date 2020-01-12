@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center"
+        android:orientation="vertical"
+        tools:context=".ui.stored.game.scoresheet.ScoreSheetActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/sync_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <WebView
+                    android:id="@+id/score_sheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/score_sheet_logo_button"
+                style="@style/AppTheme.Fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/sign_score_sheet_button"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
+                app:srcCompat="@drawable/ic_logo" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/sign_score_sheet_button"
+                style="@style/AppTheme.Fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/score_sheet_observation_button"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
+                app:srcCompat="@drawable/ic_sign" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/score_sheet_observation_button"
+                style="@style/AppTheme.Fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/save_score_sheet_button"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
+                app:srcCompat="@drawable/ic_observation" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/save_score_sheet_button"
+                style="@style/AppTheme.Fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
+                app:srcCompat="@drawable/ic_save" />
+
+    </RelativeLayout>
+
+</LinearLayout>

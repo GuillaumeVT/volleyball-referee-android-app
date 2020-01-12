@@ -14,7 +14,7 @@ import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
@@ -64,7 +64,8 @@ public class Indoor4x4CompleteGame {
         playSet_complete(indoor4x4Game);
 
         IStoredGame storedGame = mStoredGamesService.getGame(indoor4x4Game.getId());
-        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGame);
+        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mActivityRule.getActivity(), storedGame);
+        scoreSheetBuilder.createScoreSheet();
     }
 
     private void defineTeamsAndLeague(Indoor4x4Game indoor4x4Game) {

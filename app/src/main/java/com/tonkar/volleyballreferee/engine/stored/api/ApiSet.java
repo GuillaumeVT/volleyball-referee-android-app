@@ -15,6 +15,10 @@ public class ApiSet {
 
     @SerializedName("duration")
     private long                  duration;
+    @SerializedName("startTime")
+    private long                  startTime;
+    @SerializedName("endTime")
+    private long                  endTime;
     @SerializedName("homePoints")
     private int                   homePoints;
     @SerializedName("guestPoints")

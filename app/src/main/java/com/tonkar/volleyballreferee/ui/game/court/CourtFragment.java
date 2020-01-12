@@ -3,6 +3,7 @@ package com.tonkar.volleyballreferee.ui.game.court;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +13,7 @@ import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
 import com.tonkar.volleyballreferee.engine.team.TeamListener;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -21,7 +23,7 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CourtFragment extends Fragment implements TeamListener, SanctionListener, GameServiceHandler {
+public abstract class CourtFragment extends Fragment implements ScoreListener, TeamListener, SanctionListener, GameServiceHandler {
 
     protected       View                              mView;
     protected       IGame                             mGame;
@@ -31,12 +33,16 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
     protected final Map<PositionType, MaterialButton> mRightTeamPositions;
     protected final Map<PositionType, ImageView>      mLeftTeamSanctionImages;
     protected final Map<PositionType, ImageView>      mRightTeamSanctionImages;
+    protected final Map<PositionType, TextView>       mLeftTeamSubstitutions;
+    protected final Map<PositionType, TextView>       mRightTeamSubstitutions;
 
     CourtFragment() {
         mLeftTeamPositions = new HashMap<>();
         mRightTeamPositions = new HashMap<>();
         mLeftTeamSanctionImages = new HashMap<>();
         mRightTeamSanctionImages = new HashMap<>();
+        mLeftTeamSubstitutions = new HashMap<>();
+        mRightTeamSubstitutions = new HashMap<>();
     }
 
     @Override
@@ -44,12 +50,15 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         super.onDestroyView();
 
         if (mGame != null) {
+            mGame.removeScoreListener(this);
             mGame.removeTeamListener(this);
             mGame.removeSanctionListener(this);
             mLeftTeamPositions.clear();
             mRightTeamPositions.clear();
             mLeftTeamSanctionImages.clear();
             mRightTeamSanctionImages.clear();
+            mLeftTeamSubstitutions.clear();
+            mRightTeamSubstitutions.clear();
         }
     }
 
@@ -59,6 +68,7 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         if (mGame != null) {
             mTeamOnLeftSide = mGame.getTeamOnLeftSide();
             mTeamOnRightSide = mGame.getTeamOnRightSide();
+            mGame.addScoreListener(this);
             mGame.addTeamListener(this);
             mGame.addSanctionListener(this);
         }
@@ -80,6 +90,14 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
         mRightTeamSanctionImages.put(positionType, sanctionImage);
     }
 
+    protected void addSubstitutionOnLeftSide(final PositionType positionType, final TextView substitutionView) {
+        mLeftTeamSubstitutions.put(positionType, substitutionView);
+    }
+
+    protected void addSubstitutionOnRightSide(final PositionType positionType, final TextView substitutionView) {
+        mRightTeamSubstitutions.put(positionType, substitutionView);
+    }
+
     @Override
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         mTeamOnLeftSide = leftTeamType;
@@ -88,6 +106,21 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
 
     @Override
     public void onStartingLineupSubmitted(TeamType teamType) {}
+
+    @Override
+    public void onPointsUpdated(TeamType teamType, int newCount) {}
+
+    @Override
+    public void onSetsUpdated(TeamType teamType, int newCount) {}
+
+    @Override
+    public void onSetStarted() {}
+
+    @Override
+    public void onSetCompleted() {}
+
+    @Override
+    public void onMatchCompleted(final TeamType winner) {}
 
     protected void updateSanction(TeamType teamType, int number, ImageView sanctionImage) {
         if (mGame.hasSanctions(teamType, number)) {
@@ -98,4 +131,5 @@ public abstract class CourtFragment extends Fragment implements TeamListener, Sa
             sanctionImage.setVisibility(View.INVISIBLE);
         }
     }
+
 }

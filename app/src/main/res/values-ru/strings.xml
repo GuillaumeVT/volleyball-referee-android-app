@@ -49,6 +49,13 @@
         \n\u2022 Восстановление случайно потерянных матчей с сервера.
         \n\u2022 Последующие новые веб функции приложения будут включены в ваш пакет бесплатно!
     </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 Добавить подписи судей, статистиков, капитанов и тренеров
+        \n\u2022 Добавить логотип вашей федерации
+        \n\u2022 Добавить комментарии
+        \n\u2022 Сохранить в формате PDF
+        \n\u2022 Поделиться
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Войти</string>
@@ -98,7 +105,7 @@
     <string name="select_captain">Выберите капитана</string>
     <string name="select_libero">Выберите либеро (факультативно)</string>
     <string name="select_gender">Выберите категорию (пол)</string>
-    <string name="input_player_names">Saisir les noms des joueurs (optionnel)</string>
+    <string name="input_player_names">Введите имена игроков (факультативно)</string>
     <string name="confirm">Подтвердить</string>
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>
@@ -203,8 +210,14 @@
     <string name="deleted_game">Матч успешно удалён</string>
     <string name="deleted_selected_games">Все матчи успешно удалены</string>
     <string name="players">Игроки</string>
-    <string name="report_game">Создать отчёт по матчу</string>
-    <string name="report_exception">Возникла ошибка при создании отчёта / отображении матча</string>
+    <string name="create_score_sheet">Создать отчёт матча</string>
+    <string name="score_sheet_exception">Произошла ошибка при создании отчёта матча</string>
+    <string name="signatures">Подписи</string>
+    <string name="coach">Тренер</string>
+    <string name="scorer">Статистики</string>
+    <string name="captain">Капитан</string>
+    <string name="name">Имя</string>
+    <string name="remarks">Комментарии</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Поиск команды</string>

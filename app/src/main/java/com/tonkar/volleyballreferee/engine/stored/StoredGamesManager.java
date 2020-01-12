@@ -261,7 +261,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     public void onSetsUpdated(TeamType teamType, int newCount) {}
 
     @Override
-    public void onServiceSwapped(TeamType teamType) {}
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {}
 
     @Override
     public void onSetStarted() {
@@ -405,6 +405,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             mStoredGame.setSets(TeamType.HOME, mGame.getSets(TeamType.HOME));
             mStoredGame.setSets(TeamType.GUEST, mGame.getSets(TeamType.GUEST));
             mStoredGame.setScore(mGame.getScore());
+            mStoredGame.setStartTime(mGame.getStartTime());
+            mStoredGame.setEndTime(mGame.getEndTime());
 
             mStoredGame.getSets().clear();
 
@@ -412,6 +414,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 ApiSet set = new ApiSet();
 
                 set.setDuration(mGame.getSetDuration(setIndex));
+                set.setStartTime(mGame.getSetStartTime(setIndex));
+                set.setEndTime(mGame.getSetEndTime(setIndex));
                 set.getLadder().addAll(mGame.getPointsLadder(setIndex));
                 set.setServing(mGame.getServingTeam(setIndex));
                 set.setFirstServing(mGame.getFirstServingTeam(setIndex));
@@ -878,7 +882,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     @Override
     public void syncGames(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            syncGames(new ArrayList<>(), 0, 100, listener);
+            syncGames(new ArrayList<>(), 0, 50, listener);
         } else {
             if (listener != null){
                 listener.onSynchronizationFailed();

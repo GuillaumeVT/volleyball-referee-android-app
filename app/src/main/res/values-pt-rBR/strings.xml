@@ -204,8 +204,8 @@
     <string name="deleted_game">Partida deletada</string>
     <string name="deleted_selected_games">Todas as partidas foram deletadas</string>
     <string name="players">Jogadores</string>
-    <string name="report_game">Gerar relatório da partida</string>
-    <string name="report_exception">Falha ao gerar ou exibir o relatório da partida</string>
+    <string name="create_score_sheet">Gerar relatório da partida</string>
+    <string name="score_sheet_exception">Falha ao gerar ou exibir o relatório da partida</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Procurar equipes</string>

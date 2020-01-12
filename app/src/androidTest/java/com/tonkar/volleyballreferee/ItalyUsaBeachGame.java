@@ -14,7 +14,7 @@ import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetWriter;
+import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
@@ -60,7 +60,8 @@ public class ItalyUsaBeachGame {
         playSet2_complete(beachGame);
 
         IStoredGame storedGame = mStoredGamesService.getGame(beachGame.getId());
-        ScoreSheetWriter.writeStoredGame(mActivityRule.getActivity(), storedGame);
+        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mActivityRule.getActivity(), storedGame);
+        scoreSheetBuilder.createScoreSheet();
     }
 
     @Test

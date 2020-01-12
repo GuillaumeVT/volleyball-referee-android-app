@@ -12,8 +12,6 @@ public interface IBaseScore {
 
     int getSets(TeamType teamType);
 
-    long getSetDuration(int setIndex);
-
     int getPoints(TeamType teamType);
 
     int getPoints(TeamType teamType, int setIndex);
@@ -31,4 +29,10 @@ public interface IBaseScore {
     TeamType getFirstServingTeam(int setIndex);
 
     String getScore();
+
+    long getSetDuration(int setIndex);
+
+    long getSetStartTime(int setIndex);
+
+    long getSetEndTime(int setIndex);
 }

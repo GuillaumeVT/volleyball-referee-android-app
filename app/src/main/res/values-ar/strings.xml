@@ -43,7 +43,20 @@
     <!-- Purchase activity -->
     <string name="purchase">شراء</string>
     <string name="already_purchased">تم الشراء سابقا</string>
-    <string name="purchase_web_premium_summary">\n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك. \n\u2022 إستمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة. \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا. \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم. \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.</string>
+    <string name="purchase_web_premium_summary">
+        \n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك.
+        \n\u2022 إستمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة.
+        \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا.
+        \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم.
+        \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.
+    </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 إضافة الحكام ، المسجل ، توقيعات قادة الفرق و والمدربين
+        \n\u2022 أضف شعار الإتحاد الخاص بك
+        \n\u2022 أضف ملاحظات
+        \n\u2022 حفظ بتنسيق بي دي إف
+        \n\u2022 شارك
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">تسجيل الدخول</string>
@@ -198,8 +211,14 @@
     <string name="deleted_game">تم مسح المباراة</string>
     <string name="deleted_selected_games">تم مسح جميع المباريات</string>
     <string name="players">اللاعبين</string>
-    <string name="report_game">إنشاء تقرير المباراة</string>
-    <string name="report_exception">فشل في إنشاء أو عرض تقرير المباراة</string>
+    <string name="create_score_sheet">إنشاء استمارة التسجيل</string>
+    <string name="score_sheet_exception">فشل في إنشاء أو عرض إستمارة التسجيل</string>
+    <string name="signatures">التوقيعات</string>
+    <string name="coach">المدرب</string>
+    <string name="captain">قائد الفريق</string>
+    <string name="scorer">المسجل</string>
+    <string name="name">الإسم</string>
+    <string name="remarks">ملاحظات</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">البحث عن الفرق</string>

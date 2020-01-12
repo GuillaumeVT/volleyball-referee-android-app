@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.stored.game;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,13 +12,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.stored.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
@@ -49,11 +47,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_stored_game, menu);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            MenuItem shareMenu = menu.findItem(R.id.action_share_game_score_sheet);
-            shareMenu.setVisible(false);
-        }
-
         MenuItem recordMenu = menu.findItem(R.id.action_index_game);
         MenuItem deleteMenu = menu.findItem(R.id.action_delete_game);
         MenuItem shareLinkMenu = menu.findItem(R.id.action_share_game_link);
@@ -61,7 +54,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         String userId = PrefUtils.getUser(this).getId();
         boolean canSync = PrefUtils.canSync(this);
 
-        if (canSync && mStoredGame.getCreatedBy().equals(userId)) {
+        if (canSync && mStoredGame.getCreatedBy().equals(userId) && !GameType.TIME.equals(mStoredGame.getKind())) {
             if (mStoredGamesService.isGameIndexed(mGameId)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
@@ -72,7 +65,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         }
 
         deleteMenu.setVisible(mStoredGame.getCreatedBy().equals(userId));
-        shareLinkMenu.setVisible(canSync);
+        shareLinkMenu.setVisible(canSync && !GameType.TIME.equals(mStoredGame.getKind()));
 
         return true;
     }
@@ -85,9 +78,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
                 return true;
             case R.id.action_delete_game:
                 deleteGame();
-                return true;
-            case R.id.action_share_game_score_sheet:
-                shareGameScoreSheet();
                 return true;
             case R.id.action_share_game_link:
                 shareGameLink();
@@ -197,11 +187,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-    }
-
-    private void shareGameScoreSheet() {
-        Log.i(Tags.STORED_GAMES, "Share game score sheet");
-        UiUtils.shareStoredGame(this, mStoredGamesService.getGame(mGameId));
     }
 
     private void shareGameLink() {

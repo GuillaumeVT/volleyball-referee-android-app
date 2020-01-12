@@ -50,6 +50,13 @@
        \n\u2022 Изтрили сте мач погрешка? Възстановяване на вашите мачове от резервното копие на сървъра.
        \n\u2022 Автоматично получаване в бъдеще на нови уеб функции.
    </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 Добавете подписите на съдиите, секретаря, капитаните и треньорите
+        \n\u2022 Добавете логото на Вашата федерация
+        \n\u2022 Добавете забележки
+        \n\u2022 Запазете в PDF формат
+        \n\u2022 Споделете
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Вход</string>
@@ -204,8 +211,14 @@
     <string name="deleted_game">Мачът е изтрит</string>
     <string name="deleted_selected_games">Всички избрани мачове бяха изтрити</string>
     <string name="players">Играчи</string>
-    <string name="report_game">Създай рапорт за мач</string>
-    <string name="report_exception">Невъзможно създаване или показване на рапорт за мач</string>
+    <string name="create_score_sheet">Създайте протокол</string>
+    <string name="score_sheet_exception">Неуспешно създаване или показване на протокола</string>
+    <string name="signatures">Подписи</string>
+    <string name="coach">Треньор</string>
+    <string name="captain">Капитан</string>
+    <string name="scorer">Секретар</string>
+    <string name="name">Имена</string>
+    <string name="remarks">Забележки</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Търси отбор</string>

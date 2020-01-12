@@ -42,4 +42,8 @@ public interface IBaseGeneral {
     boolean isIndexed();
 
     void setIndexed(boolean indexed);
+
+    long getStartTime();
+
+    long getEndTime();
 }

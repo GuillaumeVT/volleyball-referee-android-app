@@ -246,6 +246,16 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
+    public long getStartTime() {
+        return mStartTime;
+    }
+
+    @Override
+    public long getEndTime() {
+        return mEndTime;
+    }
+
+    @Override
     public String getTeamId(TeamType teamType) {
         return getTeamDefinition(teamType).getId();
     }
@@ -501,17 +511,6 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
-    public long getSetDuration(int setIndex) {
-        long setDuration = 0L;
-
-        if (isMatchStarted()) {
-            setDuration = System.currentTimeMillis() - mStartTime;
-        }
-
-        return setDuration;
-    }
-
-    @Override
     public int getPoints(TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? mHomeTeamPoints : mGuestTeamPoints;
     }
@@ -562,6 +561,27 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     @Override
     public String getScore() {
         return String.format(Locale.getDefault(), "%d-%d", mHomeTeamPoints, mGuestTeamPoints);
+    }
+
+    @Override
+    public long getSetDuration(int setIndex) {
+        long setDuration = 0L;
+
+        if (isMatchStarted()) {
+            setDuration = System.currentTimeMillis() - mStartTime;
+        }
+
+        return setDuration;
+    }
+
+    @Override
+    public long getSetStartTime(int setIndex) {
+        return mStartTime;
+    }
+
+    @Override
+    public long getSetEndTime(int setIndex) {
+        return mEndTime;
     }
 
     @Override
@@ -673,7 +693,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
         final TeamType newServingTeam = getServingTeam();
 
         if (!oldServingTeam.equals(newServingTeam)) {
-            notifyServiceSwapped(newServingTeam);
+            notifyServiceSwapped(newServingTeam, false);
         }
     }
 
@@ -704,7 +724,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
             final TeamType newServingTeam = getServingTeam();
 
             if (!oldServingTeam.equals(newServingTeam)) {
-                notifyServiceSwapped(newServingTeam);
+                notifyServiceSwapped(newServingTeam, false);
             }
         }
     }
@@ -726,7 +746,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
                     break;
             }
 
-            notifyServiceSwapped(mServingTeamAtStart);
+            notifyServiceSwapped(mServingTeamAtStart, true);
         }
     }
 
@@ -738,11 +758,11 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
         }
     }
 
-    private void notifyServiceSwapped(final TeamType servingTeam) {
+    private void notifyServiceSwapped(final TeamType servingTeam, boolean isStart) {
         Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam.toString()));
 
         for (final ScoreListener listener : mScoreListeners) {
-            listener.onServiceSwapped(servingTeam);
+            listener.onServiceSwapped(servingTeam, isStart);
         }
     }
 

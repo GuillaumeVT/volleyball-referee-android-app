@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -33,16 +34,17 @@ import java.util.List;
 
 public class StoredTeamsListActivity extends NavigationActivity implements DataSynchronizationListener {
 
-    private StoredTeamsService     mStoredTeamsService;
-    private StoredTeamsListAdapter mStoredTeamsListAdapter;
-    private SwipeRefreshLayout     mSyncLayout;
-    private boolean                mIsFabOpen;
-    private FloatingActionButton   mAddTeamButton;
-    private FloatingActionButton   mAdd6x6TeamButton;
-    private FloatingActionButton   mAdd4x4TeamButton;
-    private FloatingActionButton   mAddBeachTeamButton;
-    private FloatingActionButton   mAddSnowTeamButton;
-    private MenuItem               mDeleteSelectedTeamsItem;
+    private StoredTeamsService           mStoredTeamsService;
+    private StoredTeamsListAdapter       mStoredTeamsListAdapter;
+    private SwipeRefreshLayout           mSyncLayout;
+    private View                         mOverlay;
+    private boolean                      mIsFabOpen;
+    private FloatingActionButton         mAddTeamButton;
+    private ExtendedFloatingActionButton mAdd6x6TeamButton;
+    private ExtendedFloatingActionButton mAdd4x4TeamButton;
+    private ExtendedFloatingActionButton mAddBeachTeamButton;
+    private ExtendedFloatingActionButton mAddSnowTeamButton;
+    private MenuItem                     mDeleteSelectedTeamsItem;
 
     @Override
     protected String getToolbarTitle() {
@@ -67,6 +69,8 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
         mSyncLayout = findViewById(R.id.sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredTeamsList);
+
+        mOverlay = findViewById(R.id.overlay);
 
         List<ApiTeamSummary> teams = mStoredTeamsService.listTeams();
 
@@ -221,6 +225,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mAddSnowTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
+        mOverlay.setVisibility(View.VISIBLE);
     }
 
     private void closeFABMenu(){
@@ -234,6 +239,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd4x4TeamButton.hide();
         mAddBeachTeamButton.hide();
         mAddSnowTeamButton.hide();
+        mOverlay.setVisibility(View.GONE);
     }
 
     @Override

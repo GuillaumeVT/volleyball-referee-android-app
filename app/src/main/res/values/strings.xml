@@ -51,6 +51,13 @@
         \n\u2022 Deleted your game by mistake? Resume your games from the server backup.
         \n\u2022 Automatically benefit from the future new web features.
     </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 Add referees, scorer, captains and coaches signatures
+        \n\u2022 Add your federation logo
+        \n\u2022 Add remarks
+        \n\u2022 Save to PDF format
+        \n\u2022 Share
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>
@@ -205,8 +212,15 @@
     <string name="deleted_game">Game was deleted</string>
     <string name="deleted_selected_games">All selected games were deleted</string>
     <string name="players">Players</string>
-    <string name="report_game">Generate game report</string>
-    <string name="report_exception">Failed to generate or to display the game report</string>
+    <string name="create_score_sheet">Create scoresheet</string>
+    <string name="score_sheet_exception">Failed to create or to display the scoresheet</string>
+    <string name="signatures">Signatures</string>
+    <string name="coach">Coach</string>
+    <string name="captain">Captain</string>
+    <string name="scorer">Scorer</string>
+    <string name="name">Name</string>
+    <string name="remarks">Remarks</string>
+
 
     <!-- Stored teams activity -->
     <string name="search_teams">Search teams</string>

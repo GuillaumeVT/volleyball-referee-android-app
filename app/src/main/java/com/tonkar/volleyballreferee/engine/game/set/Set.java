@@ -233,6 +233,14 @@ public abstract class Set {
         return duration;
     }
 
+    public long getStartTime() {
+        return mStartTime;
+    }
+
+    public long getEndTime() {
+        return mEndTime;
+    }
+
     public TeamComposition getTeamComposition(final TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? mHomeComposition : mGuestComposition;
     }

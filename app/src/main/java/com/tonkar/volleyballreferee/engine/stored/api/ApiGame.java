@@ -61,6 +61,10 @@ public class ApiGame {
     private ApiRules          rules;
     @SerializedName("score")
     private String            score;
+    @SerializedName("startTime")
+    private long              startTime;
+    @SerializedName("endTime")
+    private long              endTime;
 
     public ApiGame() {
         id = UUID.randomUUID().toString();
@@ -84,6 +88,9 @@ public class ApiGame {
         homeCards = new ArrayList<>();
         guestCards = new ArrayList<>();
         rules = null;
+        score = "";
+        startTime = 0L;
+        endTime = 0L;
     }
 
 }

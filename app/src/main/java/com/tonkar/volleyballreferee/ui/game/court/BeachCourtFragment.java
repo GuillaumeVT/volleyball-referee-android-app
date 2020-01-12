@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,11 +28,11 @@ import java.util.Map;
 
 public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
-    private IBeachTeam mBeachTeam;
-    private ImageView  mLeftServiceImage1;
-    private ImageView  mLeftServiceImage2;
-    private ImageView  mRightServiceImage1;
-    private ImageView  mRightServiceImage2;
+    private IBeachTeam  mBeachTeam;
+    private ImageButton mLeftServiceButton1;
+    private ImageButton mLeftServiceButton2;
+    private ImageButton mRightServiceButton1;
+    private ImageButton mRightServiceButton2;
 
     public BeachCourtFragment() {
         super();
@@ -66,32 +67,17 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
             addSanctionImageOnRightSide(PositionType.POSITION_1, mView.findViewById(R.id.right_team_sanction_1));
             addSanctionImageOnRightSide(PositionType.POSITION_2, mView.findViewById(R.id.right_team_sanction_2));
 
-            mLeftServiceImage1 = mView.findViewById(R.id.left_team_service_1);
-            mLeftServiceImage2 = mView.findViewById(R.id.left_team_service_2);
-            mRightServiceImage1 = mView.findViewById(R.id.right_team_service_1);
-            mRightServiceImage2 = mView.findViewById(R.id.right_team_service_2);
+            mLeftServiceButton1 = mView.findViewById(R.id.left_team_service_1);
+            mLeftServiceButton2 = mView.findViewById(R.id.left_team_service_2);
+            mRightServiceButton1 = mView.findViewById(R.id.right_team_service_1);
+            mRightServiceButton2 = mView.findViewById(R.id.right_team_service_2);
 
             onTeamsSwapped(mTeamOnLeftSide, mTeamOnRightSide, null);
 
-            for (Map.Entry<PositionType, MaterialButton> entry : mLeftTeamPositions.entrySet()) {
-                entry.getValue().setOnClickListener(view -> {
-                    if (mGame.getServingTeam().equals(mTeamOnLeftSide)) {
-                        UiUtils.animate(getContext(), view);
-                        Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnLeftSide.toString()));
-                        mBeachTeam.swapPlayers(mTeamOnLeftSide);
-                    }
-                });
-            }
-
-            for (Map.Entry<PositionType, MaterialButton> entry : mRightTeamPositions.entrySet()) {
-                entry.getValue().setOnClickListener(view -> {
-                    if (mGame.getServingTeam().equals(mTeamOnRightSide)) {
-                        UiUtils.animate(getContext(), view);
-                        Log.i(Tags.GAME_UI, String.format("Swap %s team player", mTeamOnRightSide.toString()));
-                        mBeachTeam.swapPlayers(mTeamOnRightSide);
-                    }
-                });
-            }
+            mLeftServiceButton1.setOnClickListener(view -> swapService(mTeamOnLeftSide, view));
+            mLeftServiceButton2.setOnClickListener(view -> swapService(mTeamOnLeftSide, view));
+            mRightServiceButton1.setOnClickListener(view -> swapService(mTeamOnRightSide, view));
+            mRightServiceButton2.setOnClickListener(view -> swapService(mTeamOnRightSide, view));
         }
 
         return mView;
@@ -128,43 +114,50 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     private void update(TeamType teamType) {
         final Map<PositionType, MaterialButton> teamPositions;
         final Map<PositionType, ImageView> teamSanctionImages;
-        ImageView serviceImage1;
-        ImageView serviceImage2;
+        ImageButton serviceButton1;
+        ImageButton serviceButton2;
 
         if (mTeamOnLeftSide.equals(teamType)) {
             teamPositions = mLeftTeamPositions;
-            serviceImage1 = mLeftServiceImage1;
-            serviceImage2 = mLeftServiceImage2;
+            serviceButton1 = mLeftServiceButton1;
+            serviceButton2 = mLeftServiceButton2;
             teamSanctionImages = mLeftTeamSanctionImages;
         } else {
             teamPositions = mRightTeamPositions;
-            serviceImage1 = mRightServiceImage1;
-            serviceImage2 = mRightServiceImage2;
+            serviceButton1 = mRightServiceButton1;
+            serviceButton2 = mRightServiceButton2;
             teamSanctionImages = mRightTeamSanctionImages;
         }
 
         int number = 1;
         PositionType positionType = mBeachTeam.getPlayerPosition(teamType, number);
-        MaterialButton button = teamPositions.get(PositionType.POSITION_1);
-        button.setText(UiUtils.formatNumberFromLocale(number));
-        UiUtils.styleTeamButton(mView.getContext(), mBeachTeam, teamType, number, button);
-        updateService(teamType, positionType, serviceImage1);
+        MaterialButton positionButton = teamPositions.get(PositionType.POSITION_1);
+        positionButton.setText(UiUtils.formatNumberFromLocale(number));
+        UiUtils.styleTeamButton(mView.getContext(), mBeachTeam, teamType, number, positionButton);
+        updateService(teamType, positionType, serviceButton1);
         updateSanction(teamType, number, teamSanctionImages.get(PositionType.POSITION_1));
 
         number = 2;
         positionType = mBeachTeam.getPlayerPosition(teamType, number);
-        button = teamPositions.get(PositionType.POSITION_2);
-        button.setText(UiUtils.formatNumberFromLocale(number));
-        UiUtils.styleTeamButton(mView.getContext(), mBeachTeam, teamType, number, button);
-        updateService(teamType, positionType, serviceImage2);
+        positionButton = teamPositions.get(PositionType.POSITION_2);
+        positionButton.setText(UiUtils.formatNumberFromLocale(number));
+        UiUtils.styleTeamButton(mView.getContext(), mBeachTeam, teamType, number, positionButton);
+        updateService(teamType, positionType, serviceButton2);
         updateSanction(teamType, number, teamSanctionImages.get(PositionType.POSITION_2));
     }
 
-    private void updateService(TeamType teamType, PositionType positionType, ImageView imageView) {
+    private void updateService(TeamType teamType, PositionType positionType, ImageButton imageButton) {
         if (mGame.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
-            imageView.setVisibility(View.VISIBLE);
+            imageButton.setVisibility(View.VISIBLE);
         } else {
-            imageView.setVisibility(View.INVISIBLE);
+            imageButton.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void swapService(TeamType teamType, View view) {
+        if (mGame.getServingTeam().equals(teamType)) {
+            Log.i(Tags.GAME_UI, String.format("Swap %s team player", teamType.toString()));
+            mBeachTeam.swapPlayers(teamType);
         }
     }
 
@@ -175,7 +168,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onSetsUpdated(TeamType teamType, int newCount) {}
 
     @Override
-    public void onServiceSwapped(TeamType teamType) {
+    public void onServiceSwapped(TeamType teamType, boolean isStart) {
         updateAll();
     }
 

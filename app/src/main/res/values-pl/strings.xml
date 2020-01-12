@@ -49,6 +49,13 @@
        \n\u2022 Usunąłeś mecz przez pomyłkę? Wznów swoje mecze, korzystając z kopii zapasowej serwera.
        \n\u2022 Automatycznie korzystaj z przyszłych nowych funkcji sieciowych.
    </string>
+    <string name="purchase_score_sheets_summary">
+        \n\u2022 Dodaj podpisy sędziów, kapitanów i trenerów
+        \n\u2022 Dodaj logo
+        \n\u2022 Dodaj uwagi
+        \n\u2022 Zapisz w formacie PDF
+        \n\u2022 Udostępnij
+    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>
@@ -204,8 +211,14 @@
     <string name="deleted_game">Mecz usunięty</string>
     <string name="deleted_selected_games">Wszystkie mecze usunięte</string>
     <string name="players">Gracze</string>
-    <string name="report_game">Wygeneruj raport meczowy</string>
-    <string name="report_exception">Nie udało się wygenerować ani wyświetlić raportu meczowego</string>
+    <string name="create_score_sheet">Utwórz protokół zawodów</string>
+    <string name="score_sheet_exception">Nie można utworzyć lub wyświetlić protokołu zawodów</string>
+    <string name="signatures">Podpisy</string>
+    <string name="coach">Trener</string>
+    <string name="captain">Kapitan</string>
+    <string name="scorer">Sekretarz</string>
+    <string name="name">Nazwisko</string>
+    <string name="remarks">Uwagi</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Wyszukaj zespoły</string>

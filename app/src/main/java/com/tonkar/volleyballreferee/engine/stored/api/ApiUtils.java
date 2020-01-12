@@ -42,8 +42,8 @@ public class ApiUtils {
             mTokenExpiredInterceptor = new TokenExpiredInterceptor(context.getApplicationContext());
             mHttpClient = new OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
-                    .writeTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(40, TimeUnit.SECONDS)
                     .addInterceptor(mTokenExpiredInterceptor)
                     .build();
         } else {

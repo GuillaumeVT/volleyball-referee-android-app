@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.billing;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,9 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
             case BillingService.WEB_PREMIUM:
                 viewHolder.purchaseSummary.setText(R.string.purchase_web_premium_summary);
                 break;
+            case BillingService.SCORE_SHEETS:
+                viewHolder.purchaseSummary.setText(R.string.purchase_score_sheets_summary);
+                break;
             default:
                 viewHolder.purchaseSummary.setText("");
                 break;
@@ -88,9 +92,13 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
             viewHolder.purchaseButton.setText(R.string.already_purchased);
             viewHolder.purchaseButton.setOnClickListener(null);
             viewHolder.purchaseButton.setClickable(false);
+            viewHolder.purchaseButton.setIconResource(R.drawable.ic_check);
+            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorPrimary)));
         } else {
             viewHolder.purchaseButton.setText(skuDetails.getPrice());
             viewHolder.purchaseButton.setClickable(true);
+            viewHolder.purchaseButton.setIconResource(R.drawable.ic_purchase);
+            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorPrimary)));
             viewHolder.purchaseButton.setOnClickListener(view -> mBillingService.executeServiceRequest(() -> mBillingService.launchPurchase(skuDetails)));
         }
     }

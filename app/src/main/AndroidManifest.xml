@@ -26,6 +26,7 @@
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -50,6 +51,14 @@
         <activity
                 android:name=".ui.stored.game.StoredBasicGameActivity"
                 android:parentActivityName=".ui.stored.game.StoredGamesListActivity" />
+        <activity
+                android:name=".ui.stored.game.scoresheet.ScoreSheetActivity"
+                android:parentActivityName=".ui.stored.game.StoredGamesListActivity"
+                android:configChanges="orientation|screenSize">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity" />
+        </activity>
         <activity
                 android:name=".ui.stored.team.StoredTeamsListActivity"
                 android:parentActivityName=".ui.MainActivity" />
@@ -86,16 +95,6 @@
         <activity
                 android:name=".ui.user.ColleaguesListActivity"
                 android:parentActivityName=".ui.MainActivity" />
-
-        <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="com.tonkar.volleyballreferee.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths" />
-        </provider>
 
         <receiver
                 android:name=".engine.stored.BootCompleteAndUpdateReceiver"
