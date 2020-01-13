@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30200" translatable="false">New in 3.2.0:\n- Added Snow Volleyball.\n- Reworked the beach court background.</string>
+    <string name="rn_30201" translatable="false">
+        New in this release:
+        \n\n\u2022 Go paperless: create PDF score sheets.
+        \n    Add signatures
+        \n    Add federation logo
+        \n    Save score sheet to PDF
+        \n    Share
+        \n\n\u2022 Show the serving players on court.
+        \n\n\u2022 Show the substituted players on court.
+    </string>
 
     <!-- General actions -->
     <string name="yes">Yes</string>
