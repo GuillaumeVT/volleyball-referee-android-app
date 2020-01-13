@@ -51,11 +51,11 @@
         \n\u2022 Automatikusan megkapod az összes jövőbeni webes funkciót.
     </string>
     <string name="purchase_score_sheets_summary">
-        \n\u2022 Add referees, scorer, captains and coaches signatures
-        \n\u2022 Add your federation logo
-        \n\u2022 Add remarks
-        \n\u2022 Save to PDF format
-        \n\u2022 Share
+        \n\u2022 Add hozzá a játékvezetők, a jegyzőkönyvvezető, a csapatkapitányok és az edzők aláírásait
+        \n\u2022 Add hozzá a szövetség logóját
+        \n\u2022 Adj hozzá megjegyzéseket
+        \n\u2022 Mentsd el PDF formátumban
+        \n\u2022 Oszd meg
     </string>
 
     <!-- User activity -->
@@ -212,14 +212,14 @@
     <string name="deleted_game">Mérkőzés törölve</string>
     <string name="deleted_selected_games">Minden mérkőzés törölve</string>
     <string name="players">Játékosok</string>
-    <string name="create_score_sheet">Create scoresheet</string>
-    <string name="score_sheet_exception">Failed to create or to display the scoresheet</string>
-    <string name="signatures">Signatures</string>
-    <string name="coach">Coach</string>
-    <string name="captain">Captain</string>
-    <string name="scorer">Scorer</string>
-    <string name="name">Name</string>
-    <string name="remarks">Remarks</string>
+    <string name="create_score_sheet">Jegyzőkönyv készítése</string>
+    <string name="score_sheet_exception">Hiba történt a jegyzőkönyv megjelenítése során</string>
+    <string name="signatures">Aláírások</string>
+    <string name="coach">Edző</string>
+    <string name="captain">Csapatkapitány</string>
+    <string name="scorer">Jegyzőkönyvvezető</string>
+    <string name="name">Név</string>
+    <string name="remarks">Megjegyzés</string>
 
     <!-- Stored teams activity -->
     <string name="search_teams">Csapat keresése</string>
