@@ -271,7 +271,7 @@ public class ScoreSheetBuilder {
     private Element createPlayerSpan(TeamType teamType, int player, boolean isLibero) {
         String playerStr = String.valueOf(player);
 
-        if (player < 0) {
+        if (player < 0 || player == ApiSanction.TEAM) {
             playerStr = "-";
         } else if (player == ApiSanction.COACH) {
             playerStr = mContext.getString(R.string.coach_abbreviation);
@@ -1278,7 +1278,7 @@ public class ScoreSheetBuilder {
                 "    }\n" +
                 "    .logo-image {\n" +
                 "      width: auto;\n" +
-                "      height: 100%;\n" +
+                "      height: 60px;\n" +
                 "    }\n" +
                 "    .set-anchor {\n" +
                 String.format("      color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnScoreSheetBackground))) +

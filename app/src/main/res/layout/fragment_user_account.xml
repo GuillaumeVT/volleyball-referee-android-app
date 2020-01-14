@@ -173,7 +173,7 @@
                     android:textSize="@dimen/default_text_size" />
 
             <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/user_password_input_layout"
+                    android:id="@+id/user_new_password_input_layout"
                     style="@style/AppTheme.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                     app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_password_input_text"
+                        android:id="@+id/user_new_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -196,7 +196,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/user_confirm_password_input_layout"
+                    android:id="@+id/user_confirm_new_password_input_layout"
                     style="@style/AppTheme.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                     app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_confirm_password_input_text"
+                        android:id="@+id/user_confirm_new_password_input_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"

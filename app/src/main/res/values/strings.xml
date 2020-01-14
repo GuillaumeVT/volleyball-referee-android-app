@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30201" translatable="false">
+    <string name="rn_30202" translatable="false">
         New in this release:
         \n\n\u2022 Go paperless: create PDF score sheets.
-        \n    Add signatures
-        \n    Add federation logo
-        \n    Save score sheet to PDF
-        \n    Share
+        \n     Add signatures
+        \n     Add federation logo
+        \n     Save score sheet to PDF
+        \n     Share
         \n\n\u2022 Show the serving players on court.
         \n\n\u2022 Show the substituted players on court.
+        \n\n\u2022 Misc bug fixes.
     </string>
 
     <!-- General actions -->
