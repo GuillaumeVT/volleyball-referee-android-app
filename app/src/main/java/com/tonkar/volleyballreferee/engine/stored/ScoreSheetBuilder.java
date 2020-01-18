@@ -743,12 +743,7 @@ public class ScoreSheetBuilder {
         Element img = new Element("img");
         img.addClass("logo-image");
         img.attr("src", String.format("data:image/jpeg;base64,%s", base64Image));
-
-        Element div = new Element("div");
-        div.addClass("logo-cell");
-        div.appendChild(img);
-
-        return div;
+        return img;
     }
 
     private String createStoredIndoor4x4Game() {
@@ -1108,8 +1103,7 @@ public class ScoreSheetBuilder {
                 "    }\n" +
                 "    .div-grid-game-header-logo {\n" +
                 "      display: grid;\n" +
-                "      grid-template-columns: 40fr 60fr;\n" +
-                "      grid-auto-rows: 1fr;\n" +
+                "      grid-template-columns: 4fr 6fr;\n" +
                 "      align-items: stretch;\n" +
                 "      align-content: center;\n" +
                 "      justify-content: center;\n" +
@@ -1266,19 +1260,12 @@ public class ScoreSheetBuilder {
                 "      width: auto;\n" +
                 "      height: 100%;\n" +
                 "    }\n" +
-                "    .logo-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnScoreSheetBackground))) +
-                "      width: inherit;\n" +
-                "      height: 60px;\n" +
-                "      line-height: 60px;\n" +
-                "      text-align: center;\n" +
-                "      padding: 3px;\n" +
-                "      margin-right: -1px;\n" +
-                "      margin-left: -1px;\n" +
-                "    }\n" +
                 "    .logo-image {\n" +
                 "      width: auto;\n" +
                 "      height: 60px;\n" +
+                "      padding: 3px;\n" +
+                "      margin-right: auto;\n" +
+                "      margin-left: auto;\n" +
                 "    }\n" +
                 "    .set-anchor {\n" +
                 String.format("      color: %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnScoreSheetBackground))) +

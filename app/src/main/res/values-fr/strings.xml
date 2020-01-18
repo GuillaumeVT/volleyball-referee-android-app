@@ -214,7 +214,7 @@
     <string name="score_sheet_exception">Échec de la génération de la feuille de match</string>
     <string name="signatures">Signatures</string>
     <string name="coach">Entraîneur</string>
-    <string name="scorer">Marqueurs</string>
+    <string name="scorer">Marqueur</string>
     <string name="captain">Capitaine</string>
     <string name="name">Nom</string>
     <string name="remarks">Remarques</string>

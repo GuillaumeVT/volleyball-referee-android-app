@@ -220,18 +220,20 @@ public class IndoorCourtFragment extends CourtFragment {
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
-            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                    getFragmentManager().beginTransaction().detach(IndoorCourtFragment.this).attach(IndoorCourtFragment.this).commit()
-            ).start();
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition5.getX()).y(layoutPosition5.getY()).setDuration(500L).start();
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
-            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                    getFragmentManager().beginTransaction().detach(IndoorCourtFragment.this).attach(IndoorCourtFragment.this).commit()
-            ).start();
+            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
+        }
+    }
+
+    private void detachThenAttach() {
+        if (getFragmentManager() != null && this.isAdded()) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
     }
 
