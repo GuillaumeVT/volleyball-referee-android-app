@@ -291,26 +291,6 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
     }
 
     @Override
-    public void setCaptain(TeamType teamType, int number) {
-        getTeamDefinition(teamType).setCaptain(number);
-    }
-
-    @Override
-    public int getCaptain(TeamType teamType) {
-        return getTeamDefinition(teamType).getCaptain();
-    }
-
-    @Override
-    public Set<Integer> getPossibleCaptains(TeamType teamType) {
-        return getTeamDefinition(teamType).getPossibleCaptains();
-    }
-
-    @Override
-    public boolean isCaptain(TeamType teamType, int number) {
-        return getTeamDefinition(teamType).isCaptain(number);
-    }
-
-    @Override
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 

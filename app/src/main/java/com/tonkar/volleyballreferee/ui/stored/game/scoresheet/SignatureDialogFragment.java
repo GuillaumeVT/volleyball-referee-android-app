@@ -19,6 +19,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.setup.NameSpinnerAdapter;
 
 import java.io.ByteArrayOutputStream;
@@ -37,13 +40,19 @@ public class SignatureDialogFragment extends DialogFragment {
     private int                mSelectedSignatureType;
     private ScoreSheetActivity mScoreSheetActivity;
 
-    public static SignatureDialogFragment newInstance(String homeTeamName, String guestTeamName, String homeCaptainName, String guestCaptainName) {
+    public static SignatureDialogFragment newInstance(IStoredGame storedGame) {
         SignatureDialogFragment fragment = new SignatureDialogFragment();
         Bundle args = new Bundle();
-        args.putString("homeTeamName", homeTeamName);
-        args.putString("guestTeamName", guestTeamName);
-        args.putString("homeCaptainName", homeCaptainName);
-        args.putString("guestCaptainName", guestCaptainName);
+        args.putString("kind", storedGame.getKind().toString());
+        args.putString("referee1Name", storedGame.getReferee1Name());
+        args.putString("referee2Name", storedGame.getReferee2Name());
+        args.putString("scorerName", storedGame.getScorerName());
+        args.putString("homeTeamName", storedGame.getTeamName(TeamType.HOME));
+        args.putString("guestTeamName", storedGame.getTeamName(TeamType.GUEST));
+        args.putString("homeCaptainName", storedGame.getPlayerName(TeamType.HOME, storedGame.getCaptain(TeamType.HOME)));
+        args.putString("guestCaptainName", storedGame.getPlayerName(TeamType.GUEST, storedGame.getCaptain(TeamType.GUEST)));
+        args.putString("homeCoachName", storedGame.getCoachName(TeamType.HOME));
+        args.putString("guestCoachName", storedGame.getCoachName(TeamType.GUEST));
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,10 +66,16 @@ public class SignatureDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
+        GameType kind = GameType.valueOf(getArguments().getString("kind"));
+        String referee1Name = getArguments().getString("referee1Name");
+        String referee2Name = getArguments().getString("referee2Name");
+        String scorerName = getArguments().getString("scorerName");
         String homeTeamName = getArguments().getString("homeTeamName");
         String guestTeamName = getArguments().getString("guestTeamName");
         String homeCaptainName = getArguments().getString("homeCaptainName");
         String guestCaptainName = getArguments().getString("guestCaptainName");
+        String homeCoachName = getArguments().getString("homeCoachName");
+        String guestCoachName = getArguments().getString("guestCoachName");
 
         mScoreSheetActivity = (ScoreSheetActivity) getActivity();
 
@@ -78,9 +93,11 @@ public class SignatureDialogFragment extends DialogFragment {
         signatureTypes.add(String.format(Locale.getDefault(), "%s %d", mContext.getString(R.string.referee), 2));
         signatureTypes.add(mContext.getString(R.string.scorer));
         signatureTypes.add(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.captain), homeTeamName));
-        signatureTypes.add(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.coach), homeTeamName));
         signatureTypes.add(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.captain), guestTeamName));
-        signatureTypes.add(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.coach), guestTeamName));
+        if (GameType.INDOOR.equals(kind) || GameType.INDOOR_4X4.equals(kind)) {
+            signatureTypes.add(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.coach), homeTeamName));
+            signatureTypes.add(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.coach), guestTeamName));
+        }
 
         Spinner signatureTypeSpinner = mView.findViewById(R.id.signature_type_spinner);
         signatureTypeSpinner.setAdapter(new NameSpinnerAdapter<String>(mContext, mLayoutInflater, signatureTypes) {
@@ -100,10 +117,30 @@ public class SignatureDialogFragment extends DialogFragment {
                 mSelectedSignatureType = index;
                 mNameInputText.setHint(mContext.getString(R.string.name));
 
-                if (mSelectedSignatureType == 3) {
-                    mNameInputText.setText(homeCaptainName);
-                } else if (mSelectedSignatureType == 5) {
-                    mNameInputText.setText(guestCaptainName);
+                switch (mSelectedSignatureType) {
+                    case 0:
+                        mNameInputText.setText(referee1Name);
+                        break;
+                    case 1:
+                        mNameInputText.setText(referee2Name);
+                        break;
+                    case 2:
+                        mNameInputText.setText(scorerName);
+                        break;
+                    case 3:
+                        mNameInputText.setText(homeCaptainName);
+                        break;
+                    case 4:
+                        mNameInputText.setText(guestCaptainName);
+                        break;
+                    case 5:
+                        mNameInputText.setText(homeCoachName);
+                        break;
+                    case 6:
+                        mNameInputText.setText(guestCoachName);
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -141,10 +178,10 @@ public class SignatureDialogFragment extends DialogFragment {
                 mScoreSheetActivity.getScoreSheetBuilder().setHomeCaptainSignature(name, base64Image);
                 break;
             case 4:
-                mScoreSheetActivity.getScoreSheetBuilder().setHomeCoachSignature(name, base64Image);
+                mScoreSheetActivity.getScoreSheetBuilder().setGuestCaptainSignature(name, base64Image);
                 break;
             case 5:
-                mScoreSheetActivity.getScoreSheetBuilder().setGuestCaptainSignature(name, base64Image);
+                mScoreSheetActivity.getScoreSheetBuilder().setHomeCoachSignature(name, base64Image);
                 break;
             case 6:
                 mScoreSheetActivity.getScoreSheetBuilder().setGuestCoachSignature(name, base64Image);

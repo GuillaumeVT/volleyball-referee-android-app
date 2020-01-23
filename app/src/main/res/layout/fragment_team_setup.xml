@@ -198,4 +198,27 @@
 
     </LinearLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coach_name_input_layout"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:hint="@string/coach"
+            app:endIconMode="clear_text">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/coach_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

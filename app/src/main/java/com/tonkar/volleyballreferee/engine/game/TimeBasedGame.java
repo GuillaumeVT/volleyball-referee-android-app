@@ -256,6 +256,30 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     @Override
+    public String getReferee1Name() {
+        return "";
+    }
+
+    @Override
+    public void setReferee1Name(String referee1Name) {}
+
+    @Override
+    public String getReferee2Name() {
+        return "";
+    }
+
+    @Override
+    public void setReferee2Name(String referee2Name) {}
+
+    @Override
+    public String getScorerName() {
+        return "";
+    }
+
+    @Override
+    public void setScorerName(String scorerName) {}
+
+    @Override
     public String getTeamId(TeamType teamType) {
         return getTeamDefinition(teamType).getId();
     }
@@ -457,6 +481,14 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     public boolean isCaptain(TeamType teamType, int number) {
         return false;
     }
+
+    @Override
+    public String getCoachName(TeamType teamType) {
+        return "";
+    }
+
+    @Override
+    public void setCoachName(TeamType teamType, String name) {}
 
     @Override
     public void restoreTeams(IStoredGame storedGame) {}

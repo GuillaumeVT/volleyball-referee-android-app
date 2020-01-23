@@ -361,6 +361,14 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
+    public String getCoachName(TeamType teamType) {
+        return getTeam(teamType).getCoach();
+    }
+
+    @Override
+    public void setCoachName(TeamType teamType, String name) {}
+
+    @Override
     public int getRemainingTimeouts(TeamType teamType) {
         return getSets().get(currentSetIndex()).getTimeouts(teamType);
     }

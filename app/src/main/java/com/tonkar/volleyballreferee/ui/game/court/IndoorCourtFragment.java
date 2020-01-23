@@ -444,6 +444,8 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void updateSubstitution(TeamType teamType, int number, TextView substitutionView) {
+        substitutionView.setVisibility(View.GONE);
+
         if (Rules.FIVB_LIMITATION == mGame.getRules().getSubstitutionsLimitation() && mClassicTeam.isStartingLineupConfirmed(teamType)) {
             boolean isLibero = mClassicTeam.isLibero(teamType, number);
 
@@ -462,11 +464,7 @@ public class IndoorCourtFragment extends CourtFragment {
                         }
                     }
                 }
-            } else {
-                substitutionView.setVisibility(View.GONE);
             }
-        } else {
-            substitutionView.setVisibility(View.GONE);
         }
     }
 

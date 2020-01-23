@@ -46,4 +46,16 @@ public interface IBaseGeneral {
     long getStartTime();
 
     long getEndTime();
+
+    String getReferee1Name();
+
+    void setReferee1Name(String referee1Name);
+
+    String getReferee2Name();
+
+    void setReferee2Name(String referee2Name);
+
+    String getScorerName();
+
+    void setScorerName(String scorerName);
 }

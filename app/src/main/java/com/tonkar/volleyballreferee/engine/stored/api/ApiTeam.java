@@ -43,6 +43,8 @@ public class ApiTeam {
     private List<ApiPlayer> liberos;
     @SerializedName("captain")
     private int             captain;
+    @SerializedName("coach")
+    private String          coach;
 
     public ApiTeam() {
         id = UUID.randomUUID().toString();
@@ -57,6 +59,7 @@ public class ApiTeam {
         players = new ArrayList<>();
         liberos = new ArrayList<>();
         captain = -1;
+        coach = "";
     }
 
     public int getColorInt() {

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
@@ -96,6 +98,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         mLiberoColorButton = view.findViewById(R.id.libero_color_button);
         mPlayerNamesButton = view.findViewById(R.id.team_player_names_button);
         mPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment());
+        final EditText coachNameInput = view.findViewById(R.id.coach_name_input_text);
+        final TextInputLayout coachNameInputLayout = view.findViewById(R.id.coach_name_input_layout);
 
         switch (mTeamType) {
             case HOME:
@@ -105,8 +109,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
                 break;
         }
-
-        final String teamName = mTeamService.getTeamName(mTeamType);
 
         if (isGameContext) {
             StoredTeamsService storedTeamsService = new StoredTeamsManager(getContext());
@@ -126,9 +128,12 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                     liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
                     mLiberoAdapter.notifyDataSetChanged();
                 }
+                coachNameInput.setText(mTeamService.getCoachName(mTeamType));
                 computeConfirmItemVisibility();
             });
         }
+
+        final String teamName = mTeamService.getTeamName(mTeamType);
 
         if (!teamName.isEmpty()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -202,6 +207,27 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             GenderType genderType = mTeamService.getGender(mTeamType).next();
             updateGender(genderType);
         });
+
+        if (PrefUtils.isScoreSheetsPurchased(getContext()) && (GameType.INDOOR.equals(mTeamService.getTeamsKind()) || GameType.INDOOR_4X4.equals(mTeamService.getTeamsKind()))) {
+            coachNameInput.setText(mTeamService.getCoachName(mTeamType));
+            coachNameInput.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (isAdded()) {
+                        Log.i(Tags.SETUP_UI, String.format("Update %s coach name", mTeamType.toString()));
+                        mTeamService.setCoachName(mTeamType, s.toString().trim());
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        } else {
+            coachNameInputLayout.setVisibility(View.GONE);
+        }
 
         computeConfirmItemVisibility();
 

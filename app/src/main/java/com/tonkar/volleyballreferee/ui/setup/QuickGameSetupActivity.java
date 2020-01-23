@@ -187,6 +187,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
                                 fragment = RulesSetupFragment.newInstance(true);
                             }
                             break;
+                        case R.id.misc_tab:
+                            fragment = MiscSetupFragment.newInstance();
+                            break;
                         default:
                             fragment = null;
                             break;

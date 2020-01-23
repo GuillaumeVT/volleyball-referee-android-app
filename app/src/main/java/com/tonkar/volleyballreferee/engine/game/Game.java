@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -82,14 +83,20 @@ public abstract class Game extends BaseGame {
     private       long              mStartTime;
     @SerializedName("endTime")
     private       long              mEndTime;
+    @SerializedName("referee1Name")
+    private       String            mReferee1Name;
+    @SerializedName("referee2Name")
+    private       String            mReferee2Name;
+    @SerializedName("scorerName")
+    private       String            mScorerName;
 
     private transient boolean mEnableNotifications;
 
-    private transient java.util.Set<GeneralListener>  mGeneralListeners;
-    private transient java.util.Set<ScoreListener>    mScoreListeners;
-    private transient java.util.Set<TimeoutListener>  mTimeoutListeners;
-    private transient java.util.Set<TeamListener>     mTeamListeners;
-    private transient java.util.Set<SanctionListener> mSanctionListeners;
+    private transient Set<GeneralListener>  mGeneralListeners;
+    private transient Set<ScoreListener>    mScoreListeners;
+    private transient Set<TimeoutListener>  mTimeoutListeners;
+    private transient Set<TeamListener>     mTeamListeners;
+    private transient Set<SanctionListener> mSanctionListeners;
 
     protected Game(GameType kind, String id, String createdBy, String refereeName, long createdAt, long scheduledAt, Rules rules) {
         super();
@@ -123,6 +130,9 @@ public abstract class Game extends BaseGame {
         mGuestTeamSanctions = new ArrayList<>();
         mStartTime = mScheduledAt;
         mEndTime = 0L;
+        mReferee1Name = "";
+        mReferee2Name = "";
+        mScorerName = "";
 
         mServingTeamAtStart = TeamType.HOME;
 
@@ -488,6 +498,36 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
+    public String getReferee1Name() {
+        return mReferee1Name;
+    }
+
+    @Override
+    public void setReferee1Name(String referee1Name) {
+        mReferee1Name = referee1Name;
+    }
+
+    @Override
+    public String getReferee2Name() {
+        return mReferee2Name;
+    }
+
+    @Override
+    public void setReferee2Name(String referee2Name) {
+        mReferee2Name = referee2Name;
+    }
+
+    @Override
+    public String getScorerName() {
+        return mScorerName;
+    }
+
+    @Override
+    public void setScorerName(String scorerName) {
+        mScorerName = scorerName;
+    }
+
+    @Override
     public long getSetDuration(int setIndex) {
         long duration = 0L;
         com.tonkar.volleyballreferee.engine.game.set.Set set = mSets.get(setIndex);
@@ -618,7 +658,7 @@ public abstract class Game extends BaseGame {
         }
     }
 
-    // TeamComposition
+    // Team definition / composition
 
     TeamDefinition getTeamDefinition(final TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? mHomeTeam: mGuestTeam;
@@ -719,7 +759,7 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public java.util.Set<ApiPlayer> getPlayers(TeamType teamType) {
+    public Set<ApiPlayer> getPlayers(TeamType teamType) {
         return new TreeSet<>(getTeamDefinition(teamType).getPlayers());
     }
 
@@ -770,12 +810,42 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public java.util.Set<Integer> getPlayersOnCourt(TeamType teamType) {
+    public void setCaptain(TeamType teamType, int number) {
+        getTeamDefinition(teamType).setCaptain(number);
+    }
+
+    @Override
+    public int getCaptain(TeamType teamType) {
+        return getTeamDefinition(teamType).getCaptain();
+    }
+
+    @Override
+    public Set<Integer> getPossibleCaptains(TeamType teamType) {
+        return getTeamDefinition(teamType).getPossibleCaptains();
+    }
+
+    @Override
+    public boolean isCaptain(TeamType teamType, int number) {
+        return getTeamDefinition(teamType).isCaptain(number);
+    }
+
+    @Override
+    public String getCoachName(TeamType teamType) {
+        return getTeamDefinition(teamType).getCoach();
+    }
+
+    @Override
+    public void setCoachName(TeamType teamType, String name) {
+        getTeamDefinition(teamType).setCoach(name);
+    }
+
+    @Override
+    public Set<Integer> getPlayersOnCourt(TeamType teamType) {
         return currentSet().getTeamComposition(teamType).getPlayersOnCourt();
     }
 
     @Override
-    public java.util.Set<Integer> getPlayersOnCourt(TeamType teamType, int setIndex) {
+    public Set<Integer> getPlayersOnCourt(TeamType teamType, int setIndex) {
         return getSet(setIndex).getTeamComposition(teamType).getPlayersOnCourt();
     }
 
@@ -1031,8 +1101,8 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public java.util.Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
-        java.util.Set<Integer> players = new HashSet<>();
+    public Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
+        Set<Integer> players = new HashSet<>();
 
         List<ApiSanction> sanctionsForGame = getAllSanctions(teamType);
         int currentSetIndex = currentSetIndex();
@@ -1076,7 +1146,7 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public java.util.Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
+    public Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
         boolean teamHasReachedPenalty = false;
 
         for (ApiSanction sanction : getAllSanctions(teamType)) {
@@ -1085,7 +1155,7 @@ public abstract class Game extends BaseGame {
             }
         }
 
-        java.util.Set<SanctionType> possibleMisconductSanctions = new HashSet<>();
+        Set<SanctionType> possibleMisconductSanctions = new HashSet<>();
         possibleMisconductSanctions.add(SanctionType.YELLOW);
         possibleMisconductSanctions.add(SanctionType.RED);
         possibleMisconductSanctions.add(SanctionType.RED_EXPULSION);
@@ -1198,7 +1268,7 @@ public abstract class Game extends BaseGame {
             }
         }
 
-        java.util.Set<Integer> expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType.HOME);
+        Set<Integer> expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType.HOME);
 
         for (ApiSubstitution substitution : getSubstitutions (TeamType.HOME, currentSetIndex)) {
             if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints

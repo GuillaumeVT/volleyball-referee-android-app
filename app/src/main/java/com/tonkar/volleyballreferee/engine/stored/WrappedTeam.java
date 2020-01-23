@@ -243,6 +243,16 @@ public class WrappedTeam implements IBaseTeam {
     }
 
     @Override
+    public String getCoachName(TeamType teamType) {
+        return mTeamDefinition.getCoach();
+    }
+
+    @Override
+    public void setCoachName(TeamType teamType, String name) {
+        mTeamDefinition.setCoach(name);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
 

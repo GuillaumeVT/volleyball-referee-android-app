@@ -339,6 +339,9 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         mStoredGame.setScheduledAt(mGame.getScheduledAt());
         mStoredGame.setRefereedBy(mGame.getRefereedBy());
         mStoredGame.setRefereeName(mGame.getRefereeName());
+        mStoredGame.setReferee1Name(mGame.getReferee1Name());
+        mStoredGame.setReferee2Name(mGame.getReferee2Name());
+        mStoredGame.setScorerName(mGame.getScorerName());
         mStoredGame.setKind(mGame.getKind());
         mStoredGame.setGender(mGame.getGender());
         mStoredGame.setUsage(mGame.getUsage());
@@ -363,6 +366,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         homeTeam.setColorInt(mGame.getTeamColor(TeamType.HOME));
         homeTeam.setLiberoColorInt(mGame.getLiberoColor(TeamType.HOME));
         homeTeam.setCaptain(mGame.getCaptain(TeamType.HOME));
+        homeTeam.setCoach(mGame.getCoachName(TeamType.HOME));
 
         for (ApiPlayer player : mGame.getPlayers(TeamType.HOME)) {
             if (mGame.isLibero(TeamType.HOME, player.getNum())) {
@@ -383,6 +387,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         guestTeam.setColorInt(mGame.getTeamColor(TeamType.GUEST));
         guestTeam.setLiberoColorInt(mGame.getLiberoColor(TeamType.GUEST));
         guestTeam.setCaptain(mGame.getCaptain(TeamType.GUEST));
+        guestTeam.setCoach(mGame.getCoachName(TeamType.GUEST));
 
         for (ApiPlayer player : mGame.getPlayers(TeamType.GUEST)) {
             if (mGame.isLibero(TeamType.GUEST, player.getNum())) {
@@ -554,6 +559,9 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             gameEntity.setScheduledAt(apiGame.getScheduledAt());
             gameEntity.setRefereedBy(apiGame.getRefereedBy());
             gameEntity.setRefereeName(apiGame.getRefereeName());
+            gameEntity.setReferee1Name(apiGame.getReferee1Name());
+            gameEntity.setReferee2Name(apiGame.getReferee2Name());
+            gameEntity.setScorerName(apiGame.getScorerName());
             gameEntity.setKind(apiGame.getKind());
             gameEntity.setGender(apiGame.getGender());
             gameEntity.setUsage(apiGame.getUsage());

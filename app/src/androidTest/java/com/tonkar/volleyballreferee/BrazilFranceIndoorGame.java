@@ -218,6 +218,8 @@ public class BrazilFranceIndoorGame {
             indoorGame.setPlayerName(TeamType.HOME, 18, "Ricardo Lucarelli Souza");
             indoorGame.setPlayerName(TeamType.HOME, 19, "Mauricio Borges Almeida Silva");
             indoorGame.setPlayerName(TeamType.HOME, 20, "Renan Buiatti");
+
+            indoorGame.setCoachName(TeamType.HOME, "Renan Dal Zotto");
         } else {
             storedTeamsService.copyTeam(teamBrazil, indoorGame, TeamType.HOME);
         }
@@ -261,6 +263,8 @@ public class BrazilFranceIndoorGame {
             indoorGame.setPlayerName(TeamType.GUEST, 18, "Thibault Rossard");
             indoorGame.setPlayerName(TeamType.GUEST, 20, "Nicolas Rossard");
             indoorGame.setPlayerName(TeamType.GUEST, 21, "Barthélémy Chinenyeze");
+
+            indoorGame.setCoachName(TeamType.GUEST, "Laurent Tillie");
         } else {
             storedTeamsService.copyTeam(teamFrance, indoorGame, TeamType.GUEST);
         }
@@ -268,6 +272,10 @@ public class BrazilFranceIndoorGame {
         storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, indoorGame, TeamType.HOME);
         storedTeamsService.createAndSaveTeamFrom(GameType.INDOOR, indoorGame, TeamType.GUEST);
         storedLeaguesService.createAndSaveLeagueFrom(indoorGame.getLeague());
+
+        indoorGame.setReferee1Name("Referee 1");
+        indoorGame.setReferee2Name("Referee 2");
+        indoorGame.setScorerName("Scorer");
 
         indoorGame.startMatch();
 

@@ -204,6 +204,7 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
 
         dest.setCaptain(teamType, source.getCaptain());
+        dest.setCoachName(teamType, source.getCoach());
     }
 
     @Override
@@ -229,6 +230,7 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
 
         dest.setCaptain(source.getCaptain(teamType));
+        dest.setCoach(source.getCoachName(teamType));
     }
 
     private void copyTeam(IBaseTeam source, IBaseTeam dest, TeamType teamType) {
@@ -257,6 +259,7 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
 
         dest.setCaptain(teamType, source.getCaptain(teamType));
+        dest.setCoachName(teamType, source.getCoachName(teamType));
     }
 
     // Read saved teams

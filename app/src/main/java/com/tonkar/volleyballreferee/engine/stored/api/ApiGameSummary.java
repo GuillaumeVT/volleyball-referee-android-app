@@ -101,6 +101,15 @@ public class ApiGameSummary {
     @ColumnInfo(name = "score")
     @SerializedName("score")
     private String     score;
+    @Ignore
+    @SerializedName("referee1Name")
+    private String     referee1Name;
+    @Ignore
+    @SerializedName("referee2Name")
+    private String     referee2Name;
+    @Ignore
+    @SerializedName("scorerName")
+    private String     scorerName;
 
     public ApiGameSummary() {
         id = "";
@@ -128,6 +137,9 @@ public class ApiGameSummary {
         rulesId = null;
         rulesName = "";
         score = "";
+        referee1Name = "";
+        referee2Name = "";
+        scorerName = "";
     }
 
 }

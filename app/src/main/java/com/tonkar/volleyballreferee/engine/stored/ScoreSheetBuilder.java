@@ -12,6 +12,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
@@ -154,6 +155,7 @@ public class ScoreSheetBuilder {
         mBody.appendChild(createStoredGameHeader().addClass("new-page-for-printers"));
         mBody.appendChild(createRemarks());
         mBody.appendChild(createSignatures());
+        mBody.appendChild(createFooter());
 
         return mDocument.toString();
     }
@@ -632,10 +634,12 @@ public class ScoreSheetBuilder {
         captainSignaturesDiv.appendChild(createCaptainSignatureDiv(TeamType.HOME)).appendChild(createSpacingDiv()).appendChild(createCaptainSignatureDiv(TeamType.GUEST));
         cardDiv.appendChild(captainSignaturesDiv);
 
-        Element coachSignaturesDiv = new Element("div");
-        coachSignaturesDiv.addClass("div-grid-1-2-3").addClass("spacing-before");
-        coachSignaturesDiv.appendChild(createCoachSignaturesDiv(TeamType.HOME)).appendChild(createSpacingDiv()).appendChild(createCoachSignaturesDiv(TeamType.GUEST));
-        cardDiv.appendChild(coachSignaturesDiv);
+        if (GameType.INDOOR.equals(mStoredGame.getKind()) || GameType.INDOOR_4X4.equals(mStoredGame.getKind())) {
+            Element coachSignaturesDiv = new Element("div");
+            coachSignaturesDiv.addClass("div-grid-1-2-3").addClass("spacing-before");
+            coachSignaturesDiv.appendChild(createCoachSignaturesDiv(TeamType.HOME)).appendChild(createSpacingDiv()).appendChild(createCoachSignaturesDiv(TeamType.GUEST));
+            cardDiv.appendChild(coachSignaturesDiv);
+        }
 
         return cardDiv;
     }
@@ -746,6 +750,18 @@ public class ScoreSheetBuilder {
         return img;
     }
 
+    private Element createFooter() {
+        Element div = new Element("div");
+        div.addClass("div-footer");
+        div.appendText("Powered by Volleyball Referee");
+
+        Element vbrLogo = new Element("div");
+        vbrLogo.addClass("vbr-logo-image");
+        div.appendChild(vbrLogo);
+
+        return div;
+    }
+
     private String createStoredIndoor4x4Game() {
         mBody.appendChild(createStoredGameHeader());
         mBody.appendChild(createStoredTeams());
@@ -779,6 +795,7 @@ public class ScoreSheetBuilder {
         mBody.appendChild(createStoredGameHeader().addClass("new-page-for-printers"));
         mBody.appendChild(createRemarks());
         mBody.appendChild(createSignatures());
+        mBody.appendChild(createFooter());
 
         return mDocument.toString();
     }
@@ -865,6 +882,7 @@ public class ScoreSheetBuilder {
         mBody.appendChild(createStoredGameHeader().addClass("new-page-for-printers"));
         mBody.appendChild(createRemarks());
         mBody.appendChild(createSignatures());
+        mBody.appendChild(createFooter());
 
         return mDocument.toString();
     }
@@ -898,6 +916,7 @@ public class ScoreSheetBuilder {
         mBody.appendChild(createStoredGameHeader().addClass("new-page-for-printers"));
         mBody.appendChild(createRemarks());
         mBody.appendChild(createSignatures());
+        mBody.appendChild(createFooter());
 
         return mDocument.toString();
     }
@@ -1207,6 +1226,25 @@ public class ScoreSheetBuilder {
                 "      align-items: stretch;\n" +
                 "      align-content: center;\n" +
                 "      justify-content: center;\n" +
+                "    }\n" +
+                "    .div-footer {\n" +
+                "      font-size: 10px;\n" +
+                "      position: fixed;\n" +
+                "      display: flex;\n" +
+                "      flex-flow: row wrap;\n" +
+                "      align-items: center;\n" +
+                "      align-content: center;\n" +
+                "      justify-content: center;\n" +
+                "      bottom: 12px;\n" +
+                "      right: 12px;\n" +
+                "    }\n" +
+                "    .vbr-logo-image {\n" +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.mipmap.ic_launcher_round, 128, 128)) +
+                "      background-repeat: no-repeat;\n" +
+                "      background-size: 100% 100%;\n" +
+                "      width: 16px;\n" +
+                "      height: 16px;\n" +
+                "      margin-left: 6px;\n" +
                 "    }\n" +
                 "    .cell {\n" +
                 "      min-width: 22px;\n" +

@@ -225,26 +225,6 @@ public class BeachGame extends Game implements IBeachTeam {
     }
 
     @Override
-    public void setCaptain(TeamType teamType, int number) {
-        getTeamDefinition(teamType).setCaptain(number);
-    }
-
-    @Override
-    public int getCaptain(TeamType teamType) {
-        return getTeamDefinition(teamType).getCaptain();
-    }
-
-    @Override
-    public java.util.Set<Integer> getPossibleCaptains(TeamType teamType) {
-        return getTeamDefinition(teamType).getPossibleCaptains();
-    }
-
-    @Override
-    public boolean isCaptain(TeamType teamType, int number) {
-        return getTeamDefinition(teamType).isCaptain(number);
-    }
-
-    @Override
     public void restoreGame(IStoredGame storedGame) {
         if (GameStatus.LIVE.equals(storedGame.getMatchStatus())) {
             startMatch();

@@ -65,6 +65,12 @@ public class ApiGame {
     private long              startTime;
     @SerializedName("endTime")
     private long              endTime;
+    @SerializedName("referee1")
+    private String            referee1Name;
+    @SerializedName("referee2")
+    private String            referee2Name;
+    @SerializedName("scorer")
+    private String            scorerName;
 
     public ApiGame() {
         id = UUID.randomUUID().toString();
@@ -91,6 +97,9 @@ public class ApiGame {
         score = "";
         startTime = 0L;
         endTime = 0L;
+        referee1Name = "";
+        referee2Name = "";
+        scorerName = "";
     }
 
 }

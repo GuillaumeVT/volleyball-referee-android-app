@@ -25,7 +25,6 @@ import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -116,12 +115,7 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
     }
 
     private void showSignatureDialog() {
-        String homeTeamName = mStoredGame.getTeamName(TeamType.HOME);
-        String guestTeamName = mStoredGame.getTeamName(TeamType.GUEST);
-        String homeCaptainName = mStoredGame.getPlayerName(TeamType.HOME, mStoredGame.getCaptain(TeamType.HOME));
-        String guestCaptainName = mStoredGame.getPlayerName(TeamType.GUEST, mStoredGame.getCaptain(TeamType.GUEST));
-
-        SignatureDialogFragment signatureDialogFragment = SignatureDialogFragment.newInstance(homeTeamName, guestTeamName, homeCaptainName, guestCaptainName);
+        SignatureDialogFragment signatureDialogFragment = SignatureDialogFragment.newInstance(mStoredGame);
         signatureDialogFragment.show(getSupportFragmentManager(), "signature_dialog");
     }
 

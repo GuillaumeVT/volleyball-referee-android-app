@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitEnd"
-                        app:srcCompat="@mipmap/ic_launcher_foreground" />
+                        app:srcCompat="@mipmap/ic_launcher_round" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -138,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="fitEnd"
-                        app:srcCompat="@mipmap/ic_launcher_foreground" />
+                        app:srcCompat="@mipmap/ic_launcher_round" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout

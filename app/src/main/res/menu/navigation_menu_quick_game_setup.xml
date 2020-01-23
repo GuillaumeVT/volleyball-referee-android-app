@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/teams_tab"
-        android:icon="@drawable/ic_court_position_tab"
-        android:title="@string/teams_tab"/>
+            android:id="@+id/teams_tab"
+            android:icon="@drawable/ic_court_position_tab"
+            android:title="@string/teams_tab" />
 
     <item
-        android:id="@+id/rules_tab"
-        android:icon="@drawable/ic_rules_tab"
-        android:title="@string/rules_tab"/>
+            android:id="@+id/rules_tab"
+            android:icon="@drawable/ic_rules_tab"
+            android:title="@string/rules_tab" />
+
+    <item
+            android:id="@+id/misc_tab"
+            android:icon="@drawable/ic_misc_tab"
+            android:title="@string/misc_tab" />
 
 </menu>

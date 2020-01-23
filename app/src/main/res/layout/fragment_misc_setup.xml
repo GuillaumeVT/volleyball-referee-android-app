@@ -78,4 +78,70 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/referee1_name_input_layout"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            app:endIconMode="clear_text">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/referee1_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/referee2_name_input_layout"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            app:endIconMode="clear_text">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/referee2_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/scorer_name_input_layout"
+            style="@style/AppTheme.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            app:endIconMode="clear_text">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/scorer_name_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/default_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

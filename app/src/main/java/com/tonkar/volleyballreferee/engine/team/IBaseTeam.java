@@ -97,4 +97,8 @@ public interface IBaseTeam {
 
     boolean isCaptain(TeamType teamType, int number);
 
+    String getCoachName(TeamType teamType);
+
+    void setCoachName(TeamType teamType, String name);
+
 }
