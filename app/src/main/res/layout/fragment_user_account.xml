@@ -90,14 +90,15 @@
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/user_sign_out_button"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="@dimen/small_margin_size"
                     android:text="@string/user_sign_out"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorOnSurface"
+                    android:textColor="@color/colorSurface"
+                    app:backgroundTint="@color/colorOnSurface"
                     app:strokeColor="@color/colorOnSurface" />
 
         </LinearLayout>
@@ -220,14 +221,15 @@
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/user_password_update_button"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="@dimen/small_margin_size"
                     android:text="@string/user_password_update"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorOnPrimary"
+                    app:backgroundTint="@color/colorPrimary"
                     app:strokeColor="@color/colorPrimary" />
 
         </LinearLayout>
