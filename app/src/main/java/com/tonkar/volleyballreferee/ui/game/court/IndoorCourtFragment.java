@@ -179,10 +179,12 @@ public class IndoorCourtFragment extends CourtFragment {
             update(teamType);
         } else {
             MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
-            updateService(teamType, positionType, positionButton);
+            updateService();
             updatePosition(teamType, number, positionButton);
-            updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
-            updateSubstitution(teamType, number, getTeamSubstitutions(teamType).get(positionType));
+            if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
+                updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
+                updateSubstitution(teamType, number, getTeamSubstitutions(teamType).get(positionType));
+            }
             UiUtils.animateBounce(mView.getContext(), positionButton);
 
             checkCaptain(teamType, number);
@@ -260,16 +262,19 @@ public class IndoorCourtFragment extends CourtFragment {
         for (Integer number : players) {
             final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
             MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
-            updateService(teamType, positionType, positionButton);
-            updatePosition(teamType, number, positionButton);
-            updateSanction(teamType, number, teamSanctionImages.get(positionType));
-            updateSubstitution(teamType, number, teamSubstitutions.get(positionType));
+            if (positionButton != null) {
+                updatePosition(teamType, number, positionButton);
+                if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
+                    updateSanction(teamType, number, teamSanctionImages.get(positionType));
+                    updateSubstitution(teamType, number, teamSubstitutions.get(positionType));
+                }
+            }
         }
 
+        updateService();
         confirmStartingLineup(teamType);
         checkCaptain(teamType, -1);
-        checkExplusions(TeamType.HOME);
-        checkExplusions(TeamType.GUEST);
+        checkExplusions(teamType);
     }
 
     private void confirmStartingLineup(TeamType teamType) {
@@ -368,13 +373,15 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void checkExplusions(TeamType teamType) {
-        final Set<Integer> players = mClassicTeam.getPlayersOnCourt(teamType);
-        final Set<Integer> excludedNumbers = mGame.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+        if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
+            final Set<Integer> players = mClassicTeam.getPlayersOnCourt(teamType);
+            final Set<Integer> excludedNumbers = mGame.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
 
-        for (Integer number : players) {
-            if (excludedNumbers.contains(number)) {
-                final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
-                showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
+            for (Integer number : players) {
+                if (excludedNumbers.contains(number)) {
+                    final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
+                    showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
+                }
             }
         }
     }
@@ -431,13 +438,22 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void updatePosition(TeamType teamType, int number, MaterialButton positionButton) {
-        positionButton.setText(UiUtils.formatNumberFromLocale(number));
+        if (number >= 0) {
+            positionButton.setText(UiUtils.formatNumberFromLocale(number));
+        }
         UiUtils.styleIndoorTeamButton(mView.getContext(), mClassicTeam, teamType, number, positionButton);
     }
 
-    protected void updateService(TeamType teamType, PositionType positionType, MaterialButton positionButton) {
-        if (mGame.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
+    protected void updateService() {
+        updateService(mTeamOnLeftSide);
+        updateService(mTeamOnRightSide);
+    }
+
+    private void updateService(TeamType teamType) {
+        MaterialButton positionButton = getTeamPositions(teamType).get(PositionType.POSITION_1);
+        if (mGame.getServingTeam().equals(teamType) && positionButton != null) {
             positionButton.setIconResource(R.drawable.ic_service);
+            UiUtils.styleIndoorTeamButton(mView.getContext(), mClassicTeam, teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), positionButton);
         } else {
             positionButton.setIcon(null);
         }
@@ -477,16 +493,12 @@ public class IndoorCourtFragment extends CourtFragment {
     @Override
     public void onServiceSwapped(TeamType teamType, boolean isStart) {
         if (isStart) {
-            if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
-                updateService(teamType, PositionType.POSITION_1, getTeamPositions(teamType).get(PositionType.POSITION_1));
-                updatePosition(teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), getTeamPositions(teamType).get(PositionType.POSITION_1));
-            }
+            updateService();
+
+            updatePosition(teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), getTeamPositions(teamType).get(PositionType.POSITION_1));
 
             TeamType otherTeamType = teamType.other();
-            if (mClassicTeam.isStartingLineupConfirmed(otherTeamType)) {
-                updateService(otherTeamType, PositionType.POSITION_1, getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
-                updatePosition(otherTeamType, mClassicTeam.getPlayerAtPosition(otherTeamType, PositionType.POSITION_1), getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
-            }
+            updatePosition(otherTeamType, mClassicTeam.getPlayerAtPosition(otherTeamType, PositionType.POSITION_1), getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
         }
     }
 }

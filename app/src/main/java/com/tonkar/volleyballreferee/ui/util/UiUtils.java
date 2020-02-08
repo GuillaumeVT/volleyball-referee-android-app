@@ -80,7 +80,9 @@ public class UiUtils {
     public static void styleIndoorTeamButton(Context context, IClassicTeam indoorTeam, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        if (indoorTeam.isLibero(teamType, number)) {
+        if (number < 0) {
+            colorTeamButton(context, indoorTeam.getTeamColor(teamType), button);
+        } else if (indoorTeam.isLibero(teamType, number)) {
             colorTeamButton(context, indoorTeam.getLiberoColor(teamType), button);
         } else {
             colorTeamButton(context, indoorTeam.getTeamColor(teamType), button);
@@ -93,7 +95,9 @@ public class UiUtils {
     public static void styleTeamButton(Context context, IBaseTeam teamService, TeamType teamType, int number, MaterialButton button) {
         button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        if (teamService.isLibero(teamType, number)) {
+        if (number < 0) {
+            colorTeamButton(context, teamService.getTeamColor(teamType), button);
+        } else if (teamService.isLibero(teamType, number)) {
             colorTeamButton(context, teamService.getLiberoColor(teamType), button);
         } else {
             colorTeamButton(context, teamService.getTeamColor(teamType), button);
@@ -106,7 +110,9 @@ public class UiUtils {
     public static void styleTeamText(Context context, IBaseTeam teamService, TeamType teamType, int number, TextView text) {
         text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
 
-        if (teamService.isLibero(teamType, number)) {
+        if (number < 0) {
+            colorTeamText(context, teamService.getTeamColor(teamType), text);
+        } else if (teamService.isLibero(teamType, number)) {
             colorTeamText(context, teamService.getLiberoColor(teamType), text);
         } else {
             colorTeamText(context, teamService.getTeamColor(teamType), text);

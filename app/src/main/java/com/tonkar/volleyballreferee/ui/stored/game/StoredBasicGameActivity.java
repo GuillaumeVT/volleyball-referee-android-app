@@ -2,6 +2,7 @@ package com.tonkar.volleyballreferee.ui.stored.game;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
@@ -35,9 +36,14 @@ public class StoredBasicGameActivity extends StoredGameActivity {
 
         updateGame();
 
+        initScoresheetAvailability();
+
         ListView setsList = findViewById(R.id.stored_game_set_list);
         LadderListAdapter ladderListAdapter = new LadderListAdapter(getLayoutInflater(), mStoredGame, mStoredGame, mStoredGame, mStoredGame, false);
         setsList.setAdapter(ladderListAdapter);
     }
 
+    public void generateScoreSheet(View view) {
+        super.generateScoreSheet();
+    }
 }

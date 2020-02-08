@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
@@ -122,7 +121,8 @@ public class SnowCourtFragment extends IndoorCourtFragment {
         updateService();
     }
 
-    private void updateService() {
+    @Override
+    protected void updateService() {
         TeamType servingTeam = mGame.getServingTeam();
         if (servingTeam.equals(mTeamOnLeftSide)) {
             mRightServiceImage1.setVisibility(View.INVISIBLE);
@@ -140,9 +140,6 @@ public class SnowCourtFragment extends IndoorCourtFragment {
             mRightServiceImage3.setVisibility(View.VISIBLE);
         }
     }
-
-    @Override
-    protected void updateService(TeamType teamType, PositionType positionType, MaterialButton positionButton) {}
 
     @Override
     public void onServiceSwapped(TeamType teamType, boolean isStart) {

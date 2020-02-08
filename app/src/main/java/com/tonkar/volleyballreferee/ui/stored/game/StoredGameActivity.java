@@ -1,6 +1,9 @@
 package com.tonkar.volleyballreferee.ui.stored.game;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.chip.Chip;
@@ -25,6 +29,7 @@ import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameHandler;
+import com.tonkar.volleyballreferee.ui.stored.game.scoresheet.ScoreSheetActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
@@ -151,6 +156,33 @@ public abstract class StoredGameActivity extends AppCompatActivity {
             leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , mStoredGame.getLeague().getName(), mStoredGame.getLeague().getDivision()));
         }
         leagueText.setVisibility(mStoredGame.getLeague() == null || mStoredGame.getLeague().getName().isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    protected void initScoresheetAvailability() {
+        View generateScoreSheetLayout = findViewById(R.id.generate_score_sheet_layout);
+
+        if (!GameType.TIME.equals(mStoredGame.getKind())
+                && PrefUtils.isScoreSheetsPurchased(this)
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            generateScoreSheetLayout.setVisibility(View.VISIBLE);
+        } else {
+            generateScoreSheetLayout.setVisibility(View.GONE);
+        }
+    }
+
+    protected void generateScoreSheet() {
+        Log.i(Tags.STORED_GAMES, "Generate scoresheet");
+
+        if (!GameType.TIME.equals(mStoredGame.getKind())
+                && PrefUtils.isScoreSheetsPurchased(this)
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(this, ScoreSheetActivity.class);
+            intent.putExtra("game", mGameId);
+            startActivity(intent);
+            UiUtils.animateForward(this);
+        }
     }
 
     private void toggleGameIndexed() {
