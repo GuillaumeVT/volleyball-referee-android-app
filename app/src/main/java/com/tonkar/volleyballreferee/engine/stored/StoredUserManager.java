@@ -196,6 +196,7 @@ public class StoredUserManager implements StoredUserService {
 
     @Override
     public void syncUser() {
+        refreshSubscriptionPurchaseToken();
         downloadFriendsAndRequests(null);
     }
 
@@ -360,6 +361,26 @@ public class StoredUserManager implements StoredUserService {
             });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+        }
+    }
+
+    private void refreshSubscriptionPurchaseToken() {
+        if (PrefUtils.canSync(mContext) && PrefUtils.isWebPremiumSubscribed(mContext)) {
+            Request request = ApiUtils.buildPost(String.format(Locale.US, "%s/users/%s", ApiUtils.BASE_URL, PrefUtils.getWebPremiumBillingToken(mContext)), PrefUtils.getUserToken(mContext));
+
+            ApiUtils.getInstance().getHttpClient(mContext).newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    call.cancel();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
+                    if (response.code() != HttpURLConnection.HTTP_OK) {
+                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while refreshing subscription purchase token", response.code()));
+                    }
+                }
+            });
         }
     }
 

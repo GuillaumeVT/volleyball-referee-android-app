@@ -6,8 +6,8 @@ android {
         applicationId "com.tonkar.volleyballreferee"
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 30205
-        versionName "3.2.5"
+        versionCode 30206
+        versionName "3.2.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
@@ -38,23 +38,23 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.work:work-runtime:2.3.0'
-    implementation 'androidx.room:room-runtime:2.2.3'
-    annotationProcessor 'androidx.room:room-compiler:2.2.3'
+    implementation 'androidx.work:work-runtime:2.3.2'
+    implementation 'androidx.room:room-runtime:2.2.4'
+    annotationProcessor 'androidx.room:room-compiler:2.2.4'
     implementation 'com.android.billingclient:billing:2.1.0'
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'com.google.android:flexbox:2.0.0'
+    implementation 'com.google.android:flexbox:2.0.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.okhttp3:okhttp:3.12.6'
-    implementation 'org.jsoup:jsoup:1.12.1'
+    implementation 'org.jsoup:jsoup:1.12.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'

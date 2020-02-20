@@ -10,11 +10,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.SkuDetails;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.billing.BillingService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
@@ -33,7 +36,9 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         super(context, R.layout.purchases_list_item);
         mLayoutInflater = layoutInflater;
         mBillingService = billingService;
-        mPurchasesList = mBillingService.getSkuDetailsList();
+        mPurchasesList = new ArrayList<>();
+        mPurchasesList.addAll(mBillingService.getSkuDetailsList(BillingClient.SkuType.SUBS));
+        mPurchasesList.addAll(mBillingService.getSkuDetailsList(BillingClient.SkuType.INAPP));
     }
 
     @Override
@@ -75,37 +80,59 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
     }
 
     private void updatePurchase(ViewHolder viewHolder, final SkuDetails skuDetails) {
+        final String skuType;
+
         viewHolder.purchaseTitle.setText(skuDetails.getTitle());
         switch (skuDetails.getSku()) {
             case BillingService.WEB_PREMIUM:
                 viewHolder.purchaseSummary.setText(R.string.purchase_web_premium_summary);
+                skuType = BillingClient.SkuType.INAPP;
+                break;
+            case BillingService.WEB_PREMIUM_SUBSCRIPTION:
+                viewHolder.purchaseSummary.setText(R.string.purchase_web_premium_summary);
+                skuType = BillingClient.SkuType.SUBS;
                 break;
             case BillingService.SCORE_SHEETS:
                 viewHolder.purchaseSummary.setText(R.string.purchase_score_sheets_summary);
+                skuType = BillingClient.SkuType.INAPP;
                 break;
             default:
                 viewHolder.purchaseSummary.setText("");
+                skuType = BillingClient.SkuType.INAPP;
                 break;
         }
 
-        if (mBillingService.isPurchased(skuDetails.getSku())) {
+        if (mBillingService.isPurchased(skuType, skuDetails.getSku())) {
             viewHolder.purchaseButton.setText(R.string.already_purchased);
             viewHolder.purchaseButton.setOnClickListener(null);
             viewHolder.purchaseButton.setClickable(false);
             viewHolder.purchaseButton.setIconResource(R.drawable.ic_check);
-            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorPrimary)));
+            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorOnPrimary)));
         } else {
             viewHolder.purchaseButton.setText(skuDetails.getPrice());
             viewHolder.purchaseButton.setClickable(true);
             viewHolder.purchaseButton.setIconResource(R.drawable.ic_purchase);
-            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorPrimary)));
-            viewHolder.purchaseButton.setOnClickListener(view -> mBillingService.executeServiceRequest(() -> mBillingService.launchPurchase(skuDetails)));
+            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorOnPrimary)));
+            viewHolder.purchaseButton.setOnClickListener(view -> mBillingService.executeServiceRequest(skuType, () -> mBillingService.launchPurchase(skuType, skuDetails)));
         }
     }
 
     void updatePurchasesList() {
         mPurchasesList.clear();
-        mPurchasesList.addAll(mBillingService.getSkuDetailsList());
+        for (SkuDetails skuDetails : mBillingService.getSkuDetailsList(BillingClient.SkuType.SUBS)) {
+            if (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(skuDetails.getSku())) {
+                if (!PrefUtils.isWebPremiumSubscribed(getContext()) && !PrefUtils.isWebPremiumPurchased(getContext())) {
+                    mPurchasesList.add(skuDetails);
+                }
+            }
+        }
+        for (SkuDetails skuDetails : mBillingService.getSkuDetailsList(BillingClient.SkuType.INAPP)) {
+            if (BillingService.SCORE_SHEETS.equals(skuDetails.getSku())) {
+                if (!PrefUtils.isScoreSheetsPurchased(getContext())) {
+                    mPurchasesList.add(skuDetails);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 }

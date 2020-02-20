@@ -45,7 +45,7 @@ public class UserActivity extends ProgressIndicatorActivity {
         } else if (PrefUtils.shouldSignIn(this)) {
             showProgressIndicator();
             StoredUserService storedUserService = new StoredUserManager(this);
-            storedUserService.getUser(PrefUtils.getWebPremiumPurchaseToken(this), new AsyncUserRequestListener() {
+            storedUserService.getUser(PrefUtils.getWebPremiumBillingToken(this), new AsyncUserRequestListener() {
                 @Override
                 public void onUserReceived(ApiUserSummary user) {
                     runOnUiThread(() -> {

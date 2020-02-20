@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.billingclient.api.BillingClient;
 import com.google.android.material.navigation.NavigationView;
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
@@ -204,6 +205,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
     protected void computePurchaseItemVisibility(MenuItem item) {
         final BillingService billingService = new BillingManager(this);
         billingService.addBillingListener(() -> item.setVisible(!billingService.isAllPurchased()));
-        billingService.executeServiceRequest(() -> item.setVisible(!billingService.isAllPurchased()));
+        billingService.executeServiceRequest(BillingClient.SkuType.SUBS, () -> {});
+        billingService.executeServiceRequest(BillingClient.SkuType.INAPP, () -> item.setVisible(!billingService.isAllPurchased()));
     }
 }

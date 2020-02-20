@@ -46,20 +46,11 @@ public class UserSignUpFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_user_sign_up, container, false);
 
         mNewUser = new ApiNewUser();
-        mNewUser.setPurchaseToken(PrefUtils.getWebPremiumPurchaseToken(getContext()));
+        mNewUser.setPurchaseToken(PrefUtils.getWebPremiumBillingToken(getContext()));
+        mNewUser.setId(UUID.randomUUID().toString());
         mNewUser.setEmail("");
+        mNewUser.setPseudo("");
         mNewUser.setPassword("");
-
-        if (PrefUtils.oldUserExists(getContext())) {
-            mNewUser.setId(PrefUtils.getOldUserId(getContext()));
-            mNewUser.setPseudo(PrefUtils.getOldUserPseudo(getContext()));
-            EditText pseudoInputText = mView.findViewById(R.id.user_pseudo_input_text);
-            pseudoInputText.setText(mNewUser.getPseudo());
-            pseudoInputText.setEnabled(false);
-        } else {
-            mNewUser.setId(UUID.randomUUID().toString());
-            mNewUser.setPseudo("");
-        }
 
         Button signUpButton = mView.findViewById(R.id.user_sign_up_button);
         signUpButton.setOnClickListener(button -> onSignUpClicked());

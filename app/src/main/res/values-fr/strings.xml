@@ -76,7 +76,7 @@
     <string name="user_confirm_new_password_hint">Confirmer nouveau mot de passe</string>
     <string name="user_password_not_matching">Les mots de passe sont différents</string>
     <string name="user_password_error">Mot de passe incorrect</string>
-    <string name="user_locked_error">Le compte est bloqué pendant 30 minutes suite à de trop nombreuses tentatives de connexion</string>
+    <string name="user_locked_error">L\'abonnement est expiré ou le compte est bloqué pendant 30 minutes suite à de trop nombreuses tentatives de connexion</string>
     <string name="user_email_pseudo_conflict">Ce pseudo ou cette addresse e-mail existent déjà</string>
     <string name="user_request_error">Erreur lors du traitement de la requête</string>
     <string name="user_signed_in_as_pseudo">Connecté en tant que %s</string>

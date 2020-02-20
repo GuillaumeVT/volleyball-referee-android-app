@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30205" translatable="false">
+    <string name="rn_30206" translatable="false">
         New in this release:
-        \n\n\u2022 Create PDF score sheets for scoreboard games.
-        \n\n\u2022 Show the serving players on court (improved).
-        \n\n\u2022 Misc bug fixes.
+        \n\n\u2022 For new users: web services become a 3-month subscription.
     </string>
 
     <!-- General actions -->
@@ -83,7 +81,7 @@
     <string name="user_confirm_new_password_hint">Confirm new password</string>
     <string name="user_password_not_matching">Passwords don\'t match</string>
     <string name="user_password_error">Wrong password</string>
-    <string name="user_locked_error">Account is locked for 30 minutes after too many failed attempts to sign in</string>
+    <string name="user_locked_error">Subscription is expired or account is locked for 30 minutes after too many failed attempts to sign in</string>
     <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
     <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Signed in as %s</string>

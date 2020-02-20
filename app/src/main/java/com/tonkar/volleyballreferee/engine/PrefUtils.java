@@ -16,16 +16,16 @@ import java.util.TimeZone;
 
 public class PrefUtils {
 
-    public static final  String PREF_KEEP_SCREEN_ON            = "pref_keep_screen_on";
-    public static final  String PREF_INTERACTIVE_NOTIFICATIONS = "pref_interactive_notification";
-    private static final String PREF_USER                      = "pref_user";
-    private static final String PREF_USER_TOKEN                = "pref_user_token";
-    private static final String PREF_USER_TOKEN_EXPIRY         = "pref_user_token_expiry";
-    private static final String PREF_WEB_PREMUIM_TOKEN         = "pref_web_premium_token";
-    private static final String PREF_SCORE_SHEETS_TOKEN        = "pref_score_sheets_token";
-    private static final String PREF_USER_ID                   = "pref_user_identifier";
-    private static final String PREF_USER_PSEUDO               = "pref_user_pseudo";
-    public static final  String PREF_NIGHT_MODE                = "pref_night_mode";
+    public static final String PREF_KEEP_SCREEN_ON            = "pref_keep_screen_on";
+    public static final String PREF_NIGHT_MODE                = "pref_night_mode";
+    public static final String PREF_INTERACTIVE_NOTIFICATIONS = "pref_interactive_notification";
+
+    private static final String PREF_USER                                   = "pref_user";
+    private static final String PREF_USER_TOKEN                             = "pref_user_token";
+    private static final String PREF_USER_TOKEN_EXPIRY                      = "pref_user_token_expiry";
+    private static final String PREF_WEB_PREMIUM_BILLING_TOKEN              = "pref_web_premium_token";
+    private static final String PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN = "pref_web_premium_subscription_token";
+    private static final String PREF_SCORE_SHEETS_BILLING_TOKEN             = "pref_score_sheets_token";
 
     public static void signIn(Context context, ApiUserToken userToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -88,60 +88,64 @@ public class PrefUtils {
 
     public static void purchaseWebPremium(Context context, String purchaseToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_WEB_PREMUIM_TOKEN, purchaseToken).apply();
+        sharedPreferences.edit().putString(PREF_WEB_PREMIUM_BILLING_TOKEN, purchaseToken).apply();
     }
 
     public static void unpurchaseWebPremium(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_WEB_PREMUIM_TOKEN).apply();
+        sharedPreferences.edit().remove(PREF_WEB_PREMIUM_BILLING_TOKEN).apply();
     }
 
     public static boolean isWebPremiumPurchased(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_WEB_PREMUIM_TOKEN, ""));
+        return !"".equals(sharedPreferences.getString(PREF_WEB_PREMIUM_BILLING_TOKEN, ""));
     }
 
-    public static String getWebPremiumPurchaseToken(Context context) {
+    public static void subscribeWebPremium(Context context, String subscriptionToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString(PREF_WEB_PREMUIM_TOKEN, "");
+        sharedPreferences.edit().putString(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN, subscriptionToken).apply();
+    }
+
+    public static void unsubscribeWebPremium(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().remove(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN).apply();
+    }
+
+    public static boolean isWebPremiumSubscribed(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return !"".equals(sharedPreferences.getString(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN, ""));
+    }
+
+    public static String getWebPremiumBillingToken(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (isWebPremiumSubscribed(context)) {
+            return sharedPreferences.getString(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN, "");
+        } else {
+            return sharedPreferences.getString(PREF_WEB_PREMIUM_BILLING_TOKEN, "");
+        }
     }
 
     public static void purchaseScoreSheets(Context context, String purchaseToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_SCORE_SHEETS_TOKEN, purchaseToken).apply();
+        sharedPreferences.edit().putString(PREF_SCORE_SHEETS_BILLING_TOKEN, purchaseToken).apply();
     }
 
     public static void unpurchaseScoreSheets(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_SCORE_SHEETS_TOKEN).apply();
+        sharedPreferences.edit().remove(PREF_SCORE_SHEETS_BILLING_TOKEN).apply();
     }
 
     public static boolean isScoreSheetsPurchased(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_SCORE_SHEETS_TOKEN, ""));
-    }
-
-    public static boolean oldUserExists(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_USER_PSEUDO, "")) && !"".equals(sharedPreferences.getString(PREF_USER_ID, ""));
-    }
-
-    public static String getOldUserId(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString(PREF_USER_ID, "");
-    }
-
-    public static String getOldUserPseudo(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString(PREF_USER_PSEUDO, "");
+        return !"".equals(sharedPreferences.getString(PREF_SCORE_SHEETS_BILLING_TOKEN, ""));
     }
 
     public static boolean canSync(Context context) {
-        return isWebPremiumPurchased(context) && ApiUtils.isConnectedToInternet(context) && isSignedIn(context);
+        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && ApiUtils.isConnectedToInternet(context) && isSignedIn(context);
     }
 
     public static boolean shouldSignIn(Context context) {
-        return isWebPremiumPurchased(context) && ApiUtils.isConnectedToInternet(context) && !isSignedIn(context);
+        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && ApiUtils.isConnectedToInternet(context) && !isSignedIn(context);
     }
 
     public static void applyNightMode(Context context) {
@@ -173,4 +177,5 @@ public class PrefUtils {
         sharedPreferences.edit().putString(PREF_NIGHT_MODE, nightMode).apply();
         applyNightMode(context);
     }
+
 }

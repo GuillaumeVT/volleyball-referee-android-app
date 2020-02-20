@@ -45,8 +45,7 @@
                     android:textSize="@dimen/small_text_size"
                     app:backgroundTint="@color/colorPrimary"
                     app:icon="@drawable/ic_purchase"
-                    app:iconTint="@color/colorOnPrimary"
-                    app:strokeColor="@color/colorPrimary" />
+                    app:iconTint="@color/colorOnPrimary" />
 
         </LinearLayout>
 
