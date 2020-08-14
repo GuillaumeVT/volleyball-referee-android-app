@@ -102,7 +102,6 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueSummary
             mFilteredStoredLeagueList.clear();
 
             if (results.values != null) {
-                mFilteredStoredLeagueList.clear();
                 mFilteredStoredLeagueList.addAll((Collection<? extends ApiLeagueSummary>) results.values);
             }
 

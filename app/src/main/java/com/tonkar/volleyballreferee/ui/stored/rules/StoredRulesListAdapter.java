@@ -145,7 +145,6 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
             mFilteredStoredRulesList.clear();
 
             if (results.values != null) {
-                mFilteredStoredRulesList.clear();
                 mFilteredStoredRulesList.addAll((Collection<ApiRulesSummary>) results.values);
             }
 

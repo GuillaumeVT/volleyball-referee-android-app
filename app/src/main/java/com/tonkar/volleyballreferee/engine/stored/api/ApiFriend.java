@@ -27,7 +27,7 @@ public class ApiFriend {
         this("", "");
     }
 
-    public ApiFriend(String id, String pseudo) {
+    public ApiFriend(@NonNull String id, @NonNull String pseudo) {
         this.id = id;
         this.pseudo = pseudo;
     }

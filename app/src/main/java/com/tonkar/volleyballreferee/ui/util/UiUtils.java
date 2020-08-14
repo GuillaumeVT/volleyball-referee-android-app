@@ -246,7 +246,7 @@ public class UiUtils {
                     timeBasedGameService.stop();
                     UiUtils.navigateToHome(activity);
                 });
-                builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to stop"));
+                builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects stop"));
                 AlertDialog alertDialog = builder.show();
                 UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
             }

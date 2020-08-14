@@ -8,7 +8,7 @@
         android:padding="@dimen/tiny_margin_size"
         android:weightSum="10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/score_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
             android:textAppearance="@style/AppTheme.TextView"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/player_in_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             android:tint="@color/colorPlayerOut"
             app:srcCompat="@drawable/ic_player_out" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/player_out_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

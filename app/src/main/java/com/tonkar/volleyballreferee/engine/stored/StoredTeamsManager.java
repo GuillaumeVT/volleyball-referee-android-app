@@ -93,8 +93,6 @@ public class StoredTeamsManager implements StoredTeamsService {
 
         switch (kind) {
             case INDOOR:
-                teamDefinition = new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
-                break;
             case INDOOR_4X4:
                 teamDefinition = new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
                 break;
@@ -425,6 +423,7 @@ public class StoredTeamsManager implements StoredTeamsService {
             for (ApiTeamSummary localTeam : localTeamList) {
                 if (localTeam.getId().equals(remoteTeam.getId())) {
                     foundLocalVersion = true;
+                    break;
                 }
             }
 

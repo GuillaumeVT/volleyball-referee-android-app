@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
@@ -58,7 +59,7 @@ public class BillingManager implements BillingService {
         void startServiceConnection(final Runnable executeOnSuccess) {
             mBillingClient.startConnection(new BillingClientStateListener() {
                 @Override
-                public void onBillingSetupFinished(BillingResult billingResult) {
+                public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
                     Log.d(Tags.BILLING, String.format("Billing setup finished with response code %d", billingResult.getResponseCode()));
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                         mIsServiceConnected = true;

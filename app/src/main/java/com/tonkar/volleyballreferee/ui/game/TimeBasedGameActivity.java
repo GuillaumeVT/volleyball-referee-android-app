@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -174,13 +175,11 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_game_action_menu:
-                showGameActionMenu();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_game_action_menu) {
+            showGameActionMenu();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showGameActionMenu() {
@@ -250,7 +249,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             computeStartStopVisibility();
             runMatch();
         });
-        builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to start"));
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects start"));
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
@@ -266,7 +265,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             invalidateOptionsMenu();
             computeStartStopVisibility();
         });
-        builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses to stop"));
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects stop"));
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
@@ -401,7 +400,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof GameServiceHandler) {
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGameService);

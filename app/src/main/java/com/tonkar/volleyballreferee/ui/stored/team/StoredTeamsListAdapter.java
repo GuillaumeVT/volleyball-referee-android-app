@@ -159,7 +159,6 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
             mFilteredStoredTeamsList.clear();
 
             if (results.values != null) {
-                mFilteredStoredTeamsList.clear();
                 mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamSummary>) results.values);
             }
 

@@ -15,7 +15,7 @@
             android:layout_margin="@dimen/small_margin_size"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/league_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:visibility="gone"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/division_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/referee_spinner_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             android:layout_margin="@dimen/small_margin_size"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/referee1_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
             android:layout_margin="@dimen/small_margin_size"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/referee2_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             android:layout_margin="@dimen/small_margin_size"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/scorer_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

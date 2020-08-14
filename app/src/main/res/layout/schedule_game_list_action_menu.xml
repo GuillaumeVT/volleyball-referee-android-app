@@ -8,7 +8,7 @@
         android:gravity="start"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_reschedule_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_height="1dp"
             android:background="@color/colorSeparator" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_start_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             android:textSize="@dimen/default_text_size"
             app:drawableStartCompat="@drawable/ic_play" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_edit_start_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_height="1dp"
             android:background="@color/colorSeparator" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_delete_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

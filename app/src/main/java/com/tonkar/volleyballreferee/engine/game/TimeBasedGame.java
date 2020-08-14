@@ -497,12 +497,12 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     public void callTimeout(TeamType teamType) {}
 
     @Override
-    public int getRemainingTimeouts(TeamType teamType) {
+    public int countRemainingTimeouts(TeamType teamType) {
         return 0;
     }
 
     @Override
-    public int getRemainingTimeouts(TeamType teamType, int setIndex) {
+    public int countRemainingTimeouts(TeamType teamType, int setIndex) {
         return 0;
     }
 
@@ -880,7 +880,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {}
 
     @Override
-    public java.util.Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
+    public java.util.Set<Integer> getEvictedPlayersForCurrentSet(TeamType teamType, boolean withExpulsions, boolean withDisqualifications) {
         return new HashSet<>();
     }
 

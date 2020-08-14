@@ -7,7 +7,7 @@
         android:gravity="top|center"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -27,7 +27,7 @@
             android:layout_margin="@dimen/big_margin_size"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/rules_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -66,7 +66,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -98,7 +98,7 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -139,7 +139,7 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -162,7 +162,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -184,7 +184,7 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -207,7 +207,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -239,7 +239,7 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -262,7 +262,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -275,7 +275,7 @@
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -298,7 +298,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/rules_substitutions_limitation_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -311,7 +311,7 @@
             android:textSize="@dimen/small_text_size"
             app:drawableStartCompat="@drawable/ic_info" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -334,7 +334,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -356,7 +356,7 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -379,7 +379,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"

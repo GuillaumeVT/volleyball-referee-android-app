@@ -16,7 +16,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/friend_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                     android:textAppearance="@style/AppTheme.TextView"
                     android:textSize="@dimen/default_text_size" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

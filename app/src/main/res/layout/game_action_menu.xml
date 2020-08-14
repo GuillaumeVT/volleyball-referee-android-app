@@ -8,7 +8,7 @@
         android:gravity="start"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_navigate_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:textSize="@dimen/default_text_size"
             app:drawableStartCompat="@drawable/ic_private" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_share_game_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:textSize="@dimen/default_text_size"
             app:drawableStartCompat="@drawable/ic_link" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_toss_coin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             android:layout_height="1dp"
             android:background="@color/colorSeparator" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/action_reset_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
             android:paddingStart="@dimen/big_margin_size"
             android:paddingEnd="@dimen/big_margin_size">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/night_mode_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -163,6 +163,7 @@
     <string name="private_game_message">Le match est privé</string>
     <string name="all_timeouts_called">%s n\'a plus de temps mort disponible</string>
     <string name="all_substitutions_used">%s n\'a plus de changement disponible</string>
+    <string name="one_remaining_substitution">%s n\'a plus qu\'un seul changement disponible</string>
     <string name="sanctions_tab">Sanctions</string>
     <string name="sanction">Sanction (%s)</string>
     <string name="delay_sanction">Retard</string>

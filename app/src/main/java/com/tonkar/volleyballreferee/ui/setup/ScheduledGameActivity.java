@@ -123,6 +123,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         });
 
         final AutoCompleteTextView divisionNameInput = findViewById(R.id.division_name_input_text);
+        divisionNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         divisionNameInput.setText(mGameSummary.getDivisionName());
         divisionNameInput.setThreshold(2);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
@@ -146,6 +147,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         });
 
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
+        leagueNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         leagueNameInput.setText(mGameSummary.getLeagueName());
         leagueNameInput.setThreshold(2);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(this, getLayoutInflater(), storedLeaguesService.listLeagues(mGameSummary.getKind())));
@@ -299,13 +301,11 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                cancelGame();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_delete) {
+            cancelGame();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateGender(GenderType genderType) {

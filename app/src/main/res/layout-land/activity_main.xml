@@ -50,7 +50,7 @@
                                 android:background="@drawable/indoor_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/goto_sign_in_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                                 android:background="@drawable/beach_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/goto_colleagues_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                                 android:background="@drawable/resume_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/goto_available_games_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                                 android:background="@drawable/resume_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/resume_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                                 android:background="@drawable/indoor_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/start_indoor_6x6_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -241,7 +241,7 @@
                                 android:background="@drawable/snow_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/start_snow_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -278,7 +278,7 @@
                                 android:background="@drawable/indoor_4x4_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/start_indoor_4x4_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -324,7 +324,7 @@
                                 android:background="@drawable/beach_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/start_beach_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -361,7 +361,7 @@
                                 android:background="@drawable/indoor_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/start_score_based_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -393,7 +393,7 @@
                                 android:background="@drawable/time_based_background_gradient"
                                 android:foreground="?attr/selectableItemBackground"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/start_time_based_game_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

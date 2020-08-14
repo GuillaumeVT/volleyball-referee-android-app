@@ -83,6 +83,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         mGuestTeamCaptainButton = view.findViewById(R.id.guest_team_captain_number_button);
 
         final AutoCompleteTextView homeTeamNameInput = view.findViewById(R.id.home_team_name_input_text);
+        homeTeamNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         homeTeamNameInput.setText(mGame.getTeamName(TeamType.HOME));
         homeTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -103,6 +104,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         });
 
         final AutoCompleteTextView guestTeamNameInput = view.findViewById(R.id.guest_team_name_input_text);
+        guestTeamNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         guestTeamNameInput.setText(mGame.getTeamName(TeamType.GUEST));
         guestTeamNameInput.addTextChangedListener(new TextWatcher() {
             @Override

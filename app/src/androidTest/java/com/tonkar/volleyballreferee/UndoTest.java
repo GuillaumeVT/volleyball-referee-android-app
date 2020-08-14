@@ -306,6 +306,23 @@ public class UndoTest {
         assertEquals(7, indoorGame.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_5));
 
         List<GameEvent> gameEvents = indoorGame.getLatestGameEvents();
+
+        assertEquals(1, gameEvents.size());
+        assertEquals(TeamType.GUEST, gameEvents.get(0).getTeamType());
+        assertEquals(GameEvent.EventType.SANCTION, gameEvents.get(0).getEventType());
+        assertEquals(SanctionType.RED_DISQUALIFICATION, gameEvents.get(0).getSanction().getCard());
+
+        indoorGame.undoGameEvent(gameEvents.get(0));
+
+        gameEvents = indoorGame.getLatestGameEvents();
+        assertEquals(1, gameEvents.size());
+        assertEquals(TeamType.GUEST, gameEvents.get(0).getTeamType());
+        assertEquals(GameEvent.EventType.SUBSTITUTION, gameEvents.get(0).getEventType());
+
+        indoorGame.undoGameEvent(gameEvents.get(0));
+
+        assertEquals(5, indoorGame.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_5));
+        gameEvents = indoorGame.getLatestGameEvents();
         assertEquals(0, gameEvents.size());
 
         // Indoor 4x4
@@ -317,18 +334,36 @@ public class UndoTest {
 
         fillCourts(indoor4x4Game, 4);
 
-        indoor4x4Game.giveSanction(TeamType.GUEST, SanctionType.RED_DISQUALIFICATION, 3);
-        indoor4x4Game.substitutePlayer(TeamType.GUEST, 7, PositionType.POSITION_3, ActionOriginType.USER);
-        assertEquals(7, indoor4x4Game.getPlayerAtPosition(TeamType.GUEST, PositionType.POSITION_3));
+        indoor4x4Game.giveSanction(TeamType.HOME, SanctionType.RED_DISQUALIFICATION, 3);
+        indoor4x4Game.substitutePlayer(TeamType.HOME, 7, PositionType.POSITION_3, ActionOriginType.USER);
+        assertEquals(7, indoor4x4Game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_3));
 
+        gameEvents = indoor4x4Game.getLatestGameEvents();
+
+        assertEquals(1, gameEvents.size());
+        assertEquals(TeamType.HOME, gameEvents.get(0).getTeamType());
+        assertEquals(GameEvent.EventType.SANCTION, gameEvents.get(0).getEventType());
+        assertEquals(SanctionType.RED_DISQUALIFICATION, gameEvents.get(0).getSanction().getCard());
+
+        indoor4x4Game.undoGameEvent(gameEvents.get(0));
+
+        gameEvents = indoor4x4Game.getLatestGameEvents();
+        assertEquals(1, gameEvents.size());
+        assertEquals(TeamType.HOME, gameEvents.get(0).getTeamType());
+        assertEquals(GameEvent.EventType.SUBSTITUTION, gameEvents.get(0).getEventType());
+
+        indoor4x4Game.undoGameEvent(gameEvents.get(0));
+
+        assertEquals(3, indoor4x4Game.getPlayerAtPosition(TeamType.HOME, PositionType.POSITION_3));
         gameEvents = indoor4x4Game.getLatestGameEvents();
         assertEquals(0, gameEvents.size());
     }
 
     private void fillTeam(IGame game, TeamType teamType) {
-        for (int number = 1; number <= 7; number++) {
+        for (int number = 1; number <= 8; number++) {
             game.addPlayer(teamType, number);
         }
+        game.addLibero(teamType, 8);
     }
 
     private void fillCourts(IClassicTeam indoorTeam, int positions) {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -227,7 +228,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof StoredGameHandler) {
             StoredGameHandler storedGameHandler = (StoredGameHandler) fragment;
             storedGameHandler.setStoredGame(mStoredGame);

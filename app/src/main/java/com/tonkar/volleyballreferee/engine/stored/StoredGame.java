@@ -247,11 +247,13 @@ public class StoredGame extends ApiGame implements IStoredGame {
         for (ApiPlayer player : getTeam(teamType).getPlayers()) {
             if (player.getNum() == number) {
                 playerName = player.getName();
+                break;
             }
         }
         for (ApiPlayer player : getTeam(teamType).getLiberos()) {
             if (player.getNum() == number) {
                 playerName = player.getName();
+                break;
             }
         }
 
@@ -369,12 +371,12 @@ public class StoredGame extends ApiGame implements IStoredGame {
     public void setCoachName(TeamType teamType, String name) {}
 
     @Override
-    public int getRemainingTimeouts(TeamType teamType) {
+    public int countRemainingTimeouts(TeamType teamType) {
         return getSets().get(currentSetIndex()).getTimeouts(teamType);
     }
 
     @Override
-    public int getRemainingTimeouts(TeamType teamType, int setIndex) {
+    public int countRemainingTimeouts(TeamType teamType, int setIndex) {
         return getSets().get(setIndex).getTimeouts(teamType);
     }
 

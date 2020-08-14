@@ -102,7 +102,6 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesSummary> 
             mFilteredStoredRulesList.clear();
 
             if (results.values != null) {
-                mFilteredStoredRulesList.clear();
                 mFilteredStoredRulesList.addAll((Collection<? extends ApiRulesSummary>) results.values);
             }
 

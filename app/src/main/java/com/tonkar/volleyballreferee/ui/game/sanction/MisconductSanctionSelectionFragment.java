@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
@@ -219,28 +220,46 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
             }
 
-            button.addOnCheckedChangeListener((cButton, isChecked) -> {
-                UiUtils.animate(mContext, cButton);
-                if (isChecked) {
-                    for (int index = 0; index < parent.getChildCount(); index++) {
-                        PlayerToggleButton child = (PlayerToggleButton) parent.getChildAt(index);
-                        if (child != cButton && child.isChecked()) {
-                            child.setChecked(false);
-                            mSelectedPlayer = -1;
+            if (isDisqualified(player)) {
+                button.setEnabled(false);
+                UiUtils.colorTeamButton(mContext, ContextCompat.getColor(mContext, R.color.colorDisabledButton), button);
+                button.setTextColor(ContextCompat.getColor(mContext, R.color.colorRedCard));
+            } else {
+                button.setEnabled(true);
+
+                button.addOnCheckedChangeListener((cButton, isChecked) -> {
+                    UiUtils.animate(mContext, cButton);
+                    if (isChecked) {
+                        for (int index = 0; index < parent.getChildCount(); index++) {
+                            PlayerToggleButton child = (PlayerToggleButton) parent.getChildAt(index);
+                            if (child != cButton && child.isChecked()) {
+                                child.setChecked(false);
+                                mSelectedPlayer = -1;
+                            }
                         }
+                        mSelectedPlayer = player;
+                    } else {
+                        mSelectedPlayer = -1;
                     }
-                    mSelectedPlayer = player;
-                } else {
-                    mSelectedPlayer = -1;
-                }
-                onMisconductPlayerSelected(mSelectedPlayer);
-            });
+                    onMisconductPlayerSelected(mSelectedPlayer);
+                });
+            }
 
             return button;
         }
 
         int getSelectedPlayer() {
             return mSelectedPlayer;
+        }
+
+        private boolean isDisqualified(int number) {
+            boolean result = false;
+
+            if (mGame != null) {
+                result = mGame.getEvictedPlayersForCurrentSet(mTeamType, false, true).contains(number);
+            }
+
+            return result;
         }
     }
 }

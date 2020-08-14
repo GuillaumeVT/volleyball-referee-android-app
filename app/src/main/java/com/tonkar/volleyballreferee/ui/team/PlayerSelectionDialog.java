@@ -113,11 +113,10 @@ public abstract class PlayerSelectionDialog {
             button.setText(UiUtils.formatNumberFromLocale(number));
             UiUtils.styleTeamButton(mContext, mTeamService, mTeamType, number, button);
 
-            if (isExpulsedOrDisqualified(number)) {
+            if (isEvicted(number)) {
                 button.setEnabled(false);
                 UiUtils.colorTeamButton(mContext, ContextCompat.getColor(mContext, R.color.colorDisabledButton), button);
                 button.setTextColor(ContextCompat.getColor(mContext, R.color.colorRedCard));
-
             } else {
                 button.setEnabled(true);
                 button.setOnClickListener(view -> {
@@ -131,11 +130,11 @@ public abstract class PlayerSelectionDialog {
 
         public abstract void onPlayerSelected(int selectedNumber);
 
-        private boolean isExpulsedOrDisqualified(int number) {
+        private boolean isEvicted(int number) {
             boolean result = false;
 
             if (mSanction != null) {
-                result = mSanction.getExpulsedOrDisqualifiedPlayersForCurrentSet(mTeamType).contains(number);
+                result = mSanction.getEvictedPlayersForCurrentSet(mTeamType, true, true).contains(number);
             }
 
             return result;

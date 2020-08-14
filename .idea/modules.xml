@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/volleyballreferee.iml" filepath="$PROJECT_DIR$/volleyballreferee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="volleyball-referee-android-app/app" />
+      <module fileurl="file://$PROJECT_DIR$/volleyball-referee-android-app.iml" filepath="$PROJECT_DIR$/volleyball-referee-android-app.iml" group="volleyball-referee-android-app" />
     </modules>
   </component>
 </project>

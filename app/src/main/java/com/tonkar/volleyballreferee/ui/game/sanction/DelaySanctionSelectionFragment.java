@@ -19,7 +19,6 @@ public class DelaySanctionSelectionFragment extends Fragment {
 
     private SanctionSelectionDialogFragment mSanctionSelectionDialogFragment;
     private IGame                           mGame;
-    private TeamType                        mTeamType;
     private PlayerToggleButton              mDelayWarningButton;
     private PlayerToggleButton              mDelayPenaltyButton;
     private SanctionType                    mSelectedDelaySanction;
@@ -41,16 +40,16 @@ public class DelaySanctionSelectionFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+        TeamType teamType = TeamType.valueOf(getArguments().getString("teamType"));
 
         View view = inflater.inflate(R.layout.fragment_delay_sanction_selection, container, false);
 
-        if (mGame != null && mTeamType != null) {
+        if (mGame != null) {
             mDelayWarningButton = view.findViewById(R.id.delay_warning_button);
             mDelayPenaltyButton = view.findViewById(R.id.delay_penalty_button);
 
-            mDelayWarningButton.setColor(getContext(), mGame.getTeamColor(mTeamType));
-            mDelayPenaltyButton.setColor(getContext(), mGame.getTeamColor(mTeamType));
+            mDelayWarningButton.setColor(getContext(), mGame.getTeamColor(teamType));
+            mDelayPenaltyButton.setColor(getContext(), mGame.getTeamColor(teamType));
 
             mDelayWarningButton.addOnCheckedChangeListener((cButton, isChecked) -> {
                 UiUtils.animate(getContext(), cButton);
@@ -70,7 +69,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
                 }
             });
 
-            SanctionType possibleDelaySanction = mGame.getPossibleDelaySanction(mTeamType);
+            SanctionType possibleDelaySanction = mGame.getPossibleDelaySanction(teamType);
 
             ViewGroup delayWarningLayout = view.findViewById(R.id.delay_warning_layout);
             ViewGroup delayPenaltyLayout = view.findViewById(R.id.delay_penalty_layout);

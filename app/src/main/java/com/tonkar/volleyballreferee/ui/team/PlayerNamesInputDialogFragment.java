@@ -58,6 +58,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
         mView = getActivity().getLayoutInflater().inflate(R.layout.player_names_input_dialog, null);
 
         ListView playerNameList = mView.findViewById(R.id.player_name_list);
+        playerNameList.setItemsCanFocus(true);
         mPlayerNameListAdapter = new PlayerNameListAdapter(getActivity().getLayoutInflater());
         playerNameList.setAdapter(mPlayerNameListAdapter);
 
@@ -67,7 +68,10 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> dismiss())
                 .create();
 
-        playerNameList.post(() -> alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM));
+        playerNameList.post(() -> {
+            alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            mView.requestLayout();
+        });
 
         return alertDialog;
     }
@@ -81,6 +85,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
             mPlayerNameListAdapter.notifyDataSetChanged();
         }
     }
+
 
     private class PlayerNameListAdapter extends BaseAdapter {
 

@@ -19,6 +19,7 @@ public class AlternativeSubstitutionsLimitation1 extends SubstitutionsLimitation
         for (ApiSubstitution substitution : substitutions) {
             if (substitution.getPlayerIn() == number || substitution.getPlayerOut() == number) {
                 involved = true;
+                break;
             }
         }
 

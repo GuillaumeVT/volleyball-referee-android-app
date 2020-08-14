@@ -103,15 +103,17 @@ public class SnowCourtFragment extends IndoorCourtFragment {
         if (clockwise) {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
-            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                    getFragmentManager().beginTransaction().detach(SnowCourtFragment.this).attach(SnowCourtFragment.this).commit()
-            ).start();
+            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
-            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(() ->
-                    getFragmentManager().beginTransaction().detach(SnowCourtFragment.this).attach(SnowCourtFragment.this).commit()
-            ).start();
+            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
+        }
+    }
+
+    private void detachThenAttach() {
+        if (this.isAdded()) {
+            getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
     }
 

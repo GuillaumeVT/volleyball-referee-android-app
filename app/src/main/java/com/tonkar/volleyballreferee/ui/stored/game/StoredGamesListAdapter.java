@@ -209,7 +209,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             mFilteredStoredGamesList.clear();
 
             if (results.values != null) {
-                mFilteredStoredGamesList.clear();
                 mFilteredStoredGamesList.addAll((Collection<? extends ApiGameSummary>) results.values);
             }
 

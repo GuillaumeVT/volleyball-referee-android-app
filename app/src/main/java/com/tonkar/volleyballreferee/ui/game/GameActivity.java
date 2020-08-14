@@ -341,7 +341,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 Log.i(Tags.GAME_UI, "User accepts the set point");
                 mGame.addPoint(teamType);
             });
-            builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses the set point"));
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects the set point"));
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
@@ -350,14 +350,14 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     private void callTimeoutWithDialog(final TeamType teamType) {
-        if (mGame.getRemainingTimeouts(teamType) > 0) {
+        if (mGame.countRemainingTimeouts(teamType) > 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
             builder.setTitle(String.format(getString(R.string.timeout_title), mGame.getTeamName(teamType))).setMessage(getString(R.string.timeout_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                 Log.i(Tags.GAME_UI, "User accepts the timeout");
                 mGame.callTimeout(teamType);
             });
-            builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User refuses the timeout"));
+            builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects the timeout"));
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
@@ -403,11 +403,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         onPointsUpdated(mTeamOnLeftSide, mGame.getPoints(mTeamOnLeftSide));
         onSetsUpdated(mTeamOnLeftSide, mGame.getSets(mTeamOnLeftSide));
-        onTimeoutUpdated(mTeamOnLeftSide, mGame.getRules().getTeamTimeoutsPerSet(), mGame.getRemainingTimeouts(mTeamOnLeftSide));
+        onTimeoutUpdated(mTeamOnLeftSide, mGame.getRules().getTeamTimeoutsPerSet(), mGame.countRemainingTimeouts(mTeamOnLeftSide));
 
         onPointsUpdated(mTeamOnRightSide, mGame.getPoints(mTeamOnRightSide));
         onSetsUpdated(mTeamOnRightSide, mGame.getSets(mTeamOnRightSide));
-        onTimeoutUpdated(mTeamOnRightSide, mGame.getRules().getTeamTimeoutsPerSet(), mGame.getRemainingTimeouts(mTeamOnRightSide));
+        onTimeoutUpdated(mTeamOnRightSide, mGame.getRules().getTeamTimeoutsPerSet(), mGame.countRemainingTimeouts(mTeamOnRightSide));
 
         onServiceSwapped(mGame.getServingTeam(), false);
 
@@ -544,7 +544,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getString(R.string.timeout_title), mGame.getTeamName(teamType)));
         timeoutFragment.show(getSupportFragmentManager(), "timeout");
 
-        if (mGame.getRemainingTimeouts(teamType) == 0) {
+        if (mGame.countRemainingTimeouts(teamType) == 0) {
             UiUtils.showNotification(this, String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
         }
     }
@@ -630,9 +630,11 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         switch (sanctionType) {
             case YELLOW:
+            case DELAY_WARNING:
                 sanctionText = getString(R.string.yellow_card);
                 break;
             case RED:
+            case DELAY_PENALTY:
                 sanctionText = getString(R.string.red_card);
                 break;
             case RED_EXPULSION:
@@ -640,12 +642,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 break;
             case RED_DISQUALIFICATION:
                 sanctionText = getString(R.string.red_card_disqualification);
-                break;
-            case DELAY_WARNING:
-                sanctionText = getString(R.string.yellow_card);
-                break;
-            case DELAY_PENALTY:
-                sanctionText = getString(R.string.red_card);
                 break;
         }
 
@@ -744,7 +740,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof GameServiceHandler) {
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGame);

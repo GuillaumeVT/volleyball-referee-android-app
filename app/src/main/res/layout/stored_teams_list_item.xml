@@ -20,7 +20,7 @@
                 android:gravity="top|start"
                 android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/stored_team_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

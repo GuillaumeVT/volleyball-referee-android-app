@@ -193,8 +193,14 @@ public class IndoorCourtFragment extends CourtFragment {
         if (ActionOriginType.USER.equals(actionOriginType)) {
             confirmStartingLineup(teamType);
 
-            if (mClassicTeam.isStartingLineupConfirmed(teamType) && !mClassicTeam.hasRemainingSubstitutions(teamType) && !mClassicTeam.isLibero(teamType, number)) {
-                UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
+            if (mClassicTeam.isStartingLineupConfirmed(teamType) && !mClassicTeam.isLibero(teamType, number)) {
+                int remainingSubstitutions = mClassicTeam.countRemainingSubstitutions(teamType);
+
+                if (remainingSubstitutions == 0) {
+                    UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
+                } else if (remainingSubstitutions == 1) {
+                    UiUtils.showNotification(getContext(), String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
+                }
             }
         }
     }
@@ -234,8 +240,8 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void detachThenAttach() {
-        if (getFragmentManager() != null && this.isAdded()) {
-            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        if (this.isAdded()) {
+            getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
     }
 
@@ -274,7 +280,7 @@ public class IndoorCourtFragment extends CourtFragment {
         updateService();
         confirmStartingLineup(teamType);
         checkCaptain(teamType, -1);
-        checkExplusions(teamType);
+        checkEvictions(teamType);
     }
 
     private void confirmStartingLineup(TeamType teamType) {
@@ -372,15 +378,15 @@ public class IndoorCourtFragment extends CourtFragment {
         update(teamType);
     }
 
-    private void checkExplusions(TeamType teamType) {
+    private void checkEvictions(TeamType teamType) {
         if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
             final Set<Integer> players = mClassicTeam.getPlayersOnCourt(teamType);
-            final Set<Integer> excludedNumbers = mGame.getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+            final Set<Integer> evictedPlayers = mGame.getEvictedPlayersForCurrentSet(teamType, true, true);
 
-            for (Integer number : players) {
-                if (excludedNumbers.contains(number)) {
-                    final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
-                    showPlayerSelectionDialogAfterExpulsion(teamType, number, positionType);
+            for (Integer player : players) {
+                if (evictedPlayers.contains(player)) {
+                    final PositionType positionType = mClassicTeam.getPlayerPosition(teamType, player);
+                    showPlayerSelectionDialogAfterExpulsion(teamType, player, positionType);
                 }
             }
         }
@@ -388,7 +394,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showPlayerSelectionDialogAfterExpulsion(TeamType teamType, int number, PositionType positionType) {
         final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(teamType, positionType);
-        final Set<Integer> filteredSubstitutions = mClassicTeam.filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+        final Set<Integer> filteredSubstitutions = mClassicTeam.filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
 
         if (filteredSubstitutions.size() > 0) {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);

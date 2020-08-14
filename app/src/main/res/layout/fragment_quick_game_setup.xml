@@ -24,7 +24,7 @@
                 android:layout_weight="1"
                 app:endIconMode="clear_text">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/home_team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/home_team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/home_team_player_names_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                 android:layout_weight="1"
                 app:endIconMode="clear_text">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/guest_team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/guest_team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/guest_team_player_names_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/gender_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/match_duration_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

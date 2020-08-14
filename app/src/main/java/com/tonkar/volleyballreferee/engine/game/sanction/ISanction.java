@@ -12,7 +12,7 @@ public interface ISanction extends IBaseSanction {
 
     void giveSanction(TeamType teamType, SanctionType sanctionType, int number);
 
-    Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType);
+    Set<Integer> getEvictedPlayersForCurrentSet(TeamType teamType, boolean withExpulsions, boolean withDisqualifications);
 
     SanctionType getMostSeriousSanction(TeamType teamType, int number);
 

@@ -97,9 +97,9 @@ public class GameTest {
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
-        assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.getRemainingTimeouts(TeamType.HOME));
+        assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.countRemainingTimeouts(TeamType.HOME));
         game.callTimeout(TeamType.HOME);
-        assertEquals(game.getRules().getTeamTimeoutsPerSet() - 1, game.getRemainingTimeouts(TeamType.HOME));
+        assertEquals(game.getRules().getTeamTimeoutsPerSet() - 1, game.countRemainingTimeouts(TeamType.HOME));
         assertEquals(1, game.getCalledTimeouts(TeamType.HOME).size());
     }
 

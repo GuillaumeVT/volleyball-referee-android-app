@@ -91,6 +91,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
+        teamNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         mTeamColorButton = view.findViewById(R.id.team_color_button);
         final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);

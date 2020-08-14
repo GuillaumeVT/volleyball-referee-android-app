@@ -25,7 +25,7 @@
                     android:layout_marginBottom="@dimen/big_margin_size"
                     android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -43,7 +43,7 @@
                         app:srcCompat="@mipmap/ic_launcher_round" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"

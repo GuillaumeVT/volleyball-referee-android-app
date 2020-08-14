@@ -56,6 +56,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         StoredUserService storedUserService = new StoredUserManager(getContext());
 
         final AutoCompleteTextView divisionNameInput = view.findViewById(R.id.division_name_input_text);
+        divisionNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         divisionNameInput.setText(mGame.getLeague().getDivision());
         divisionNameInput.setThreshold(2);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
@@ -81,6 +82,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         });
 
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
+        leagueNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         leagueNameInput.setText(mGame.getLeague().getName());
         leagueNameInput.setThreshold(2);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));

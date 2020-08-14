@@ -41,9 +41,7 @@ public class PlayerToggleButton extends MaterialButton {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.default_text_size));
         color();
 
-        addOnCheckedChangeListener((button, isChecked) -> {
-            color();
-        });
+        addOnCheckedChangeListener((button, isChecked) -> color());
     }
 
     private void color() {

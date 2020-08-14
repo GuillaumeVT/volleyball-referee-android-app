@@ -426,7 +426,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 set.setFirstServing(mGame.getFirstServingTeam(setIndex));
 
                 set.setPoints(TeamType.HOME, mGame.getPoints(TeamType.HOME, setIndex));
-                set.setTimeouts(TeamType.HOME, mGame.getRemainingTimeouts(TeamType.HOME, setIndex));
+                set.setTimeouts(TeamType.HOME, mGame.countRemainingTimeouts(TeamType.HOME, setIndex));
 
                 ApiCourt homeCurrentPlayers = set.getCurrentPlayers(TeamType.HOME);
                 for (PositionType position : PositionType.listPositions(mGame.getKind())) {
@@ -438,7 +438,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 }
 
                 set.setPoints(TeamType.GUEST, mGame.getPoints(TeamType.GUEST, setIndex));
-                set.setTimeouts(TeamType.GUEST, mGame.getRemainingTimeouts(TeamType.GUEST, setIndex));
+                set.setTimeouts(TeamType.GUEST, mGame.countRemainingTimeouts(TeamType.GUEST, setIndex));
 
                 ApiCourt guestCurrentPlayers = set.getCurrentPlayers(TeamType.GUEST);
                 for (PositionType position : PositionType.listPositions(mGame.getKind())) {
@@ -994,6 +994,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             for (ApiGameSummary localGame : localGameList) {
                 if (localGame.getId().equals(remoteGame.getId())) {
                     foundLocalVersion = true;
+                    break;
                 }
             }
 

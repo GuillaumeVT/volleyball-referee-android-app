@@ -165,18 +165,16 @@ public abstract class NavigationActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Log.i(Tags.MAIN_UI, "Drawer");
-                if (isNavigationDrawerOpen()) {
-                    mDrawerLayout.closeDrawers();
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            Log.i(Tags.MAIN_UI, "Drawer");
+            if (isNavigationDrawerOpen()) {
+                mDrawerLayout.closeDrawers();
+            } else {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

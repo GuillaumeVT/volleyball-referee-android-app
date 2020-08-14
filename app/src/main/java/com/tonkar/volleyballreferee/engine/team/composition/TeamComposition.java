@@ -100,6 +100,7 @@ public abstract class TeamComposition {
             for (Player player : mPlayers.values()) {
                 if (player.getPosition().equals(positionType)) {
                     number = player.getNumber();
+                    break;
                 }
             }
         }
@@ -134,5 +135,4 @@ public abstract class TeamComposition {
 
         return result;
     }
-
 }

@@ -104,6 +104,7 @@ public class Indoor4x4TeamComposition extends TeamComposition {
                         substitutePlayer(substitution.getPlayerOut(), positionType, substitution.getHomePoints(), substitution.getGuestPoints());
                         mStartingLineupConfirmed = true;
                         result = true;
+                        break;
                     }
                 }
             }
@@ -150,7 +151,11 @@ public class Indoor4x4TeamComposition extends TeamComposition {
     }
 
     public boolean canSubstitute() {
-        return mSubstitutions.size() < mMaxSubstitutionsPerSet;
+        return countRemainingSubstitutions() > 0;
+    }
+
+    public int countRemainingSubstitutions() {
+        return mMaxSubstitutionsPerSet - mSubstitutions.size();
     }
 
     public Set<Integer> getPossibleSubstitutions(PositionType positionType) {

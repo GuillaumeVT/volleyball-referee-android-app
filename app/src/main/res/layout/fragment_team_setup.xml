@@ -24,7 +24,7 @@
                 android:layout_weight="1"
                 app:endIconMode="clear_text">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/team_name_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/select_gender_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team_member_numbers_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/team_captain_number_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/team_libero_numbers_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/team_player_names_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
             android:hint="@string/coach"
             app:endIconMode="clear_text">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/coach_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

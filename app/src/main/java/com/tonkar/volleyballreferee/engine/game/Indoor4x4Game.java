@@ -112,9 +112,9 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
 
     @Override
     protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {
-        Set<Integer> expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
-        if (!expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerIn())
-                && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())
+        Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
+        if (!evictedPlayers.contains(substitution.getPlayerIn())
+                && !evictedPlayers.contains(substitution.getPlayerOut())
                 && getIndoorTeamComposition(teamType).undoSubstitution(substitution)) {
             notifyPlayerChanged(teamType, substitution.getPlayerOut(), getIndoorTeamComposition(teamType).getPlayerPosition(substitution.getPlayerOut()), ActionOriginType.APPLICATION);
         }
@@ -171,13 +171,18 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
     }
 
     @Override
-    public Set<Integer> filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType, int excludedNumber, Set<Integer> possibleSubstitutions) {
+    public int countRemainingSubstitutions(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).countRemainingSubstitutions();
+    }
+
+    @Override
+    public Set<Integer> filterSubstitutionsWithEvictedPlayersForCurrentSet(TeamType teamType, int evictedNumber, Set<Integer> possibleSubstitutions) {
         final Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
-        final Set<Integer> excludedNumbers = getExpulsedOrDisqualifiedPlayersForCurrentSet(teamType);
+        final Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
 
         for (Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
             int possibleReplacement = iterator.next();
-            if (excludedNumbers.contains(possibleReplacement)) {
+            if (evictedPlayers.contains(possibleReplacement)) {
                 iterator.remove();
             }
         }
@@ -300,18 +305,19 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
 
             if (!PositionType.BENCH.equals(positionType)) {
                 final Set<Integer> possibleSubstitutions = getPossibleSubstitutions(teamType, positionType);
-                final Set<Integer> filteredSubstitutions = filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+                final Set<Integer> filteredSubstitutions = filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
 
-                // If there is no possible legal substituion, the set is lost
+                // If there is no possible legal substitution, the set is lost
                 if (filteredSubstitutions.size() == 0) {
                     forceFinishSet(teamType.other());
                 }
             }
         }
 
-        if (sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
+        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
-            List<ApiPlayer> players = getTeamDefinition(teamType).getPlayers();
+            // copy the list of players
+            List<ApiPlayer> players = new ArrayList<>(getTeamDefinition(teamType).getPlayers());
 
             // Remove the disqualified players
 

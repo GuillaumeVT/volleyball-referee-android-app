@@ -134,7 +134,6 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
             mFilteredStoredTeamsList.clear();
 
             if (results.values != null) {
-                mFilteredStoredTeamsList.clear();
                 mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamSummary>) results.values);
             }
 

@@ -175,7 +175,7 @@ public class StoredTeamActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof BaseTeamServiceHandler) {
             BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
             baseTeamServiceHandler.setTeamService(mTeamService);

@@ -244,6 +244,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
             for (ApiLeagueSummary localLeague : localLeagueList) {
                 if (localLeague.getId().equals(remoteLeague.getId())) {
                     foundLocalVersion = true;
+                    break;
                 }
             }
 

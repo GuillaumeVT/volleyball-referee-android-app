@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IBaseTimeout {
 
-    int getRemainingTimeouts(TeamType teamType);
+    int countRemainingTimeouts(TeamType teamType);
 
-    int getRemainingTimeouts(TeamType teamType, int setIndex);
+    int countRemainingTimeouts(TeamType teamType, int setIndex);
 
     List<ApiTimeout> getCalledTimeouts(TeamType teamType);
 

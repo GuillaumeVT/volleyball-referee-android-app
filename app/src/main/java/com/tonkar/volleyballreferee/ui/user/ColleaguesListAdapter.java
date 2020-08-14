@@ -221,7 +221,6 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
             mFilteredColleagueItems.clear();
 
             if (results.values != null) {
-                mFilteredColleagueItems.clear();
                 mFilteredColleagueItems.addAll((Collection<ColleagueItem>) results.values);
             }
 

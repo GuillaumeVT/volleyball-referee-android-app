@@ -25,7 +25,9 @@ public interface IClassicTeam extends ITeam {
 
     boolean hasRemainingSubstitutions(TeamType teamType);
 
-    Set<Integer> filterSubstitutionsWithExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType, int excludedNumber, Set<Integer> possibleSubstitutions);
+    int countRemainingSubstitutions(TeamType teamType);
+
+    Set<Integer> filterSubstitutionsWithEvictedPlayersForCurrentSet(TeamType teamType, int evictedNumber, Set<Integer> possibleSubstitutions);
 
     int getWaitingMiddleBlocker(TeamType teamType);
 }

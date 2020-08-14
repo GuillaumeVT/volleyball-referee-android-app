@@ -11,7 +11,7 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/empty_fab_space">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -24,7 +24,7 @@
                 android:textSize="@dimen/default_text_size"
                 android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -35,7 +35,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_sets_per_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:textColor="@color/colorDisabledText"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -58,7 +58,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_points_per_set"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -91,7 +91,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_points_in_tie_break"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -134,7 +134,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_match_termination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                 android:textColor="@color/colorDisabledText"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -169,7 +169,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -180,7 +180,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_team_timeouts_per_set"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
                 android:textColor="@color/colorDisabledText"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -203,7 +203,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_team_timeout_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -236,7 +236,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_technical_timeout_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,7 +258,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -269,7 +269,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_game_intervals_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                 android:textColor="@color/colorDisabledText"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -304,7 +304,7 @@
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -315,7 +315,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_court_switch_frequency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -327,7 +327,7 @@
                 android:textColor="@color/colorDisabledText"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -338,7 +338,7 @@
                 android:textAppearance="@style/AppTheme.TextView"
                 android:textSize="@dimen/default_text_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rules_court_switch_frequency_tie_break"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

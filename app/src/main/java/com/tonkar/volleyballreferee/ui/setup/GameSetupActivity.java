@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,13 +80,11 @@ public class GameSetupActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                cancelSetup();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            cancelSetup();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void computeStartLayoutVisibility() {
@@ -205,7 +204,7 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof RulesHandler) {
             RulesHandler rulesHandler = (RulesHandler) fragment;
             rulesHandler.setRules(mGame.getRules());

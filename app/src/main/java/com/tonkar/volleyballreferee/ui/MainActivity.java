@@ -386,9 +386,7 @@ public class MainActivity extends NavigationActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
                         .setTitle(String.format("Welcome to Volleyball Referee %s", BuildConfig.VERSION_NAME)).setMessage(releaseNotes)
-                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                            sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply();
-                        });
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply());
                 AlertDialog alertDialog = builder.show();
                 UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
             } catch (Resources.NotFoundException e) {

@@ -316,6 +316,7 @@ public class StoredRulesManager implements StoredRulesService {
             for (ApiRulesSummary localRules : localRulesList) {
                 if (localRules.getId().equals(remoteRules.getId())) {
                     foundLocalVersion = true;
+                    break;
                 }
             }
 

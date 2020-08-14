@@ -943,12 +943,12 @@ public abstract class Game extends BaseGame {
     // Timeout
 
     @Override
-    public int getRemainingTimeouts(TeamType teamType) {
+    public int countRemainingTimeouts(TeamType teamType) {
         return currentSet().getRemainingTimeouts(teamType);
     }
 
     @Override
-    public int getRemainingTimeouts(TeamType teamType, int setIndex) {
+    public int countRemainingTimeouts(TeamType teamType, int setIndex) {
         int timeouts = 0;
         com.tonkar.volleyballreferee.engine.game.set.Set set = mSets.get(setIndex);
 
@@ -1101,16 +1101,16 @@ public abstract class Game extends BaseGame {
     }
 
     @Override
-    public Set<Integer> getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType teamType) {
+    public Set<Integer> getEvictedPlayersForCurrentSet(TeamType teamType, boolean withExpulsions, boolean withDisqualifications) {
         Set<Integer> players = new HashSet<>();
 
         List<ApiSanction> sanctionsForGame = getAllSanctions(teamType);
         int currentSetIndex = currentSetIndex();
 
         for (ApiSanction sanction : sanctionsForGame) {
-            if (sanction.getCard().isMisconductDisqualificationCard()) {
+            if (withDisqualifications && sanction.getCard().isMisconductDisqualificationCard()) {
                 players.add(sanction.getNum());
-            } else if (sanction.getCard().isMisconductExpulsionCard() && sanction.getSet() == currentSetIndex) {
+            } else if (withExpulsions && sanction.getCard().isMisconductExpulsionCard() && sanction.getSet() == currentSetIndex) {
                 players.add(sanction.getNum());
             }
         }
@@ -1139,6 +1139,7 @@ public abstract class Game extends BaseGame {
         for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getCard().isDelaySanctionType()) {
                 teamHasReachedPenalty = true;
+                break;
             }
         }
 
@@ -1152,6 +1153,7 @@ public abstract class Game extends BaseGame {
         for (ApiSanction sanction : getAllSanctions(teamType)) {
             if (sanction.getCard().isMisconductSanctionType()) {
                 teamHasReachedPenalty = true;
+                break;
             }
         }
 
@@ -1268,7 +1270,7 @@ public abstract class Game extends BaseGame {
             }
         }
 
-        Set<Integer> expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType.HOME);
+        Set<Integer> expulsedOrDisqualifiedPlayers = getEvictedPlayersForCurrentSet(TeamType.HOME, true, true);
 
         for (ApiSubstitution substitution : getSubstitutions (TeamType.HOME, currentSetIndex)) {
             if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints
@@ -1278,7 +1280,7 @@ public abstract class Game extends BaseGame {
             }
         }
 
-        expulsedOrDisqualifiedPlayers = getExpulsedOrDisqualifiedPlayersForCurrentSet(TeamType.GUEST);
+        expulsedOrDisqualifiedPlayers = getEvictedPlayersForCurrentSet(TeamType.GUEST, true, true);
 
         for (ApiSubstitution substitution : getSubstitutions (TeamType.GUEST, currentSetIndex)) {
             if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints
@@ -1289,13 +1291,13 @@ public abstract class Game extends BaseGame {
         }
 
         for (ApiSanction sanction : getAllSanctions(TeamType.HOME, currentSetIndex)) {
-            if (sanction.getHomePoints() == homePoints && sanction.getGuestPoints() == guestPoints && !sanction.getCard().isMisconductDisqualificationCard()) {
+            if (sanction.getHomePoints() == homePoints && sanction.getGuestPoints() == guestPoints) {
                 gameEvents.add(GameEvent.newSanctionEvent(TeamType.HOME, sanction));
             }
         }
 
         for (ApiSanction sanction : getAllSanctions(TeamType.GUEST, currentSetIndex)) {
-            if (sanction.getHomePoints() == homePoints && sanction.getGuestPoints() == guestPoints && !sanction.getCard().isMisconductDisqualificationCard()) {
+            if (sanction.getHomePoints() == homePoints && sanction.getGuestPoints() == guestPoints) {
                 gameEvents.add(GameEvent.newSanctionEvent(TeamType.GUEST, sanction));
             }
         }
