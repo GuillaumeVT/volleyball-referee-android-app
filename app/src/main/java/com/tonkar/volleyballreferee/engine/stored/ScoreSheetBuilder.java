@@ -198,9 +198,15 @@ public class ScoreSheetBuilder {
 
         homeSetsInfoDiv.appendChild(createCellSpan(String.valueOf(mStoredGame.getSets(TeamType.HOME)), true, false));
 
+        int homePointsTotal = 0;
+
         for (int setIndex = 0; setIndex < mStoredGame.getNumberOfSets(); setIndex++) {
-            homeSetsInfoDiv.appendChild(createSetCellAnchor(String.valueOf(mStoredGame.getPoints(TeamType.HOME, setIndex)), setIndex));
+            int points = mStoredGame.getPoints(TeamType.HOME, setIndex);
+            homePointsTotal += points;
+            homeSetsInfoDiv.appendChild(createSetCellAnchor(String.valueOf(points), setIndex));
         }
+
+        homeSetsInfoDiv.appendChild(createCellSpan(String.valueOf(homePointsTotal), true, false));
 
         cardDiv.appendChild(homeSetsInfoDiv);
 
@@ -213,9 +219,15 @@ public class ScoreSheetBuilder {
 
         guestSetsInfoDiv.appendChild(createCellSpan(String.valueOf(mStoredGame.getSets(TeamType.GUEST)), true, false));
 
+        int guestPointsTotal = 0;
+
         for (int setIndex = 0; setIndex < mStoredGame.getNumberOfSets(); setIndex++) {
-            guestSetsInfoDiv.appendChild(createSetCellAnchor(String.valueOf(mStoredGame.getPoints(TeamType.GUEST, setIndex)), setIndex));
+            int points = mStoredGame.getPoints(TeamType.GUEST, setIndex);
+            guestPointsTotal += points;
+            guestSetsInfoDiv.appendChild(createSetCellAnchor(String.valueOf(points), setIndex));
         }
+
+        guestSetsInfoDiv.appendChild(createCellSpan(String.valueOf(guestPointsTotal), true, false));
 
         cardDiv.appendChild(guestSetsInfoDiv);
 
@@ -1137,7 +1149,7 @@ public class ScoreSheetBuilder {
                 "    }\n" +
                 "    .div-grid-sets-info {\n" +
                 "      display: grid;\n" +
-                "      grid-template-columns: 40fr 5fr 5fr 5fr 5fr 5fr 5fr 30fr;\n" +
+                "      grid-template-columns: 40fr 5fr 5fr 5fr 5fr 5fr 5fr 10fr 20fr;\n" +
                 "      grid-auto-rows: 1fr;\n" +
                 "      align-items: stretch;\n" +
                 "      align-content: center;\n" +
