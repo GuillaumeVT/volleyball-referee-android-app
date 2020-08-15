@@ -416,7 +416,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.addPoint(TeamType.GUEST);
         indoorGame.substitutePlayer(TeamType.HOME, 20, PositionType.POSITION_3, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 9, PositionType.POSITION_6, ActionOriginType.USER);
-        indoorGame.setActingCaptain(TeamType.HOME, 20);
+        indoorGame.setGameCaptain(TeamType.HOME, 20);
         indoorGame.addPoint(TeamType.GUEST);
         indoorGame.addPoint(TeamType.HOME);
         indoorGame.addPoint(TeamType.GUEST);
@@ -490,7 +490,7 @@ public class BrazilFranceIndoorGame {
         indoorGame.addPoint(TeamType.HOME);
         indoorGame.substitutePlayer(TeamType.GUEST, 11, PositionType.POSITION_4, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.GUEST, 8, PositionType.POSITION_2, ActionOriginType.USER);
-        indoorGame.setActingCaptain(TeamType.GUEST, 8);
+        indoorGame.setGameCaptain(TeamType.GUEST, 8);
         indoorGame.addPoint(TeamType.GUEST);
         indoorGame.addPoint(TeamType.HOME);
         indoorGame.addPoint(TeamType.GUEST);
@@ -584,9 +584,9 @@ public class BrazilFranceIndoorGame {
         indoorGame.addPoint(TeamType.HOME);
         indoorGame.substitutePlayer(TeamType.HOME, 9, PositionType.POSITION_3, ActionOriginType.USER);
         indoorGame.substitutePlayer(TeamType.HOME, 20, PositionType.POSITION_6, ActionOriginType.USER);
-        indoorGame.setActingCaptain(TeamType.HOME, 9);
+        indoorGame.setGameCaptain(TeamType.HOME, 9);
         indoorGame.substitutePlayer(TeamType.GUEST, 11, PositionType.POSITION_4, ActionOriginType.USER);
-        indoorGame.setActingCaptain(TeamType.GUEST, 9);
+        indoorGame.setGameCaptain(TeamType.GUEST, 9);
         indoorGame.substitutePlayer(TeamType.GUEST, 5, PositionType.POSITION_2, ActionOriginType.USER);
     }
 

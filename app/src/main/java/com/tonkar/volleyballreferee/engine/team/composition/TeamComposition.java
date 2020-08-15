@@ -108,6 +108,10 @@ public abstract class TeamComposition {
         return number;
     }
 
+    public boolean hasCaptainOnCourt() {
+        return !PositionType.BENCH.equals(getPlayerPosition(mTeamDefinition.getCaptain()));
+    }
+
     public void rotateToNextPositions() {
         for (Integer number : getPlayersOnCourt()) {
             final Player player = mPlayers.get(number);

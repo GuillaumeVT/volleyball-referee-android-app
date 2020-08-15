@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface IStoredGame extends IBaseGeneral, IBaseScore, IBaseTeam, IBaseTimeout, IBaseSanction, IBaseTime {
 
-    int getActingCaptain(TeamType teamType, int setIndex);
+    int getGameCaptain(TeamType teamType, int setIndex);
 
     List<ApiTimeout> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
 

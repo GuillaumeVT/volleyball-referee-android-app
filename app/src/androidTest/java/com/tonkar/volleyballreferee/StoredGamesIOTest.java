@@ -148,8 +148,8 @@ public class StoredGamesIOTest {
             set1.getStartingPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
         }
         Collections.addAll(set1.getSubstitutions(TeamType.HOME), new ApiSubstitution(1, 5, 12, 10), new ApiSubstitution(7, 2, 37, 1));
-        set1.setActingCaptain(TeamType.HOME, 1);
-        set1.setActingCaptain(TeamType.GUEST, 2);
+        set1.setGameCaptain(TeamType.HOME, 1);
+        set1.setGameCaptain(TeamType.GUEST, 2);
 
         ApiSet set2 = new ApiSet();
         game.getSets().add(set2);
@@ -169,8 +169,8 @@ public class StoredGamesIOTest {
         }
         Collections.addAll(set2.getSubstitutions(TeamType.HOME), new ApiSubstitution(7, 1, 1, 53), new ApiSubstitution(4, 2, 0, 32));
         Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new ApiSubstitution(10, 50, 1, 1));
-        set2.setActingCaptain(TeamType.HOME, 1);
-        set2.setActingCaptain(TeamType.GUEST, 2);
+        set2.setGameCaptain(TeamType.HOME, 1);
+        set2.setGameCaptain(TeamType.GUEST, 2);
 
         game.getAllSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.YELLOW, 5, 1, 12, 14));
         game.getAllSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED, 8, 3, 20, 1));

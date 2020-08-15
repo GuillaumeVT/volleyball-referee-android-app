@@ -7,6 +7,7 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiCourt;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.definition.SnowTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
@@ -37,8 +38,8 @@ public class SnowTeamComposition extends TeamComposition {
     private final int                     mMaxSubstitutionsPerSet;
     @SerializedName("substitutions")
     private final List<ApiSubstitution>   mSubstitutions;
-    @SerializedName("actingCaptain")
-    private       int                     mActingCaptain;
+    @SerializedName("secondaryCaptain")
+    private       int                     mSecondaryCaptain;
 
     public SnowTeamComposition(final TeamDefinition teamDefinition, int substitutionType, int maxSubstitutionsPerSet) {
         super(teamDefinition);
@@ -47,7 +48,7 @@ public class SnowTeamComposition extends TeamComposition {
         mStartingLineup = new ApiCourt();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
         mSubstitutions = new ArrayList<>();
-        mActingCaptain = -1;
+        mSecondaryCaptain = -1;
 
         switch (substitutionType) {
             case Rules.FIVB_LIMITATION:
@@ -116,18 +117,6 @@ public class SnowTeamComposition extends TeamComposition {
         if (isStartingLineupConfirmed()) {
             Log.i(Tags.TEAM, "Actual substitution");
             mSubstitutions.add(new ApiSubstitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
-
-            // A captain on the bench can no longer be acting captain
-            if (getTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d acting captain of %s team leaves the court", oldNumber, getTeamDefinition().getTeamType().toString()));
-                mActingCaptain = -1;
-            }
-
-            // The game captain coming back on the court is automatically the captain again
-            if (getTeamDefinition().isCaptain(newNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d captain of %s team is back on court", newNumber, getTeamDefinition().getTeamType().toString()));
-                setActingCaptain(getTeamDefinition().getCaptain());
-            }
         }
     }
 
@@ -135,10 +124,6 @@ public class SnowTeamComposition extends TeamComposition {
         mStartingLineupConfirmed = true;
         for (PositionType position : PositionType.listPositions(getTeamDefinition().getKind())) {
             mStartingLineup.setPlayerAt(getPlayerAtPosition(position), position);
-        }
-
-        if (!PositionType.BENCH.equals(getPlayerPosition(getTeamDefinition().getCaptain()))) {
-            setActingCaptain(getTeamDefinition().getCaptain());
         }
     }
 
@@ -233,32 +218,54 @@ public class SnowTeamComposition extends TeamComposition {
         return mStartingLineup.getPlayerAt(positionType);
     }
 
-    public int getActingCaptain() {
-        return mActingCaptain;
+    public boolean hasGameCaptainOnCourt() {
+        return isStartingLineupConfirmed() && (hasCaptainOnCourt() || hasSecondaryCaptainOnCourt());
     }
 
-    public void setActingCaptain(int number) {
-        if (isStartingLineupConfirmed() && getTeamDefinition().hasPlayer(number)) {
-            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now acting captain", number, getTeamDefinition().getTeamType().toString()));
-            mActingCaptain = number;
+    public boolean isGameCaptain(int number) {
+        return number == getGameCaptain() && ApiSanction.isPlayer(number);
+    }
+
+    public int getGameCaptain() {
+        if (hasCaptainOnCourt()) {
+            return getTeamDefinition().getCaptain();
+        } else if (hasSecondaryCaptainOnCourt()) {
+            return getSecondaryCaptain();
+        } else {
+            return -1;
         }
     }
 
-    public boolean hasActingCaptainOnCourt() {
-        return mActingCaptain > -1;
+    public void setGameCaptain(int number) {
+        if (isStartingLineupConfirmed()
+                && getTeamDefinition().hasPlayer(number)
+                && !getTeamDefinition().isCaptain(number)
+                && !isSecondaryCaptain(number)
+                && !PositionType.BENCH.equals(getPlayerPosition(number))) {
+            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now secondary captain", number, getTeamDefinition().getTeamType().toString()));
+            mSecondaryCaptain = number;
+        }
     }
 
-    public boolean isActingCaptain(int number) {
-        return number == mActingCaptain;
+    private int getSecondaryCaptain() {
+        return mSecondaryCaptain;
     }
 
-    public Set<Integer> getPossibleActingCaptains() {
+    private boolean hasSecondaryCaptainOnCourt() {
+        return mSecondaryCaptain > -1 && !PositionType.BENCH.equals(getPlayerPosition(mSecondaryCaptain));
+    }
+
+    private boolean isSecondaryCaptain(int number) {
+        return number == mSecondaryCaptain;
+    }
+
+    public Set<Integer> getPossibleSecondaryCaptains() {
         Set<Integer> players = new TreeSet<>();
 
-        if (mActingCaptain > -1) {
-            players.add(mActingCaptain);
-        } else {
-            players.addAll(getPlayersOnCourt());
+        for (int number : getPlayersOnCourt()) {
+            if (!getTeamDefinition().isCaptain(number) && !isSecondaryCaptain(number)) {
+                players.add(number);
+            }
         }
 
         return players;
@@ -282,7 +289,7 @@ public class SnowTeamComposition extends TeamComposition {
                     && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_3) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_3)))
                     && (this.canSubstitute() == other.canSubstitute())
                     && (this.getSubstitutions().equals(other.getSubstitutions()))
-                    && (this.getActingCaptain() == other.getActingCaptain());
+                    && (this.getSecondaryCaptain() == other.getSecondaryCaptain());
         }
 
         return result;

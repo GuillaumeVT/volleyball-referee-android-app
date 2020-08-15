@@ -401,8 +401,8 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public int getActingCaptain(TeamType teamType, int setIndex) {
-        return getSets().get(setIndex).getActingCaptain(teamType);
+    public int getGameCaptain(TeamType teamType, int setIndex) {
+        return getSets().get(setIndex).getGameCaptain(teamType);
     }
 
     @Override

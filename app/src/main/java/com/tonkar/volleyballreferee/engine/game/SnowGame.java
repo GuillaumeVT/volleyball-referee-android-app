@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class SnowGame extends Game implements IClassicTeam {
@@ -134,37 +135,37 @@ public class SnowGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public boolean hasActingCaptainOnCourt(TeamType teamType) {
-        return getSnowTeamComposition(teamType).hasActingCaptainOnCourt();
+    public boolean hasGameCaptainOnCourt(TeamType teamType) {
+        return getSnowTeamComposition(teamType).hasGameCaptainOnCourt();
     }
 
     @Override
-    public int getActingCaptain(TeamType teamType, int setIndex) {
+    public int getGameCaptain(TeamType teamType, int setIndex) {
         int number = -1;
 
         com.tonkar.volleyballreferee.engine.game.set.Set set = getSet(setIndex);
 
         if (set != null) {
             SnowTeamComposition snowTeamComposition = (SnowTeamComposition) set.getTeamComposition(teamType);
-            number = snowTeamComposition.getActingCaptain();
+            number = snowTeamComposition.getGameCaptain();
         }
 
         return number;
     }
 
     @Override
-    public void setActingCaptain(TeamType teamType, int number) {
-        getSnowTeamComposition(teamType).setActingCaptain(number);
+    public boolean isGameCaptain(TeamType teamType, int number) {
+        return getSnowTeamComposition(teamType).isGameCaptain(number);
     }
 
     @Override
-    public boolean isActingCaptain(TeamType teamType, int number) {
-        return getSnowTeamComposition(teamType).isActingCaptain(number);
+    public void setGameCaptain(TeamType teamType, int number) {
+        getSnowTeamComposition(teamType).setGameCaptain(number);
     }
 
     @Override
-    public java.util.Set<Integer> getPossibleActingCaptains(TeamType teamType) {
-        return getSnowTeamComposition(teamType).getPossibleActingCaptains();
+    public Set<Integer> getPossibleSecondaryCaptains(TeamType teamType) {
+        return getSnowTeamComposition(teamType).getPossibleSecondaryCaptains();
     }
 
     @Override
@@ -420,8 +421,8 @@ public class SnowGame extends Game implements IClassicTeam {
                     }
 
                     if (pointsIndex == pointsLadder.size() - 1) {
-                        setActingCaptain(TeamType.HOME, storedGame.getActingCaptain(TeamType.HOME, setIndex));
-                        setActingCaptain(TeamType.GUEST, storedGame.getActingCaptain(TeamType.GUEST, setIndex));
+                        setGameCaptain(TeamType.HOME, storedGame.getGameCaptain(TeamType.HOME, setIndex));
+                        setGameCaptain(TeamType.GUEST, storedGame.getGameCaptain(TeamType.GUEST, setIndex));
                     }
 
                     addPoint(pointsLadder.get(pointsIndex));

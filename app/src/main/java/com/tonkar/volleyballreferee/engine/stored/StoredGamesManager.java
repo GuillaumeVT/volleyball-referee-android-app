@@ -475,8 +475,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                         set.getSubstitutions(TeamType.GUEST).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
-                    set.setActingCaptain(TeamType.HOME, indoorTeam.getActingCaptain(TeamType.HOME, setIndex));
-                    set.setActingCaptain(TeamType.GUEST, indoorTeam.getActingCaptain(TeamType.GUEST, setIndex));
+                    set.setGameCaptain(TeamType.HOME, indoorTeam.getGameCaptain(TeamType.HOME, setIndex));
+                    set.setGameCaptain(TeamType.GUEST, indoorTeam.getGameCaptain(TeamType.GUEST, setIndex));
                 }
 
                 mStoredGame.getSets().add(set);

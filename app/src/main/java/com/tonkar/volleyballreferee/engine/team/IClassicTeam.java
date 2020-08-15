@@ -13,15 +13,15 @@ public interface IClassicTeam extends ITeam {
 
     void confirmStartingLineup(TeamType teamType);
 
-    boolean hasActingCaptainOnCourt(TeamType teamType);
+    boolean hasGameCaptainOnCourt(TeamType teamType);
 
-    int getActingCaptain(TeamType teamType, int setIndex);
+    int getGameCaptain(TeamType teamType, int setIndex);
 
-    void setActingCaptain(TeamType teamType, int number);
+    boolean isGameCaptain(TeamType teamType, int number);
 
-    boolean isActingCaptain(TeamType teamType, int number);
+    void setGameCaptain(TeamType teamType, int number);
 
-    Set<Integer> getPossibleActingCaptains(TeamType teamType);
+    Set<Integer> getPossibleSecondaryCaptains(TeamType teamType);
 
     boolean hasRemainingSubstitutions(TeamType teamType);
 

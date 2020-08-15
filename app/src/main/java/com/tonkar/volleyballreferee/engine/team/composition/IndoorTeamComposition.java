@@ -7,6 +7,7 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiCourt;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
@@ -44,8 +45,8 @@ public class IndoorTeamComposition extends TeamComposition {
     private final Set<Integer>            mMiddleBlockers;
     @SerializedName("waitingMiddleBlocker")
     private       int                     mWaitingMiddleBlocker;
-    @SerializedName("actingCaptain")
-    private       int                     mActingCaptain;
+    @SerializedName("secondaryCaptain")
+    private       int                     mSecondaryCaptain;
 
     public IndoorTeamComposition(final TeamDefinition teamDefinition, int substitutionType, int maxSubstitutionsPerSet) {
         super(teamDefinition);
@@ -57,7 +58,7 @@ public class IndoorTeamComposition extends TeamComposition {
         mActingLibero = -1;
         mMiddleBlockers = new HashSet<>();
         mWaitingMiddleBlocker = -1;
-        mActingCaptain = -1;
+        mSecondaryCaptain = -1;
 
         switch (substitutionType) {
             case Rules.FIVB_LIMITATION:
@@ -83,10 +84,6 @@ public class IndoorTeamComposition extends TeamComposition {
     @Override
     protected Player createPlayer(int number) {
         return new IndoorPlayer(number);
-    }
-
-    private IndoorTeamDefinition indoorTeamDefinition() {
-        return (IndoorTeamDefinition) getTeamDefinition();
     }
 
     @Override
@@ -126,44 +123,32 @@ public class IndoorTeamComposition extends TeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
-        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), indoorTeamDefinition().getTeamType().toString()));
+        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), getTeamDefinition().getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {
-            if (indoorTeamDefinition().isLibero(newNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, indoorTeamDefinition().getTeamType().toString()));
+            if (getTeamDefinition().isLibero(newNumber)) {
+                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, getTeamDefinition().getTeamType().toString()));
                 mActingLibero = newNumber;
 
-                if (!indoorTeamDefinition().isLibero(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, indoorTeamDefinition().getTeamType().toString()));
+                if (!getTeamDefinition().isLibero(oldNumber)) {
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, getTeamDefinition().getTeamType().toString()));
                     mMiddleBlockers.clear();
                     mWaitingMiddleBlocker = oldNumber;
                     mMiddleBlockers.add(oldNumber);
                     mMiddleBlockers.add(getPlayerAtPosition(positionType.oppositePosition()));
                 }
-            } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(oldNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
+            } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(oldNumber)) {
+                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, getTeamDefinition().getTeamType().toString()));
                 mWaitingMiddleBlocker = -1;
             } else {
                 Log.i(Tags.TEAM, "Actual substitution");
                 mSubstitutions.add(new ApiSubstitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
 
                 if (isMiddleBlocker(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, indoorTeamDefinition().getTeamType().toString()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, getTeamDefinition().getTeamType().toString()));
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
                 }
-            }
-
-            // A captain on the bench can no longer be acting captain
-            if (indoorTeamDefinition().isCaptain(oldNumber) || isActingCaptain(oldNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d acting captain of %s team leaves the court", oldNumber, indoorTeamDefinition().getTeamType().toString()));
-                mActingCaptain = -1;
-            }
-
-            // The game captain coming back on the court is automatically the captain again
-            if (indoorTeamDefinition().isCaptain(newNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d captain of %s team is back on court", newNumber, indoorTeamDefinition().getTeamType().toString()));
-                setActingCaptain(indoorTeamDefinition().getCaptain());
             }
         }
     }
@@ -172,10 +157,6 @@ public class IndoorTeamComposition extends TeamComposition {
         mStartingLineupConfirmed = true;
         for (PositionType position : PositionType.listPositions(getTeamDefinition().getKind())) {
             mStartingLineup.setPlayerAt(getPlayerAtPosition(position), position);
-        }
-
-        if (!PositionType.BENCH.equals(getPlayerPosition(indoorTeamDefinition().getCaptain()))) {
-            setActingCaptain(indoorTeamDefinition().getCaptain());
         }
     }
 
@@ -193,7 +174,7 @@ public class IndoorTeamComposition extends TeamComposition {
 
     public Set<Integer> getPossibleSubstitutions(PositionType positionType) {
         Set<Integer> availablePlayers = new TreeSet<>(getPossibleSubstitutionsNoMax(positionType));
-        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), indoorTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
+        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), getTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
         return availablePlayers;
     }
 
@@ -230,7 +211,7 @@ public class IndoorTeamComposition extends TeamComposition {
                 }
                 // If no libero is on the court, they can replace the player if he is at the back
                 if (!hasLiberoOnCourt() && positionType.isAtTheBack()) {
-                    for (ApiPlayer player : indoorTeamDefinition().getLiberos()) {
+                    for (ApiPlayer player : getTeamDefinition().getLiberos()) {
                         availablePlayers.add(player.getNum());
                     }
                 }
@@ -257,7 +238,7 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean involvesLibero(int number, PositionType positionType) {
-        return indoorTeamDefinition().isLibero(number) || indoorTeamDefinition().isLibero(getPlayerAtPosition(positionType));
+        return getTeamDefinition().isLibero(number) || getTeamDefinition().isLibero(getPlayerAtPosition(positionType));
     }
 
     private boolean isInvolvedInPastSubstitution(int number) {
@@ -275,8 +256,8 @@ public class IndoorTeamComposition extends TeamComposition {
     private List<Integer> getFreePlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
-        for (ApiPlayer player : indoorTeamDefinition().getPlayers()) {
-            if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(player.getNum()) && !indoorTeamDefinition().isLibero(player.getNum())) {
+        for (ApiPlayer player : getTeamDefinition().getPlayers()) {
+            if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(player.getNum()) && !getTeamDefinition().isLibero(player.getNum())) {
                 players.add(player.getNum());
             }
         }
@@ -287,7 +268,7 @@ public class IndoorTeamComposition extends TeamComposition {
     private boolean hasLiberoOnCourt() {
         boolean result = false;
 
-        for (ApiPlayer player : indoorTeamDefinition().getLiberos()) {
+        for (ApiPlayer player : getTeamDefinition().getLiberos()) {
             if (!PositionType.BENCH.equals(getPlayerPosition(player.getNum()))) {
                 result = true;
             }
@@ -301,13 +282,13 @@ public class IndoorTeamComposition extends TeamComposition {
     }
 
     private boolean hasSecondLibero() {
-        return indoorTeamDefinition().getLiberos().size() > 1;
+        return getTeamDefinition().getLiberos().size() > 1;
     }
 
     private int getSecondLibero() {
         int secondLibero = -1;
 
-        for (ApiPlayer player : indoorTeamDefinition().getLiberos()) {
+        for (ApiPlayer player : getTeamDefinition().getLiberos()) {
             if (player.getNum() != mActingLibero) {
                 secondLibero = player.getNum();
             }
@@ -328,7 +309,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public void rotateToNextPositions() {
         super.rotateToNextPositions();
 
-        if (hasLiberoOnCourt() && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_4))) {
+        if (hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_4))) {
             substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_4);
         }
     }
@@ -337,7 +318,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public void rotateToPreviousPositions() {
         super.rotateToPreviousPositions();
 
-        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_2))) {
+        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_2))) {
             substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_2);
         }
         if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(getPlayerAtPosition(PositionType.POSITION_5))) {
@@ -348,7 +329,7 @@ public class IndoorTeamComposition extends TeamComposition {
     public int checkPosition1Offence() {
         int middleBlockerNumber = -1;
 
-        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && indoorTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_1))) {
+        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_1))) {
             middleBlockerNumber = mWaitingMiddleBlocker;
         }
 
@@ -381,35 +362,54 @@ public class IndoorTeamComposition extends TeamComposition {
         return mStartingLineup.getPlayerAt(positionType);
     }
 
-    public int getActingCaptain() {
-        return mActingCaptain;
+    public boolean hasGameCaptainOnCourt() {
+        return isStartingLineupConfirmed() && (hasCaptainOnCourt() || hasSecondaryCaptainOnCourt());
     }
 
-    public void setActingCaptain(int number) {
-        if (isStartingLineupConfirmed() && indoorTeamDefinition().hasPlayer(number) && !indoorTeamDefinition().isLibero(number)) {
-            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now acting captain", number, indoorTeamDefinition().getTeamType().toString()));
-            mActingCaptain = number;
+    public boolean isGameCaptain(int number) {
+        return number == getGameCaptain() && ApiSanction.isPlayer(number);
+    }
+
+    public int getGameCaptain() {
+        if (hasCaptainOnCourt()) {
+            return getTeamDefinition().getCaptain();
+        } else if (hasSecondaryCaptainOnCourt()) {
+            return getSecondaryCaptain();
+        } else {
+            return -1;
         }
     }
 
-    public boolean hasActingCaptainOnCourt() {
-        return mActingCaptain > -1;
+    public void setGameCaptain(int number) {
+        if (isStartingLineupConfirmed()
+                && getTeamDefinition().hasPlayer(number)
+                && !getTeamDefinition().isLibero(number)
+                && !getTeamDefinition().isCaptain(number)
+                && !isSecondaryCaptain(number)
+                && !PositionType.BENCH.equals(getPlayerPosition(number))) {
+            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now secondary captain", number, getTeamDefinition().getTeamType().toString()));
+            mSecondaryCaptain = number;
+        }
     }
 
-    public boolean isActingCaptain(int number) {
-        return number == mActingCaptain;
+    private int getSecondaryCaptain() {
+        return mSecondaryCaptain;
     }
 
-    public Set<Integer> getPossibleActingCaptains() {
+    private boolean hasSecondaryCaptainOnCourt() {
+        return mSecondaryCaptain > -1 && !PositionType.BENCH.equals(getPlayerPosition(mSecondaryCaptain));
+    }
+
+    private boolean isSecondaryCaptain(int number) {
+        return number == mSecondaryCaptain;
+    }
+
+    public Set<Integer> getPossibleSecondaryCaptains() {
         Set<Integer> players = new TreeSet<>();
 
-        if (mActingCaptain > -1) {
-            players.add(mActingCaptain);
-        } else {
-            for (int number : getPlayersOnCourt()) {
-                if (!indoorTeamDefinition().isLibero(number)) {
-                    players.add(number);
-                }
+        for (int number : getPlayersOnCourt()) {
+            if (!getTeamDefinition().isLibero(number) && !getTeamDefinition().isCaptain(number) && !isSecondaryCaptain(number)) {
+                players.add(number);
             }
         }
 
@@ -446,7 +446,7 @@ public class IndoorTeamComposition extends TeamComposition {
                     && (this.getSubstitutions().equals(other.getSubstitutions()))
                     && (this.hasActingLibero() == other.hasActingLibero())
                     && (this.hasWaitingMiddleBlocker() == other.hasWaitingMiddleBlocker())
-                    && (this.getActingCaptain() == other.getActingCaptain())
+                    && (this.getSecondaryCaptain() == other.getSecondaryCaptain())
                     && (this.hasLiberoOnCourt() == other.hasLiberoOnCourt());
         }
 

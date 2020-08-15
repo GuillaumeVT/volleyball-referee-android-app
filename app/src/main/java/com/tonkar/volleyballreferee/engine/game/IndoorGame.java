@@ -146,37 +146,37 @@ public class IndoorGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public boolean hasActingCaptainOnCourt(TeamType teamType) {
-        return getIndoorTeamComposition(teamType).hasActingCaptainOnCourt();
+    public boolean hasGameCaptainOnCourt(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).hasGameCaptainOnCourt();
     }
 
     @Override
-    public int getActingCaptain(TeamType teamType, int setIndex) {
+    public int getGameCaptain(TeamType teamType, int setIndex) {
         int number = -1;
 
         com.tonkar.volleyballreferee.engine.game.set.Set set = getSet(setIndex);
 
         if (set != null) {
             IndoorTeamComposition indoorTeamComposition = (IndoorTeamComposition) set.getTeamComposition(teamType);
-            number = indoorTeamComposition.getActingCaptain();
+            number = indoorTeamComposition.getGameCaptain();
         }
 
         return number;
     }
 
     @Override
-    public void setActingCaptain(TeamType teamType, int number) {
-        getIndoorTeamComposition(teamType).setActingCaptain(number);
+    public boolean isGameCaptain(TeamType teamType, int number) {
+        return getIndoorTeamComposition(teamType).isGameCaptain(number);
     }
 
     @Override
-    public boolean isActingCaptain(TeamType teamType, int number) {
-        return getIndoorTeamComposition(teamType).isActingCaptain(number);
+    public void setGameCaptain(TeamType teamType, int number) {
+        getIndoorTeamComposition(teamType).setGameCaptain(number);
     }
 
     @Override
-    public Set<Integer> getPossibleActingCaptains(TeamType teamType) {
-        return getIndoorTeamComposition(teamType).getPossibleActingCaptains();
+    public Set<Integer> getPossibleSecondaryCaptains(TeamType teamType) {
+        return getIndoorTeamComposition(teamType).getPossibleSecondaryCaptains();
     }
 
     @Override
@@ -455,8 +455,8 @@ public class IndoorGame extends Game implements IClassicTeam {
                     }
 
                     if (pointsIndex == pointsLadder.size() - 1) {
-                        setActingCaptain(TeamType.HOME, storedGame.getActingCaptain(TeamType.HOME, setIndex));
-                        setActingCaptain(TeamType.GUEST, storedGame.getActingCaptain(TeamType.GUEST, setIndex));
+                        setGameCaptain(TeamType.HOME, storedGame.getGameCaptain(TeamType.HOME, setIndex));
+                        setGameCaptain(TeamType.GUEST, storedGame.getGameCaptain(TeamType.GUEST, setIndex));
                     }
 
                     addPoint(pointsLadder.get(pointsIndex));

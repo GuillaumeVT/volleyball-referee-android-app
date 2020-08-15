@@ -175,19 +175,11 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (PositionType.BENCH.equals(positionType)) {
-            update(teamType);
-        } else {
-            MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
-            updateService();
-            updatePosition(teamType, number, positionButton);
-            if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
-                updateSanction(teamType, number, getTeamSanctionImages(teamType).get(positionType));
-                updateSubstitution(teamType, number, getTeamSubstitutions(teamType).get(positionType));
-            }
-            UiUtils.animateBounce(mView.getContext(), positionButton);
+        update(teamType);
 
-            checkCaptain(teamType, number);
+        if (!PositionType.BENCH.equals(positionType)) {
+            MaterialButton positionButton = getTeamPositions(teamType).get(positionType);
+            UiUtils.animateBounce(mView.getContext(), positionButton);
         }
 
         if (ActionOriginType.USER.equals(actionOriginType)) {
@@ -279,7 +271,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
         updateService();
         confirmStartingLineup(teamType);
-        checkCaptain(teamType, -1);
+        checkCaptain(teamType);
         checkEvictions(teamType);
     }
 
@@ -311,7 +303,7 @@ public class IndoorCourtFragment extends CourtFragment {
             @Override
             public void onPositiveButtonClicked() {
                 mClassicTeam.confirmStartingLineup(teamType);
-                checkCaptain(teamType, -1);
+                checkCaptain(teamType);
                 mOneStartingLineupDialog = false;
             }
 
@@ -332,25 +324,20 @@ public class IndoorCourtFragment extends CourtFragment {
         playerSelectionDialog.show();
     }
 
-    private void checkCaptain(TeamType teamType, int number) {
-        if (mClassicTeam.isStartingLineupConfirmed(teamType)) {
-            if (mClassicTeam.isCaptain(teamType, number)) {
-                // the captain is back on court, refresh the team
-                update(teamType);
-            } else if (!mClassicTeam.hasActingCaptainOnCourt(teamType)) {
-                // there is no captain on court, request one
-                showCaptainSelectionDialog(teamType);
-            }
+    private void checkCaptain(TeamType teamType) {
+        if (mClassicTeam.isStartingLineupConfirmed(teamType) && !mClassicTeam.hasGameCaptainOnCourt(teamType)) {
+            // there is no captain on court, request one
+            showCaptainSelectionDialog(teamType);
         }
     }
 
     private void showCaptainSelectionDialog(final TeamType teamType) {
         PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_captain),
-                mClassicTeam, mGame, teamType, mClassicTeam.getPossibleActingCaptains(teamType)) {
+                mClassicTeam, mGame, teamType, mClassicTeam.getPossibleSecondaryCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
-                mClassicTeam.setActingCaptain(teamType, selectedNumber);
+                mClassicTeam.setGameCaptain(teamType, selectedNumber);
                 // refresh the team with the new captain
                 update(teamType);
             }

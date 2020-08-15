@@ -144,7 +144,7 @@ public class ApiSet {
         return substitutions;
     }
 
-    public int getActingCaptain(TeamType teamType) {
+    public int getGameCaptain(TeamType teamType) {
         int number;
 
         if (TeamType.HOME.equals(teamType)) {
@@ -156,7 +156,7 @@ public class ApiSet {
         return number;
     }
 
-    public void setActingCaptain(TeamType teamType, int number) {
+    public void setGameCaptain(TeamType teamType, int number) {
         if (TeamType.HOME.equals(teamType)) {
             homeCaptain = number;
         } else {

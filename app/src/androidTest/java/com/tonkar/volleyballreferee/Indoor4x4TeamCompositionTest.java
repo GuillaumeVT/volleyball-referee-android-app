@@ -174,22 +174,27 @@ public class Indoor4x4TeamCompositionTest {
     public void captain_composition() {
         Indoor4x4TeamComposition teamComposition = createTeamWithNPlayersAndFillCourt(6);
 
-        assertFalse(teamComposition.hasActingCaptainOnCourt());
+        assertFalse(teamComposition.hasGameCaptainOnCourt());
         teamComposition.confirmStartingLineup();
-        assertTrue(teamComposition.hasActingCaptainOnCourt());
+        assertTrue(teamComposition.hasGameCaptainOnCourt());
 
         int captain = 3;
-        assertEquals(captain, teamComposition.getActingCaptain());
+        assertEquals(captain, teamComposition.getGameCaptain());
 
-        teamComposition.substitutePlayer(5, PositionType.POSITION_3, 0, 0);
-        assertFalse(teamComposition.hasActingCaptainOnCourt());
+        int secondaryCaptain = 5;
+        teamComposition.substitutePlayer(secondaryCaptain, PositionType.POSITION_3, 0, 0);
+        assertFalse(teamComposition.hasGameCaptainOnCourt());
 
-        teamComposition.setActingCaptain(5);
-        assertEquals(5, teamComposition.getActingCaptain());
-        assertTrue(teamComposition.hasActingCaptainOnCourt());
+        teamComposition.setGameCaptain(secondaryCaptain);
+        assertEquals(secondaryCaptain, teamComposition.getGameCaptain());
+        assertFalse(teamComposition.isGameCaptain(captain));
+        assertTrue(teamComposition.isGameCaptain(secondaryCaptain));
+        assertTrue(teamComposition.hasGameCaptainOnCourt());
 
         teamComposition.substitutePlayer(captain, PositionType.POSITION_3, 0, 0);
-        assertEquals(captain, teamComposition.getActingCaptain());
-        assertTrue(teamComposition.hasActingCaptainOnCourt());
+        assertEquals(captain, teamComposition.getGameCaptain());
+        assertTrue(teamComposition.isGameCaptain(captain));
+        assertFalse(teamComposition.isGameCaptain(secondaryCaptain));
+        assertTrue(teamComposition.hasGameCaptainOnCourt());
     }
 }

@@ -86,7 +86,7 @@ public class UiUtils {
             colorTeamButton(context, indoorTeam.getLiberoColor(teamType), button);
         } else {
             colorTeamButton(context, indoorTeam.getTeamColor(teamType), button);
-            if (indoorTeam.isCaptain(teamType, number) || indoorTeam.isActingCaptain(teamType, number)) {
+            if (indoorTeam.isGameCaptain(teamType, number)) {
                 button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
         }
