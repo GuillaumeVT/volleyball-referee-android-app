@@ -278,7 +278,7 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
 
     @Override
     public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
-        return getIndoorTeamComposition(teamType).getSubstitutions();
+        return getIndoorTeamComposition(teamType).getSubstitutionsCopy();
     }
 
     @Override
@@ -289,7 +289,7 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
 
         if (set != null) {
             Indoor4x4TeamComposition indoorTeamComposition = (Indoor4x4TeamComposition) set.getTeamComposition(teamType);
-            substitutions = indoorTeamComposition.getSubstitutions();
+            substitutions = indoorTeamComposition.getSubstitutionsCopy();
         }
 
         return substitutions;

@@ -281,7 +281,7 @@ public class SnowGame extends Game implements IClassicTeam {
 
     @Override
     public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
-        return getSnowTeamComposition(teamType).getSubstitutions();
+        return getSnowTeamComposition(teamType).getSubstitutionsCopy();
     }
 
     @Override
@@ -292,7 +292,7 @@ public class SnowGame extends Game implements IClassicTeam {
 
         if (set != null) {
             SnowTeamComposition snowTeamComposition = (SnowTeamComposition) set.getTeamComposition(teamType);
-            substitutions = snowTeamComposition.getSubstitutions();
+            substitutions = snowTeamComposition.getSubstitutionsCopy();
         }
 
         return substitutions;
