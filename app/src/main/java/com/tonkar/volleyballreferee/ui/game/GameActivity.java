@@ -361,7 +361,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
-            UiUtils.showNotification(this, String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
+            UiUtils.showNotification(findViewById(R.id.activity_game_content), String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
         }
     }
 
@@ -422,15 +422,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         UiUtils.animateBounce(this, mRightTeamTimeoutButton);
         UiUtils.animateBounce(this, mLeftTeamCardsButton);
         UiUtils.animateBounce(this, mRightTeamCardsButton);
-
-        if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            if (GameType.BEACH.equals(mGame.getKind()) || GameType.SNOW.equals(mGame.getKind())) {
-                UiUtils.showNotification(this, getString(R.string.switch_sides));
-                UiUtils.playNotificationSound(this);
-            } else {
-                UiUtils.makeText(this, getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     @Override
@@ -438,6 +429,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     @Override
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
+
+    @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
 
     @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {
@@ -545,7 +539,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         timeoutFragment.show(getSupportFragmentManager(), "timeout");
 
         if (mGame.countRemainingTimeouts(teamType) == 0) {
-            UiUtils.showNotification(this, String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
+            UiUtils.showNotification(findViewById(R.id.activity_game_content), String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
         }
     }
 

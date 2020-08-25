@@ -295,10 +295,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         UiUtils.animateBounce(this, mRightTeamNameText);
         UiUtils.animateBounce(this, mLeftTeamScoreButton);
         UiUtils.animateBounce(this, mRightTeamScoreButton);
-
-        if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            UiUtils.makeText(this, getString(R.string.switch_sides), Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -306,6 +302,9 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     @Override
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
+
+    @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
 
     @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -36,11 +34,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceManager;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -57,7 +55,6 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity;
-import com.tonkar.volleyballreferee.ui.user.UserActivity;
 
 import java.util.Locale;
 import java.util.Random;
@@ -261,15 +258,6 @@ public class UiUtils {
         }
     }
 
-    public static void navigateToUserSignIn(Activity activity) {
-        Intent intent = new Intent(activity, UserActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        activity.startActivity(intent);
-        UiUtils.animateForward(activity);
-    }
-
     public static void navigateToStoredGameAfterDelay(Activity activity, long delay) {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -346,33 +334,21 @@ public class UiUtils {
         return title;
     }
 
-    public static void showNotification(Context context, String message) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean interactiveNotification = sharedPreferences.getBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, false);
-
-        if (interactiveNotification) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
-            builder.setMessage(message);
-            builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {});
-            AlertDialog alertDialog = builder.show();
-            centerAlertDialogMessage(alertDialog);
-            setAlertDialogMessageSize(alertDialog, context.getResources());
-        } else {
-            makeText(context, message, Toast.LENGTH_LONG).show();
-        }
+    public static void showNotification(View view, String message) {
+        Context context = view.getContext();
+        Snackbar
+                .make(view, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(android.R.string.ok, button -> {})
+                .setActionTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setBackgroundTint(ContextCompat.getColor(context, R.color.colorPrimaryVariant))
+                .show();
     }
 
     public static void setAlertDialogMessageSize(AlertDialog alertDialog, Resources resources) {
         TextView textView = alertDialog.findViewById(android.R.id.message);
         if (textView != null) {
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.default_text_size));
-        }
-    }
-
-    private static void centerAlertDialogMessage(AlertDialog alertDialog) {
-        TextView textView = alertDialog.findViewById(android.R.id.message);
-        if (textView != null) {
-            textView.setGravity(Gravity.CENTER);
         }
     }
 

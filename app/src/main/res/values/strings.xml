@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30206" translatable="false">
+    <string name="rn_30300" translatable="false">
         New in this release:
-        \n\n\u2022 For new users: web services become a 3-month subscription.
+        \n\n\u2022 Warn the user when there is 1 remaining substitution for a team
+        \n\n\u2022 Ask the user whether or not they want to let the libero in
+        \n\n\u2022 Show the sum of all points in the score sheet
+        \n\n\u2022 Reworked the disqualification sanctions
     </string>
 
     <!-- General actions -->
@@ -188,6 +191,7 @@
     <string name="position_6_title">VI</string>
     <string name="substitution">Substitution</string>
     <string name="timeout">Timeout</string>
+    <string name="let_libero_in_question">Let the libero of %s in?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Delete the match</string>
@@ -200,7 +204,6 @@
     <!-- Settings activity -->
     <string name="settings">Settings</string>
     <string name="pref_keep_screen_on">Keep the screen on during games</string>
-    <string name="pref_interactive_notification">Use interactive notifications</string>
     <string name="pref_night_mode">Theme</string>
 
     <string name="synchronize">Synchronize</string>

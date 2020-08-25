@@ -188,7 +188,6 @@
     <!-- Settings activity -->
     <string name="settings">Configurações</string>
     <string name="pref_keep_screen_on">Manter tela ligada durante as partidas</string>
-    <string name="pref_interactive_notification">Exibir notificações interativas</string>
     <string name="pref_night_mode">Tema</string>
 
     <string name="synchronize">Sincronizar</string>

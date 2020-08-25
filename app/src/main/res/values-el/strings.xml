@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Ρυθμίσεις</string>
     <string name="pref_keep_screen_on">Κράτα την οθόνη ανοιχτή κατά τη διάρκεια των αγώνων</string>
-    <string name="pref_interactive_notification">Χρήση ειδοποιήσεων με αλληλεπίδραση</string>
     <string name="pref_night_mode">Θέμα</string>
 
     <string name="synchronize">Συγχρονισμός</string>

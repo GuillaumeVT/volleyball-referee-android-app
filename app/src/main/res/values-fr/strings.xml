@@ -183,6 +183,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Temps mort</string>
     <string name="substitution">Remplacement</string>
+    <string name="let_libero_in_question">Laisser entrer le libéro de %s?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Supprimer le match</string>
@@ -195,7 +196,6 @@
     <!-- Settings activity -->
     <string name="settings">Paramètres</string>
     <string name="pref_keep_screen_on">Maintenir l\'écran allumé pendant les matchs</string>
-    <string name="pref_interactive_notification">Utiliser les notifications interactives</string>
     <string name="pref_night_mode">Thème</string>
 
     <string name="synchronize">Synchroniser</string>

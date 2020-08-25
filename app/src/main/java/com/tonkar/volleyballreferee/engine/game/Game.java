@@ -940,6 +940,13 @@ public abstract class Game extends BaseGame {
         }
     }
 
+    void notifyCanLetLiberoIn(TeamType defendingTeam, int number) {
+        Log.i(Tags.TEAM, String.format("Libero #%d of %s team may enter on %s position", number, defendingTeam.toString(), PositionType.POSITION_1.toString()));
+        for (final TeamListener listener : mTeamListeners) {
+            listener.onCanLetLiberoIn(defendingTeam, number);
+        }
+    }
+
     // Timeout
 
     @Override

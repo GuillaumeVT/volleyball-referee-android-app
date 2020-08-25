@@ -89,6 +89,9 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
+
+    @Override
     public void setGameService(IGame game) {
         mIndoorTeam = (IClassicTeam) game;
     }

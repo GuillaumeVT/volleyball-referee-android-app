@@ -16,9 +16,8 @@ import java.util.TimeZone;
 
 public class PrefUtils {
 
-    public static final String PREF_KEEP_SCREEN_ON            = "pref_keep_screen_on";
-    public static final String PREF_NIGHT_MODE                = "pref_night_mode";
-    public static final String PREF_INTERACTIVE_NOTIFICATIONS = "pref_interactive_notification";
+    public static final String PREF_KEEP_SCREEN_ON = "pref_keep_screen_on";
+    public static final String PREF_NIGHT_MODE     = "pref_night_mode";
 
     private static final String PREF_USER                                   = "pref_user";
     private static final String PREF_USER_TOKEN                             = "pref_user_token";

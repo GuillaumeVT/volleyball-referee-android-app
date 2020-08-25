@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
@@ -171,6 +172,11 @@ public class IndoorCourtFragment extends CourtFragment {
 
         update(mTeamOnLeftSide);
         update(mTeamOnRightSide);
+
+        if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
+            UiUtils.showNotification(mView, getString(R.string.switch_sides));
+            UiUtils.playNotificationSound(getContext());
+        }
     }
 
     @Override
@@ -189,9 +195,9 @@ public class IndoorCourtFragment extends CourtFragment {
                 int remainingSubstitutions = mClassicTeam.countRemainingSubstitutions(teamType);
 
                 if (remainingSubstitutions == 0) {
-                    UiUtils.showNotification(getContext(), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(mView, String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
                 } else if (remainingSubstitutions == 1) {
-                    UiUtils.showNotification(getContext(), String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(mView, String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
                 }
             }
         }
@@ -204,6 +210,19 @@ public class IndoorCourtFragment extends CourtFragment {
         } else {
             update(teamType);
         }
+    }
+
+    @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {
+        // TODO avoid asking multiple times when the opposite team is serving and keep scoring
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+                .setTitle(getString(R.string.substitution))
+                .setMessage(String.format(Locale.getDefault(), getString(R.string.let_libero_in_question), mClassicTeam.getTeamName(defendingTeam)))
+                .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> mClassicTeam.substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION))
+                .setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {});
+
+        builder.create().show();
     }
 
     protected void rotateAnimation(TeamType teamType, boolean clockwise) {
@@ -390,7 +409,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.showNotification(mView, String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
         }
     }
 

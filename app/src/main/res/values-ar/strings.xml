@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">الإعدادات</string>
     <string name="pref_keep_screen_on">الحفاظ على شاشة الهاتف مشتغلة أثناء المباراة</string>
-    <string name="pref_interactive_notification">استخدام الإشعارات التفاعلية</string>
     <string name="pref_night_mode">التصميم</string>
 
     <string name="synchronize">المزامنة</string>

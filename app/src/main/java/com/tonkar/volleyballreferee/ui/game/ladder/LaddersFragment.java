@@ -120,6 +120,9 @@ public class LaddersFragment extends Fragment implements ScoreListener, TimeoutL
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
+
+    @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         mLadderListAdapter.notifyDataSetChanged();
     }

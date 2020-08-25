@@ -72,18 +72,15 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
             TextView tossCoinText = view.findViewById(R.id.action_toss_coin);
             TextView resetSetText = view.findViewById(R.id.action_reset_set);
             SwitchCompat keepScreenOnSwitch = view.findViewById(R.id.keep_screen_on);
-            SwitchCompat interactiveNotificationSwitch = view.findViewById(R.id.interactive_notification);
             Spinner nightModeSpinner = view.findViewById(R.id.night_mode_spinner);
 
             keepScreenOnSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, false));
-            interactiveNotificationSwitch.setChecked(sharedPreferences.getBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, false));
 
             if (mGame.isMatchCompleted()) {
                 tossCoinText.setVisibility(View.GONE);
                 indexGameText.setVisibility(View.GONE);
                 resetSetText.setVisibility(View.GONE);
                 keepScreenOnSwitch.setVisibility(View.GONE);
-                interactiveNotificationSwitch.setVisibility(View.GONE);
             } else if (GameType.TIME.equals(mGame.getKind())) {
                 resetSetText.setVisibility(View.GONE);
             }
@@ -104,7 +101,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 sharedPreferences.edit().putBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, isChecked).apply();
                 mActivity.recreate();
             });
-            interactiveNotificationSwitch.setOnCheckedChangeListener((button, isChecked) -> sharedPreferences.edit().putBoolean(PrefUtils.PREF_INTERACTIVE_NOTIFICATIONS, isChecked).apply());
             StringArrayAdapter nightModeSpinnerAdapter = new StringArrayAdapter(getContext(), inflater, getResources().getStringArray(R.array.night_mode_entries), getResources().getStringArray(R.array.night_mode_values));
             nightModeSpinner.setAdapter(nightModeSpinnerAdapter);
             nightModeSpinner.setSelection(nightModeSpinnerAdapter.getPosition(PrefUtils.getNightMode(mActivity)));

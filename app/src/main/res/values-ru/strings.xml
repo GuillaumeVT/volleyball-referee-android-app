@@ -163,6 +163,7 @@
     <string name="private_game_message">Статус матча: скрытый</string>
     <string name="all_timeouts_called">Команда \"%s\": нет командных тайм аутов</string>
     <string name="all_substitutions_used">Команда \"%s\": нет доступных замен в данной партии</string>
+    <string name="one_remaining_substitution">Команда \"%s\": одна последняя замена в данной партии</string>
     <string name="sanctions_tab">Санкции</string>
     <string name="sanction">Санкция (%s)</string>
     <string name="delay_sanction">Задержка</string>
@@ -194,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Параметры</string>
     <string name="pref_keep_screen_on">Оставить экран активным во время матча</string>
-    <string name="pref_interactive_notification">Включить интерактивные уведомления</string>
     <string name="pref_night_mode">Тема</string>
 
     <string name="synchronize">Синхронизировать</string>

@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Настройки</string>
     <string name="pref_keep_screen_on">Екранът да остане включен по време на мач</string>
-    <string name="pref_interactive_notification">Използвайте интерактивни уведомления</string>
     <string name="pref_night_mode">Тема</string>
 
     <string name="synchronize">Синхронизирай</string>

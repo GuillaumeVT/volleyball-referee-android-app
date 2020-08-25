@@ -101,17 +101,6 @@
             android:textSize="@dimen/default_text_size"
             app:drawableStartCompat="@drawable/ic_screen_on" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/interactive_notification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:padding="@dimen/big_margin_size"
-            android:text="@string/pref_interactive_notification"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            app:drawableStartCompat="@drawable/ic_notification" />
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

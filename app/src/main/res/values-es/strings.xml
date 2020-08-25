@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Ajustes</string>
     <string name="pref_keep_screen_on">No apagar la pantalla durante los partidos</string>
-    <string name="pref_interactive_notification">Usar notificaciones interactivas</string>
     <string name="pref_night_mode">Tema</string>
 
     <string name="synchronize">Sincronizar</string>

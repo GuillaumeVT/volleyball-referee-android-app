@@ -298,6 +298,9 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
+
+    @Override
     public void onTimeoutUpdated(TeamType teamType, int maxCount, int newCount) {
         saveCurrentGame();
         pushCurrentGameToServer();

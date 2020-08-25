@@ -113,7 +113,7 @@ public class IndoorGame extends Game implements IClassicTeam {
         TeamType defendingTeam = scoringTeam.other();
         number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
         if (number > -1)  {
-            substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
+            notifyCanLetLiberoIn(defendingTeam, number);
         }
     }
 

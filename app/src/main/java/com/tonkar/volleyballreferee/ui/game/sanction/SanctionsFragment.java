@@ -84,6 +84,9 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
+
+    @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (teamType.equals(mLeftTeamSanctionsListAdapter.getTeamType())) {
             mLeftTeamSanctionsListAdapter.notifyDataSetChanged();

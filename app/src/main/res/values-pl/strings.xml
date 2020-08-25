@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Ustawienia</string>
     <string name="pref_keep_screen_on">Zachowaj ekran podczas gier</string>
-    <string name="pref_interactive_notification">Użyj powiadomień interaktywnych</string>
     <string name="pref_night_mode">Motyw</string>
 
     <string name="synchronize">Zsynchronizuj</string>

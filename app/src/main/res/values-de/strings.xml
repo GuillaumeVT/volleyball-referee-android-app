@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Einstellungen</string>
     <string name="pref_keep_screen_on">Bildschirm bleibt während dem Spiel an</string>
-    <string name="pref_interactive_notification">Verwenden Sie interaktive Benachrichtigungen</string>
     <string name="pref_night_mode">Design</string>
 
     <string name="synchronize">Synchronisieren</string>

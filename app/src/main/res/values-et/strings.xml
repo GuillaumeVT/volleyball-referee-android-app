@@ -195,7 +195,6 @@
     <!-- Settings activity -->
     <string name="settings">Seaded</string>
     <string name="pref_keep_screen_on">Jäta mängu ajaks aktiivseks ekraani</string>
-    <string name="pref_interactive_notification">Aktiveeri interaktiivsed teated</string>
     <string name="pref_night_mode">Teema</string>
 
     <string name="synchronize">Sünkroniseerida</string>

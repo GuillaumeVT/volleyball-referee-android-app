@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -96,6 +95,11 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onTeamsSwapped(TeamType leftTeamType, TeamType rightTeamType, ActionOriginType actionOriginType) {
         super.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
         updateAll();
+
+        if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
+            UiUtils.showNotification(mView, getString(R.string.switch_sides));
+            UiUtils.playNotificationSound(getContext());
+        }
     }
 
     @Override
@@ -105,6 +109,9 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onTeamRotated(TeamType teamType, boolean clockwise) {
         updateAll();
     }
+
+    @Override
+    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
 
     private void updateAll() {
         update(mTeamOnLeftSide);
@@ -185,10 +192,10 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
-            UiUtils.makeText(getActivity(), String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.showNotification(mView, String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)));
         } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
-            UiUtils.makeText(getActivity(), String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)), Toast.LENGTH_LONG).show();
+            UiUtils.showNotification(mView, String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)));
         }
 
         update(teamType);
