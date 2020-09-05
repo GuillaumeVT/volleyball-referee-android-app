@@ -164,6 +164,7 @@
     <string name="private_game_message">El partido ahora es privado</string>
     <string name="all_timeouts_called">%s no puede pedir más tiempos muertos</string>
     <string name="all_substitutions_used">%s no puede pedir más sustituciones</string>
+    <string name="one_remaining_substitution">%s has one remaining substitution</string>
     <string name="sanctions_tab">Sanciones</string>
     <string name="sanction">Sanción (%s)</string>
     <string name="delay_sanction">Demora</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Tiempos muertos</string>
     <string name="substitution">Sustitución</string>
+    <string name="let_libero_in_question">Let the libero of %s in?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Borrar el partido</string>
