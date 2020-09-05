@@ -19,6 +19,7 @@ class LadderItem {
     private final List<ApiTimeout>      mGuestTimeouts;
     private final List<ApiSanction>     mHomeSanctions;
     private final List<ApiSanction>     mGuestSanctions;
+    private       TeamType              mFirstService;
 
     LadderItem(TeamType teamType, int homePoints, int guestPoints) {
         mTeamType = teamType;
@@ -92,6 +93,10 @@ class LadderItem {
         }
     }
 
+    void setFirstService(TeamType firstService) {
+        mFirstService = firstService;
+    }
+
     boolean hasSubstitutionEvents(TeamType teamType) {
         if (TeamType.HOME.equals(teamType)) {
             return mHomeSubstitutions.size() > 0;
@@ -116,8 +121,12 @@ class LadderItem {
         }
     }
 
+    boolean hasFirstService(TeamType teamType) {
+        return teamType.equals(mFirstService);
+    }
+
     boolean hasEvent(TeamType teamType) {
-        return hasSubstitutionEvents(teamType) || hasTimeoutEvents(teamType) || hasSanctionEvents(teamType);
+        return hasSubstitutionEvents(teamType) || hasTimeoutEvents(teamType) || hasSanctionEvents(teamType) || hasFirstService(teamType);
     }
 
     boolean hasSeveralEvents(TeamType teamType) {
@@ -130,6 +139,9 @@ class LadderItem {
             count++;
         }
         if (hasSanctionEvents(teamType)) {
+            count++;
+        }
+        if (hasFirstService(teamType)) {
             count++;
         }
 

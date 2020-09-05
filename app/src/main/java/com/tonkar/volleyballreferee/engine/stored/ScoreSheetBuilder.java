@@ -582,6 +582,9 @@ public class ScoreSheetBuilder {
         Element ladderDiv = new Element("div");
         ladderDiv.addClass("div-flex-row");
 
+        TeamType firstServingTeam = mStoredGame.getFirstServingTeam(setIndex);
+        ladderDiv.appendChild(createServiceLadderItem(firstServingTeam));
+
         for (TeamType teamType : mStoredGame.getPointsLadder(setIndex)) {
             if (TeamType.HOME.equals(teamType)) {
                 homeScore++;
@@ -610,6 +613,35 @@ public class ScoreSheetBuilder {
         }
 
         return ladderItemDiv;
+    }
+
+    private Element createServiceLadderItem(TeamType teamType) {
+        Element ladderItemDiv = new Element("div");
+        ladderItemDiv.addClass("div-flex-column").addClass("ladder-spacing");
+
+        if (TeamType.HOME.equals(teamType)) {
+            ladderItemDiv.appendChild(createCellSpan(" ", false, true).addClass("vbr-home-team").appendChild(new Element("span").addClass(getServiceImageClass(mStoredGame.getTeamColor(teamType)))));
+            ladderItemDiv.appendChild(createCellSpan(" ", false, true));
+        } else {
+            ladderItemDiv.appendChild(createCellSpan(" ", false, true));
+            ladderItemDiv.appendChild(createCellSpan(" ", false, true).addClass("vbr-guest-team").appendChild(new Element("span").addClass(getServiceImageClass(mStoredGame.getTeamColor(teamType)))));
+        }
+
+        return ladderItemDiv;
+    }
+
+    private String getServiceImageClass(int backgroundColor) {
+        String imageClass;
+
+        double a = 1 - ( 0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(backgroundColor)) / 255;
+
+        if (a < 0.5) {
+            imageClass = "service-gray-image";
+        } else {
+            imageClass = "service-white-image";
+        }
+
+        return imageClass;
     }
 
     private Element createRemarks() {
@@ -1347,6 +1379,24 @@ public class ScoreSheetBuilder {
                 "      background-size: 100% 100%;\n" +
                 "      width: auto;\n" +
                 "      height: 20px;\n" +
+                "    }\n" +
+                "    .service-gray-image {\n" +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.ic_thumb_service, 32, 32)) +
+                "      display: inline-block;\n" +
+                "      background-repeat: no-repeat;\n" +
+                "      background-size: 100% 100%;\n" +
+                "      width: 10px;\n" +
+                "      min-width: 10px;\n" +
+                "      height: 10px;\n" +
+                "    }\n" +
+                "    .service-white-image {\n" +
+                String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.ic_thumb_service_white, 32, 32)) +
+                "      display: inline-block;\n" +
+                "      background-repeat: no-repeat;\n" +
+                "      background-size: 100% 100%;\n" +
+                "      width: 10px;\n" +
+                "      min-width: 10px;\n" +
+                "      height: 10px;\n" +
                 "    }\n" +
                 "    .timeout-gray-image {\n" +
                 String.format("      background-image: url(\"data:image/png;base64,%s\");\n", toBase64(R.drawable.ic_thumb_timeout, 32, 32)) +

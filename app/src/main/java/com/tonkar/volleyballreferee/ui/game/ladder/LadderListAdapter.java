@@ -114,6 +114,7 @@ public class LadderListAdapter extends BaseAdapter {
         addTimeouts(TeamType.GUEST, actualIndex, ladderItems);
         addSanctions(TeamType.HOME, actualIndex, ladderItems);
         addSanctions(TeamType.GUEST, actualIndex, ladderItems);
+        addService(actualIndex, ladderItems);
         fillLadder(viewHolder, ladderItems);
 
         if (mReverseOrder && index == 0) {
@@ -202,6 +203,12 @@ public class LadderListAdapter extends BaseAdapter {
                     ladderItem.addSanction(teamType, sanction);
                 }
             }
+        }
+    }
+
+    private void addService(int setIndex, List<LadderItem> ladderItems) {
+        if (ladderItems.size() > 0) {
+            ladderItems.get(0).setFirstService(mBaseScore.getFirstServingTeam(setIndex));
         }
     }
 
@@ -315,6 +322,15 @@ public class LadderListAdapter extends BaseAdapter {
             }
         } else if (ladderItem.hasSanctionEvents(teamType)) {
             id = R.drawable.ic_thumb_card;
+        } else if (ladderItem.hasFirstService(teamType)) {
+            switch (mCurrentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    id = R.drawable.ic_thumb_service;
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    id = R.drawable.ic_thumb_service_white;
+                    break;
+            }
         }
 
         return id;
