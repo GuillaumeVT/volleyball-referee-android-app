@@ -214,8 +214,6 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onCanLetLiberoIn(TeamType defendingTeam, int number) {
-        // TODO avoid asking multiple times when the opposite team is serving and keep scoring
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
                 .setTitle(getString(R.string.substitution))
                 .setMessage(String.format(Locale.getDefault(), getString(R.string.let_libero_in_question), mClassicTeam.getTeamName(defendingTeam)))

@@ -1213,7 +1213,7 @@ public abstract class Game extends BaseGame {
         return samePlayerServedNConsecutiveTimes(teamType, tempTeamPoints, tempPointsLadder);
     }
 
-    private int getConsecutiveServes(TeamType teamType, List<TeamType> pointsLadder) {
+    protected int getConsecutiveServes(TeamType teamType, List<TeamType> pointsLadder) {
         int consecutiveServes;
         int ladderIndex = pointsLadder.size() - 1;
 

@@ -112,7 +112,7 @@ public class IndoorGame extends Game implements IClassicTeam {
 
         TeamType defendingTeam = scoringTeam.other();
         number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
-        if (number > -1)  {
+        if (number > -1 && getConsecutiveServes(scoringTeam, getPointsLadder()) == 0)  {
             notifyCanLetLiberoIn(defendingTeam, number);
         }
     }
