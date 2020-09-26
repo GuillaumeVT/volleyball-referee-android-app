@@ -164,6 +164,7 @@
     <string name="private_game_message">Мачът е личен</string>
     <string name="all_timeouts_called">%s няма повече почивки</string>
     <string name="all_substitutions_used">%s няма повече смени</string>
+    <string name="one_remaining_substitution">%s oстава една смяна</string>
     <string name="sanctions_tab">Наказания</string>
     <string name="sanction">Наказания (%s)</string>
     <string name="delay_sanction">Забавяне</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Прекъсване</string>
     <string name="substitution">Смена</string>
+    <string name="let_libero_in_question">Да пусна либерото на %s?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Изтрийте мач</string>

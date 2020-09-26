@@ -164,6 +164,7 @@
     <string name="private_game_message">De wedstrijd is nu privé</string>
     <string name="all_timeouts_called">%s heeft geen beschikbare time-out meer</string>
     <string name="all_substitutions_used">%s heeft geen vervaningen meer</string>
+    <string name="one_remaining_substitution">%s heeft 1 resterende vervanging</string>
     <string name="sanctions_tab">Sancties</string>
     <string name="sanction">Sanctie (%s)</string>
     <string name="delay_sanction">Spelvertraging</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Time-out</string>
     <string name="substitution">Vervanging</string>
+    <string name="let_libero_in_question">Mag de libero van %s vervangen worden?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Verwijder de wedstrijd</string>

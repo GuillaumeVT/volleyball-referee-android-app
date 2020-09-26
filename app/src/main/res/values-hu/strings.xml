@@ -164,6 +164,7 @@
     <string name="private_game_message">A mérkőzés most már privát</string>
     <string name="all_timeouts_called">%s csapatnak nincs több időkérése</string>
     <string name="all_substitutions_used">%s csapatnak nincs több cserelehetősége</string>
+    <string name="one_remaining_substitution">A %s csapatnak 1 cserelehetősége maradt</string>
     <string name="sanctions_tab">Szankciók</string>
     <string name="sanction">Szankció (%s)</string>
     <string name="delay_sanction">Késleltetés</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Időkérés</string>
     <string name="substitution">Csere</string>
+    <string name="let_libero_in_question">Becseréled a %s csapat liberóját?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Mérkőzés törlése</string>

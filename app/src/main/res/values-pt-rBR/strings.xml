@@ -157,6 +157,7 @@
     <string name="private_game_message">A partida agora é privada</string>
     <string name="all_timeouts_called">%s não possui mais tempos no set</string>
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
+    <string name="one_remaining_substitution">%s possui apenas mais uma substituição</string>
     <string name="sanctions_tab">Punições</string>
     <string name="sanction">Punição (%s)</string>
     <string name="delay_sanction">Retardo</string>
@@ -176,6 +177,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Tempo</string>
     <string name="substitution">Substituição</string>
+    <string name="let_libero_in_question">Deixar o líbero de %s entrar?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Excluir a partida</string>

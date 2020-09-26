@@ -164,6 +164,7 @@
     <string name="private_game_message">Das Spiel ist jetzt privat</string>
     <string name="all_timeouts_called">%s kann keine weitere Auszeit mehr nehmen</string>
     <string name="all_substitutions_used">%s kann keinen Spielerwechsel mehr durchführen</string>
+    <string name="one_remaining_substitution">%s kann noch einen Spielerwechsel durchführen</string>
     <string name="sanctions_tab">Sanktionen</string>
     <string name="sanction">Sanktion (%s)</string>
     <string name="delay_sanction">Verzögerung</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Auszeit</string>
     <string name="substitution">Auswechslung</string>
+    <string name="let_libero_in_question">Darf der Libero von %s ins Spiel?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Spiel löschen</string>

@@ -164,6 +164,7 @@
     <string name="private_game_message">Mängu staatus: peidetud</string>
     <string name="all_timeouts_called">Võistkond \"%s\": võistkonna vaheajad puuduvad</string>
     <string name="all_substitutions_used">Võistkond \"%s\": ei ole rohkem vahetusi antud geimis</string>
+    <string name="one_remaining_substitution">\"%s\" üks vahetus jäänud</string>
     <string name="sanctions_tab">Karistused</string>
     <string name="sanction">Karistus (%s)</string>
     <string name="delay_sanction">Viivitus</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Vaheajad</string>
     <string name="substitution">Vahetus</string>
+    <string name="let_libero_in_question">Kas \"%s\" libero tuli väljakule?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Kustuta mängu</string>

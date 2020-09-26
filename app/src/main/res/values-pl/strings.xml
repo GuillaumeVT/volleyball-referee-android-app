@@ -164,6 +164,7 @@
     <string name="private_game_message">Mecz jest teraz prywatny</string>
     <string name="all_timeouts_called">%s brak dostępnych przerw na żądanie</string>
     <string name="all_substitutions_used">%s brak dostępnych zmian</string>
+    <string name="one_remaining_substitution">Pozostała jedna zmiana w zespole %s</string>
     <string name="sanctions_tab">Sankcje</string>
     <string name="sanction">Sankcja (%s)</string>
     <string name="delay_sanction">Opóźnianie</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Czas</string>
     <string name="substitution">Zmiana</string>
+    <string name="let_libero_in_question">Wpuścić libero w zespole %s ?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Usuń mecz</string>

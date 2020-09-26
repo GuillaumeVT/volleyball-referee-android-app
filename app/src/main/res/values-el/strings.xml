@@ -164,6 +164,7 @@
     <string name="private_game_message">Ο αγώνας είναι τώρα ιδιωτικός</string>
     <string name="all_timeouts_called">%s δεν έχει άλλα διαθέσιμα τάιμ άουτ</string>
     <string name="all_substitutions_used">%s δεν έχει άλλη διαθέσιμη αλλαγή</string>
+    <string name="one_remaining_substitution">%s έχει απομείνει μία αλλαγή</string>
     <string name="sanctions_tab">Κυρώσεις</string>
     <string name="sanction">Κύρωση (%s)</string>
     <string name="delay_sanction">Καθυστέρηση</string>
@@ -183,6 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Τάιμ άουτ</string>
     <string name="substitution">Αλλαγή</string>
+    <string name="let_libero_in_question">Επέτρεψε στο λίμπερο από %s να μπει;</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Διαγραφή του αγώνα</string>
