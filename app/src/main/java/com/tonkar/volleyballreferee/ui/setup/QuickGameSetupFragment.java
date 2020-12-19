@@ -278,13 +278,13 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamIconButton(context, context.getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamIconButton(context, context.getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(context, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamIconButton(context, context.getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

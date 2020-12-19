@@ -51,6 +51,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -534,7 +535,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     public static List<StoredGame> readStoredGamesStream(InputStream inputStream) throws IOException, JsonParseException {
-        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return JsonIOUtils.GSON.fromJson(reader, new TypeToken<List<StoredGame>>(){}.getType());
         }
     }
@@ -611,7 +612,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     public static void writeStoredGamesStream(OutputStream outputStream, List<StoredGame> storedGames) throws JsonParseException, IOException {
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
         JsonIOUtils.GSON.toJson(storedGames, new TypeToken<List<StoredGame>>(){}.getType(), writer);
         writer.close();
     }

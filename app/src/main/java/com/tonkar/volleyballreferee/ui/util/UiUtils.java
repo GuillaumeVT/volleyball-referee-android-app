@@ -12,7 +12,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
@@ -123,9 +122,6 @@ public class UiUtils {
         int textColor = getTextColor(context, color);
         button.setTextColor(textColor);
         button.setBackgroundTintList(ColorStateList.valueOf(color));
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-            button.getBackground().mutate().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
-        }
         if (button.getIcon() != null) {
             button.setIconTint(ColorStateList.valueOf(textColor));
         }
@@ -183,12 +179,6 @@ public class UiUtils {
         chip.setChipIconResource(drawable);
         chip.setChipBackgroundColorResource(color);
         chip.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnLightSurface), PorterDuff.Mode.SRC_IN));
-    }
-
-    public static void fixFabCompatPadding(FloatingActionButton button) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            button.setCompatElevation(0);
-        }
     }
 
     public static void shareGameLink(Context context, IStoredGame storedGame) {

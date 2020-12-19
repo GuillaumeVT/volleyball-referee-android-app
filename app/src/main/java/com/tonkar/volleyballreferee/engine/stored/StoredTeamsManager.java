@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -268,7 +269,7 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     public static List<ApiTeam> readTeamsStream(InputStream inputStream) throws IOException, JsonParseException {
-        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return JsonIOUtils.GSON.fromJson(reader, new TypeToken<List<ApiTeam>>(){}.getType());
         }
     }
@@ -308,7 +309,7 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     public static void writeTeamsStream(OutputStream outputStream, List<ApiTeam> teams) throws JsonParseException, IOException {
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
         JsonIOUtils.GSON.toJson(teams, new TypeToken<List<ApiTeam>>(){}.getType(), writer);
         writer.close();
     }

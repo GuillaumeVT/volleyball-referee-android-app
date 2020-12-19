@@ -114,13 +114,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
             mStartMatchButton = findViewById(R.id.start_match_button);
             mStopMatchButton = findViewById(R.id.stop_match_button);
 
-            UiUtils.fixFabCompatPadding(mSwapTeamsButton);
-            UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
-            UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
-            UiUtils.fixFabCompatPadding(mScoreRemoveButton);
-            UiUtils.fixFabCompatPadding(mStartMatchButton);
-            UiUtils.fixFabCompatPadding(mStopMatchButton);
-
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, LaddersFragment.newInstance());
             fragmentTransaction.commit();

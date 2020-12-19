@@ -312,13 +312,13 @@ public class ScheduledGameActivity extends AppCompatActivity {
         mGameSummary.setGender(genderType);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(this, getResources().getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamIconButton(this, getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(this, getResources().getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamIconButton(this, getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(this, getResources().getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamIconButton(this, getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

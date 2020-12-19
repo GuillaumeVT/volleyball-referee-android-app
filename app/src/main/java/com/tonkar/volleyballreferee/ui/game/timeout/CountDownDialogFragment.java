@@ -47,7 +47,7 @@ public class CountDownDialogFragment extends DialogFragment {
         String title = getArguments().getString("title");
 
         mCountDownView = new TextView(getActivity());
-        mCountDownView.setTextAppearance(getActivity(), androidx.appcompat.R.style.TextAppearance_AppCompat_Headline);
+        mCountDownView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Headline);
         mCountDownView.setTextSize(72);
         mCountDownView.setGravity(Gravity.CENTER_HORIZONTAL);
 

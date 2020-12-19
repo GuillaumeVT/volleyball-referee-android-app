@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.billing;
 
 import android.app.Activity;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -113,9 +112,7 @@ public class BillingManager implements BillingService {
         InAppBillingManager() {
             super(BillingClient.SkuType.INAPP);
             mSkus.add(WEB_PREMIUM);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mSkus.add(SCORE_SHEETS);
-            }
+            mSkus.add(SCORE_SHEETS);
 
             startServiceConnection(() -> {
                 querySkuList();

@@ -107,12 +107,12 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
             viewHolder.purchaseButton.setOnClickListener(null);
             viewHolder.purchaseButton.setClickable(false);
             viewHolder.purchaseButton.setIconResource(R.drawable.ic_check);
-            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorOnPrimary)));
+            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getColor(R.color.colorOnPrimary)));
         } else {
             viewHolder.purchaseButton.setText(skuDetails.getPrice());
             viewHolder.purchaseButton.setClickable(true);
             viewHolder.purchaseButton.setIconResource(R.drawable.ic_purchase);
-            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorOnPrimary)));
+            viewHolder.purchaseButton.setIconTint(ColorStateList.valueOf(getContext().getColor(R.color.colorOnPrimary)));
             viewHolder.purchaseButton.setOnClickListener(view -> mBillingService.executeServiceRequest(skuType, () -> mBillingService.launchPurchase(skuType, skuDetails)));
         }
     }

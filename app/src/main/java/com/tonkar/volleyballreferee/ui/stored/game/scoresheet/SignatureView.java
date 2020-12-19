@@ -35,7 +35,7 @@ public class SignatureView extends View {
         mStartX = 0f;
         mStartY = 0f;
 
-        mPaint.setColor(context.getResources().getColor(R.color.colorOnScoreSheetBackground));
+        mPaint.setColor(context.getColor(R.color.colorOnScoreSheetBackground));
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);

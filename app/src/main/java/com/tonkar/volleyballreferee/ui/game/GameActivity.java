@@ -156,15 +156,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             mLeftTeamCardsButton = findViewById(R.id.left_team_cards_button);
             mRightTeamCardsButton = findViewById(R.id.right_team_cards_button);
 
-            UiUtils.fixFabCompatPadding(mSwapTeamsButton);
-            UiUtils.fixFabCompatPadding(mLeftTeamServiceButton);
-            UiUtils.fixFabCompatPadding(mRightTeamServiceButton);
-            UiUtils.fixFabCompatPadding(mUndoGameEventButton);
-            UiUtils.fixFabCompatPadding(mLeftTeamTimeoutButton);
-            UiUtils.fixFabCompatPadding(mLeftTeamCardsButton);
-            UiUtils.fixFabCompatPadding(mRightTeamTimeoutButton);
-            UiUtils.fixFabCompatPadding(mRightTeamCardsButton);
-
             if (mGame.getRules().isTeamTimeouts()) {
                 for (int index = 0; index < mGame.getRules().getTeamTimeoutsPerSet(); index++) {
                     final ImageView leftTimeout = new ImageView(this);

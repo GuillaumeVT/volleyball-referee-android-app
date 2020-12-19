@@ -66,7 +66,7 @@ public abstract class PlayerSelectionDialog {
 
     public abstract void onPlayerSelected(int selectedNumber);
 
-    private abstract class PlayerSelectionAdapter extends BaseAdapter {
+    private abstract static class PlayerSelectionAdapter extends BaseAdapter {
 
         private final LayoutInflater mLayoutInflater;
         private final Context        mContext;

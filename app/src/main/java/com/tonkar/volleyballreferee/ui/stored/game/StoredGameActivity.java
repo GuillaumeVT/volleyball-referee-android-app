@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.ui.stored.game;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -164,7 +163,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
         if (!GameType.TIME.equals(mStoredGame.getKind())
                 && PrefUtils.isScoreSheetsPurchased(this)
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             generateScoreSheetLayout.setVisibility(View.VISIBLE);
         } else {
@@ -177,7 +175,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
         if (!GameType.TIME.equals(mStoredGame.getKind())
                 && PrefUtils.isScoreSheetsPurchased(this)
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(this, ScoreSheetActivity.class);
             intent.putExtra("game", mGameId);

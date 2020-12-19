@@ -59,7 +59,7 @@ public abstract class ColorSelectionDialog {
 
     public abstract void onColorSelected(int selectedColor);
 
-    private abstract class ColorSelectionAdapter extends BaseAdapter {
+    private abstract static class ColorSelectionAdapter extends BaseAdapter {
 
         private final LayoutInflater mLayoutInflater;
         private final Context        mContext;

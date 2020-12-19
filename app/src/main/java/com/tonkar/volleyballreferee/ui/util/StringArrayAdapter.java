@@ -55,7 +55,7 @@ public class StringArrayAdapter extends ArrayAdapter<String> {
         }
 
         textView.setText(mDisplayedValues.get(index));
-        textView.setTextColor(mContext.getResources().getColor(R.color.colorOnSurface));
+        textView.setTextColor(mContext.getColor(R.color.colorOnSurface));
 
         return textView;
     }

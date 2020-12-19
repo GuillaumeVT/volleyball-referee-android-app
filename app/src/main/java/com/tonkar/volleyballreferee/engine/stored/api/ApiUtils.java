@@ -144,7 +144,7 @@ public class ApiUtils {
                 .build();
     }
 
-    private final class TokenExpiredInterceptor implements Interceptor {
+    private static final class TokenExpiredInterceptor implements Interceptor {
 
         private Context mContext;
 

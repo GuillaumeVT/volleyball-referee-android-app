@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -111,13 +112,13 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     }
 
     public static List<ApiLeague> readLeaguesStream(InputStream inputStream) throws IOException, JsonParseException {
-        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"))) {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return JsonIOUtils.GSON.fromJson(reader, new TypeToken<List<ApiLeague>>(){}.getType());
         }
     }
 
     public static void writeLeaguesStream(OutputStream outputStream, List<ApiLeague> leagues) throws JsonParseException, IOException {
-        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
         JsonIOUtils.GSON.toJson(leagues, new TypeToken<List<ApiLeague>>(){}.getType(), writer);
         writer.close();
     }
