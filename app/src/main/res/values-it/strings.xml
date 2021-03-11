@@ -16,6 +16,7 @@
     <string name="save">Salva</string>
     <string name="start">Inizia</string>
     <string name="undo">Annulla</string>
+    <string name="next">Avanti</string>
 
     <!-- Main activity -->
     <string name="volleyball_game">Pallavolo</string>
@@ -119,6 +120,7 @@
     <string name="referee">Arbitro</string>
     <string name="leave_game_setup_question">Questa configurazione di partita sarà persa. Uscire?</string>
     <string name="must_provide_at_least_n_characters">Deve contenere minimo %d lettere</string>
+    <string name="help">Aiuto</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Croce</string>
@@ -374,5 +376,13 @@
 
     <!-- Credits activity -->
     <string name="credit_title">About the VBR Team</string>
+
+    <!-- Main activity onboarding -->
+    <string name="volleyball_game_description">Creare una partita completa di pallavolo 6x6\n\nQuesta modalità permette di configurare i giocatori, liberi, capitani, posizioni e regole.</string>
+    <string name="beach_volleyball_game_description">Creare una partita completa di beach volley in qualche secondo.\n\nQuesta modalità permette di configurare i capitani e le regole.</string>
+    <string name="score_based_game_description">La configurazione dei giocatori e delle posizioni non vi interessa?\n\nQuesta modalità vi permette di creare una partita veloce in pochi istanti.</string>
+    <string name="app_intro_next_button">@string/next</string>
+    <string name="app_intro_skip_button">@string/skip</string>
+    <string name="app_intro_done_button">@string/start</string>
 
 </resources>

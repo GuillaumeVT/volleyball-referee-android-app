@@ -16,6 +16,7 @@
     <string name="save">حفظ</string>
     <string name="start">بدأ</string>
     <string name="undo">تراجع</string>
+    <string name="next">التالي</string>
 
     <!-- Main activity -->
     <string name="volleyball_game">كرة الطائرة صالات</string>
@@ -119,6 +120,7 @@
     <string name="referee">الحكم</string>
     <string name="leave_game_setup_question">سيتم فقد إعداد هذه المباراة. اترك على أي حال؟</string>
     <string name="must_provide_at_least_n_characters">يجب عليك تقديم %d أحرف على الأقل</string>
+    <string name="help">مساعدة</string>
 
     <!-- Game activity -->
     <string name="toss_tails">الذيل</string>
@@ -374,5 +376,13 @@
 
     <!-- Credits activity -->
     <string name="credit_title">حول فريق حكم الكرة الطائرة</string>
+
+    <!-- Main activity onboarding -->
+    <string name="volleyball_game_description">قم بإنشاء مباراة كرة طائرة كاملة 6 في 6.\n\يتيح لك هذا الوضع إعداد اللاعبين ، و اللاعبين الأحرار ، و قادة الفرق ، و المراكز و القوانين.</string>
+    <string name="beach_volleyball_game_description">قم بإنشاء مباراة كرة طائرة شاطئية كاملة في غضون ثوان.\n\nيتيح لك هذا الوضع تكوين قادة الفرق و القوانين.</string>
+    <string name="score_based_game_description">لست مهتمًا بإعداد اللاعبين و المراكز؟\n\nيتيح لك هذا الوضع إنشاء مباراة سريعة في لحظة.</string>
+    <string name="app_intro_next_button">@string/next</string>
+    <string name="app_intro_skip_button">@string/skip</string>
+    <string name="app_intro_done_button">@string/start</string>
 
 </resources>

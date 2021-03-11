@@ -18,6 +18,7 @@
     <color name="colorError">#bc0019</color>
     <color name="colorErrorVariant">#ffbcc5</color>
     <color name="colorOnError">@android:color/white</color>
+    <color name="colorSuccess">#006032</color>
 
     <color name="colorSelectedItem">@color/colorPrimaryVariant</color>
     <color name="colorDisabledButton">#d6d7d7</color>

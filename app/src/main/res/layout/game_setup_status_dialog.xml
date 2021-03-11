@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/default_margin_size">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/home_team_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/default_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/home_team_tab"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/home_team_name_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/name"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:text="@string/players"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/home_team_players_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/home_team_captain_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/captain"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/guest_team_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/default_margin_size"
+        android:layout_marginTop="@dimen/default_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/guest_team_tab"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/guest_team_name_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/name"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:text="@string/players"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/guest_team_players_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:drawablePadding="@dimen/big_margin_size"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/guest_team_captain_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/captain"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/rules_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/default_margin_size"
+        android:layout_marginTop="@dimen/default_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/rules_tab"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/rules_name_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/name"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/misc_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/default_margin_size"
+        android:layout_marginTop="@dimen/default_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/misc_tab"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/league_name_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/league_name"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/division_name_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/default_margin_size"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:text="@string/division_name"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
+
+</LinearLayout>

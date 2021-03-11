@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/goto_available_games_card"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/main_card_height"
+    android:layout_margin="@dimen/tiny_margin_size"
+    android:background="@color/colorBackgroundMain"
+    android:onClick="goToAvailableGames"
+    android:visibility="gone">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/schedule" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/resume_background_gradient"
+        android:foreground="?attr/selectableItemBackground" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/goto_available_games_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_margin="@dimen/big_margin_size"
+        android:drawablePadding="@dimen/default_margin_size"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/available_games"
+        android:textColor="@color/colorOnDarkSurface"
+        android:textSize="@dimen/big_text_size"
+        android:transitionName="gameKindToToolbar"
+        app:drawableStartCompat="@drawable/ic_schedule"
+        app:drawableTint="@color/colorOnDarkSurface"
+        app:textAllCaps="true" />
+
+</FrameLayout>

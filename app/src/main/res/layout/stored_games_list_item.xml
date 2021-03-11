@@ -88,6 +88,7 @@
                     android:id="@+id/stored_game_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin_size"
                     android:textAppearance="@style/AppTheme.TextView"
                     android:textSize="@dimen/small_text_size" />
 
@@ -95,6 +96,7 @@
                     android:id="@+id/stored_game_league"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_margin_size"
                     android:textAppearance="@style/AppTheme.TextView"
                     android:textSize="@dimen/small_text_size" />
 

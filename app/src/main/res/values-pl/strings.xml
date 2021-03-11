@@ -15,11 +15,12 @@
     <string name="save">Zapisz</string>
     <string name="start">Start</string>
     <string name="undo">Cofnij</string>
+    <string name="next">Dalej</string>
 
     <!-- Main activity -->
     <string name="volleyball_game">Siatkówka halowa</string>
     <string name="beach_volleyball_game">Siatkówka plażowa</string>
-    <string name="snow_volleyball_game">Snow volleyball</string>
+    <string name="snow_volleyball_game">Siatkówka na śniegu</string>
     <string name="score_based_game">Tablica wyników</string>
     <string name="time_based_game">Rozpocznij grę na czas</string>
     <string name="permission_title">O uprawnieniach</string>
@@ -119,6 +120,7 @@
     <string name="referee">Sędzia</string>
     <string name="leave_game_setup_question">Ustawienia meczowe zostaną utracone. Wyjść mimo to?</string>
     <string name="must_provide_at_least_n_characters">Musisz podać co najmniej %d znaków</string>
+    <string name="help">Pomoc</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Reszka</string>
@@ -374,5 +376,13 @@
 
     <!-- Credits activity -->
     <string name="credit_title">O nas - VBR Team</string>
+
+    <!-- Main activity onboarding -->
+    <string name="volleyball_game_description">Stwórz mecz siatkówki halowej 6x6.\n\nTen tryb pozwala na konfigurację zawodników, libero, kapitanów, pozycji oraz zasad gry.</string>
+    <string name="beach_volleyball_game_description">Stwórz mecz w siatkówkę plażową w kilka sekund.\n\nTen tryb pozwala na konfigurację kapitanów i zasad gry.</string>
+    <string name="score_based_game_description">Nie interesuje się konfiguracja zawodników oraz ich pozycji?\n\nTen tryb pozwala na błyskawiczne stworzenie szybkiej gry.</string>
+    <string name="app_intro_next_button">@string/next</string>
+    <string name="app_intro_skip_button">@string/skip</string>
+    <string name="app_intro_done_button">@string/start</string>
 
 </resources>

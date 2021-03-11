@@ -15,6 +15,7 @@
     <string name="save">Сохранить</string>
     <string name="start">Начать</string>
     <string name="undo">Отменить</string>
+    <string name="next">Далее</string>
 
     <!-- Main activity -->
     <string name="volleyball_game">Классический волейбол</string>
@@ -118,6 +119,7 @@
     <string name="referee">Судья</string>
     <string name="leave_game_setup_question">Настройки данного матча будут потеряны. Покинуть страницу?</string>
     <string name="must_provide_at_least_n_characters">Минимум %d буквы</string>
+    <string name="help">Помощь</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>
@@ -373,5 +375,13 @@
 
     <!-- Credits activity -->
     <string name="credit_title">About the VBR Team</string>
+
+    <!-- Main activity onboarding -->
+    <string name="volleyball_game_description">Создайте полноценный волейбольный матч 6х6.\n\nВ этом разделе вы можете настроить игроков, расстановку, либеро, правила и выбрать капитанов команд.</string>
+    <string name="beach_volleyball_game_description">Создайте полноценный матч по пляжному волейболу за несколько секунд.\n\nВ этом разделе вы можете настроить правила, порядок подачи и выбрать капитанов команд.</string>
+    <string name="score_based_game_description">Нет времени настраивать игроков и расстановку?\n\nВ этом разделе вы можете мгновенно создать матч, чтобы просто отслеживать счёт.</string>
+    <string name="app_intro_next_button">@string/next</string>
+    <string name="app_intro_skip_button">@string/skip</string>
+    <string name="app_intro_done_button">@string/start</string>
 
 </resources>

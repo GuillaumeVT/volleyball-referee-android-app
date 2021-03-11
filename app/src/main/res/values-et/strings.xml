@@ -16,6 +16,7 @@
     <string name="save">Salvesta</string>
     <string name="start">Start</string>
     <string name="undo">Võta tagasi</string>
+    <string name="next">Edasi</string>
 
     <!-- Main activity -->
     <string name="volleyball_game">Klassikaline võrkpall</string>
@@ -119,6 +120,7 @@
     <string name="referee">Kohtunik</string>
     <string name="leave_game_setup_question">Antud mängu seaded kaovad ära. Kas soovite lehelt lahkuda?</string>
     <string name="must_provide_at_least_n_characters">Väli peab sisaldama vähemalt %d sümboleid</string>
+    <string name="help">Abi</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Kiri</string>
@@ -374,5 +376,13 @@
 
     <!-- Credits activity -->
     <string name="credit_title">About the VBR Team</string>
+
+    <!-- Main activity onboarding -->
+    <string name="volleyball_game_description">Loo täiusliku 6x6 võrkpalli mängu.\n\nAntud režiim võimaldab Teile seadistada mängijaid, libero, kapteneid, positsioone ning reegleid.</string>
+    <string name="beach_volleyball_game_description">Loo mõne sekundiga täieliku rannavõrkpallimängu.\n\nAntud režiim võimaldab Teile seadistada kapteneid ning reegleid.</string>
+    <string name="score_based_game_description">Kas ei tunne huvi mängijate- ning positsioonide seadistamiseks?\n\nAntud režiim võimaldab Teile koheselt luua kiire mängu.</string>
+    <string name="app_intro_next_button">@string/next</string>
+    <string name="app_intro_skip_button">@string/skip</string>
+    <string name="app_intro_done_button">@string/start</string>
 
 </resources>

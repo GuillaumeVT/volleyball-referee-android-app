@@ -26,6 +26,8 @@ public class PrefUtils {
     private static final String PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN = "pref_web_premium_subscription_token";
     private static final String PREF_SCORE_SHEETS_BILLING_TOKEN             = "pref_score_sheets_token";
 
+    public static final String PREF_ONBOARDING_MAIN = "pref_onboarding_main";
+
     public static void signIn(Context context, ApiUserToken userToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences
@@ -177,4 +179,13 @@ public class PrefUtils {
         applyNightMode(context);
     }
 
+    public static boolean showOnboarding(Context context, String pref) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return !sharedPreferences.getBoolean(pref, false);
+    }
+
+    public static void completeOnboarding(Context context, String pref) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().putBoolean(pref, true).apply();
+    }
 }

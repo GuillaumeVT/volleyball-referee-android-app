@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
@@ -46,6 +45,7 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
+import com.tonkar.volleyballreferee.ui.onboarding.MainOnboardingActivity;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
@@ -66,10 +66,6 @@ import okhttp3.Response;
 
 public class MainActivity extends NavigationActivity {
 
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
-
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
     private StoredGamesService mStoredGamesService;
@@ -86,11 +82,12 @@ public class MainActivity extends NavigationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        showOnboarding();
+
         super.onCreate(savedInstanceState);
 
         mStoredGamesService = new StoredGamesManager(this);
 
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         Log.i(Tags.MAIN_UI, "Create main activity");
         setContentView(R.layout.activity_main);
 
@@ -395,4 +392,10 @@ public class MainActivity extends NavigationActivity {
         }
     }
 
+    private void showOnboarding() {
+        if (PrefUtils.showOnboarding(this, PrefUtils.PREF_ONBOARDING_MAIN)) {
+            Intent intent = new Intent(this, MainOnboardingActivity.class);
+            startActivity(intent);
+        }
+    }
 }

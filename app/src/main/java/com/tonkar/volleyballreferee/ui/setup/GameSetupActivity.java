@@ -3,6 +3,8 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -79,12 +81,25 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_help, menu);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            cancelSetup();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_help_menu:
+                showGameSetupStatus();
+                return true;
+            case android.R.id.home:
+                cancelSetup();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void computeStartLayoutVisibility() {
@@ -217,5 +232,10 @@ public class GameSetupActivity extends AppCompatActivity {
             GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
             gameServiceHandler.setGameService(mGame);
         }
+    }
+
+    private void showGameSetupStatus() {
+        GameSetupStatusDialog gameSetupStatusDialog = new GameSetupStatusDialog(this, mGame);
+        gameSetupStatusDialog.show();
     }
 }

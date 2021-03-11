@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -38,10 +37,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public abstract class StoredGameActivity extends AppCompatActivity {
-
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
 
     protected StoredGamesService mStoredGamesService;
     protected String             mGameId;
