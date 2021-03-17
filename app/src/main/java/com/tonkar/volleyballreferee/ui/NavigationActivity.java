@@ -109,7 +109,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         break;
                     case R.id.action_live_games_vbr_com:
                         Log.i(Tags.WEB, "Live games on VBR.com");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search/live", BuildConfig.SERVER_ADDRESS)));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search?type=live", BuildConfig.SERVER_ADDRESS)));
                         startActivity(intent);
                         UiUtils.animateForward(this);
                         navigationView.post(() -> {

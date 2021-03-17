@@ -377,7 +377,7 @@
     <string name="credit_title">À propos de l\'équipe VBR</string>
 
     <!-- Main activity onboarding -->
-    <string name="volleyball_game_description">Créez un match complet de volley-ball 6x6.\n\nCe mode vous permet de configurer les joueurs et les règles, de gérer les remplacements de suivre les rotations et bien plus encore.</string>
+    <string name="volleyball_game_description">Créez un match complet de volley-ball 6x6.\n\nCe mode vous permet de configurer les joueurs et les règles, de gérer les remplacements, de suivre les rotations et bien plus encore.</string>
     <string name="beach_volleyball_game_description">Créez un match complet de beach volley-ball en quelques secondes.\n\nCe mode vous permet de configurer les joueurs et les règles, de suivre les serveurs et les changements de côtés.</string>
     <string name="score_based_game_description">Configurer les joueurs et les positions ne vous intéresse pas?\n\nCe mode vous permet de créer un match rapide en un instant.</string>
     <string name="app_intro_next_button">@string/next</string>
