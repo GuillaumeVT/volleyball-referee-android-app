@@ -325,14 +325,17 @@ public class UiUtils {
     }
 
     public static void showNotification(View view, String message) {
-        Context context = view.getContext();
-        Snackbar
-                .make(view, message, Snackbar.LENGTH_INDEFINITE)
-                .setAction(android.R.string.ok, button -> {})
-                .setActionTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setBackgroundTint(ContextCompat.getColor(context, R.color.colorPrimaryVariant))
-                .show();
+        if (view != null) {
+            Context context = view.getContext();
+            Snackbar
+                    .make(view, message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, button -> {
+                    })
+                    .setActionTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setBackgroundTint(ContextCompat.getColor(context, R.color.colorPrimaryVariant))
+                    .show();
+        }
     }
 
     public static void setAlertDialogMessageSize(AlertDialog alertDialog, Resources resources) {

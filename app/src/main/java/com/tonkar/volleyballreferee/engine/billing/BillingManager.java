@@ -25,9 +25,9 @@ import java.util.Set;
 
 public class BillingManager implements BillingService {
 
-    private       Activity                   mActivity;
-    private       InAppBillingManager        mInAppBillingManager;
-    private       SubscriptionBillingManager mSubscriptionBillingManager;
+    private final Activity                   mActivity;
+    private final InAppBillingManager        mInAppBillingManager;
+    private final SubscriptionBillingManager mSubscriptionBillingManager;
     private final Set<BillingListener>       mBillingListeners;
 
     public BillingManager(Activity activity) {
@@ -39,12 +39,12 @@ public class BillingManager implements BillingService {
     }
 
     private abstract class AbstractBillingManager implements PurchasesUpdatedListener {
-        String        mSkuType;
-        BillingClient mBillingClient;
-        boolean       mIsServiceConnected;
-        final List<String>     mSkus;
-        final List<SkuDetails> mSkuDetailsList;
-        final Set<String>      mPurchasedSkus;
+        protected       String           mSkuType;
+        protected       BillingClient    mBillingClient;
+        protected       boolean          mIsServiceConnected;
+        protected final List<String>     mSkus;
+        protected final List<SkuDetails> mSkuDetailsList;
+        protected final Set<String>      mPurchasedSkus;
 
         AbstractBillingManager(String skuType) {
             mSkuType = skuType;
@@ -52,7 +52,11 @@ public class BillingManager implements BillingService {
             mSkus = new ArrayList<>();
             mSkuDetailsList = new ArrayList<>();
             mPurchasedSkus = new HashSet<>();
-            mBillingClient = BillingClient.newBuilder(mActivity).enablePendingPurchases().setListener(this).build();
+            mBillingClient = BillingClient
+                    .newBuilder(mActivity)
+                    .enablePendingPurchases()
+                    .setListener(this)
+                    .build();
         }
 
         void startServiceConnection(final Runnable executeOnSuccess) {
@@ -93,11 +97,7 @@ public class BillingManager implements BillingService {
         }
 
         void queryPurchases() {
-            Runnable queryToExecute = () -> {
-                Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(mSkuType);
-                onPurchasesUpdated(purchasesResult.getBillingResult(), purchasesResult.getPurchasesList());
-            };
-
+            Runnable queryToExecute = () -> mBillingClient.queryPurchasesAsync(mSkuType, this::onPurchasesUpdated);
             executeServiceRequest(mSkuType, queryToExecute);
         }
 
@@ -150,13 +150,13 @@ public class BillingManager implements BillingService {
 
         private void handlePurchase(Purchase purchase) {
             if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-                if (purchase.getSku().equals(BillingService.WEB_PREMIUM)) {
+                if (purchase.getSkus().contains(BillingService.WEB_PREMIUM)) {
                     mPurchasedSkus.add(WEB_PREMIUM);
                     if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
                         PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
                         mActivity.recreate();
                     }
-                } else if (purchase.getSku().equals(BillingService.SCORE_SHEETS)) {
+                } else if (purchase.getSkus().contains(BillingService.SCORE_SHEETS)) {
                     mPurchasedSkus.add(SCORE_SHEETS);
                     if (!PrefUtils.isScoreSheetsPurchased(mActivity)) {
                         PrefUtils.purchaseScoreSheets(mActivity, purchase.getPurchaseToken());
@@ -213,7 +213,7 @@ public class BillingManager implements BillingService {
 
         private void handlePurchase(Purchase purchase) {
             if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-                if (purchase.getSku().equals(BillingService.WEB_PREMIUM_SUBSCRIPTION)) {
+                if (purchase.getSkus().contains(BillingService.WEB_PREMIUM_SUBSCRIPTION)) {
                     mPurchasedSkus.add(WEB_PREMIUM_SUBSCRIPTION);
                     if (PrefUtils.isWebPremiumSubscribed(mActivity)) {
                         if (!purchase.getPurchaseToken().equals(PrefUtils.getWebPremiumBillingToken(mActivity))) {

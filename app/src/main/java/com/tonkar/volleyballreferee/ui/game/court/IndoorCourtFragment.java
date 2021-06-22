@@ -174,7 +174,7 @@ public class IndoorCourtFragment extends CourtFragment {
         update(mTeamOnRightSide);
 
         if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            UiUtils.showNotification(mView, getString(R.string.switch_sides));
+            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), getString(R.string.switch_sides));
             UiUtils.playNotificationSound(getContext());
         }
     }
@@ -195,9 +195,9 @@ public class IndoorCourtFragment extends CourtFragment {
                 int remainingSubstitutions = mClassicTeam.countRemainingSubstitutions(teamType);
 
                 if (remainingSubstitutions == 0) {
-                    UiUtils.showNotification(mView, String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
                 } else if (remainingSubstitutions == 1) {
-                    UiUtils.showNotification(mView, String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
                 }
             }
         }
@@ -407,7 +407,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.showNotification(mView, String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
+            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
         }
     }
 

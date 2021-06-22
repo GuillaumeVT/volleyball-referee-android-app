@@ -114,7 +114,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         if (isGameContext) {
             StoredTeamsService storedTeamsService = new StoredTeamsManager(getContext());
 
-            teamNameInput.setThreshold(2);
+            teamNameInput.setThreshold(1);
             teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.listTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeamSummary teamDescription = (ApiTeamSummary) teamNameInput.getAdapter().getItem(index);
@@ -131,6 +131,11 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 }
                 coachNameInput.setText(mTeamService.getCoachName(mTeamType));
                 computeConfirmItemVisibility();
+            });
+            teamNameInput.setOnClickListener(input -> {
+                if (!teamNameInput.isPopupShowing()) {
+                    teamNameInput.showDropDown();
+                }
             });
         }
 

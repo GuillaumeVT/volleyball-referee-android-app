@@ -97,7 +97,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         updateAll();
 
         if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            UiUtils.showNotification(mView, getString(R.string.switch_sides));
+            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), getString(R.string.switch_sides));
             UiUtils.playNotificationSound(getContext());
         }
     }
@@ -192,10 +192,10 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
-            UiUtils.showNotification(mView, String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)));
+            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)));
         } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
-            UiUtils.showNotification(mView, String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)));
+            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)));
         }
 
         update(teamType);

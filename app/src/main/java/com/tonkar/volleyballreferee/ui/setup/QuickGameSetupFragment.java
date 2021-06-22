@@ -188,7 +188,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             mAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.listTeams(GameType.BEACH));
 
             homeTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
-            homeTeamNameInput.setThreshold(2);
+            homeTeamNameInput.setThreshold(1);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeamSummary teamDescription = mAutocompleteTeamListAdapter.getItem(index);
                 homeTeamNameInput.setText(teamDescription.getName());
@@ -199,9 +199,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 updateCaptain(TeamType.HOME);
                 computeConfirmItemVisibility();
             });
+            homeTeamNameInput.setOnClickListener(input -> {
+                if (!homeTeamNameInput.isPopupShowing()) {
+                    homeTeamNameInput.showDropDown();
+                }
+            });
 
             guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
-            guestTeamNameInput.setThreshold(2);
+            guestTeamNameInput.setThreshold(1);
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeamSummary teamDescription = mAutocompleteTeamListAdapter.getItem(index);
                 guestTeamNameInput.setText(teamDescription.getName());
@@ -212,9 +217,11 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 updateCaptain(TeamType.GUEST);
                 computeConfirmItemVisibility();
             });
-
-            guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
-            guestTeamNameInput.setThreshold(2);
+            guestTeamNameInput.setOnClickListener(input -> {
+                if (!guestTeamNameInput.isPopupShowing()) {
+                    guestTeamNameInput.showDropDown();
+                }
+            });
 
             mHomeTeamPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment(TeamType.HOME));
             mGuestTeamPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment(TeamType.GUEST));

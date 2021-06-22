@@ -385,7 +385,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         if (isGameContext) {
             StoredRulesService storedRulesService = new StoredRulesManager(getContext());
 
-            mRulesNameInput.setThreshold(2);
+            mRulesNameInput.setThreshold(1);
             mRulesNameInput.setAdapter(new AutocompleteRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules(mRules.getKind())));
             mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiRulesSummary rulesDescription = (ApiRulesSummary) mRulesNameInput.getAdapter().getItem(index);
@@ -393,6 +393,11 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
                 mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
                 initValues();
                 computeConfirmItemVisibility();
+            });
+            mRulesNameInput.setOnClickListener(input -> {
+                if (!mRulesNameInput.isPopupShowing()) {
+                    mRulesNameInput.showDropDown();
+                }
             });
         }
 
