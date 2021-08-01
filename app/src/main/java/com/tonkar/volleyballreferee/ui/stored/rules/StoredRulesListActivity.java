@@ -105,10 +105,6 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoor4x4RulesButton = findViewById(R.id.add_indoor_4x4_rules_button);
         mAddBeachRulesButton = findViewById(R.id.add_beach_rules_button);
         mAddSnowRulesButton = findViewById(R.id.add_snow_rules_button);
-        mAddIndoorRulesButton.hide();
-        mAddIndoor4x4RulesButton.hide();
-        mAddBeachRulesButton.hide();
-        mAddSnowRulesButton.hide();
         mAddRulesButton = findViewById(R.id.add_rules_button);
         mAddRulesButton.setOnClickListener(view -> {
             if (mIsFabOpen) {
@@ -117,6 +113,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
                 showFABMenu();
             }
         });
+        closeFABMenu();
 
         updateStoredRulesList();
     }

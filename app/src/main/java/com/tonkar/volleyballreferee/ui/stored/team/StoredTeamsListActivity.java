@@ -106,10 +106,6 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd4x4TeamButton = findViewById(R.id.add_4x4_team_button);
         mAddBeachTeamButton = findViewById(R.id.add_beach_team_button);
         mAddSnowTeamButton = findViewById(R.id.add_snow_team_button);
-        mAdd6x6TeamButton.hide();
-        mAdd4x4TeamButton.hide();
-        mAddBeachTeamButton.hide();
-        mAddSnowTeamButton.hide();
         mAddTeamButton = findViewById(R.id.add_team_button);
         mAddTeamButton.setOnClickListener(view -> {
             if(mIsFabOpen){
@@ -118,6 +114,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
                 showFABMenu();
             }
         });
+        closeFABMenu();
 
         updateStoredTeamsList();
     }

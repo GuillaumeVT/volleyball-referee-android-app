@@ -102,10 +102,6 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoor4x4GameButton = findViewById(R.id.schedule_indoor_4x4_game_button);
         mScheduleBeachGameButton = findViewById(R.id.schedule_beach_game_button);
         mScheduleSnowGameButton = findViewById(R.id.schedule_snow_game_button);
-        mScheduleIndoorGameButton.hide();
-        mScheduleIndoor4x4GameButton.hide();
-        mScheduleBeachGameButton.hide();
-        mScheduleSnowGameButton.hide();
         mScheduleGameButton = findViewById(R.id.schedule_game_button);
         mScheduleGameButton.setOnClickListener(button -> {
             if(mIsFabOpen){
@@ -114,6 +110,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
                 showFABMenu();
             }
         });
+        closeFABMenu();
     }
 
     @Override
