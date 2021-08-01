@@ -17,6 +17,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
@@ -91,7 +92,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
         final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
-        teamNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         mTeamColorButton = view.findViewById(R.id.team_color_button);
         final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
         mCaptainButton = view.findViewById(R.id.team_captain_number_button);
@@ -131,11 +131,6 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 }
                 coachNameInput.setText(mTeamService.getCoachName(mTeamType));
                 computeConfirmItemVisibility();
-            });
-            teamNameInput.setOnClickListener(input -> {
-                if (!teamNameInput.isPopupShowing()) {
-                    teamNameInput.showDropDown();
-                }
             });
         }
 
@@ -247,11 +242,14 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     }
 
     @Override
-    public void onAttachFragment(@NonNull Fragment childFragment) {
-        if (childFragment instanceof PlayerNamesInputDialogFragment) {
-            PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
-            fragment.setTeam(mTeamService);
-        }
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        getChildFragmentManager().addFragmentOnAttachListener((fragmentManager, childFragment) -> {
+            if (childFragment instanceof PlayerNamesInputDialogFragment) {
+                PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
+                fragment.setTeam(mTeamService);
+            }
+        });
     }
 
     private void selectTeamColor() {
@@ -568,13 +566,13 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(context, context.getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(context, context.getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(context, context.getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

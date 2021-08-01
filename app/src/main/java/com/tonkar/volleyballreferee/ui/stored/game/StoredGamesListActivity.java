@@ -54,7 +54,7 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
 
         initNavigationMenu();
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.stored_games_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredGamesList);
 
         mStoredGamesService = new StoredGamesManager(this);

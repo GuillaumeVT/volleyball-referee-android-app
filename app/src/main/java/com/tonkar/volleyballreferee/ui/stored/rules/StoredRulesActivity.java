@@ -14,7 +14,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.tonkar.volleyballreferee.R;
@@ -32,6 +31,16 @@ public class StoredRulesActivity extends AppCompatActivity {
     private StoredRulesService mStoredRulesService;
     private Rules              mRules;
     private boolean            mCreate;
+
+    public StoredRulesActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof RulesHandler) {
+                RulesHandler rulesHandler = (RulesHandler) fragment;
+                rulesHandler.setRules(mRules);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,13 +159,4 @@ public class StoredRulesActivity extends AppCompatActivity {
             saveLayout.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof RulesHandler) {
-            RulesHandler rulesHandler = (RulesHandler) fragment;
-            rulesHandler.setRules(mRules);
-        }
-    }
-
 }

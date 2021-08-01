@@ -1,9 +1,10 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
@@ -12,10 +13,9 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 
+import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -33,12 +33,16 @@ import static org.junit.Assert.assertNotEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StoredTeamsIOTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+    private Context mContext;
+
+    @Before
+    public void init() {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
 
     @Test
     public void save() {
-        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity().getApplicationContext());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext.getApplicationContext());
 
         IBaseTeam teamService = storedTeamsService.createTeam(GameType.INDOOR);
         teamService.setTeamName(TeamType.HOME, "BRAZIL");
@@ -99,7 +103,7 @@ public class StoredTeamsIOTest {
 
     @Test
     public void writeThenRead() {
-        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity().getApplicationContext());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext.getApplicationContext());
 
         List<ApiTeam> expectedList = new ArrayList<>();
         expectedList.add(storedTeamsService.getTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));

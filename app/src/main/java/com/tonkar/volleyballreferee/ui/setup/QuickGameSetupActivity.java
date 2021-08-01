@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +38,20 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 public class QuickGameSetupActivity extends AppCompatActivity {
 
     private IGame mGame;
+
+    public QuickGameSetupActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof GameServiceHandler) {
+                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+                gameServiceHandler.setGameService(mGame);
+            }
+            if (fragment instanceof RulesHandler) {
+                RulesHandler rulesHandler = (RulesHandler) fragment;
+                rulesHandler.setRules(mGame.getRules());
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +185,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
-        gameSetupNavigation.setOnNavigationItemSelectedListener(item -> {
+        gameSetupNavigation.setOnItemSelectedListener(item -> {
                     final Fragment fragment;
 
                     switch (item.getItemId()) {
@@ -210,17 +223,4 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             gameSetupNavigation.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof GameServiceHandler) {
-            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
-            gameServiceHandler.setGameService(mGame);
-        }
-        if (fragment instanceof RulesHandler) {
-            RulesHandler rulesHandler = (RulesHandler) fragment;
-            rulesHandler.setRules(mGame.getRules());
-        }
-    }
-
 }

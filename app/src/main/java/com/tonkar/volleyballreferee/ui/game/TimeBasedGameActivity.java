@@ -12,11 +12,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
@@ -62,6 +60,20 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     private FloatingActionButton mStopMatchButton;
     private SimpleDateFormat     mTimeFormat;
     private CountDownTimer       mCountDownTimer;
+
+    public TimeBasedGameActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof GameServiceHandler) {
+                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+                gameServiceHandler.setGameService(mGameService);
+            }
+            if (fragment instanceof StoredGamesServiceHandler) {
+                StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
+                storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -385,17 +397,4 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         }
         invalidateOptionsMenu();
     }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof GameServiceHandler) {
-            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
-            gameServiceHandler.setGameService(mGameService);
-        }
-        if (fragment instanceof StoredGamesServiceHandler) {
-            StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
-            storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
-        }
-    }
-
 }

@@ -1,7 +1,9 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
@@ -9,10 +11,9 @@ import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiLeague;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 
+import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -31,8 +32,12 @@ import static org.junit.Assert.assertNotEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StoredLeaguesIOTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+    private Context mContext;
+
+    @Before
+    public void init() {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
 
     @Test
     public void save() {
@@ -54,14 +59,14 @@ public class StoredLeaguesIOTest {
         selectedLeague2.setName("Test League Bis");
         selectedLeague2.setDivision("Test division Bis");
 
-        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mActivityRule.getActivity().getApplicationContext());
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext.getApplicationContext());
         storedLeaguesService.createAndSaveLeagueFrom(selectedLeague1);
         storedLeaguesService.createAndSaveLeagueFrom(selectedLeague2);
     }
 
     @Test
     public void writeThenRead() {
-        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mActivityRule.getActivity().getApplicationContext());
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext.getApplicationContext());
 
         List<ApiLeague> expectedList = new ArrayList<>();
         expectedList.add(storedLeaguesService.getLeague(GameType.INDOOR, "Test League"));

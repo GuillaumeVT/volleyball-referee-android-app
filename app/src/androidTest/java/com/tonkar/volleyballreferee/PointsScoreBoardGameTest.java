@@ -1,10 +1,11 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
@@ -17,9 +18,8 @@ import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,14 +33,18 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(AndroidJUnit4.class)
 public class PointsScoreBoardGameTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
-
+    private Context            mContext;
     private StoredGamesService mStoredGamesService;
+
+    @Before
+    public void init() {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mStoredGamesService = new StoredGamesManager(mContext);
+    }
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        ApiUserSummary user = PrefUtils.getUser(mContext);
         IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
         game.setUsage(UsageType.POINTS_SCOREBOARD);
@@ -76,7 +80,6 @@ public class PointsScoreBoardGameTest {
 
         game.startMatch();
 
-        mStoredGamesService = new StoredGamesManager(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(game);
     }
 

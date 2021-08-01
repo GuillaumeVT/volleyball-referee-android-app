@@ -20,7 +20,7 @@
                 android:layout_height="match_parent">
 
             <View
-                    android:id="@+id/overlay"
+                    android:id="@+id/scheduled_games_overlay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/colorOverlay"
@@ -28,7 +28,7 @@
                     android:visibility="gone"/>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:id="@+id/sync_layout"
+                    android:id="@+id/scheduled_games_sync_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

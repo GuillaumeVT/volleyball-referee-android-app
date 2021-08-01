@@ -11,11 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
@@ -26,6 +24,7 @@ import com.tonkar.volleyballreferee.engine.stored.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
 import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameHandler;
 import com.tonkar.volleyballreferee.ui.stored.game.scoresheet.ScoreSheetActivity;
@@ -41,6 +40,20 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     protected StoredGamesService mStoredGamesService;
     protected String             mGameId;
     protected IStoredGame        mStoredGame;
+
+    public StoredGameActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof StoredGameHandler) {
+                StoredGameHandler storedGameHandler = (StoredGameHandler) fragment;
+                storedGameHandler.setStoredGame(mStoredGame);
+            }
+            if (fragment instanceof RulesHandler) {
+                RulesHandler rulesHandler = (RulesHandler) fragment;
+                rulesHandler.setRules(mStoredGame.getRules());
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,12 +166,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         leagueText.setVisibility(mStoredGame.getLeague() == null || mStoredGame.getLeague().getName().isEmpty() ? View.GONE : View.VISIBLE);
     }
 
-    protected void initScoresheetAvailability() {
+    protected void initScoreSheetAvailability() {
         View generateScoreSheetLayout = findViewById(R.id.generate_score_sheet_layout);
 
-        if (!GameType.TIME.equals(mStoredGame.getKind())
-                && PrefUtils.isScoreSheetsPurchased(this)
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (!GameType.TIME.equals(mStoredGame.getKind()) && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             generateScoreSheetLayout.setVisibility(View.VISIBLE);
         } else {
             generateScoreSheetLayout.setVisibility(View.GONE);
@@ -166,15 +177,19 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     }
 
     protected void generateScoreSheet() {
-        Log.i(Tags.STORED_GAMES, "Generate scoresheet");
+        Log.i(Tags.STORED_GAMES, "Generate score sheet");
 
-        if (!GameType.TIME.equals(mStoredGame.getKind())
-                && PrefUtils.isScoreSheetsPurchased(this)
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(this, ScoreSheetActivity.class);
-            intent.putExtra("game", mGameId);
-            startActivity(intent);
-            UiUtils.animateForward(this);
+        if (!GameType.TIME.equals(mStoredGame.getKind()) && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (PrefUtils.isScoreSheetsPurchased(this)) {
+                Intent intent = new Intent(this, ScoreSheetActivity.class);
+                intent.putExtra("game", mGameId);
+                startActivity(intent);
+                UiUtils.animateForward(this);
+            } else {
+                Intent intent = new Intent(this, PurchasesListActivity.class);
+                startActivity(intent);
+                UiUtils.animateForward(this);
+            }
         }
     }
 
@@ -217,17 +232,5 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     private void shareGameLink() {
         Log.i(Tags.STORED_GAMES, "Share game link");
         UiUtils.shareGameLink(this, mStoredGamesService.getGame(mGameId));
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof StoredGameHandler) {
-            StoredGameHandler storedGameHandler = (StoredGameHandler) fragment;
-            storedGameHandler.setStoredGame(mStoredGame);
-        }
-        if (fragment instanceof RulesHandler) {
-            RulesHandler rulesHandler = (RulesHandler) fragment;
-            rulesHandler.setRules(mStoredGame.getRules());
-        }
     }
 }

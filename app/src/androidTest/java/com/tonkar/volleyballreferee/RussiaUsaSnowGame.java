@@ -1,11 +1,12 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
@@ -28,9 +29,8 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,14 +45,18 @@ import static org.junit.Assert.assertNotEquals;
 @LargeTest
 public class RussiaUsaSnowGame {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
-
+    private Context            mContext;
     private StoredGamesService mStoredGamesService;
+
+    @Before
+    public void init() {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mStoredGamesService = new StoredGamesManager(mContext);
+    }
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        ApiUserSummary user = PrefUtils.getUser(mContext);
         SnowGame snowGame = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialSnowRules());
 
@@ -63,13 +67,13 @@ public class RussiaUsaSnowGame {
         playSet3_complete(snowGame);
 
         IStoredGame storedGame = mStoredGamesService.getGame(snowGame.getId());
-        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mActivityRule.getActivity(), storedGame);
+        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mContext, storedGame);
         scoreSheetBuilder.createScoreSheet();
     }
 
     @Test
     public void playGame_matchPoint() {
-        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        ApiUserSummary user = PrefUtils.getUser(mContext);
         SnowGame snowGame = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialSnowRules());
 
@@ -95,8 +99,8 @@ public class RussiaUsaSnowGame {
     }
 
     private void defineTeamsAndLeague(SnowGame snowGame) {
-        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity());
-        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mActivityRule.getActivity());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext);
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext);
 
         snowGame.setGender(GenderType.GENTS);
 
@@ -136,7 +140,6 @@ public class RussiaUsaSnowGame {
 
         snowGame.startMatch();
 
-        mStoredGamesService = new StoredGamesManager(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(snowGame);
     }
 

@@ -21,11 +21,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/rules_name_input_layout"
-            style="@style/AppTheme.TextInputLayout"
+            style="@style/AppTheme.TextInputLayoutAutoComplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            app:endIconMode="clear_text">
+            android:layout_margin="@dimen/big_margin_size">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/rules_name_input_text"

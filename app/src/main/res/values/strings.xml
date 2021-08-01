@@ -96,12 +96,12 @@
     <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Signed out</string>
     <string name="search_colleague">Search in colleagues</string>
-    <string name="add_colleague">Add colleague</string>
-    <string name="received_colleague_request">You received a request from %s</string>
-    <string name="sent_colleague_request">You sent a request to %s</string>
+    <string name="add_colleague">Connect with a referee</string>
+    <string name="received_colleague_request">You received a connection request from %s</string>
+    <string name="sent_colleague_request">You sent a connection request to %s</string>
     <string name="pending">Pending</string>
-    <string name="accept_colleague_question">Accept %s as colleague?</string>
-    <string name="reject_colleague_question">Discard request from %s?</string>
+    <string name="accept_colleague_question">Accept %s\'s request to connect?</string>
+    <string name="reject_colleague_question">Discard %s\'s request to connect?</string>
     <string name="remove_colleague_question">Remove %s?</string>
 
     <!-- Setup activities -->
@@ -223,8 +223,8 @@
     <string name="deleted_game">Game was deleted</string>
     <string name="deleted_selected_games">All selected games were deleted</string>
     <string name="players">Players</string>
-    <string name="create_score_sheet">Create scoresheet</string>
-    <string name="score_sheet_exception">Failed to create or to display the scoresheet</string>
+    <string name="create_score_sheet">Create score sheet</string>
+    <string name="score_sheet_exception">Failed to create or to display the score sheet</string>
     <string name="signatures">Signatures</string>
     <string name="coach">Coach</string>
     <string name="captain">Captain</string>

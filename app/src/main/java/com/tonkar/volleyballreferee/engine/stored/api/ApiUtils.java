@@ -86,7 +86,7 @@ public class ApiUtils {
         return new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
-                .post(RequestBody.create(JSON_MEDIA_TYPE, jsonBody))
+                .post(RequestBody.create(jsonBody, JSON_MEDIA_TYPE))
                 .build();
     }
 
@@ -94,21 +94,21 @@ public class ApiUtils {
         return new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
-                .post(RequestBody.create(JSON_MEDIA_TYPE, ""))
+                .post(RequestBody.create("", JSON_MEDIA_TYPE))
                 .build();
     }
 
     public static Request buildPost(String url, String jsonBody) {
         return new Request.Builder()
                 .url(url)
-                .post(RequestBody.create(JSON_MEDIA_TYPE, jsonBody))
+                .post(RequestBody.create(jsonBody, JSON_MEDIA_TYPE))
                 .build();
     }
 
     public static Request buildPost(String url) {
         return new Request.Builder()
                 .url(url)
-                .post(RequestBody.create(JSON_MEDIA_TYPE, ""))
+                .post(RequestBody.create("", JSON_MEDIA_TYPE))
                 .build();
     }
 
@@ -116,7 +116,7 @@ public class ApiUtils {
         return new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
-                .put(RequestBody.create(JSON_MEDIA_TYPE, jsonBody))
+                .put(RequestBody.create(jsonBody, JSON_MEDIA_TYPE))
                 .build();
     }
 
@@ -124,7 +124,7 @@ public class ApiUtils {
         return new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
-                .patch(RequestBody.create(JSON_MEDIA_TYPE, jsonBody))
+                .patch(RequestBody.create(jsonBody, JSON_MEDIA_TYPE))
                 .build();
     }
 
@@ -132,7 +132,7 @@ public class ApiUtils {
         return new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", String.format("Bearer %s", userToken.getToken()))
-                .patch(RequestBody.create(JSON_MEDIA_TYPE, ""))
+                .patch(RequestBody.create("", JSON_MEDIA_TYPE))
                 .build();
     }
 

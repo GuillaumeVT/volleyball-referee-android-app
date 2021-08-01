@@ -1,6 +1,7 @@
 package com.tonkar.volleyballreferee.ui.game.sanction;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
 
         mSanctionTypePager = mView.findViewById(R.id.sanction_nav);
 
-        mSanctionTypePager.setOnNavigationItemSelectedListener(item -> {
+        mSanctionTypePager.setOnItemSelectedListener(item -> {
                     Fragment fragment = null;
 
                     switch (item.getItemId()) {
@@ -125,15 +126,18 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
     }
 
     @Override
-    public void onAttachFragment(@NonNull Fragment childFragment) {
-        if (childFragment instanceof DelaySanctionSelectionFragment) {
-            DelaySanctionSelectionFragment fragment = (DelaySanctionSelectionFragment) childFragment;
-            fragment.init(this, mGame);
-        }
-        if (childFragment instanceof MisconductSanctionSelectionFragment) {
-            MisconductSanctionSelectionFragment fragment = (MisconductSanctionSelectionFragment) childFragment;
-            fragment.init(this, mGame);
-        }
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        getChildFragmentManager().addFragmentOnAttachListener((fragmentManager, childFragment) -> {
+            if (childFragment instanceof DelaySanctionSelectionFragment) {
+                DelaySanctionSelectionFragment fragment = (DelaySanctionSelectionFragment) childFragment;
+                fragment.init(this, mGame);
+            }
+            if (childFragment instanceof MisconductSanctionSelectionFragment) {
+                MisconductSanctionSelectionFragment fragment = (MisconductSanctionSelectionFragment) childFragment;
+                fragment.init(this, mGame);
+            }
+        });
     }
 
     @Override

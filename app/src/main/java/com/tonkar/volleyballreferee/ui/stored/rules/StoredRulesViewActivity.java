@@ -10,12 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.chip.Chip;
@@ -32,6 +30,16 @@ public class StoredRulesViewActivity extends AppCompatActivity {
 
     private StoredRulesService mStoredRulesService;
     private Rules              mRules;
+
+    public StoredRulesViewActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof RulesHandler) {
+                RulesHandler rulesHandler = (RulesHandler) fragment;
+                rulesHandler.setRules(mRules);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,13 +145,5 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof RulesHandler) {
-            RulesHandler rulesHandler = (RulesHandler) fragment;
-            rulesHandler.setRules(mRules);
-        }
     }
 }

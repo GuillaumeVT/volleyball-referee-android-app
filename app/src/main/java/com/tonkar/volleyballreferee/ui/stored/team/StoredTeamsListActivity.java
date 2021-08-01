@@ -67,10 +67,10 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
         initNavigationMenu();
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.stored_teams_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredTeamsList);
 
-        mOverlay = findViewById(R.id.overlay);
+        mOverlay = findViewById(R.id.stored_teams_overlay);
 
         List<ApiTeamSummary> teams = mStoredTeamsService.listTeams();
 

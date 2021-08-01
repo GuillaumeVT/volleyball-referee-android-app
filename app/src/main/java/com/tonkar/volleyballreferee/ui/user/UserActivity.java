@@ -37,7 +37,7 @@ public class UserActivity extends ProgressIndicatorActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.user_sync_layout);
         mSyncLayout.setEnabled(false);
 
         if (PrefUtils.isSignedIn(this)) {

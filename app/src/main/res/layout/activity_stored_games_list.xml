@@ -16,7 +16,7 @@
         <include layout="@layout/toolbar"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/sync_layout"
+                android:id="@+id/stored_games_sync_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity">

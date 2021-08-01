@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +41,24 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 public class GameSetupActivity extends AppCompatActivity {
 
     private IGame mGame;
+
+    public GameSetupActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof RulesHandler) {
+                RulesHandler rulesHandler = (RulesHandler) fragment;
+                rulesHandler.setRules(mGame.getRules());
+            }
+            if (fragment instanceof BaseTeamServiceHandler) {
+                BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
+                baseTeamServiceHandler.setTeamService(mGame);
+            }
+            if (fragment instanceof GameServiceHandler) {
+                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+                gameServiceHandler.setGameService(mGame);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,7 +201,7 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState) {
-        gameSetupNavigation.setOnNavigationItemSelectedListener(item -> {
+        gameSetupNavigation.setOnItemSelectedListener(item -> {
                     final Fragment fragment;
 
                     switch (item.getItemId()) {
@@ -215,22 +232,6 @@ public class GameSetupActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             gameSetupNavigation.setSelectedItemId(R.id.home_team_tab);
-        }
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof RulesHandler) {
-            RulesHandler rulesHandler = (RulesHandler) fragment;
-            rulesHandler.setRules(mGame.getRules());
-        }
-        if (fragment instanceof BaseTeamServiceHandler) {
-            BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
-            baseTeamServiceHandler.setTeamService(mGame);
-        }
-        if (fragment instanceof GameServiceHandler) {
-            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
-            gameServiceHandler.setGameService(mGame);
         }
     }
 

@@ -123,9 +123,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
         });
 
         final AutoCompleteTextView divisionNameInput = findViewById(R.id.division_name_input_text);
-        divisionNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         divisionNameInput.setText(mGameSummary.getDivisionName());
-        divisionNameInput.setThreshold(2);
+        divisionNameInput.setThreshold(1);
         divisionNameInput.setOnItemClickListener((parent, input, index, id) -> {
             mGameSummary.setDivisionName((String) divisionNameInput.getAdapter().getItem(index));
             computeScheduleLayoutVisibility();
@@ -147,9 +146,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
         });
 
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
-        leagueNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
         leagueNameInput.setText(mGameSummary.getLeagueName());
-        leagueNameInput.setThreshold(2);
+        leagueNameInput.setThreshold(1);
         leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(this, getLayoutInflater(), storedLeaguesService.listLeagues(mGameSummary.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueSummary leagueDescription = (ApiLeagueSummary) leagueNameInput.getAdapter().getItem(index);

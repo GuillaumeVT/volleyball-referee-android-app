@@ -36,6 +36,16 @@ public class StoredTeamActivity extends AppCompatActivity {
     private IBaseTeam          mTeamService;
     private boolean            mCreate;
 
+    public StoredTeamActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof BaseTeamServiceHandler) {
+                BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
+                baseTeamServiceHandler.setTeamService(mTeamService);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mStoredTeamsService = new StoredTeamsManager(this);
@@ -171,14 +181,6 @@ public class StoredTeamActivity extends AppCompatActivity {
         } else {
             Log.i(Tags.STORED_TEAMS, "Save button is visible");
             saveLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof BaseTeamServiceHandler) {
-            BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
-            baseTeamServiceHandler.setTeamService(mTeamService);
         }
     }
 }

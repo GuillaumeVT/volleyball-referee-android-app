@@ -87,6 +87,20 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private FloatingActionButton mRightTeamCardsButton;
     private CountDown            mCountDown;
 
+    public GameActivity() {
+        super();
+        getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            if (fragment instanceof GameServiceHandler) {
+                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+                gameServiceHandler.setGameService(mGame);
+            }
+            if (fragment instanceof StoredGamesServiceHandler) {
+                StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
+                storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mStoredGamesService = new StoredGamesManager(this);
@@ -632,7 +646,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     public void onUndoSanction(TeamType teamType, SanctionType sanctionType, int number) {}
 
     private void initGameNavigation(final BottomNavigationView gameNavigation, Bundle savedInstanceState) {
-        gameNavigation.setOnNavigationItemSelectedListener(item -> {
+        gameNavigation.setOnItemSelectedListener(item -> {
                     final Fragment fragment;
 
                     switch (item.getItemId()) {
@@ -718,17 +732,4 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             actionBar.setTitle(title);
         }
     }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof GameServiceHandler) {
-            GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
-            gameServiceHandler.setGameService(mGame);
-        }
-        if (fragment instanceof StoredGamesServiceHandler) {
-            StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
-            storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
-        }
-    }
-
 }

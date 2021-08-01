@@ -71,10 +71,10 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
         initNavigationMenu();
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.scheduled_games_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateScheduledGamesList);
 
-        mOverlay = findViewById(R.id.overlay);
+        mOverlay = findViewById(R.id.scheduled_games_overlay);
 
         final ListView scheduledGamesList = findViewById(R.id.scheduled_games_list);
         mScheduledGamesListAdapter = new ScheduledGamesListAdapter(getLayoutInflater());

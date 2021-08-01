@@ -17,12 +17,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/home_team_name_input_layout"
-                style="@style/AppTheme.TextInputLayout"
+                style="@style/AppTheme.TextInputLayoutAutoComplete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1"
-                app:endIconMode="clear_text">
+                android:layout_weight="1">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/home_team_name_input_text"
@@ -120,12 +119,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/guest_team_name_input_layout"
-                style="@style/AppTheme.TextInputLayout"
+                style="@style/AppTheme.TextInputLayoutAutoComplete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1"
-                app:endIconMode="clear_text">
+                android:layout_weight="1">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/guest_team_name_input_text"

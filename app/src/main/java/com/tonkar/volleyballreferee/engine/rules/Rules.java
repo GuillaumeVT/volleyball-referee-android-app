@@ -96,7 +96,7 @@ public class Rules extends ApiRules {
     public static Rules officialSnowRules() {
         return new Rules(DEFAULT_SNOW_ID,
                 ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW,
-                2, 15, false, 15, true, true, WIN_TERMINATION, true, 1, 30,
+                3, 15, false, 15, true, true, WIN_TERMINATION, true, 1, 30,
                 false, 0, true, 60,
                 NO_LIMITATION, 2, true, 5, 5, 9999);
     }

@@ -1,10 +1,11 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
@@ -27,9 +28,8 @@ import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,14 +41,18 @@ import java.util.UUID;
 @LargeTest
 public class Indoor4x4CompleteGame {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
-
+    private Context            mContext;
     private StoredGamesService mStoredGamesService;
 
+    @Before
+    public void init() {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mStoredGamesService = new StoredGamesManager(mContext);
+    }
+    
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = PrefUtils.getUser(mActivityRule.getActivity());
+        ApiUserSummary user = PrefUtils.getUser(mContext);
         Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
 
@@ -64,13 +68,13 @@ public class Indoor4x4CompleteGame {
         playSet_complete(indoor4x4Game);
 
         IStoredGame storedGame = mStoredGamesService.getGame(indoor4x4Game.getId());
-        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mActivityRule.getActivity(), storedGame);
+        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mContext, storedGame);
         scoreSheetBuilder.createScoreSheet();
     }
 
     private void defineTeamsAndLeague(Indoor4x4Game indoor4x4Game) {
-        StoredTeamsService storedTeamsService = new StoredTeamsManager(mActivityRule.getActivity());
-        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mActivityRule.getActivity());
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext);
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext);
 
         indoor4x4Game.setGender(GenderType.MIXED);
 
@@ -122,7 +126,6 @@ public class Indoor4x4CompleteGame {
 
         indoor4x4Game.startMatch();
 
-        mStoredGamesService = new StoredGamesManager(mActivityRule.getActivity());
         mStoredGamesService.connectGameRecorder(indoor4x4Game);
     }
 

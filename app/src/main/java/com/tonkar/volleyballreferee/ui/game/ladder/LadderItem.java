@@ -10,9 +10,9 @@ import java.util.List;
 
 class LadderItem {
 
-    private       TeamType              mTeamType;
-    private       int                   mHomePoints;
-    private       int                   mGuestPoints;
+    private final TeamType              mTeamType;
+    private final int                   mHomePoints;
+    private final int                   mGuestPoints;
     private final List<ApiSubstitution> mHomeSubstitutions;
     private final List<ApiSubstitution> mGuestSubstitutions;
     private final List<ApiTimeout>      mHomeTimeouts;

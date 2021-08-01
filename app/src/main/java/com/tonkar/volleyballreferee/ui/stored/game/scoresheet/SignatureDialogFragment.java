@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.ui.stored.game.scoresheet;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
@@ -29,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class SignatureDialogFragment extends DialogFragment {
 
     private Context            mContext;

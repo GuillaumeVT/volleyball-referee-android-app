@@ -3,7 +3,6 @@ package android.print;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.CancellationSignal;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -11,20 +10,17 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
 import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScoreSheetPdfConverter {
 
-    private ProgressIndicatorActivity mActivity;
-    private Uri                       mFileUri;
-    private WebView                   mWebView;
+    private final ProgressIndicatorActivity mActivity;
+    private final Uri                       mFileUri;
+    private       WebView                   mWebView;
 
     public ScoreSheetPdfConverter(ProgressIndicatorActivity activity, Uri fileUri) {
         mActivity = activity;
@@ -82,7 +78,7 @@ public class ScoreSheetPdfConverter {
                             try {
                                 mActivity.startActivity(Intent.createChooser(intent, mActivity.getString(R.string.create_score_sheet)));
                             } catch (ActivityNotFoundException e) {
-                                Log.e(Tags.SCORE_SHEET, "Exception while opening the scoresheet", e);
+                                Log.e(Tags.SCORE_SHEET, "Exception while opening the score sheet", e);
                                 UiUtils.makeErrorText(mActivity, mActivity.getString(R.string.score_sheet_exception), Toast.LENGTH_LONG).show();
                             }
                         }

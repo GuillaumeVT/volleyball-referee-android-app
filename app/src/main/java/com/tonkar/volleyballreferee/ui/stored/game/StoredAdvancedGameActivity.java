@@ -6,9 +6,10 @@ import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
@@ -39,14 +40,17 @@ public class StoredAdvancedGameActivity extends StoredGameActivity {
 
         updateGame();
 
-        initScoresheetAvailability();
+        initScoreSheetAvailability();
 
-        final ViewPager storedGamePager = findViewById(R.id.stored_game_pager);
-        final StoredGameFragmentPagerAdapter storedGamePagerAdapter = new StoredGameFragmentPagerAdapter(mStoredGame, this, getSupportFragmentManager());
-        storedGamePager.setAdapter(storedGamePagerAdapter);
+        final ViewPager2 storedGamePager = findViewById(R.id.stored_game_pager);
+        final StoredGameFragmentStateAdapter storedGameStateAdapter = new StoredGameFragmentStateAdapter(this, mStoredGame.getNumberOfSets());
+        storedGamePager.setAdapter(storedGameStateAdapter);
 
         final TabLayout storedGameTabs = findViewById(R.id.stored_game_tabs);
-        storedGameTabs.setupWithViewPager(storedGamePager);
+        new TabLayoutMediator(storedGameTabs, storedGamePager, (tab, position) -> {
+            String tabText = position == 0 ? getString(R.string.players) : position == 1 ? getString(R.string.rules) : String.format(getString(R.string.set_number), position - 1);
+            tab.setText(tabText);
+        }).attach();
     }
 
     public void generateScoreSheet(View view) {

@@ -1106,7 +1106,7 @@ public class ScoreSheetBuilder {
                 "      font-size: 12px !important;\n" +
                 "    }\n" +
                 "    .vbr-body {\n" +
-                String.format("      color: %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      color: %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      width: 28cm;\n" +
                 "      max-width: 28cm;\n" +
                 "      margin-left: auto;\n" +
@@ -1139,7 +1139,7 @@ public class ScoreSheetBuilder {
                 String.format("      background-color: %s;\n", guestLiberoBackgroundColor) +
                 "    }\n" +
                 "    .div-card {\n" +
-                String.format("      background-color: %s;\n", colorIntToHtml(mContext.getColor(R.color.colorScoreSheetBackground))) +
+                String.format("      background-color: %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorScoreSheetBackground))) +
                 "      padding: 6px;\n" +
                 "      margin: 6px;\n" +
                 "      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n" +
@@ -1296,7 +1296,7 @@ public class ScoreSheetBuilder {
                 "      padding: 3px;\n" +
                 "    }\n" +
                 "    .bordered-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      min-width: 22px;\n" +
                 "      text-align: center;\n" +
                 "      padding: 3px;\n" +
@@ -1304,12 +1304,12 @@ public class ScoreSheetBuilder {
                 "      margin-left: -1px;\n" +
                 "    }\n" +
                 "    .remarks-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      padding: 3px;\n" +
                 "      min-height: 40px;\n" +
                 "    }\n" +
                 "    .signature-title-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      width: inherit;\n" +
                 "      grid-row: 1 / span 2;\n" +
                 "      height:82px;\n" +
@@ -1319,7 +1319,7 @@ public class ScoreSheetBuilder {
                 "      margin-left: -1px;\n" +
                 "    }\n" +
                 "    .signature-name-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      width: inherit;\n" +
                 "      height:14px;\n" +
                 "      line-height:14px;\n" +
@@ -1329,7 +1329,7 @@ public class ScoreSheetBuilder {
                 "      margin-left: -1px;\n" +
                 "    }\n" +
                 "    .signature-cell {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      width: inherit;\n" +
                 "      height: 60px;\n" +
                 "      line-height: 60px;\n" +
@@ -1350,7 +1350,7 @@ public class ScoreSheetBuilder {
                 "      margin-left: auto;\n" +
                 "    }\n" +
                 "    .set-anchor {\n" +
-                String.format("      color: %s;\n", colorIntToHtml(mContext.getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      color: %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "    }\n" +
                 "    .badge {\n" +
                 "      min-width: 22px;\n" +
@@ -1369,7 +1369,7 @@ public class ScoreSheetBuilder {
                 "      min-width: 34px;\n" +
                 "    }\n" +
                 "    .border {\n" +
-                String.format("      border: 1px solid %s;\n", colorIntToHtml(mContext.getResources().getColor(R.color.colorOnScoreSheetBackground))) +
+                String.format("      border: 1px solid %s;\n", colorIntToHtml(ContextCompat.getColor(mContext, R.color.colorOnScoreSheetBackground))) +
                 "      margin-right: -1px;\n" +
                 "      margin-left: -1px;\n" +
                 "    }\n" +

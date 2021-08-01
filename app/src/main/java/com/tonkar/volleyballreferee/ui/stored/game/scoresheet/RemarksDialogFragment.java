@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.stored.game.scoresheet;
 
 import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +8,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.tonkar.volleyballreferee.R;
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class RemarksDialogFragment extends DialogFragment {
 
     private View               mView;

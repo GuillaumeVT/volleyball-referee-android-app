@@ -53,7 +53,7 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
 
         initNavigationMenu();
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.colleagues_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateColleaguesList);
 
         final ListView colleaguesList = findViewById(R.id.colleagues_list);

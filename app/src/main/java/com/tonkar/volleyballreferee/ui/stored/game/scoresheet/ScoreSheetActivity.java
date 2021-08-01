@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.print.ScoreSheetPdfConverter;
 import android.provider.MediaStore;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.webkit.WebView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
@@ -31,7 +29,6 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class ScoreSheetActivity extends ProgressIndicatorActivity {
 
     private IStoredGame       mStoredGame;
@@ -47,7 +44,7 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
 
         super.onCreate(savedInstanceState);
 
-        Log.i(Tags.SCORE_SHEET, "Create scoresheet activity");
+        Log.i(Tags.SCORE_SHEET, "Create score sheet activity");
         setContentView(R.layout.activity_score_sheet);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -61,7 +58,7 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.score_sheet_sync_layout);
         mSyncLayout.setEnabled(false);
 
         mWebView = findViewById(R.id.score_sheet);

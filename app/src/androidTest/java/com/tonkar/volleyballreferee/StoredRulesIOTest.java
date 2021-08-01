@@ -1,17 +1,18 @@
 package com.tonkar.volleyballreferee;
 
+import android.content.Context;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
 import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
 import com.tonkar.volleyballreferee.engine.stored.api.ApiRules;
-import com.tonkar.volleyballreferee.ui.MainActivity;
 
+import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -29,12 +30,16 @@ import static org.junit.Assert.assertNotEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StoredRulesIOTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+    private Context mContext;
+
+    @Before
+    public void init() {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    }
 
     @Test
     public void save() {
-        StoredRulesService storedRulesService = new StoredRulesManager(mActivityRule.getActivity().getApplicationContext());
+        StoredRulesService storedRulesService = new StoredRulesManager(mContext.getApplicationContext());
 
         Rules rules = storedRulesService.createRules(GameType.INDOOR);
         rules.setName("Test Rules 1");
@@ -87,7 +92,7 @@ public class StoredRulesIOTest {
 
     @Test
     public void writeThenRead() {
-        StoredRulesService storedRulesService = new StoredRulesManager(mActivityRule.getActivity().getApplicationContext());
+        StoredRulesService storedRulesService = new StoredRulesManager(mContext.getApplicationContext());
 
         List<ApiRules> expectedList = new ArrayList<>();
         expectedList.add(storedRulesService.getRules(GameType.INDOOR,"Test Rules 1"));

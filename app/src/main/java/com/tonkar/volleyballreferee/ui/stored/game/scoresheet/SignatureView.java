@@ -5,25 +5,23 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class SignatureView extends View {
 
-    private Paint mPaint;
-    private Path  mPath;
-    private float mCurX;
-    private float mCurY;
-    private float mStartX;
-    private float mStartY;
+    private final Paint mPaint;
+    private final Path  mPath;
+    private       float mCurX;
+    private       float mCurY;
+    private       float mStartX;
+    private       float mStartY;
 
     public SignatureView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -35,7 +33,7 @@ public class SignatureView extends View {
         mStartX = 0f;
         mStartY = 0f;
 
-        mPaint.setColor(context.getColor(R.color.colorOnScoreSheetBackground));
+        mPaint.setColor(ContextCompat.getColor(context, R.color.colorOnScoreSheetBackground));
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);

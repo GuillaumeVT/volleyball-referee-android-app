@@ -108,6 +108,13 @@
         <item name="android:textCursorDrawable">@color/colorPrimary</item>
     </style>
 
+    <style name="AppTheme.TextInputLayoutAutoComplete" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="hintTextColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorOnSurface</item>
+        <item name="android:textCursorDrawable">@color/colorPrimary</item>
+    </style>
+
     <style name="AppTheme.NumberPicker" parent="AppTheme">
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>

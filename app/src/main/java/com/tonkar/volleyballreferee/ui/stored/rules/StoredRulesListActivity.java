@@ -66,10 +66,10 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
         initNavigationMenu();
 
-        mSyncLayout = findViewById(R.id.sync_layout);
+        mSyncLayout = findViewById(R.id.stored_rules_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredRulesList);
 
-        mOverlay = findViewById(R.id.overlay);
+        mOverlay = findViewById(R.id.stored_rules_overlay);
 
         List<ApiRulesSummary> storedRules = mStoredRulesService.listRules();
 
@@ -111,9 +111,9 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddSnowRulesButton.hide();
         mAddRulesButton = findViewById(R.id.add_rules_button);
         mAddRulesButton.setOnClickListener(view -> {
-            if(mIsFabOpen){
+            if (mIsFabOpen) {
                 closeFABMenu();
-            }else{
+            } else {
                 showFABMenu();
             }
         });
@@ -212,6 +212,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private void showFABMenu(){
         mIsFabOpen = true;
         UiUtils.colorCloseIconButton(this, mAddRulesButton);
+        mOverlay.setVisibility(View.VISIBLE);
         mAddIndoorRulesButton.show();
         mAddIndoor4x4RulesButton.show();
         mAddBeachRulesButton.show();
@@ -220,7 +221,6 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mAddSnowRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
-        mOverlay.setVisibility(View.VISIBLE);
     }
 
     private void closeFABMenu(){

@@ -110,7 +110,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         }
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
-        mRulesNameInput.setText(" "); // or else won't inflate its height and will stay thin (bug?)
 
         if (!mRules.getName().isEmpty()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -393,11 +392,6 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
                 mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
                 initValues();
                 computeConfirmItemVisibility();
-            });
-            mRulesNameInput.setOnClickListener(input -> {
-                if (!mRulesNameInput.isPopupShowing()) {
-                    mRulesNameInput.showDropDown();
-                }
             });
         }
 

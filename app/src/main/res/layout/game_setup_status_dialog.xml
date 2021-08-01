@@ -10,13 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/default_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
         android:text="@string/home_team_tab"
+        android:textAllCaps="true"
         android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/home_team_name_status"
@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
         android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/name"
         android:textAppearance="@style/AppTheme.TextView"
@@ -34,14 +33,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size">
+        android:layout_marginStart="@dimen/big_margin_size">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:drawablePadding="@dimen/big_margin_size"
             android:text="@string/players"
             android:textAppearance="@style/AppTheme.TextView"
             android:textColor="@color/colorOnSurface"
@@ -66,7 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
         android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/captain"
         android:textAppearance="@style/AppTheme.TextView"
@@ -78,14 +74,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/default_margin_size"
-        android:layout_marginTop="@dimen/default_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
         android:text="@string/guest_team_tab"
+        android:textAllCaps="true"
         android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/guest_team_name_status"
@@ -93,7 +88,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
         android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/name"
         android:textAppearance="@style/AppTheme.TextView"
@@ -103,14 +97,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size">
+        android:layout_marginStart="@dimen/big_margin_size">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:drawablePadding="@dimen/big_margin_size"
             android:text="@string/players"
             android:textAppearance="@style/AppTheme.TextView"
             android:textColor="@color/colorOnSurface"
@@ -135,7 +127,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
         android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/captain"
         android:textAppearance="@style/AppTheme.TextView"
@@ -147,14 +138,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/default_margin_size"
-        android:layout_marginTop="@dimen/default_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
         android:text="@string/rules_tab"
+        android:textAllCaps="true"
         android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/rules_name_status"
@@ -162,7 +152,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
         android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/name"
         android:textAppearance="@style/AppTheme.TextView"
@@ -174,14 +163,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/default_margin_size"
-        android:layout_marginTop="@dimen/default_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
         android:text="@string/misc_tab"
+        android:textAllCaps="true"
         android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/league_name_status"
@@ -189,8 +177,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/league_name"
         android:textAppearance="@style/AppTheme.TextView"
         android:textColor="@color/colorOnSurface"
@@ -202,8 +188,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/big_margin_size"
-        android:layout_marginBottom="@dimen/default_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
         android:text="@string/division_name"
         android:textAppearance="@style/AppTheme.TextView"
         android:textColor="@color/colorOnSurface"
