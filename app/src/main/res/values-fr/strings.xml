@@ -85,7 +85,7 @@
     <string name="password_strength_error">Le mot de passe ne remplit pas les critères décrits précédemment</string>
     <string name="user_signed_out">Déconnecté</string>
     <string name="search_colleague">Chercher dans les collègues</string>
-    <string name="add_colleague">Se connecter avec un arbitre</string>
+    <string name="add_colleague">Connexion avec arbitre</string>
     <string name="received_colleague_request">Vous avez reçu une demande de connexion de %s</string>
     <string name="sent_colleague_request">Vous avez envoyé une demande de connexion à %s</string>
     <string name="pending">En attente</string>
