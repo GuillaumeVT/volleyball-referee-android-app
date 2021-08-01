@@ -28,7 +28,6 @@
     <string name="resume_game_title">Continuer le match</string>
     <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le continuer ou le supprimer?</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Mes données</string>
     <string name="configuration_group">Configuration</string>
     <string name="completed_games">Matchs terminés</string>

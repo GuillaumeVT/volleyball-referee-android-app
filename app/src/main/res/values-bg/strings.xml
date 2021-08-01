@@ -29,7 +29,6 @@
     <string name="resume_game_title">Продължи мач</string>
     <string name="resume_game_question">Приложението намира неприключен мач. Искаш ли да го продължиш или да го изтриеш?</string>
     <string name="resume_game_error">Мачът не може да бъде продължен.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Моите данни</string>
     <string name="configuration_group">Конфигурация</string>
     <string name="completed_games">Приключени мачове</string>

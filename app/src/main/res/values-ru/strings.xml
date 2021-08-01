@@ -28,7 +28,6 @@
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён недоигранный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume_game_error">Невозможно продолжить матч.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Мои данные</string>
     <string name="configuration_group">Настройки</string>
     <string name="completed_games">Законченные матчи</string>

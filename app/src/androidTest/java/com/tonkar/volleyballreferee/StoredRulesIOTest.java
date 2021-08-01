@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -67,7 +68,7 @@ public class StoredRulesIOTest {
 
         rules = storedRulesService.createRules(GameType.BEACH);
         rules.setName("Test Rules 2");
-        rules.setCreatedBy("byg765bvg66v@facebook");
+        rules.setCreatedBy(UUID.randomUUID().toString());
         rules.setSetsPerGame(1);
         rules.setPointsPerSet(99);
         rules.setTieBreakInLastSet(true);

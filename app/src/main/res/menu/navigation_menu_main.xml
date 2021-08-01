@@ -3,80 +3,74 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/action_home"
-                android:icon="@drawable/ic_home"
-                android:title="@string/app_name"/>
+            android:id="@+id/action_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/app_name" />
         <item
-                android:id="@+id/action_purchase"
-                android:icon="@drawable/ic_purchase"
-                android:title="@string/purchase"
-                android:visible="false"/>
+            android:id="@+id/action_purchase"
+            android:icon="@drawable/ic_purchase"
+            android:title="@string/purchase"
+            android:visible="false" />
         <item
-                android:id="@+id/my_data_group"
-                android:title="@string/my_data_group">
+            android:id="@+id/my_data_group"
+            android:title="@string/my_data_group">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                            android:id="@+id/action_available_games"
-                            android:icon="@drawable/ic_schedule"
-                            android:title="@string/available_games"
-                            android:visible="false"/>
+                        android:id="@+id/action_available_games"
+                        android:icon="@drawable/ic_schedule"
+                        android:title="@string/available_games"
+                        android:visible="false" />
                     <item
-                            android:id="@+id/action_stored_games"
-                            android:icon="@drawable/ic_volleyball"
-                            android:title="@string/completed_games"/>
+                        android:id="@+id/action_stored_games"
+                        android:icon="@drawable/ic_volleyball"
+                        android:title="@string/completed_games" />
                     <item
-                            android:id="@+id/action_stored_teams"
-                            android:icon="@drawable/ic_teams"
-                            android:title="@string/teams"/>
+                        android:id="@+id/action_stored_teams"
+                        android:icon="@drawable/ic_teams"
+                        android:title="@string/teams" />
                     <item
-                            android:id="@+id/action_stored_rules"
-                            android:icon="@drawable/ic_rules"
-                            android:title="@string/rules"/>
+                        android:id="@+id/action_stored_rules"
+                        android:icon="@drawable/ic_rules"
+                        android:title="@string/rules" />
                     <item
-                            android:id="@+id/action_colleagues"
-                            android:icon="@drawable/ic_colleagues"
-                            android:title="@string/colleagues"/>
+                        android:id="@+id/action_colleagues"
+                        android:icon="@drawable/ic_colleagues"
+                        android:title="@string/colleagues" />
                 </group>
             </menu>
         </item>
 
         <item
-                android:id="@+id/configuration_group"
-                android:title="@string/configuration_group">
+            android:id="@+id/configuration_group"
+            android:title="@string/configuration_group">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                            android:id="@+id/action_settings"
-                            android:icon="@drawable/ic_settings"
-                            android:title="@string/settings"/>
+                        android:id="@+id/action_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/settings" />
                 </group>
             </menu>
         </item>
 
         <item
-                android:id="@+id/misc_group"
-                android:title="@string/misc_tab">
+            android:id="@+id/misc_group"
+            android:title="@string/misc_tab">
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                            android:id="@+id/action_live_games_vbr_com"
-                            android:icon="@drawable/ic_live"
-                            android:title="@string/live_games_vbr_com"/>
+                        android:id="@+id/action_live_games_vbr_com"
+                        android:icon="@drawable/ic_live"
+                        android:title="@string/live_games_vbr_com" />
                     <item
-                            android:id="@+id/action_facebook"
-                            android:icon="@drawable/ic_facebook"
-                            android:title="@string/facebook"/>
-
+                        android:id="@+id/action_credits"
+                        android:icon="@drawable/ic_info"
+                        android:title="@string/credit_title" />
                     <item
-                            android:id="@+id/action_credits"
-                            android:icon="@drawable/ic_info"
-                            android:title="@string/credit_title"/>
-
-                    <item
-                            android:id="@+id/action_privacy_policy"
-                            android:icon="@drawable/ic_private"
-                            android:title="@string/privacy_policy"/>
+                        android:id="@+id/action_privacy_policy"
+                        android:icon="@drawable/ic_private"
+                        android:title="@string/privacy_policy" />
                 </group>
             </menu>
         </item>

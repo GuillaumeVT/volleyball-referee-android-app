@@ -29,7 +29,6 @@
     <string name="resume_game_title">Spiel fortsetzen</string>
     <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
     <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Meine Daten</string>
     <string name="configuration_group">Konfiguration</string>
     <string name="completed_games">Alle Spiele</string>

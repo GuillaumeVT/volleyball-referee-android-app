@@ -29,7 +29,6 @@
     <string name="resume_game_title">Continuar jogo</string>
     <string name="resume_game_question">A aplicação encontrou um jogo a decorrer. Gostaria de continuar ou apagar esse jogo?</string>
     <string name="resume_game_error">O jogo não pode ser retomado.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Os meus dados</string>
     <string name="configuration_group">Configurações</string>
     <string name="completed_games">Jogos terminados</string>

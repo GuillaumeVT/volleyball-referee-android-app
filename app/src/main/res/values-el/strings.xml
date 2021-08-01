@@ -29,7 +29,6 @@
     <string name="resume_game_title">Συνέχεια αγώνα</string>
     <string name="resume_game_question">Η εφαρμογή βρήκε έναν αγώνα σε εξέλιξη. Θες να τον συνεχίσεις ή να τον διαγράψεις;</string>
     <string name="resume_game_error">Ο αγώνας δεν μπορεί να συνεχιστεί.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Τα δεδομένα μου</string>
     <string name="configuration_group">Ρυθμίσεις</string>
     <string name="completed_games">Ολοκληρωμένοι αγώνες</string>

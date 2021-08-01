@@ -38,7 +38,6 @@
     <string name="resume_game_title">Resume match</string>
     <string name="resume_game_question">The application found a match in progress. Do you wish to resume it or to delete it?</string>
     <string name="resume_game_error">The match could not be resumed.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">My data</string>
     <string name="configuration_group">Configuration</string>
     <string name="completed_games">Completed matches</string>

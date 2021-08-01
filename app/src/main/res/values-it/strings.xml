@@ -29,7 +29,6 @@
     <string name="resume_game_title">Riprendi la partita</string>
     <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
     <string name="resume_game_error">La partita non può essere ripresa.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">I miei dati</string>
     <string name="configuration_group">Configurazione</string>
     <string name="completed_games">Partite concluse</string>

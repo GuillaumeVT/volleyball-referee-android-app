@@ -29,7 +29,6 @@
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
     <string name="resume_game_error">A mérkőzés nem folytatható.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Adataim</string>
     <string name="configuration_group">Beállítások</string>
     <string name="completed_games">Befejezett mérkőzések</string>

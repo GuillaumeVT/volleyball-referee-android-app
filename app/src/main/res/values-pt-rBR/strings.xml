@@ -29,7 +29,6 @@
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Meus dados</string>
     <string name="configuration_group">Configurações</string>
     <string name="completed_games">Partidas Realizadas</string>

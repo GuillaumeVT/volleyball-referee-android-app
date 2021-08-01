@@ -29,7 +29,6 @@
     <string name="resume_game_title">Continuar partido</string>
     <string name="resume_game_question">Se ha encontrado un partido en curso. ¿Desea retomarlo o borrarlo?</string>
     <string name="resume_game_error">No se ha podido continuar el partido</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Mis datos</string>
     <string name="configuration_group">Configuración</string>
     <string name="completed_games">Partidos completados</string>

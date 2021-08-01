@@ -29,7 +29,6 @@
     <string name="resume_game_title">Spel hervatten</string>
     <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u deze te hervatten of te verwijderen?</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Mijn data</string>
     <string name="configuration_group">Configuratie</string>
     <string name="completed_games">Voltooide wedstrijden</string>

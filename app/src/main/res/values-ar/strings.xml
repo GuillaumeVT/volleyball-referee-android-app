@@ -29,7 +29,6 @@
     <string name="resume_game_title">إستئناف المباراة</string>
     <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في إستئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
-    <string name="facebook">فيسبوك</string>
     <string name="my_data_group">بياناتي</string>
     <string name="configuration_group">الإعدادات</string>
     <string name="completed_games">المباريات المكتملة</string>

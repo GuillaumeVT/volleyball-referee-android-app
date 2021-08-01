@@ -29,7 +29,6 @@
     <string name="resume_game_title">Jätka mängu</string>
     <string name="resume_game_question">Rakenduses salvestatud lõpetamata mäng. Kas te soovite antud mängu jätkata või kustutada?</string>
     <string name="resume_game_error">Mängu jätkamine pole võimalik.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Minu andmed</string>
     <string name="configuration_group">Seaded</string>
     <string name="completed_games">Lõpetatud mängud</string>

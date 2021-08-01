@@ -28,7 +28,6 @@
     <string name="resume_game_title">Wznów grę</string>
     <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ją wznowić czy usunąć?</string>
     <string name="resume_game_error">Gra nie może zostać wznowiona.</string>
-    <string name="facebook">Facebook</string>
     <string name="my_data_group">Moje Dane</string>
     <string name="configuration_group">Konfiguracja</string>
     <string name="completed_games">Zakończone Mecze</string>

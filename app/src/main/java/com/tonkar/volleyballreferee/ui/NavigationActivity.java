@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -114,23 +113,6 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         UiUtils.animateForward(this);
                         navigationView.post(() -> {
                             navigationView.getMenu().findItem(R.id.action_live_games_vbr_com).setChecked(false);
-                            navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
-                        });
-                        break;
-                    case R.id.action_facebook:
-                        Log.i(Tags.WEB, "Facebook");
-                        Intent browserIntent;
-                        try {
-                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1983857898556706"));
-                            startActivity(browserIntent);
-                            UiUtils.animateForward(this);
-                        } catch (ActivityNotFoundException e) {
-                            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/VolleyballReferee/"));
-                            startActivity(browserIntent);
-                            UiUtils.animateForward(this);
-                        }
-                        navigationView.post(() -> {
-                            navigationView.getMenu().findItem(R.id.action_facebook).setChecked(false);
                             navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
                         });
                         break;
