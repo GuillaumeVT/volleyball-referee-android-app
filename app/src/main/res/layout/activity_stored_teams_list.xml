@@ -1,132 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tonkar.volleyballreferee.ui.stored.team.StoredTeamsListActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.tonkar.volleyballreferee.ui.stored.team.StoredTeamsListActivity">
+        android:layout_height="match_parent">
 
-    <LinearLayout
-            android:layout_width="match_parent"
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="top|center"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <include layout="@layout/toolbar" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/stored_teams_sync_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <ListView
+                android:id="@+id/stored_teams_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                android:paddingBottom="@dimen/empty_fab_space" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:id="@+id/stored_teams_fab_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
 
             <View
-                    android:id="@+id/stored_teams_overlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorOverlay"
-                    android:elevation="1dp"
-                    android:visibility="gone"/>
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:id="@+id/stored_teams_sync_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <ListView
-                        android:id="@+id/stored_teams_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:divider="@android:color/transparent"
-                        android:paddingBottom="@dimen/empty_fab_space" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorOverlay" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/add_6x6_team_button"
-                    style="@style/AppTheme.ExtendedFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="addIndoorTeam"
-                    android:transitionName="gameKindToToolbar"
-                    android:text="@string/volleyball_game"
-                    android:textColor="@color/colorOnDarkSurface"
-                    app:backgroundTint="@color/colorIndoor"
-                    app:icon="@drawable/ic_6x6_small"
-                    app:iconTint="@color/colorOnDarkSurface" />
+                android:id="@+id/add_6x6_team_button"
+                style="@style/AppTheme.ExtendedFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/fab_shift_default"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="addIndoorTeam"
+                android:text="@string/volleyball_game"
+                android:textColor="@color/colorOnDarkSurface"
+                android:transitionName="gameKindToToolbar"
+                app:backgroundTint="@color/colorIndoor"
+                app:icon="@drawable/ic_6x6_small"
+                app:iconTint="@color/colorOnDarkSurface" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/add_beach_team_button"
-                    style="@style/AppTheme.ExtendedFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="addBeachTeam"
-                    android:transitionName="gameKindToToolbar"
-                    android:text="@string/beach_volleyball_game"
-                    android:textColor="@color/colorOnLightSurface"
-                    app:backgroundTint="@color/colorBeach"
-                    app:icon="@drawable/ic_beach"
-                    app:iconTint="@color/colorOnLightSurface" />
+                android:id="@+id/add_beach_team_button"
+                style="@style/AppTheme.ExtendedFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/fab_shift_default"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="addBeachTeam"
+                android:text="@string/beach_volleyball_game"
+                android:textColor="@color/colorOnLightSurface"
+                android:transitionName="gameKindToToolbar"
+                app:backgroundTint="@color/colorBeach"
+                app:icon="@drawable/ic_beach"
+                app:iconTint="@color/colorOnLightSurface" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/add_4x4_team_button"
-                    style="@style/AppTheme.ExtendedFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="addIndoor4x4Team"
-                    android:transitionName="gameKindToToolbar"
-                    android:text="@string/volleyball_game"
-                    android:textColor="@color/colorOnDarkSurface"
-                    app:backgroundTint="@color/colorIndoor4x4"
-                    app:icon="@drawable/ic_4x4_small"
-                    app:iconTint="@color/colorOnDarkSurface" />
+                android:id="@+id/add_4x4_team_button"
+                style="@style/AppTheme.ExtendedFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/fab_shift_default"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="addIndoor4x4Team"
+                android:text="@string/volleyball_game"
+                android:textColor="@color/colorOnDarkSurface"
+                android:transitionName="gameKindToToolbar"
+                app:backgroundTint="@color/colorIndoor4x4"
+                app:icon="@drawable/ic_4x4_small"
+                app:iconTint="@color/colorOnDarkSurface" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/add_snow_team_button"
-                    style="@style/AppTheme.ExtendedFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="addSnowTeam"
-                    android:transitionName="gameKindToToolbar"
-                    android:text="@string/snow_volleyball_game"
-                    android:textColor="@color/colorOnDarkSurface"
-                    app:backgroundTint="@color/colorSnow"
-                    app:icon="@drawable/ic_snow"
-                    app:iconTint="@color/colorOnDarkSurface" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_team_button"
-                    style="@style/AppTheme.Fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    app:srcCompat="@drawable/ic_plus" />
+                android:id="@+id/add_snow_team_button"
+                style="@style/AppTheme.ExtendedFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/fab_shift_default"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="addSnowTeam"
+                android:text="@string/snow_volleyball_game"
+                android:textColor="@color/colorOnDarkSurface"
+                android:transitionName="gameKindToToolbar"
+                app:backgroundTint="@color/colorSnow"
+                app:icon="@drawable/ic_snow"
+                app:iconTint="@color/colorOnDarkSurface" />
 
         </RelativeLayout>
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_team_button"
+            style="@style/AppTheme.Fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_shift_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_plus" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/navigation_drawer" />
 

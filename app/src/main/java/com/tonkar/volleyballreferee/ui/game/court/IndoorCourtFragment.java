@@ -250,7 +250,8 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void detachThenAttach() {
         if (this.isAdded()) {
-            getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
+            getParentFragmentManager().beginTransaction().detach(this).commit();
+            getParentFragmentManager().beginTransaction().attach(this).commit();
         }
     }
 

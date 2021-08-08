@@ -184,7 +184,7 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Temps mort</string>
     <string name="substitution">Remplacement</string>
-    <string name="let_libero_in_question">Нека либера от %s да влезе?</string>
+    <string name="let_libero_in_question">Laisser entrer le libéro de %s?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Supprimer le match</string>

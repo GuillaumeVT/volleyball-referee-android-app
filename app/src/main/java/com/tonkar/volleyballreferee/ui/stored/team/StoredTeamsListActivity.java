@@ -37,7 +37,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private StoredTeamsService           mStoredTeamsService;
     private StoredTeamsListAdapter       mStoredTeamsListAdapter;
     private SwipeRefreshLayout           mSyncLayout;
-    private View                         mOverlay;
+    private View                         mFabMenu;
     private boolean                      mIsFabOpen;
     private FloatingActionButton         mAddTeamButton;
     private ExtendedFloatingActionButton mAdd6x6TeamButton;
@@ -70,7 +70,8 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mSyncLayout = findViewById(R.id.stored_teams_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredTeamsList);
 
-        mOverlay = findViewById(R.id.stored_teams_overlay);
+        mFabMenu = findViewById(R.id.stored_teams_fab_menu);
+        mFabMenu.setVisibility(View.INVISIBLE);
 
         List<ApiTeamSummary> teams = mStoredTeamsService.listTeams();
 
@@ -214,15 +215,11 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private void showFABMenu(){
         mIsFabOpen = true;
         UiUtils.colorCloseIconButton(this, mAddTeamButton);
-        mAdd6x6TeamButton.show();
-        mAdd4x4TeamButton.show();
-        mAddBeachTeamButton.show();
-        mAddSnowTeamButton.show();
+        mFabMenu.setVisibility(View.VISIBLE);
         mAdd6x6TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mAdd4x4TeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mAddSnowTeamButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
-        mOverlay.setVisibility(View.VISIBLE);
     }
 
     private void closeFABMenu(){
@@ -231,12 +228,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         mAdd6x6TeamButton.animate().translationY(0);
         mAdd4x4TeamButton.animate().translationY(0);
         mAddBeachTeamButton.animate().translationY(0);
-        mAddSnowTeamButton.animate().translationY(0);
-        mAdd6x6TeamButton.hide();
-        mAdd4x4TeamButton.hide();
-        mAddBeachTeamButton.hide();
-        mAddSnowTeamButton.hide();
-        mOverlay.setVisibility(View.GONE);
+        mAddSnowTeamButton.animate().translationY(0).withEndAction(() -> mFabMenu.setVisibility(View.INVISIBLE));
     }
 
     @Override

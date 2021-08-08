@@ -36,7 +36,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private StoredRulesService           mStoredRulesService;
     private StoredRulesListAdapter       mStoredRulesListAdapter;
     private SwipeRefreshLayout           mSyncLayout;
-    private View                         mOverlay;
+    private View                         mFabMenu;
     private boolean                      mIsFabOpen;
     private FloatingActionButton         mAddRulesButton;
     private ExtendedFloatingActionButton mAddIndoorRulesButton;
@@ -69,7 +69,8 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mSyncLayout = findViewById(R.id.stored_rules_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateStoredRulesList);
 
-        mOverlay = findViewById(R.id.stored_rules_overlay);
+        mFabMenu = findViewById(R.id.stored_rules_fab_menu);
+        mFabMenu.setVisibility(View.INVISIBLE);
 
         List<ApiRulesSummary> storedRules = mStoredRulesService.listRules();
 
@@ -209,11 +210,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private void showFABMenu(){
         mIsFabOpen = true;
         UiUtils.colorCloseIconButton(this, mAddRulesButton);
-        mOverlay.setVisibility(View.VISIBLE);
-        mAddIndoorRulesButton.show();
-        mAddIndoor4x4RulesButton.show();
-        mAddBeachRulesButton.show();
-        mAddSnowRulesButton.show();
+        mFabMenu.setVisibility(View.VISIBLE);
         mAddIndoorRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mAddIndoor4x4RulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mAddBeachRulesButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
@@ -226,12 +223,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         mAddIndoorRulesButton.animate().translationY(0);
         mAddIndoor4x4RulesButton.animate().translationY(0);
         mAddBeachRulesButton.animate().translationY(0);
-        mAddSnowRulesButton.animate().translationY(0);
-        mAddIndoorRulesButton.hide();
-        mAddIndoor4x4RulesButton.hide();
-        mAddBeachRulesButton.hide();
-        mAddSnowRulesButton.hide();
-        mOverlay.setVisibility(View.GONE);
+        mAddSnowRulesButton.animate().translationY(0).withEndAction(() -> mFabMenu.setVisibility(View.INVISIBLE));
     }
 
     @Override

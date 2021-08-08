@@ -41,7 +41,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     private StoredGamesService           mStoredGamesService;
     private SwipeRefreshLayout           mSyncLayout;
-    private View                         mOverlay;
+    private View                         mFabMenu;
     private ScheduledGamesListAdapter    mScheduledGamesListAdapter;
     private boolean                      mIsFabOpen;
     private FloatingActionButton         mScheduleGameButton;
@@ -74,7 +74,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mSyncLayout = findViewById(R.id.scheduled_games_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateScheduledGamesList);
 
-        mOverlay = findViewById(R.id.scheduled_games_overlay);
+        mFabMenu = findViewById(R.id.scheduled_games_fab_menu);
+        mFabMenu.setVisibility(View.INVISIBLE);
 
         final ListView scheduledGamesList = findViewById(R.id.scheduled_games_list);
         mScheduledGamesListAdapter = new ScheduledGamesListAdapter(getLayoutInflater());
@@ -220,15 +221,11 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private void showFABMenu(){
         mIsFabOpen = true;
         UiUtils.colorCloseIconButton(this, mScheduleGameButton);
-        mScheduleIndoorGameButton.show();
-        mScheduleIndoor4x4GameButton.show();
-        mScheduleBeachGameButton.show();
-        mScheduleSnowGameButton.show();
+        mFabMenu.setVisibility(View.VISIBLE);
         mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mScheduleSnowGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
-        mOverlay.setVisibility(View.VISIBLE);
     }
 
     private void closeFABMenu(){
@@ -238,12 +235,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         mScheduleIndoorGameButton.animate().translationY(0);
         mScheduleIndoor4x4GameButton.animate().translationY(0);
         mScheduleBeachGameButton.animate().translationY(0);
-        mScheduleSnowGameButton.animate().translationY(0);
-        mScheduleIndoorGameButton.hide();
-        mScheduleIndoor4x4GameButton.hide();
-        mScheduleBeachGameButton.hide();
-        mScheduleSnowGameButton.hide();
-        mOverlay.setVisibility(View.GONE);
+        mScheduleSnowGameButton.animate().translationY(0).withEndAction(() -> mFabMenu.setVisibility(View.INVISIBLE));
     }
 
     @Override
