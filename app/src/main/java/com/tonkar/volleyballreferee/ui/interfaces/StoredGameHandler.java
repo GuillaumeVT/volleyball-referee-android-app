@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.ui.interfaces;
 
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 
 public interface StoredGameHandler {
 

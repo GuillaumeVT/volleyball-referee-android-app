@@ -1,7 +1,10 @@
 package com.tonkar.volleyballreferee;
 
+import static org.junit.Assert.assertEquals;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.game.BeachGame;
 import com.tonkar.volleyballreferee.engine.game.GameEvent;
@@ -11,7 +14,6 @@ import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
 import com.tonkar.volleyballreferee.engine.game.IndoorGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -21,8 +23,6 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class UndoTest {

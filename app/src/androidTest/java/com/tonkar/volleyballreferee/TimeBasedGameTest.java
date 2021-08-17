@@ -7,15 +7,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiLeague;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 

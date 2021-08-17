@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 
 public class GameFactory {
 

@@ -17,9 +17,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.game.GameEvent;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;

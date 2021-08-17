@@ -3,10 +3,10 @@ package com.tonkar.volleyballreferee.engine.rules;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
+import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiRules;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
 
 import lombok.ToString;
 

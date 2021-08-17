@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import lombok.Getter;

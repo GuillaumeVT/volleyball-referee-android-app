@@ -4,11 +4,11 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
+import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiCourt;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.engine.team.substitution.AlternativeSubstitutionsLimitation1;

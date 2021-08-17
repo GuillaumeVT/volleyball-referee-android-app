@@ -29,7 +29,7 @@ import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.StringArrayAdapter;

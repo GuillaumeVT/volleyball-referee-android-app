@@ -13,12 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.stored.AsyncFriendRequestListener;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendRequest;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiFriendsAndRequests;
+import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
+import com.tonkar.volleyballreferee.engine.api.model.ApiFriendRequest;
+import com.tonkar.volleyballreferee.engine.api.model.ApiFriendsAndRequests;
+import com.tonkar.volleyballreferee.engine.service.AsyncFriendRequestListener;
+import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.service.StoredUserService;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;

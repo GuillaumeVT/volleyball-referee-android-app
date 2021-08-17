@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
+import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
 import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 

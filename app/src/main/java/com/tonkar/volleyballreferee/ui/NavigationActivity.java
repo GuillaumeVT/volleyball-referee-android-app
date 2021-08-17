@@ -21,10 +21,10 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.billing.BillingManager;
 import com.tonkar.volleyballreferee.engine.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
+import com.tonkar.volleyballreferee.ui.data.game.StoredGamesListActivity;
+import com.tonkar.volleyballreferee.ui.data.rules.StoredRulesListActivity;
+import com.tonkar.volleyballreferee.ui.data.team.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
-import com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity;
-import com.tonkar.volleyballreferee.ui.stored.rules.StoredRulesListActivity;
-import com.tonkar.volleyballreferee.ui.stored.team.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 

@@ -27,6 +27,10 @@ import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.JsonConverters;
+import com.tonkar.volleyballreferee.engine.api.VbrApi;
+import com.tonkar.volleyballreferee.engine.api.model.ApiCount;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.BeachGame;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.GameType;
@@ -36,12 +40,9 @@ import com.tonkar.volleyballreferee.engine.game.IndoorGame;
 import com.tonkar.volleyballreferee.engine.game.SnowGame;
 import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiCount;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.SyncService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
@@ -61,7 +62,6 @@ import java.util.UUID;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends NavigationActivity {
@@ -145,6 +145,9 @@ public class MainActivity extends NavigationActivity {
                 });
             }
         }
+
+        Intent intent = new Intent(this, SyncService.class);
+        startService(intent);
 
         showReleaseNotes();
     }
@@ -302,9 +305,7 @@ public class MainActivity extends NavigationActivity {
 
     private void fetchFriendRequests() {
         if (PrefUtils.canSync(this)) {
-            Request request = ApiUtils.buildGet(String.format("%s/users/friends/received/count", ApiUtils.BASE_URL), PrefUtils.getUserToken(this));
-
-            ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
+            VbrApi.getInstance().countFriendRequests(this, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -314,7 +315,7 @@ public class MainActivity extends NavigationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), ApiCount.class);
+                        ApiCount count = JsonConverters.GSON.fromJson(response.body().string(), ApiCount.class);
                         initFriendRequestsButton(count);
                     } else {
                         initFriendRequestsButton(new ApiCount(0L));
@@ -338,9 +339,7 @@ public class MainActivity extends NavigationActivity {
 
     private void fetchAvailableGames() {
         if (PrefUtils.canSync(this)) {
-            Request request = ApiUtils.buildGet(String.format("%s/games/available/count", ApiUtils.BASE_URL), PrefUtils.getUserToken(this));
-
-            ApiUtils.getInstance().getHttpClient(this).newCall(request).enqueue(new Callback() {
+            VbrApi.getInstance().countAvailableGames(this, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -350,7 +349,7 @@ public class MainActivity extends NavigationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiCount count = JsonIOUtils.GSON.fromJson(response.body().string(), ApiCount.class);
+                        ApiCount count = JsonConverters.GSON.fromJson(response.body().string(), ApiCount.class);
                         initAvailableGamesButton(count);
                     } else {
                         initAvailableGamesButton(new ApiCount(0L));

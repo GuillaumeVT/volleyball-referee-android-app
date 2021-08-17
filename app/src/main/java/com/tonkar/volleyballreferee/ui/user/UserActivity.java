@@ -9,11 +9,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.stored.AsyncUserRequestListener;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserToken;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
+import com.tonkar.volleyballreferee.engine.service.AsyncUserRequestListener;
+import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.service.StoredUserService;
 import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
 
 import java.net.HttpURLConnection;

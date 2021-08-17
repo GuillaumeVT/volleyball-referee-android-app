@@ -1,5 +1,8 @@
 package com.tonkar.volleyballreferee;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -9,22 +12,22 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.BeachGame;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.ScoreSheetBuilder;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiLeague;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
@@ -35,9 +38,6 @@ import org.junit.runner.RunWith;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

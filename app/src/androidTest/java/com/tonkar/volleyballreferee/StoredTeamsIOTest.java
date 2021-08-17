@@ -1,15 +1,18 @@
 package com.tonkar.volleyballreferee;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import android.content.Context;
 import android.graphics.Color;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
@@ -25,9 +28,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

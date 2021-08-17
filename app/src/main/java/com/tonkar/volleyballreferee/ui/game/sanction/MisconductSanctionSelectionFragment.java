@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;

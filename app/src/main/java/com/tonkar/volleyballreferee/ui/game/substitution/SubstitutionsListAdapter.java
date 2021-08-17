@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;

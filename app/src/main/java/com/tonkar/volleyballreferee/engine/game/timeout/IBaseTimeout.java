@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game.timeout;
 
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import java.util.List;

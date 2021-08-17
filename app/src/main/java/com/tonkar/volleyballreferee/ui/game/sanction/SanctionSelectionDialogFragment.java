@@ -17,8 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;

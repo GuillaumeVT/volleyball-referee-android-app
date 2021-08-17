@@ -20,15 +20,15 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.service.StoredRulesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredRulesService;
+import com.tonkar.volleyballreferee.ui.data.rules.StoredRulesActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.setup.AutocompleteRulesListAdapter;
 import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.stored.rules.StoredRulesActivity;
 
 import java.util.Locale;
 

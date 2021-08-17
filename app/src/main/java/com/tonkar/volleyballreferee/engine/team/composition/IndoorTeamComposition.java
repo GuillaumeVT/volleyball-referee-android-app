@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.IndoorPlayer;

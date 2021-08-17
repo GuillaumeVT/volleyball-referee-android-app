@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;

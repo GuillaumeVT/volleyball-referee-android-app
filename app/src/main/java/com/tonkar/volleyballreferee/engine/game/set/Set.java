@@ -1,8 +1,8 @@
 package com.tonkar.volleyballreferee.engine.game.set;
 
 import com.google.gson.annotations.SerializedName;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.TeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;

@@ -22,17 +22,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.JsonConverters;
+import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.GameFactory;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.stored.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.service.AsyncGameRequestListener;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -48,7 +48,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     public static ScheduleGameListActionMenu newInstance(ApiGameSummary gameDescription) {
         ScheduleGameListActionMenu fragment = new ScheduleGameListActionMenu();
         Bundle args = new Bundle();
-        args.putString("game", JsonIOUtils.GSON.toJson(gameDescription, ApiGameSummary.class));
+        args.putString("game", JsonConverters.GSON.toJson(gameDescription, ApiGameSummary.class));
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +56,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String gameDescriptionStr = getArguments().getString("game");
-        mGameDescription = JsonIOUtils.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
+        mGameDescription = JsonConverters.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
 
         Log.i(Tags.SCHEDULE_UI, "Create schedule game list action menu fragment");
         View view = inflater
@@ -123,7 +123,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                     case BEACH:
                         Log.i(Tags.SCHEDULE_UI, "Start activity to reschedule game");
                         final Intent intent = new Intent(mActivity, ScheduledGameActivity.class);
-                        intent.putExtra("game", JsonIOUtils.GSON.toJson(mGameDescription, ApiGameSummary.class));
+                        intent.putExtra("game", JsonConverters.GSON.toJson(mGameDescription, ApiGameSummary.class));
                         intent.putExtra("create", false);
                         startActivity(intent);
                         UiUtils.animateForward(mActivity);

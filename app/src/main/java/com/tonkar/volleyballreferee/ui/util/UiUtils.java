@@ -31,6 +31,7 @@ import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -47,13 +48,13 @@ import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.stored.game.StoredGamesListActivity;
+import com.tonkar.volleyballreferee.ui.data.game.StoredGamesListActivity;
 
 import java.util.Locale;
 import java.util.Random;
@@ -385,7 +386,11 @@ public class UiUtils {
 
     public static String formatScoreFromLocale(int leftScore, int rightScore, boolean withSpace) {
         String format = withSpace ? "%d\t-\t%d" : "%d-%d";
-        return String.format(Locale.getDefault(), format, leftScore, rightScore);
+        if (ViewCompat.LAYOUT_DIRECTION_LTR == TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault())) {
+            return String.format(Locale.getDefault(), format, leftScore, rightScore);
+        } else {
+            return String.format(Locale.getDefault(), format, rightScore, leftScore);
+        }
     }
 
     public static void setSanctionImage(ImageView imageView, SanctionType sanctionType) {

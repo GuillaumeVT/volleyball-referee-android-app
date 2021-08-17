@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;

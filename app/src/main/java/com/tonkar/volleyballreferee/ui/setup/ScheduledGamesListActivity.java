@@ -19,16 +19,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.JsonConverters;
+import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.stored.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.service.AsyncGameRequestListener;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -213,7 +213,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
         Log.i(Tags.SCHEDULE_UI, "Start activity to schedule game");
         final Intent intent = new Intent(this, ScheduledGameActivity.class);
-        intent.putExtra("game", JsonIOUtils.GSON.toJson(gameDescription, ApiGameSummary.class));
+        intent.putExtra("game", JsonConverters.GSON.toJson(gameDescription, ApiGameSummary.class));
         intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
     }

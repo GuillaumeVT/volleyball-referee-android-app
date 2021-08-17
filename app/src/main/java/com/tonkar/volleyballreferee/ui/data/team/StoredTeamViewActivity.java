@@ -1,0 +1,152 @@
+package com.tonkar.volleyballreferee.ui.data.team;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.chip.Chip;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.JsonConverters;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
+
+public class StoredTeamViewActivity extends AppCompatActivity {
+
+    private StoredTeamsService mStoredTeamsService;
+    private IBaseTeam          mTeamService;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mStoredTeamsService = new StoredTeamsManager(this);
+        mTeamService = mStoredTeamsService.copyTeam(JsonConverters.GSON.fromJson(getIntent().getStringExtra("team"), ApiTeam.class));
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_stored_team_view);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        TextView nameText = findViewById(R.id.stored_team_name);
+        Chip kindItem = findViewById(R.id.team_kind_item);
+        Chip genderItem = findViewById(R.id.team_gender_item);
+
+        nameText.setText(mTeamService.getTeamName(null));
+
+        switch (mTeamService.getGender()) {
+            case MIXED:
+                UiUtils.colorChipIcon(this, R.color.colorMixedLight, R.drawable.ic_mixed, genderItem);
+                break;
+            case LADIES:
+                UiUtils.colorChipIcon(this, R.color.colorLadiesLight, R.drawable.ic_ladies, genderItem);
+                break;
+            case GENTS:
+                UiUtils.colorChipIcon(this, R.color.colorGentsLight, R.drawable.ic_gents, genderItem);
+                break;
+        }
+
+        switch (mTeamService.getTeamsKind()) {
+            case INDOOR_4X4:
+                UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
+                break;
+            case BEACH:
+                UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
+                break;
+            case SNOW:
+                UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
+                break;
+            case INDOOR:
+            default:
+                UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
+                break;
+        }
+
+        ListView playersList = findViewById(R.id.players_list);
+        PlayersListAdapter playersListAdapter = new PlayersListAdapter(getLayoutInflater(), this, mTeamService, null);
+        playersList.setAdapter(playersListAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_stored_team_view, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                backToList();
+                return true;
+            case R.id.action_delete_team:
+                deleteTeam();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backToList();
+    }
+
+    public void editTeam(View view) {
+        ApiTeam team = mStoredTeamsService.getTeam(mTeamService.getTeamId(null));
+        Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
+
+        final Intent intent = new Intent(this, StoredTeamActivity.class);
+        intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
+        intent.putExtra("kind",mTeamService.getTeamsKind().toString());
+        intent.putExtra("create", false);
+        startActivity(intent);
+        UiUtils.animateForward(this);
+    }
+
+    private void backToList() {
+        Intent intent = new Intent(this, StoredTeamsListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        UiUtils.animateBackward(this);
+    }
+
+    private void deleteTeam() {
+        Log.i(Tags.STORED_TEAMS, "Delete team");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
+        builder.setTitle(getString(R.string.delete_team)).setMessage(getString(R.string.delete_team_question));
+        builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
+            StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
+            storedTeamsService.deleteTeam(mTeamService.getTeamId(null));
+            UiUtils.makeText(StoredTeamViewActivity.this, getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(StoredTeamViewActivity.this, StoredTeamsListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            UiUtils.animateBackward(this);
+        });
+        builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
+        AlertDialog alertDialog = builder.show();
+        UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+    }
+}

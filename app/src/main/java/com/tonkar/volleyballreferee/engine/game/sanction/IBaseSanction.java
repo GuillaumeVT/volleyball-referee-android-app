@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game.sanction;
 
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import java.util.List;

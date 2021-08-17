@@ -21,10 +21,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
 import com.tonkar.volleyballreferee.engine.game.GameEvent;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;

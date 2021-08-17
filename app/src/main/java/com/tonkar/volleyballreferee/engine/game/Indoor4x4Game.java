@@ -2,15 +2,15 @@ package com.tonkar.volleyballreferee.engine.game;
 
 import android.graphics.Color;
 
+import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
+import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.set.Indoor4x4Set;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiCourt;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.Indoor4x4TeamComposition;

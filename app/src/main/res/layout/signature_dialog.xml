@@ -38,7 +38,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.tonkar.volleyballreferee.ui.stored.game.scoresheet.SignatureView
+    <com.tonkar.volleyballreferee.ui.scoresheet.SignatureView
             android:id="@+id/signature_canvas"
             android:layout_width="@dimen/signature_width"
             android:layout_height="@dimen/signature_height"

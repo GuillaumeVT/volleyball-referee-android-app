@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
-import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserToken;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUtils;
+import com.tonkar.volleyballreferee.engine.api.JsonConverters;
+import com.tonkar.volleyballreferee.engine.api.VbrApi;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -32,7 +32,7 @@ public class PrefUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences
                 .edit()
-                .putString(PREF_USER, JsonIOUtils.GSON.toJson(userToken.getUser()))
+                .putString(PREF_USER, JsonConverters.GSON.toJson(userToken.getUser()))
                 .putString(PREF_USER_TOKEN, userToken.getToken())
                 .putLong(PREF_USER_TOKEN_EXPIRY, userToken.getTokenExpiry())
                 .apply();
@@ -42,7 +42,7 @@ public class PrefUtils {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences
                 .edit()
-                .putString(PREF_USER, JsonIOUtils.GSON.toJson(user))
+                .putString(PREF_USER, JsonConverters.GSON.toJson(user))
                 .apply();
     }
 
@@ -52,7 +52,7 @@ public class PrefUtils {
         if ("".equals(userStr)) {
             return ApiUserSummary.emptyUser();
         } else {
-            return JsonIOUtils.GSON.fromJson(userStr, ApiUserSummary.class);
+            return JsonConverters.GSON.fromJson(userStr, ApiUserSummary.class);
         }
     }
 
@@ -79,7 +79,7 @@ public class PrefUtils {
         long tokenExpiry = sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
 
         if (!"".equals(userStr) && !"".equals(tokenStr)) {
-            userToken = new ApiUserToken(JsonIOUtils.GSON.fromJson(userStr, ApiUserSummary.class), tokenStr, tokenExpiry);
+            userToken = new ApiUserToken(JsonConverters.GSON.fromJson(userStr, ApiUserSummary.class), tokenStr, tokenExpiry);
         } else {
             userToken = new ApiUserToken(ApiUserSummary.emptyUser(), "", 0L);
         }
@@ -142,11 +142,11 @@ public class PrefUtils {
     }
 
     public static boolean canSync(Context context) {
-        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && ApiUtils.isConnectedToInternet(context) && isSignedIn(context);
+        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && isSignedIn(context);
     }
 
     public static boolean shouldSignIn(Context context) {
-        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && ApiUtils.isConnectedToInternet(context) && !isSignedIn(context);
+        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && !isSignedIn(context);
     }
 
     public static void applyNightMode(Context context) {

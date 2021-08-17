@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee.engine.team;
 
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.stored.IStoredGame;
+import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import java.util.Set;

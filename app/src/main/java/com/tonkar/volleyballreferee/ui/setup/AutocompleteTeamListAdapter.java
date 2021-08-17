@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 
 import java.util.ArrayList;
 import java.util.Collection;

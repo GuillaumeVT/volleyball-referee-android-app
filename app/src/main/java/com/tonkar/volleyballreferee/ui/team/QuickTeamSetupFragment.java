@@ -24,8 +24,8 @@ import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
+import com.tonkar.volleyballreferee.ui.data.team.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
-import com.tonkar.volleyballreferee.ui.stored.team.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;

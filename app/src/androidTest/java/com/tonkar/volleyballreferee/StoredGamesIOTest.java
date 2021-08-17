@@ -1,22 +1,25 @@
 package com.tonkar.volleyballreferee;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import android.graphics.Color;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSet;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.stored.StoredGame;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSanction;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSelectedLeague;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSet;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTeam;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.service.StoredGame;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -31,9 +34,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class StoredGamesIOTest {

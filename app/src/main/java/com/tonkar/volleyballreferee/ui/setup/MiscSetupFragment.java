@@ -20,14 +20,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
+import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiLeagueSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.service.StoredUserService;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
 
         Spinner refereeSpinner = view.findViewById(R.id.referee_spinner);
         if (PrefUtils.canSync(getContext())) {
-            NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<ApiFriend>(getContext(), inflater, referees) {
+            NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<>(getContext(), inflater, referees) {
                 @Override
                 public String getName(ApiFriend referee) {
                     return referee.getPseudo();

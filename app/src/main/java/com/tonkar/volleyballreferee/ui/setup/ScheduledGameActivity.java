@@ -31,24 +31,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.stored.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.engine.stored.JsonIOUtils;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredRulesManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredRulesService;
-import com.tonkar.volleyballreferee.engine.stored.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.stored.StoredUserService;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiFriend;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiLeagueSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiRulesSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiTeamSummary;
-import com.tonkar.volleyballreferee.engine.stored.api.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.JsonConverters;
+import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
+import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.service.DataSynchronizationListener;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.service.StoredRulesManager;
+import com.tonkar.volleyballreferee.engine.service.StoredRulesService;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
+import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
+import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
+import com.tonkar.volleyballreferee.engine.service.StoredUserService;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -79,7 +79,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String gameDescriptionStr = getIntent().getStringExtra("game");
-        mGameSummary = JsonIOUtils.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
+        mGameSummary = JsonConverters.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduled_game);
@@ -216,7 +216,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         List<ApiRulesSummary> rules = storedRulesService.listRules(mGameSummary.getKind());
 
 
-        final NameSpinnerAdapter<ApiRulesSummary> rulesAdapter = new NameSpinnerAdapter<ApiRulesSummary>(this, getLayoutInflater(), rules) {
+        final NameSpinnerAdapter<ApiRulesSummary> rulesAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), rules) {
             @Override
             public String getName(ApiRulesSummary rules) {
                 return rules.getName();
@@ -248,7 +248,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         List<ApiFriend> referees = storedUserService.listReferees();
 
         Spinner refereeSpinner = findViewById(R.id.referee_spinner);
-        NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<ApiFriend>(this, getLayoutInflater(), referees) {
+        NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), referees) {
             @Override
             public String getName(ApiFriend referee) {
                 return referee.getPseudo();
@@ -283,7 +283,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        getIntent().putExtra("game", JsonIOUtils.GSON.toJson(mGameSummary, ApiGameSummary.class));
+        getIntent().putExtra("game", JsonConverters.GSON.toJson(mGameSummary, ApiGameSummary.class));
     }
 
     @Override
@@ -325,7 +325,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
         List<ApiTeamSummary> teams = storedTeamsService.listTeams(mGameSummary.getKind(), mGameSummary.getGender());
 
-        mTeamAdapter = new NameSpinnerAdapter<ApiTeamSummary>(this, getLayoutInflater(), teams) {
+        mTeamAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), teams) {
             @Override
             public String getName(ApiTeamSummary team) {
                 return team.getName();
@@ -418,26 +418,25 @@ public class ScheduledGameActivity extends AppCompatActivity {
         }
 
         StoredGamesService storedGamesService = new StoredGamesManager(this);
-        storedGamesService.scheduleGame(mGameSummary, mCreate,
-                new DataSynchronizationListener() {
-                    @Override
-                    public void onSynchronizationSucceeded() {
-                        runOnUiThread(() -> {
-                            UiUtils.makeText(ScheduledGameActivity.this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-                            final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            UiUtils.animateCreate(ScheduledGameActivity.this);
-                        });
-                    }
-
-                    @Override
-                    public void onSynchronizationFailed() {
-                        runOnUiThread(() -> UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show());
-                    }
+        storedGamesService.scheduleGame(mGameSummary, mCreate, new DataSynchronizationListener() {
+            @Override
+            public void onSynchronizationSucceeded() {
+                runOnUiThread(() -> {
+                    UiUtils.makeText(ScheduledGameActivity.this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+                    final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    UiUtils.animateCreate(ScheduledGameActivity.this);
                 });
+            }
+
+            @Override
+            public void onSynchronizationFailed() {
+                runOnUiThread(() -> UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show());
+            }
+        });
     }
 
     private void cancelGame() {

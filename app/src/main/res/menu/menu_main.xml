@@ -8,7 +8,7 @@
         android:orderInCategory="1"
         android:title="@string/purchase"
         app:showAsAction="always"
-        android:visible="false"/>
+        android:visible="true"/>
 
     <item
         android:id="@+id/action_account_menu"
@@ -16,6 +16,6 @@
         android:orderInCategory="2"
         android:title="@string/my_account"
         app:showAsAction="always"
-        android:visible="false"/>
+        android:visible="true"/>
 
 </menu>
