@@ -16,7 +16,6 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -39,7 +38,7 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
     private SwipeRefreshLayout           mSyncLayout;
     private View                         mFabMenu;
     private boolean                      mIsFabOpen;
-    private FloatingActionButton         mAddRulesButton;
+    private ExtendedFloatingActionButton mAddRulesButton;
     private ExtendedFloatingActionButton mAddIndoorRulesButton;
     private ExtendedFloatingActionButton mAddIndoor4x4RulesButton;
     private ExtendedFloatingActionButton mAddBeachRulesButton;
@@ -118,6 +117,8 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
         closeFABMenu();
 
         updateStoredRulesList();
+
+        UiUtils.addExtendShrinkListener(storedRulesList, mAddRulesButton);
     }
 
     public void addIndoorRules(View view) {

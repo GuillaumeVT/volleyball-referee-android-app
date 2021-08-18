@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
@@ -67,6 +69,10 @@ public class StoredRulesActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
         computeSaveLayoutVisibility();
+
+        ScrollView scrollView = findViewById(R.id.rules_scroll_view);
+        ExtendedFloatingActionButton saveRulesButton = findViewById(R.id.save_rules_button);
+        UiUtils.addExtendShrinkListener(scrollView, saveRulesButton);
     }
 
     @Override

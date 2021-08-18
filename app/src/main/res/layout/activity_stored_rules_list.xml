@@ -56,7 +56,6 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/add_indoor_rules_button"
-                style="@style/AppTheme.ExtendedFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -74,7 +73,6 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/add_beach_rules_button"
-                style="@style/AppTheme.ExtendedFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -92,7 +90,6 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/add_indoor_4x4_rules_button"
-                style="@style/AppTheme.ExtendedFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -110,12 +107,14 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/add_snow_rules_button"
-                style="@style/AppTheme.ExtendedFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/fab_shift_default"
+                android:layout_marginStart="@dimen/fab_shift_default"
+                android:layout_marginTop="@dimen/fab_shift_default"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="addSnowRules"
@@ -128,15 +127,15 @@
 
         </RelativeLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_rules_button"
-            style="@style/AppTheme.Fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_shift_default"
+            android:text="@string/create"
+            app:icon="@drawable/ic_plus"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_plus" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

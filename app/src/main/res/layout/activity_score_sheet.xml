@@ -28,7 +28,6 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/score_sheet_logo_button"
-                style="@style/AppTheme.Fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -39,7 +38,6 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/sign_score_sheet_button"
-                style="@style/AppTheme.Fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -50,7 +48,6 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/score_sheet_observation_button"
-                style="@style/AppTheme.Fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -61,7 +58,6 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/save_score_sheet_button"
-                style="@style/AppTheme.Fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

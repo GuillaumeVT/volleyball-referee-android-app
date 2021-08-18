@@ -37,7 +37,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/swap_teams_button"
-                    style="@style/AppTheme.RoundButton"
+                    style="@style/AppTheme.ActionButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
@@ -97,7 +97,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/left_team_service_button"
-                        style="@style/AppTheme.RoundButton"
+                        style="@style/AppTheme.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -129,7 +129,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/right_team_service_button"
-                        style="@style/AppTheme.RoundButton"
+                        style="@style/AppTheme.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -187,7 +187,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/left_team_timeout_button"
-                        style="@style/AppTheme.RoundButton"
+                        style="@style/AppTheme.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/small_margin_size"
@@ -201,7 +201,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/left_team_cards_button"
-                    style="@style/AppTheme.RoundButton"
+                    style="@style/AppTheme.ActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
@@ -212,7 +212,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/undo_game_event_button"
-                    style="@style/AppTheme.RoundButton"
+                    style="@style/AppTheme.ActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
@@ -224,7 +224,7 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/right_team_cards_button"
-                    style="@style/AppTheme.RoundButton"
+                    style="@style/AppTheme.ActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/small_margin_size"
@@ -241,7 +241,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/right_team_timeout_button"
-                        style="@style/AppTheme.RoundButton"
+                        style="@style/AppTheme.ActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/small_margin_size"

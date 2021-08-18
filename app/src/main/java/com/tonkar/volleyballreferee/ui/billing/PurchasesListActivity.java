@@ -52,6 +52,6 @@ public class PurchasesListActivity extends NavigationActivity implements Billing
 
     @Override
     public void onPurchasesUpdated() {
-        mPurchasesListAdapter.updatePurchasesList();
+        runOnUiThread(() -> mPurchasesListAdapter.updatePurchasesList());
     }
 }

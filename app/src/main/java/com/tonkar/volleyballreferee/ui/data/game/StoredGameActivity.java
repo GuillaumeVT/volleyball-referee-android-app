@@ -199,7 +199,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
             mStoredGamesService.toggleGameIndexed(mGameId, new DataSynchronizationListener() {
                 @Override
                 public void onSynchronizationSucceeded() {
-                    runOnUiThread(() -> updateGame());
+                    runOnUiThread(() -> {
+                        updateGame();
+                        invalidateOptionsMenu();
+                    });
                 }
 
                 @Override
@@ -207,7 +210,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
                     runOnUiThread(() -> UiUtils.makeErrorText(StoredGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show());
                 }
             });
-            invalidateOptionsMenu();
         }
     }
 

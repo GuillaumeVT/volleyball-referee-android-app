@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -61,6 +62,9 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
         colleaguesList.setAdapter(mColleaguesListAdapter);
 
         updateColleaguesList();
+
+        ExtendedFloatingActionButton addColleagueButton = findViewById(R.id.add_colleague_button);
+        UiUtils.addExtendShrinkListener(colleaguesList, addColleagueButton);
     }
 
     public void addColleague(View view) {

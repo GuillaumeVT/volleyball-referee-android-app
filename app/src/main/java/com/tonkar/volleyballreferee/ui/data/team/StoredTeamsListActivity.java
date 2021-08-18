@@ -16,7 +16,6 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -40,7 +39,7 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
     private SwipeRefreshLayout           mSyncLayout;
     private View                         mFabMenu;
     private boolean                      mIsFabOpen;
-    private FloatingActionButton         mAddTeamButton;
+    private ExtendedFloatingActionButton mAddTeamButton;
     private ExtendedFloatingActionButton mAdd6x6TeamButton;
     private ExtendedFloatingActionButton mAdd4x4TeamButton;
     private ExtendedFloatingActionButton mAddBeachTeamButton;
@@ -119,6 +118,8 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
         closeFABMenu();
 
         updateStoredTeamsList();
+
+        UiUtils.addExtendShrinkListener(storedTeamsList, mAddTeamButton);
     }
 
     public void addIndoorTeam(View view) {

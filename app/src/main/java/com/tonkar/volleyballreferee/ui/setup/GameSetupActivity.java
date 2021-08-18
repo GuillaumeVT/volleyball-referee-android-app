@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -83,6 +85,10 @@ public class GameSetupActivity extends AppCompatActivity {
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
 
         computeStartLayoutVisibility();
+
+        ScrollView scrollView = findViewById(R.id.setup_scroll_view);
+        ExtendedFloatingActionButton startGameButton = findViewById(R.id.start_game_button);
+        UiUtils.addExtendShrinkListener(scrollView, startGameButton);
     }
 
     @Override

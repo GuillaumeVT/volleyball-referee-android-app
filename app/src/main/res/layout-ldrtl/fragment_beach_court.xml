@@ -183,7 +183,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/left_team_service_2"
-            style="@style/AppTheme.RoundButton"
+            style="@style/AppTheme.ActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="mini"
@@ -196,7 +196,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/left_team_service_1"
-            style="@style/AppTheme.RoundButton"
+            style="@style/AppTheme.ActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="mini"
@@ -209,7 +209,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/right_team_service_1"
-            style="@style/AppTheme.RoundButton"
+            style="@style/AppTheme.ActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="mini"
@@ -222,7 +222,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/right_team_service_2"
-            style="@style/AppTheme.RoundButton"
+            style="@style/AppTheme.ActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="mini"

@@ -15,7 +15,6 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -44,7 +43,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private View                         mFabMenu;
     private ScheduledGamesListAdapter    mScheduledGamesListAdapter;
     private boolean                      mIsFabOpen;
-    private FloatingActionButton         mScheduleGameButton;
+    private ExtendedFloatingActionButton mScheduleGameButton;
     private ExtendedFloatingActionButton mScheduleIndoorGameButton;
     private ExtendedFloatingActionButton mScheduleIndoor4x4GameButton;
     private ExtendedFloatingActionButton mScheduleBeachGameButton;
@@ -112,6 +111,8 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
             }
         });
         closeFABMenu();
+
+        UiUtils.addExtendShrinkListener(scheduledGamesList, mScheduleGameButton);
     }
 
     @Override
@@ -231,7 +232,6 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private void closeFABMenu(){
         mIsFabOpen = false;
         UiUtils.colorPlusIconButton(this, mScheduleGameButton);
-        mScheduleGameButton.setImageResource(R.drawable.ic_plus);
         mScheduleIndoorGameButton.animate().translationY(0);
         mScheduleIndoor4x4GameButton.animate().translationY(0);
         mScheduleBeachGameButton.animate().translationY(0);

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
@@ -91,6 +93,10 @@ public class StoredTeamActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
         computeSaveLayoutVisibility();
+
+        ScrollView scrollView = findViewById(R.id.team_scroll_view);
+        ExtendedFloatingActionButton saveTeamButton = findViewById(R.id.save_team_button);
+        UiUtils.addExtendShrinkListener(scrollView, saveTeamButton);
     }
 
     @Override

@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top|center"
-        android:orientation="vertical"
-        tools:context="com.tonkar.volleyballreferee.ui.setup.GameSetupActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top|center"
+    android:orientation="vertical"
+    tools:context="com.tonkar.volleyballreferee.ui.setup.GameSetupActivity">
 
     <include layout="@layout/toolbar" />
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|center"
-                android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|center"
+            android:orientation="vertical">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/game_setup_nav"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorSurface"
-                    app:elevation="@dimen/elevation"
-                    app:itemBackground="@drawable/navigation_menu_item"
-                    app:itemHorizontalTranslationEnabled="true"
-                    app:itemIconTint="@drawable/navigation_menu_item"
-                    app:itemTextColor="@drawable/navigation_menu_item"
-                    app:menu="@menu/navigation_menu_game_setup" />
+                android:id="@+id/game_setup_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorSurface"
+                app:elevation="@dimen/elevation"
+                app:itemBackground="@drawable/navigation_menu_item"
+                app:itemHorizontalTranslationEnabled="true"
+                app:itemIconTint="@drawable/navigation_menu_item"
+                app:itemTextColor="@drawable/navigation_menu_item"
+                app:menu="@menu/navigation_menu_game_setup" />
 
             <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:id="@+id/setup_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <FrameLayout
-                        android:id="@+id/game_setup_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/big_margin_size"
-                        android:gravity="top|center"
-                        android:paddingBottom="@dimen/empty_fab_space" />
+                    android:id="@+id/game_setup_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/big_margin_size"
+                    android:gravity="top|center"
+                    android:paddingBottom="@dimen/empty_fab_space" />
 
             </ScrollView>
 
@@ -50,24 +51,24 @@
 
 
         <LinearLayout
-                android:id="@+id/start_game_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/default_margin_size">
+            android:id="@+id/start_game_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/default_margin_size">
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    style="@style/AppTheme.ExtendedFab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fab_shift_default"
-                    android:layout_marginTop="@dimen/fab_shift_default"
-                    android:layout_marginEnd="@dimen/fab_shift_default"
-                    android:layout_marginBottom="@dimen/fab_shift_default"
-                    android:onClick="startGame"
-                    android:text="@string/start_match"
-                    app:icon="@drawable/ic_play" />
+                android:id="@+id/start_game_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fab_shift_default"
+                android:layout_marginTop="@dimen/fab_shift_default"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
+                android:onClick="startGame"
+                android:text="@string/start_match"
+                app:icon="@drawable/ic_play" />
 
         </LinearLayout>
 

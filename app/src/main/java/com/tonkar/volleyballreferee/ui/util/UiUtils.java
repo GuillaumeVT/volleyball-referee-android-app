@@ -15,6 +15,7 @@ import android.media.RingtoneManager;
 import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -37,6 +38,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.tonkar.volleyballreferee.BuildConfig;
@@ -159,16 +161,18 @@ public class UiUtils {
         colorTeamIconButton(context, color, button);
     }
 
-    public static void colorPlusIconButton(Context context, FloatingActionButton button) {
-        button.setImageResource(R.drawable.ic_plus);
+    private static void colorIconButton(Context context, ExtendedFloatingActionButton button, @DrawableRes int drawable) {
+        button.setIconResource(drawable);
         button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorFab)));
-        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
+        button.getIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
     }
 
-    public static void colorCloseIconButton(Context context, FloatingActionButton button) {
-        button.setImageResource(R.drawable.ic_close);
-        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorFab)));
-        button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
+    public static void colorPlusIconButton(Context context, ExtendedFloatingActionButton button) {
+        colorIconButton(context, button, R.drawable.ic_plus);
+    }
+
+    public static void colorCloseIconButton(Context context, ExtendedFloatingActionButton button) {
+        colorIconButton(context, button, R.drawable.ic_close);
     }
 
     public static void colorIconButtonInWhite(FloatingActionButton button) {
@@ -442,4 +446,21 @@ public class UiUtils {
         imageView.setVisibility(View.VISIBLE);
     }
 
+    public static void addExtendShrinkListener(View relatedView, ExtendedFloatingActionButton button) {
+        relatedView.setOnTouchListener((view, motionEvent) -> {
+            switch (motionEvent.getAction( ) ) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_CANCEL:
+                case MotionEvent.ACTION_UP:
+                    button.extend();
+                    break;
+                case MotionEvent.ACTION_SCROLL:
+                case MotionEvent.ACTION_MOVE:
+                default:
+                    button.shrink();
+                    break;
+            }
+            return false;
+        });
+    }
 }

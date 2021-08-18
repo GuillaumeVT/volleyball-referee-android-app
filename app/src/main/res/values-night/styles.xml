@@ -14,6 +14,8 @@
         <item name="colorError">@color/colorError</item>
         <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
         <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
+        <item name="extendedFloatingActionButtonStyle">@style/AppTheme.ExtendedFab</item>
+        <item name="floatingActionButtonStyle">@style/AppTheme.Fab</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />

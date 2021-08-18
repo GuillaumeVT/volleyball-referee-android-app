@@ -102,7 +102,7 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
                 break;
         }
 
-        if (mBillingService.isPurchased(skuType, skuDetails.getSku())) {
+        if (mBillingService.isPurchased(skuType, skuDetails.getSku()) || (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(skuDetails.getSku()) && PrefUtils.isWebPremiumPurchased(getContext()))) {
             viewHolder.purchaseButton.setText(R.string.already_purchased);
             viewHolder.purchaseButton.setOnClickListener(null);
             viewHolder.purchaseButton.setClickable(false);
@@ -121,16 +121,12 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         mPurchasesList.clear();
         for (SkuDetails skuDetails : mBillingService.getSkuDetailsList(BillingClient.SkuType.SUBS)) {
             if (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(skuDetails.getSku())) {
-                if (!PrefUtils.isWebPremiumSubscribed(getContext()) && !PrefUtils.isWebPremiumPurchased(getContext())) {
-                    mPurchasesList.add(skuDetails);
-                }
+                mPurchasesList.add(skuDetails);
             }
         }
         for (SkuDetails skuDetails : mBillingService.getSkuDetailsList(BillingClient.SkuType.INAPP)) {
             if (BillingService.SCORE_SHEETS.equals(skuDetails.getSku())) {
-                if (!PrefUtils.isScoreSheetsPurchased(getContext())) {
-                    mPurchasesList.add(skuDetails);
-                }
+                mPurchasesList.add(skuDetails);
             }
         }
         notifyDataSetChanged();

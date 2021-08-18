@@ -43,7 +43,6 @@ import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.service.SyncService;
-import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.onboarding.MainOnboardingActivity;
@@ -157,9 +156,6 @@ public class MainActivity extends NavigationActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
-        final MenuItem purchaseItem = menu.findItem(R.id.action_purchase_menu);
-        computePurchaseItemVisibility(purchaseItem);
-
         final MenuItem accountItem = menu.findItem(R.id.action_account_menu);
         accountItem.setVisible(PrefUtils.canSync(this));
 
@@ -169,15 +165,9 @@ public class MainActivity extends NavigationActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_purchase_menu:
-                Log.i(Tags.BILLING, "Purchase");
-                Intent intent = new Intent(this, PurchasesListActivity.class);
-                startActivity(intent);
-                UiUtils.animateForward(this);
-                return true;
             case R.id.action_account_menu:
                 Log.i(Tags.USER_UI, "User account");
-                intent = new Intent(this, UserActivity.class);
+                Intent intent = new Intent(this, UserActivity.class);
                 startActivity(intent);
                 UiUtils.animateForward(this);
                 return true;

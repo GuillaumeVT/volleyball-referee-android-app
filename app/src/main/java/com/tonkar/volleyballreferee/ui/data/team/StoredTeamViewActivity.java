@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
@@ -84,6 +85,9 @@ public class StoredTeamViewActivity extends AppCompatActivity {
         ListView playersList = findViewById(R.id.players_list);
         PlayersListAdapter playersListAdapter = new PlayersListAdapter(getLayoutInflater(), this, mTeamService, null);
         playersList.setAdapter(playersListAdapter);
+
+        ExtendedFloatingActionButton editTeamButton = findViewById(R.id.edit_team_button);
+        UiUtils.addExtendShrinkListener(playersList, editTeamButton);
     }
 
     @Override

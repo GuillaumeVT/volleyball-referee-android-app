@@ -40,7 +40,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/home_team_color_button"
-                style="@style/AppTheme.RoundButton"
+                style="@style/AppTheme.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
@@ -100,7 +100,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/home_team_player_names_button"
-                style="@style/AppTheme.RoundButton"
+                style="@style/AppTheme.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
@@ -142,7 +142,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/guest_team_color_button"
-                style="@style/AppTheme.RoundButton"
+                style="@style/AppTheme.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
@@ -202,7 +202,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/guest_team_player_names_button"
-                style="@style/AppTheme.RoundButton"
+                style="@style/AppTheme.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"
@@ -231,7 +231,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/switch_gender_button"
-                style="@style/AppTheme.RoundButton"
+                style="@style/AppTheme.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin_size"

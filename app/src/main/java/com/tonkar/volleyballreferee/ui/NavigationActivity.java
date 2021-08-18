@@ -12,14 +12,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.android.billingclient.api.BillingClient;
 import com.google.android.material.navigation.NavigationView;
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.billing.BillingManager;
-import com.tonkar.volleyballreferee.engine.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.data.game.StoredGamesListActivity;
 import com.tonkar.volleyballreferee.ui.data.rules.StoredRulesListActivity;
@@ -51,7 +48,6 @@ public abstract class NavigationActivity extends AppCompatActivity {
         navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
 
         computeWebItemVisibility(navigationView);
-        computePurchaseItemVisibility(navigationView.getMenu().findItem(R.id.action_purchase));
 
         navigationView.setNavigationItemSelectedListener(item -> {
             if (getCheckedItem() != item.getItemId()) {
@@ -180,12 +176,5 @@ public abstract class NavigationActivity extends AppCompatActivity {
         boolean canSync = PrefUtils.canSync(this);
         navigationView.getMenu().findItem(R.id.action_available_games).setVisible(canSync);
         navigationView.getMenu().findItem(R.id.action_colleagues).setVisible(canSync);
-    }
-
-    protected void computePurchaseItemVisibility(MenuItem item) {
-        final BillingService billingService = new BillingManager(this);
-        billingService.addBillingListener(() -> item.setVisible(!billingService.isAllPurchased()));
-        billingService.executeServiceRequest(BillingClient.SkuType.SUBS, () -> {});
-        billingService.executeServiceRequest(BillingClient.SkuType.INAPP, () -> item.setVisible(!billingService.isAllPurchased()));
     }
 }
