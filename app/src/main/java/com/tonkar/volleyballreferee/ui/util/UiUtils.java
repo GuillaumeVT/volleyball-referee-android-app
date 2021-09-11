@@ -85,9 +85,10 @@ public class UiUtils {
             colorTeamButton(context, indoorTeam.getLiberoColor(teamType), button);
         } else {
             colorTeamButton(context, indoorTeam.getTeamColor(teamType), button);
-            if (indoorTeam.isGameCaptain(teamType, number)) {
-                button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            }
+        }
+
+        if (indoorTeam.isGameCaptain(teamType, number)) {
+            button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 
@@ -100,9 +101,10 @@ public class UiUtils {
             colorTeamButton(context, teamService.getLiberoColor(teamType), button);
         } else {
             colorTeamButton(context, teamService.getTeamColor(teamType), button);
-            if (teamService.isCaptain(teamType, number)) {
-                button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            }
+        }
+
+        if (teamService.isCaptain(teamType, number)) {
+            button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 
@@ -115,9 +117,10 @@ public class UiUtils {
             colorTeamText(context, teamService.getLiberoColor(teamType), text);
         } else {
             colorTeamText(context, teamService.getTeamColor(teamType), text);
-            if (teamService.isCaptain(teamType, number)) {
-                text.setPaintFlags(text.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            }
+        }
+
+        if (teamService.isCaptain(teamType, number)) {
+            text.setPaintFlags(text.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 

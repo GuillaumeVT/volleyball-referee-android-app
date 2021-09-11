@@ -73,7 +73,7 @@ public class Rules extends ApiRules {
         return new Rules(DEFAULT_INDOOR_ID,
                 ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR,
                 5, 25, true, 15, true, true, WIN_TERMINATION, true, 2, 30,
-                true, 60, true, 180,
+                false, 60, true, 180,
                 FIVB_LIMITATION, 6, false, 0, 0, 9999);
     }
 

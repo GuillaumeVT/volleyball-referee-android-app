@@ -183,7 +183,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
             if (mTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-                liberoColorSelected(UiUtils.getRandomShirtColor(getActivity()));
+                liberoColorSelected(UiUtils.getRandomShirtColor(getContext()));
             } else {
                 liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
             }
@@ -460,7 +460,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void updateCaptain() {
         int captain = mTeamService.getCaptain(mTeamType);
-        if ((captain < 1 || mTeamService.isLibero(mTeamType, captain)) && !mTeamService.getPossibleCaptains(mTeamType).isEmpty()) {
+        if (captain < 1 && !mTeamService.getPossibleCaptains(mTeamType).isEmpty()) {
             captain = mTeamService.getPossibleCaptains(mTeamType).iterator().next();
         }
 

@@ -99,9 +99,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
         Set<Integer> possibleCaptains = new TreeSet<>();
 
         for (ApiPlayer player : getPlayers()) {
-            if (!isLibero(player.getNum())) {
-                possibleCaptains.add(player.getNum());
-            }
+            possibleCaptains.add(player.getNum());
         }
 
         return possibleCaptains;

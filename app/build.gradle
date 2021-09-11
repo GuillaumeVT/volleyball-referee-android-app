@@ -6,8 +6,8 @@ android {
         applicationId "com.tonkar.volleyballreferee"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 30503
-        versionName "3.5.3"
+        versionCode 30504
+        versionName "3.5.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
@@ -20,8 +20,7 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            buildConfigField "String", "SERVER_ADDRESS", "\"http://192.168.56.107:8080\""
-            //buildConfigField "String", "SERVER_ADDRESS", "\"http://10.0.2.2:8080\""
+            buildConfigField "String", "SERVER_ADDRESS", "\"http://10.0.2.2:8080\""
         }
         release {
             minifyEnabled false
@@ -52,7 +51,7 @@ dependencies {
     implementation 'com.android.billingclient:billing:4.0.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.google.android:flexbox:2.0.1'
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'org.jsoup:jsoup:1.14.2'
     implementation 'com.github.AppIntro:AppIntro:6.1.0'

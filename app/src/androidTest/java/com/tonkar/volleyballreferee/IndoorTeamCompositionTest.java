@@ -348,7 +348,7 @@ public class IndoorTeamCompositionTest {
         IndoorTeamDefinition teamDefinition = createTeamWithNPlayers(13);
 
         teamDefinition.addLibero(4);
-        assertFalse(teamDefinition.getPossibleCaptains().contains(4));
+        assertTrue(teamDefinition.getPossibleCaptains().contains(4));
     }
 
     @Test

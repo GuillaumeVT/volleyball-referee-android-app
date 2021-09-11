@@ -248,9 +248,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
 
     @Override
     public void setGameCaptain(int number) {
-        if (!getTeamDefinition().isLibero(number)) {
-            super.setGameCaptain(number);
-        }
+        super.setGameCaptain(number);
     }
 
     @Override
@@ -258,7 +256,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
         Set<Integer> players = new TreeSet<>();
 
         for (int number : getPlayersOnCourt()) {
-            if (!getTeamDefinition().isLibero(number) && !getTeamDefinition().isCaptain(number) && !isSecondaryCaptain(number)) {
+            if (!getTeamDefinition().isCaptain(number) && !isSecondaryCaptain(number)) {
                 players.add(number);
             }
         }
