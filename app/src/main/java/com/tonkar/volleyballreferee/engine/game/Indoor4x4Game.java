@@ -105,7 +105,7 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST))) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), actionOriginType)) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }

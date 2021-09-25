@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.Player;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -63,11 +64,11 @@ public abstract class TeamComposition {
         return positionType;
     }
 
-    public boolean substitutePlayer(final int number, final PositionType positionType) {
-        return substitutePlayer(number, positionType, 0, 0);
+    public boolean substitutePlayer(final int number, final PositionType positionType, ActionOriginType actionOriginType) {
+        return substitutePlayer(number, positionType, 0, 0, actionOriginType);
     }
 
-    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
+    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
         boolean result = false;
 
         int oldNumber = getPlayerAtPosition(positionType);
@@ -85,13 +86,13 @@ public abstract class TeamComposition {
         }
 
         if (result) {
-            onSubstitution(oldNumber, number, positionType, homeTeamPoints, guestTeamPoints);
+            onSubstitution(oldNumber, number, positionType, homeTeamPoints, guestTeamPoints, actionOriginType);
         }
 
         return result;
     }
 
-    protected abstract void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints);
+    protected abstract void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType);
 
     public int getPlayerAtPosition(final PositionType positionType) {
         int number = -1;

@@ -185,7 +185,6 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Auszeit</string>
     <string name="substitution">Auswechslung</string>
-    <string name="let_libero_in_question">Darf der Libero von %s ins Spiel?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Spiel löschen</string>

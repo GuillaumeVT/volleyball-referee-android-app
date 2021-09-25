@@ -110,9 +110,6 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         updateAll();
     }
 
-    @Override
-    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
-
     private void updateAll() {
         update(mTeamOnLeftSide);
         update(mTeamOnRightSide);

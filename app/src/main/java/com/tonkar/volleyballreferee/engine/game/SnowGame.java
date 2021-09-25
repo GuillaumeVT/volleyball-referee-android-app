@@ -108,7 +108,7 @@ public class SnowGame extends Game implements IClassicTeam {
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getSnowTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST))) {
+        if (getSnowTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), actionOriginType)) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }

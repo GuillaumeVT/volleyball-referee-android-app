@@ -194,7 +194,6 @@
     <string name="position_6_title">VI</string>
     <string name="substitution">Substitution</string>
     <string name="timeout">Timeout</string>
-    <string name="let_libero_in_question">Let the libero of %s in?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Delete the match</string>

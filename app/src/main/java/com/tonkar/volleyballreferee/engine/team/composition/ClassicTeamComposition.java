@@ -8,6 +8,7 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -75,11 +76,11 @@ public abstract class ClassicTeamComposition extends TeamComposition {
     }
 
     @Override
-    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
+    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
         boolean result = false;
 
         if (isPossibleSubstitution(number, positionType)) {
-            result = super.substitutePlayer(number, positionType, homeTeamPoints, guestTeamPoints);
+            result = super.substitutePlayer(number, positionType, homeTeamPoints, guestTeamPoints, actionOriginType);
         }
 
         return result;
@@ -97,7 +98,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
                     if (tmpSubstitution.equals(substitution)) {
                         iterator.remove();
                         mStartingLineupConfirmed = false;
-                        substitutePlayer(substitution.getPlayerOut(), positionType, substitution.getHomePoints(), substitution.getGuestPoints());
+                        substitutePlayer(substitution.getPlayerOut(), positionType, substitution.getHomePoints(), substitution.getGuestPoints(), ActionOriginType.USER);
                         mStartingLineupConfirmed = true;
                         result = true;
                         break;
@@ -149,7 +150,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
+    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
         Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), getTeamDefinition().getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {

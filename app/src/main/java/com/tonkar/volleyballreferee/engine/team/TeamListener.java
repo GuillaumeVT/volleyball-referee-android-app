@@ -12,6 +12,4 @@ public interface TeamListener {
     void onPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType);
 
     void onTeamRotated(TeamType teamType, boolean clockwise);
-
-    void onCanLetLiberoIn(TeamType defendingTeam, int number);
 }

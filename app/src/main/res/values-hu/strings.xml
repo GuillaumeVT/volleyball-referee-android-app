@@ -185,7 +185,6 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Időkérés</string>
     <string name="substitution">Csere</string>
-    <string name="let_libero_in_question">Becseréled a %s csapat liberóját?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Mérkőzés törlése</string>

@@ -340,7 +340,7 @@ public class UiUtils {
                     .setAction(android.R.string.ok, button -> {
                     })
                     .setActionTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    .setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
                     .setBackgroundTint(ContextCompat.getColor(context, R.color.colorPrimaryVariant))
                     .show();
         }

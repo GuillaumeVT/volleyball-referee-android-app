@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
@@ -210,17 +209,6 @@ public class IndoorCourtFragment extends CourtFragment {
         } else {
             update(teamType);
         }
-    }
-
-    @Override
-    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
-                .setTitle(getString(R.string.substitution))
-                .setMessage(String.format(Locale.getDefault(), getString(R.string.let_libero_in_question), mClassicTeam.getTeamName(defendingTeam)))
-                .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> mClassicTeam.substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION))
-                .setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {});
-
-        builder.create().show();
     }
 
     protected void rotateAnimation(TeamType teamType, boolean clockwise) {

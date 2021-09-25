@@ -113,13 +113,13 @@ public class IndoorGame extends Game implements IClassicTeam {
         TeamType defendingTeam = scoringTeam.other();
         number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
         if (number > -1 && getConsecutiveServes(scoringTeam, getPointsLadder()) == 0)  {
-            notifyCanLetLiberoIn(defendingTeam, number);
+            substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
     }
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST))) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), actionOriginType)) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }

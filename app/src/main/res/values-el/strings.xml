@@ -185,7 +185,6 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Τάιμ άουτ</string>
     <string name="substitution">Αλλαγή</string>
-    <string name="let_libero_in_question">Επέτρεψε στο λίμπερο από %s να μπει;</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Διαγραφή του αγώνα</string>

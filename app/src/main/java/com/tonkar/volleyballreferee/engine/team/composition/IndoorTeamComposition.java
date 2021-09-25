@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
@@ -46,7 +47,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {
+    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
         Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), getTeamDefinition().getTeamType().toString()));
 
         if (isStartingLineupConfirmed()) {
@@ -56,17 +57,36 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
 
                 if (!getTeamDefinition().isLibero(oldNumber)) {
                     Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, getTeamDefinition().getTeamType().toString()));
-                    mMiddleBlockers.clear();
-                    mWaitingMiddleBlocker = oldNumber;
-                    mMiddleBlockers.add(oldNumber);
-                    mMiddleBlockers.add(getPlayerAtPosition(positionType.oppositePosition()));
+
+                    if (mMiddleBlockers.size() == 1) {
+                        int middleBlocker = mMiddleBlockers.iterator().next();
+                        if (middleBlocker == getPlayerAtPosition(positionType.oppositePosition())) {
+                            // There is already a middle blocker and opposite to the player, player becomes middle blocker
+                            addMiddleBlocker(oldNumber);
+                        } else if (oldNumber == middleBlocker) {
+                            middleBlockerOnBench(middleBlocker);
+                        } else {
+                            // There is already a middle blocker but not opposite to the player, reset and player and opposite player both become middle blockers
+                            setMiddleBlockers(oldNumber, positionType);
+                        }
+                    } else {
+                        // The player and opposite player both become middle blockers
+                        setMiddleBlockers(oldNumber, positionType);
+                    }
                 }
             } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(oldNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, getTeamDefinition().getTeamType().toString()));
-                mWaitingMiddleBlocker = -1;
+                if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
+                    // The middle blocker is back on court as a result of a rotation
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, getTeamDefinition().getTeamType().toString()));
+                    middleBlockerOnCourt();
+                } else {
+                    // The middle blocker is back on court as a result of a substitution, the user wants this middle blocker to stay in defence
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and will stay on court in defence", newNumber, getTeamDefinition().getTeamType().toString()));
+                    removeMiddleBlocker(newNumber);
+                }
             } else {
                 Log.i(Tags.TEAM, "Actual substitution");
-                super.onSubstitution(oldNumber, newNumber, positionType, homeTeamPoints, guestTeamPoints);
+                super.onSubstitution(oldNumber, newNumber, positionType, homeTeamPoints, guestTeamPoints, actionOriginType);
 
                 if (isMiddleBlocker(oldNumber)) {
                     Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, getTeamDefinition().getTeamType().toString()));
@@ -197,7 +217,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
         return mWaitingMiddleBlocker > -1;
     }
 
-    private boolean isMiddleBlocker(int number) {
+    public boolean isMiddleBlocker(int number) {
         return mMiddleBlockers.contains(number);
     }
 
@@ -205,12 +225,36 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
         return mWaitingMiddleBlocker;
     }
 
+    private void addMiddleBlocker(int number) {
+        mMiddleBlockers.add(number);
+        middleBlockerOnBench(number);
+    }
+
+    private void middleBlockerOnBench(int number) {
+        mWaitingMiddleBlocker = number;
+    }
+
+    private void middleBlockerOnCourt() {
+        mWaitingMiddleBlocker = -1;
+    }
+
+    private void removeMiddleBlocker(int number) {
+        middleBlockerOnCourt();
+        mMiddleBlockers.remove(number);
+    }
+
+    private void setMiddleBlockers(int number, PositionType positionType) {
+        mMiddleBlockers.clear();
+        addMiddleBlocker(number);
+        mMiddleBlockers.add(getPlayerAtPosition(positionType.oppositePosition()));
+    }
+
     @Override
     public void rotateToNextPositions() {
         super.rotateToNextPositions();
 
         if (hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_4))) {
-            substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_4);
+            substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_4, ActionOriginType.APPLICATION);
         }
     }
 
@@ -219,10 +263,10 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
         super.rotateToPreviousPositions();
 
         if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_2))) {
-            substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_2);
+            substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_2, ActionOriginType.APPLICATION);
         }
         if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(getPlayerAtPosition(PositionType.POSITION_5))) {
-            substitutePlayer(mActingLibero, PositionType.POSITION_5);
+            substitutePlayer(mActingLibero, PositionType.POSITION_5, ActionOriginType.APPLICATION);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.engine.team.composition;
 
+import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.BeachPlayer;
@@ -11,8 +12,8 @@ public class BeachTeamComposition extends TeamComposition {
     public BeachTeamComposition(final TeamDefinition teamDefinition) {
         super(teamDefinition);
 
-        substitutePlayer(1, PositionType.POSITION_1);
-        substitutePlayer(2, PositionType.POSITION_2);
+        substitutePlayer(1, PositionType.POSITION_1, ActionOriginType.APPLICATION);
+        substitutePlayer(2, PositionType.POSITION_2, ActionOriginType.APPLICATION);
     }
 
     // For GSON Deserialization
@@ -26,18 +27,18 @@ public class BeachTeamComposition extends TeamComposition {
     }
 
     @Override
-    public boolean substitutePlayer(final int number, final PositionType positionType) {
+    public boolean substitutePlayer(final int number, final PositionType positionType, ActionOriginType actionOriginType) {
         boolean result = false;
 
         if (PositionType.POSITION_1.equals(positionType) || PositionType.POSITION_2.equals(positionType) || PositionType.BENCH.equals(positionType)) {
-            result = super.substitutePlayer(number, positionType);
+            result = super.substitutePlayer(number, positionType, actionOriginType);
         }
 
         return result;
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints) {}
+    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {}
 
     @Override
     public boolean equals(Object obj) {

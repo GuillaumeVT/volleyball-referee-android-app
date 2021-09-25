@@ -185,7 +185,6 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Tiempos muertos</string>
     <string name="substitution">Sustitución</string>
-    <string name="let_libero_in_question">¿Permitir que entre el líbero de %s?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Borrar el partido</string>

@@ -185,7 +185,6 @@
     <string name="position_6_title">VI</string>
     <string name="timeout">Vaheajad</string>
     <string name="substitution">Vahetus</string>
-    <string name="let_libero_in_question">Kas \"%s\" libero tuli väljakule?</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">Kustuta mängu</string>

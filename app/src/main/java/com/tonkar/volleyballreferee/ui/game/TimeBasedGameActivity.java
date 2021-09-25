@@ -304,9 +304,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     public void onTeamRotated(TeamType teamType, boolean clockwise) {}
 
     @Override
-    public void onCanLetLiberoIn(TeamType defendingTeam, int number) {}
-
-    @Override
     public void onPointsUpdated(TeamType teamType, int newCount) {
         if (mTeamOnLeftSide.equals(teamType)) {
             mLeftTeamScoreButton.setText(UiUtils.formatNumberFromLocale(newCount));

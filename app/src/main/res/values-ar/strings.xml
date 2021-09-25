@@ -185,7 +185,6 @@
     <string name="position_6_title">6</string>
     <string name="timeout">وقت مستقطع</string>
     <string name="substitution">الإستبدال</string>
-    <string name="let_libero_in_question">السماح بدخول اللاعب الحر لـ %s</string>
 
     <!-- Scheduled games activity -->
     <string name="delete_match">حذف المباراة</string>
