@@ -112,7 +112,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View playerNameView = mLayoutInflater.inflate(R.layout.player_name_item, null);
+            View playerNameView = mLayoutInflater.inflate(R.layout.player_name_item, parent, false);
 
             TextInputLayout playerNameInputTextLayout = playerNameView.findViewById(R.id.player_name_input_layout);
             EditText playerNameInputText = playerNameView.findViewById(R.id.player_name_input_text);

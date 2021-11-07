@@ -1,543 +1,531 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/indoor_court"
+    android:paddingStart="@dimen/court_x_padding"
+    android:paddingEnd="@dimen/court_x_padding">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/indoor_court"
-        android:paddingStart="@dimen/court_x_padding"
-        android:paddingEnd="@dimen/court_x_padding">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+        android:id="@+id/guideline_vertical_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_vertical_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.25" />
+        android:id="@+id/guideline_vertical_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_vertical_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75" />
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <RelativeLayout
-            android:id="@+id/left_team_layout_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
+        android:id="@+id/left_team_layout_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_team_position_5"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_5_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/left_team_position_5"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_5_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_5"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/left_team_position_5"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/left_team_sanction_5"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/left_team_position_5"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/left_team_substitution_5"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/left_team_position_5"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/left_team_substitution_5"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/left_team_position_5"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/left_team_layout_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_horizontal">
+        android:id="@+id/left_team_layout_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_team_position_6"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_6_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/left_team_position_6"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_6_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_6"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/left_team_position_6"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/left_team_sanction_6"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/left_team_position_6"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/left_team_substitution_6"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/left_team_position_6"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/left_team_substitution_6"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/left_team_position_6"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/left_team_layout_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
-            app:layout_constraintRight_toRightOf="parent">
+        android:id="@+id/left_team_layout_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_left"
+        app:layout_constraintRight_toRightOf="parent">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_team_position_1"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_1_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius"
-                app:iconGravity="start"
-                app:iconPadding="0dp"
-                app:iconSize="@dimen/court_service_size" />
+            android:id="@+id/left_team_position_1"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_1_title"
+            android:textSize="@dimen/court_position_size"
+            app:iconGravity="start"
+            app:iconPadding="0dp"
+            app:iconSize="@dimen/court_service_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_1"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/left_team_position_1"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/left_team_sanction_1"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/left_team_position_1"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/left_team_substitution_1"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/left_team_position_1"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/left_team_substitution_1"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/left_team_position_1"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/left_team_layout_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left"
-            app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
+        android:id="@+id/left_team_layout_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_team_position_4"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_4_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/left_team_position_4"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_4_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_4"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/left_team_position_4"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/left_team_sanction_4"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/left_team_position_4"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/left_team_substitution_4"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/left_team_position_4"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/left_team_substitution_4"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/left_team_position_4"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/left_team_layout_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left"
-            app:layout_constraintTop_toTopOf="@id/guideline_horizontal">
+        android:id="@+id/left_team_layout_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_team_position_3"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_3_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/left_team_position_3"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_3_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_3"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/left_team_position_3"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/left_team_sanction_3"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/left_team_position_3"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/left_team_substitution_3"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/left_team_position_3"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/left_team_substitution_3"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/left_team_position_3"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/left_team_layout_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left">
+        android:id="@+id/left_team_layout_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_left">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_team_position_2"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_2_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/left_team_position_2"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_2_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/left_team_sanction_2"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/left_team_position_2"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/left_team_sanction_2"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/left_team_position_2"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/left_team_substitution_2"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/left_team_position_2"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/left_team_substitution_2"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/left_team_position_2"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/right_team_layout_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical"
-            app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
+        android:id="@+id/right_team_layout_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_team_position_2"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_2_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/right_team_position_2"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_2_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_2"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/right_team_position_2"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/right_team_sanction_2"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/right_team_position_2"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/right_team_substitution_2"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/right_team_position_2"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/right_team_substitution_2"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/right_team_position_2"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/right_team_layout_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical"
-            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
+        android:id="@+id/right_team_layout_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_team_position_3"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_3_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/right_team_position_3"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_3_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_3"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/right_team_position_3"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/right_team_sanction_3"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/right_team_position_3"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/right_team_substitution_3"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/right_team_position_3"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/right_team_substitution_3"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/right_team_position_3"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/right_team_layout_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical">
+        android:id="@+id/right_team_layout_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_right"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_team_position_4"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_4_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/right_team_position_4"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_4_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_4"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/right_team_position_4"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/right_team_sanction_4"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/right_team_position_4"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/right_team_substitution_4"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/right_team_position_4"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/right_team_substitution_4"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/right_team_position_4"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/right_team_layout_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right"
-            app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
+        android:id="@+id/right_team_layout_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_team_position_1"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_1_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius"
-                app:iconGravity="end"
-                app:iconPadding="0dp"
-                app:iconSize="@dimen/court_service_size" />
+            android:id="@+id/right_team_position_1"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_1_title"
+            android:textSize="@dimen/court_position_size"
+            app:iconGravity="end"
+            app:iconPadding="0dp"
+            app:iconSize="@dimen/court_service_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_1"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/right_team_position_1"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/right_team_sanction_1"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/right_team_position_1"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/right_team_substitution_1"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/right_team_position_1"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/right_team_substitution_1"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/right_team_position_1"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/right_team_layout_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indoor_court_y_margin"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right"
-            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
+        android:id="@+id/right_team_layout_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indoor_court_y_margin"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right"
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_team_position_6"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_6_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/right_team_position_6"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_6_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_6"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/right_team_position_6"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/right_team_sanction_6"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/right_team_position_6"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/right_team_substitution_6"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/right_team_position_6"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/right_team_substitution_6"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/right_team_position_6"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/right_team_layout_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/indoor_court_y_margin"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right">
+        android:id="@+id/right_team_layout_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/indoor_court_y_margin"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline_vertical_right">
 
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_team_position_5"
-                style="@style/AppTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin_size"
-                android:layout_marginTop="@dimen/default_margin_size"
-                android:layout_marginEnd="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/default_margin_size"
-                android:text="@string/position_5_title"
-                android:textSize="@dimen/court_position_size"
-                app:cornerRadius="@dimen/form_button_radius" />
+            android:id="@+id/right_team_position_5"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/player_court_button_size"
+            android:layout_height="@dimen/player_court_button_size"
+            android:layout_marginStart="@dimen/small_margin_size"
+            android:layout_marginTop="@dimen/default_margin_size"
+            android:layout_marginEnd="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/default_margin_size"
+            android:text="@string/position_5_title"
+            android:textSize="@dimen/court_position_size" />
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/right_team_sanction_5"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignTop="@+id/right_team_position_5"
-                android:layout_alignParentStart="true"
-                android:elevation="@dimen/court_event_elevation" />
+            android:id="@+id/right_team_sanction_5"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignTop="@+id/right_team_position_5"
+            android:layout_alignParentStart="true"
+            android:elevation="@dimen/court_event_elevation" />
 
         <include
-                android:id="@+id/right_team_substitution_5"
-                layout="@layout/substitution_player_item"
-                android:layout_width="@dimen/court_event_size"
-                android:layout_height="@dimen/court_event_size"
-                android:layout_alignBottom="@+id/right_team_position_5"
-                android:layout_alignParentStart="true" />
+            android:id="@+id/right_team_substitution_5"
+            layout="@layout/substitution_player_item"
+            android:layout_width="@dimen/court_event_size"
+            android:layout_height="@dimen/court_event_size"
+            android:layout_alignBottom="@+id/right_team_position_5"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

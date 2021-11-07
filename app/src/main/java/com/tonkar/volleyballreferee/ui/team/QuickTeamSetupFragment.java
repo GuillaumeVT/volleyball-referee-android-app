@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
@@ -32,12 +31,12 @@ import java.util.Locale;
 
 public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
-    private TeamType             mTeamType;
-    private IBaseTeam            mTeamService;
-    private FloatingActionButton mTeamColorButton;
-    private MaterialButton       mCaptainButton;
-    private FloatingActionButton mGenderButton;
-    private FloatingActionButton mPlayerNamesButton;
+    private TeamType       mTeamType;
+    private IBaseTeam      mTeamService;
+    private MaterialButton mTeamColorButton;
+    private MaterialButton mCaptainButton;
+    private MaterialButton mGenderButton;
+    private MaterialButton mPlayerNamesButton;
 
     public QuickTeamSetupFragment() {}
 
@@ -148,8 +147,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     private void teamColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType.toString()));
-        UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
-        UiUtils.colorTeamIconButton(getActivity(), color, mPlayerNamesButton);
+        UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamText(getActivity(), color, mPlayerNamesButton);
         mTeamService.setTeamColor(mTeamType, color);
         updateCaptain();
     }
@@ -186,16 +185,15 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         mTeamService.setGender(mTeamType, genderType);
-        UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

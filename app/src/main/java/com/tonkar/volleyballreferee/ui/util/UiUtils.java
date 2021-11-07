@@ -39,7 +39,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
@@ -124,7 +123,7 @@ public class UiUtils {
         }
     }
 
-    public static void colorTeamButton(Context context, int color, MaterialButton button) {
+    public static void colorTeamButton(Context context, @ColorInt int color, MaterialButton button) {
         int textColor = getTextColor(context, color);
         button.setTextColor(textColor);
         button.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -133,7 +132,12 @@ public class UiUtils {
         }
     }
 
-    public static void colorTeamText(Context context, int color, TextView text) {
+    public static void colorTeamButton(Context context, @ColorInt int color, @DrawableRes int drawable, MaterialButton button) {
+        button.setIconResource(drawable);
+        colorTeamButton(context, color, button);
+    }
+
+    public static void colorTeamText(Context context, @ColorInt int color, TextView text) {
         ViewCompat.setBackgroundTintList(text, ColorStateList.valueOf(color));
         text.setTextColor(getTextColor(context, color));
     }
@@ -152,18 +156,6 @@ public class UiUtils {
         return textColor;
     }
 
-    public static void colorTeamIconButton(Context context, @ColorInt int color, FloatingActionButton button) {
-        button.setBackgroundTintList(ColorStateList.valueOf(color));
-        if (button.getDrawable() != null) {
-            button.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(getTextColor(context, color), PorterDuff.Mode.SRC_IN));
-        }
-    }
-
-    public static void colorTeamIconButton(Context context, @ColorInt int color, @DrawableRes int drawable, FloatingActionButton button) {
-        button.setImageResource(drawable);
-        colorTeamIconButton(context, color, button);
-    }
-
     private static void colorIconButton(Context context, ExtendedFloatingActionButton button, @DrawableRes int drawable) {
         button.setIconResource(drawable);
         button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorFab)));
@@ -176,11 +168,6 @@ public class UiUtils {
 
     public static void colorCloseIconButton(Context context, ExtendedFloatingActionButton button) {
         colorIconButton(context, button, R.drawable.ic_close);
-    }
-
-    public static void colorIconButtonInWhite(FloatingActionButton button) {
-        int color = Color.parseColor("#ffffff");
-        button.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
     public static void colorChipIcon(Context context, @ColorRes int color, @DrawableRes int drawable, Chip chip) {

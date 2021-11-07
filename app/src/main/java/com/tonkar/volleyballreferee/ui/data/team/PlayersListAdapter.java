@@ -58,7 +58,7 @@ public class PlayersListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            playerItem = mLayoutInflater.inflate(R.layout.full_player_item, null);
+            playerItem = mLayoutInflater.inflate(R.layout.full_player_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.playerNumber = playerItem.findViewById(R.id.player_number);
             viewHolder.playerName = playerItem.findViewById(R.id.player_name);

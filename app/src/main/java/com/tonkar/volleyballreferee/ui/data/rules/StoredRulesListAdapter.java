@@ -73,7 +73,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
         ViewHolder viewHolder;
 
         if (rulesView == null) {
-            rulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, null);
+            rulesView = mLayoutInflater.inflate(R.layout.stored_rules_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.listItemCard = rulesView.findViewById(R.id.list_item_card);
             viewHolder.nameText = rulesView.findViewById(R.id.stored_rules_name);

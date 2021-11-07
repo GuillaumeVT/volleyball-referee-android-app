@@ -1,213 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:gravity="top|center"
-        android:importantForAutofill="noExcludeDescendants"
-        android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:gravity="top|center"
+    android:importantForAutofill="noExcludeDescendants"
+    android:orientation="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/team_name_input_layout"
-                style="@style/AppTheme.TextInputLayoutAutoComplete"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1">
+            android:id="@+id/team_name_input_layout"
+            style="@style/AppTheme.TextInputLayoutAutoComplete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/team_name_input_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapWords"
-                    android:paddingStart="@dimen/default_margin_size"
-                    android:paddingEnd="@dimen/default_margin_size"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/default_text_size" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/team_color_button"
-                style="@style/AppTheme.ActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                app:fabCustomSize="@dimen/form_button_size"
-                app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_shirt_color" />
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-        <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/select_gender_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1"
-                android:text="@string/select_gender"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/select_gender_button"
-                style="@style/AppTheme.ActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                android:contentDescription="@string/gender_description"
-                app:fabCustomSize="@dimen/form_button_size"
-                app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_mixed" />
-
-    </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/team_member_numbers_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            android:text="@string/select_players"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
-
-    <view
-            android:id="@+id/team_member_numbers_grid"
-            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/small_margin_size"
-            android:columnWidth="@dimen/form_button_size"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/default_margin_size"
-            android:numColumns="auto_fit" />
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-        <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/team_captain_number_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1"
-                android:text="@string/select_captain"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
-
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/team_captain_number_button"
-                style="@style/AppTheme.Button"
-                android:layout_width="@dimen/form_button_size"
-                android:layout_height="@dimen/form_button_size"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/small_margin_size"
-                android:textSize="@dimen/default_text_size"
-                app:cornerRadius="@dimen/form_button_radius" />
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-        <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/team_libero_numbers_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1"
-                android:text="@string/select_libero"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/libero_color_button"
-                style="@style/AppTheme.ActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                app:fabCustomSize="@dimen/form_button_size"
-                app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_shirt_color" />
-
-    </LinearLayout>
-
-    <view
-            android:id="@+id/team_libero_numbers_grid"
-            class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/small_margin_size"
-            android:columnWidth="@dimen/form_button_size"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/default_margin_size"
-            android:numColumns="auto_fit" />
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-        <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/team_player_names_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                android:layout_weight="1"
-                android:text="@string/input_player_names"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/team_player_names_button"
-                style="@style/AppTheme.ActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin_size"
-                app:fabCustomSize="@dimen/form_button_size"
-                app:maxImageSize="@dimen/form_fab_icon_size"
-                app:srcCompat="@drawable/ic_player_name" />
-
-    </LinearLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/coach_name_input_layout"
-            style="@style/AppTheme.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            android:hint="@string/coach"
-            app:endIconMode="clear_text">
-
-        <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/coach_name_input_text"
+                android:id="@+id/team_name_input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -217,6 +34,181 @@
                 android:paddingEnd="@dimen/default_margin_size"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/team_color_button"
+            style="@style/AppTheme.ActionButton"
+            android:layout_width="@dimen/form_button_size"
+            android:layout_height="@dimen/form_button_size"
+            android:layout_margin="@dimen/small_margin_size"
+            app:icon="@drawable/ic_shirt_color" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/select_gender_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1"
+            android:text="@string/select_gender"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/select_gender_button"
+            style="@style/AppTheme.ActionButton"
+            android:layout_width="@dimen/form_button_size"
+            android:layout_height="@dimen/form_button_size"
+            android:layout_margin="@dimen/small_margin_size"
+            android:contentDescription="@string/gender_description"
+            app:icon="@drawable/ic_mixed" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/team_member_numbers_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        android:text="@string/select_players"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
+
+    <view
+        android:id="@+id/team_member_numbers_grid"
+        class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/small_margin_size"
+        android:columnWidth="@dimen/player_form_button_size"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/small_margin_size"
+        android:verticalSpacing="@dimen/small_margin_size"
+        android:numColumns="auto_fit" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team_captain_number_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1"
+            android:text="@string/select_captain"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/team_captain_number_button"
+            style="@style/AppTheme.RoundButton"
+            android:layout_width="@dimen/form_button_size"
+            android:layout_height="@dimen/form_button_size"
+            android:layout_margin="@dimen/small_margin_size"
+            android:textSize="@dimen/default_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team_libero_numbers_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1"
+            android:text="@string/select_libero"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/libero_color_button"
+            style="@style/AppTheme.ActionButton"
+            android:layout_width="@dimen/form_button_size"
+            android:layout_height="@dimen/form_button_size"
+            android:layout_margin="@dimen/small_margin_size"
+            app:icon="@drawable/ic_shirt_color" />
+
+    </LinearLayout>
+
+    <view
+        android:id="@+id/team_libero_numbers_grid"
+        class="com.tonkar.volleyballreferee.ui.util.ExpandedGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/small_margin_size"
+        android:columnWidth="@dimen/player_form_button_size"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/small_margin_size"
+        android:verticalSpacing="@dimen/small_margin_size"
+        android:numColumns="auto_fit" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team_player_names_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin_size"
+            android:layout_weight="1"
+            android:text="@string/input_player_names"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/team_player_names_button"
+            style="@style/AppTheme.ActionButton"
+            android:layout_width="@dimen/form_button_size"
+            android:layout_height="@dimen/form_button_size"
+            android:layout_margin="@dimen/small_margin_size"
+            app:icon="@drawable/ic_player_name" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/coach_name_input_layout"
+        style="@style/AppTheme.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        android:hint="@string/coach"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/coach_name_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

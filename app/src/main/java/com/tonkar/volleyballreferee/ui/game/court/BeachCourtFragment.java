@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -27,11 +26,11 @@ import java.util.Map;
 
 public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
-    private IBeachTeam  mBeachTeam;
-    private ImageButton mLeftServiceButton1;
-    private ImageButton mLeftServiceButton2;
-    private ImageButton mRightServiceButton1;
-    private ImageButton mRightServiceButton2;
+    private IBeachTeam     mBeachTeam;
+    private MaterialButton mLeftServiceButton1;
+    private MaterialButton mLeftServiceButton2;
+    private MaterialButton mRightServiceButton1;
+    private MaterialButton mRightServiceButton2;
 
     public BeachCourtFragment() {
         super();
@@ -118,8 +117,8 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     private void update(TeamType teamType) {
         final Map<PositionType, MaterialButton> teamPositions;
         final Map<PositionType, ImageView> teamSanctionImages;
-        ImageButton serviceButton1;
-        ImageButton serviceButton2;
+        MaterialButton serviceButton1;
+        MaterialButton serviceButton2;
 
         if (mTeamOnLeftSide.equals(teamType)) {
             teamPositions = mLeftTeamPositions;
@@ -150,7 +149,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
         updateSanction(teamType, number, teamSanctionImages.get(PositionType.POSITION_2));
     }
 
-    private void updateService(TeamType teamType, PositionType positionType, ImageButton imageButton) {
+    private void updateService(TeamType teamType, PositionType positionType, MaterialButton imageButton) {
         if (mGame.getServingTeam().equals(teamType) && PositionType.POSITION_1.equals(positionType)) {
             imageButton.setVisibility(View.VISIBLE);
         } else {

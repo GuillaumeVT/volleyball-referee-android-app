@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -36,19 +35,21 @@ import com.tonkar.volleyballreferee.ui.team.ColorSelectionDialog;
 import com.tonkar.volleyballreferee.ui.team.PlayerNamesInputDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import java.util.List;
 import java.util.Locale;
 
 public class QuickGameSetupFragment extends Fragment implements GameServiceHandler {
 
     private IGame                       mGame;
-    private FloatingActionButton        mGenderButton;
-    private FloatingActionButton        mHomeTeamColorButton;
-    private FloatingActionButton        mGuestTeamColorButton;
+    private MaterialButton              mGenderButton;
+    private MaterialButton              mHomeTeamColorButton;
+    private MaterialButton              mGuestTeamColorButton;
     private MaterialButton              mHomeTeamCaptainButton;
     private MaterialButton              mGuestTeamCaptainButton;
-    private FloatingActionButton        mHomeTeamPlayerNamesButton;
-    private FloatingActionButton        mGuestTeamPlayerNamesButton;
-    private AutocompleteTeamListAdapter mAutocompleteTeamListAdapter;
+    private MaterialButton              mHomeTeamPlayerNamesButton;
+    private MaterialButton              mGuestTeamPlayerNamesButton;
+    private AutocompleteTeamListAdapter mHomeTeamAutocompleteTeamListAdapter;
+    private AutocompleteTeamListAdapter mGuestTeamAutocompleteTeamListAdapter;
 
     public QuickGameSetupFragment() {}
 
@@ -184,12 +185,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 switchCaptain(TeamType.GUEST);
             });
 
-            mAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.listTeams(GameType.BEACH));
+            List<ApiTeamSummary> teams =  storedTeamsService.listTeams(GameType.BEACH);
+            mHomeTeamAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), teams);
+            mGuestTeamAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), teams);
 
-            homeTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
+            homeTeamNameInput.setAdapter(mHomeTeamAutocompleteTeamListAdapter);
             homeTeamNameInput.setThreshold(1);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamSummary teamDescription = mAutocompleteTeamListAdapter.getItem(index);
+                ApiTeamSummary teamDescription = mHomeTeamAutocompleteTeamListAdapter.getItem(index);
                 homeTeamNameInput.setText(teamDescription.getName());
                 storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGame, TeamType.HOME);
 
@@ -199,10 +202,10 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 computeConfirmItemVisibility();
             });
 
-            guestTeamNameInput.setAdapter(mAutocompleteTeamListAdapter);
+            guestTeamNameInput.setAdapter(mGuestTeamAutocompleteTeamListAdapter);
             guestTeamNameInput.setThreshold(1);
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamSummary teamDescription = mAutocompleteTeamListAdapter.getItem(index);
+                ApiTeamSummary teamDescription = mGuestTeamAutocompleteTeamListAdapter.getItem(index);
                 guestTeamNameInput.setText(teamDescription.getName());
                 storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGame, TeamType.GUEST);
 
@@ -254,8 +257,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     private void teamColorSelected(TeamType teamType, int colorId) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", teamType.toString()));
-        final FloatingActionButton colorButton;
-        final FloatingActionButton namesButton;
+        final MaterialButton colorButton;
+        final MaterialButton namesButton;
 
         if (TeamType.HOME.equals(teamType)) {
             colorButton = mHomeTeamColorButton;
@@ -265,8 +268,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             namesButton = mGuestTeamPlayerNamesButton;
         }
 
-        UiUtils.colorTeamIconButton(getContext(), colorId, colorButton);
-        UiUtils.colorTeamIconButton(getContext(), colorId, namesButton);
+        UiUtils.colorTeamButton(getContext(), colorId, colorButton);
+        UiUtils.colorTeamButton(getContext(), colorId, namesButton);
         mGame.setTeamColor(teamType, colorId);
         updateCaptain(teamType);
     }
@@ -274,16 +277,15 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         mGame.setGender(genderType);
-        UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

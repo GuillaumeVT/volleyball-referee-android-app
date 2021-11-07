@@ -11,7 +11,7 @@ import android.widget.GridView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -90,19 +90,19 @@ public abstract class ColorSelectionDialog {
 
         @Override
         public View getView(int index, View convertView, ViewGroup parent) {
-            FloatingActionButton button;
+            MaterialButton button;
 
             if (convertView == null) {
-                button = (FloatingActionButton) mLayoutInflater.inflate(R.layout.color_item, null);
+                button = (MaterialButton) mLayoutInflater.inflate(R.layout.color_item, null);
                 int pixels = mContext.getResources().getDimensionPixelSize(R.dimen.form_button_size);
                 button.setLayoutParams(new GridView.LayoutParams(pixels, pixels));
             } else {
-                button = (FloatingActionButton) convertView;
+                button = (MaterialButton) convertView;
             }
 
             final int color = mColors[index];
-            button.setImageResource(color == mSelectedColor ? R.drawable.ic_check : 0);
-            UiUtils.colorTeamIconButton(mContext, color, button);
+            button.setIconResource(color == mSelectedColor ? R.drawable.ic_check : 0);
+            UiUtils.colorTeamButton(mContext, color, button);
             button.setOnClickListener(fab -> onColorSelected(color));
             return button;
         }

@@ -1,252 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="noExcludeDescendants"
-        android:orientation="vertical"
-        tools:context="com.tonkar.volleyballreferee.ui.setup.ScheduledGameActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:importantForAutofill="noExcludeDescendants"
+    android:orientation="vertical"
+    tools:context="com.tonkar.volleyballreferee.ui.setup.ScheduledGameActivity">
 
     <include layout="@layout/toolbar" />
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_size"
+                android:clipToPadding="false"
+                android:gravity="top|center"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/empty_fab_space">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_margin_size"
-                    android:clipToPadding="false"
-                    android:gravity="top|center"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/empty_fab_space">
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/date_input_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_margin_size"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/default_margin_size"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimary"
+                        app:strokeColor="@color/colorPrimary" />
 
                     <com.google.android.material.button.MaterialButton
-                            android:id="@+id/date_input_button"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/default_margin_size"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorPrimary"
-                            app:strokeColor="@color/colorPrimary" />
-
-                    <com.google.android.material.button.MaterialButton
-                            android:id="@+id/time_input_button"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/default_margin_size"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorPrimary"
-                            app:strokeColor="@color/colorPrimary" />
+                        android:id="@+id/time_input_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_size"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimary"
+                        app:strokeColor="@color/colorPrimary" />
 
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AppTheme.TextInputLayoutAutoComplete"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin_size">
+                    style="@style/AppTheme.TextInputLayoutAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/league_name_input_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/league_name"
-                            android:imeOptions="actionNext"
-                            android:inputType="textCapWords"
-                            android:paddingStart="@dimen/default_margin_size"
-                            android:paddingEnd="@dimen/default_margin_size"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/default_text_size" />
+                        android:id="@+id/league_name_input_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/league_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/default_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/division_name_input_layout"
-                        style="@style/AppTheme.TextInputLayoutAutoComplete"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin_size"
-                        android:visibility="gone">
+                    android:id="@+id/division_name_input_layout"
+                    style="@style/AppTheme.TextInputLayoutAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin_size"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/division_name_input_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/division_name"
-                            android:imeOptions="actionDone"
-                            android:inputType="textCapWords"
-                            android:paddingStart="@dimen/default_margin_size"
-                            android:paddingEnd="@dimen/default_margin_size"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/default_text_size" />
+                        android:id="@+id/division_name_input_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/division_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingStart="@dimen/default_margin_size"
+                        android:paddingEnd="@dimen/default_margin_size"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/default_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/gender_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/small_margin_size"
-                            android:layout_weight="1"
-                            android:text="@string/gender_description"
-                            android:textAppearance="@style/AppTheme.TextView"
-                            android:textSize="@dimen/default_text_size" />
+                        android:id="@+id/gender_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin_size"
+                        android:layout_weight="1"
+                        android:text="@string/gender_description"
+                        android:textAppearance="@style/AppTheme.TextView"
+                        android:textSize="@dimen/default_text_size" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/switch_gender_button"
-                            style="@style/AppTheme.ActionButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/small_margin_size"
-                            android:contentDescription="@string/gender_description"
-                            app:fabSize="normal"
-                            app:maxImageSize="@dimen/form_fab_icon_size"
-                            app:srcCompat="@drawable/ic_mixed" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/switch_gender_button"
+                        style="@style/AppTheme.ActionButton"
+                        android:layout_width="@dimen/form_button_size"
+                        android:layout_height="@dimen/form_button_size"
+                        android:layout_margin="@dimen/small_margin_size"
+                        android:contentDescription="@string/gender_description"
+                        app:icon="@drawable/ic_mixed" />
 
                 </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/home_team_name_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginTop="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:text="@string/home_team_tab"
-                        android:textAppearance="@style/AppTheme.TextView"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/home_team_name_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:text="@string/home_team_tab"
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/home_team_name_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginBottom="@dimen/default_margin_size"
-                        android:ems="10"
-                        android:prompt="@string/home_team_tab"
-                        android:spinnerMode="dialog"
-                        android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/home_team_name_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:ems="10"
+                    android:prompt="@string/home_team_tab"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/colorDisabledText"
+                    android:textSize="@dimen/default_text_size" />
 
                 <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/guest_team_tab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginTop="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:text="@string/guest_team_hint"
-                        android:textAppearance="@style/AppTheme.TextView"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/guest_team_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:text="@string/guest_team_hint"
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/guest_team_name_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginBottom="@dimen/default_margin_size"
-                        android:ems="10"
-                        android:prompt="@string/guest_team_tab"
-                        android:spinnerMode="dialog"
-                        android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/guest_team_name_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:ems="10"
+                    android:prompt="@string/guest_team_tab"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/colorDisabledText"
+                    android:textSize="@dimen/default_text_size" />
 
                 <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/rules_tab"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginTop="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:text="@string/rules_name_hint"
-                        android:textAppearance="@style/AppTheme.TextView"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/rules_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:text="@string/rules_name_hint"
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/rules_name_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginBottom="@dimen/default_margin_size"
-                        android:ems="10"
-                        android:prompt="@string/rules_name_hint"
-                        android:spinnerMode="dialog"
-                        android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/rules_name_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:ems="10"
+                    android:prompt="@string/rules_name_hint"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/colorDisabledText"
+                    android:textSize="@dimen/default_text_size" />
 
                 <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/referee_spinner_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginTop="@dimen/default_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:text="@string/referee"
-                        android:textAppearance="@style/AppTheme.TextView"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/referee_spinner_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginTop="@dimen/default_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:text="@string/referee"
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/default_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/referee_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/small_margin_size"
-                        android:layout_marginEnd="@dimen/small_margin_size"
-                        android:layout_marginBottom="@dimen/default_margin_size"
-                        android:prompt="@string/referee"
-                        android:spinnerMode="dialog"
-                        android:textColor="@color/colorDisabledText"
-                        android:textSize="@dimen/default_text_size" />
+                    android:id="@+id/referee_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin_size"
+                    android:layout_marginEnd="@dimen/small_margin_size"
+                    android:layout_marginBottom="@dimen/default_margin_size"
+                    android:prompt="@string/referee"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/colorDisabledText"
+                    android:textSize="@dimen/default_text_size" />
 
             </LinearLayout>
 
         </ScrollView>
 
         <LinearLayout
-                android:id="@+id/schedule_game_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/default_margin_size">
+            android:id="@+id/schedule_game_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/default_margin_size">
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fab_shift_default"
-                    android:layout_marginTop="@dimen/fab_shift_default"
-                    android:layout_marginEnd="@dimen/fab_shift_default"
-                    android:layout_marginBottom="@dimen/fab_shift_default"
-                    android:onClick="scheduleGame"
-                    android:text="@string/save"
-                    app:icon="@drawable/ic_schedule" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fab_shift_default"
+                android:layout_marginTop="@dimen/fab_shift_default"
+                android:layout_marginEnd="@dimen/fab_shift_default"
+                android:layout_marginBottom="@dimen/fab_shift_default"
+                android:onClick="scheduleGame"
+                android:text="@string/save"
+                app:icon="@drawable/ic_schedule" />
 
         </LinearLayout>
 

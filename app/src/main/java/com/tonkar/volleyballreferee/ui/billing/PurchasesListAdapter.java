@@ -62,7 +62,7 @@ public class PurchasesListAdapter extends ArrayAdapter<SkuDetails> {
         ViewHolder viewHolder;
 
         if (purchaseView == null) {
-            purchaseView = mLayoutInflater.inflate(R.layout.purchases_list_item, null);
+            purchaseView = mLayoutInflater.inflate(R.layout.purchases_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.purchaseTitle = purchaseView.findViewById(R.id.purchase_title);
             viewHolder.purchaseSummary = purchaseView.findViewById(R.id.purchase_summary);

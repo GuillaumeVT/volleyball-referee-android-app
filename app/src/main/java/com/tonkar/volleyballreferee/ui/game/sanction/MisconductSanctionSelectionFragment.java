@@ -199,7 +199,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
             PlayerToggleButton button;
 
             if (view == null) {
-                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, null);
+                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, parent, false);
             } else {
                 button = (PlayerToggleButton) view;
             }

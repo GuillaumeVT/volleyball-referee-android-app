@@ -22,10 +22,8 @@
     <dimen name="number_text_elevation">2dp</dimen>
 
     <dimen name="score_button_height">78dp</dimen>
-    <dimen name="game_fab_size">44dp</dimen>
-    <dimen name="game_fab_icon_size">32dp</dimen>
-    <dimen name="game_small_fab_size">32dp</dimen>
-    <dimen name="game_small_fab_icon_size">24dp</dimen>
+    <dimen name="game_button_size">44dp</dimen>
+    <dimen name="game_small_button_size">32dp</dimen>
 
     <dimen tools:override="true" name="design_navigation_icon_padding">8dp</dimen>
 
@@ -33,7 +31,8 @@
     <dimen name="sanction_half_size">12dp</dimen>
     <dimen name="sanction_max_width">48dp</dimen>
 
-    <dimen name="indoor_court_y_margin">24dp</dimen>
+    <dimen name="player_court_button_size">56dp</dimen>
+    <dimen name="indoor_court_y_margin">36dp</dimen>
     <dimen name="beach_court_y_padding">24dp</dimen>
     <dimen name="snow_court_y_padding">20dp</dimen>
     <dimen name="court_x_padding">16dp</dimen>
@@ -49,8 +48,9 @@
     <dimen name="fab_shift_fourth">280dp</dimen>
     <dimen name="fab_shift_default">16dp</dimen>
 
+    <dimen name="player_form_button_size">48dp</dimen>
     <dimen name="form_button_size">56dp</dimen>
-    <dimen name="form_fab_icon_size">32dp</dimen>
+    <dimen name="fab_icon_size">32dp</dimen>
 
     <dimen name="elevation">2dp</dimen>
 

@@ -54,7 +54,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesSummary> 
         TextView rulesTextView;
 
         if (view == null) {
-            rulesTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, null);
+            rulesTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, parent, false);
         } else {
             rulesTextView = (TextView) view;
         }

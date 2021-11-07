@@ -79,7 +79,7 @@ public class LadderListAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
 
         if (setView == null) {
-            setView = mLayoutInflater.inflate(R.layout.ladder_with_title_item, null);
+            setView = mLayoutInflater.inflate(R.layout.ladder_with_title_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.setNumberText = setView.findViewById(R.id.set_number_text);
             viewHolder.setScoreText = setView.findViewById(R.id.set_score_text);

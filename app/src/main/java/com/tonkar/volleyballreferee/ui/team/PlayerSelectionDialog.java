@@ -34,7 +34,7 @@ public abstract class PlayerSelectionDialog {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
-        gridView.setNumColumns(4);
+        gridView.setColumnWidth((int)context.getResources().getDimension(R.dimen.player_form_button_size));
         gridView.setHorizontalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
         gridView.setVerticalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
@@ -105,7 +105,7 @@ public abstract class PlayerSelectionDialog {
             MaterialButton button;
 
             if (convertView == null) {
-                button = (MaterialButton) mLayoutInflater.inflate(R.layout.player_item, null);
+                button = (MaterialButton) mLayoutInflater.inflate(R.layout.player_item, parent, false);
             } else {
                 button = (MaterialButton) convertView;
             }

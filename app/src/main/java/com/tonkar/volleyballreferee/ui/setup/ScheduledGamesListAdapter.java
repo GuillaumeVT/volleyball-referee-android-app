@@ -79,7 +79,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
         ViewHolder viewHolder;
 
         if (gameView == null) {
-            gameView = mLayoutInflater.inflate(R.layout.scheduled_games_list_item, null);
+            gameView = mLayoutInflater.inflate(R.layout.scheduled_games_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.summaryText = gameView.findViewById(R.id.scheduled_game_summary);
             viewHolder.dateText = gameView.findViewById(R.id.scheduled_game_date);

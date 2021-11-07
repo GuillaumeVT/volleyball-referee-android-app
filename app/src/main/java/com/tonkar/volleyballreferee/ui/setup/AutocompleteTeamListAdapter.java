@@ -58,7 +58,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
         TextView teamTextView;
 
         if (view == null) {
-            teamTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, null);
+            teamTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, parent, false);
         } else {
             teamTextView = (TextView) view;
         }

@@ -21,7 +21,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -47,17 +46,17 @@ import java.util.Locale;
 
 public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
-    private LayoutInflater       mLayoutInflater;
-    private TeamType             mTeamType;
-    private IBaseTeam            mTeamService;
-    private int                  mNumberOfShirts;
-    private FloatingActionButton mTeamColorButton;
-    private PlayerAdapter        mPlayerAdapter;
-    private FloatingActionButton mLiberoColorButton;
-    private MaterialButton       mCaptainButton;
-    private LiberoAdapter        mLiberoAdapter;
-    private FloatingActionButton mGenderButton;
-    private FloatingActionButton mPlayerNamesButton;
+    private LayoutInflater mLayoutInflater;
+    private TeamType       mTeamType;
+    private IBaseTeam      mTeamService;
+    private int            mNumberOfShirts;
+    private MaterialButton mTeamColorButton;
+    private PlayerAdapter  mPlayerAdapter;
+    private MaterialButton mLiberoColorButton;
+    private MaterialButton mCaptainButton;
+    private LiberoAdapter  mLiberoAdapter;
+    private MaterialButton mGenderButton;
+    private MaterialButton mPlayerNamesButton;
 
     public TeamSetupFragment() {}
 
@@ -196,7 +195,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             teamNumbersGridTitle.setText(getString(R.string.select_players_with_liberos));
         } else {
             liberoNumbersGrid.setVisibility(View.GONE);
-            mLiberoColorButton.hide();
+            mLiberoColorButton.setVisibility(View.GONE);
             final TextView liberoNumbersTitle =  view.findViewById(R.id.team_libero_numbers_title);
             liberoNumbersTitle.setVisibility(View.GONE);
         }
@@ -267,8 +266,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void teamColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType.toString()));
-        UiUtils.colorTeamIconButton(getActivity(), color, mTeamColorButton);
-        UiUtils.colorTeamIconButton(getActivity(), color, mPlayerNamesButton);
+        UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamButton(getActivity(), color, mPlayerNamesButton);
         mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
         updateCaptain();
@@ -315,7 +314,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             PlayerToggleButton button;
 
             if (view == null) {
-                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, null);
+                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, parent, false);
             } else {
                 button = (PlayerToggleButton) view;
             }
@@ -453,7 +452,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void liberoColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team libero color", mTeamType.toString()));
-        UiUtils.colorTeamIconButton(getActivity(), color, mLiberoColorButton);
+        UiUtils.colorTeamButton(getActivity(), color, mLiberoColorButton);
         mTeamService.setLiberoColor(mTeamType, color);
         mLiberoAdapter.setColor(color);
     }
@@ -521,7 +520,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             final PlayerToggleButton button;
 
             if (view == null) {
-                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, null);
+                button = (PlayerToggleButton) mLayoutInflater.inflate(R.layout.player_toggle_item, parent, false);
             } else {
                 button = (PlayerToggleButton) view;
             }
@@ -563,16 +562,15 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     private void updateGender(GenderType genderType) {
         Context context = getContext();
         mTeamService.setGender(mTeamType, genderType);
-        UiUtils.colorIconButtonInWhite(mGenderButton);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

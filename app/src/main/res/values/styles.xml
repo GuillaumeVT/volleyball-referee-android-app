@@ -43,19 +43,36 @@
         <item name="iconTint">@color/colorOnPrimary</item>
     </style>
 
-    <style name="AppTheme.ActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="android:adjustViewBounds">true</item>
-        <item name="tint">@color/colorPrimary</item>
+    <style name="AppTheme.RoundButton.Shape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="AppTheme.RoundButton" parent="AppTheme.Button">
+        <item name="shapeAppearanceOverlay">@style/AppTheme.RoundButton.Shape</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="AppTheme.ActionButton" parent="AppTheme.RoundButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="iconTint">@color/colorPrimary</item>
         <item name="backgroundTint">@color/colorOnPrimary</item>
     </style>
 
-    <style name="AppTheme.Fab" parent="AppTheme.ActionButton">
+    <style name="AppTheme.Fab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:adjustViewBounds">true</item>
         <item name="tint">@color/colorOnFab</item>
         <item name="backgroundTint">@color/colorFab</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="fabCustomSize">@dimen/form_button_size</item>
-        <item name="maxImageSize">@dimen/form_fab_icon_size</item>
+        <item name="maxImageSize">@dimen/fab_icon_size</item>
     </style>
 
     <style name="AppTheme.ExtendedFab" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
@@ -66,7 +83,7 @@
         <item name="backgroundTint">@color/colorFab</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="maxImageSize">@dimen/form_fab_icon_size</item>
+        <item name="maxImageSize">@dimen/fab_icon_size</item>
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 

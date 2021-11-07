@@ -54,7 +54,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueSummary
         TextView leagueTextView;
 
         if (view == null) {
-            leagueTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, null);
+            leagueTextView = (TextView) mLayoutInflater.inflate(R.layout.autocomplete_list_item, parent, false);
         } else {
             leagueTextView = (TextView) view;
         }

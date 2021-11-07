@@ -55,7 +55,7 @@ public class LineupAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
 
         if (positionView == null) {
-            positionView = mLayoutInflater.inflate(R.layout.lineup_item, null);
+            positionView = mLayoutInflater.inflate(R.layout.lineup_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.positionTitle = positionView.findViewById(R.id.position_title);
             viewHolder.positionText = positionView.findViewById(R.id.position);

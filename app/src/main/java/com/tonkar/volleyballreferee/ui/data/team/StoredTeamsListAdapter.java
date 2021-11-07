@@ -74,7 +74,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
         ViewHolder viewHolder;
 
         if (teamView == null) {
-            teamView = mLayoutInflater.inflate(R.layout.stored_teams_list_item, null);
+            teamView = mLayoutInflater.inflate(R.layout.stored_teams_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.listItemCard = teamView.findViewById(R.id.list_item_card);
             viewHolder.nameText = teamView.findViewById(R.id.stored_team_name);

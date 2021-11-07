@@ -27,7 +27,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -70,7 +69,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private Calendar                           mScheduleDate;
     private MaterialButton                     mDateInputButton;
     private MaterialButton                     mTimeInputButton;
-    private FloatingActionButton               mGenderButton;
+    private MaterialButton                     mGenderButton;
     private Spinner                            mHomeTeamSpinner;
     private Spinner                            mGuestTeamSpinner;
     private NameSpinnerAdapter<ApiTeamSummary> mTeamAdapter;
@@ -310,13 +309,13 @@ public class ScheduledGameActivity extends AppCompatActivity {
         mGameSummary.setGender(genderType);
         switch (genderType) {
             case MIXED:
-                UiUtils.colorTeamIconButton(this, getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
+                UiUtils.colorTeamButton(this, getColor(R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
                 break;
             case LADIES:
-                UiUtils.colorTeamIconButton(this, getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
+                UiUtils.colorTeamButton(this, getColor(R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
                 break;
             case GENTS:
-                UiUtils.colorTeamIconButton(this, getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
+                UiUtils.colorTeamButton(this, getColor(R.color.colorGents), R.drawable.ic_gents, mGenderButton);
                 break;
         }
     }

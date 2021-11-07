@@ -60,7 +60,7 @@ public abstract class NameSpinnerAdapter<T> extends ArrayAdapter<T> {
         TextView textView;
 
         if (view == null) {
-            textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_spinner, null);
+            textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_spinner, parent, false);
         } else {
             textView = (TextView) view;
         }
@@ -75,7 +75,7 @@ public abstract class NameSpinnerAdapter<T> extends ArrayAdapter<T> {
         TextView textView;
 
         if (view == null) {
-            textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_checked_spinner_entry, null);
+            textView = (TextView) mLayoutInflater.inflate(R.layout.vbr_checked_spinner_entry, parent, false);
         } else {
             textView = (TextView) view;
         }

@@ -87,7 +87,7 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
         ViewHolder viewHolder;
 
         if (gameView == null) {
-            gameView = mLayoutInflater.inflate(R.layout.stored_games_list_item, null);
+            gameView = mLayoutInflater.inflate(R.layout.stored_games_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.listItemCard = gameView.findViewById(R.id.list_item_card);
             viewHolder.summaryText = gameView.findViewById(R.id.stored_game_summary);

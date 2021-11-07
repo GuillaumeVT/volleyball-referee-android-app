@@ -123,7 +123,7 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
 
         @Override
         public @NonNull View getView(int index, View view, @NonNull ViewGroup parent) {
-            view = mLayoutInflater.inflate(R.layout.game_event_toggle_item, null);
+            view = mLayoutInflater.inflate(R.layout.game_event_toggle_item, parent, false);
 
             GameEvent gameEvent = mGameEvents.get(index);
 

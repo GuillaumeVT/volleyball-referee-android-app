@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -43,23 +42,23 @@ import java.util.Locale;
 
 public class TimeBasedGameActivity extends AppCompatActivity implements GeneralListener, ScoreListener, TeamListener {
 
-    private ITimeBasedGame       mGameService;
-    private StoredGamesService   mStoredGamesService;
-    private TeamType             mTeamOnLeftSide;
-    private TeamType             mTeamOnRightSide;
-    private TextView             mLeftTeamNameText;
-    private TextView             mRightTeamNameText;
-    private FloatingActionButton mSwapTeamsButton;
-    private MaterialButton       mLeftTeamScoreButton;
-    private MaterialButton       mRightTeamScoreButton;
-    private FloatingActionButton mLeftTeamServiceButton;
-    private FloatingActionButton mRightTeamServiceButton;
-    private FloatingActionButton mScoreRemoveButton;
-    private TextView             mRemainingTimeText;
-    private FloatingActionButton mStartMatchButton;
-    private FloatingActionButton mStopMatchButton;
-    private SimpleDateFormat     mTimeFormat;
-    private CountDownTimer       mCountDownTimer;
+    private ITimeBasedGame     mGameService;
+    private StoredGamesService mStoredGamesService;
+    private TeamType           mTeamOnLeftSide;
+    private TeamType           mTeamOnRightSide;
+    private TextView           mLeftTeamNameText;
+    private TextView           mRightTeamNameText;
+    private MaterialButton     mSwapTeamsButton;
+    private MaterialButton     mLeftTeamScoreButton;
+    private MaterialButton     mRightTeamScoreButton;
+    private MaterialButton     mLeftTeamServiceButton;
+    private MaterialButton     mRightTeamServiceButton;
+    private MaterialButton     mScoreRemoveButton;
+    private TextView           mRemainingTimeText;
+    private MaterialButton     mStartMatchButton;
+    private MaterialButton     mStopMatchButton;
+    private SimpleDateFormat   mTimeFormat;
+    private CountDownTimer     mCountDownTimer;
 
     public TimeBasedGameActivity() {
         super();
@@ -318,11 +317,11 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     @Override
     public void onServiceSwapped(TeamType teamType, boolean isStart) {
         if (mTeamOnLeftSide.equals(teamType)) {
-            mLeftTeamServiceButton.show();
-            mRightTeamServiceButton.hide();
+            mLeftTeamServiceButton.setVisibility(View.VISIBLE);
+            mRightTeamServiceButton.setVisibility(View.GONE);
         } else {
-            mRightTeamServiceButton.show();
-            mLeftTeamServiceButton.hide();
+            mRightTeamServiceButton.setVisibility(View.VISIBLE);
+            mLeftTeamServiceButton.setVisibility(View.GONE);
         }
     }
 
@@ -358,14 +357,14 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
 
     private void computeStartStopVisibility() {
         if (mGameService.isMatchStarted()) {
-            mStartMatchButton.hide();
+            mStartMatchButton.setVisibility(View.GONE);
         } else {
-            mStartMatchButton.show();
+            mStartMatchButton.setVisibility(View.VISIBLE);
         }
         if (mGameService.isMatchRunning()) {
-            mStopMatchButton.show();
+            mStopMatchButton.setVisibility(View.VISIBLE);
         } else {
-            mStopMatchButton.hide();
+            mStopMatchButton.setVisibility(View.GONE);
         }
     }
 
