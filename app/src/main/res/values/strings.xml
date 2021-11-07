@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30301" translatable="false">
+    <string name="rn_30600" translatable="false">
         New in this release:
-        \n\n\u2022 Warn the user when there is 1 remaining substitution for a team
-        \n\n\u2022 Ask the user whether or not they want to let the libero in
-        \n\n\u2022 Show the sum of all points in the score sheet
-        \n\n\u2022 Show the first serving team in the score sheet
-        \n\n\u2022 Reworked the disqualification sanctions
-        \n\n\u2022 Added support for Android 11
+        \n\n\u2022 Design update
+        \n\n\u2022 Added support for Android 12
     </string>
 
     <!-- General actions -->
