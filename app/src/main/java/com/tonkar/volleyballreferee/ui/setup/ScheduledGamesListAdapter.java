@@ -5,11 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
@@ -26,12 +26,12 @@ import java.util.TimeZone;
 public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 
     static class ViewHolder {
-        TextView summaryText;
-        TextView dateText;
-        Chip     liveItem;
-        Chip     kindItem;
-        Chip     genderItem;
-        TextView leagueText;
+        TextView  summaryText;
+        TextView  dateText;
+        ImageView liveItem;
+        ImageView kindItem;
+        ImageView genderItem;
+        TextView  leagueText;
     }
 
     private final LayoutInflater       mLayoutInflater;

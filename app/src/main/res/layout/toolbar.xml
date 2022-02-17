@@ -6,8 +6,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorToolbar"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-        app:popupTheme="@style/Theme.MaterialComponents.Light"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        app:popupTheme="@style/Theme.Material3.Light"
         app:titleTextAppearance="@style/AppTheme.ToolbarText">
 
     <androidx.appcompat.widget.AppCompatImageView

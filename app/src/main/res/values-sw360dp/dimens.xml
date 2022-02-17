@@ -57,4 +57,7 @@
     <dimen name="signature_width">320dp</dimen>
     <dimen name="signature_height">170dp</dimen>
 
+    <dimen name="chip_width">40dp</dimen>
+    <dimen name="chip_height">24dp</dimen>
+
 </resources>

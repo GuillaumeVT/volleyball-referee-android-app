@@ -90,7 +90,7 @@
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/user_sign_out_button"
-                    style="@style/Widget.MaterialComponents.Button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -221,7 +221,7 @@
 
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/user_password_update_button"
-                    style="@style/Widget.MaterialComponents.Button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -62,7 +62,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         }
 
         TextView nameText = findViewById(R.id.stored_rules_name);
-        Chip kindItem = findViewById(R.id.rules_kind_item);
+        ImageView kindItem = findViewById(R.id.rules_kind_item);
 
         nameText.setText(mRules.getName());
 

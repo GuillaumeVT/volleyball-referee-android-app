@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
@@ -27,7 +27,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
     static class ViewHolder {
         MaterialCardView listItemCard;
         TextView         nameText;
-        Chip             kindItem;
+        ImageView        kindItem;
     }
 
     private final LayoutInflater        mLayoutInflater;

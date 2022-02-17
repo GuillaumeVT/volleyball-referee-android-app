@@ -1,9 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorToolbar</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -12,15 +14,16 @@
         <item name="android:textColorPrimaryInverse">@color/colorOnPrimary</item>
         <item name="android:textSize">@dimen/default_text_size</item>
         <item name="colorError">@color/colorError</item>
+        <item name="colorErrorContainer">@color/colorErrorContainer</item>
         <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
         <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
         <item name="extendedFloatingActionButtonStyle">@style/AppTheme.ExtendedFab</item>
         <item name="floatingActionButtonStyle">@style/AppTheme.Fab</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.Material3.Dark" />
 
-    <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.Dialog.Alert">
+    <style name="AppTheme.Dialog" parent="Theme.Material3.Dark.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colorPrimary</item>
@@ -30,7 +33,7 @@
         <item name="android:windowBackground">@drawable/dialog_round_background</item>
     </style>
 
-    <style name="AppTheme.BottomSheetDialog" parent="Theme.MaterialComponents.BottomSheetDialog">
+    <style name="AppTheme.BottomSheetDialog" parent="Theme.Material3.Dark.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppTheme.BottomSheet</item>
     </style>
 

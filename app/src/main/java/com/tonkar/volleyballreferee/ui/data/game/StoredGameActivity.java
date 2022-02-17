@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -104,9 +104,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         TextView summaryText = findViewById(R.id.stored_game_summary);
         TextView dateText = findViewById(R.id.stored_game_date);
         TextView scoreText = findViewById(R.id.stored_game_score);
-        Chip kindItem = findViewById(R.id.game_kind_item);
-        Chip genderItem = findViewById(R.id.game_gender_item);
-        Chip indexedItem = findViewById(R.id.game_indexed_item);
+        ImageView kindItem = findViewById(R.id.game_kind_item);
+        ImageView genderItem = findViewById(R.id.game_gender_item);
+        ImageView indexedItem = findViewById(R.id.game_indexed_item);
         TextView leagueText = findViewById(R.id.stored_game_league);
 
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());

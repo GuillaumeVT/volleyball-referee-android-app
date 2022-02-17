@@ -87,7 +87,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_tie_break"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_two_points_difference"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_sanctions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,7 +173,7 @@
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_team_timeouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_technical_timeouts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -260,7 +260,7 @@
             android:textColor="@color/colorDisabledText"
             android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_game_intervals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
             android:textSize="@dimen/default_text_size"
             android:textStyle="bold" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/rules_court_switches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
