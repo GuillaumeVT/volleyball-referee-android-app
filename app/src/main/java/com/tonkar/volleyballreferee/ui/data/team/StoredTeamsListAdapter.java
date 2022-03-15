@@ -117,7 +117,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
                 break;
         }
 
-        viewHolder.listItemCard.setBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
 
         return teamView;
     }

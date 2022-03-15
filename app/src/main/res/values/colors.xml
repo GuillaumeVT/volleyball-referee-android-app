@@ -13,6 +13,7 @@
     <color name="colorOnBackground">#1f1f1f</color>
     <color name="colorSurface">#f3f3f3</color>
     <color name="colorOnSurface">@color/colorOnBackground</color>
+    <color name="colorOnSurfaceVariant">@color/colorPrimaryContainer</color>
     <color name="colorOnDarkSurface">@android:color/white</color>
     <color name="colorOnLightSurface">#1f1f1f</color>
     <color name="colorError">#bc0019</color>
@@ -24,10 +25,12 @@
     <color name="colorDisabledButton">#d6d7d7</color>
     <color name="colorDisabledText">#757368</color>
     <color name="colorSeparator">#d6d7d7</color>
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/colorSeparator</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">
+        @color/colorSeparator
+    </color>
 
-    <color name="colorToolbar">@color/colorPrimary</color>
-    <color name="colorOnToolbar">@color/colorOnPrimary</color>
+    <color name="colorToolbar">@color/colorPrimaryContainer</color>
+    <color name="colorOnToolbar">@color/colorPrimary</color>
     <color name="colorFab">#fac511</color>
     <color name="colorOnFab">#1f4294</color>
 
@@ -67,5 +70,7 @@
     <color name="colorOnScoreSheetBackground">#1f1f1f</color>
 
     <color name="colorOverlay">#5A000000</color>
+
+    <color name="colorNavBackground">@color/colorOnPrimary</color>
 
 </resources>

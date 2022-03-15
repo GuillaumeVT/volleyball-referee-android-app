@@ -13,7 +13,9 @@
 
     <color name="colorSeparator">#757368</color>
 
-    <color name="colorToolbar">@color/colorSurface</color>
-    <color name="colorOnToolbar">@color/colorOnSurface</color>
+    <color name="colorToolbar">@color/colorPrimaryContainer</color>
+    <color name="colorOnToolbar">@color/colorPrimary</color>
+
+    <color name="colorNavBackground">@color/colorOnPrimary</color>
 
 </resources>

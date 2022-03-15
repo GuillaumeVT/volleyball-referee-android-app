@@ -1,106 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="top|start"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|start"
+    android:orientation="vertical">
 
     <com.tonkar.volleyballreferee.ui.util.ExpandedGridView
-            android:id="@+id/misconduct_player_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnWidth="@dimen/player_form_button_size"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/small_margin_size"
-            android:verticalSpacing="@dimen/small_margin_size"
-            android:numColumns="auto_fit" />
+        android:id="@+id/misconduct_player_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="@dimen/player_form_button_size"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/small_margin_size"
+        android:verticalSpacing="@dimen/small_margin_size"
+        android:numColumns="auto_fit" />
 
     <LinearLayout
-            android:id="@+id/yellow_card_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+        android:id="@+id/yellow_card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/sanction_max_width"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/yellow_card"/>
+            android:layout_width="@dimen/sanction_max_width"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/yellow_card" />
 
         <com.tonkar.volleyballreferee.ui.team.PlayerToggleButton
-                android:id="@+id/yellow_card_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin_size"
-                android:text="@string/yellow_card"
-                android:textAllCaps="false"/>
+            android:id="@+id/yellow_card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_size"
+            android:text="@string/yellow_card"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/red_card_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+        android:id="@+id/red_card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/sanction_max_width"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/red_card"/>
+            android:layout_width="@dimen/sanction_max_width"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/red_card" />
 
         <com.tonkar.volleyballreferee.ui.team.PlayerToggleButton
-                android:id="@+id/red_card_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin_size"
-                android:text="@string/red_card"
-                android:textAllCaps="false"/>
+            android:id="@+id/red_card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_size"
+            android:text="@string/red_card"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/red_card_expulsion_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+        android:id="@+id/red_card_expulsion_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/sanction_max_width"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/expulsion_card"/>
+            android:layout_width="@dimen/sanction_max_width"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/expulsion_card" />
 
         <com.tonkar.volleyballreferee.ui.team.PlayerToggleButton
-                android:id="@+id/red_card_expulsion_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin_size"
-                android:text="@string/red_card_expulsion"
-                android:textAllCaps="false"/>
+            android:id="@+id/red_card_expulsion_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_size"
+            android:text="@string/red_card_expulsion"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/red_card_disqualification_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+        android:id="@+id/red_card_disqualification_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/sanction_max_width"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/disqualification_card"/>
+            android:layout_width="@dimen/sanction_max_width"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/disqualification_card" />
 
         <com.tonkar.volleyballreferee.ui.team.PlayerToggleButton
-                android:id="@+id/red_card_disqualification_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin_size"
-                android:text="@string/red_card_disqualification"
-                android:textAllCaps="false"/>
+            android:id="@+id/red_card_disqualification_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_size"
+            android:text="@string/red_card_disqualification"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 

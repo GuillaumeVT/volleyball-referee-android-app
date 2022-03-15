@@ -3,10 +3,17 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
-            <solid android:color="@color/colorYellowCard"/>
-            <size android:width="@dimen/sanction_size" android:height="@dimen/sanction_size"/>
+            <solid android:color="@color/colorYellowCard" />
+            <size
+                android:width="@dimen/sanction_size"
+                android:height="@dimen/sanction_size" />
         </shape>
     </item>
-    <item android:top="@dimen/tiny_margin_size" android:bottom="@dimen/tiny_margin_size" android:left="@dimen/tiny_margin_size" android:right="@dimen/tiny_margin_size"
-          android:gravity="center" android:drawable="@drawable/ic_thumb_timeout" />
+    <item
+        android:top="@dimen/tiny_margin_size"
+        android:bottom="@dimen/tiny_margin_size"
+        android:left="@dimen/tiny_margin_size"
+        android:right="@dimen/tiny_margin_size"
+        android:gravity="center"
+        android:drawable="@drawable/ic_thumb_timeout" />
 </layer-list>

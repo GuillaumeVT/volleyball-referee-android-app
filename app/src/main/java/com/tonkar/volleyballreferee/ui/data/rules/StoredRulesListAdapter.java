@@ -103,7 +103,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
                 break;
         }
 
-        viewHolder.listItemCard.setBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
 
         return rulesView;
     }

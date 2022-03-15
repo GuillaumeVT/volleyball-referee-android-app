@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/AppTheme.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            app:endIconMode="clear_text">
+        style="@style/AppTheme.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/observation_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/remarks"
-                android:inputType="textMultiLine"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/observation_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/remarks"
+            android:inputType="textMultiLine"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

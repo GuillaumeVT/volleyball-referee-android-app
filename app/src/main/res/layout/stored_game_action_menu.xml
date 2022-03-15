@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/game_action_menu"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/game_action_menu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/big_margin_size"
+    android:gravity="start"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/action_share_game_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_margin_size"
-        android:gravity="start"
-        android:orientation="vertical">
+        android:drawablePadding="@dimen/big_margin_size"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical|start"
+        android:padding="@dimen/big_margin_size"
+        android:text="@string/share"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size"
+        app:drawableStartCompat="@drawable/ic_link" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/action_share_game_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:foreground="?android:selectableItemBackground"
-            android:gravity="center_vertical|start"
-            android:padding="@dimen/big_margin_size"
-            android:text="@string/share"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            app:drawableStartCompat="@drawable/ic_link" />
-
-    <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/action_generate_score_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:foreground="?android:selectableItemBackground"
-            android:gravity="center_vertical|start"
-            android:padding="@dimen/big_margin_size"
-            android:text="@string/create_score_sheet"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            app:drawableStartCompat="@drawable/ic_score_sheet" />
+        android:id="@+id/action_generate_score_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical|start"
+        android:padding="@dimen/big_margin_size"
+        android:text="@string/create_score_sheet"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size"
+        app:drawableStartCompat="@drawable/ic_score_sheet" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/action_index_game"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:padding="@dimen/big_margin_size"
-            android:text="@string/index_game"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            app:drawableStartCompat="@drawable/ic_private" />
+        android:id="@+id/action_index_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:padding="@dimen/big_margin_size"
+        android:text="@string/index_game"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size"
+        app:drawableStartCompat="@drawable/ic_private" />
 
     <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorSeparator" />
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorSeparator" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/action_delete_game"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/big_margin_size"
-            android:foreground="?android:selectableItemBackground"
-            android:gravity="center_vertical|start"
-            android:padding="@dimen/big_margin_size"
-            android:text="@string/delete_game"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size"
-            app:drawableStartCompat="@drawable/ic_delete" />
+        android:id="@+id/action_delete_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/big_margin_size"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical|start"
+        android:padding="@dimen/big_margin_size"
+        android:text="@string/delete_game"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size"
+        app:drawableStartCompat="@drawable/ic_delete" />
 
 </LinearLayout>

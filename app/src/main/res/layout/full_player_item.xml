@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center|start"
+    android:orientation="horizontal">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/player_number"
+        android:layout_width="@dimen/player_column_width"
         android:layout_height="wrap_content"
-        android:gravity="center|start"
-        android:orientation="horizontal">
+        android:layout_margin="@dimen/default_margin_size"
+        android:background="@drawable/text_round_background"
+        android:elevation="@dimen/number_text_elevation"
+        android:gravity="center"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/player_number"
-            android:layout_width="@dimen/player_column_width"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            android:background="@drawable/text_round_background"
-            android:elevation="@dimen/number_text_elevation"
-            android:gravity="center"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
-
-    <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/player_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_size"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_size"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

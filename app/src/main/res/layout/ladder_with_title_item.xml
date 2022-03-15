@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/tiny_margin_size"
-        android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/tiny_margin_size"
+    android:orientation="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/set_number_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="@dimen/default_margin_size"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/set_number_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin_size"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/set_score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/set_score_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/big_margin_size"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
-
-        <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/set_duration_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/big_margin_size"
-                android:textAppearance="@style/AppTheme.TextView"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/set_duration_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/big_margin_size"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textSize="@dimen/default_text_size" />
     </LinearLayout>
 
     <HorizontalScrollView
-            android:id="@+id/set_ladder_scroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:id="@+id/set_ladder_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TableLayout
-                android:id="@+id/set_ladder_table"
+            android:id="@+id/set_ladder_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin_size"
+            android:layout_marginBottom="@dimen/small_margin_size">
+
+            <TableRow
+                android:id="@+id/set_ladder_home_team_event_row"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin_size"
-                android:layout_marginBottom="@dimen/small_margin_size">
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:gravity="start" />
 
             <TableRow
-                    android:id="@+id/set_ladder_home_team_event_row"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin_size"
-                    android:layout_marginEnd="@dimen/small_margin_size"
-                    android:gravity="start" />
+                android:id="@+id/set_ladder_home_team_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:gravity="start" />
 
             <TableRow
-                    android:id="@+id/set_ladder_home_team_row"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin_size"
-                    android:layout_marginEnd="@dimen/small_margin_size"
-                    android:gravity="start" />
+                android:id="@+id/set_ladder_guest_team_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:gravity="start" />
 
             <TableRow
-                    android:id="@+id/set_ladder_guest_team_row"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin_size"
-                    android:layout_marginEnd="@dimen/small_margin_size"
-                    android:gravity="start" />
-
-            <TableRow
-                    android:id="@+id/set_ladder_guest_team_event_row"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin_size"
-                    android:layout_marginEnd="@dimen/small_margin_size"
-                    android:gravity="start" />
+                android:id="@+id/set_ladder_guest_team_event_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginEnd="@dimen/small_margin_size"
+                android:gravity="start" />
 
         </TableLayout>
 
