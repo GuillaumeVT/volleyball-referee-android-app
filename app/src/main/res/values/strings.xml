@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_30600" translatable="false">
+    <string name="rn_30700" translatable="false">
         New in this release:
-        \n\n\u2022 Design update
-        \n\n\u2022 Added support for Android 12
+        \n\n\u2022 Material 3 design update
     </string>
 
     <!-- General actions -->
