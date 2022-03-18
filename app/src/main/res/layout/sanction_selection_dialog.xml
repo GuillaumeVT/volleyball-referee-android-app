@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/sanction_nav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:background="@color/colorSurface"
-            app:elevation="@dimen/elevation"
-            app:itemBackground="@drawable/navigation_menu_item"
-            app:itemHorizontalTranslationEnabled="true"
-            app:itemIconTint="@drawable/navigation_menu_item"
-            app:itemTextColor="@drawable/navigation_menu_item"
-            app:menu="@menu/navigation_menu_sanction"/>
+        android:id="@+id/sanction_nav"
+        style="@style/AppTheme.BottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_margin_size"
+        app:menu="@menu/navigation_menu_sanction" />
 
-    <ScrollView android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <FrameLayout
-                android:id="@+id/sanction_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:layout_margin="@dimen/big_margin_size"
-                android:paddingBottom="@dimen/default_margin_size"/>
+            android:id="@+id/sanction_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:layout_margin="@dimen/big_margin_size"
+            android:paddingBottom="@dimen/default_margin_size" />
 
     </ScrollView>
 

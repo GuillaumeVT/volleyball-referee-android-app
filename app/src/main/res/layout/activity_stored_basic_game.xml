@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context="com.tonkar.volleyballreferee.ui.data.game.StoredBasicGameActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.tonkar.volleyballreferee.ui.data.game.StoredBasicGameActivity">
 
     <include layout="@layout/toolbar" />
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|center"
-                android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|center"
+            android:orientation="vertical">
 
             <include layout="@layout/stored_games_list_item" />
 
             <ListView
-                    android:id="@+id/stored_game_set_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/default_margin_size"
-                    android:divider="@android:color/transparent" />
+                android:id="@+id/stored_game_set_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/default_margin_size"
+                android:divider="@android:color/transparent" />
 
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/generate_score_sheet_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/default_margin_size"
-                android:visibility="gone">
+            android:id="@+id/generate_score_sheet_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/default_margin_size"
+            android:visibility="gone">
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_shift_default"
-                    android:onClick="generateScoreSheet"
-                    android:text="@string/create_score_sheet"
-                    app:icon="@drawable/ic_score_sheet" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_shift_default"
+                android:onClick="generateScoreSheet"
+                android:text="@string/create_score_sheet"
+                app:icon="@drawable/ic_score_sheet" />
 
         </LinearLayout>
 

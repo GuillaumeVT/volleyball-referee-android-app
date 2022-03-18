@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
@@ -27,8 +27,8 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
     static class ViewHolder {
         MaterialCardView listItemCard;
         TextView         nameText;
-        Chip             kindItem;
-        Chip             genderItem;
+        ImageView        kindItem;
+        ImageView        genderItem;
     }
 
     private final LayoutInflater       mLayoutInflater;
@@ -117,7 +117,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
                 break;
         }
 
-        viewHolder.listItemCard.setBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
 
         return teamView;
     }

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +17,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
@@ -49,8 +49,8 @@ public class StoredTeamViewActivity extends AppCompatActivity {
         }
 
         TextView nameText = findViewById(R.id.stored_team_name);
-        Chip kindItem = findViewById(R.id.team_kind_item);
-        Chip genderItem = findViewById(R.id.team_gender_item);
+        ImageView kindItem = findViewById(R.id.team_kind_item);
+        ImageView genderItem = findViewById(R.id.team_gender_item);
 
         nameText.setText(mTeamService.getTeamName(null));
 

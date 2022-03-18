@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:baselineAligned="true"
-              android:orientation="horizontal"
-              android:weightSum="2">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="true"
+    android:orientation="horizontal"
+    android:weightSum="2">
 
     <ListView
         android:id="@+id/left_team_substitutions_list"
@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/small_margin_size"
         android:divider="@android:color/transparent"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <ListView
         android:id="@+id/right_team_substitutions_list"
@@ -20,6 +20,6 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/small_margin_size"
         android:divider="@android:color/transparent"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
 </LinearLayout>

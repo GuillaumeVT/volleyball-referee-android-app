@@ -37,7 +37,6 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.tonkar.volleyballreferee.BuildConfig;
@@ -170,10 +169,10 @@ public class UiUtils {
         colorIconButton(context, button, R.drawable.ic_close);
     }
 
-    public static void colorChipIcon(Context context, @ColorRes int color, @DrawableRes int drawable, Chip chip) {
-        chip.setChipIconResource(drawable);
-        chip.setChipBackgroundColorResource(color);
-        chip.getChipIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnLightSurface), PorterDuff.Mode.SRC_IN));
+    public static void colorChipIcon(Context context, @ColorRes int color, @DrawableRes int drawable, ImageView imageView) {
+        imageView.setImageResource(drawable);
+        imageView.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+        imageView.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorOnLightSurface)));
     }
 
     public static void shareGameLink(Context context, IStoredGame storedGame) {
@@ -328,7 +327,7 @@ public class UiUtils {
                     })
                     .setActionTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
                     .setTextColor(ContextCompat.getColor(context, R.color.colorOnSurface))
-                    .setBackgroundTint(ContextCompat.getColor(context, R.color.colorPrimaryVariant))
+                    .setBackgroundTint(ContextCompat.getColor(context, R.color.colorPrimaryContainer))
                     .show();
         }
     }
@@ -346,7 +345,7 @@ public class UiUtils {
         TextView textView = layout.findViewById(R.id.toast_text);
         textView.setText(text);
 
-        int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryVariant);
+        int backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryContainer);
         ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
         textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
@@ -363,7 +362,7 @@ public class UiUtils {
         TextView textView = layout.findViewById(R.id.toast_text);
         textView.setText(text);
 
-        int backgroundColor = ContextCompat.getColor(context, R.color.colorErrorVariant);
+        int backgroundColor = ContextCompat.getColor(context, R.color.colorErrorContainer);
         ViewCompat.setBackgroundTintList(textView, ColorStateList.valueOf(backgroundColor));
         textView.setTextColor(ContextCompat.getColor(context, R.color.colorError));
 

@@ -138,7 +138,6 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:text="@string/position_1_title"
             android:textSize="@dimen/court_position_size"
-            app:iconGravity="start"
             app:iconPadding="0dp"
             app:iconSize="@dimen/court_service_size" />
 
@@ -425,7 +424,6 @@
             android:layout_marginBottom="@dimen/default_margin_size"
             android:text="@string/position_1_title"
             android:textSize="@dimen/court_position_size"
-            app:iconGravity="end"
             app:iconPadding="0dp"
             app:iconSize="@dimen/court_service_size" />
 

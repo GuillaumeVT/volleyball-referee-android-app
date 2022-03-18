@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
@@ -33,9 +33,9 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
         TextView         summaryText;
         TextView         dateText;
         TextView         scoreText;
-        Chip             kindItem;
-        Chip             genderItem;
-        Chip             indexedItem;
+        ImageView        kindItem;
+        ImageView        genderItem;
+        ImageView        indexedItem;
         TextView         leagueText;
     }
 

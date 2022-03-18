@@ -40,7 +40,7 @@
     <dimen name="court_x_padding">16dp</dimen>
     <dimen name="court_event_size">24dp</dimen>
     <dimen name="court_event_elevation">3dp</dimen>
-    <dimen name="court_service_size">13dp</dimen>
+    <dimen name="court_service_size">16dp</dimen>
 
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
@@ -62,5 +62,8 @@
 
     <dimen name="signature_width">380dp</dimen>
     <dimen name="signature_height">200dp</dimen>
+
+    <dimen name="chip_width">40dp</dimen>
+    <dimen name="chip_height">24dp</dimen>
 
 </resources>

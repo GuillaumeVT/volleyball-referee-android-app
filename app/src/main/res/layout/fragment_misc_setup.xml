@@ -1,144 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:gravity="top|center"
-        android:importantForAutofill="noExcludeDescendants"
-        android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:gravity="top|center"
+    android:importantForAutofill="noExcludeDescendants"
+    android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/AppTheme.TextInputLayoutAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size">
+        style="@style/AppTheme.TextInputLayoutAutoComplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/league_name_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/league_name"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/league_name_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/league_name"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/division_name_input_layout"
-            style="@style/AppTheme.TextInputLayoutAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            android:visibility="gone">
+        android:id="@+id/division_name_input_layout"
+        style="@style/AppTheme.TextInputLayoutAutoComplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        android:visibility="gone">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/division_name_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/division_name"
-                android:imeOptions="actionDone"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/division_name_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/division_name"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/referee_spinner_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:text="@string/referee"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/referee_spinner_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/small_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/small_margin_size"
+        android:text="@string/referee"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/referee_spinner"
+        android:id="@+id/referee_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin_size"
+        android:layout_marginEnd="@dimen/small_margin_size"
+        android:layout_marginBottom="@dimen/small_margin_size"
+        android:prompt="@string/referee"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/referee1_name_input_layout"
+        style="@style/AppTheme.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/referee1_name_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/small_margin_size"
-            android:layout_marginEnd="@dimen/small_margin_size"
-            android:layout_marginBottom="@dimen/small_margin_size"
-            android:prompt="@string/referee"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/default_text_size" />
 
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/referee1_name_input_layout"
-            style="@style/AppTheme.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            app:endIconMode="clear_text">
+        android:id="@+id/referee2_name_input_layout"
+        style="@style/AppTheme.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/referee1_name_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/referee2_name_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/referee2_name_input_layout"
-            style="@style/AppTheme.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            app:endIconMode="clear_text">
+        android:id="@+id/scorer_name_input_layout"
+        style="@style/AppTheme.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/referee2_name_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/scorer_name_input_layout"
-            style="@style/AppTheme.TextInputLayout"
+            android:id="@+id/scorer_name_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            app:endIconMode="clear_text">
-
-        <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/scorer_name_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:imeOptions="actionDone"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

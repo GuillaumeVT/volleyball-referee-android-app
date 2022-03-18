@@ -7,357 +7,357 @@
     android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:text="@string/general_rules"
-            android:textAllCaps="true"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size"
-            android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:text="@string/general_rules"
+        android:textAllCaps="true"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/rules_name_input_layout"
-            style="@style/AppTheme.TextInputLayoutAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size">
+        android:id="@+id/rules_name_input_layout"
+        style="@style/AppTheme.TextInputLayoutAutoComplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/rules_name_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/rules_name_hint"
-                android:imeOptions="actionDone"
-                android:importantForAutofill="no"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/default_margin_size"
-                android:paddingEnd="@dimen/default_margin_size"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_text_size" />
+            android:id="@+id/rules_name_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/rules_name_hint"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords"
+            android:paddingStart="@dimen/default_margin_size"
+            android:paddingEnd="@dimen/default_margin_size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_sets_per_game"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_sets_per_game"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_sets_per_game"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_sets_per_game"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_sets_per_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_sets_per_game"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_points_per_set"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_points_per_set"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_points_per_set"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_points_per_set"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_points_per_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_points_per_set"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_tie_break"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_tie_break"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_tie_break"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_tie_break"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_points_in_tie_break"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_points_in_tie_break"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_points_in_tie_break"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_points_in_tie_break"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_points_in_tie_break"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_points_in_tie_break"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_two_points_difference"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_two_points_difference"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_two_points_difference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_two_points_difference"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_sanctions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_sanctions"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_sanctions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_sanctions"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_match_termination"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_match_termination"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_match_termination"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_match_termination"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_match_termination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_match_termination"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:text="@string/timeouts_tab"
-            android:textAllCaps="true"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size"
-            android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:text="@string/timeouts_tab"
+        android:textAllCaps="true"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_team_timeouts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_team_timeouts"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_team_timeouts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_team_timeouts"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_team_timeouts_per_set"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_team_timeouts_per_set"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_team_timeouts_per_set"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_team_timeouts_per_set"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_team_timeouts_per_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_team_timeouts_per_set"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_team_timeout_duration"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_team_timeout_duration"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_team_timeout_duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_team_timeout_duration"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_team_timeout_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_team_timeout_duration"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_technical_timeouts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_technical_timeouts"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_technical_timeouts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_technical_timeouts"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_technical_timeout_duration"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_technical_timeout_duration"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_technical_timeout_duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_technical_timeout_duration"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_technical_timeout_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_technical_timeout_duration"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_game_intervals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_game_intervals"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_game_intervals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_game_intervals"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_game_intervals_duration"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_game_intervals_duration"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_game_intervals_duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_game_intervals_duration"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_game_intervals_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_game_intervals_duration"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:text="@string/rules_court_switches"
-            android:textAllCaps="true"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/default_text_size"
-            android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:text="@string/rules_court_switches"
+        android:textAllCaps="true"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/default_text_size"
+        android:textStyle="bold" />
 
-    <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rules_court_switches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin_size"
-            android:text="@string/rules_court_switches"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="@dimen/default_text_size" />
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/rules_court_switches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        android:text="@string/rules_court_switches"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_court_switch_frequency"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_court_switch_frequency"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_court_switch_frequency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_court_switch_frequency"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_court_switch_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_court_switch_frequency"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginTop="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:text="@string/rules_court_switch_frequency_tie_break"
-            android:textAppearance="@style/AppTheme.TextView"
-            android:textSize="@dimen/default_text_size" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginTop="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:text="@string/rules_court_switch_frequency_tie_break"
+        android:textAppearance="@style/AppTheme.TextView"
+        android:textSize="@dimen/default_text_size" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/rules_court_switch_frequency_tie_break"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:layout_marginEnd="@dimen/big_margin_size"
-            android:layout_marginBottom="@dimen/big_margin_size"
-            android:prompt="@string/rules_court_switch_frequency_tie_break"
-            android:spinnerMode="dialog"
-            android:textColor="@color/colorDisabledText"
-            android:textSize="@dimen/default_text_size" />
+        android:id="@+id/rules_court_switch_frequency_tie_break"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin_size"
+        android:layout_marginEnd="@dimen/big_margin_size"
+        android:layout_marginBottom="@dimen/big_margin_size"
+        android:prompt="@string/rules_court_switch_frequency_tie_break"
+        android:spinnerMode="dialog"
+        android:textColor="@color/colorDisabledText"
+        android:textSize="@dimen/default_text_size" />
 
 </LinearLayout>

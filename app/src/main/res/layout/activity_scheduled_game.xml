@@ -36,7 +36,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/date_input_button"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/default_margin_size"
@@ -46,7 +46,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/time_input_button"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_margin_size"

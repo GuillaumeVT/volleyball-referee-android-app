@@ -164,16 +164,14 @@ public class MainActivity extends NavigationActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_account_menu:
-                Log.i(Tags.USER_UI, "User account");
-                Intent intent = new Intent(this, UserActivity.class);
-                startActivity(intent);
-                UiUtils.animateForward(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_account_menu) {
+            Log.i(Tags.USER_UI, "User account");
+            Intent intent = new Intent(this, UserActivity.class);
+            startActivity(intent);
+            UiUtils.animateForward(this);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void resumeCurrentGame(View view) {
@@ -368,13 +366,16 @@ public class MainActivity extends NavigationActivity {
         if (!sharedPreferences.getBoolean(releaseNotesKey, false)) {
             try {
                 int resourceId = getResources().getIdentifier(releaseNotesKey, "string", getPackageName());
-                String releaseNotes = getString(resourceId);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                        .setTitle(String.format("Welcome to Volleyball Referee %s", BuildConfig.VERSION_NAME)).setMessage(releaseNotes)
-                        .setPositiveButton(android.R.string.yes, (dialog, which) -> sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply());
-                AlertDialog alertDialog = builder.show();
-                UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+                if (resourceId > 0) {
+                    String releaseNotes = getString(resourceId);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
+                            .setTitle(String.format("Welcome to Volleyball Referee %s", BuildConfig.VERSION_NAME)).setMessage(releaseNotes)
+                            .setPositiveButton(android.R.string.yes, (dialog, which) -> sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply());
+                    AlertDialog alertDialog = builder.show();
+                    UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
+                }
             } catch (Resources.NotFoundException e) {
                 Log.i(Tags.MAIN_UI, String.format("There is no release note %s", releaseNotesKey));
             }

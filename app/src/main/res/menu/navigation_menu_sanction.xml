@@ -4,11 +4,11 @@
     <item
         android:id="@+id/delay_sanction_tab"
         android:icon="@drawable/ic_thumb_timeout_white"
-        android:title="@string/delay_sanction"/>
+        android:title="@string/delay_sanction" />
 
     <item
         android:id="@+id/misconduct_sanction_tab"
         android:icon="@drawable/ic_sanctions_tab"
-        android:title="@string/misconduct_sanction"/>
+        android:title="@string/misconduct_sanction" />
 
 </menu>

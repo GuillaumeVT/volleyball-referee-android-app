@@ -4,16 +4,15 @@
 
     <item
         android:id="@+id/action_search_games"
-        android:icon="@drawable/ic_search_menu"
         android:orderInCategory="1"
         android:title="@string/search_games"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_menu"
         android:orderInCategory="2"
         android:title="@string/synchronize"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

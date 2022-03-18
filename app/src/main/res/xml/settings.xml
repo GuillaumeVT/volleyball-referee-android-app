@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="pref_keep_screen_on"
-            android:title="@string/pref_keep_screen_on"
-            app:icon="@drawable/ic_screen_on"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
+        android:defaultValue="false"
+        android:key="pref_keep_screen_on"
+        android:title="@string/pref_keep_screen_on"
+        app:icon="@drawable/ic_screen_on"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <androidx.preference.ListPreference
-            android:defaultValue="system"
-            android:entries="@array/night_mode_entries"
-            android:entryValues="@array/night_mode_values"
-            android:key="pref_night_mode"
-            android:summary="%s"
-            android:title="@string/pref_night_mode"
-            app:icon="@drawable/ic_night_mode"
-            app:iconSpaceReserved="false" />
+        android:defaultValue="system"
+        android:entries="@array/night_mode_entries"
+        android:entryValues="@array/night_mode_values"
+        android:key="pref_night_mode"
+        android:summary="%s"
+        android:title="@string/pref_night_mode"
+        app:icon="@drawable/ic_night_mode"
+        app:iconSpaceReserved="false" />
 
 </androidx.preference.PreferenceScreen>

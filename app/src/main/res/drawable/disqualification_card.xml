@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:left="@dimen/sanction_size" android:right="0dp">
+    <item
+        android:left="@dimen/sanction_size"
+        android:right="0dp">
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
-            <solid android:color="@color/colorYellowCard"/>
-            <size android:width="@dimen/big_margin_size" android:height="@dimen/sanction_size"/>
+            <solid android:color="@color/colorYellowCard" />
+            <size
+                android:width="@dimen/big_margin_size"
+                android:height="@dimen/sanction_size" />
         </shape>
     </item>
-    <item android:left="0dp" android:right="@dimen/sanction_size">
+    <item
+        android:left="0dp"
+        android:right="@dimen/sanction_size">
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
-            <solid android:color="@color/colorRedCard"/>
-            <size android:width="@dimen/sanction_size" android:height="@dimen/sanction_size"/>
+            <solid android:color="@color/colorRedCard" />
+            <size
+                android:width="@dimen/sanction_size"
+                android:height="@dimen/sanction_size" />
         </shape>
     </item>
 </layer-list>

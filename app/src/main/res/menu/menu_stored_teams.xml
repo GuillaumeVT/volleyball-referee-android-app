@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_search_teams"
-        android:icon="@drawable/ic_search_menu"
         android:orderInCategory="1"
         android:title="@string/search_teams"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_menu"
         android:orderInCategory="2"
         android:title="@string/synchronize"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_delete_teams"
         android:icon="@drawable/ic_delete_menu"
         android:orderInCategory="3"
         android:title="@string/delete_selected_teams"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

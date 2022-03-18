@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-            style="@style/AppTheme.RoundedCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            app:contentPadding="@dimen/default_margin_size">
+        style="@style/AppTheme.RoundedCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        app:contentPadding="@dimen/default_margin_size">
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/friend_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/default_margin_size"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
             <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/friend_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin_size"
-                    android:textAppearance="@style/AppTheme.TextView"
-                    android:textSize="@dimen/default_text_size" />
-
-            <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="@dimen/small_margin_size"
-                    android:text="@string/pending"
-                    android:textAllCaps="true"
-                    android:textAppearance="@style/AppTheme.TextView"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/small_text_size"
-                    android:textStyle="italic" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/small_margin_size"
+                android:text="@string/pending"
+                android:textAllCaps="true"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="italic" />
 
         </LinearLayout>
 

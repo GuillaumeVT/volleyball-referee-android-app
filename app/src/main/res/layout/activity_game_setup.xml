@@ -22,14 +22,9 @@
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/game_setup_nav"
+                style="@style/AppTheme.BottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorSurface"
-                app:elevation="@dimen/elevation"
-                app:itemBackground="@drawable/navigation_menu_item"
-                app:itemHorizontalTranslationEnabled="true"
-                app:itemIconTint="@drawable/navigation_menu_item"
-                app:itemTextColor="@drawable/navigation_menu_item"
                 app:menu="@menu/navigation_menu_game_setup" />
 
             <ScrollView

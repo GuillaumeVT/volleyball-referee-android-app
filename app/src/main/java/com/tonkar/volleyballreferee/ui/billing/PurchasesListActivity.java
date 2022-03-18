@@ -2,19 +2,21 @@ package com.tonkar.volleyballreferee.ui.billing;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
+
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.billing.BillingListener;
 import com.tonkar.volleyballreferee.engine.billing.BillingManager;
 import com.tonkar.volleyballreferee.engine.billing.BillingService;
 import com.tonkar.volleyballreferee.ui.NavigationActivity;
 
-public class PurchasesListActivity extends NavigationActivity implements BillingListener {
+public class PurchasesListActivity extends NavigationActivity {
 
-    private BillingService       mBillingService;
-    private PurchasesListAdapter mPurchasesListAdapter;
+    private BillingService    mBillingService;
+    private PurchaseViewModel mPurchaseViewModel;
 
     @Override
     protected String getToolbarTitle() {
@@ -37,21 +39,23 @@ public class PurchasesListActivity extends NavigationActivity implements Billing
 
         mBillingService = new BillingManager(this);
 
-        final ListView purchasesList = findViewById(R.id.purchases_list);
-        mPurchasesListAdapter = new PurchasesListAdapter(this, getLayoutInflater(), mBillingService);
-        purchasesList.setAdapter(mPurchasesListAdapter);
+        final RecyclerView purchaseList = findViewById(R.id.purchases_list);
+        final PurchasesListAdapter purchasesListAdapter = new PurchasesListAdapter(new PurchasesListAdapter.PurchaseDiff(), mBillingService);
+        purchasesListAdapter.setHasStableIds(true);
+        purchaseList.setAdapter(purchasesListAdapter);
+        purchaseList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        mBillingService.addBillingListener(this);
+        mPurchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
+        mPurchaseViewModel.init(mBillingService);
+        mPurchaseViewModel
+                .getPurchaseList()
+                .observe(this, purchasesListAdapter::submitList);
+        mBillingService.addBillingListener(mPurchaseViewModel);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBillingService.removeBillingListener(this);
-    }
-
-    @Override
-    public void onPurchasesUpdated() {
-        runOnUiThread(() -> mPurchasesListAdapter.updatePurchasesList());
+        mBillingService.removeBillingListener(mPurchaseViewModel);
     }
 }

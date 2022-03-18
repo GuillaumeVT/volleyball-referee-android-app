@@ -1,58 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants"
-        android:transitionName="listItemToDetails">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:transitionName="listItemToDetails">
 
     <com.google.android.material.card.MaterialCardView
-            android:id="@+id/list_item_card"
-            style="@style/AppTheme.RoundedCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin_size"
-            app:contentPadding="@dimen/default_margin_size">
+        android:id="@+id/list_item_card"
+        style="@style/AppTheme.RoundedCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin_size"
+        app:contentPadding="@dimen/default_margin_size">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/stored_team_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center|start"
-                    android:textAppearance="@style/AppTheme.TextView"
-                    android:textSize="@dimen/default_text_size" />
+                android:id="@+id/stored_team_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/default_text_size" />
 
-            <com.google.android.material.chip.ChipGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipSpacing="@dimen/default_margin_size">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/team_kind_item"
+                style="@style/AppTheme.IconChip"
+                android:layout_marginStart="@dimen/default_margin_size"
+                android:backgroundTint="@color/colorBeachLight"
+                app:srcCompat="@drawable/ic_beach"
+                app:tint="@color/colorOnLightSurface" />
 
-                <com.google.android.material.chip.Chip
-                        android:id="@+id/team_kind_item"
-                        style="@style/AppTheme.IconChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipBackgroundColor="@color/colorBeachLight"
-                        app:chipIcon="@drawable/ic_beach" />
-
-                <com.google.android.material.chip.Chip
-                        android:id="@+id/team_gender_item"
-                        style="@style/AppTheme.IconChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:chipBackgroundColor="@color/colorMixedLight"
-                        app:chipIcon="@drawable/ic_mixed" />
-
-            </com.google.android.material.chip.ChipGroup>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/team_gender_item"
+                style="@style/AppTheme.IconChip"
+                android:layout_marginStart="@dimen/default_margin_size"
+                android:backgroundTint="@color/colorMixedLight"
+                app:srcCompat="@drawable/ic_mixed"
+                app:tint="@color/colorOnLightSurface" />
 
         </LinearLayout>
 
