@@ -307,7 +307,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>5 játszmás mérkőzések</item>
+        <item>4 játszmás mérkőzések</item>
         <item>3 játszmás mérkőzések</item>
+        <item>2 játszmás mérkőzések</item>
         <item>1 játszmás mérkőzések</item>
     </string-array>
     <string-array name="match_termination_entries">

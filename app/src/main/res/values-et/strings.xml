@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>5-geimiline mäng</item>
+        <item>4-geimiline mäng</item>
         <item>3-geimiline mäng</item>
+        <item>2-geimiline mäng</item>
         <item>1-geimiline mäng</item>
     </string-array>
     <string-array name="match_termination_entries">

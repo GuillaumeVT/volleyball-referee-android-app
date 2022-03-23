@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Mecz 5 setowy</item>
+        <item>Mecz 4 setowy</item>
         <item>Mecz 3 setowy</item>
+        <item>Mecz 2 setowy</item>
         <item>Mecz 1 setowy</item>
     </string-array>
     <string-array name="match_termination_entries">

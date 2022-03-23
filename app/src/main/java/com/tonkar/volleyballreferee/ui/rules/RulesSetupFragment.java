@@ -160,7 +160,11 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mSetsPerGameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setSetsPerGame(mSetsPerGameAdapter.getItem(index));
+                int setsPerGame = mSetsPerGameAdapter.getItem(index);
+                mRules.setSetsPerGame(setsPerGame);
+                if (setsPerGame % 2 == 0) {
+                    mMatchTerminationSpinner.setSelection(mMatchTerminationAdapter.getPosition(2)); // ALL_SETS_TERMINATION
+                }
             }
 
             @Override
@@ -199,7 +203,11 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mMatchTerminationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                mRules.setMatchTermination(mMatchTerminationAdapter.getItem(index));
+                if (mRules.getSetsPerGame() % 2 == 0) {
+                    mMatchTerminationSpinner.setSelection(mMatchTerminationAdapter.getPosition(2)); // ALL_SETS_TERMINATION
+                } else {
+                    mRules.setMatchTermination(mMatchTerminationAdapter.getItem(index));
+                }
             }
 
             @Override

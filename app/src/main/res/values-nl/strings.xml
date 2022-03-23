@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Wedstrijd van 5 sets</item>
+        <item>Wedstrijd van 4 sets</item>
         <item>Wedstrijd van 3 sets</item>
+        <item>Wedstrijd van 2 sets</item>
         <item>Wedstrijd van 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">

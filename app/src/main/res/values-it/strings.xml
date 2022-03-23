@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Partita in 5 set</item>
+        <item>Partita in 4 set</item>
         <item>Partita in 3 set</item>
+        <item>Partita in 2 set</item>
         <item>Partita in 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">

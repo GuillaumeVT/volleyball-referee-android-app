@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Αγώνας των 5 σετ</item>
+        <item>Αγώνας των 4 σετ</item>
         <item>Αγώνας των 3 σετ</item>
+        <item>Αγώνας των 2 σετ</item>
         <item>Αγώνας του 1 σετ</item>
     </string-array>
     <string-array name="match_termination_entries">

@@ -305,7 +305,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Match en 5 sets</item>
+        <item>Match en 4 sets</item>
         <item>Match en 3 sets</item>
+        <item>Match en 2 sets</item>
         <item>Match en 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">

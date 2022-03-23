@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>مباراة من خمس اشواط</item>
+        <item>مباراة من أربعة اشواط</item>
         <item>مباراة من ثلاث أشواط</item>
+        <item>مباراة من اثنين أشواط</item>
         <item>مباراة من شوط واحد</item>
     </string-array>
     <string-array name="match_termination_entries">

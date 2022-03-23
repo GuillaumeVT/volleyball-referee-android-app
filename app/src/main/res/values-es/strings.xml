@@ -306,7 +306,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Partido de 5 sets</item>
+        <item>Partido de 4 sets</item>
         <item>Partido de 3 sets</item>
+        <item>Partido de 2 sets</item>
         <item>Partido de 1 set</item>
     </string-array>
     <string-array name="match_termination_entries">

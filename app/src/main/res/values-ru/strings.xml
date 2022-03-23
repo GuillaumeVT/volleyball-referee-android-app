@@ -305,7 +305,9 @@
     </string-array>
     <string-array name="sets_per_game_entries">
         <item>Матч из 5 партий</item>
+        <item>Матч из 4 партий</item>
         <item>Матч из 3 партий</item>
+        <item>Матч из 2 партий</item>
         <item>Матч из 1 партии</item>
     </string-array>
     <string-array name="match_termination_entries">

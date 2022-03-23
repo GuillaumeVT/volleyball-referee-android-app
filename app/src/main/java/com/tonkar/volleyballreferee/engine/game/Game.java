@@ -23,6 +23,7 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -438,11 +439,23 @@ public abstract class Game extends BaseGame {
 
     @Override
     public boolean isMatchPoint() {
-        final int homeTeamSetCount = 1 + getSets(TeamType.HOME);
-        final int guestTeamSetCount = 1 + getSets(TeamType.GUEST);
+        boolean matchPoint;
 
-        return !isMatchCompleted() && isSetPoint()
-                && ((TeamType.HOME.equals(getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
+        switch (mRules.getMatchTermination()) {
+            case Rules.ALL_SETS_TERMINATION:
+                matchPoint = !isMatchCompleted() && isSetPoint() && (1 + getSets(TeamType.HOME) + getSets(TeamType.GUEST) == mRules.getSetsPerGame());
+                break;
+            case Rules.WIN_TERMINATION:
+            default:
+                final int homeTeamSetCount = 1 + getSets(TeamType.HOME);
+                final int guestTeamSetCount = 1 + getSets(TeamType.GUEST);
+
+                matchPoint = !isMatchCompleted() && isSetPoint()
+                        && ((TeamType.HOME.equals(getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
+                break;
+        }
+
+        return matchPoint;
     }
 
     @Override
@@ -581,7 +594,7 @@ public abstract class Game extends BaseGame {
     boolean isTieBreakSet() {
         return getSets(TeamType.HOME) + getSets(TeamType.GUEST) + 1 == mRules.getSetsPerGame()
                 && mRules.isTieBreakInLastSet()
-                && mRules.getSetsPerGame() > 1;
+                && Arrays.asList(3, 5).contains(mRules.getSetsPerGame());
     }
 
     private void notifySetsUpdated(final TeamType teamType, int newCount) {

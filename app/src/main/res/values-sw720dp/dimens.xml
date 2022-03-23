@@ -31,7 +31,7 @@
     <dimen name="sanction_half_size">16dp</dimen>
     <dimen name="sanction_max_width">64dp</dimen>
 
-    <dimen name="player_court_button_size">70dp</dimen>
+    <dimen name="player_court_button_size">100dp</dimen>
     <dimen name="indoor_court_y_margin">84dp</dimen>
     <dimen name="beach_court_y_padding">56dp</dimen>
     <dimen name="snow_court_y_padding">40dp</dimen>
