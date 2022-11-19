@@ -5,8 +5,7 @@
     style="@style/AppTheme.TextInputLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/small_margin_size"
-    app:endIconMode="clear_text">
+    android:layout_margin="@dimen/small_margin_size">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/player_name_input_text"

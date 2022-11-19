@@ -6,14 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.ProductDetails;
 import com.tonkar.volleyballreferee.engine.billing.BillingService;
 
-public class PurchasesListAdapter extends ListAdapter<SkuDetails, PurchaseViewHolder> {
+public class PurchasesListAdapter extends ListAdapter<ProductDetails, PurchaseViewHolder> {
 
     private final BillingService mBillingService;
 
-    PurchasesListAdapter(@NonNull DiffUtil.ItemCallback<SkuDetails> diffCallback, BillingService billingService) {
+    PurchasesListAdapter(@NonNull DiffUtil.ItemCallback<ProductDetails> diffCallback, BillingService billingService) {
         super(diffCallback);
         mBillingService = billingService;
     }
@@ -26,19 +26,19 @@ public class PurchasesListAdapter extends ListAdapter<SkuDetails, PurchaseViewHo
 
     @Override
     public void onBindViewHolder(@NonNull PurchaseViewHolder holder, int position) {
-        SkuDetails skuDetails = getItem(position);
-        holder.bind(skuDetails, mBillingService);
+        ProductDetails productDetails = getItem(position);
+        holder.bind(productDetails, mBillingService);
     }
 
-    static class PurchaseDiff extends DiffUtil.ItemCallback<SkuDetails> {
+    static class PurchaseDiff extends DiffUtil.ItemCallback<ProductDetails> {
         @Override
-        public boolean areItemsTheSame(@NonNull SkuDetails oldItem, @NonNull SkuDetails newItem) {
+        public boolean areItemsTheSame(@NonNull ProductDetails oldItem, @NonNull ProductDetails newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull SkuDetails oldItem, @NonNull SkuDetails newItem) {
-            return oldItem.getSku().equals(newItem.getSku());
+        public boolean areContentsTheSame(@NonNull ProductDetails oldItem, @NonNull ProductDetails newItem) {
+            return oldItem.getProductId().equals(newItem.getProductId());
         }
     }
 }

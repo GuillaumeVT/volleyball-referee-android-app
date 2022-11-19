@@ -11,10 +11,11 @@ import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ProductDetails;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.QueryProductDetailsParams;
+import com.android.billingclient.api.QueryPurchasesParams;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 
@@ -39,19 +40,19 @@ public class BillingManager implements BillingService {
     }
 
     private abstract class AbstractBillingManager implements PurchasesUpdatedListener {
-        protected       String           mSkuType;
-        protected       BillingClient    mBillingClient;
-        protected       boolean          mIsServiceConnected;
-        protected final List<String>     mSkus;
-        protected final List<SkuDetails> mSkuDetailsList;
-        protected final Set<String>      mPurchasedSkus;
+        protected       String               mProductType;
+        protected       BillingClient        mBillingClient;
+        protected       boolean              mIsServiceConnected;
+        protected final List<String>         mProductIds;
+        protected final List<ProductDetails> mProductDetailList;
+        protected final Set<String>          mPurchasedProducts;
 
-        AbstractBillingManager(String skuType) {
-            mSkuType = skuType;
+        AbstractBillingManager(String productType) {
+            mProductType = productType;
             mIsServiceConnected = false;
-            mSkus = new ArrayList<>();
-            mSkuDetailsList = new ArrayList<>();
-            mPurchasedSkus = new HashSet<>();
+            mProductIds = new ArrayList<>();
+            mProductDetailList = new ArrayList<>();
+            mPurchasedProducts = new HashSet<>();
             mBillingClient = BillingClient
                     .newBuilder(mActivity)
                     .enablePendingPurchases()
@@ -79,15 +80,30 @@ public class BillingManager implements BillingService {
             });
         }
 
-        void querySkuList() {
-            SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
-            params.setSkusList(mSkus).setType(mSkuType);
-            mBillingClient.querySkuDetailsAsync(
-                    params.build(),
-                    (billingResult, skuDetailsList) -> {
-                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                            mSkuDetailsList.clear();
-                            mSkuDetailsList.addAll(skuDetailsList);
+        void queryProductList() {
+            List<QueryProductDetailsParams.Product> productList = new ArrayList<>();
+
+            for (String productId: mProductIds) {
+                productList.add(
+                        QueryProductDetailsParams.Product
+                                .newBuilder()
+                                .setProductId(productId)
+                                .setProductType(mProductType)
+                                .build()
+                );
+            }
+
+            QueryProductDetailsParams params = QueryProductDetailsParams
+                    .newBuilder()
+                    .setProductList(productList)
+                    .build();
+
+            mBillingClient.queryProductDetailsAsync(
+                    params,
+                    (billingResult, productDetailsList) -> {
+                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                            mProductDetailList.clear();
+                            mProductDetailList.addAll(productDetailsList);
                         }
 
                         for (BillingListener listener : mBillingListeners) {
@@ -97,25 +113,47 @@ public class BillingManager implements BillingService {
         }
 
         void queryPurchases() {
-            Runnable queryToExecute = () -> mBillingClient.queryPurchasesAsync(mSkuType, this::onPurchasesUpdated);
-            executeServiceRequest(mSkuType, queryToExecute);
+            Runnable queryToExecute = () -> mBillingClient.queryPurchasesAsync(QueryPurchasesParams.newBuilder().setProductType(mProductType).build(), this::onPurchasesUpdated);
+            executeServiceRequest(mProductType, queryToExecute);
         }
 
-        void launchPurchase(SkuDetails skuDetails) {
-            BillingFlowParams flowParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build();
-            mBillingClient.launchBillingFlow(mActivity, flowParams);
+        void launchPurchase(ProductDetails productDetails) {
+            BillingFlowParams.ProductDetailsParams productDetailsParams;
+
+            if (BillingClient.ProductType.SUBS.equals(mProductType)) {
+                String offerToken = productDetails
+                        .getSubscriptionOfferDetails()
+                        .get(0)
+                        .getOfferToken();
+
+                productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+                        .setProductDetails(productDetails)
+                        .setOfferToken(offerToken)
+                        .build();
+            } else {
+                productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+                        .setProductDetails(productDetails)
+                        .build();
+            }
+
+            BillingFlowParams billingFlowParams = BillingFlowParams
+                    .newBuilder()
+                    .setProductDetailsParamsList(List.of(productDetailsParams))
+                    .build();
+
+            mBillingClient.launchBillingFlow(mActivity, billingFlowParams);
         }
     }
 
     private class InAppBillingManager extends AbstractBillingManager {
 
         InAppBillingManager() {
-            super(BillingClient.SkuType.INAPP);
-            mSkus.add(WEB_PREMIUM);
-            mSkus.add(SCORE_SHEETS);
+            super(BillingClient.ProductType.INAPP);
+            mProductIds.add(WEB_PREMIUM);
+            mProductIds.add(SCORE_SHEETS);
 
             startServiceConnection(() -> {
-                querySkuList();
+                queryProductList();
                 queryPurchases();
             });
         }
@@ -128,12 +166,12 @@ public class BillingManager implements BillingService {
                         handlePurchase(purchase);
                     }
                 } else if (PrefUtils.isWebPremiumPurchased(mActivity)) {
-                    mPurchasedSkus.remove(WEB_PREMIUM);
+                    mPurchasedProducts.remove(WEB_PREMIUM);
                     PrefUtils.unpurchaseWebPremium(mActivity);
                     PrefUtils.signOut(mActivity);
                     mActivity.recreate();
                 } else if (PrefUtils.isScoreSheetsPurchased(mActivity)) {
-                    mPurchasedSkus.remove(SCORE_SHEETS);
+                    mPurchasedProducts.remove(SCORE_SHEETS);
                     PrefUtils.unpurchaseScoreSheets(mActivity);
                     mActivity.recreate();
                 }
@@ -150,14 +188,14 @@ public class BillingManager implements BillingService {
 
         private void handlePurchase(Purchase purchase) {
             if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-                if (purchase.getSkus().contains(BillingService.WEB_PREMIUM)) {
-                    mPurchasedSkus.add(WEB_PREMIUM);
+                if (purchase.getProducts().contains(BillingService.WEB_PREMIUM)) {
+                    mPurchasedProducts.add(WEB_PREMIUM);
                     if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
                         PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
                         mActivity.recreate();
                     }
-                } else if (purchase.getSkus().contains(BillingService.SCORE_SHEETS)) {
-                    mPurchasedSkus.add(SCORE_SHEETS);
+                } else if (purchase.getProducts().contains(BillingService.SCORE_SHEETS)) {
+                    mPurchasedProducts.add(SCORE_SHEETS);
                     if (!PrefUtils.isScoreSheetsPurchased(mActivity)) {
                         PrefUtils.purchaseScoreSheets(mActivity, purchase.getPurchaseToken());
                         mActivity.recreate();
@@ -178,11 +216,11 @@ public class BillingManager implements BillingService {
     private class SubscriptionBillingManager extends AbstractBillingManager {
 
         SubscriptionBillingManager() {
-            super(BillingClient.SkuType.SUBS);
-            mSkus.add(WEB_PREMIUM_SUBSCRIPTION);
+            super(BillingClient.ProductType.SUBS);
+            mProductIds.add(WEB_PREMIUM_SUBSCRIPTION);
 
             startServiceConnection(() -> {
-                querySkuList();
+                queryProductList();
                 queryPurchases();
             });
         }
@@ -195,7 +233,7 @@ public class BillingManager implements BillingService {
                         handlePurchase(purchase);
                     }
                 } else if (PrefUtils.isWebPremiumSubscribed(mActivity)) {
-                    mPurchasedSkus.remove(WEB_PREMIUM_SUBSCRIPTION);
+                    mPurchasedProducts.remove(WEB_PREMIUM_SUBSCRIPTION);
                     PrefUtils.unsubscribeWebPremium(mActivity);
                     PrefUtils.signOut(mActivity);
                     mActivity.recreate();
@@ -213,8 +251,8 @@ public class BillingManager implements BillingService {
 
         private void handlePurchase(Purchase purchase) {
             if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-                if (purchase.getSkus().contains(BillingService.WEB_PREMIUM_SUBSCRIPTION)) {
-                    mPurchasedSkus.add(WEB_PREMIUM_SUBSCRIPTION);
+                if (purchase.getProducts().contains(BillingService.WEB_PREMIUM_SUBSCRIPTION)) {
+                    mPurchasedProducts.add(WEB_PREMIUM_SUBSCRIPTION);
                     if (PrefUtils.isWebPremiumSubscribed(mActivity)) {
                         if (!purchase.getPurchaseToken().equals(PrefUtils.getWebPremiumBillingToken(mActivity))) {
                             PrefUtils.subscribeWebPremium(mActivity, purchase.getPurchaseToken());
@@ -238,8 +276,8 @@ public class BillingManager implements BillingService {
     }
 
     @Override
-    public void executeServiceRequest(String skuType, Runnable runnable) {
-        AbstractBillingManager abstractBillingManager = BillingClient.SkuType.INAPP.equals(skuType) ? mInAppBillingManager : mSubscriptionBillingManager;
+    public void executeServiceRequest(String productType, Runnable runnable) {
+        AbstractBillingManager abstractBillingManager = BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager : mSubscriptionBillingManager;
 
         if (abstractBillingManager.mIsServiceConnected) {
             runnable.run();
@@ -259,45 +297,19 @@ public class BillingManager implements BillingService {
     }
 
     @Override
-    public List<SkuDetails> getSkuDetailsList(String skuType) {
-        return BillingClient.SkuType.INAPP.equals(skuType) ? mInAppBillingManager.mSkuDetailsList : mSubscriptionBillingManager.mSkuDetailsList;
+    public List<ProductDetails> getProductDetailList(String productType) {
+        return BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager.mProductDetailList : mSubscriptionBillingManager.mProductDetailList;
     }
 
     @Override
-    public boolean isPurchased(String skuType, String sku) {
-        return BillingClient.SkuType.INAPP.equals(skuType) ? mInAppBillingManager.mPurchasedSkus.contains(sku) : mSubscriptionBillingManager.mPurchasedSkus.contains(sku);
+    public boolean isPurchased(String productType, String product) {
+        return BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager.mPurchasedProducts.contains(product) : mSubscriptionBillingManager.mPurchasedProducts.contains(product);
     }
 
     @Override
-    public boolean isAllPurchased() {
-        boolean hasWebPremium = false;
-        boolean hasWebPremiumSubscription = false;
-        boolean hasScoreSheets = false;
-
-        for (String sku : mInAppBillingManager.mSkus) {
-            switch (sku) {
-                case SCORE_SHEETS:
-                    hasScoreSheets = mInAppBillingManager.mPurchasedSkus.contains(sku);
-                    break;
-                case WEB_PREMIUM:
-                    hasWebPremium = mInAppBillingManager.mPurchasedSkus.contains(sku);
-                    break;
-            }
-        }
-
-        for (String sku : mSubscriptionBillingManager.mSkus) {
-            if (WEB_PREMIUM_SUBSCRIPTION.equals(sku)) {
-                hasWebPremiumSubscription = mSubscriptionBillingManager.mPurchasedSkus.contains(sku);
-            }
-        }
-
-        return (hasWebPremium || hasWebPremiumSubscription) && hasScoreSheets;
-    }
-
-    @Override
-    public void launchPurchase(String skuType, SkuDetails skuDetails) {
-        AbstractBillingManager abstractBillingManager = BillingClient.SkuType.INAPP.equals(skuType) ? mInAppBillingManager : mSubscriptionBillingManager;
-        abstractBillingManager.launchPurchase(skuDetails);
+    public void launchPurchase(String productType, ProductDetails productDetails) {
+        AbstractBillingManager abstractBillingManager = BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager : mSubscriptionBillingManager;
+        abstractBillingManager.launchPurchase(productDetails);
     }
 
 }

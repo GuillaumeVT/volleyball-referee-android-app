@@ -28,11 +28,8 @@ import java.util.Locale;
 
 public class PlayerNamesInputDialogFragment extends DialogFragment {
 
-    private       View                  mView;
-    private       PlayerNameListAdapter mPlayerNameListAdapter;
-    private       TeamType              mTeamType;
-    private       IBaseTeam             mTeam;
-    private final List<ApiPlayer>       mPlayers;
+    private View      mView;
+    private IBaseTeam mTeam;
 
     public static PlayerNamesInputDialogFragment newInstance(TeamType teamType) {
         PlayerNamesInputDialogFragment fragment = new PlayerNamesInputDialogFragment();
@@ -42,9 +39,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public PlayerNamesInputDialogFragment() {
-        mPlayers = new ArrayList<>();
-    }
+    public PlayerNamesInputDialogFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,14 +48,14 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+        TeamType teamType = TeamType.valueOf(getArguments().getString("teamType"));
 
         mView = getActivity().getLayoutInflater().inflate(R.layout.player_names_input_dialog, null);
 
         ListView playerNameList = mView.findViewById(R.id.player_name_list);
         playerNameList.setItemsCanFocus(true);
-        mPlayerNameListAdapter = new PlayerNameListAdapter(getActivity().getLayoutInflater());
-        playerNameList.setAdapter(mPlayerNameListAdapter);
+        PlayerNameListAdapter playerNameListAdapter = new PlayerNameListAdapter(getActivity().getLayoutInflater(), teamType, mTeam);
+        playerNameList.setAdapter(playerNameListAdapter);
 
         AlertDialog alertDialog = new AlertDialog
                 .Builder(getContext(), R.style.AppTheme_Dialog)
@@ -77,22 +72,21 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
     }
 
     public void setTeam(IBaseTeam team) {
-        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
         mTeam = team;
-        mPlayers.clear();
-        mPlayers.addAll(mTeam.getPlayers(mTeamType));
-        if (mPlayerNameListAdapter != null) {
-            mPlayerNameListAdapter.notifyDataSetChanged();
-        }
     }
 
-
-    private class PlayerNameListAdapter extends BaseAdapter {
+    private static class PlayerNameListAdapter extends BaseAdapter {
 
         private final LayoutInflater  mLayoutInflater;
+        private final TeamType        mTeamType;
+        private final IBaseTeam       mTeam;
+        private final List<ApiPlayer> mPlayers;
 
-        private PlayerNameListAdapter(LayoutInflater layoutInflater) {
+        private PlayerNameListAdapter(LayoutInflater layoutInflater, TeamType teamType, IBaseTeam team) {
             mLayoutInflater = layoutInflater;
+            mTeamType = teamType;
+            mTeam = team;
+            mPlayers = new ArrayList<>(mTeam.getPlayers(mTeamType));
         }
 
         @Override
@@ -111,7 +105,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View view, ViewGroup parent) {
             View playerNameView = mLayoutInflater.inflate(R.layout.player_name_item, parent, false);
 
             TextInputLayout playerNameInputTextLayout = playerNameView.findViewById(R.id.player_name_input_layout);
@@ -120,7 +114,6 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
             ApiPlayer player = mPlayers.get(position);
             playerNameInputText.setText(player.getName());
             playerNameInputTextLayout.setHint(String.format(Locale.getDefault(), "#%d", player.getNum()));
-
             playerNameInputText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -128,10 +121,8 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     String name = s.toString().trim();
-                    if (isAdded()) {
-                        ApiPlayer player = mPlayers.get(position);
-                        mTeam.setPlayerName(mTeamType, player.getNum(), name);
-                    }
+                    ApiPlayer player = mPlayers.get(position);
+                    mTeam.setPlayerName(mTeamType, player.getNum(), name);
                 }
 
                 @Override

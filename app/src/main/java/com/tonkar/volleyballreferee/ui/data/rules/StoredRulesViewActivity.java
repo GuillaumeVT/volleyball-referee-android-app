@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,6 +86,11 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, RulesFragment.newInstance());
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
         ScrollView scrollView = findViewById(R.id.rules_scroll_view);
         ExtendedFloatingActionButton editRulesButton = findViewById(R.id.edit_rules_button);

@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.billing;
 
-import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.ProductDetails;
 
 import java.util.List;
 
@@ -14,13 +14,11 @@ public interface BillingService {
 
     void removeBillingListener(BillingListener listener);
 
-    void executeServiceRequest(String skuType, Runnable runnable);
+    void executeServiceRequest(String productType, Runnable runnable);
 
-    List<SkuDetails> getSkuDetailsList(String skuType);
+    List<ProductDetails> getProductDetailList(String productType);
 
-    boolean isPurchased(String skuType, String sku);
+    boolean isPurchased(String productType, String product);
 
-    boolean isAllPurchased();
-
-    void launchPurchase(String skuType, SkuDetails skuDetails);
+    void launchPurchase(String productType, ProductDetails productDetails);
 }

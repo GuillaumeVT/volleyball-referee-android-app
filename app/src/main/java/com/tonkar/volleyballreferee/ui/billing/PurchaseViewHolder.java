@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.ProductDetails;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -32,43 +32,51 @@ public class PurchaseViewHolder extends RecyclerView.ViewHolder {
         mPurchaseButton = itemView.findViewById(R.id.purchase_button);
     }
 
-    void bind(SkuDetails skuDetails, BillingService billingService) {
-        final String skuType;
+    void bind(ProductDetails productDetails, BillingService billingService) {
+        final String productType;
 
-        mPurchaseTitle.setText(skuDetails.getTitle());
-        switch (skuDetails.getSku()) {
+        mPurchaseTitle.setText(productDetails.getTitle());
+        switch (productDetails.getProductId()) {
             case BillingService.WEB_PREMIUM:
                 mPurchaseSummary.setText(R.string.purchase_web_premium_summary);
-                skuType = BillingClient.SkuType.INAPP;
+                productType = BillingClient.ProductType.INAPP;
                 break;
             case BillingService.WEB_PREMIUM_SUBSCRIPTION:
                 mPurchaseSummary.setText(R.string.purchase_web_premium_summary);
-                skuType = BillingClient.SkuType.SUBS;
+                productType = BillingClient.ProductType.SUBS;
                 break;
             case BillingService.SCORE_SHEETS:
                 mPurchaseSummary.setText(R.string.purchase_score_sheets_summary);
-                skuType = BillingClient.SkuType.INAPP;
+                productType = BillingClient.ProductType.INAPP;
                 break;
             default:
                 mPurchaseSummary.setText("");
-                skuType = BillingClient.SkuType.INAPP;
+                productType = BillingClient.ProductType.INAPP;
                 break;
         }
 
         final Context context = mPurchaseItem.getContext();
 
-        if (billingService.isPurchased(skuType, skuDetails.getSku()) || (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(skuDetails.getSku()) && PrefUtils.isWebPremiumPurchased(context))) {
+        if (billingService.isPurchased(productType, productDetails.getProductId()) || (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(productDetails.getProductId()) && PrefUtils.isWebPremiumPurchased(context))) {
             mPurchaseButton.setText(R.string.already_purchased);
             mPurchaseButton.setOnClickListener(null);
             mPurchaseButton.setClickable(false);
             mPurchaseButton.setIconResource(R.drawable.ic_check);
             mPurchaseButton.setIconTint(ColorStateList.valueOf(context.getColor(R.color.colorOnPrimary)));
         } else {
-            mPurchaseButton.setText(skuDetails.getPrice());
+            mPurchaseButton.setText(getPrice(productDetails, productType));
             mPurchaseButton.setClickable(true);
             mPurchaseButton.setIconResource(R.drawable.ic_purchase);
             mPurchaseButton.setIconTint(ColorStateList.valueOf(context.getColor(R.color.colorOnPrimary)));
-            mPurchaseButton.setOnClickListener(view -> billingService.executeServiceRequest(skuType, () -> billingService.launchPurchase(skuType, skuDetails)));
+            mPurchaseButton.setOnClickListener(view -> billingService.executeServiceRequest(productType, () -> billingService.launchPurchase(productType, productDetails)));
+        }
+    }
+
+    private String getPrice(ProductDetails productDetails, String productType) {
+        if (BillingClient.ProductType.SUBS.equals(productType)) {
+            return productDetails.getSubscriptionOfferDetails().get(0).getPricingPhases().getPricingPhaseList().get(0).getFormattedPrice();
+        } else {
+            return productDetails.getOneTimePurchaseOfferDetails().getFormattedPrice();
         }
     }
 
