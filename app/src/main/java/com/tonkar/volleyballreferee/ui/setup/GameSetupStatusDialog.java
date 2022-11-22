@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.TextViewCompat;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.tonkar.volleyballreferee.R;
@@ -74,6 +75,6 @@ public class GameSetupStatusDialog {
 
     private void setTextViewStatus(MaterialTextView statusView, boolean success) {
         statusView.setCompoundDrawablesWithIntrinsicBounds(0, 0, success ? R.drawable.ic_check : R.drawable.ic_close, 0);
-        statusView.setCompoundDrawableTintList(ColorStateList.valueOf(ContextCompat.getColor(mActivity, success ? R.color.colorSuccess : R.color.colorError)));
+        TextViewCompat.setCompoundDrawableTintList(statusView, ColorStateList.valueOf(ContextCompat.getColor(mActivity, success ? R.color.colorSuccess : R.color.colorError)));
     }
 }

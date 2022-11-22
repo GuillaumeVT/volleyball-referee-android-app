@@ -9,7 +9,7 @@
         android:id="@+id/player_name_list"
         class="com.tonkar.volleyballreferee.ui.util.ExpandedListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_size"
         android:layout_marginEnd="@dimen/default_margin_size"
         android:divider="@android:color/transparent" />

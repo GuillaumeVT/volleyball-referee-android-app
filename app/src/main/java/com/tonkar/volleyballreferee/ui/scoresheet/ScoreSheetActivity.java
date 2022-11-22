@@ -1,5 +1,6 @@
 package com.tonkar.volleyballreferee.ui.scoresheet;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -11,7 +12,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.webkit.WebView;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
@@ -34,6 +36,9 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
     private IStoredGame       mStoredGame;
     private ScoreSheetBuilder mScoreSheetBuilder;
     private WebView           mWebView;
+
+    private ActivityResultLauncher<Intent> mSelectScoreSheetLogoResultLauncher;
+    private ActivityResultLauncher<Intent> mCreatePdfScoreSheetResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,30 +81,43 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
 
         FloatingActionButton saveButton = findViewById(R.id.save_score_sheet_button);
         saveButton.setOnClickListener(v -> createPdfScoreSheet());
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        mSelectScoreSheetLogoResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        if (data != null) {
+                            try {
+                                Uri imageUri = data.getData();
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
 
-        if (data != null && requestCode == 51) {
-            try {
-                Uri imageUri = data.getData();
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+                                String base64Image = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
+                                mScoreSheetBuilder.setLogo(base64Image);
+                                loadScoreSheet(false);
 
-                String base64Image = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
-                mScoreSheetBuilder.setLogo(base64Image);
-                loadScoreSheet(false);
+                            } catch (IOException e) {
+                                Log.e(Tags.SCORE_SHEET, "Exception while opening the logo", e);
+                            }
+                        }
+                    }
+                });
 
-            } catch (IOException e) {
-                Log.e(Tags.SCORE_SHEET, "Exception while opening the logo", e);
-            }
-        } else if (data != null && requestCode == 52) {
-            ScoreSheetPdfConverter scoreSheetPdfConverter = new ScoreSheetPdfConverter(ScoreSheetActivity.this, data.getData());
-            scoreSheetPdfConverter.convert(mScoreSheetBuilder.createScoreSheet());
-        }
+        mCreatePdfScoreSheetResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        if (data != null) {
+                            ScoreSheetPdfConverter scoreSheetPdfConverter = new ScoreSheetPdfConverter(ScoreSheetActivity.this, data.getData());
+                            scoreSheetPdfConverter.convert(mScoreSheetBuilder.createScoreSheet());
+                        }
+                    }
+                });
     }
 
     private void selectScoreSheetLogo() {
@@ -108,7 +126,7 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
         chooseFile.setType("image/*");
 
         Intent intent = Intent.createChooser(chooseFile, "");
-        startActivityForResult(intent, 51);
+        mSelectScoreSheetLogoResultLauncher.launch(intent);
     }
 
     private void showSignatureDialog() {
@@ -127,7 +145,7 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
         intent.setType("application/pdf");
         intent.putExtra(Intent.EXTRA_TITLE, mScoreSheetBuilder.getFilename().replace(".html", ".pdf"));
 
-        startActivityForResult(intent, 52);
+        mCreatePdfScoreSheetResultLauncher.launch(intent);
     }
 
     void loadScoreSheet(boolean scrollBottom) {

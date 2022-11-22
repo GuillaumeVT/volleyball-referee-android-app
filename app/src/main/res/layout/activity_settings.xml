@@ -25,7 +25,7 @@
                 android:gravity="top|center"
                 android:orientation="vertical">
 
-                <fragment
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/settings_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
