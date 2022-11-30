@@ -119,15 +119,14 @@ public class ColleaguesListActivity extends NavigationActivity implements AsyncF
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search_colleague:
-                return true;
-            case R.id.action_sync:
-                updateColleaguesList();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_search_colleague) {
+            return true;
+        } else if (itemId == R.id.action_sync) {
+            updateColleaguesList();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateColleaguesList() {

@@ -187,18 +187,17 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search_teams:
-                return true;
-            case R.id.action_sync:
-                updateStoredTeamsList();
-                return true;
-            case R.id.action_delete_teams:
-                deleteSelectedTeams();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_search_teams) {
+            return true;
+        } else if (itemId == R.id.action_sync) {
+            updateStoredTeamsList();
+            return true;
+        } else if (itemId == R.id.action_delete_teams) {
+            deleteSelectedTeams();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteSelectedTeams() {

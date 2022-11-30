@@ -182,18 +182,17 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search_rules:
-                return true;
-            case R.id.action_sync:
-                updateStoredRulesList();
-                return true;
-            case R.id.action_delete_rules:
-                deleteSelectedRules();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_search_rules) {
+            return true;
+        } else if (itemId == R.id.action_sync) {
+            updateStoredRulesList();
+            return true;
+        } else if (itemId == R.id.action_delete_rules) {
+            deleteSelectedRules();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteSelectedRules() {

@@ -645,37 +645,31 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         gameNavigation.setOnItemSelectedListener(item -> {
                     final Fragment fragment;
 
-                    switch (item.getItemId()) {
-                        case R.id.court_position_tab:
-                            switch (mGame.getKind()) {
-                                case INDOOR_4X4:
-                                    fragment = Indoor4x4CourtFragment.newInstance();
-                                    break;
-                                case BEACH:
-                                    fragment = BeachCourtFragment.newInstance();
-                                    break;
-                                case SNOW:
-                                    fragment = SnowCourtFragment.newInstance();
-                                    break;
-                                case INDOOR:
-                                default:
-                                    fragment = IndoorCourtFragment.newInstance();
-                                    break;
-                            }
-                            break;
-                        case R.id.substitutions_tab:
-                            fragment = SubstitutionsFragment.newInstance();
-                            break;
-                        case R.id.timeouts_tab:
-                            fragment = TimeoutsFragment.newInstance();
-                            break;
-                        case R.id.sanctions_tab:
-                            fragment = SanctionsFragment.newInstance();
-                            break;
-                        case R.id.ladder_tab:
-                        default:
-                            fragment = LaddersFragment.newInstance();
-                            break;
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.court_position_tab) {
+                        switch (mGame.getKind()) {
+                            case INDOOR_4X4:
+                                fragment = Indoor4x4CourtFragment.newInstance();
+                                break;
+                            case BEACH:
+                                fragment = BeachCourtFragment.newInstance();
+                                break;
+                            case SNOW:
+                                fragment = SnowCourtFragment.newInstance();
+                                break;
+                            case INDOOR:
+                            default:
+                                fragment = IndoorCourtFragment.newInstance();
+                                break;
+                        }
+                    } else if (itemId == R.id.substitutions_tab) {
+                        fragment = SubstitutionsFragment.newInstance();
+                    } else if (itemId == R.id.timeouts_tab) {
+                        fragment = TimeoutsFragment.newInstance();
+                    } else if (itemId == R.id.sanctions_tab) {
+                        fragment = SanctionsFragment.newInstance();
+                    } else {
+                        fragment = LaddersFragment.newInstance();
                     }
 
                     final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

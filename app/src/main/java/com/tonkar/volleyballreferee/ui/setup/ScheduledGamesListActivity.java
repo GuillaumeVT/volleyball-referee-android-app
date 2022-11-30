@@ -143,15 +143,14 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search_games:
-                return true;
-            case R.id.action_sync:
-                updateScheduledGamesList();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_search_games) {
+            return true;
+        } else if (itemId == R.id.action_sync) {
+            updateScheduledGamesList();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateScheduledGamesList() {

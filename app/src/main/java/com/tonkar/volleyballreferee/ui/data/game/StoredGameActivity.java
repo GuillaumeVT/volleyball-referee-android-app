@@ -85,19 +85,18 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_index_game:
-                toggleGameIndexed();
-                return true;
-            case R.id.action_delete_game:
-                deleteGame();
-                return true;
-            case R.id.action_share_game_link:
-                shareGameLink();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_index_game) {
+            toggleGameIndexed();
+            return true;
+        } else if (itemId == R.id.action_delete_game) {
+            deleteGame();
+            return true;
+        } else if (itemId == R.id.action_share_game_link) {
+            shareGameLink();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
     
     protected void updateGame() {

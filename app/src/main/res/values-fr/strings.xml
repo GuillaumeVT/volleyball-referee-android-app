@@ -262,7 +262,7 @@
     <string name="rules_technical_timeout_duration">Durée d\'un temps mort technique</string>
     <string name="rules_game_intervals">Pauses entre les sets</string>
     <string name="rules_game_intervals_duration">Durée de la pause entre les sets</string>
-    <string name="rules_substitutions_limitation">Limitation des remplacements</string>
+    <string name="rules_substitutions_limitation">Restriction des remplacements</string>
     <string name="rules_team_substitutions_per_set">Nombre de remplacements par set</string>
     <string name="rules_consecutive_serves_per_player">Limite de services consécutifs par joueur</string>
     <string name="rules_court_switches">Changements de côtés</string>
@@ -331,10 +331,10 @@
         <item>1 minute</item>
     </string-array>
     <string-array name="substitutions_limitation_entries">
-        <item>Limitation FIVB</item>
-        <item>Autre limitation type 1</item>
-        <item>Autre limitation type 2</item>
-        <item>Pas de limitation</item>
+        <item>Restrictions FIVB</item>
+        <item>Autre restrictions type 1</item>
+        <item>Autre restrictions type 2</item>
+        <item>Pas de restriction</item>
     </string-array>
     <string-array name="substitutions_limitation_description_entries">
         <item>Un joueur de la formation de départ peut sortir du jeu mais une fois par set et n’y retourner qu’une seule fois par set et uniquement à la place qu’il occupait précédemment dans la formation de départ.\n\nUn joueur remplaçant peut entrer en jeu à la place d’un joueur de la formation de départ mais une fois par set et ne peut être remplacé que par le même joueur de la formation de départ.</item>
@@ -343,8 +343,8 @@
         <item>Les joueurs peuvent sortir du jeu et y retourner sur n\'importe quelle position, un nombre illimité de fois par set (dans la limite du nombre de remplacements).</item>
     </string-array>
     <string-array name="team_substitutions_per_set_entries">
-        <item>18 remplacements par set (en fonction des limitations de remplacements)</item>
-        <item>15 remplacements par set (en fonction des limitations de remplacements)</item>
+        <item>18 remplacements par set (en fonction des restrictions de remplacements)</item>
+        <item>15 remplacements par set (en fonction des restrictions de remplacements)</item>
         <item>12 remplacements par set</item>
         <item>6 remplacements par set</item>
         <item>5 remplacements par set</item>

@@ -62,17 +62,15 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
         mSanctionTypePager = mView.findViewById(R.id.sanction_nav);
 
         mSanctionTypePager.setOnItemSelectedListener(item -> {
-                    Fragment fragment = null;
+                    final Fragment fragment;
 
-                    switch (item.getItemId()) {
-                        case R.id.delay_sanction_tab:
-                            fragment = mDelaySanctionSelectionFragment;
-                            break;
-                        case R.id.misconduct_sanction_tab:
-                            fragment = mMisconductSanctionSelectionFragment;
-                            break;
-                        default:
-                            break;
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.delay_sanction_tab) {
+                        fragment = mDelaySanctionSelectionFragment;
+                    } else if (itemId == R.id.misconduct_sanction_tab) {
+                        fragment = mMisconductSanctionSelectionFragment;
+                    } else {
+                        fragment = null;
                     }
 
                     final FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

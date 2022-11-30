@@ -113,16 +113,15 @@ public class GameSetupActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_help_menu:
-                showGameSetupStatus();
-                return true;
-            case android.R.id.home:
-                cancelSetup();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_help_menu) {
+            showGameSetupStatus();
+            return true;
+        } else if (itemId == android.R.id.home) {
+            cancelSetup();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void computeStartLayoutVisibility() {
@@ -210,23 +209,18 @@ public class GameSetupActivity extends AppCompatActivity {
         gameSetupNavigation.setOnItemSelectedListener(item -> {
                     final Fragment fragment;
 
-                    switch (item.getItemId()) {
-                        case R.id.home_team_tab:
-                            fragment = TeamSetupFragment.newInstance(mGame.getTeamsKind(), TeamType.HOME, true);
-                            break;
-                        case R.id.guest_team_tab:
-                            fragment = TeamSetupFragment.newInstance(mGame.getTeamsKind(), TeamType.GUEST, true);
-                            break;
-                        case R.id.rules_tab:
-                            fragment = RulesSetupFragment.newInstance(true);
-                            break;
-                        case R.id.misc_tab:
-                            fragment = MiscSetupFragment.newInstance();
-                            break;
-                        default:
-                            fragment = null;
-                            break;
-                    }
+            int itemId = item.getItemId();
+            if (itemId == R.id.home_team_tab) {
+                fragment = TeamSetupFragment.newInstance(mGame.getTeamsKind(), TeamType.HOME, true);
+            } else if (itemId == R.id.guest_team_tab) {
+                fragment = TeamSetupFragment.newInstance(mGame.getTeamsKind(), TeamType.GUEST, true);
+            } else if (itemId == R.id.rules_tab) {
+                fragment = RulesSetupFragment.newInstance(true);
+            } else if (itemId == R.id.misc_tab) {
+                fragment = MiscSetupFragment.newInstance();
+            } else {
+                fragment = null;
+            }
 
                     final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     UiUtils.animateNavigationView(transaction);

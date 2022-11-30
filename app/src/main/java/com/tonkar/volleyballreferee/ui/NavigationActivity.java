@@ -51,83 +51,81 @@ public abstract class NavigationActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(item -> {
             if (getCheckedItem() != item.getItemId()) {
-                switch (item.getItemId()) {
-                    case R.id.action_home:
-                        Log.i(Tags.MAIN_UI, "Home");
-                        UiUtils.navigateToHome(this, R.anim.slide_in_right, R.anim.slide_out_left);
-                        break;
-                    case R.id.action_purchase:
-                        Log.i(Tags.BILLING, "Purchase");
-                        Intent intent = new Intent(this, PurchasesListActivity.class);
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_home) {
+                    Log.i(Tags.MAIN_UI, "Home");
+                    UiUtils.navigateToHome(this, R.anim.slide_in_right, R.anim.slide_out_left);
+                } else if (itemId == R.id.action_purchase) {
+                    Log.i(Tags.BILLING, "Purchase");
+                    Intent intent = new Intent(this, PurchasesListActivity.class);
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                } else if (itemId == R.id.action_stored_rules) {
+                    Intent intent;
+                    Log.i(Tags.STORED_RULES, "Stored Rules");
+                    intent = new Intent(this, StoredRulesListActivity.class);
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                } else if (itemId == R.id.action_settings) {
+                    Intent intent;
+                    Log.i(Tags.SETTINGS, "Settings");
+                    intent = new Intent(this, SettingsActivity.class);
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                } else if (itemId == R.id.action_stored_games) {
+                    Intent intent;
+                    Log.i(Tags.STORED_GAMES, "Stored games");
+                    intent = new Intent(this, StoredGamesListActivity.class);
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                } else if (itemId == R.id.action_stored_teams) {
+                    Intent intent;
+                    Log.i(Tags.STORED_TEAMS, "Stored teams");
+                    intent = new Intent(this, StoredTeamsListActivity.class);
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                } else if (itemId == R.id.action_available_games) {
+                    Intent intent;
+                    if (PrefUtils.canSync(this)) {
+                        Log.i(Tags.SCHEDULE_UI, "Scheduled games");
+                        intent = new Intent(this, ScheduledGamesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_stored_rules:
-                        Log.i(Tags.STORED_RULES, "Stored Rules");
-                        intent = new Intent(this, StoredRulesListActivity.class);
+                    }
+                } else if (itemId == R.id.action_colleagues) {
+                    Intent intent;
+                    if (PrefUtils.canSync(this)) {
+                        Log.i(Tags.USER_UI, "Colleagues");
+                        intent = new Intent(this, ColleaguesListActivity.class);
                         startActivity(intent);
                         UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_settings:
-                        Log.i(Tags.SETTINGS, "Settings");
-                        intent = new Intent(this, SettingsActivity.class);
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_stored_games:
-                        Log.i(Tags.STORED_GAMES, "Stored games");
-                        intent = new Intent(this, StoredGamesListActivity.class);
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_stored_teams:
-                        Log.i(Tags.STORED_TEAMS, "Stored teams");
-                        intent = new Intent(this, StoredTeamsListActivity.class);
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_available_games:
-                        if (PrefUtils.canSync(this)) {
-                            Log.i(Tags.SCHEDULE_UI, "Scheduled games");
-                            intent = new Intent(this, ScheduledGamesListActivity.class);
-                            startActivity(intent);
-                            UiUtils.animateForward(this);
-                        }
-                        break;
-                    case R.id.action_colleagues:
-                        if (PrefUtils.canSync(this)) {
-                            Log.i(Tags.USER_UI, "Colleagues");
-                            intent = new Intent(this, ColleaguesListActivity.class);
-                            startActivity(intent);
-                            UiUtils.animateForward(this);
-                        }
-                        break;
-                    case R.id.action_live_games_vbr_com:
-                        Log.i(Tags.WEB, "Live games on VBR.com");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search?type=live", BuildConfig.SERVER_ADDRESS)));
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        navigationView.post(() -> {
-                            navigationView.getMenu().findItem(R.id.action_live_games_vbr_com).setChecked(false);
-                            navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
-                        });
-                        break;
-                    case R.id.action_credits:
-                        Log.i(Tags.MAIN_UI, "Credits");
-                        intent = new Intent(this, CreditsActivity.class);
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        break;
-                    case R.id.action_privacy_policy:
-                        Log.i(Tags.WEB, "Privacy policy on VBR.com");
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/privacy-policy", BuildConfig.SERVER_ADDRESS)));
-                        startActivity(intent);
-                        UiUtils.animateForward(this);
-                        navigationView.post(() -> {
-                            navigationView.getMenu().findItem(R.id.action_privacy_policy).setChecked(false);
-                            navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
-                        });
-                        break;
+                    }
+                } else if (itemId == R.id.action_live_games_vbr_com) {
+                    Intent intent;
+                    Log.i(Tags.WEB, "Live games on VBR.com");
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search?type=live", BuildConfig.SERVER_ADDRESS)));
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                    navigationView.post(() -> {
+                        navigationView.getMenu().findItem(R.id.action_live_games_vbr_com).setChecked(false);
+                        navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
+                    });
+                } else if (itemId == R.id.action_credits) {
+                    Intent intent;
+                    Log.i(Tags.MAIN_UI, "Credits");
+                    intent = new Intent(this, CreditsActivity.class);
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                } else if (itemId == R.id.action_privacy_policy) {
+                    Intent intent;
+                    Log.i(Tags.WEB, "Privacy policy on VBR.com");
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/privacy-policy", BuildConfig.SERVER_ADDRESS)));
+                    startActivity(intent);
+                    UiUtils.animateForward(this);
+                    navigationView.post(() -> {
+                        navigationView.getMenu().findItem(R.id.action_privacy_policy).setChecked(false);
+                        navigationView.getMenu().findItem(getCheckedItem()).setChecked(true);
+                    });
                 }
             }
             mDrawerLayout.closeDrawers();

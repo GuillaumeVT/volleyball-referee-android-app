@@ -194,23 +194,19 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         gameSetupNavigation.setOnItemSelectedListener(item -> {
                     final Fragment fragment;
 
-                    switch (item.getItemId()) {
-                        case R.id.teams_tab:
-                            fragment = QuickGameSetupFragment.newInstance(create);
-                            break;
-                        case R.id.rules_tab:
-                            if (GameType.TIME.equals(mGame.getKind())) {
-                                fragment = null;
-                            } else {
-                                fragment = RulesSetupFragment.newInstance(true);
-                            }
-                            break;
-                        case R.id.misc_tab:
-                            fragment = MiscSetupFragment.newInstance();
-                            break;
-                        default:
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.teams_tab) {
+                        fragment = QuickGameSetupFragment.newInstance(create);
+                    } else if (itemId == R.id.rules_tab) {
+                        if (GameType.TIME.equals(mGame.getKind())) {
                             fragment = null;
-                            break;
+                        } else {
+                            fragment = RulesSetupFragment.newInstance(true);
+                        }
+                    } else if (itemId == R.id.misc_tab) {
+                        fragment = MiscSetupFragment.newInstance();
+                    } else {
+                        fragment = null;
                     }
 
                     final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
