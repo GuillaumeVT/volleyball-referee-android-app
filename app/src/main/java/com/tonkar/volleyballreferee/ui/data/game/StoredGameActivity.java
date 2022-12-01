@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.ui.data.game;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -98,6 +95,18 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        backToList();
+    }
+
+    protected void backToList() {
+        Intent intent = new Intent(this, StoredGamesListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        UiUtils.animateBackward(this);
+    }
     
     protected void updateGame() {
         TextView summaryText = findViewById(R.id.stored_game_summary);
@@ -168,7 +177,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     protected void initScoreSheetAvailability() {
         View generateScoreSheetLayout = findViewById(R.id.generate_score_sheet_layout);
 
-        if (!GameType.TIME.equals(mStoredGame.getKind()) && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (!GameType.TIME.equals(mStoredGame.getKind())) {
             generateScoreSheetLayout.setVisibility(View.VISIBLE);
         } else {
             generateScoreSheetLayout.setVisibility(View.GONE);
@@ -178,7 +187,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     protected void generateScoreSheet() {
         Log.i(Tags.STORED_GAMES, "Generate score sheet");
 
-        if (!GameType.TIME.equals(mStoredGame.getKind()) && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (!GameType.TIME.equals(mStoredGame.getKind())) {
             if (PrefUtils.isScoreSheetsPurchased(this)) {
                 Intent intent = new Intent(this, ScoreSheetActivity.class);
                 intent.putExtra("game", mGameId);

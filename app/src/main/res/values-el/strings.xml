@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Βόλεϊ στο χιόνι</string>
     <string name="score_based_game">Πίνακας Σκορ</string>
     <string name="time_based_game">Με Χρόνο</string>
-    <string name="permission_title">Σχετικά με τις άδειες</string>
-    <string name="permission_message">Αυτή η εφαρμογή χρειάζεται άδεια αποθήκευσης για να μπορείς να μοιραστείς τα αποτελέσματα του αγώνα.</string>
     <string name="resume_game_title">Συνέχεια αγώνα</string>
     <string name="resume_game_question">Η εφαρμογή βρήκε έναν αγώνα σε εξέλιξη. Θες να τον συνεχίσεις ή να τον διαγράψεις;</string>
     <string name="resume_game_error">Ο αγώνας δεν μπορεί να συνεχιστεί.</string>

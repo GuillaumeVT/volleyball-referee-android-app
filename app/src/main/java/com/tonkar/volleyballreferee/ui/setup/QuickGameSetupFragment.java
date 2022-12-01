@@ -93,7 +93,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isAdded()) {
-                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME.toString()));
+                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME));
                     mGame.setTeamName(TeamType.HOME, s.toString().trim());
                     ((TextInputLayout) view.findViewById(R.id.home_team_name_input_layout)).setError(mGame.getTeamName(TeamType.HOME).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                     computeConfirmItemVisibility();
@@ -113,7 +113,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (isAdded()) {
-                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST.toString()));
+                    Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST));
                     mGame.setTeamName(TeamType.GUEST, s.toString().trim());
                     ((TextInputLayout) view.findViewById(R.id.guest_team_name_input_layout)).setError(mGame.getTeamName(TeamType.GUEST).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                     computeConfirmItemVisibility();
@@ -243,7 +243,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     }
 
     private void selectTeamColor(final TeamType teamType) {
-        Log.i(Tags.SETUP_UI, String.format("Select %s team color", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Select %s team color", teamType));
         ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
                 getResources().getStringArray(R.array.shirt_colors), mGame.getTeamColor(teamType)) {
             @Override
@@ -256,7 +256,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     }
 
     private void teamColorSelected(TeamType teamType, int colorId) {
-        Log.i(Tags.SETUP_UI, String.format("Update %s team color", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team color", teamType));
         final MaterialButton colorButton;
         final MaterialButton namesButton;
 
@@ -296,7 +296,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     }
 
     private void captainUpdated(TeamType teamType, int number) {
-        Log.i(Tags.SETUP_UI, String.format("Update %s team captain", teamType.toString()));
+        Log.i(Tags.SETUP_UI, String.format("Update %s team captain", teamType));
         mGame.setCaptain(teamType, number);
 
         final MaterialButton button;

@@ -117,14 +117,19 @@ public class StoredTeamViewActivity extends AppCompatActivity {
 
     public void editTeam(View view) {
         ApiTeam team = mStoredTeamsService.getTeam(mTeamService.getTeamId(null));
-        Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
 
-        final Intent intent = new Intent(this, StoredTeamActivity.class);
-        intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
-        intent.putExtra("kind",mTeamService.getTeamsKind().toString());
-        intent.putExtra("create", false);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        if (team == null) {
+            backToList();
+        } else {
+            Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
+
+            final Intent intent = new Intent(this, StoredTeamActivity.class);
+            intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
+            intent.putExtra("kind", mTeamService.getTeamsKind().toString());
+            intent.putExtra("create", false);
+            startActivity(intent);
+            UiUtils.animateForward(this);
+        }
     }
 
     private void backToList() {

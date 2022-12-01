@@ -118,7 +118,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(mTeamOnLeftSide, positionType);
                 if (possibleSubstitutions.size() > 0) {
                     UiUtils.animate(getContext(), view);
-                    Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide.toString(), positionType.toString()));
+                    Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnLeftSide, positionType));
                     showPlayerSelectionDialog(mTeamOnLeftSide, positionType, possibleSubstitutions);
                 } else {
                     UiUtils.makeText(getContext(), getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
@@ -145,7 +145,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(mTeamOnRightSide, positionType);
                 if (possibleSubstitutions.size() > 0) {
                     UiUtils.animate(getContext(), view);
-                    Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide.toString(), positionType.toString()));
+                    Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position", mTeamOnRightSide, positionType));
                     showPlayerSelectionDialog(mTeamOnRightSide, positionType, possibleSubstitutions);
                 } else {
                     UiUtils.makeText(getContext(), getString(R.string.no_substitution_message), Toast.LENGTH_LONG).show();
@@ -323,7 +323,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 mClassicTeam, mGame, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
-                Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position by #%d player", teamType.toString(), positionType.toString(), selectedNumber));
+                Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position by #%d player", teamType, positionType, selectedNumber));
                 mClassicTeam.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
             }
         };
@@ -342,7 +342,7 @@ public class IndoorCourtFragment extends CourtFragment {
                 mClassicTeam, mGame, teamType, mClassicTeam.getPossibleSecondaryCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
-                Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType.toString(), selectedNumber));
+                Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType, selectedNumber));
                 mClassicTeam.setGameCaptain(teamType, selectedNumber);
                 // refresh the team with the new captain
                 update(teamType);
@@ -393,7 +393,7 @@ public class IndoorCourtFragment extends CourtFragment {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
             MaterialButton button = teamPositions.get(positionType);
             UiUtils.animate(getContext(), button);
-            Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType.toString(), positionType.toString()));
+            Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType, positionType));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
             UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));

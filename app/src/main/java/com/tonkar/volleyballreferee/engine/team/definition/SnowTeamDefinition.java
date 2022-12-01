@@ -53,7 +53,7 @@ public class SnowTeamDefinition extends TeamDefinition {
     @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
-            Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType()));
             super.setCaptain(number);
         }
     }

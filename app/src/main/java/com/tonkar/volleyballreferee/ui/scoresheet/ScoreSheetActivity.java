@@ -45,6 +45,11 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
         String gameId = getIntent().getStringExtra("game");
         StoredGamesService storedGamesService = new StoredGamesManager(this);
         mStoredGame = storedGamesService.getGame(gameId);
+
+        if (mStoredGame == null) {
+            UiUtils.navigateToHome(this);
+        }
+
         mScoreSheetBuilder = new ScoreSheetBuilder(this, mStoredGame);
 
         super.onCreate(savedInstanceState);

@@ -23,33 +23,33 @@ public class MainOnboardingActivity extends AppIntro {
         indoorPage.setDescription(getString(R.string.volleyball_game_description));
         indoorPage.setImageDrawable(R.drawable.indoor);
         indoorPage.setBackgroundDrawable(R.drawable.indoor_background);
-        indoorPage.setTitleColor(getColor(R.color.colorOnDarkSurface));
-        indoorPage.setDescriptionColor(getColor(R.color.colorOnDarkSurface));
-        indoorPage.setBackgroundColor(getColor(R.color.colorBackgroundMain));
+        indoorPage.setTitleColorRes(R.color.colorOnDarkSurface);
+        indoorPage.setDescriptionColorRes(R.color.colorOnDarkSurface);
+        indoorPage.setBackgroundColorRes(R.color.colorBackgroundMain);
 
-        addSlide(AppIntroFragment.newInstance(indoorPage));
+        addSlide(AppIntroFragment.createInstance(indoorPage));
 
         SliderPage beachPage = new SliderPage();
         beachPage.setTitle(getString(R.string.beach_volleyball_game));
         beachPage.setDescription(getString(R.string.beach_volleyball_game_description));
         beachPage.setImageDrawable(R.drawable.beach);
         beachPage.setBackgroundDrawable(R.drawable.beach_background);
-        beachPage.setTitleColor(getColor(R.color.colorOnLightSurface));
-        beachPage.setDescriptionColor(getColor(R.color.colorOnLightSurface));
-        beachPage.setBackgroundColor(getColor(R.color.colorBackgroundMain));
+        beachPage.setTitleColorRes(R.color.colorOnLightSurface);
+        beachPage.setDescriptionColorRes(R.color.colorOnLightSurface);
+        beachPage.setBackgroundColorRes(R.color.colorBackgroundMain);
 
-        addSlide(AppIntroFragment.newInstance(beachPage));
+        addSlide(AppIntroFragment.createInstance(beachPage));
 
         SliderPage scorePage = new SliderPage();
         scorePage.setTitle(getString(R.string.score_based_game));
         scorePage.setDescription(getString(R.string.score_based_game_description));
         scorePage.setImageDrawable(R.drawable.scoreboard);
         scorePage.setBackgroundDrawable(R.drawable.indoor_background);
-        scorePage.setTitleColor(getColor(R.color.colorOnDarkSurface));
-        scorePage.setDescriptionColor(getColor(R.color.colorOnDarkSurface));
-        scorePage.setBackgroundColor(getColor(R.color.colorBackgroundMain));
+        scorePage.setTitleColorRes(R.color.colorOnDarkSurface);
+        scorePage.setDescriptionColorRes(R.color.colorOnDarkSurface);
+        scorePage.setBackgroundColorRes(R.color.colorBackgroundMain);
 
-        addSlide(AppIntroFragment.newInstance(scorePage));
+        addSlide(AppIntroFragment.createInstance(scorePage));
 
         setTransformer(new AppIntroPageTransformerType.Parallax(1.0, -1.0, 2.0));
 

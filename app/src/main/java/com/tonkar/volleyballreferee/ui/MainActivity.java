@@ -1,9 +1,7 @@
 package com.tonkar.volleyballreferee.ui;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.google.gson.JsonParseException;
@@ -51,7 +47,6 @@ import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
 import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
 import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
 import com.tonkar.volleyballreferee.ui.user.UserActivity;
-import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.IOException;
@@ -64,8 +59,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class MainActivity extends NavigationActivity {
-
-    private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 1;
 
     private StoredGamesService mStoredGamesService;
 
@@ -117,32 +110,6 @@ public class MainActivity extends NavigationActivity {
         }
         if (mStoredGamesService.hasSetupGame()) {
             mStoredGamesService.deleteSetupGame();
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            AlertDialogFragment alertDialogFragment;
-
-            if (savedInstanceState == null) {
-                alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.permission_title), getString(R.string.permission_message), getString(android.R.string.ok));
-                alertDialogFragment.show(getSupportFragmentManager(), "permission");
-            } else {
-                alertDialogFragment = (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag("permission");
-            }
-
-            if (alertDialogFragment != null) {
-                alertDialogFragment.setAlertDialogListener(new AlertDialogFragment.AlertDialogListener() {
-                    @Override
-                    public void onNegativeButtonClicked() {
-                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_STORAGE);
-                    }
-
-                    @Override
-                    public void onPositiveButtonClicked() {}
-
-                    @Override
-                    public void onNeutralButtonClicked() {}
-                });
-            }
         }
 
         Intent intent = new Intent(this, SyncService.class);

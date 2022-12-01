@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Voleibol na neve</string>
     <string name="score_based_game">Marcador</string>
     <string name="time_based_game">Jogo por tempo</string>
-    <string name="permission_title">Permissões</string>
-    <string name="permission_message">A aplicação necessita de permissões de armazenamento para partilhar resultados dos jogos.</string>
     <string name="resume_game_title">Continuar jogo</string>
     <string name="resume_game_question">A aplicação encontrou um jogo a decorrer. Gostaria de continuar ou apagar esse jogo?</string>
     <string name="resume_game_error">O jogo não pode ser retomado.</string>

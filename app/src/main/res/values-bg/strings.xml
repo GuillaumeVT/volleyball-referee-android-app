@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Снежен волейбол</string>
     <string name="score_based_game">Табло</string>
     <string name="time_based_game">За време</string>
-    <string name="permission_title">Относно разрешенията</string>
-    <string name="permission_message">Това приложение се нуждае от разрешение за достъп до паметта за да е възможно споделяне на резултатите от мачовете.</string>
     <string name="resume_game_title">Продължи мач</string>
     <string name="resume_game_question">Приложението намира неприключен мач. Искаш ли да го продължиш или да го изтриеш?</string>
     <string name="resume_game_error">Мачът не може да бъде продължен.</string>

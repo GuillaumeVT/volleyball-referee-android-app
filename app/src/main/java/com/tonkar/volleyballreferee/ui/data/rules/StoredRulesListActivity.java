@@ -86,11 +86,16 @@ public class StoredRulesListActivity extends NavigationActivity implements DataS
                 mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
             } else {
                 ApiRules rules = mStoredRulesService.getRules(rulesDescription.getId());
-                Log.i(Tags.STORED_RULES, String.format("Start activity to view stored rules %s", rules.getName()));
 
-                final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesViewActivity.class);
-                intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
-                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+                if (rules == null) {
+                    UiUtils.navigateToHome(this);
+                } else {
+                    Log.i(Tags.STORED_RULES, String.format("Start activity to view stored rules %s", rules.getName()));
+
+                    final Intent intent = new Intent(StoredRulesListActivity.this, StoredRulesViewActivity.class);
+                    intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
+                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+                }
             }
         });
 

@@ -43,14 +43,14 @@ public abstract class TeamDefinition extends ApiTeam {
 
     public void addPlayer(final int number) {
         if (!hasPlayer(number)) {
-            Log.i(Tags.TEAM, String.format("Add player #%d to %s team", number, mTeamType.toString()));
+            Log.i(Tags.TEAM, String.format("Add player #%d to %s team", number, mTeamType));
             getPlayers().add(new ApiPlayer(number));
         }
     }
 
     public void removePlayer(final int number) {
         if (hasPlayer(number)) {
-            Log.i(Tags.TEAM, String.format("Remove player #%d from %s team", number, mTeamType.toString()));
+            Log.i(Tags.TEAM, String.format("Remove player #%d from %s team", number, mTeamType));
             getPlayers().remove(new ApiPlayer(number));
         }
     }
@@ -86,7 +86,7 @@ public abstract class TeamDefinition extends ApiTeam {
     }
 
     public void setPlayerName(final int number, final String name) {
-        Log.i(Tags.TEAM, String.format("Set name of player #%d to %s team as %s", number, mTeamType.toString(), name));
+        Log.i(Tags.TEAM, String.format("Set name of player #%d to %s team as %s", number, mTeamType, name));
         for (ApiPlayer player : getPlayers()) {
             if (player.getNum() == number) {
                 player.setName(name);

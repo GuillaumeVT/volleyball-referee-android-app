@@ -345,7 +345,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyMatchCompleted(final TeamType winner) {
-        Log.i(Tags.SCORE, String.format("Match is completed and %s team won", winner.toString()));
+        Log.i(Tags.SCORE, String.format("Match is completed and %s team won", winner));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onMatchCompleted(winner);
@@ -426,7 +426,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyPointsUpdated(final TeamType teamType, int newCount) {
-        Log.i(Tags.SCORE, String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
+        Log.i(Tags.SCORE, String.format("Points are updated for %s team: %d", teamType, newCount));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
@@ -598,7 +598,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySetsUpdated(final TeamType teamType, int newCount) {
-        Log.i(Tags.SCORE, String.format("Sets are updated for %s team: %d", teamType.toString(), newCount));
+        Log.i(Tags.SCORE, String.format("Sets are updated for %s team: %d", teamType, newCount));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onSetsUpdated(teamType, newCount);
@@ -664,7 +664,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyServiceSwapped(final TeamType servingTeam, boolean isStart) {
-        Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam.toString()));
+        Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onServiceSwapped(servingTeam, isStart);
@@ -914,19 +914,19 @@ public abstract class Game extends BaseGame {
     }
 
     void rotateToNextPositions(TeamType teamType) {
-        Log.i(Tags.TEAM, String.format("Rotate all players of %s team to next position", teamType.toString()));
+        Log.i(Tags.TEAM, String.format("Rotate all players of %s team to next position", teamType));
         currentSet().getTeamComposition(teamType).rotateToNextPositions();
         notifyTeamRotated(teamType, true);
     }
 
     void rotateToPreviousPositions(TeamType teamType) {
-        Log.i(Tags.TEAM, String.format("Rotate all players of %s team to previous position", teamType.toString()));
+        Log.i(Tags.TEAM, String.format("Rotate all players of %s team to previous position", teamType));
         currentSet().getTeamComposition(teamType).rotateToPreviousPositions();
         notifyTeamRotated(teamType, false);
     }
 
     void notifyPlayerChanged(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        Log.i(Tags.TEAM, String.format("Player #%d of %s team is on %s position", number, teamType.toString(), positionType.toString()));
+        Log.i(Tags.TEAM, String.format("Player #%d of %s team is on %s position", number, teamType, positionType));
         for (final TeamListener listener : mTeamListeners) {
             listener.onPlayerChanged(teamType, number, positionType, actionOriginType);
         }
@@ -940,14 +940,14 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyTeamsSwapped(final TeamType leftTeamType, final TeamType rightTeamType, final ActionOriginType actionOriginType) {
-        Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
+        Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType, rightTeamType));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
         }
     }
 
     void notifyTeamRotated(TeamType teamType, boolean clockwise) {
-        Log.i(Tags.TEAM, String.format("%s team rotated", teamType.toString()));
+        Log.i(Tags.TEAM, String.format("%s team rotated", teamType));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamRotated(teamType, clockwise);
         }
@@ -1014,7 +1014,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifyTimeoutUpdated(final TeamType teamType, final int maxCount, final int newCount) {
-        Log.i(Tags.TIMEOUT, String.format("%s has %d timeouts left on %d", teamType.toString(), newCount, maxCount));
+        Log.i(Tags.TIMEOUT, String.format("%s has %d timeouts left on %d", teamType, newCount, maxCount));
         for (final TimeoutListener listener : mTimeoutListeners) {
             listener.onTimeoutUpdated(teamType, maxCount, newCount);
         }
@@ -1064,14 +1064,14 @@ public abstract class Game extends BaseGame {
     }
 
     private void notifySanctionGiven(TeamType teamType, SanctionType sanctionType, int number) {
-        Log.i(Tags.SANCTION, String.format("Player %d of %s team was given a %s sanction", number, teamType.toString(), sanctionType.toString()));
+        Log.i(Tags.SANCTION, String.format("Player %d of %s team was given a %s sanction", number, teamType, sanctionType));
         for (final SanctionListener listener : mSanctionListeners) {
             listener.onSanction(teamType, sanctionType, number);
         }
     }
 
     private void notifySanctionUndone(TeamType teamType, SanctionType sanctionType, int number) {
-        Log.i(Tags.SANCTION, String.format("Player %d of %s team had a %s sanction undone", number, teamType.toString(), sanctionType.toString()));
+        Log.i(Tags.SANCTION, String.format("Player %d of %s team had a %s sanction undone", number, teamType, sanctionType));
         for (final SanctionListener listener : mSanctionListeners) {
             listener.onUndoSanction(teamType, sanctionType, number);
         }

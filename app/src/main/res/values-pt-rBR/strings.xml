@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Vôlei de neve</string>
     <string name="score_based_game">Placar</string>
     <string name="time_based_game">Partida por tempo</string>
-    <string name="permission_title">Permissões</string>
-    <string name="permission_message">Essa aplicação necessita de permissões de armazenamento para compartilhar resultados das partidas.</string>
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>

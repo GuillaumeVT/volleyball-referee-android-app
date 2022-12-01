@@ -47,7 +47,7 @@ public abstract class TeamComposition {
             }
         }
 
-        Log.i(Tags.TEAM, String.format("Players on court for %s team: %s", mTeamDefinition.getTeamType().toString(), playersOnCourt.toString()));
+        Log.i(Tags.TEAM, String.format("Players on court for %s team: %s", mTeamDefinition.getTeamType(), playersOnCourt));
 
         return playersOnCourt;
     }
@@ -73,7 +73,7 @@ public abstract class TeamComposition {
 
         int oldNumber = getPlayerAtPosition(positionType);
 
-        Log.i(Tags.TEAM, String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamDefinition.getTeamType().toString(), number, positionType.toString()));
+        Log.i(Tags.TEAM, String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamDefinition.getTeamType(), number, positionType));
 
         if (mTeamDefinition.hasPlayer(number)) {
             mPlayers.get(number).setPosition(positionType);
@@ -82,7 +82,7 @@ public abstract class TeamComposition {
 
         if (result && oldNumber > -1 && mTeamDefinition.hasPlayer(oldNumber)) {
             mPlayers.get(oldNumber).setPosition(PositionType.BENCH);
-            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now on bench", oldNumber, mTeamDefinition.getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now on bench", oldNumber, mTeamDefinition.getTeamType()));
         }
 
         if (result) {

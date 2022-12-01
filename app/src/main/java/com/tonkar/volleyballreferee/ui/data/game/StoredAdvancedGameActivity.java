@@ -24,6 +24,10 @@ public class StoredAdvancedGameActivity extends StoredGameActivity {
         mStoredGamesService = new StoredGamesManager(this);
         mStoredGame = mStoredGamesService.getGame(mGameId);
 
+        if (mStoredGame == null) {
+            backToList();
+        }
+
         super.onCreate(savedInstanceState);
 
         Log.i(Tags.STORED_GAMES, "Create stored advanced game activity");

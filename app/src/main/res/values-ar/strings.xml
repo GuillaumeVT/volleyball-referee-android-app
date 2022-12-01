@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">كرة الطائرة الثلجية</string>
     <string name="score_based_game">لوحة النتائج</string>
     <string name="time_based_game">محدد الوقت</string>
-    <string name="permission_title">حول صلاحيات التطبيق</string>
-    <string name="permission_message">يحتاج هذا التطبيق إلى صلاحيات التخزين لمشاركة نتائج المباريات.</string>
     <string name="resume_game_title">إستئناف المباراة</string>
     <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في إستئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>

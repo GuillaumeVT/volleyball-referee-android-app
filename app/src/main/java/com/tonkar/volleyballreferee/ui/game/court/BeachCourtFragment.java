@@ -159,7 +159,7 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     private void swapService(TeamType teamType, View view) {
         if (mGame.getServingTeam().equals(teamType)) {
-            Log.i(Tags.GAME_UI, String.format("Swap %s team player", teamType.toString()));
+            Log.i(Tags.GAME_UI, String.format("Swap %s team player", teamType));
             mBeachTeam.swapPlayers(teamType);
         }
     }

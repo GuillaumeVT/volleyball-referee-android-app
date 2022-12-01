@@ -23,8 +23,6 @@
     <string name="snow_volleyball_game">Snow Volley-ball</string>
     <string name="score_based_game">Panneau de score</string>
     <string name="time_based_game">En temps</string>
-    <string name="permission_title">À propos des autorisations</string>
-    <string name="permission_message">Cette application nécessite les droits de stockage pour partager les résultats des matchs.</string>
     <string name="resume_game_title">Continuer le match</string>
     <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le continuer ou le supprimer?</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>

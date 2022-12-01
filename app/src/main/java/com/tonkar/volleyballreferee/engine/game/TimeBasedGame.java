@@ -671,7 +671,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     private void notifyTeamsSwapped(final TeamType leftTeamType, final TeamType rightTeamType, final ActionOriginType actionOriginType) {
-        Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType.toString(), rightTeamType.toString()));
+        Log.i(Tags.TEAM, String.format("Changed sides: %s team is on left, %s team is on right", leftTeamType, rightTeamType));
         for (final TeamListener listener : mTeamListeners) {
             listener.onTeamsSwapped(leftTeamType, rightTeamType, actionOriginType);
         }
@@ -783,7 +783,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     private void notifyPointsUpdated(final TeamType teamType, int newCount) {
-        Log.i(Tags.SCORE, String.format("Points are updated for %s team: %d", teamType.toString(), newCount));
+        Log.i(Tags.SCORE, String.format("Points are updated for %s team: %d", teamType, newCount));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onPointsUpdated(teamType, newCount);
@@ -791,7 +791,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     private void notifyServiceSwapped(final TeamType servingTeam, boolean isStart) {
-        Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam.toString()));
+        Log.i(Tags.SCORE, String.format("%s team is now serving", servingTeam));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onServiceSwapped(servingTeam, isStart);
@@ -799,7 +799,7 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     }
 
     private void notifyMatchCompleted(TeamType winner) {
-        Log.i(Tags.SCORE, String.format("Match is completed and %s team won", winner.toString()));
+        Log.i(Tags.SCORE, String.format("Match is completed and %s team won", winner));
 
         for (final ScoreListener listener : mScoreListeners) {
             listener.onSetCompleted();

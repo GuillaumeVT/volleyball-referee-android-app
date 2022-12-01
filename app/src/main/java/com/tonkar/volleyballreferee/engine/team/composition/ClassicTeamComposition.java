@@ -132,7 +132,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
             availablePlayers.addAll(getFreePlayersOnBench());
         }
 
-        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), getTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
+        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType, getTeamDefinition().getTeamType(), availablePlayers));
 
         return availablePlayers;
     }
@@ -151,7 +151,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
-        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), getTeamDefinition().getTeamType().toString()));
+        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType, getTeamDefinition().getTeamType()));
 
         if (isStartingLineupConfirmed()) {
             Log.i(Tags.TEAM, "Actual substitution");
@@ -231,7 +231,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
                 && !getTeamDefinition().isCaptain(number)
                 && !isSecondaryCaptain(number)
                 && !PositionType.BENCH.equals(getPlayerPosition(number))) {
-            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now secondary captain", number, getTeamDefinition().getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Player #%d of %s team is now secondary captain", number, getTeamDefinition().getTeamType()));
             mSecondaryCaptain = number;
         }
     }

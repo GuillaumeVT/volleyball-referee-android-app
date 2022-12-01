@@ -87,11 +87,16 @@ public class StoredTeamsListActivity extends NavigationActivity implements DataS
                 mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
             } else {
                 ApiTeam team = mStoredTeamsService.getTeam(teamDescription.getId());
-                Log.i(Tags.STORED_TEAMS, String.format("Start activity to view stored team %s", team.getName()));
 
-                final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamViewActivity.class);
-                intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
-                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+                if (team == null) {
+                    UiUtils.navigateToHome(this);
+                } else {
+                    Log.i(Tags.STORED_TEAMS, String.format("Start activity to view stored team %s", team.getName()));
+
+                    final Intent intent = new Intent(StoredTeamsListActivity.this, StoredTeamViewActivity.class);
+                    intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
+                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "listItemToDetails").toBundle());
+                }
             }
         });
 

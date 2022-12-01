@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Snow volley</string>
     <string name="score_based_game">A punti</string>
     <string name="time_based_game">A tempo</string>
-    <string name="permission_title">Autorizzazioni</string>
-    <string name="permission_message">Questa applicazione richiede l\'autorizzazione al salvataggio dei risultati delle partite per la condivisione.</string>
     <string name="resume_game_title">Riprendi la partita</string>
     <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
     <string name="resume_game_error">La partita non può essere ripresa.</string>

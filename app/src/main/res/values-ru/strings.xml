@@ -23,8 +23,6 @@
     <string name="snow_volleyball_game">Снежный волейбол</string>
     <string name="score_based_game">Счётное табло</string>
     <string name="time_based_game">Матч ограниченный по времени</string>
-    <string name="permission_title">Разрешения</string>
-    <string name="permission_message">Этому приложению нужно разрешение на хранение информации на данном утройстве для возможности делиться результатами.</string>
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_question">В приложении сохранён недоигранный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume_game_error">Невозможно продолжить матч.</string>

@@ -201,44 +201,44 @@ public class UiUtils {
         activity.overridePendingTransition(animIn, animOut);
     }
 
-    public static void navigateToHome(Activity activity) {
-        navigateToHome(activity, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    public static void navigateToHome(Activity originActivity) {
+        navigateToHome(originActivity, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    public static void navigateToHomeWithDialog(Activity activity, IGame game) {
+    public static void navigateToHomeWithDialog(Activity originActivity, IGame game) {
         Log.i(Tags.GAME_UI, "Navigate to home");
         if (game.isMatchCompleted()) {
-            UiUtils.navigateToHome(activity);
+            UiUtils.navigateToHome(originActivity);
         } else if (GameType.TIME.equals(game.getKind())) {
             ITimeBasedGame timeBasedGameService = (ITimeBasedGame) game;
             if (timeBasedGameService.getRemainingTime() > 0L) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
-                builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
-                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity));
+                final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
+                builder.setTitle(originActivity.getString(R.string.navigate_home)).setMessage(originActivity.getString(R.string.navigate_home_question));
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(originActivity));
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
                 AlertDialog alertDialog = builder.show();
-                UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
+                UiUtils.setAlertDialogMessageSize(alertDialog, originActivity.getResources());
             } else {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
-                builder.setTitle(R.string.stop_match_description).setMessage(activity.getString(R.string.confirm_stop_match_question));
+                final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
+                builder.setTitle(R.string.stop_match_description).setMessage(originActivity.getString(R.string.confirm_stop_match_question));
                 builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     Log.i(Tags.GAME_UI, "User accepts to stop");
                     timeBasedGameService.stop();
-                    UiUtils.navigateToHome(activity);
+                    UiUtils.navigateToHome(originActivity);
                 });
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects stop"));
                 AlertDialog alertDialog = builder.show();
-                UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
+                UiUtils.setAlertDialogMessageSize(alertDialog, originActivity.getResources());
             }
         } else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AppTheme_Dialog);
-            builder.setTitle(activity.getString(R.string.navigate_home)).setMessage(activity.getString(R.string.navigate_home_question));
-            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(activity));
+            final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
+            builder.setTitle(originActivity.getString(R.string.navigate_home)).setMessage(originActivity.getString(R.string.navigate_home_question));
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(originActivity));
             builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
             AlertDialog alertDialog = builder.show();
-            UiUtils.setAlertDialogMessageSize(alertDialog, activity.getResources());
+            UiUtils.setAlertDialogMessageSize(alertDialog, originActivity.getResources());
         }
     }
 

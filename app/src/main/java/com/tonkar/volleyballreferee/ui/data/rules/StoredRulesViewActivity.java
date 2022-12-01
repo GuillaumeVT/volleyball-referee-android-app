@@ -124,13 +124,18 @@ public class StoredRulesViewActivity extends AppCompatActivity {
 
     public void editRules(View view) {
         ApiRules rules = mStoredRulesService.getRules(mRules.getId());
-        Log.i(Tags.STORED_RULES, String.format("Start activity to edit stored rules %s", rules.getName()));
 
-        final Intent intent = new Intent(this, StoredRulesActivity.class);
-        intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
-        intent.putExtra("create", false);
-        startActivity(intent);
-        UiUtils.animateForward(this);
+        if (rules == null) {
+            backToList();
+        } else {
+            Log.i(Tags.STORED_RULES, String.format("Start activity to edit stored rules %s", rules.getName()));
+
+            final Intent intent = new Intent(this, StoredRulesActivity.class);
+            intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
+            intent.putExtra("create", false);
+            startActivity(intent);
+            UiUtils.animateForward(this);
+        }
     }
 
     private void backToList() {

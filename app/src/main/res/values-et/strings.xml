@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Lumevõrkpall</string>
     <string name="score_based_game">Seisu tabloo</string>
     <string name="time_based_game">Ajaline piirang</string>
-    <string name="permission_title">Õigused</string>
-    <string name="permission_message">Antud rakendusele on vajalik andmete salvestamine antud seadmel selleks, et saaks tulemusi jagada.</string>
     <string name="resume_game_title">Jätka mängu</string>
     <string name="resume_game_question">Rakenduses salvestatud lõpetamata mäng. Kas te soovite antud mängu jätkata või kustutada?</string>
     <string name="resume_game_error">Mängu jätkamine pole võimalik.</string>

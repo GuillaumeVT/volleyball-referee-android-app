@@ -24,8 +24,6 @@
     <string name="snow_volleyball_game">Schnee Volleyball</string>
     <string name="score_based_game">Anzeigetafel</string>
     <string name="time_based_game">Zeitbasiert</string>
-    <string name="permission_title">Berechtigungen</string>
-    <string name="permission_message">Diese App benötigt Speicherberechtigungen, um die Spielergebnisse zu teilen.</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
     <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
     <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>

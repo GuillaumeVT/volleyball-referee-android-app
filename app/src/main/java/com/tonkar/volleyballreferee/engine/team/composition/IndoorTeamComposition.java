@@ -48,15 +48,15 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
 
     @Override
     protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
-        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType.toString(), getTeamDefinition().getTeamType().toString()));
+        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType, getTeamDefinition().getTeamType()));
 
         if (isStartingLineupConfirmed()) {
             if (getTeamDefinition().isLibero(newNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, getTeamDefinition().getTeamType().toString()));
+                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, getTeamDefinition().getTeamType()));
                 mActingLibero = newNumber;
 
                 if (!getTeamDefinition().isLibero(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, getTeamDefinition().getTeamType().toString()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, getTeamDefinition().getTeamType()));
 
                     if (mMiddleBlockers.size() == 1) {
                         int middleBlocker = mMiddleBlockers.iterator().next();
@@ -77,11 +77,11 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
             } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(oldNumber)) {
                 if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
                     // The middle blocker is back on court as a result of a rotation
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, getTeamDefinition().getTeamType().toString()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, getTeamDefinition().getTeamType()));
                     middleBlockerOnCourt();
                 } else {
                     // The middle blocker is back on court as a result of a substitution, the user wants this middle blocker to stay in defence
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and will stay on court in defence", newNumber, getTeamDefinition().getTeamType().toString()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and will stay on court in defence", newNumber, getTeamDefinition().getTeamType()));
                     removeMiddleBlocker(newNumber);
                 }
             } else {
@@ -89,7 +89,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
                 super.onSubstitution(oldNumber, newNumber, positionType, homeTeamPoints, guestTeamPoints, actionOriginType);
 
                 if (isMiddleBlocker(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, getTeamDefinition().getTeamType().toString()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, getTeamDefinition().getTeamType()));
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
                 }
@@ -100,7 +100,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     @Override
     public Set<Integer> getPossibleSubstitutions(PositionType positionType) {
         Set<Integer> availablePlayers = new TreeSet<>(getPossibleSubstitutionsNoMax(positionType));
-        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType.toString(), getTeamDefinition().getTeamType().toString(), availablePlayers.toString()));
+        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType, getTeamDefinition().getTeamType(), availablePlayers));
         return availablePlayers;
     }
 

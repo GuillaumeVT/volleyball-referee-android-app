@@ -67,7 +67,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     @Override
     public void addLibero(final int number) {
         if (canAddLibero() && hasPlayer(number)) {
-            Log.i(Tags.TEAM, String.format("Add player #%d as libero of %s team", number, getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Add player #%d as libero of %s team", number, getTeamType()));
             ApiPlayer player = getPlayer(number);
             getLiberos().add(player);
         }
@@ -76,7 +76,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     @Override
     public void removeLibero(final int number) {
         if (hasPlayer(number) && isLibero(number)) {
-            Log.i(Tags.TEAM, String.format("Remove player #%d as libero from %s team", number, getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Remove player #%d as libero from %s team", number, getTeamType()));
             getLiberos().remove(new ApiPlayer(number));
         }
     }
@@ -84,7 +84,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     @Override
     public void setCaptain(int number) {
         if (hasPlayer(number)) {
-            Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType().toString()));
+            Log.i(Tags.TEAM, String.format("Set player #%d as captain of %s team", number, getTeamType()));
             super.setCaptain(number);
         }
     }
