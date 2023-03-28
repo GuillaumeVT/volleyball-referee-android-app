@@ -42,7 +42,7 @@ public class BrazilFranceIndoorGame {
 
     private Context            mContext;
     private StoredGamesService mStoredGamesService;
-    
+
     @Before
     public void init() {
         mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -51,11 +51,15 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        playGame_complete(mContext, mStoredGamesService);
+    }
+
+    public void playGame_complete(Context context, StoredGamesService storedGamesService) {
+        ApiUserSummary user = PrefUtils.getUser(context);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeamsAndLeague(indoorGame);
+        defineTeamsAndLeague(indoorGame, context, storedGamesService);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -72,18 +76,22 @@ public class BrazilFranceIndoorGame {
         composeTeamsSet5(indoorGame);
         playSet5_complete(indoorGame);
 
-        IStoredGame storedGame = mStoredGamesService.getGame(indoorGame.getId());
-        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(mContext, storedGame);
+        IStoredGame storedGame = storedGamesService.getGame(indoorGame.getId());
+        ScoreSheetBuilder scoreSheetBuilder = new ScoreSheetBuilder(context, storedGame);
         scoreSheetBuilder.createScoreSheet();
     }
 
     @Test
     public void playGame_lastSetEnd() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        playGame_lastSetEnd(mContext, mStoredGamesService);
+    }
+
+    public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
+        ApiUserSummary user = PrefUtils.getUser(context);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeamsAndLeague(indoorGame);
+        defineTeamsAndLeague(indoorGame, context, storedGamesService);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -103,11 +111,15 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_substitutions() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        playGame_substitutions(mContext, mStoredGamesService);
+    }
+
+    public void playGame_substitutions(Context context, StoredGamesService storedGamesService) {
+        ApiUserSummary user = PrefUtils.getUser(context);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeamsAndLeague(indoorGame);
+        defineTeamsAndLeague(indoorGame, context, storedGamesService);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -128,7 +140,7 @@ public class BrazilFranceIndoorGame {
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
 
-        defineTeamsAndLeague(indoorGame);
+        defineTeamsAndLeague(indoorGame, mContext, mStoredGamesService);
 
         composeTeamsSet1(indoorGame);
         playSet1_complete(indoorGame);
@@ -157,9 +169,9 @@ public class BrazilFranceIndoorGame {
         }
     }
 
-    private void defineTeamsAndLeague(IndoorGame indoorGame) {
-        StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext);
-        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext);
+    private void defineTeamsAndLeague(IndoorGame indoorGame, Context context, StoredGamesService storedGamesService) {
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(context);
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(context);
 
         indoorGame.setGender(GenderType.GENTS);
 
@@ -278,7 +290,7 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.startMatch();
 
-        mStoredGamesService.connectGameRecorder(indoorGame);
+        storedGamesService.connectGameRecorder(indoorGame);
     }
 
     private void composeTeamsSet1(IndoorGame indoorGame) {
@@ -616,6 +628,7 @@ public class BrazilFranceIndoorGame {
     private void playSet5_complete(IndoorGame indoorGame) {
         playSet5_lastSetEnd(indoorGame);
 
+        indoorGame.addPoint(TeamType.GUEST);
         indoorGame.addPoint(TeamType.HOME);
         indoorGame.addPoint(TeamType.GUEST);
     }
@@ -650,6 +663,5 @@ public class BrazilFranceIndoorGame {
         indoorGame.addPoint(TeamType.GUEST);
         indoorGame.addPoint(TeamType.GUEST);
         indoorGame.addPoint(TeamType.HOME);
-        indoorGame.addPoint(TeamType.GUEST);
     }
 }

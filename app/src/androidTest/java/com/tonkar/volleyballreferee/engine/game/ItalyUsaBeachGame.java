@@ -54,7 +54,7 @@ public class ItalyUsaBeachGame {
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
-        defineTeamsAndLeague(beachGame);
+        defineTeamsAndLeague(beachGame, mContext, mStoredGamesService);
 
         playSet1_complete(beachGame);
         playSet2_complete(beachGame);
@@ -65,15 +65,19 @@ public class ItalyUsaBeachGame {
     }
 
     @Test
-    public void playGame_matchPoint() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+    public void playGame_lastSetEnd() {
+        playGame_lastSetEnd(mContext, mStoredGamesService);
+    }
+
+    public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
+        ApiUserSummary user = PrefUtils.getUser(context);
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
-        defineTeamsAndLeague(beachGame);
+        defineTeamsAndLeague(beachGame, context, storedGamesService);
 
         playSet1_complete(beachGame);
-        playSet2_matchPoint(beachGame);
+        playSet2_lastSetEnd(beachGame);
 
         try {
             Thread.sleep(1000);
@@ -83,8 +87,8 @@ public class ItalyUsaBeachGame {
 
         for (int index = 0; index < 5; index++) {
             Log.i("VBR-Test", "playGame_matchPoint index #" + index);
-            mStoredGamesService.saveCurrentGame(true);
-            IGame game = mStoredGamesService.loadCurrentGame();
+            storedGamesService.saveCurrentGame(true);
+            IGame game = storedGamesService.loadCurrentGame();
             assertNotEquals(null, game);
             assertEquals(beachGame, game);
         }
@@ -92,18 +96,22 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_technicalTimeout() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        playGame_technicalTimeout(mContext, mStoredGamesService);
+    }
+
+    public void playGame_technicalTimeout(Context context, StoredGamesService storedGamesService) {
+        ApiUserSummary user = PrefUtils.getUser(context);
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
 
-        defineTeamsAndLeague(beachGame);
+        defineTeamsAndLeague(beachGame, context, storedGamesService);
 
         playSet1_technicalTimeout(beachGame);
     }
 
-    private void defineTeamsAndLeague(BeachGame beachGame) {
-        StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext);
-        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext);
+    private void defineTeamsAndLeague(BeachGame beachGame, Context context, StoredGamesService storedGamesService) {
+        StoredTeamsService storedTeamsService = new StoredTeamsManager(context);
+        StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(context);
 
         beachGame.setGender(GenderType.GENTS);
 
@@ -147,7 +155,7 @@ public class ItalyUsaBeachGame {
 
         beachGame.startMatch();
 
-        mStoredGamesService.connectGameRecorder(beachGame);
+        storedGamesService.connectGameRecorder(beachGame);
     }
 
     private void playSet1_complete(BeachGame beachGame) {
@@ -200,11 +208,13 @@ public class ItalyUsaBeachGame {
     }
 
     private void playSet2_complete(BeachGame beachGame) {
-        playSet2_matchPoint(beachGame);
+        playSet2_lastSetEnd(beachGame);
+        beachGame.addPoint(TeamType.HOME);
+        beachGame.addPoint(TeamType.GUEST);
         beachGame.addPoint(TeamType.HOME);
     }
 
-    private void playSet2_matchPoint(BeachGame beachGame) {
+    private void playSet2_lastSetEnd(BeachGame beachGame) {
         beachGame.addPoint(TeamType.HOME);
         beachGame.addPoint(TeamType.GUEST);
         beachGame.addPoint(TeamType.HOME);
@@ -242,7 +252,5 @@ public class ItalyUsaBeachGame {
         beachGame.addPoint(TeamType.GUEST);
         beachGame.addPoint(TeamType.HOME);
         beachGame.addPoint(TeamType.HOME);
-        beachGame.addPoint(TeamType.HOME);
-        beachGame.addPoint(TeamType.GUEST);
     }
 }
