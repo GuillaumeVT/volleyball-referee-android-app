@@ -61,6 +61,7 @@ import java.util.TimeZone;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class StoredGamesManager implements StoredGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
@@ -507,8 +508,10 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        StoredGame storedGame = JsonConverters.GSON.fromJson(response.body().string(), StoredGame.class);
-                        listener.onGameReceived(storedGame);
+                        try (ResponseBody body = response.body()) {
+                            StoredGame storedGame = JsonConverters.GSON.fromJson(body.string(), StoredGame.class);
+                            listener.onGameReceived(storedGame);
+                        }
                     } else {
                         Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting game", response.code()));
                         listener.onError(response.code());
@@ -533,8 +536,11 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        List<ApiGameSummary> games = JsonConverters.GSON.fromJson(response.body().string(), new TypeToken<List<ApiGameSummary>>(){}.getType());
-                        listener.onAvailableGamesReceived(games);
+                        try (ResponseBody body = response.body()) {
+                            List<ApiGameSummary> games = JsonConverters.GSON.fromJson(body.string(), new TypeToken<List<ApiGameSummary>>() {
+                            }.getType());
+                            listener.onAvailableGamesReceived(games);
+                        }
                     } else {
                         Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting available games list", response.code()));
                         listener.onError(response.code());
@@ -747,12 +753,15 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
-                    ApiPage<ApiGameSummary> gamesPage = JsonConverters.GSON.fromJson(response.body().string(), new TypeToken<ApiPage<ApiGameSummary>>(){}.getType());
-                    remoteGameList.addAll(gamesPage.getContent());
-                    if (gamesPage.isLast()) {
-                        syncGames(remoteGameList, listener);
-                    } else {
-                        syncGames(remoteGameList, page + 1, size, listener);
+                    try (ResponseBody body = response.body()) {
+                        ApiPage<ApiGameSummary> gamesPage = JsonConverters.GSON.fromJson(body.string(), new TypeToken<ApiPage<ApiGameSummary>>() {
+                        }.getType());
+                        remoteGameList.addAll(gamesPage.getContent());
+                        if (gamesPage.isLast()) {
+                            syncGames(remoteGameList, listener);
+                        } else {
+                            syncGames(remoteGameList, page + 1, size, listener);
+                        }
                     }
                 } else {
                     Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", response.code()));
@@ -859,9 +868,11 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiGame game = JsonConverters.GSON.fromJson(response.body().string(), ApiGame.class);
-                        mRepository.insertGame(game, true, false);
-                        downloadGamesRecursive(remoteGames, listener);
+                        try (ResponseBody body = response.body()) {
+                            ApiGame game = JsonConverters.GSON.fromJson(body.string(), ApiGame.class);
+                            mRepository.insertGame(game, true, false);
+                            downloadGamesRecursive(remoteGames, listener);
+                        }
                     } else {
                         Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", response.code()));
                         if (listener != null){

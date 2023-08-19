@@ -39,6 +39,7 @@ import java.util.UUID;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class StoredRulesManager implements StoredRulesService {
 
@@ -186,8 +187,10 @@ public class StoredRulesManager implements StoredRulesService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        List<ApiRulesSummary> rulesList = JsonConverters.GSON.fromJson(response.body().string(), new TypeToken<List<ApiRulesSummary>>(){}.getType());
-                        syncRules(rulesList, listener);
+                        try (ResponseBody body = response.body()) {
+                            List<ApiRulesSummary> rulesList = JsonConverters.GSON.fromJson(body.string(), new TypeToken<List<ApiRulesSummary>>() {}.getType());
+                            syncRules(rulesList, listener);
+                        }
                     } else {
                         Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", response.code()));
                         if (listener != null){
@@ -289,9 +292,11 @@ public class StoredRulesManager implements StoredRulesService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiRules rules = JsonConverters.GSON.fromJson(response.body().string(), ApiRules.class);
-                        mRepository.insertRules(rules, true, false);
-                        downloadRulesRecursive(remoteRules, listener);
+                        try (ResponseBody body = response.body()) {
+                            ApiRules rules = JsonConverters.GSON.fromJson(body.string(), ApiRules.class);
+                            mRepository.insertRules(rules, true, false);
+                            downloadRulesRecursive(remoteRules, listener);
+                        }
                     } else {
                         Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", response.code()));
                         if (listener != null){

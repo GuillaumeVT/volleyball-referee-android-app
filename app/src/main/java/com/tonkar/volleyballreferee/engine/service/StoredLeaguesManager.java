@@ -36,6 +36,7 @@ import java.util.TimeZone;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class StoredLeaguesManager implements StoredLeaguesService {
 
@@ -129,8 +130,10 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        List<ApiLeagueSummary> leagueList = JsonConverters.GSON.fromJson(response.body().string(), new TypeToken<List<ApiLeagueSummary>>(){}.getType());
-                        syncLeagues(leagueList, listener);
+                        try (ResponseBody body = response.body()) {
+                            List<ApiLeagueSummary> leagueList = JsonConverters.GSON.fromJson(body.string(), new TypeToken<List<ApiLeagueSummary>>() {}.getType());
+                            syncLeagues(leagueList, listener);
+                        }
                     } else {
                         Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising leagues", response.code()));
                         if (listener != null){
@@ -226,9 +229,11 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiLeague league = JsonConverters.GSON.fromJson(response.body().string(), ApiLeague.class);
-                        mRepository.insertLeague(league, true, false);
-                        downloadLeaguesRecursive(remoteLeagues, listener);
+                        try (ResponseBody body = response.body()) {
+                            ApiLeague league = JsonConverters.GSON.fromJson(body.string(), ApiLeague.class);
+                            mRepository.insertLeague(league, true, false);
+                            downloadLeaguesRecursive(remoteLeagues, listener);
+                        }
                     } else {
                         Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising league", response.code()));
                         if (listener != null){

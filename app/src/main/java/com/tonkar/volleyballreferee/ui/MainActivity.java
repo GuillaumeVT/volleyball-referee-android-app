@@ -57,6 +57,7 @@ import java.util.UUID;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends NavigationActivity {
 
@@ -270,8 +271,10 @@ public class MainActivity extends NavigationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiCount count = JsonConverters.GSON.fromJson(response.body().string(), ApiCount.class);
-                        initFriendRequestsButton(count);
+                        try (ResponseBody body = response.body()) {
+                            ApiCount count = JsonConverters.GSON.fromJson(body.string(), ApiCount.class);
+                            initFriendRequestsButton(count);
+                        }
                     } else {
                         initFriendRequestsButton(new ApiCount(0L));
                     }
@@ -304,8 +307,10 @@ public class MainActivity extends NavigationActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiCount count = JsonConverters.GSON.fromJson(response.body().string(), ApiCount.class);
-                        initAvailableGamesButton(count);
+                        try (ResponseBody body = response.body()) {
+                            ApiCount count = JsonConverters.GSON.fromJson(body.string(), ApiCount.class);
+                            initAvailableGamesButton(count);
+                        }
                     } else {
                         initAvailableGamesButton(new ApiCount(0L));
                     }

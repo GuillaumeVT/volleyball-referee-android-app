@@ -32,6 +32,7 @@ import java.util.Locale;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class StoredUserManager implements StoredUserService {
 
@@ -58,10 +59,12 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiUserSummary user = JsonConverters.GSON.fromJson(response.body().string(), ApiUserSummary.class);
-                        PrefUtils.storeUser(mContext, user);
-                        if (listener != null) {
-                            listener.onUserReceived(user);
+                        try (ResponseBody body = response.body()) {
+                            ApiUserSummary user = JsonConverters.GSON.fromJson(body.string(), ApiUserSummary.class);
+                            PrefUtils.storeUser(mContext, user);
+                            if (listener != null) {
+                                listener.onUserReceived(user);
+                            }
                         }
                     } else {
                         Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while getting user from purchase token", response.code()));
@@ -89,9 +92,11 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_CREATED) {
-                        ApiUserToken userToken = JsonConverters.GSON.fromJson(response.body().string(), ApiUserToken.class);
-                        PrefUtils.signIn(mContext, userToken);
-                        listener.onUserTokenReceived(userToken);
+                        try (ResponseBody body = response.body()) {
+                            ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
+                            PrefUtils.signIn(mContext, userToken);
+                            listener.onUserTokenReceived(userToken);
+                        }
                     } else {
                         Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while creating user", response.code()));
                         listener.onError(response.code());
@@ -118,10 +123,12 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiUserToken userToken = JsonConverters.GSON.fromJson(response.body().string(), ApiUserToken.class);
-                        PrefUtils.signIn(mContext, userToken);
-                        listener.onUserTokenReceived(userToken);
-                        syncAll();
+                        try (ResponseBody body = response.body()) {
+                            ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
+                            PrefUtils.signIn(mContext, userToken);
+                            listener.onUserTokenReceived(userToken);
+                            syncAll();
+                        }
                     } else {
                         Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while signing in user", response.code()));
                         listener.onError(response.code());
@@ -171,10 +178,12 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiUserToken userToken = JsonConverters.GSON.fromJson(response.body().string(), ApiUserToken.class);
-                        PrefUtils.signIn(mContext, userToken);
-                        listener.onUserTokenReceived(userToken);
-                        syncAll();
+                        try (ResponseBody body = response.body()) {
+                            ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
+                            PrefUtils.signIn(mContext, userToken);
+                            listener.onUserTokenReceived(userToken);
+                            syncAll();
+                        }
                     } else {
                         Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while updating user password", response.code()));
                         listener.onError(response.code());
@@ -207,11 +216,13 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiFriendsAndRequests friendsAndRequests = JsonConverters.GSON.fromJson(response.body().string(), new TypeToken<ApiFriendsAndRequests>(){}.getType());
+                        try (ResponseBody body = response.body()) {
+                            ApiFriendsAndRequests friendsAndRequests = JsonConverters.GSON.fromJson(body.string(), new TypeToken<ApiFriendsAndRequests>() {}.getType());
 
-                        mRepository.insertFriends(friendsAndRequests.getFriends(), false);
-                        if (listener != null) {
-                            listener.onFriendsAndRequestsReceived(friendsAndRequests);
+                            mRepository.insertFriends(friendsAndRequests.getFriends(), false);
+                            if (listener != null) {
+                                listener.onFriendsAndRequestsReceived(friendsAndRequests);
+                            }
                         }
                     } else {
                         Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting friends and requests", response.code()));

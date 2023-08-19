@@ -48,6 +48,7 @@ import java.util.UUID;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class StoredTeamsManager implements StoredTeamsService {
 
@@ -294,12 +295,14 @@ public class StoredTeamsManager implements StoredTeamsService {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
-                    ApiPage<ApiTeamSummary> teamsPage = JsonConverters.GSON.fromJson(response.body().string(), new TypeToken<ApiPage<ApiTeamSummary>>(){}.getType());
-                    remoteTeamList.addAll(teamsPage.getContent());
-                    if (teamsPage.isLast()) {
-                        syncTeams(remoteTeamList, listener);
-                    } else {
-                        syncTeams(remoteTeamList, page + 1, size, listener);
+                    try (ResponseBody body = response.body()) {
+                        ApiPage<ApiTeamSummary> teamsPage = JsonConverters.GSON.fromJson(body.string(), new TypeToken<ApiPage<ApiTeamSummary>>() {}.getType());
+                        remoteTeamList.addAll(teamsPage.getContent());
+                        if (teamsPage.isLast()) {
+                            syncTeams(remoteTeamList, listener);
+                        } else {
+                            syncTeams(remoteTeamList, page + 1, size, listener);
+                        }
                     }
                 } else {
                     Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
@@ -397,9 +400,11 @@ public class StoredTeamsManager implements StoredTeamsService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        ApiTeam team = JsonConverters.GSON.fromJson(response.body().string(), ApiTeam.class);
-                        mRepository.insertTeam(team, true, false);
-                        downloadTeamsRecursive(remoteTeams, listener);
+                        try (ResponseBody body = response.body()) {
+                            ApiTeam team = JsonConverters.GSON.fromJson(body.string(), ApiTeam.class);
+                            mRepository.insertTeam(team, true, false);
+                            downloadTeamsRecursive(remoteTeams, listener);
+                        }
                     } else {
                         Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
                         if (listener != null){
