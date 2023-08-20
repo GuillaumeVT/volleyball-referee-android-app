@@ -93,7 +93,7 @@
     <string name="remove_colleague_question">Anfragen des Schiedsrichterkollege(in) %s entfernen?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Spieleinstellungen</string>
+    <string name="new_game_title">Neues Spiel</string>
     <string name="home_team_tab">Heimmannschaft</string>
     <string name="home_team_hint">Name Heimmannschaft</string>
     <string name="guest_team_tab">Gastmannschaft</string>

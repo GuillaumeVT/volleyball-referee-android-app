@@ -93,7 +93,7 @@
     <string name="remove_colleague_question">%s eltávolítása?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Csapatok beállítása</string>
+    <string name="new_game_title">Csapatok beállítása</string>
     <string name="home_team_tab">Hazai csapat</string>
     <string name="home_team_hint">Hazai csapat neve</string>
     <string name="guest_team_tab">Vendég csapat</string>

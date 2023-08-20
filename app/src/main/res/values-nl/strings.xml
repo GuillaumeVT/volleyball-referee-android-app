@@ -93,7 +93,7 @@
     <string name="remove_colleague_question">Verwijder collega %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Wedstrijd instellen</string>
+    <string name="new_game_title">Wedstrijd instellen</string>
     <string name="home_team_tab">Thuisploeg</string>
     <string name="home_team_hint">Naam thuisploeg</string>
     <string name="guest_team_tab">Uitploeg</string>

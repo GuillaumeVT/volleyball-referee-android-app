@@ -92,7 +92,7 @@
     <string name="remove_colleague_question">Удалить коллегу %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Настройка матча</string>
+    <string name="new_game_title">Новый матч</string>
     <string name="home_team_tab">Хозяева</string>
     <string name="home_team_hint">Имя принимающей команды</string>
     <string name="guest_team_tab">Гости</string>

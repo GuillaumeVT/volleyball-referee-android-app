@@ -93,7 +93,7 @@
     <string name="remove_colleague_question">Eemalda kolleegi %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Mängu seaded</string>
+    <string name="new_game_title">Mängu seaded</string>
     <string name="home_team_tab">Koduvõistkond</string>
     <string name="home_team_hint">Koduvõiskonna nimi</string>
     <string name="guest_team_tab">Külalisvõistkond</string>

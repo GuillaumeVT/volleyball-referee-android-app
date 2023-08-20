@@ -93,7 +93,7 @@
     <string name="remove_colleague_question">Διαγραφή %s;</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Σύνθεση αγώνα</string>
+    <string name="new_game_title">Νέο παιχνίδι</string>
     <string name="home_team_tab">Γηπεδούχος ομάδα</string>
     <string name="home_team_hint">Όνομα γηπεδούχου ομάδας</string>
     <string name="guest_team_tab">Φιλοξενούμενη ομάδα</string>

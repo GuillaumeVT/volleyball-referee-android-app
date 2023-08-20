@@ -176,7 +176,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         Log.i(Tags.SETUP_UI, "Cancel setup");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-        builder.setTitle(getString(R.string.game_setup_title)).setMessage(getString(R.string.leave_game_setup_question));
+        builder.setTitle(getString(R.string.new_game_title)).setMessage(getString(R.string.leave_game_setup_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             StoredGamesService storedGamesService = new StoredGamesManager(this);
             if (storedGamesService.hasSetupGame()) {

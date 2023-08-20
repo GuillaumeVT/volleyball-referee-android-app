@@ -92,7 +92,7 @@
     <string name="remove_colleague_question">Supprimer %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Configuration du match</string>
+    <string name="new_game_title">Nouveau match</string>
     <string name="home_team_tab">Équipe à domicile</string>
     <string name="home_team_hint">Nom de l\'équipe à domicile</string>
     <string name="guest_team_tab">Équipe à l\'extérieur</string>

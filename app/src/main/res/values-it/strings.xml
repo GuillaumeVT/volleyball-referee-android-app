@@ -93,7 +93,7 @@
     <string name="remove_colleague_question">Eliminare %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Configura le squadre</string>
+    <string name="new_game_title">Nuova partita</string>
     <string name="home_team_tab">Squadra ospitante</string>
     <string name="home_team_hint">Nome della squadra ospitante</string>
     <string name="guest_team_tab">Squadra avversaria</string>

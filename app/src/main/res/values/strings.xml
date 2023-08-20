@@ -98,7 +98,7 @@
     <string name="remove_colleague_question">Remove %s?</string>
 
     <!-- Setup activities -->
-    <string name="game_setup_title">Setup game</string>
+    <string name="new_game_title">New game</string>
     <string name="home_team_tab">Home team</string>
     <string name="home_team_hint">Home team name</string>
     <string name="guest_team_tab">Guest team</string>
