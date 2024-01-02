@@ -156,7 +156,7 @@ public class Pixel4aScreenshots extends Screenshots {
                     .onView(ViewMatchers.withText(android.R.string.ok))
                     .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-            takeScreenshot("screenshot5", 240000L, 260000L);
+            takeScreenshot("screenshot5", 240000L, 270000L);
 
             Espresso
                     .onView(ViewMatchers.withText(android.R.string.no))

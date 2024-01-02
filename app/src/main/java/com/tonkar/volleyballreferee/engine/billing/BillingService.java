@@ -8,7 +8,6 @@ public interface BillingService {
 
     String WEB_PREMIUM              = "vbr_web_premium";
     String WEB_PREMIUM_SUBSCRIPTION = "vbr_web_premium_sub";
-    String SCORE_SHEETS             = "vbr_score_sheets";
 
     void addBillingListener(BillingListener listener);
 

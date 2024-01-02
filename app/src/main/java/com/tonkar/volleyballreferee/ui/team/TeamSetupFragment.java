@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
@@ -208,7 +207,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             updateGender(genderType);
         });
 
-        if (PrefUtils.isScoreSheetsPurchased(getContext()) && (GameType.INDOOR.equals(mTeamService.getTeamsKind()) || GameType.INDOOR_4X4.equals(mTeamService.getTeamsKind()))) {
+        if (GameType.INDOOR.equals(mTeamService.getTeamsKind()) || GameType.INDOOR_4X4.equals(mTeamService.getTeamsKind())) {
             coachNameInput.setText(mTeamService.getCoachName(mTeamType));
             coachNameInput.addTextChangedListener(new TextWatcher() {
                 @Override

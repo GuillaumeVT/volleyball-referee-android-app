@@ -24,7 +24,6 @@ public class PrefUtils {
     private static final String PREF_USER_TOKEN_EXPIRY                      = "pref_user_token_expiry";
     private static final String PREF_WEB_PREMIUM_BILLING_TOKEN              = "pref_web_premium_token";
     private static final String PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN = "pref_web_premium_subscription_token";
-    private static final String PREF_SCORE_SHEETS_BILLING_TOKEN             = "pref_score_sheets_token";
 
     public static final String PREF_ONBOARDING_MAIN = "pref_onboarding_main";
 
@@ -124,21 +123,6 @@ public class PrefUtils {
         } else {
             return sharedPreferences.getString(PREF_WEB_PREMIUM_BILLING_TOKEN, "");
         }
-    }
-
-    public static void purchaseScoreSheets(Context context, String purchaseToken) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_SCORE_SHEETS_BILLING_TOKEN, purchaseToken).apply();
-    }
-
-    public static void unpurchaseScoreSheets(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_SCORE_SHEETS_BILLING_TOKEN).apply();
-    }
-
-    public static boolean isScoreSheetsPurchased(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_SCORE_SHEETS_BILLING_TOKEN, ""));
     }
 
     public static boolean canSync(Context context) {

@@ -27,8 +27,9 @@ public abstract class Screenshots {
     protected File               mScreenshotsDirectory;
 
     protected final List<Locale> mLocales = List.of(
-            Locale.forLanguageTag("ar"),
-            Locale.forLanguageTag("bg"),
+     /*       Locale.forLanguageTag("ar"),
+            Locale.forLanguageTag("bg"),*/
+            Locale.forLanguageTag("ca")/*,
             Locale.GERMAN,
             Locale.forLanguageTag("el"),
             Locale.forLanguageTag("es"),
@@ -41,7 +42,7 @@ public abstract class Screenshots {
             Locale.forLanguageTag("pt"),
             Locale.forLanguageTag("pt-BR"),
             Locale.forLanguageTag("ru"),
-            Locale.ENGLISH
+            Locale.ENGLISH*/
     );
 
     protected void setAppLanguage(Locale locale) {
@@ -51,7 +52,7 @@ public abstract class Screenshots {
     protected void takeScreenshot(String filename, long minSize, long maxSize) throws IOException {
         Bitmap bitmap = DeviceCapture.takeScreenshot();
 
-        Locale locale = mContext.getResources().getConfiguration().locale;
+        Locale locale = mContext.getResources().getConfiguration().getLocales().get(0);
 
         File screenshot = new File(mScreenshotsDirectory, String.format("%s_%s.png", locale, filename));
 

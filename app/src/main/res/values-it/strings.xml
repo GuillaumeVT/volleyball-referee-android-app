@@ -48,13 +48,6 @@
         \n\u2022 Avete cancellato una partita per sbaglio? Recuperate le vostre partite dal backup del server.
         \n\u2022 Beneficiare automaticamente delle future funzioni web dell\'applicazione
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Aggiungere le firme degli arbitri, segnapunti, capitani e allenatori
-        \n\u2022 Aggiungere il logo della vostra federazione
-        \n\u2022 Aggiungere le osservazioni
-        \n\u2022 Salvare in formato PDF
-        \n\u2022 Condividere
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Connettiti</string>

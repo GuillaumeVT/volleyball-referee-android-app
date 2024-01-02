@@ -21,7 +21,6 @@ import com.tonkar.volleyballreferee.engine.service.DataSynchronizationListener;
 import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.ui.billing.PurchasesListActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.interfaces.StoredGameHandler;
 import com.tonkar.volleyballreferee.ui.scoresheet.ScoreSheetActivity;
@@ -188,16 +187,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         Log.i(Tags.STORED_GAMES, "Generate score sheet");
 
         if (!GameType.TIME.equals(mStoredGame.getKind())) {
-            if (PrefUtils.isScoreSheetsPurchased(this)) {
-                Intent intent = new Intent(this, ScoreSheetActivity.class);
-                intent.putExtra("game", mGameId);
-                startActivity(intent);
-                UiUtils.animateForward(this);
-            } else {
-                Intent intent = new Intent(this, PurchasesListActivity.class);
-                startActivity(intent);
-                UiUtils.animateForward(this);
-            }
+            Intent intent = new Intent(this, ScoreSheetActivity.class);
+            intent.putExtra("game", mGameId);
+            startActivity(intent);
+            UiUtils.animateForward(this);
         }
     }
 

@@ -53,13 +53,6 @@
         \n\u2022 Deleted your game by mistake? Resume your games from the server backup.
         \n\u2022 Benefit automatically from the future new web features.
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Add referees, scorer, captains and coaches signatures
-        \n\u2022 Add your federation logo
-        \n\u2022 Add remarks
-        \n\u2022 Save to PDF format
-        \n\u2022 Share
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>
@@ -382,7 +375,7 @@
     <string name="credit_title">About the VBR Team</string>
     <string name="credit_designers" translatable="false">Volleyball Referee is designed and developed by Guillaume VT and Polina P as a hobby project.\nYou can contact us at vbr.app.team@gmail.com.</string>
     <string name="credit_translators_intro" translatable="false">Our translations are made by voluntary referees and players. A huge thanks to them all:</string>
-    <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bartosz W - Polski</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Petar H - Български</li>\n <li>Polina P - Русский</li></string>
+    <string name="credit_translators" translatable="false"> <li>Andreas A. - Ελληνικά</li>\n <li>Arne K - Deutsch</li>\n <li>Bartosz W - Polski</li>\n <li>Bert VDB - Nederlands</li>\n <li>Istvan E - Magyar</li>\n <li>Felipe L - Português (Brasil)</li>\n <li>Guillaume VT - Français</li>\n <li>Ignacio D - Español</li>\n <li>Marco B - Português (Portugal)</li>\n <li>Marti C - Català</li>\n <li>Matteo T - Italiano</li>\n <li>Namariq AS - العَرَبِيَّة‎</li>\n <li>Nikolai P - Eesti</li>\n <li>Petar H - Български</li>\n <li>Polina P - Русский</li></string>
 
     <!-- Main activity onboarding -->
     <string name="volleyball_game_description">Create a complete 6x6 volleyball game.\n\nThis mode allows you to configure the players and the rules, to manage the substitutions, to monitor the rotations and much more.</string>

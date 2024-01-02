@@ -154,68 +154,62 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         final TextInputLayout referee2InputLayout = view.findViewById(R.id.referee2_name_input_layout);
         final TextInputLayout scorerInputLayout = view.findViewById(R.id.scorer_name_input_layout);
 
-        if (PrefUtils.isScoreSheetsPurchased(getContext())) {
-            final EditText referee1Input = view.findViewById(R.id.referee1_name_input_text);
-            referee1Input.setText(mGame.getReferee1Name());
-            referee1InputLayout.setHint(String.format(Locale.getDefault(), "%s %d", getString(R.string.referee), 1));
-            referee1Input.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        final EditText referee1Input = view.findViewById(R.id.referee1_name_input_text);
+        referee1Input.setText(mGame.getReferee1Name());
+        referee1InputLayout.setHint(String.format(Locale.getDefault(), "%s %d", getString(R.string.referee), 1));
+        referee1Input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (isAdded()) {
-                        Log.i(Tags.SETUP_UI, "Update referee 1");
-                        mGame.setReferee1Name(s.toString().trim());
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, "Update referee 1");
+                    mGame.setReferee1Name(s.toString().trim());
                 }
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {}
-            });
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
-            final EditText referee2Input = view.findViewById(R.id.referee2_name_input_text);
-            referee2Input.setText(mGame.getReferee2Name());
-            referee2InputLayout.setHint(String.format(Locale.getDefault(), "%s %d", getString(R.string.referee), 2));
-            referee2Input.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        final EditText referee2Input = view.findViewById(R.id.referee2_name_input_text);
+        referee2Input.setText(mGame.getReferee2Name());
+        referee2InputLayout.setHint(String.format(Locale.getDefault(), "%s %d", getString(R.string.referee), 2));
+        referee2Input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (isAdded()) {
-                        Log.i(Tags.SETUP_UI, "Update referee 2");
-                        mGame.setReferee2Name(s.toString().trim());
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, "Update referee 2");
+                    mGame.setReferee2Name(s.toString().trim());
                 }
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {}
-            });
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
-            final EditText scorerInput = view.findViewById(R.id.scorer_name_input_text);
-            scorerInput.setText(mGame.getScorerName());
-            scorerInputLayout.setHint(getString(R.string.scorer));
-            scorerInput.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        final EditText scorerInput = view.findViewById(R.id.scorer_name_input_text);
+        scorerInput.setText(mGame.getScorerName());
+        scorerInputLayout.setHint(getString(R.string.scorer));
+        scorerInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (isAdded()) {
-                        Log.i(Tags.SETUP_UI, "Update scorer");
-                        mGame.setScorerName(s.toString().trim());
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isAdded()) {
+                    Log.i(Tags.SETUP_UI, "Update scorer");
+                    mGame.setScorerName(s.toString().trim());
                 }
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {}
-            });
-        } else {
-            referee1InputLayout.setVisibility(View.GONE);
-            referee2InputLayout.setVisibility(View.GONE);
-            scorerInputLayout.setVisibility(View.GONE);
-        }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         return view;
     }

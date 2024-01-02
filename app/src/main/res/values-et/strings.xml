@@ -48,13 +48,6 @@
         \n\u2022 Kogemata kadunud mängude taastamine serverist.
         \n\u2022 Tulevased uued rakenduse web-funktsioone lisatakse teie paketi tasuta!
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Lisage kohtunike-, sekretäri, kapteni ja treenerite allkirjad
-        \n\u2022 Lisage teie võrkpalliliidu logo
-        \n\u2022 Lisa märkused
-        \n\u2022 Salvesta dokumendi PDF-i formaadis
-        \n\u2022 Jaga
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Logi sisse</string>

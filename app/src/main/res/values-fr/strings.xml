@@ -47,13 +47,6 @@
         \n\u2022 Vous avez effacé un match par erreur? Reprenez vos matchs depuis la sauvegarde du serveur.
         \n\u2022 Bénéficiez automatiquement des futures fonctionnalités web de l\'appli.
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Ajoutez les signatures des arbitres, marqueurs, capitaines et entraîneurs
-        \n\u2022 Ajoutez le logo de votre fédération
-        \n\u2022 Ajoutez des remarques
-        \n\u2022 Enregistrez au format PDF
-        \n\u2022 Partagez
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Me connecter</string>

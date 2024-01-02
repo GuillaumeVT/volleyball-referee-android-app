@@ -47,11 +47,6 @@ public class PurchaseViewModel extends AndroidViewModel implements BillingListen
                 purchaseList.add(productDetails);
             }
         }
-        for (ProductDetails productDetails : mBillingService.getProductDetailList(BillingClient.ProductType.INAPP)) {
-            if (BillingService.SCORE_SHEETS.equals(productDetails.getProductId())) {
-                purchaseList.add(productDetails);
-            }
-        }
 
         mPurchaseList.postValue(purchaseList);
     }

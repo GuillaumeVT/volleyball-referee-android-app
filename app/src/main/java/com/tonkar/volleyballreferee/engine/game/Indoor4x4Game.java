@@ -20,7 +20,6 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -180,12 +179,7 @@ public class Indoor4x4Game extends Game implements IClassicTeam {
         final Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
         final Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
 
-        for (Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
-            int possibleReplacement = iterator.next();
-            if (evictedPlayers.contains(possibleReplacement)) {
-                iterator.remove();
-            }
-        }
+        filteredSubstitutions.removeIf(evictedPlayers::contains);
 
         return filteredSubstitutions;
     }

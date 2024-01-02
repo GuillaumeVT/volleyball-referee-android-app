@@ -50,7 +50,6 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -796,12 +795,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             localGameList = listGames();
         }
 
-        for (Iterator<ApiGameSummary> localGameIt = localGameList.iterator(); localGameIt.hasNext();) {
-            ApiGameSummary localGame = localGameIt.next();
-            if (GameType.TIME.equals(localGame.getKind())) {
-                localGameIt.remove();
-            }
-        }
+        localGameList.removeIf(localGame -> GameType.TIME.equals(localGame.getKind()));
 
         for (ApiGameSummary localGame : localGameList) {
             boolean foundRemoteVersion = false;

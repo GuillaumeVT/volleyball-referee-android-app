@@ -47,13 +47,6 @@
        \n\u2022 Usunąłeś mecz przez pomyłkę? Wznów swoje mecze, korzystając z kopii zapasowej serwera.
        \n\u2022 Automatycznie korzystaj z przyszłych nowych funkcji sieciowych.
    </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Dodaj podpisy sędziów, kapitanów i trenerów
-        \n\u2022 Dodaj logo
-        \n\u2022 Dodaj uwagi
-        \n\u2022 Zapisz w formacie PDF
-        \n\u2022 Udostępnij
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>

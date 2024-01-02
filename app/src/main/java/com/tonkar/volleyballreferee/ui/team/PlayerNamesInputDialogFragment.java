@@ -77,6 +77,12 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
 
     private static class PlayerNameListAdapter extends BaseAdapter {
 
+        static class ViewHolder {
+            TextInputLayout playerNameInputTextLayout;
+            EditText        playerNameInputText;
+            TextWatcher     listener;
+        }
+
         private final LayoutInflater  mLayoutInflater;
         private final TeamType        mTeamType;
         private final IBaseTeam       mTeam;
@@ -106,30 +112,52 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
-            View playerNameView = mLayoutInflater.inflate(R.layout.player_name_item, parent, false);
-
-            TextInputLayout playerNameInputTextLayout = playerNameView.findViewById(R.id.player_name_input_layout);
-            EditText playerNameInputText = playerNameView.findViewById(R.id.player_name_input_text);
+            View playerNameView = view;
+            final ViewHolder viewHolder;
 
             ApiPlayer player = mPlayers.get(position);
-            playerNameInputText.setText(player.getName());
-            playerNameInputTextLayout.setHint(String.format(Locale.getDefault(), "#%d", player.getNum()));
-            playerNameInputText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            TextWatcher listener = new PlayerNameTextWatcher(position);
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    String name = s.toString().trim();
-                    ApiPlayer player = mPlayers.get(position);
-                    mTeam.setPlayerName(mTeamType, player.getNum(), name);
-                }
+            if (playerNameView == null) {
+                playerNameView = mLayoutInflater.inflate(R.layout.player_name_item, parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.playerNameInputTextLayout = playerNameView.findViewById(R.id.player_name_input_layout);
+                viewHolder.playerNameInputText = playerNameView.findViewById(R.id.player_name_input_text);
+                playerNameView.setTag(viewHolder);
+            }
+            else {
+                viewHolder = (ViewHolder) playerNameView.getTag();
+                viewHolder.playerNameInputText.removeTextChangedListener(viewHolder.listener);
+            }
 
-                @Override
-                public void afterTextChanged(Editable s) {}
-            });
+            viewHolder.playerNameInputText.setText(player.getName());
+            viewHolder.playerNameInputTextLayout.setHint(String.format(Locale.getDefault(), "#%d", player.getNum()));
+            viewHolder.listener = listener;
+            viewHolder.playerNameInputText.addTextChangedListener(viewHolder.listener);
 
             return playerNameView;
+        }
+
+        private class PlayerNameTextWatcher implements TextWatcher {
+
+            private final int mPosition;
+
+            PlayerNameTextWatcher(int position) {
+                mPosition = position;
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String name = s.toString().trim();
+                ApiPlayer player = mPlayers.get(mPosition);
+                mTeam.setPlayerName(mTeamType, player.getNum(), name);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         }
     }
 }

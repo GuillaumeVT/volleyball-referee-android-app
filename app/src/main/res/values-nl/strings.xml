@@ -48,13 +48,6 @@
         \n\u2022 Heb je per ongeluk je wedstrijd verwijderd? Herstel je wedstrijden van de server back-up.
         \n\u2022 Profiteer automatisch van de toekomstige nieuwe webfuncties.
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Voeg handtekeningen van scheidsrechters, markeerder, kapiteins en coaches toe
-        \n\u2022 Voeg logo van federatie toe
-        \n\u2022 Voeg opmerkingen toe
-        \n\u2022 Bewaar in PDF formaat
-        \n\u2022 Deel
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Aanmelden</string>

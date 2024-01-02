@@ -150,7 +150,6 @@ public class BillingManager implements BillingService {
         InAppBillingManager() {
             super(BillingClient.ProductType.INAPP);
             mProductIds.add(WEB_PREMIUM);
-            mProductIds.add(SCORE_SHEETS);
 
             startServiceConnection(() -> {
                 queryProductList();
@@ -170,10 +169,6 @@ public class BillingManager implements BillingService {
                     PrefUtils.unpurchaseWebPremium(mActivity);
                     PrefUtils.signOut(mActivity);
                     mActivity.recreate();
-                } else if (PrefUtils.isScoreSheetsPurchased(mActivity)) {
-                    mPurchasedProducts.remove(SCORE_SHEETS);
-                    PrefUtils.unpurchaseScoreSheets(mActivity);
-                    mActivity.recreate();
                 }
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
                 Log.w(Tags.BILLING, "Purchase canceled by user");
@@ -192,12 +187,6 @@ public class BillingManager implements BillingService {
                     mPurchasedProducts.add(WEB_PREMIUM);
                     if (!PrefUtils.isWebPremiumPurchased(mActivity)) {
                         PrefUtils.purchaseWebPremium(mActivity, purchase.getPurchaseToken());
-                        mActivity.recreate();
-                    }
-                } else if (purchase.getProducts().contains(BillingService.SCORE_SHEETS)) {
-                    mPurchasedProducts.add(SCORE_SHEETS);
-                    if (!PrefUtils.isScoreSheetsPurchased(mActivity)) {
-                        PrefUtils.purchaseScoreSheets(mActivity, purchase.getPurchaseToken());
                         mActivity.recreate();
                     }
                 }

@@ -90,7 +90,7 @@ public class PixelCScreenshots extends Screenshots {
                     .onView(ViewMatchers.withId(R.id.swap_teams_button))
                     .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-            takeScreenshot("screenshot2", 190000L, 205000L);
+            takeScreenshot("screenshot2", 190000L, 210000L);
         }
     }
 
@@ -110,7 +110,7 @@ public class PixelCScreenshots extends Screenshots {
                     .onView(ViewMatchers.withId(R.id.swap_teams_button))
                     .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-            takeScreenshot("screenshot3", 1800000L, 1820000L);
+            takeScreenshot("screenshot3", 1800000L, 1830000L);
         }
     }
 
@@ -134,7 +134,7 @@ public class PixelCScreenshots extends Screenshots {
                     .onView(ViewMatchers.withText(android.R.string.no))
                     .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-            takeScreenshot("screenshot4", 162000L, 180000L);
+            takeScreenshot("screenshot4", 162000L, 182000L);
         }
     }
 
@@ -190,7 +190,7 @@ public class PixelCScreenshots extends Screenshots {
                     .onView(ViewMatchers.withId(R.id.set_list))
                     .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-            takeScreenshot("screenshot6", 137000L, 155000L);
+            takeScreenshot("screenshot6", 137000L, 156000L);
         }
     }
 
@@ -247,7 +247,7 @@ public class PixelCScreenshots extends Screenshots {
                     .onView(ViewMatchers.withId(R.id.team_name_input_layout))
                     .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-            takeScreenshot("screenshot8", 225000L, 250000L);
+            takeScreenshot("screenshot8", 225000L, 255000L);
         }
     }
 }

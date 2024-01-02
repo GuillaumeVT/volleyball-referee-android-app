@@ -48,13 +48,6 @@
         \n\u2022 ¿Has borrado un partido por error? Reanuda tus partidos desde la copia del servidor.
         \n\u2022 Obtén automáticamente las funcionalidades de la futura web.
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Añadir árbitros, anotador, firmas de capitanes y entrenadores
-        \n\u2022 Añadir el logo de tu Federación
-        \n\u2022 Añadir observaciones
-        \n\u2022 Guardar en formato PDF
-        \n\u2022 Compartir
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Entrar</string>

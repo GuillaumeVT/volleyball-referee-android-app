@@ -48,13 +48,6 @@
         \n\u2022 Apagou o jogo por engano? Recupere os seus jogos a partir da cópia de segurança no servidor.
         \n\u2022 Beneficie automaticamente das futuras novas funcionalidades online.
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Adicionar assinaturas de árbitros, marcador, capitães e treinadores
-        \n\u2022 Adicionar logótipo da sua federação
-        \n\u2022 Adicionar notas
-        \n\u2022 Gravar no formato PDF
-        \n\u2022 Partilhar
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Iniciar sessão</string>

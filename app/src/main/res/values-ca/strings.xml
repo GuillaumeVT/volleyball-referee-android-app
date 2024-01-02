@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Volleyball Referee</string>
+
+    <!-- General actions -->
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="resume">Continuar</string>
+    <string name="delete">Esborrar</string>
+    <string name="ignore">Ignorar</string>
+    <string name="accept">Acceptar</string>
+    <string name="reject">Rebutjar</string>
+    <string name="remove">Eliminar</string>
+    <string name="create">Crear</string>
+    <string name="edit">Editar</string>
+    <string name="save">Guardar</string>
+    <string name="start">Començar</string>
+    <string name="undo">Desfer</string>
+    <string name="next">Següent</string>
+
+    <!-- Main activity -->
+    <string name="volleyball_game">Voleibol</string>
+    <string name="beach_volleyball_game">Vòlei-Platja</string>
+    <string name="snow_volleyball_game">Vòlei-Neu</string>
+    <string name="score_based_game">Marcador</string>
+    <string name="time_based_game">Joc per temps</string>
+    <string name="resume_game_title">Continuar partit</string>
+    <string name="resume_game_question">S’ha trobat un partit en curs. ¿Desitja reprendre’l o esborrar-lo?</string>
+    <string name="resume_game_error">No s’ha pogut continuar el partit</string>
+    <string name="my_data_group">Les meves dades</string>
+    <string name="configuration_group">Configuració</string>
+    <string name="completed_games">Partits completats</string>
+    <string name="available_games">Partits previstos i en directe</string>
+    <string name="teams">Equips</string>
+    <string name="rules">Regles</string>
+    <string name="colleagues">Companys</string>
+    <string name="live_games_vbr_com">Partits en directe a la web</string>
+    <string name="my_account">El meu compte</string>
+    <string name="privacy_policy">Política de privacitat</string>
+
+    <!-- Purchase activity -->
+    <string name="purchase">Comprar</string>
+    <string name="already_purchased">Comprat</string>
+    <string name="purchase_web_premium_summary">
+       \n\u2022 Mantingui els seus partits, equips i regles sincronitzats entre diferents dispositius.
+       \n\u2022 Gaudeixi de l\'emmagatzematge il·limitat per les seves dades i millor qualitat de vídeo pels seus partits en directe.
+       \n\u2022 Planifica els partits perquè es juguin més tard.
+       \n\u2022 ¿Has esborrat un partit per error? Reprèn els teus partits des del núvol.
+       \n\u2022 Obtingui automàticament les funcions de la futura web.
+   </string>
+
+    <!-- User activity -->
+    <string name="user_sign_in">Entrar</string>
+    <string name="user_sign_up">Registrar-se</string>
+    <string name="user_password_update">Canviar contrasenya</string>
+    <string name="user_lost_password">Contrasenya perduda</string>
+    <string name="user_sign_out">Sortir</string>
+    <string name="user_sign_in_why_title">Per què he de registrar-me?</string>
+    <string name="user_sign_in_why_message">Les teves dades en Volleyball Referee (partits, equips, regles, lligues, companys) es sincronizaran amb el nostre servidor. Registrant-te sabrem qui ets i mantindrem les teves dades associades amb el teu compte.</string>
+    <string name="user_pseudo_hint">Pseudònim d’àrbitre</string>
+    <string name="user_email_hint">Correu electrònic</string>
+    <string name="user_confirm_email_hint">Confirmar el correu electrònic</string>
+    <string name="user_email_not_matching">Les adreces de correu no coincideixen</string>
+    <string name="user_current_password_hint">Contrasenya actual</string>
+    <string name="user_password_hint">Contrasenya</string>
+    <string name="user_confirm_password_hint">Confirmar contrasenya</string>
+    <string name="user_new_password_hint">Contrasenya nova</string>
+    <string name="user_confirm_new_password_hint">Confirmar nova contrasenya</string>
+    <string name="user_password_not_matching">Les contrasenyes no coincideixen</string>
+    <string name="user_password_error">Contrasenya errònia</string>
+    <string name="user_locked_error">Massa errors d’autenticació; el compte es bloquejarà durant 30 minuts</string>
+    <string name="user_email_pseudo_conflict">Aquest pseudónim o correu electrònic ja existeix</string>
+    <string name="user_request_error">Error al processar la petició</string>
+    <string name="user_signed_in_as_pseudo">Registrat com %s</string>
+    <string name="user_password_recovery_initiated">S’ha enviat un correu electrònic amb un enllaç de recuperació a %s</string>
+    <string name="password_strength">La contrasenya ha de tenir almenys 8 caràcters, incloent-hi 1 majúscula, 1 dígit i 1 caràcter especial (símbol)</string>
+    <string name="password_strength_error">La contrasenya no compleix amb els requisits</string>
+    <string name="user_signed_out">Sessió finalitzada</string>
+    <string name="search_colleague">Buscar companys</string>
+    <string name="add_colleague">Afegir companys</string>
+    <string name="received_colleague_request">Has rebut una sol·licitud per ser company de %s</string>
+    <string name="sent_colleague_request">Has enviat una sol·licitud a %s</string>
+    <string name="pending">Pendent</string>
+    <string name="accept_colleague_question">Acceptar sol·licitud de %s per ser companys?</string>
+    <string name="reject_colleague_question">Rebutjar la sol·licitud de %s per ser companys?</string>
+    <string name="remove_colleague_question">Eliminar a %s com a company?</string>
+
+    <!-- Setup activities -->
+    <string name="new_game_title">Nou joc</string>
+    <string name="home_team_tab">Equip local</string>
+    <string name="home_team_hint">Nom de l’equip local</string>
+    <string name="guest_team_tab">Equip visitant</string>
+    <string name="guest_team_hint">Nom de l’equip visitant</string>
+    <string name="select_players">Escull els jugadors</string>
+    <string name="select_players_with_liberos">Escull els jugadors (incloent-hi els lliures)</string>
+    <string name="select_shirts_color">Selecciona el color de l’equipació</string>
+    <string name="select_captain">Escull el capitá</string>
+    <string name="select_libero">Escull els lliures (opcional)</string>
+    <string name="select_gender">Selecciona el gènere</string>
+    <string name="input_player_names">Introdueix els noms dels jugadors (opcional)</string>
+    <string name="confirm">Confirmar</string>
+    <string name="confirm_game_setup_question">Confirmes aquesta configuració?</string>
+    <string name="gender_description">Gènere</string>
+    <string name="match_duration_text">Escull la duració del partit</string>
+    <string name="league_name">Nom de la lliga/torneig</string>
+    <string name="division_name">Nom de la divisió/grup</string>
+    <string name="misc_tab">Varies</string>
+    <string name="rules_tab">Regles</string>
+    <string name="teams_tab">Equips</string>
+    <string name="referee">Àrbitre</string>
+    <string name="leave_game_setup_question">Es perdran els canvis realitzats. Sortir de totes maneres?</string>
+    <string name="must_provide_at_least_n_characters">Has d’introduir almenys %d caràcters</string>
+    <string name="help">Ajuda</string>
+
+    <!-- Game activity -->
+    <string name="toss_tails">Creu</string>
+    <string name="toss_heads">Cara</string>
+    <string name="toss_coin">Llençar una moneda</string>
+    <string name="swap_first_service">Canviar primer servei</string>
+    <string name="navigate_home">Tornar a l’inici</string>
+    <string name="reset_set">Reinicia el set actual</string>
+    <string name="reset_set_question">El set actual es reiniciarà, i totes les accions es perdran. ¿Reiniciar?</string>
+    <string name="share">Compartir</string>
+    <string name="share_exception">Error al compartir el partit</string>
+    <string name="navigate_home_question">Pots continuar el partit més tard. ¿Sortir?</string>
+    <string name="select_player_title">Seleccionar jugador de la banqueta</string>
+    <string name="court_position_tab">Posicions</string>
+    <string name="ladder_tab">Punts</string>
+    <string name="substitutions_tab">Substitucions</string>
+    <string name="timeouts_tab">Temps morts</string>
+    <string name="set_number">Set %d</string>
+    <string name="set_duration">%d min</string>
+    <string name="switch_sides">Canvi de camps</string>
+    <string name="won_game">%s ha guanyat el partit</string>
+    <string name="timeout_title">Temps mort (%s)</string>
+    <string name="timeout_question">Demanar temps mort?</string>
+    <string name="technical_timeout_title">Temps tècnic</string>
+    <string name="game_interval_title">Interval de partit</string>
+    <string name="skip">Saltar</string>
+    <string name="run_background">Executar en segon pla</string>
+    <string name="switch_sides_description">Canviar de camp manualment</string>
+    <string name="remove_point_description">Borrar últim punt</string>
+    <string name="call_timeout_description">Demanar temps mort</string>
+    <string name="match_point">Punt de partit</string>
+    <string name="set_point">Punt de set</string>
+    <string name="confirm_lineup_title">Alineació inicial</string>
+    <string name="confirm_team_lineup_question">Confirmes l’alineació inicial de %s per aquest set?</string>
+    <string name="no_substitution_message">No queden més substitucions</string>
+    <string name="confirm_set_question">Confirmes aquest punt?</string>
+    <string name="start_match_description">Començar partit</string>
+    <string name="stop_match_description">Aturar partit</string>
+    <string name="confirm_start_match_question">Vols començar el partit?</string>
+    <string name="confirm_stop_match_question">Vols aturar el partit?</string>
+    <string name="index_game">Canviar partit privat/públic</string>
+    <string name="public_game_message">El partit ara és públic</string>
+    <string name="private_game_message">El partit ara és privat</string>
+    <string name="all_timeouts_called">%s no pot demanar més temps morts</string>
+    <string name="all_substitutions_used">%s no pot demanar més substitucions</string>
+    <string name="one_remaining_substitution">A %s només li queda una substitució</string>
+    <string name="sanctions_tab">Sancions</string>
+    <string name="sanction">Sanció (%s)</string>
+    <string name="delay_sanction">Demora</string>
+    <string name="misconduct_sanction">Conducta incorrecta</string>
+    <string name="yellow_card">Amonestació</string>
+    <string name="red_card">Punt i servei per l’oponent</string>
+    <string name="red_card_expulsion">Expulsió durant la resta del set</string>
+    <string name="red_card_disqualification">Desqualificació per la resta del partit</string>
+    <string name="coach_abbreviation">E</string>
+    <string name="set_lost_incomplete">%s ha perdut el set per equip incomplet</string>
+    <string name="match_lost_incomplete">%s ha perdut el partit per equip incomplet</string>
+    <string name="position_1_title">I</string>
+    <string name="position_2_title">II</string>
+    <string name="position_3_title">III</string>
+    <string name="position_4_title">IV</string>
+    <string name="position_5_title">V</string>
+    <string name="position_6_title">VI</string>
+    <string name="timeout">Temps morts</string>
+    <string name="substitution">Substitució</string>
+
+    <!-- Scheduled games activity -->
+    <string name="delete_match">Eliminar el partit</string>
+    <string name="reschedule_match">Canviar data del partit</string>
+    <string name="edit_start_match">Editar i començar el partit</string>
+    <string name="start_match">@string/start_match_description</string>
+    <string name="resume_match">Continuar el partit</string>
+    <string name="download_match_error">Error en descarregar el partit</string>
+
+    <!-- Settings activity -->
+    <string name="settings">Ajustaments</string>
+    <string name="pref_keep_screen_on">Mantenir la pantalla encesa durant els partits</string>
+    <string name="pref_night_mode">Tema</string>
+
+    <string name="synchronize">Sincronitzar</string>
+    <string name="sync_succeeded_message">Sincronització de dades completada</string>
+    <string name="sync_failed_message">Error al sincronitzar</string>
+
+    <!-- Stored games activity -->
+    <string name="search_games">Buscar partits</string>
+    <string name="delete_selected_games">Eliminar tots els partits</string>
+    <string name="delete_game">Eliminar partit</string>
+    <string name="delete_selected_games_question">Vols eliminar tots els partits?</string>
+    <string name="delete_game_question">Vols eliminar aquest partit?</string>
+    <string name="deleted_game">Partit eliminat</string>
+    <string name="deleted_selected_games">Tots els partits han estat eliminats</string>
+    <string name="players">Jugadors</string>
+    <string name="create_score_sheet">Crear acta</string>
+    <string name="score_sheet_exception">Error al crear o mostrar l’acta</string>
+    <string name="signatures">Firmes</string>
+    <string name="coach">Entrenador</string>
+    <string name="captain">Capità</string>
+    <string name="scorer">Anotador</string>
+    <string name="name">Nom</string>
+    <string name="remarks">Observacions</string>
+
+    <!-- Stored teams activity -->
+    <string name="search_teams">Buscar equips</string>
+    <string name="delete_selected_teams">Eliminar tots els equips</string>
+    <string name="delete_team">Eliminar equip</string>
+    <string name="save_team">Guardar equip</string>
+    <string name="delete_selected_teams_question">Vols eliminar tots els equips?</string>
+    <string name="delete_team_question">Vols eliminar aquest equip?</string>
+    <string name="deleted_team">Equip eliminat</string>
+    <string name="saved_team">Equip guardat</string>
+    <string name="deleted_teams">Equips eliminats</string>
+    <string name="leave_team_creation_title">Abandonar la creació de l’equip</string>
+    <string name="leave_team_creation_question">Aquest equip no es guardarà. Sortir de totes maneres?</string>
+
+    <!-- Stored rules activity -->
+    <string name="delete_selected_rules">Eliminar totes les regles</string>
+    <string name="delete_rules">Eliminar regles</string>
+    <string name="save_rules">Guardar regles</string>
+    <string name="search_rules">Buscar regles</string>
+    <string name="delete_selected_rules_question">Vols eliminar totes les regles?</string>
+    <string name="delete_rules_question">Vols eliminar aquestes regles?</string>
+    <string name="deleted_rules">Regles eliminades</string>
+    <string name="saved_rules">Regles guardades</string>
+    <string name="deleted_selected_rules">Totes les regles han estat eliminades</string>
+    <string name="leave_rules_creation_title">Sortir de la creació de regles</string>
+    <string name="leave_rules_creation_question">Aquestes regles no es guardaran. Sortir de totes maneres?</string>
+    <string name="rules_name_hint">Nom de les regles</string>
+    <string name="general_rules">General</string>
+
+    <string name="rules_points_per_set">Punts per guanyar un set</string>
+    <string name="rules_sets_per_game">Sets per partit</string>
+    <string name="rules_tie_break">Tie-break en l’últim set</string>
+    <string name="rules_points_in_tie_break">Punts en el tie-break</string>
+    <string name="rules_two_points_difference">Diferència de 2 punts per guanyar el set</string>
+    <string name="rules_sanctions">Sancions</string>
+    <string name="rules_match_termination">Finalització del partit</string>
+    <string name="rules_team_timeouts">Temps morts de l’equip</string>
+    <string name="rules_team_timeouts_per_set">Temps morts per set</string>
+    <string name="rules_team_timeout_duration">Durada del temps mort</string>
+    <string name="rules_technical_timeouts">Temps tècnics</string>
+    <string name="rules_technical_timeout_duration">Durada del temps tècnic</string>
+    <string name="rules_game_intervals">Intervals</string>
+    <string name="rules_game_intervals_duration">Durada d’un interval</string>
+    <string name="rules_substitutions_limitation">Regles de les substitucions</string>
+    <string name="rules_team_substitutions_per_set">Nombre de substitucions per set</string>
+    <string name="rules_consecutive_serves_per_player">Límit de serveis consecutius per jugador</string>
+    <string name="rules_court_switches">Canvis de camp</string>
+    <string name="rules_court_switch_frequency">Freqüència de canvis en un set normal</string>
+    <string name="rules_court_switch_frequency_tie_break">Freqüència de canvis en el tie-break</string>
+
+    <string-array name="points_per_set_entries">
+        <item>Set de 40 punts</item>
+        <item>Set de 39 punts</item>
+        <item>Set de 38 punts</item>
+        <item>Set de 37 punts</item>
+        <item>Set de 36 punts</item>
+        <item>Set de 35 punts</item>
+        <item>Set de 34 punts</item>
+        <item>Set de 33 punts</item>
+        <item>Set de 32 punts</item>
+        <item>Set de 31 punts</item>
+        <item>Set de 30 punts</item>
+        <item>Set de 29 punts</item>
+        <item>Set de 28 punts</item>
+        <item>Set de 27 punts</item>
+        <item>Set de 26 punts</item>
+        <item>Set de 25 punts</item>
+        <item>Set de 24 punts</item>
+        <item>Set de 23 punts</item>
+        <item>Set de 22 punts</item>
+        <item>Set de 21 punts</item>
+        <item>Set de 20 punts</item>
+        <item>Set de 19 punts</item>
+        <item>Set de 18 punts</item>
+        <item>Set de 17 punts</item>
+        <item>Set de 16 punts</item>
+        <item>Set de 15 punts</item>
+        <item>Set de 14 punts</item>
+        <item>Set de 13 punts</item>
+        <item>Set de 12 punts</item>
+        <item>Set de 11 punts</item>
+        <item>Set de 10 punts</item>
+        <item>Set de 9 punts</item>
+    </string-array>
+    <string-array name="sets_per_game_entries">
+        <item>Partit de 5 sets</item>
+        <item>Partit de 4 sets</item>
+        <item>Partit de 3 sets</item>
+        <item>Partit de 2 sets</item>
+        <item>Partit d’ 1 set</item>
+    </string-array>
+    <string-array name="match_termination_entries">
+        <item>El partit acaba quan un equip guanya</item>
+        <item>El partit acaba quan s’han jugat tots els sets</item>
+    </string-array>
+    <string-array name="team_timeouts_per_set_entries">
+        <item>3 temps morts per set</item>
+        <item>2 temps morts per set</item>
+        <item>1 temps mort per set</item>
+        <item>Sense temps morts</item>
+    </string-array>
+    <string-array name="timeout_duration_entries">
+        <item>60 segons</item>
+        <item>45 segons</item>
+        <item>30 segons</item>
+    </string-array>
+    <string-array name="game_interval_duration_entries">
+        <item>3 minuts</item>
+        <item>2 minuts</item>
+        <item>1 minut</item>
+    </string-array>
+    <string-array name="substitutions_limitation_entries">
+        <item>Substitucions FIVB</item>
+        <item>Substitucions alternatives 1</item>
+        <item>Substitucions alternatives 2</item>
+        <item>Sense restriccions</item>
+    </string-array>
+    <string-array name="substitutions_limitation_description_entries">
+        <item>Un jugador titular pot sortir del joc, només un cop en el set, i tornar a entrar, però només un cop en el set i únicament en la seva posició prèvia en la formació inicial.\n\nUn jugador suplent pot incorporar-se al joc per substituir a un jugador titular, però només un cop en el set, i pot tornar a ser substituït pel mateix jugador titular.</item>
+        <item>Un jugador titular pot ser substituït diversos cops durant el set (sense excedir el nombre de substitucions permeses per equip), i únicament en la seva posició original en la rotació.\n\nUn jugador suplent pot ingressar al joc per substituir a un jugador titular diversos cops durant el set (sense excedir el nombre de substitucions permeses per equip), i només pot ser substituït pel mateix jugador titular.</item>
+        <item>Un jugador titular pot ser substituït diversos cops durant el set (sense excedir el nombre de substitucions permeses per equip), i únicament en la seva posició original en la rotació. \n\nUn jugador suplent pot ingresar al joc per substituir a un jugador titular diversos cops durant el set (sense excedir el nombre de substitucions permeses per equip).\n\nMés d’un suplent pot entrar a jugar en cada posició.</item>
+        <item>Els jugadors poden entrar i sortir del joc en qualsevol posició tants cops com vulguin, sense excedir el nombre de substitucions permeses per equip.</item>
+    </string-array>
+    <string-array name="team_substitutions_per_set_entries">
+        <item>18 substitucions per set (segons les restriccions de substitucions)</item>
+        <item>15 substitucions per set (segons les restriccions de substitucions)</item>
+        <item>12 substitucions per set</item>
+        <item>6 substitucions per set</item>
+        <item>5 substitucions per set</item>
+        <item>4 substitucions per set</item>
+        <item>3 substitucions per set</item>
+        <item>2 substitucions per set</item>
+    </string-array>
+    <string-array name="court_switch_frequency_entries">
+        <item>Canvi de camp cada 10 punts</item>
+        <item>Canvi de camp cada 9 punts</item>
+        <item>Canvi de camp cada 8 punts</item>
+        <item>Canvi de camp cada 7 punts</item>
+        <item>Canvi de camp cada 6 punts</item>
+        <item>Canvi de camp cada 5 punts</item>
+    </string-array>
+    <string-array name="consecutive_serves_per_player_entries">
+        <item>Sense límits</item>
+        <item>5 serveis</item>
+        <item>4 serveis</item>
+        <item>3 serveis</item>
+        <item>2 serveis</item>
+    </string-array>
+    <string-array name="night_mode_entries">
+        <item>Predeterminat del sistema</item>
+        <item>Clar</item>
+        <item>Fosc</item>
+    </string-array>
+
+    <!-- Credits activity -->
+    <string name="credit_title">Sobre l’equip VBR</string>
+
+    <!-- Main activity onboarding -->
+    <string name="volleyball_game_description">Crear un partit complet de voleibol 6x6.\n\nAquest mode et permet configurar jugadors, lliures, capitans, posicions i regles.</string>
+    <string name="beach_volleyball_game_description">Crear un partit complet de vòlei-platja en qüestió de segons.\n\nAquest mode et permet configurar capitans i regles.</string>
+    <string name="score_based_game_description">No t’interesa configurar jugadors i posicions?\n\nAquest mode et permet crear un partit ràpid en un moment.</string>
+    <string name="app_intro_next_button">@string/next</string>
+    <string name="app_intro_skip_button">@string/skip</string>
+    <string name="app_intro_done_button">@string/start</string>
+
+</resources>
+

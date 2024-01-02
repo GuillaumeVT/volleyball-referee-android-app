@@ -48,13 +48,6 @@
         \n\u2022 Véletlenül töröltél egy mérkőzést? Állítsd vissza a szerver biztonsági mentéséből.
         \n\u2022 Automatikusan megkapod az összes jövőbeni webes funkciót.
     </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Add hozzá a játékvezetők, a jegyzőkönyvvezető, a csapatkapitányok és az edzők aláírásait
-        \n\u2022 Add hozzá a szövetség logóját
-        \n\u2022 Adj hozzá megjegyzéseket
-        \n\u2022 Mentsd el PDF formátumban
-        \n\u2022 Oszd meg
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Bejelentkezés</string>

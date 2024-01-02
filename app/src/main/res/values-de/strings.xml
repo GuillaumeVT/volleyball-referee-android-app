@@ -48,13 +48,6 @@
         \n\u2022 Ihr Spiel wurde versehentlich gelöscht? Setzen Sie Ihre Spiele von der Serversicherung fort.
         \n\u2022 Profitieren Sie von den zukünftigen neuen Webfunktionen.
    </string>
-    <string name="purchase_score_sheets_summary">
-        \n\u2022 Schiedsrichter, Schreiber, Kapitäne und Trainer hinzufügen
-        \n\u2022 Verbandslogo hinzufügen
-        \n\u2022 Bemerkung hinzufügen
-        \n\u2022 Als PDF Datei speichern
-        \n\u2022 Teilen
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Anmelden</string>

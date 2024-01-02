@@ -13,23 +13,23 @@ import lombok.ToString;
 @ToString
 public class Rules extends ApiRules {
 
-    public static final transient int FIVB_LIMITATION          = 1;
-    public static final transient int ALTERNATIVE_LIMITATION_1 = 2;
-    public static final transient int ALTERNATIVE_LIMITATION_2 = 3;
-    public static final transient int NO_LIMITATION            = 4;
+    public static final int FIVB_LIMITATION          = 1;
+    public static final int ALTERNATIVE_LIMITATION_1 = 2;
+    public static final int ALTERNATIVE_LIMITATION_2 = 3;
+    public static final int NO_LIMITATION            = 4;
 
-    public static final transient int WIN_TERMINATION      = 1;
-    public static final transient int ALL_SETS_TERMINATION = 2;
+    public static final int WIN_TERMINATION      = 1;
+    public static final int ALL_SETS_TERMINATION = 2;
 
-    public static final transient String DEFAULT_INDOOR_ID     = "efb06d97-264e-425d-b8ca-b499e3b63a95";
-    public static final transient String DEFAULT_INDOOR_4X4_ID = "375dd005-08b6-45f8-a60f-7e04e1e5ba71";
-    public static final transient String DEFAULT_BEACH_ID      = "cceb81c9-2201-4495-8a5e-e289a77e24bf";
-    public static final transient String DEFAULT_SNOW_ID       = "ff03b7e2-f794-4d32-9e6c-a046f75eafa5";
+    public static final String DEFAULT_INDOOR_ID     = "efb06d97-264e-425d-b8ca-b499e3b63a95";
+    public static final String DEFAULT_INDOOR_4X4_ID = "375dd005-08b6-45f8-a60f-7e04e1e5ba71";
+    public static final String DEFAULT_BEACH_ID      = "cceb81c9-2201-4495-8a5e-e289a77e24bf";
+    public static final String DEFAULT_SNOW_ID       = "ff03b7e2-f794-4d32-9e6c-a046f75eafa5";
 
-    public static final transient String DEFAULT_INDOOR_NAME     = "FIVB indoor 6x6 volleyball rules";
-    public static final transient String DEFAULT_INDOOR_4X4_NAME = "Default 4x4 volleyball rules";
-    public static final transient String DEFAULT_BEACH_NAME      = "FIVB beach volleyball rules";
-    public static final transient String DEFAULT_SNOW_NAME       = "FIVB snow volleyball rules";
+    public static final String DEFAULT_INDOOR_NAME     = "FIVB indoor 6x6 volleyball rules";
+    public static final String DEFAULT_INDOOR_4X4_NAME = "Default 4x4 volleyball rules";
+    public static final String DEFAULT_BEACH_NAME      = "FIVB beach volleyball rules";
+    public static final String DEFAULT_SNOW_NAME       = "FIVB snow volleyball rules";
 
     // For GSON Deserialization
     public Rules() {

@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -316,12 +315,7 @@ public abstract class Game extends BaseGame {
     }
 
     private void resetCurrentSetSanctions(List<ApiSanction> sanctions) {
-        for (Iterator<ApiSanction> it = sanctions.iterator(); it.hasNext() ;) {
-            ApiSanction sanction = it.next();
-            if (sanction.getSet() == currentSetIndex()) {
-                it.remove();
-            }
-        }
+        sanctions.removeIf(sanction -> sanction.getSet() == currentSetIndex());
     }
 
     @Override
@@ -1182,12 +1176,7 @@ public abstract class Game extends BaseGame {
 
         if (hasSanctions(teamType, number)) {
             SanctionType mostSeriousSanction = getMostSeriousSanction(teamType, number);
-            for (Iterator<SanctionType> it = possibleMisconductSanctions.iterator(); it.hasNext(); ) {
-                SanctionType sanctionType = it.next();
-                if (sanctionType.seriousness() <= mostSeriousSanction.seriousness()) {
-                    it.remove();
-                }
-            }
+            possibleMisconductSanctions.removeIf(sanctionType -> sanctionType.seriousness() <= mostSeriousSanction.seriousness());
         }
 
         return possibleMisconductSanctions;

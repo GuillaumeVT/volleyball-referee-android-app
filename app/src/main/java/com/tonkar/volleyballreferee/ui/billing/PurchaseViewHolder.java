@@ -45,10 +45,6 @@ public class PurchaseViewHolder extends RecyclerView.ViewHolder {
                 mPurchaseSummary.setText(R.string.purchase_web_premium_summary);
                 productType = BillingClient.ProductType.SUBS;
                 break;
-            case BillingService.SCORE_SHEETS:
-                mPurchaseSummary.setText(R.string.purchase_score_sheets_summary);
-                productType = BillingClient.ProductType.INAPP;
-                break;
             default:
                 mPurchaseSummary.setText("");
                 productType = BillingClient.ProductType.INAPP;
