@@ -68,7 +68,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         Log.i(Tags.SETUP_UI, "Create game setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_game_setup, container, false);
 
-        final boolean create = getArguments().getBoolean("create");
+        final boolean create = requireArguments().getBoolean("create");
 
         final StoredTeamsService storedTeamsService = new StoredTeamsManager(getContext());
 
@@ -140,14 +140,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
         if (mGame.getTeamColor(TeamType.HOME) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)
                 && mGame.getTeamColor(TeamType.GUEST) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            int homeTeamColor = UiUtils.getRandomShirtColor(getContext());
+            int homeTeamColor = UiUtils.getRandomShirtColor(requireContext());
             teamColorSelected(TeamType.HOME, homeTeamColor);
 
             boolean sameColor = true;
             int guestTeamColor = 0;
 
             while (sameColor) {
-                guestTeamColor = UiUtils.getRandomShirtColor(getContext());
+                guestTeamColor = UiUtils.getRandomShirtColor(requireContext());
                 sameColor = (guestTeamColor == homeTeamColor);
             }
             teamColorSelected(TeamType.GUEST, guestTeamColor);
@@ -275,7 +275,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     }
 
     private void updateGender(GenderType genderType) {
-        Context context = getContext();
+        Context context = requireContext();
         mGame.setGender(genderType);
         switch (genderType) {
             case MIXED:
@@ -329,8 +329,8 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
     }
 
     private void computeConfirmItemVisibility() {
-        if (getActivity() instanceof QuickGameSetupActivity) {
-            ((QuickGameSetupActivity) getActivity()).computeStartGameButton();
+        if (requireActivity() instanceof QuickGameSetupActivity) {
+            ((QuickGameSetupActivity) requireActivity()).computeStartGameButton();
         }
     }
 

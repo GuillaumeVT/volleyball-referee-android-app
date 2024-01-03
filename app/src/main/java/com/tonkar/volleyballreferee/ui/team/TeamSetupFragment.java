@@ -77,10 +77,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         mLayoutInflater = inflater;
         View view = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
 
-        final String teamTypeStr = getArguments().getString(TeamType.class.getName());
+        final String teamTypeStr = requireArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
-        final boolean isGameContext = getArguments().getBoolean("is_game");
+        final boolean isGameContext = requireArguments().getBoolean("is_game");
 
         if (savedInstanceState == null) {
             mNumberOfShirts = GameType.SNOW.equals(mTeamService.getTeamsKind()) ? 4 : 26;
@@ -135,7 +135,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         final String teamName = mTeamService.getTeamName(mTeamType);
 
         if (!teamName.isEmpty()) {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
 
         teamNameInput.setText(teamName);
@@ -157,11 +157,11 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             public void afterTextChanged(Editable s) {}
         });
 
-        mPlayerAdapter = new PlayerAdapter(getLayoutInflater(), getActivity(), mTeamService.getTeamColor(mTeamType));
+        mPlayerAdapter = new PlayerAdapter(getLayoutInflater(), requireActivity(), mTeamService.getTeamColor(mTeamType));
         teamNumbersGrid.setAdapter(mPlayerAdapter);
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            teamColorSelected(UiUtils.getRandomShirtColor(getContext()));
+            teamColorSelected(UiUtils.getRandomShirtColor(requireContext()));
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
@@ -177,11 +177,11 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         });
 
         if (GameType.INDOOR.equals(mTeamService.getTeamsKind())) {
-            mLiberoAdapter = new LiberoAdapter(getLayoutInflater(), getActivity(), mTeamService.getLiberoColor(mTeamType));
+            mLiberoAdapter = new LiberoAdapter(getLayoutInflater(), requireActivity(), mTeamService.getLiberoColor(mTeamType));
             liberoNumbersGrid.setAdapter(mLiberoAdapter);
 
             if (mTeamService.getLiberoColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-                liberoColorSelected(UiUtils.getRandomShirtColor(getContext()));
+                liberoColorSelected(UiUtils.getRandomShirtColor(requireContext()));
             } else {
                 liberoColorSelected(mTeamService.getLiberoColor(mTeamType));
             }
@@ -265,8 +265,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void teamColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType));
-        UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
-        UiUtils.colorTeamButton(getActivity(), color, mPlayerNamesButton);
+        UiUtils.colorTeamButton(requireActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamButton(requireActivity(), color, mPlayerNamesButton);
         mTeamService.setTeamColor(mTeamType, color);
         mPlayerAdapter.setColor(color);
         updateCaptain();
@@ -451,7 +451,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void liberoColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team libero color", mTeamType));
-        UiUtils.colorTeamButton(getActivity(), color, mLiberoColorButton);
+        UiUtils.colorTeamButton(requireActivity(), color, mLiberoColorButton);
         mTeamService.setLiberoColor(mTeamType, color);
         mLiberoAdapter.setColor(color);
     }
@@ -559,7 +559,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     }
 
     private void updateGender(GenderType genderType) {
-        Context context = getContext();
+        Context context = requireContext();
         mTeamService.setGender(mTeamType, genderType);
         switch (genderType) {
             case MIXED:
@@ -581,10 +581,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     }
 
     private void computeConfirmItemVisibility() {
-        if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartGameButton();
-        } else if (getActivity() instanceof StoredTeamActivity) {
-            ((StoredTeamActivity) getActivity()).computeSaveLayoutVisibility();
+        if (requireActivity() instanceof GameSetupActivity) {
+            ((GameSetupActivity) requireActivity()).computeStartGameButton();
+        } else if (requireActivity() instanceof StoredTeamActivity) {
+            ((StoredTeamActivity) requireActivity()).computeSaveLayoutVisibility();
         }
     }
 }

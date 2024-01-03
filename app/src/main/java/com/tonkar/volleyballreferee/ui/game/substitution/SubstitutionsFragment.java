@@ -43,11 +43,11 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
             mIndoorTeam.addTeamListener(this);
 
             ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
-            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnLeftSide());
+            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(requireActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnLeftSide());
             leftTeamSubstitutionsList.setAdapter(mLeftTeamSubstitutionsListAdapter);
 
             ListView rightTeamSubstitutionsList = view.findViewById(R.id.right_team_substitutions_list);
-            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(getActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnRightSide());
+            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(requireActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnRightSide());
             rightTeamSubstitutionsList.setAdapter(mRightTeamSubstitutionsListAdapter);
         }
 

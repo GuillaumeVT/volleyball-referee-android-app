@@ -40,7 +40,7 @@ public class DelaySanctionSelectionFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TeamType teamType = TeamType.valueOf(getArguments().getString("teamType"));
+        TeamType teamType = TeamType.valueOf(requireArguments().getString("teamType"));
 
         View view = inflater.inflate(R.layout.fragment_delay_sanction_selection, container, false);
 

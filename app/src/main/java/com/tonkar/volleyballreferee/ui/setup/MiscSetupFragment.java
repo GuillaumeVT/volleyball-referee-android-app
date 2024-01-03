@@ -89,7 +89,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
             leagueNameInput.setText(leagueDescription.getName());
             mGame.getLeague().setAll(leagueDescription);
             divisionNameInput.setText("");
-            divisionNameInput.setAdapter(new ArrayAdapter<>(getContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
+            divisionNameInput.setAdapter(new ArrayAdapter<>(requireContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
             computeConfirmItemVisibility();
         });
 
@@ -117,7 +117,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
 
         Spinner refereeSpinner = view.findViewById(R.id.referee_spinner);
         if (PrefUtils.canSync(getContext())) {
-            NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<>(getContext(), inflater, referees) {
+            NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<>(requireContext(), inflater, referees) {
                 @Override
                 public String getName(ApiFriend referee) {
                     return referee.getPseudo();
@@ -221,8 +221,8 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
     }
 
     private void computeConfirmItemVisibility() {
-        if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartGameButton();
+        if (requireActivity() instanceof GameSetupActivity) {
+            ((GameSetupActivity) requireActivity()).computeStartGameButton();
         }
     }
 

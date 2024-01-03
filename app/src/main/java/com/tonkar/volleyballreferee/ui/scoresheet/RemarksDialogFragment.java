@@ -33,7 +33,7 @@ public class RemarksDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        mScoreSheetActivity = (ScoreSheetActivity) getActivity();
+        mScoreSheetActivity = (ScoreSheetActivity) requireActivity();
 
         mView = mScoreSheetActivity.getLayoutInflater().inflate(R.layout.remarks_dialog, null);
 
@@ -41,7 +41,7 @@ public class RemarksDialogFragment extends DialogFragment {
         mObservationInputText.setText(mScoreSheetActivity.getScoreSheetBuilder().getRemarks());
 
         return new AlertDialog
-                .Builder(getContext(), R.style.AppTheme_Dialog)
+                .Builder(requireContext(), R.style.AppTheme_Dialog)
                 .setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> setObservations())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})

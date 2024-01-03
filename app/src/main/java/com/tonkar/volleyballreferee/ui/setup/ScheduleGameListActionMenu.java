@@ -2,7 +2,6 @@ package com.tonkar.volleyballreferee.ui.setup;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +54,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        String gameDescriptionStr = getArguments().getString("game");
+        String gameDescriptionStr = requireArguments().getString("game");
         mGameDescription = JsonConverters.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
 
         Log.i(Tags.SCHEDULE_UI, "Create schedule game list action menu fragment");
@@ -63,9 +62,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                 .cloneInContext(new ContextThemeWrapper(inflater.getContext(), R.style.AppTheme_Dialog))
                 .inflate(R.layout.schedule_game_list_action_menu, container, false);
 
-        Context context = inflater.getContext();
-
-        mActivity = getActivity();
+        mActivity = requireActivity();
         mStoredGamesService = new StoredGamesManager(mActivity);
         mConfigureBeforeStart = false;
 

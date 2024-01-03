@@ -63,18 +63,19 @@ public class SignatureDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        GameType kind = GameType.valueOf(getArguments().getString("kind"));
-        String referee1Name = getArguments().getString("referee1Name");
-        String referee2Name = getArguments().getString("referee2Name");
-        String scorerName = getArguments().getString("scorerName");
-        String homeTeamName = getArguments().getString("homeTeamName");
-        String guestTeamName = getArguments().getString("guestTeamName");
-        String homeCaptainName = getArguments().getString("homeCaptainName");
-        String guestCaptainName = getArguments().getString("guestCaptainName");
-        String homeCoachName = getArguments().getString("homeCoachName");
-        String guestCoachName = getArguments().getString("guestCoachName");
+        final Bundle bundle = requireArguments();
+        GameType kind = GameType.valueOf(bundle.getString("kind"));
+        String referee1Name = bundle.getString("referee1Name");
+        String referee2Name = bundle.getString("referee2Name");
+        String scorerName = bundle.getString("scorerName");
+        String homeTeamName = bundle.getString("homeTeamName");
+        String guestTeamName = bundle.getString("guestTeamName");
+        String homeCaptainName = bundle.getString("homeCaptainName");
+        String guestCaptainName = bundle.getString("guestCaptainName");
+        String homeCoachName = bundle.getString("homeCoachName");
+        String guestCoachName = bundle.getString("guestCoachName");
 
-        mScoreSheetActivity = (ScoreSheetActivity) getActivity();
+        mScoreSheetActivity = (ScoreSheetActivity) requireActivity();
 
         mLayoutInflater = mScoreSheetActivity.getLayoutInflater();
         mContext = getContext();

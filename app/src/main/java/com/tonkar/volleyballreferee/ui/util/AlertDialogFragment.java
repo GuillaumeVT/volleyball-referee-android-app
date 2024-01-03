@@ -48,23 +48,24 @@ public class AlertDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        String title = getArguments().getString("title");
-        String message = getArguments().getString("content");
+        Bundle bundle = requireArguments();
+        String title = bundle.getString("title");
+        String message = bundle.getString("content");
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog);
         builder.setTitle(title).setMessage(message);
 
-        String negativeButtonText = getArguments().getString("negative");
+        String negativeButtonText = bundle.getString("negative");
         if (negativeButtonText != null) {
             builder.setNegativeButton(negativeButtonText, (dialog, which) -> mAlertDialogListener.onNegativeButtonClicked());
         }
 
-        String positiveButtonText = getArguments().getString("positive");
+        String positiveButtonText = bundle.getString("positive");
         if (positiveButtonText != null) {
             builder.setPositiveButton(positiveButtonText, (dialog, which) -> mAlertDialogListener.onPositiveButtonClicked());
         }
 
-        String neutralButtonText = getArguments().getString("neutral");
+        String neutralButtonText = bundle.getString("neutral");
         if (neutralButtonText != null) {
             builder.setNeutralButton(neutralButtonText, (dialog, which) -> mAlertDialogListener.onNeutralButtonClicked());
         }

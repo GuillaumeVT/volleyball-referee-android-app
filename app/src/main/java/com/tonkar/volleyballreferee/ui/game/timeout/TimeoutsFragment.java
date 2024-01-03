@@ -45,11 +45,11 @@ public class TimeoutsFragment extends Fragment implements TimeoutListener, TeamL
             mGame.addTeamListener(this);
 
             ListView leftTeamTimeoutsList = view.findViewById(R.id.left_team_timeouts_list);
-            mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnLeftSide());
+            mLeftTeamTimeoutsListAdapter = new TimeoutsListAdapter(requireActivity(), inflater, mGame, mGame, mGame.getTeamOnLeftSide());
             leftTeamTimeoutsList.setAdapter(mLeftTeamTimeoutsListAdapter);
 
             ListView rightTeamTimeoutsList = view.findViewById(R.id.right_team_timeouts_list);
-            mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
+            mRightTeamTimeoutsListAdapter = new TimeoutsListAdapter(requireActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
             rightTeamTimeoutsList.setAdapter(mRightTeamTimeoutsListAdapter);
         }
 

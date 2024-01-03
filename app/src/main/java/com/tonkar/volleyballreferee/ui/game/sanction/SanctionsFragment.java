@@ -45,11 +45,11 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
             mGame.addTeamListener(this);
 
             ListView leftTeamSanctionsList = view.findViewById(R.id.left_team_sanctions_list);
-            mLeftTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnLeftSide());
+            mLeftTeamSanctionsListAdapter = new SanctionsListAdapter(requireActivity(), inflater, mGame, mGame, mGame.getTeamOnLeftSide());
             leftTeamSanctionsList.setAdapter(mLeftTeamSanctionsListAdapter);
 
             ListView rightTeamSanctionsList = view.findViewById(R.id.right_team_sanctions_list);
-            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(getActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
+            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(requireActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
             rightTeamSanctionsList.setAdapter(mRightTeamSanctionsListAdapter);
         }
 

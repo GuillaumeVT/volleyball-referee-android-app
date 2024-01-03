@@ -35,8 +35,8 @@ public class CountDownDialogFragment extends DialogFragment {
         long duration;
 
         if (savedInstanceState == null) {
-            duration = getArguments().getLong("timeout_duration");
-            UiUtils.playNotificationSound(getActivity());
+            duration = requireArguments().getLong("timeout_duration");
+            UiUtils.playNotificationSound(requireActivity());
         }
         else {
             duration = savedInstanceState.getLong("saved_timeout_duration");
@@ -44,14 +44,14 @@ public class CountDownDialogFragment extends DialogFragment {
 
         mCountDown = new CountDown(duration);
 
-        String title = getArguments().getString("title");
+        String title = requireArguments().getString("title");
 
-        mCountDownView = new TextView(getActivity());
+        mCountDownView = new TextView(requireActivity());
         mCountDownView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Headline);
         mCountDownView.setTextSize(72);
         mCountDownView.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.AppTheme_Dialog);
         builder.setTitle(title).setView(mCountDownView).setCancelable(false);
         builder.setNegativeButton(R.string.skip, (dialog, which) -> {
             Log.i(Tags.TIMEOUT, "User cancels the countdown");
@@ -60,8 +60,8 @@ public class CountDownDialogFragment extends DialogFragment {
         builder.setNeutralButton(R.string.run_background, (dialog, which) -> {
             Log.i(Tags.TIMEOUT, "User runs the countdown in background");
             mCountDown.getCountDownTimer().cancel();
-            if (isAdded() && getActivity() instanceof GameActivity) {
-                GameActivity activity = (GameActivity) getActivity();
+            if (isAdded() && requireActivity() instanceof GameActivity) {
+                GameActivity activity = (GameActivity) requireActivity();
                 activity.startToolbarCountDown(mCountDown.getDuration());
             }
         });
@@ -76,7 +76,7 @@ public class CountDownDialogFragment extends DialogFragment {
 
             @Override
             public void onFinish() {
-                UiUtils.playNotificationSound(getActivity());
+                UiUtils.playNotificationSound(requireActivity());
                 alertDialog.dismiss();
             }
         });

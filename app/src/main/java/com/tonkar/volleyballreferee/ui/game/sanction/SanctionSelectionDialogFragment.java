@@ -51,10 +51,10 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
-        String title = getArguments().getString("title");
+        mTeamType = TeamType.valueOf(requireArguments().getString("teamType"));
+        String title = requireArguments().getString("title");
 
-        mView = getActivity().getLayoutInflater().inflate(R.layout.sanction_selection_dialog, null);
+        mView = requireActivity().getLayoutInflater().inflate(R.layout.sanction_selection_dialog, null);
 
         mDelaySanctionSelectionFragment = DelaySanctionSelectionFragment.newInstance(mTeamType);
         mMisconductSanctionSelectionFragment = MisconductSanctionSelectionFragment.newInstance(mTeamType);
@@ -86,7 +86,7 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
         mSanctionTypePager.setSelectedItemId(R.id.delay_sanction_tab);
 
         mAlertDialog = new AlertDialog
-                .Builder(getContext(), R.style.AppTheme_Dialog)
+                .Builder(requireContext(), R.style.AppTheme_Dialog)
                 .setTitle(title).setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> giveSanction())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})

@@ -48,17 +48,17 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        TeamType teamType = TeamType.valueOf(getArguments().getString("teamType"));
+        TeamType teamType = TeamType.valueOf(requireArguments().getString("teamType"));
 
-        mView = getActivity().getLayoutInflater().inflate(R.layout.player_names_input_dialog, null);
+        mView = requireActivity().getLayoutInflater().inflate(R.layout.player_names_input_dialog, null);
 
         ListView playerNameList = mView.findViewById(R.id.player_name_list);
         playerNameList.setItemsCanFocus(true);
-        PlayerNameListAdapter playerNameListAdapter = new PlayerNameListAdapter(getActivity().getLayoutInflater(), teamType, mTeam);
+        PlayerNameListAdapter playerNameListAdapter = new PlayerNameListAdapter(requireActivity().getLayoutInflater(), teamType, mTeam);
         playerNameList.setAdapter(playerNameListAdapter);
 
         AlertDialog alertDialog = new AlertDialog
-                .Builder(getContext(), R.style.AppTheme_Dialog)
+                .Builder(requireContext(), R.style.AppTheme_Dialog)
                 .setTitle(R.string.players).setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> dismiss())
                 .create();

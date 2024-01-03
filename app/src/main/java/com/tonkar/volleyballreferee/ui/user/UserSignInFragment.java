@@ -80,9 +80,9 @@ public class UserSignInFragment extends Fragment {
 
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
-                        UiUtils.navigateToHome(getActivity());
+                        UiUtils.navigateToHome(requireActivity());
                     });
                 }
 
@@ -91,7 +91,7 @@ public class UserSignInFragment extends Fragment {
 
                 @Override
                 public void onError(int httpCode) {
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         switch (httpCode) {
                             case HttpURLConnection.HTTP_UNAUTHORIZED:
                                 passwordInputLayout.setError(getString(R.string.user_password_error));
@@ -120,12 +120,12 @@ public class UserSignInFragment extends Fragment {
 
             @Override
             public void onUserPasswordRecoveryInitiated() {
-                getActivity().runOnUiThread(() -> UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated), mUser.getEmail()), Toast.LENGTH_LONG).show());
+                requireActivity().runOnUiThread(() -> UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated), mUser.getEmail()), Toast.LENGTH_LONG).show());
             }
 
             @Override
             public void onError(int httpCode) {
-                getActivity().runOnUiThread(() -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
+                requireActivity().runOnUiThread(() -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
             }
         });
 

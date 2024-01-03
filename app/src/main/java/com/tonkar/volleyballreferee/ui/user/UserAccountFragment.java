@@ -56,7 +56,7 @@ public class UserAccountFragment extends Fragment {
             signOutButton.setOnClickListener(button -> {
                 PrefUtils.signOut(getContext());
                 UiUtils.makeText(getContext(), getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
-                UiUtils.navigateToHome(getActivity());
+                UiUtils.navigateToHome(requireActivity());
             });
 
             Button updatePasswordButton = mView.findViewById(R.id.user_password_update_button);
@@ -100,9 +100,9 @@ public class UserAccountFragment extends Fragment {
 
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
-                        UiUtils.navigateToHome(getActivity());
+                        UiUtils.navigateToHome(requireActivity());
                     });
                 }
 
@@ -111,7 +111,7 @@ public class UserAccountFragment extends Fragment {
 
                 @Override
                 public void onError(int httpCode) {
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         switch (httpCode) {
                             case HttpURLConnection.HTTP_UNAUTHORIZED:
                                 currentPasswordInputLayout.setError(getString(R.string.user_password_error));

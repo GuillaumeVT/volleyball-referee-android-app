@@ -60,9 +60,9 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
         Context context = inflater.getContext();
 
-        mActivity = getActivity();
+        mActivity = requireActivity();
 
-        if (mActivity != null && mGame != null && mStoredGamesService != null) {
+        if (mGame != null && mStoredGamesService != null) {
             mRandom = new Random();
             final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 

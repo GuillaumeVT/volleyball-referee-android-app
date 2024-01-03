@@ -173,7 +173,7 @@ public class IndoorCourtFragment extends CourtFragment {
         update(mTeamOnRightSide);
 
         if (mGame.areNotificationsEnabled() && ActionOriginType.APPLICATION.equals(actionOriginType)) {
-            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), getString(R.string.switch_sides));
+            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), getString(R.string.switch_sides));
             UiUtils.playNotificationSound(getContext());
         }
     }
@@ -194,9 +194,9 @@ public class IndoorCourtFragment extends CourtFragment {
                 int remainingSubstitutions = mClassicTeam.countRemainingSubstitutions(teamType);
 
                 if (remainingSubstitutions == 0) {
-                    UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
                 } else if (remainingSubstitutions == 1) {
-                    UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
                 }
             }
         }
@@ -283,13 +283,13 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void confirmStartingLineup(TeamType teamType) {
         if (!mClassicTeam.isStartingLineupConfirmed(teamType) && mClassicTeam.getPlayersOnCourt(teamType).size() == mClassicTeam.getExpectedNumberOfPlayersOnCourt()) {
-            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
+            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
                 if (!mOneStartingLineupDialog) {
                     alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), String.format(Locale.getDefault(), getString(R.string.confirm_team_lineup_question), mClassicTeam.getTeamName(teamType)),
                             getString(android.R.string.no), getString(android.R.string.yes));
                     setStartingLineupDialogListener(alertDialogFragment, teamType);
-                    alertDialogFragment.show(getActivity().getSupportFragmentManager(), "confirm_lineup");
+                    alertDialogFragment.show(requireActivity().getSupportFragmentManager(), "confirm_lineup");
                     mOneStartingLineupDialog = true;
                 }
             } else {
@@ -319,7 +319,7 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
-        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(getActivity(), positionType) + ")",
+        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(requireActivity(), positionType) + ")",
                 mClassicTeam, mGame, teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
@@ -396,7 +396,7 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType, positionType));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.showNotification(getActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
+            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
         }
     }
 

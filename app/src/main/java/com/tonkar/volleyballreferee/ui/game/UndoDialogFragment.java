@@ -53,7 +53,7 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        mLayoutInflater = getActivity().getLayoutInflater();
+        mLayoutInflater = requireActivity().getLayoutInflater();
         mView = mLayoutInflater.inflate(R.layout.undo_dialog, null);
 
         ListView gameEventList = mView.findViewById(R.id.game_event_list);
@@ -61,7 +61,7 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
         gameEventList.setAdapter(mGameEventListAdapter);
 
         mAlertDialog = new AlertDialog
-                .Builder(getContext(), R.style.AppTheme_Dialog)
+                .Builder(requireContext(), R.style.AppTheme_Dialog)
                 .setTitle(R.string.undo).setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> undo())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})
@@ -95,10 +95,10 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
 
     private class GameEventListAdapter extends ArrayAdapter<GameEvent> {
 
-        private Context            mContext;
-        private List<GameEvent>    mGameEvents;
-        private GameEvent          mSelectedGameEvent;
-        private PlayerToggleButton mSelectedButton;
+        private final Context            mContext;
+        private final List<GameEvent>    mGameEvents;
+        private       GameEvent          mSelectedGameEvent;
+        private       PlayerToggleButton mSelectedButton;
 
         private GameEventListAdapter(Context context, List<GameEvent> gameEvents) {
             super(context, R.layout.game_event_toggle_item, gameEvents);

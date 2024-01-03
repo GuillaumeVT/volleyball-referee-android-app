@@ -53,7 +53,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         Log.i(Tags.SETUP_UI, "Create team setup fragment");
         View view = inflater.inflate(R.layout.fragment_quick_team_setup, container, false);
 
-        final String teamTypeStr = getArguments().getString(TeamType.class.getName());
+        final String teamTypeStr = requireArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
 
         final TextInputEditText teamNameInput = view.findViewById(R.id.team_name_input_text);
@@ -99,7 +99,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         });
 
         if (mTeamService.getTeamColor(mTeamType) == Color.parseColor(TeamDefinition.DEFAULT_COLOR)) {
-            teamColorSelected(UiUtils.getRandomShirtColor(getContext()));
+            teamColorSelected(UiUtils.getRandomShirtColor(requireContext()));
         } else {
             teamColorSelected(mTeamService.getTeamColor(mTeamType));
         }
@@ -147,8 +147,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     private void teamColorSelected(int color) {
         Log.i(Tags.SETUP_UI, String.format("Update %s team color", mTeamType));
-        UiUtils.colorTeamButton(getActivity(), color, mTeamColorButton);
-        UiUtils.colorTeamText(getActivity(), color, mPlayerNamesButton);
+        UiUtils.colorTeamButton(requireActivity(), color, mTeamColorButton);
+        UiUtils.colorTeamText(requireActivity(), color, mPlayerNamesButton);
         mTeamService.setTeamColor(mTeamType, color);
         updateCaptain();
     }
@@ -183,7 +183,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     }
 
     private void updateGender(GenderType genderType) {
-        Context context = getContext();
+        Context context = requireContext();
         mTeamService.setGender(mTeamType, genderType);
         switch (genderType) {
             case MIXED:
@@ -205,8 +205,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     }
 
     private void computeSaveItemVisibility() {
-        if (getActivity() instanceof StoredTeamActivity) {
-            ((StoredTeamActivity) getActivity()).computeSaveLayoutVisibility();
+        if (requireActivity() instanceof StoredTeamActivity) {
+            ((StoredTeamActivity) requireActivity()).computeSaveLayoutVisibility();
         }
     }
 

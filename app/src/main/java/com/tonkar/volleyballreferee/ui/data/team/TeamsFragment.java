@@ -35,11 +35,11 @@ public class TeamsFragment extends Fragment implements StoredGameHandler {
         View view = inflater.inflate(R.layout.fragment_teams, container, false);
 
         ListView homeTeamPlayersList = view.findViewById(R.id.home_team_players_list);
-        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mStoredGame, TeamType.HOME);
+        PlayersListAdapter homeTeamPlayersListAdapter = new PlayersListAdapter(inflater, requireActivity(), mStoredGame, TeamType.HOME);
         homeTeamPlayersList.setAdapter(homeTeamPlayersListAdapter);
 
         ListView guestTeamPlayersList = view.findViewById(R.id.guest_team_players_list);
-        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, getActivity(), mStoredGame, TeamType.GUEST);
+        PlayersListAdapter guestTeamPlayersListAdapter = new PlayersListAdapter(inflater, requireActivity(), mStoredGame, TeamType.GUEST);
         guestTeamPlayersList.setAdapter(guestTeamPlayersListAdapter);
 
         return view;

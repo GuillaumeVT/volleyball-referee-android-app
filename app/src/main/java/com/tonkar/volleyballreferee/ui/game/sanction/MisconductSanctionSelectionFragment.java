@@ -60,7 +60,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
-        mTeamType = TeamType.valueOf(getArguments().getString("teamType"));
+        mTeamType = TeamType.valueOf(requireArguments().getString("teamType"));
 
         View view = layoutInflater.inflate(R.layout.fragment_misconduct_sanction_selection, container, false);
 
@@ -127,7 +127,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
 
             GridView misconductPlayerGrid = view.findViewById(R.id.misconduct_player_grid);
 
-            mMisconductPlayerAdapter = new MisconductPlayerAdapter(getActivity().getLayoutInflater(), getContext(), mGame, mTeamType);
+            mMisconductPlayerAdapter = new MisconductPlayerAdapter(requireActivity().getLayoutInflater(), getContext(), mGame, mTeamType);
             misconductPlayerGrid.setAdapter(mMisconductPlayerAdapter);
 
             onMisconductPlayerSelected(-1);

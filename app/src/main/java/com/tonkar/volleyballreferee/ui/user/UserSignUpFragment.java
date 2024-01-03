@@ -116,10 +116,10 @@ public class UserSignUpFragment extends Fragment {
 
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         hideProgressIndicator();
                         UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
-                        UiUtils.navigateToHome(getActivity());
+                        UiUtils.navigateToHome(requireActivity());
                     });
                 }
 
@@ -128,7 +128,7 @@ public class UserSignUpFragment extends Fragment {
 
                 @Override
                 public void onError(int httpCode) {
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         hideProgressIndicator();
                         switch (httpCode) {
                             case HttpURLConnection.HTTP_CONFLICT:
@@ -152,13 +152,13 @@ public class UserSignUpFragment extends Fragment {
 
     private void showProgressIndicator() {
         if (isAdded()) {
-            ((ProgressIndicatorActivity) getActivity()).showProgressIndicator();
+            ((ProgressIndicatorActivity) requireActivity()).showProgressIndicator();
         }
     }
 
     private void hideProgressIndicator() {
         if (isAdded()) {
-            ((ProgressIndicatorActivity) getActivity()).hideProgressIndicator();
+            ((ProgressIndicatorActivity) requireActivity()).hideProgressIndicator();
         }
     }
 

@@ -24,11 +24,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         mPrefListener = (prefs, key) -> {
-            if(key.equals(PrefUtils.PREF_NIGHT_MODE)) {
-                PrefUtils.applyNightMode(getContext());
+            if (PrefUtils.PREF_NIGHT_MODE.equals(key)) {
+                PrefUtils.applyNightMode(requireContext());
             }
         };
 
@@ -40,7 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         super.onDestroyView();
 
         if (mPrefListener != null) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
             sharedPreferences.unregisterOnSharedPreferenceChangeListener(mPrefListener);
         }
     }

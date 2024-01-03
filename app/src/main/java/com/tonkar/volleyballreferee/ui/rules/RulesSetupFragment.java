@@ -93,7 +93,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         Log.i(Tags.RULES, "Create rules setup fragment");
         View view;
 
-        final boolean isGameContext = getArguments().getBoolean("is_game");
+        final boolean isGameContext = requireArguments().getBoolean("is_game");
 
         switch (mRules.getKind()) {
             case BEACH:
@@ -112,7 +112,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
 
         if (!mRules.getName().isEmpty()) {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
 
         mRulesNameInput.addTextChangedListener(new TextWatcher() {
@@ -452,10 +452,10 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
     }
 
     private void computeConfirmItemVisibility() {
-        if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartGameButton();
-        } else if (getActivity() instanceof StoredRulesActivity) {
-            ((StoredRulesActivity) getActivity()).computeSaveLayoutVisibility();
+        if (requireActivity() instanceof GameSetupActivity) {
+            ((GameSetupActivity) requireActivity()).computeStartGameButton();
+        } else if (requireActivity() instanceof StoredRulesActivity) {
+            ((StoredRulesActivity) requireActivity()).computeSaveLayoutVisibility();
         }
     }
 
