@@ -109,7 +109,6 @@
     <string name="referee">Arbitre</string>
     <string name="leave_game_setup_question">Cette configuration de match sera perdue. Quitter?</string>
     <string name="must_provide_at_least_n_characters">Doit contenir au minimum %d lettres</string>
-    <string name="help">Aide</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Pile</string>

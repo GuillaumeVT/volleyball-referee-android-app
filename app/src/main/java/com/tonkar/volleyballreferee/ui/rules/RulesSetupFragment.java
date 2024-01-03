@@ -453,7 +453,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartLayoutVisibility();
+            ((GameSetupActivity) getActivity()).computeStartGameButton();
         } else if (getActivity() instanceof StoredRulesActivity) {
             ((StoredRulesActivity) getActivity()).computeSaveLayoutVisibility();
         }

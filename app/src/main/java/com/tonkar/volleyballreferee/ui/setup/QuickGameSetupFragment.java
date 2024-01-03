@@ -330,7 +330,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
 
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof QuickGameSetupActivity) {
-            ((QuickGameSetupActivity) getActivity()).computeStartLayoutVisibility();
+            ((QuickGameSetupActivity) getActivity()).computeStartGameButton();
         }
     }
 

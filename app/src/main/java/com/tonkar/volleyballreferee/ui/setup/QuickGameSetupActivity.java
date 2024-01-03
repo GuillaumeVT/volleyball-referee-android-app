@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -74,11 +76,18 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                cancelSetup();
+            }
+        });
+
         final boolean create = getIntent().getBooleanExtra("create", true);
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.quick_game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState, create);
 
-        computeStartLayoutVisibility();
+        computeStartGameButton();
 
         ScrollView scrollView = findViewById(R.id.setup_scroll_view);
         ExtendedFloatingActionButton startGameButton = findViewById(R.id.start_game_button);
@@ -93,11 +102,6 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        cancelSetup();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             cancelSetup();
@@ -106,16 +110,14 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void computeStartLayoutVisibility() {
-        View saveLayout = findViewById(R.id.start_game_layout);
-        if (mGame.getTeamName(TeamType.HOME).length() < 2 || mGame.getTeamName(TeamType.GUEST).length() < 2
-                || mGame.getRules().getName().length() < 2
-                || (mGame.getLeague().getName().length() > 0 && mGame.getLeague().getDivision().length() < 2)) {
-            Log.i(Tags.SETUP_UI, "Save button is invisible");
-            saveLayout.setVisibility(View.GONE);
+    public void computeStartGameButton() {
+        MaterialButton saveButton = findViewById(R.id.start_game_button);
+        if (cannotStartGame(mGame)) {
+            saveButton.setIconResource(R.drawable.ic_help_menu);
+            saveButton.setOnClickListener(view -> showGameSetupStatus(mGame));
         } else {
-            Log.i(Tags.SETUP_UI, "Save button is visible");
-            saveLayout.setVisibility(View.VISIBLE);
+            saveButton.setOnClickListener(this::startGame);
+            saveButton.setIconResource(R.drawable.ic_play);
         }
     }
 
@@ -224,5 +226,16 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         if (GameType.TIME.equals(mGame.getKind())) {
             gameSetupNavigation.setVisibility(View.GONE);
         }
+    }
+
+    private boolean cannotStartGame(IGame game) {
+        return game.getTeamName(TeamType.HOME).length() < 2 || game.getTeamName(TeamType.GUEST).length() < 2
+                || game.getRules().getName().length() < 2
+                || (game.getLeague().getName().length() > 0 && game.getLeague().getDivision().length() < 2);
+    }
+
+    private void showGameSetupStatus(IGame game) {
+        GameSetupStatusDialog gameSetupStatusDialog = new GameSetupStatusDialog(this, game);
+        gameSetupStatusDialog.show(game.getUsage());
     }
 }

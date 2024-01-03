@@ -109,7 +109,6 @@
     <string name="referee">Судья</string>
     <string name="leave_game_setup_question">Настройки данного матча будут потеряны. Покинуть страницу?</string>
     <string name="must_provide_at_least_n_characters">Минимум %d буквы</string>
-    <string name="help">Помощь</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Решка</string>

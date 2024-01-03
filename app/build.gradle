@@ -6,8 +6,8 @@ android {
         minSdkVersion 24
         targetSdkVersion 34
         compileSdk 34
-        versionCode 31000
-        versionName "3.10.0"
+        versionCode 31001
+        versionName "3.10.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
@@ -37,8 +37,11 @@ android {
         animationsDisabled = true
     }
 
-    buildToolsVersion = '33.0.2'
+    buildToolsVersion = '34.0.0'
     namespace 'com.tonkar.volleyballreferee'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {

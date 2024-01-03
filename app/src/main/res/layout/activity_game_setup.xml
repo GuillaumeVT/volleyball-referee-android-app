@@ -61,7 +61,6 @@
                 android:layout_marginTop="@dimen/fab_shift_default"
                 android:layout_marginEnd="@dimen/fab_shift_default"
                 android:layout_marginBottom="@dimen/fab_shift_default"
-                android:onClick="startGame"
                 android:text="@string/start_match"
                 app:icon="@drawable/ic_play" />
 

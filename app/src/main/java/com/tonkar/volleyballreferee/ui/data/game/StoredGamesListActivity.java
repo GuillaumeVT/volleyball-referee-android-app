@@ -146,7 +146,7 @@ public class StoredGamesListActivity extends NavigationActivity implements DataS
 
     @Override
     public void onBackPressed() {
-        if(mStoredGamesListAdapter.hasSelectedItems()){
+        if (mStoredGamesListAdapter.hasSelectedItems()) {
             mStoredGamesListAdapter.clearSelectedItems();
         } else {
             super.onBackPressed();

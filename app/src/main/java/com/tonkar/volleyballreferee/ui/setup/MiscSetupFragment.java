@@ -102,7 +102,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, "Update league");
                     mGame.getLeague().setName(s.toString().trim());
-                    view.findViewById(R.id.division_name_input_layout).setVisibility(mGame.getLeague().getName().length() < 2 ? View.GONE : View.VISIBLE);
+                    computeDivisionLayoutVisibility(view);
                     computeConfirmItemVisibility();
                 }
             }
@@ -110,6 +110,8 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        computeDivisionLayoutVisibility(view);
 
         List<ApiFriend> referees = storedUserService.listReferees();
 
@@ -214,9 +216,13 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         return view;
     }
 
+    private void computeDivisionLayoutVisibility(View view) {
+        view.findViewById(R.id.division_name_input_layout).setVisibility(mGame.getLeague().getName().length() < 2 ? View.GONE : View.VISIBLE);
+    }
+
     private void computeConfirmItemVisibility() {
         if (getActivity() instanceof GameSetupActivity) {
-            ((GameSetupActivity) getActivity()).computeStartLayoutVisibility();
+            ((GameSetupActivity) getActivity()).computeStartGameButton();
         }
     }
 

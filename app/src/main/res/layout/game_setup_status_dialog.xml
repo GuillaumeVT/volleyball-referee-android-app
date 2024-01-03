@@ -31,6 +31,7 @@
         android:textSize="@dimen/default_text_size" />
 
     <LinearLayout
+        android:id="@+id/home_team_players_status_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/big_margin_size">
@@ -95,6 +96,7 @@
         android:textSize="@dimen/default_text_size" />
 
     <LinearLayout
+        android:id="@+id/guest_team_players_status_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/big_margin_size">

@@ -110,7 +110,6 @@
     <string name="referee">Kohtunik</string>
     <string name="leave_game_setup_question">Antud mängu seaded kaovad ära. Kas soovite lehelt lahkuda?</string>
     <string name="must_provide_at_least_n_characters">Väli peab sisaldama vähemalt %d sümboleid</string>
-    <string name="help">Abi</string>
 
     <!-- Game activity -->
     <string name="toss_tails">Kiri</string>

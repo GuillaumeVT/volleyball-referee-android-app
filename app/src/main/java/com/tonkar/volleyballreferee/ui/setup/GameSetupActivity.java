@@ -3,12 +3,11 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -81,10 +81,17 @@ public class GameSetupActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                cancelSetup();
+            }
+        });
+
         final BottomNavigationView gameSetupNavigation = findViewById(R.id.game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState);
 
-        computeStartLayoutVisibility();
+        computeStartGameButton();
 
         ScrollView scrollView = findViewById(R.id.setup_scroll_view);
         ExtendedFloatingActionButton startGameButton = findViewById(R.id.start_game_button);
@@ -99,43 +106,22 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        cancelSetup();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_help, menu);
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.action_help_menu) {
-            showGameSetupStatus();
-            return true;
-        } else if (itemId == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             cancelSetup();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void computeStartLayoutVisibility() {
-        View saveLayout = findViewById(R.id.start_game_layout);
-        if (mGame.getTeamName(TeamType.HOME).length() < 2 || mGame.getNumberOfPlayers(TeamType.HOME) < mGame.getExpectedNumberOfPlayersOnCourt()
-                || mGame.getTeamName(TeamType.GUEST).length() < 2 || mGame.getNumberOfPlayers(TeamType.GUEST) < mGame.getExpectedNumberOfPlayersOnCourt()
-                || mGame.getCaptain(TeamType.HOME) < 0 || mGame.getCaptain(TeamType.GUEST) < 0
-                || mGame.getRules().getName().length() < 2
-                || (mGame.getLeague().getName().length() > 0 && mGame.getLeague().getDivision().length() < 2)) {
-            Log.i(Tags.SETUP_UI, "Save button is invisible");
-            saveLayout.setVisibility(View.GONE);
+    public void computeStartGameButton() {
+        MaterialButton saveButton = findViewById(R.id.start_game_button);
+        if (cannotStartGame(mGame)) {
+            saveButton.setIconResource(R.drawable.ic_help_menu);
+            saveButton.setOnClickListener(view -> showGameSetupStatus(mGame));
         } else {
-            Log.i(Tags.SETUP_UI, "Save button is visible");
-            saveLayout.setVisibility(View.VISIBLE);
+            saveButton.setOnClickListener(this::startGame);
+            saveButton.setIconResource(R.drawable.ic_play);
         }
     }
 
@@ -235,8 +221,16 @@ public class GameSetupActivity extends AppCompatActivity {
         }
     }
 
-    private void showGameSetupStatus() {
-        GameSetupStatusDialog gameSetupStatusDialog = new GameSetupStatusDialog(this, mGame);
-        gameSetupStatusDialog.show();
+    private boolean cannotStartGame(IGame game) {
+        return game.getTeamName(TeamType.HOME).length() < 2 || game.getNumberOfPlayers(TeamType.HOME) < game.getExpectedNumberOfPlayersOnCourt()
+                || game.getTeamName(TeamType.GUEST).length() < 2 || game.getNumberOfPlayers(TeamType.GUEST) < game.getExpectedNumberOfPlayersOnCourt()
+                || game.getCaptain(TeamType.HOME) < 0 || game.getCaptain(TeamType.GUEST) < 0
+                || game.getRules().getName().length() < 2
+                || (game.getLeague().getName().length() > 0 && game.getLeague().getDivision().length() < 2);
+    }
+
+    private void showGameSetupStatus(IGame game) {
+        GameSetupStatusDialog gameSetupStatusDialog = new GameSetupStatusDialog(this, game);
+        gameSetupStatusDialog.show(game.getUsage());
     }
 }

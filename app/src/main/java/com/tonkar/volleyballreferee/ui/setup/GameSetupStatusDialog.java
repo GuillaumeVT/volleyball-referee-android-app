@@ -11,6 +11,7 @@ import androidx.core.widget.TextViewCompat;
 import com.google.android.material.textview.MaterialTextView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import java.util.Locale;
@@ -25,15 +26,13 @@ public class GameSetupStatusDialog {
         mGame = game;
     }
 
-    public void show() {
+    public void show(UsageType usageType) {
         View gameSetupStatusView = mActivity.getLayoutInflater().inflate(R.layout.game_setup_status_dialog, null);
 
         MaterialTextView homeTeamNameStatusView = gameSetupStatusView.findViewById(R.id.home_team_name_status);
-        MaterialTextView homeTeamPlayersStatusView = gameSetupStatusView.findViewById(R.id.home_team_players_status);
         MaterialTextView homeTeamCaptainStatusView = gameSetupStatusView.findViewById(R.id.home_team_captain_status);
 
         MaterialTextView guestTeamNameStatusView = gameSetupStatusView.findViewById(R.id.guest_team_name_status);
-        MaterialTextView guestTeamPlayersStatusView = gameSetupStatusView.findViewById(R.id.guest_team_players_status);
         MaterialTextView guestTeamCaptainStatusView = gameSetupStatusView.findViewById(R.id.guest_team_captain_status);
 
         MaterialTextView rulesNameStatusView = gameSetupStatusView.findViewById(R.id.rules_name_status);
@@ -43,14 +42,31 @@ public class GameSetupStatusDialog {
         MaterialTextView divisionNameStatusView = gameSetupStatusView.findViewById(R.id.division_name_status);
 
         setTextViewStatus(homeTeamNameStatusView, mGame.getTeamName(TeamType.HOME).length() >= 2);
-        setTextViewStatus(homeTeamPlayersStatusView, mGame.getNumberOfPlayers(TeamType.HOME) >= mGame.getExpectedNumberOfPlayersOnCourt());
-        homeTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.HOME), mGame.getExpectedNumberOfPlayersOnCourt()));
-        setTextViewStatus(homeTeamCaptainStatusView, mGame.getCaptain(TeamType.HOME) >= 0);
+
 
         setTextViewStatus(guestTeamNameStatusView, mGame.getTeamName(TeamType.GUEST).length() >= 2);
-        setTextViewStatus(guestTeamPlayersStatusView, mGame.getNumberOfPlayers(TeamType.GUEST) >= mGame.getExpectedNumberOfPlayersOnCourt());
-        guestTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.GUEST), mGame.getExpectedNumberOfPlayersOnCourt()));
-        setTextViewStatus(guestTeamCaptainStatusView, mGame.getCaptain(TeamType.GUEST) >= 0);
+
+
+        if (UsageType.NORMAL.equals(mGame.getUsage())) {
+            MaterialTextView homeTeamPlayersStatusView = gameSetupStatusView.findViewById(R.id.home_team_players_status);
+            MaterialTextView guestTeamPlayersStatusView = gameSetupStatusView.findViewById(R.id.guest_team_players_status);
+
+            setTextViewStatus(homeTeamPlayersStatusView, mGame.getNumberOfPlayers(TeamType.HOME) >= mGame.getExpectedNumberOfPlayersOnCourt());
+            homeTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.HOME), mGame.getExpectedNumberOfPlayersOnCourt()));
+            setTextViewStatus(homeTeamCaptainStatusView, mGame.getCaptain(TeamType.HOME) >= 0);
+
+            setTextViewStatus(guestTeamPlayersStatusView, mGame.getNumberOfPlayers(TeamType.GUEST) >= mGame.getExpectedNumberOfPlayersOnCourt());
+            guestTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.GUEST), mGame.getExpectedNumberOfPlayersOnCourt()));
+            setTextViewStatus(guestTeamCaptainStatusView, mGame.getCaptain(TeamType.GUEST) >= 0);
+        } else {
+            View homeTeamPlayersStatusLayout = gameSetupStatusView.findViewById(R.id.home_team_players_status_layout);
+            View guestTeamPlayersStatusLayout = gameSetupStatusView.findViewById(R.id.guest_team_players_status_layout);
+
+            homeTeamPlayersStatusLayout.setVisibility(View.GONE);
+            homeTeamCaptainStatusView.setVisibility(View.GONE);
+            guestTeamPlayersStatusLayout.setVisibility(View.GONE);
+            guestTeamCaptainStatusView.setVisibility(View.GONE);
+        }
 
         setTextViewStatus(rulesNameStatusView, mGame.getRules().getName().length() >= 2);
 
