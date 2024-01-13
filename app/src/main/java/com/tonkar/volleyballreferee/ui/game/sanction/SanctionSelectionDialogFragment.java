@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
@@ -21,7 +20,6 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class SanctionSelectionDialogFragment extends DialogFragment implements GameServiceHandler {
 
@@ -62,20 +60,18 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
         mSanctionTypePager = mView.findViewById(R.id.sanction_nav);
 
         mSanctionTypePager.setOnItemSelectedListener(item -> {
-                    final Fragment fragment;
+                    Fragment fragment = null;
 
                     int itemId = item.getItemId();
                     if (itemId == R.id.delay_sanction_tab) {
                         fragment = mDelaySanctionSelectionFragment;
                     } else if (itemId == R.id.misconduct_sanction_tab) {
                         fragment = mMisconductSanctionSelectionFragment;
-                    } else {
-                        fragment = null;
                     }
 
-                    final FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                    UiUtils.animateNavigationView(transaction);
-                    transaction.replace(R.id.sanction_container, fragment).commit();
+                    if (fragment != null) {
+                        getChildFragmentManager().beginTransaction().replace(R.id.sanction_container, fragment).commit();
+                    }
 
                     computeOkAvailability(item.getItemId());
 

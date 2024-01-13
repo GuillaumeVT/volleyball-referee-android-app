@@ -28,6 +28,7 @@ import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
 import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
 import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
@@ -95,7 +96,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.HOME));
                     mGame.setTeamName(TeamType.HOME, s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.home_team_name_input_layout)).setError(mGame.getTeamName(TeamType.HOME).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    ((TextInputLayout) view.findViewById(R.id.home_team_name_input_layout)).setError(mGame.getTeamName(TeamType.HOME).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), IBaseTeam.TEAM_NAME_MIN_LENGTH) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -115,7 +116,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", TeamType.GUEST));
                     mGame.setTeamName(TeamType.GUEST, s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.guest_team_name_input_layout)).setError(mGame.getTeamName(TeamType.GUEST).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    ((TextInputLayout) view.findViewById(R.id.guest_team_name_input_layout)).setError(mGame.getTeamName(TeamType.GUEST).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), IBaseTeam.TEAM_NAME_MIN_LENGTH) : null);
                     computeConfirmItemVisibility();
                 }
             }

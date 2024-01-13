@@ -24,7 +24,6 @@
     <string name="score_based_game">Tablica wyników</string>
     <string name="time_based_game">Rozpocznij grę na czas</string>
     <string name="resume_game_title">Wznów grę</string>
-    <string name="resume_game_question">Aplikacja znalazła rozgrywkę w toku. Czy chcesz ją wznowić czy usunąć?</string>
     <string name="resume_game_error">Gra nie może zostać wznowiona.</string>
     <string name="my_data_group">Moje Dane</string>
     <string name="configuration_group">Konfiguracja</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Strona Główna</string>
 
 </resources>

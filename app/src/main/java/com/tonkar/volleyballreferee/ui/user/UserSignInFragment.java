@@ -28,7 +28,6 @@ import java.util.Locale;
 
 public class UserSignInFragment extends Fragment {
 
-    private View           mView;
     private ApiUserSummary mUser;
 
     public UserSignInFragment() {}
@@ -40,31 +39,31 @@ public class UserSignInFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.USER_UI, "Create user sign in fragment");
-        mView = inflater.inflate(R.layout.fragment_user_sign_in, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_user_sign_in, container, false);
 
         mUser = PrefUtils.getUser(getContext());
         if (!ApiUserSummary.emptyUser().equals(mUser)) {
-            EditText emailText = mView.findViewById(R.id.user_email_input_text);
+            EditText emailText = fragmentView.findViewById(R.id.user_email_input_text);
             emailText.setEnabled(false);
             emailText.setText(mUser.getEmail());
 
-            EditText pseudoText = mView.findViewById(R.id.user_pseudo_input_text);
+            EditText pseudoText = fragmentView.findViewById(R.id.user_pseudo_input_text);
             pseudoText.setEnabled(false);
             pseudoText.setText(mUser.getPseudo());
 
-            Button signInButton = mView.findViewById(R.id.user_sign_in_button);
-            signInButton.setOnClickListener(button -> onSignInClicked());
+            Button signInButton = fragmentView.findViewById(R.id.user_sign_in_button);
+            signInButton.setOnClickListener(button -> onSignInClicked(fragmentView));
 
-            Button lostPasswordButton = mView.findViewById(R.id.lost_password_button);
+            Button lostPasswordButton = fragmentView.findViewById(R.id.lost_password_button);
             lostPasswordButton.setOnClickListener(button -> onLostPasswordClicked());
         }
 
-        return mView;
+        return fragmentView;
     }
 
-    private void onSignInClicked() {
-        TextInputLayout passwordInputLayout = mView.findViewById(R.id.user_new_password_input_layout);
-        EditText passwordInputText = mView.findViewById(R.id.user_new_password_input_text);
+    private void onSignInClicked(View fragmentView) {
+        TextInputLayout passwordInputLayout = fragmentView.findViewById(R.id.user_new_password_input_layout);
+        EditText passwordInputText = fragmentView.findViewById(R.id.user_new_password_input_text);
         final String password = passwordInputText.getText().toString().trim();
 
         passwordInputLayout.setError(null);
@@ -82,7 +81,7 @@ public class UserSignInFragment extends Fragment {
                 public void onUserTokenReceived(ApiUserToken userToken) {
                     requireActivity().runOnUiThread(() -> {
                         UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
-                        UiUtils.navigateToHome(requireActivity());
+                        UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
                     });
                 }
 

@@ -122,7 +122,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -136,14 +136,14 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                         }
                     } else {
                         Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising leagues", response.code()));
-                        if (listener != null){
+                        if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
                     }
                 }
             });
         } else {
-            if (listener != null){
+            if (listener != null) {
                 listener.onSynchronizationFailed();
             }
         }
@@ -221,7 +221,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -236,7 +236,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                         }
                     } else {
                         Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising league", response.code()));
-                        if (listener != null){
+                        if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
                     }

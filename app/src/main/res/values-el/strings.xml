@@ -25,7 +25,6 @@
     <string name="score_based_game">Πίνακας Σκορ</string>
     <string name="time_based_game">Με Χρόνο</string>
     <string name="resume_game_title">Συνέχεια αγώνα</string>
-    <string name="resume_game_question">Η εφαρμογή βρήκε έναν αγώνα σε εξέλιξη. Θες να τον συνεχίσεις ή να τον διαγράψεις;</string>
     <string name="resume_game_error">Ο αγώνας δεν μπορεί να συνεχιστεί.</string>
     <string name="my_data_group">Τα δεδομένα μου</string>
     <string name="configuration_group">Ρυθμίσεις</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Αρχική</string>
 
 </resources>

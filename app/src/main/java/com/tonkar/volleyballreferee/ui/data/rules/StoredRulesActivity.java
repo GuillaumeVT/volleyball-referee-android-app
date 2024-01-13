@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.data.rules;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -73,6 +73,13 @@ public class StoredRulesActivity extends AppCompatActivity {
         ScrollView scrollView = findViewById(R.id.rules_scroll_view);
         ExtendedFloatingActionButton saveRulesButton = findViewById(R.id.save_rules_button);
         UiUtils.addExtendShrinkListener(scrollView, saveRulesButton);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                cancelRules();
+            }
+        });
     }
 
     @Override
@@ -105,20 +112,13 @@ public class StoredRulesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        cancelRules();
-    }
-
     public void saveRules(View view) {
         Log.i(Tags.STORED_RULES, "Save rules");
         StoredRulesService storedRulesService = new StoredRulesManager(this);
         storedRulesService.saveRules(mRules, mCreate);
         UiUtils.makeText(this, getString(R.string.saved_rules), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        UiUtils.animateCreate(this);
+        UiUtils.navigateToMain(this, R.id.stored_rules_list_fragment);
+        UiUtils.animateForward(this);
     }
 
     private void deleteRules() {
@@ -129,10 +129,7 @@ public class StoredRulesActivity extends AppCompatActivity {
             StoredRulesService storedRulesService = new StoredRulesManager(this);
             storedRulesService.deleteRules(mRules.getId());
             UiUtils.makeText(StoredRulesActivity.this, getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_rules_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
@@ -144,9 +141,7 @@ public class StoredRulesActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.leave_rules_creation_title)).setMessage(getString(R.string.leave_rules_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            Intent intent = new Intent(StoredRulesActivity.this, StoredRulesListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_rules_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});

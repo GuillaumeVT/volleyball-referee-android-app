@@ -3,15 +3,19 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -28,7 +32,6 @@ import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
 import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
-import com.tonkar.volleyballreferee.ui.NavigationActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Calendar;
@@ -36,7 +39,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
-public class ScheduledGamesListActivity extends NavigationActivity implements AsyncGameRequestListener {
+public class ScheduledGamesListFragment extends Fragment implements AsyncGameRequestListener {
 
     private StoredGamesService           mStoredGamesService;
     private SwipeRefreshLayout           mSyncLayout;
@@ -48,46 +51,41 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
     private ExtendedFloatingActionButton mScheduleIndoor4x4GameButton;
     private ExtendedFloatingActionButton mScheduleBeachGameButton;
     private ExtendedFloatingActionButton mScheduleSnowGameButton;
+    private OnBackPressedCallback        mBackPressedCallback;
 
-    @Override
-    protected String getToolbarTitle() {
-        return "";
+    public ScheduledGamesListFragment() {}
+
+    public static ScheduledGamesListFragment newInstance() {
+        return new ScheduledGamesListFragment();
     }
 
     @Override
-    protected int getCheckedItem() {
-        return R.id.action_available_games;
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        mStoredGamesService = new StoredGamesManager(requireContext());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        mStoredGamesService = new StoredGamesManager(this);
+        Log.i(Tags.SCHEDULE_UI, "Create scheduled games list fragment");
 
-        super.onCreate(savedInstanceState);
+        View fragmentView = inflater.inflate(R.layout.fragment_scheduled_games_list, container, false);
 
-        Log.i(Tags.SCHEDULE_UI, "Create scheduled games list activity");
-        setContentView(R.layout.activity_scheduled_games_list);
-
-        initNavigationMenu();
-
-        mSyncLayout = findViewById(R.id.scheduled_games_sync_layout);
+        mSyncLayout = fragmentView.findViewById(R.id.scheduled_games_sync_layout);
         mSyncLayout.setOnRefreshListener(this::updateScheduledGamesList);
 
-        mFabMenu = findViewById(R.id.scheduled_games_fab_menu);
+        mFabMenu = fragmentView.findViewById(R.id.scheduled_games_fab_menu);
         mFabMenu.setVisibility(View.INVISIBLE);
 
-        final ListView scheduledGamesList = findViewById(R.id.scheduled_games_list);
+        final ListView scheduledGamesList = fragmentView.findViewById(R.id.scheduled_games_list);
         mScheduledGamesListAdapter = new ScheduledGamesListAdapter(getLayoutInflater());
         scheduledGamesList.setAdapter(mScheduledGamesListAdapter);
 
-        scheduledGamesList.setOnItemClickListener((adapterView, view, i, l) -> {
+        scheduledGamesList.setOnItemClickListener((adapterView, itemView, i, l) -> {
             ApiGameSummary gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getKind())) {
                 switch (gameDescription.getStatus()) {
                     case SCHEDULED:
                     case LIVE:
                         ScheduleGameListActionMenu scheduleGameListActionMenu = ScheduleGameListActionMenu.newInstance(gameDescription);
-                        scheduleGameListActionMenu.show(getSupportFragmentManager(), "schedule_game_list_action_menu");
+                        scheduleGameListActionMenu.show(getChildFragmentManager(), "schedule_game_list_action_menu");
                         break;
                     default:
                         break;
@@ -98,32 +96,64 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         updateScheduledGamesList();
 
         mIsFabOpen = false;
-        mScheduleIndoorGameButton = findViewById(R.id.schedule_indoor_game_button);
-        mScheduleIndoor4x4GameButton = findViewById(R.id.schedule_indoor_4x4_game_button);
-        mScheduleBeachGameButton = findViewById(R.id.schedule_beach_game_button);
-        mScheduleSnowGameButton = findViewById(R.id.schedule_snow_game_button);
-        mScheduleGameButton = findViewById(R.id.schedule_game_button);
+        mScheduleIndoorGameButton = fragmentView.findViewById(R.id.schedule_indoor_game_button);
+        mScheduleIndoorGameButton.setOnClickListener(this::scheduleIndoorGame);
+
+        mScheduleIndoor4x4GameButton = fragmentView.findViewById(R.id.schedule_indoor_4x4_game_button);
+        mScheduleIndoor4x4GameButton.setOnClickListener(this::scheduleIndoor4x4Game);
+
+        mScheduleBeachGameButton = fragmentView.findViewById(R.id.schedule_beach_game_button);
+        mScheduleBeachGameButton.setOnClickListener(this::scheduleBeachGame);
+
+        mScheduleSnowGameButton = fragmentView.findViewById(R.id.schedule_snow_game_button);
+        mScheduleSnowGameButton.setOnClickListener(this::scheduleSnowGame);
+
+        mScheduleGameButton = fragmentView.findViewById(R.id.schedule_game_button);
         mScheduleGameButton.setOnClickListener(button -> {
-            if(mIsFabOpen){
+            if (mIsFabOpen) {
                 closeFABMenu();
-            }else{
+            } else {
                 showFABMenu();
             }
         });
-        closeFABMenu();
 
         UiUtils.addExtendShrinkListener(scheduledGamesList, mScheduleGameButton);
+
+        mBackPressedCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mIsFabOpen) {
+                    closeFABMenu();
+                }
+                computeOnBackPressedCallbackState();
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), mBackPressedCallback);
+
+        initMenu(fragmentView);
+
+        closeFABMenu();
+
+        return fragmentView;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_scheduled_games, menu);
+    public void onStop() {
+        super.onStop();
+        closeFABMenu();
+        mBackPressedCallback.setEnabled(false);
+    }
 
+    private void initMenu(View fragmentView) {
+        Toolbar toolbar = fragmentView.findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_scheduled_games);
+
+        Menu menu = toolbar.getMenu();
         MenuItem searchGamesItem = menu.findItem(R.id.action_search_games);
         SearchView searchGamesView = (SearchView) searchGamesItem.getActionView();
 
-        searchGamesView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {});
+        searchGamesView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {});
 
         searchGamesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -138,26 +168,28 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
             }
         });
 
-        return true;
+        toolbar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_search_games) {
+                return true;
+            } else if (itemId == R.id.action_sync) {
+                updateScheduledGamesList();
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.action_search_games) {
-            return true;
-        } else if (itemId == R.id.action_sync) {
-            updateScheduledGamesList();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private void computeOnBackPressedCallbackState() {
+        mBackPressedCallback.setEnabled(mIsFabOpen);
     }
 
     private void updateScheduledGamesList() {
-        if (PrefUtils.canSync(this)) {
+        if (PrefUtils.canSync(requireContext())) {
             mSyncLayout.setRefreshing(true);
             mStoredGamesService.downloadAvailableGames(this);
-            StoredLeaguesService storedLeagues = new StoredLeaguesManager(this);
+            StoredLeaguesService storedLeagues = new StoredLeaguesManager(requireContext());
             storedLeagues.syncLeagues();
         }
     }
@@ -167,7 +199,7 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     public void onAvailableGamesReceived(List<ApiGameSummary> gameDescriptionList) {
-        runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
             mSyncLayout.setRefreshing(false);
         });
@@ -175,31 +207,31 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
 
     @Override
     public void onError(int httpCode) {
-        runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             mSyncLayout.setRefreshing(false);
-            UiUtils.makeErrorText(this, getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+            UiUtils.makeErrorText(requireContext(), getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
         });
     }
 
-    public void scheduleIndoorGame(View view) {
+    private void scheduleIndoorGame(View view) {
         scheduleGame(GameType.INDOOR, view);
     }
 
-    public void scheduleIndoor4x4Game(View view) {
+    private void scheduleIndoor4x4Game(View view) {
         scheduleGame(GameType.INDOOR_4X4, view);
     }
 
-    public void scheduleBeachGame(View view) {
+    private void scheduleBeachGame(View view) {
         scheduleGame(GameType.BEACH, view);
     }
 
-    public void scheduleSnowGame(View view) {
+    private void scheduleSnowGame(View view) {
         scheduleGame(GameType.SNOW, view);
     }
 
     private void scheduleGame(GameType kind, View view) {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
-        ApiUserSummary user = PrefUtils.getUser(this);
+        ApiUserSummary user = PrefUtils.getUser(requireContext());
 
         ApiGameSummary gameDescription = new ApiGameSummary();
         gameDescription.setId(UUID.randomUUID().toString());
@@ -212,37 +244,30 @@ public class ScheduledGamesListActivity extends NavigationActivity implements As
         gameDescription.setKind(kind);
 
         Log.i(Tags.SCHEDULE_UI, "Start activity to schedule game");
-        final Intent intent = new Intent(this, ScheduledGameActivity.class);
+        final Intent intent = new Intent(requireContext(), ScheduledGameActivity.class);
         intent.putExtra("game", JsonConverters.GSON.toJson(gameDescription, ApiGameSummary.class));
         intent.putExtra("create", true);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, "gameKindToToolbar").toBundle());
     }
 
-    private void showFABMenu(){
+    private void showFABMenu() {
         mIsFabOpen = true;
-        UiUtils.colorCloseIconButton(this, mScheduleGameButton);
+        UiUtils.colorCloseIconButton(requireContext(), mScheduleGameButton);
         mFabMenu.setVisibility(View.VISIBLE);
         mScheduleIndoorGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_first));
         mScheduleIndoor4x4GameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_third));
         mScheduleBeachGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_second));
         mScheduleSnowGameButton.animate().translationY(-getResources().getDimension(R.dimen.fab_shift_fourth));
+        computeOnBackPressedCallbackState();
     }
 
-    private void closeFABMenu(){
+    private void closeFABMenu() {
         mIsFabOpen = false;
-        UiUtils.colorPlusIconButton(this, mScheduleGameButton);
+        UiUtils.colorPlusIconButton(requireContext(), mScheduleGameButton);
         mScheduleIndoorGameButton.animate().translationY(0);
         mScheduleIndoor4x4GameButton.animate().translationY(0);
         mScheduleBeachGameButton.animate().translationY(0);
         mScheduleSnowGameButton.animate().translationY(0).withEndAction(() -> mFabMenu.setVisibility(View.INVISIBLE));
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(mIsFabOpen){
-            closeFABMenu();
-        } else {
-            super.onBackPressed();
-        }
+        computeOnBackPressedCallbackState();
     }
 }

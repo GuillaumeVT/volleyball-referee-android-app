@@ -25,7 +25,6 @@
     <string name="score_based_game">Anzeigetafel</string>
     <string name="time_based_game">Zeitbasiert</string>
     <string name="resume_game_title">Spiel fortsetzen</string>
-    <string name="resume_game_question">Die App hat ein laufendes Spiel gefunden. Soll dieses fortgesetzt oder gelöscht werden?</string>
     <string name="resume_game_error">Das Spiel konnte nicht fortgesetzt werden.</string>
     <string name="my_data_group">Meine Daten</string>
     <string name="configuration_group">Konfiguration</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Startseite</string>
 
 </resources>

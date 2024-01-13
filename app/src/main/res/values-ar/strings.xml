@@ -25,7 +25,6 @@
     <string name="score_based_game">لوحة النتائج</string>
     <string name="time_based_game">محدد الوقت</string>
     <string name="resume_game_title">إستئناف المباراة</string>
-    <string name="resume_game_question">تم العثور على مباراة قيد التشغيل. هل ترغب في إستئنافها أو حذفها؟</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
     <string name="my_data_group">بياناتي</string>
     <string name="configuration_group">الإعدادات</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">الصفحة الرئيسية</string>
 
 </resources>

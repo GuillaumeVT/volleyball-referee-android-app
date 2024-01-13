@@ -25,7 +25,6 @@
     <string name="score_based_game">Placar</string>
     <string name="time_based_game">Partida por tempo</string>
     <string name="resume_game_title">Continuar partida</string>
-    <string name="resume_game_question">Essa aplicação encontrou uma partida em andamento. Gostaria de continuar ou deletar essa partida?</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>
     <string name="my_data_group">Meus dados</string>
     <string name="configuration_group">Configurações</string>
@@ -368,5 +367,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Início</string>
 
 </resources>

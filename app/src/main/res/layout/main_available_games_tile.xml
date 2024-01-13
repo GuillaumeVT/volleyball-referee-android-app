@@ -6,7 +6,6 @@
     android:layout_height="@dimen/main_card_height"
     android:layout_margin="@dimen/tiny_margin_size"
     android:background="@color/colorBackgroundMain"
-    android:onClick="goToAvailableGames"
     android:visibility="gone">
 
     <androidx.appcompat.widget.AppCompatImageView

@@ -25,7 +25,6 @@
     <string name="score_based_game">Marcador</string>
     <string name="time_based_game">Por tiempo</string>
     <string name="resume_game_title">Continuar partido</string>
-    <string name="resume_game_question">Se ha encontrado un partido en curso. ¿Desea retomarlo o borrarlo?</string>
     <string name="resume_game_error">No se ha podido continuar el partido</string>
     <string name="my_data_group">Mis datos</string>
     <string name="configuration_group">Configuración</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Inicio</string>
 
 </resources>

@@ -108,7 +108,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            backToList();
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         } else if (itemId == R.id.action_delete_rules) {
             deleteRules();
@@ -117,16 +117,11 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        backToList();
-    }
-
     public void editRules(View view) {
         ApiRules rules = mStoredRulesService.getRules(mRules.getId());
 
         if (rules == null) {
-            backToList();
+            getOnBackPressedDispatcher().onBackPressed();
         } else {
             Log.i(Tags.STORED_RULES, String.format("Start activity to edit stored rules %s", rules.getName()));
 
@@ -138,13 +133,6 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         }
     }
 
-    private void backToList() {
-        Intent intent = new Intent(this, StoredRulesListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        UiUtils.animateBackward(this);
-    }
-
     private void deleteRules() {
         Log.i(Tags.STORED_RULES, "Delete rules");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
@@ -153,10 +141,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
             StoredRulesService storedRulesService = new StoredRulesManager(this);
             storedRulesService.deleteRules(mRules.getId());
             UiUtils.makeText(this, getString(R.string.deleted_rules), Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(this, StoredRulesListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_rules_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});

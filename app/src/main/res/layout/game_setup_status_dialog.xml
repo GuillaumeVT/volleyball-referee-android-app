@@ -1,45 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/default_margin_size">
+    android:padding="@dimen/default_margin_size"
+    android:stretchColumns="0,1,2">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/home_team_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="@dimen/big_margin_size"
-        android:text="@string/home_team_tab"
-        android:textAllCaps="true"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/default_text_size"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/home_team_name_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
-        android:text="@string/name"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
-
-    <LinearLayout
-        android:id="@+id/home_team_players_status_layout"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/big_margin_size">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_span="2"
+            android:text="@string/home_team_tab"
+            android:textAllCaps="true"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/home_team_status_icon"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_valid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/home_team_name_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/name"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/home_team_players_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingStart="@dimen/default_margin_size"
             android:text="@string/players"
             android:textAppearance="@style/AppTheme.TextView"
             android:textColor="@color/colorOnSurface"
@@ -50,61 +70,94 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:drawablePadding="@dimen/big_margin_size"
             android:textAppearance="@style/AppTheme.TextView"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/home_team_captain_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
-        android:text="@string/captain"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+    </TableRow>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/guest_team_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="@dimen/big_margin_size"
-        android:text="@string/guest_team_tab"
-        android:textAllCaps="true"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/default_text_size"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/guest_team_name_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
-        android:text="@string/name"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
-
-    <LinearLayout
-        android:id="@+id/guest_team_players_status_layout"
+    <TableRow
+        android:id="@+id/home_team_captain_status_row"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/big_margin_size">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/captain"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_margin_size">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:text="@string/guest_team_tab"
+            android:textAllCaps="true"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/guest_team_status_icon"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_valid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/guest_team_name_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/name"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/guest_team_players_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingStart="@dimen/default_margin_size"
             android:text="@string/players"
             android:textAppearance="@style/AppTheme.TextView"
             android:textColor="@color/colorOnSurface"
@@ -115,84 +168,152 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="@dimen/big_margin_size"
-            android:drawablePadding="@dimen/big_margin_size"
             android:textAppearance="@style/AppTheme.TextView"
             android:textColor="@color/colorOnSurface"
             android:textSize="@dimen/default_text_size" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/guest_team_captain_status"
-        android:layout_width="wrap_content"
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/guest_team_captain_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/captain"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
-        android:text="@string/captain"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+        android:layout_marginTop="@dimen/big_margin_size">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/rules_status"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rules_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:text="@string/rules_tab"
+            android:textAllCaps="true"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/rules_status_icon"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_valid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/rules_name_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/name"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/misc_status_row"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="@dimen/big_margin_size"
-        android:text="@string/rules_tab"
-        android:textAllCaps="true"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/default_text_size"
-        android:textStyle="bold" />
+        android:layout_marginTop="@dimen/big_margin_size">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/rules_name_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:drawablePadding="@dimen/big_margin_size"
-        android:text="@string/name"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:text="@string/misc_tab"
+            android:textAllCaps="true"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/misc_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="@dimen/big_margin_size"
-        android:text="@string/misc_tab"
-        android:textAllCaps="true"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/default_text_size"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/misc_status_icon"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_valid" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/league_name_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:text="@string/league_name"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+    </TableRow>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/division_name_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/big_margin_size"
-        android:text="@string/division_name"
-        android:textAppearance="@style/AppTheme.TextView"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="@dimen/default_text_size" />
+    <TableRow
+        android:id="@+id/league_name_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/league_name"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/division_name_status_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_span="2"
+            android:paddingStart="@dimen/default_margin_size"
+            android:text="@string/division_name"
+            android:textAppearance="@style/AppTheme.TextView"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="@dimen/default_text_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_invalid" />
+
+    </TableRow>
+
+</TableLayout>

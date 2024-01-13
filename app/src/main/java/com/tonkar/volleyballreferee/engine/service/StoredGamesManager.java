@@ -744,7 +744,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 call.cancel();
-                if (listener != null){
+                if (listener != null) {
                     listener.onSynchronizationFailed();
                 }
             }
@@ -764,7 +764,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                     }
                 } else {
                     Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", response.code()));
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -854,7 +854,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -869,7 +869,7 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                         }
                     } else {
                         Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while synchronising games", response.code()));
-                        if (listener != null){
+                        if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
                     }

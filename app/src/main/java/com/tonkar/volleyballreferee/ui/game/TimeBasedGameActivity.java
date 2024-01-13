@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -95,7 +96,7 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
         setSupportActionBar(toolbar);
 
         if (mGameService == null || mStoredGamesService == null) {
-            UiUtils.navigateToHome(this);
+            UiUtils.navigateBackToHome(this);
         } else {
             mGameService.addGeneralListener(this);
             mGameService.addScoreListener(this);
@@ -137,6 +138,13 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
                 disableView();
             }
         }
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                UiUtils.navigateToMainWithDialog(TimeBasedGameActivity.this, mGameService);
+            }
+        });
     }
 
     @Override
@@ -155,11 +163,6 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
                 mStoredGamesService.disconnectGameRecorder(isFinishing());
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        UiUtils.navigateToHomeWithDialog(this, mGameService);
     }
 
     // Menu

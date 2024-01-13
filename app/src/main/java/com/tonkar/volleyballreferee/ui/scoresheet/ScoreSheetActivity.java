@@ -10,6 +10,7 @@ import android.print.ScoreSheetPdfConverter;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.webkit.WebView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -47,82 +48,92 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
         mStoredGame = storedGamesService.getGame(gameId);
 
         if (mStoredGame == null) {
-            UiUtils.navigateToHome(this);
-        }
+            getOnBackPressedDispatcher().onBackPressed();
+        } else {
+            mScoreSheetBuilder = new ScoreSheetBuilder(this, mStoredGame);
 
-        mScoreSheetBuilder = new ScoreSheetBuilder(this, mStoredGame);
+            super.onCreate(savedInstanceState);
 
-        super.onCreate(savedInstanceState);
+            Log.i(Tags.SCORE_SHEET, "Create score sheet activity");
+            setContentView(R.layout.activity_score_sheet);
 
-        Log.i(Tags.SCORE_SHEET, "Create score sheet activity");
-        setContentView(R.layout.activity_score_sheet);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            toolbar.setTitle("");
+            UiUtils.updateToolbarLogo(toolbar, mStoredGame.getKind(), UsageType.NORMAL);
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        UiUtils.updateToolbarLogo(toolbar, mStoredGame.getKind(), UsageType.NORMAL);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+            mSyncLayout = findViewById(R.id.score_sheet_sync_layout);
+            mSyncLayout.setEnabled(false);
 
-        mSyncLayout = findViewById(R.id.score_sheet_sync_layout);
-        mSyncLayout.setEnabled(false);
+            mWebView = findViewById(R.id.score_sheet);
 
-        mWebView = findViewById(R.id.score_sheet);
+            loadScoreSheet(false);
 
-        loadScoreSheet(false);
+            FloatingActionButton logoButton = findViewById(R.id.score_sheet_logo_button);
+            logoButton.setOnClickListener(v -> selectScoreSheetLogo());
 
-        FloatingActionButton logoButton = findViewById(R.id.score_sheet_logo_button);
-        logoButton.setOnClickListener(v -> selectScoreSheetLogo());
+            FloatingActionButton signatureButton = findViewById(R.id.sign_score_sheet_button);
+            signatureButton.setOnClickListener(v -> showSignatureDialog());
 
-        FloatingActionButton signatureButton = findViewById(R.id.sign_score_sheet_button);
-        signatureButton.setOnClickListener(v -> showSignatureDialog());
+            FloatingActionButton observationButton = findViewById(R.id.score_sheet_observation_button);
+            observationButton.setOnClickListener(v -> showObservationDialog());
 
-        FloatingActionButton observationButton = findViewById(R.id.score_sheet_observation_button);
-        observationButton.setOnClickListener(v -> showObservationDialog());
+            FloatingActionButton saveButton = findViewById(R.id.save_score_sheet_button);
+            saveButton.setOnClickListener(v -> createPdfScoreSheet());
 
-        FloatingActionButton saveButton = findViewById(R.id.save_score_sheet_button);
-        saveButton.setOnClickListener(v -> createPdfScoreSheet());
+            mSelectScoreSheetLogoResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            if (data != null) {
+                                try {
+                                    Uri imageUri = data.getData();
+                                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
 
-        mSelectScoreSheetLogoResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        if (data != null) {
-                            try {
-                                Uri imageUri = data.getData();
-                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+                                    String base64Image = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
+                                    mScoreSheetBuilder.setLogo(base64Image);
+                                    loadScoreSheet(false);
 
-                                String base64Image = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
-                                mScoreSheetBuilder.setLogo(base64Image);
-                                loadScoreSheet(false);
-
-                            } catch (IOException e) {
-                                Log.e(Tags.SCORE_SHEET, "Exception while opening the logo", e);
+                                } catch (IOException e) {
+                                    Log.e(Tags.SCORE_SHEET, "Exception while opening the logo", e);
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
-        mCreatePdfScoreSheetResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        if (data != null) {
-                            ScoreSheetPdfConverter scoreSheetPdfConverter = new ScoreSheetPdfConverter(ScoreSheetActivity.this, data.getData());
-                            scoreSheetPdfConverter.convert(mScoreSheetBuilder.createScoreSheet());
+            mCreatePdfScoreSheetResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            if (data != null) {
+                                ScoreSheetPdfConverter scoreSheetPdfConverter = new ScoreSheetPdfConverter(ScoreSheetActivity.this, data.getData());
+                                scoreSheetPdfConverter.convert(mScoreSheetBuilder.createScoreSheet());
+                            }
                         }
-                    }
-                });
+                    });
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            getOnBackPressedDispatcher().onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void selectScoreSheetLogo() {

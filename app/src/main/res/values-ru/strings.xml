@@ -24,7 +24,6 @@
     <string name="score_based_game">Счётное табло</string>
     <string name="time_based_game">Матч ограниченный по времени</string>
     <string name="resume_game_title">Продолжить матч</string>
-    <string name="resume_game_question">В приложении сохранён недоигранный матч. Вы хотите продолжить или удалить этот матч?</string>
     <string name="resume_game_error">Невозможно продолжить матч.</string>
     <string name="my_data_group">Мои данные</string>
     <string name="configuration_group">Настройки</string>
@@ -373,5 +372,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Главная</string>
 
 </resources>

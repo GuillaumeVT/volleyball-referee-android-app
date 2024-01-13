@@ -25,7 +25,6 @@
     <string name="score_based_game">Scorebord</string>
     <string name="time_based_game">Tijdgebaseerd</string>
     <string name="resume_game_title">Spel hervatten</string>
-    <string name="resume_game_question">De applicatie vond een wedstrijd die bezig is. Wenst u deze te hervatten of te verwijderen?</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>
     <string name="my_data_group">Mijn data</string>
     <string name="configuration_group">Configuratie</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Homepage</string>
 
 </resources>

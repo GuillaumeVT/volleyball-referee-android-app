@@ -75,7 +75,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.SETUP_UI, "Create team setup fragment");
         mLayoutInflater = inflater;
-        View view = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
+        View fragmentView = mLayoutInflater.inflate(R.layout.fragment_team_setup, container, false);
 
         final String teamTypeStr = requireArguments().getString(TeamType.class.getName());
         mTeamType = TeamType.valueOf(teamTypeStr);
@@ -88,17 +88,17 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             mNumberOfShirts = savedInstanceState.getInt("number_of_shirts");
         }
 
-        final AutoCompleteTextView teamNameInput = view.findViewById(R.id.team_name_input_text);
-        final TextInputLayout teamNameInputLayout = view.findViewById(R.id.team_name_input_layout);
-        mTeamColorButton = view.findViewById(R.id.team_color_button);
-        final GridView teamNumbersGrid = view.findViewById(R.id.team_member_numbers_grid);
-        mCaptainButton = view.findViewById(R.id.team_captain_number_button);
-        final GridView liberoNumbersGrid = view.findViewById(R.id.team_libero_numbers_grid);
-        mLiberoColorButton = view.findViewById(R.id.libero_color_button);
-        mPlayerNamesButton = view.findViewById(R.id.team_player_names_button);
+        final AutoCompleteTextView teamNameInput = fragmentView.findViewById(R.id.team_name_input_text);
+        final TextInputLayout teamNameInputLayout = fragmentView.findViewById(R.id.team_name_input_layout);
+        mTeamColorButton = fragmentView.findViewById(R.id.team_color_button);
+        final GridView teamNumbersGrid = fragmentView.findViewById(R.id.team_member_numbers_grid);
+        mCaptainButton = fragmentView.findViewById(R.id.team_captain_number_button);
+        final GridView liberoNumbersGrid = fragmentView.findViewById(R.id.team_libero_numbers_grid);
+        mLiberoColorButton = fragmentView.findViewById(R.id.libero_color_button);
+        mPlayerNamesButton = fragmentView.findViewById(R.id.team_player_names_button);
         mPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment());
-        final EditText coachNameInput = view.findViewById(R.id.coach_name_input_text);
-        final TextInputLayout coachNameInputLayout = view.findViewById(R.id.coach_name_input_layout);
+        final EditText coachNameInput = fragmentView.findViewById(R.id.coach_name_input_text);
+        final TextInputLayout coachNameInputLayout = fragmentView.findViewById(R.id.coach_name_input_layout);
 
         switch (mTeamType) {
             case HOME:
@@ -148,7 +148,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType));
                     mTeamService.setTeamName(mTeamType, s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.team_name_input_layout)).setError(mTeamService.getTeamName(mTeamType).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    ((TextInputLayout) fragmentView.findViewById(R.id.team_name_input_layout)).setError(mTeamService.getTeamName(mTeamType).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), IBaseTeam.TEAM_NAME_MIN_LENGTH) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -190,16 +190,16 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 selectLiberoColor();
             });
 
-            TextView teamNumbersGridTitle = view.findViewById(R.id.team_member_numbers_title);
+            TextView teamNumbersGridTitle = fragmentView.findViewById(R.id.team_member_numbers_title);
             teamNumbersGridTitle.setText(getString(R.string.select_players_with_liberos));
         } else {
             liberoNumbersGrid.setVisibility(View.GONE);
             mLiberoColorButton.setVisibility(View.GONE);
-            final TextView liberoNumbersTitle =  view.findViewById(R.id.team_libero_numbers_title);
+            final TextView liberoNumbersTitle =  fragmentView.findViewById(R.id.team_libero_numbers_title);
             liberoNumbersTitle.setVisibility(View.GONE);
         }
 
-        mGenderButton = view.findViewById(R.id.select_gender_button);
+        mGenderButton = fragmentView.findViewById(R.id.select_gender_button);
         updateGender(mTeamService.getGender(mTeamType));
         mGenderButton.setOnClickListener(button -> {
             UiUtils.animate(getContext(), mGenderButton);
@@ -230,7 +230,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         computeConfirmItemVisibility();
 
-        return view;
+        return fragmentView;
     }
 
     @Override

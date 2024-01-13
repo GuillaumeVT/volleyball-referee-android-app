@@ -25,7 +25,6 @@
     <string name="score_based_game">Табло</string>
     <string name="time_based_game">За време</string>
     <string name="resume_game_title">Продължи мач</string>
-    <string name="resume_game_question">Приложението намира неприключен мач. Искаш ли да го продължиш или да го изтриеш?</string>
     <string name="resume_game_error">Мачът не може да бъде продължен.</string>
     <string name="my_data_group">Моите данни</string>
     <string name="configuration_group">Конфигурация</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Начало</string>
 
 </resources>

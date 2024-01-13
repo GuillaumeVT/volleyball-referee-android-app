@@ -1,4 +1,4 @@
-package com.tonkar.volleyballreferee.ui;
+package com.tonkar.volleyballreferee.ui.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +15,12 @@ import com.tonkar.volleyballreferee.engine.PrefUtils;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener;
+
+    public SettingsFragment() {}
+
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String s) {

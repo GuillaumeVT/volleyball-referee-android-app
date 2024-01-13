@@ -101,7 +101,7 @@ public class StoredTeamViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            backToList();
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         } else if (itemId == R.id.action_delete_team) {
             deleteTeam();
@@ -110,16 +110,11 @@ public class StoredTeamViewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        backToList();
-    }
-
     public void editTeam(View view) {
         ApiTeam team = mStoredTeamsService.getTeam(mTeamService.getTeamId(null));
 
         if (team == null) {
-            backToList();
+            getOnBackPressedDispatcher().onBackPressed();
         } else {
             Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
 
@@ -132,13 +127,6 @@ public class StoredTeamViewActivity extends AppCompatActivity {
         }
     }
 
-    private void backToList() {
-        Intent intent = new Intent(this, StoredTeamsListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        UiUtils.animateBackward(this);
-    }
-
     private void deleteTeam() {
         Log.i(Tags.STORED_TEAMS, "Delete team");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
@@ -147,10 +135,7 @@ public class StoredTeamViewActivity extends AppCompatActivity {
             StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
             storedTeamsService.deleteTeam(mTeamService.getTeamId(null));
             UiUtils.makeText(StoredTeamViewActivity.this, getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(StoredTeamViewActivity.this, StoredTeamsListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_teams_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});

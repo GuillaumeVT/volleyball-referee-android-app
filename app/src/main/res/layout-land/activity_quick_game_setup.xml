@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity">
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <com.google.android.material.navigationrail.NavigationRailView
+        android:id="@+id/quick_game_setup_nav"
+        style="@style/AppTheme.BottomNavigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        app:menu="@menu/navigation_menu_quick_game_setup"
+        app:menuGravity="center" />
+
+    <ScrollView
+        android:id="@+id/setup_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_toEndOf="@id/quick_game_setup_nav">
+
+        <FrameLayout
+            android:id="@+id/quick_game_setup_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/big_margin_size"
+            android:gravity="top|center"
+            android:paddingBottom="@dimen/empty_fab_space" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/start_game_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/default_margin_size">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/start_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_shift_default"
+            android:layout_marginTop="@dimen/fab_shift_default"
+            android:layout_marginEnd="@dimen/fab_shift_default"
+            android:layout_marginBottom="@dimen/fab_shift_default"
+            android:text="@string/start_match"
+            app:icon="@drawable/ic_play" />
+
+    </LinearLayout>
+
+</RelativeLayout>

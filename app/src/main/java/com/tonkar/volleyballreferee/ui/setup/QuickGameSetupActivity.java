@@ -13,16 +13,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
@@ -31,6 +31,7 @@ import com.tonkar.volleyballreferee.engine.service.StoredRulesManager;
 import com.tonkar.volleyballreferee.engine.service.StoredRulesService;
 import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
 import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
+import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
@@ -84,7 +85,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         });
 
         final boolean create = getIntent().getBooleanExtra("create", true);
-        final BottomNavigationView gameSetupNavigation = findViewById(R.id.quick_game_setup_nav);
+        final NavigationBarView gameSetupNavigation = findViewById(R.id.quick_game_setup_nav);
         initGameSetupNavigation(gameSetupNavigation, savedInstanceState, create);
 
         computeStartGameButton();
@@ -184,7 +185,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             if (storedGamesService.hasSetupGame()) {
                 storedGamesService.deleteSetupGame();
             }
-            UiUtils.navigateToHome(QuickGameSetupActivity.this);
+            UiUtils.navigateBackToHome(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
@@ -192,28 +193,22 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
     }
 
-    private void initGameSetupNavigation(final BottomNavigationView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
+    private void initGameSetupNavigation(final NavigationBarView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
         gameSetupNavigation.setOnItemSelectedListener(item -> {
-                    final Fragment fragment;
+                    Fragment fragment = null;
 
                     int itemId = item.getItemId();
                     if (itemId == R.id.teams_tab) {
                         fragment = QuickGameSetupFragment.newInstance(create);
-                    } else if (itemId == R.id.rules_tab) {
-                        if (GameType.TIME.equals(mGame.getKind())) {
-                            fragment = null;
-                        } else {
-                            fragment = RulesSetupFragment.newInstance(true);
-                        }
+                    } else if (itemId == R.id.rules_tab && !GameType.TIME.equals(mGame.getKind())) {
+                        fragment = RulesSetupFragment.newInstance(true);
                     } else if (itemId == R.id.misc_tab) {
                         fragment = MiscSetupFragment.newInstance();
-                    } else {
-                        fragment = null;
                     }
 
-                    final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    UiUtils.animateNavigationView(transaction);
-                    transaction.replace(R.id.quick_game_setup_container, fragment).commit();
+                    if (fragment != null) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.quick_game_setup_container, fragment).commit();
+                    }
 
                     return true;
                 }
@@ -229,8 +224,9 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private boolean cannotStartGame(IGame game) {
-        return game.getTeamName(TeamType.HOME).length() < 2 || game.getTeamName(TeamType.GUEST).length() < 2
-                || game.getRules().getName().length() < 2
+        return game.getTeamName(TeamType.HOME).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH
+                || game.getTeamName(TeamType.GUEST).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH
+                || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH
                 || (game.getLeague().getName().length() > 0 && game.getLeague().getDivision().length() < 2);
     }
 

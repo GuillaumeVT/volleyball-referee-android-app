@@ -20,8 +20,6 @@ import com.tonkar.volleyballreferee.engine.game.BrazilFranceIndoorGame;
 import com.tonkar.volleyballreferee.engine.game.ItalyUsaBeachGame;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.data.rules.StoredRulesListActivity;
-import com.tonkar.volleyballreferee.ui.data.team.StoredTeamsListActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
 import org.hamcrest.Matchers;
@@ -199,7 +197,15 @@ public class PixelCScreenshots extends Screenshots {
         PrefUtils.setNightMode(mContext, "light");
 
         mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_0);
-        ActivityScenario.launch(StoredRulesListActivity.class);
+        ActivityScenario.launch(MainActivity.class);
+
+        Espresso
+                .onView(ViewMatchers.withId(R.id.navigation_fragment))
+                .perform(ViewActions.click());
+
+        Espresso
+                .onView(ViewMatchers.withId(R.id.action_stored_rules))
+                .perform(ViewActions.click());
 
         Espresso
                 .onView(ViewMatchers.withId(R.id.add_rules_button))
@@ -228,7 +234,16 @@ public class PixelCScreenshots extends Screenshots {
         new BrazilFranceIndoorGame().playGame_complete(mContext, mStoredGamesService);
 
         mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_0);
-        ActivityScenario.launch(StoredTeamsListActivity.class);
+        ActivityScenario.launch(MainActivity.class);
+
+        Espresso
+                .onView(ViewMatchers.withId(R.id.navigation_fragment))
+                .perform(ViewActions.click());
+
+        Espresso
+                .onView(ViewMatchers.withId(R.id.action_stored_teams))
+                .perform(ViewActions.click());
+
 
         Espresso
                 .onData(Matchers.anything())

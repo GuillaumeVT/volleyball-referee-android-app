@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.data.rules.StoredRulesListFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/stored_rules_sync_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ListView
+            android:id="@+id/stored_rules_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:divider="@android:color/transparent"
+            android:paddingBottom="@dimen/empty_fab_space" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/stored_rules_fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorOverlay" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_indoor_rules_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/fab_shift_default"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/volleyball_game"
+            android:textColor="@color/colorOnDarkSurface"
+            android:transitionName="gameKindToToolbar"
+            app:backgroundTint="@color/colorIndoor"
+            app:icon="@drawable/ic_6x6_small"
+            app:iconTint="@color/colorOnDarkSurface" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_beach_rules_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/fab_shift_default"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/beach_volleyball_game"
+            android:textColor="@color/colorOnLightSurface"
+            android:transitionName="gameKindToToolbar"
+            app:backgroundTint="@color/colorBeach"
+            app:icon="@drawable/ic_beach"
+            app:iconTint="@color/colorOnLightSurface" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_indoor_4x4_rules_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/fab_shift_default"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/volleyball_game"
+            android:textColor="@color/colorOnDarkSurface"
+            android:transitionName="gameKindToToolbar"
+            app:backgroundTint="@color/colorIndoor4x4"
+            app:icon="@drawable/ic_4x4_small"
+            app:iconTint="@color/colorOnDarkSurface" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_snow_rules_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/fab_shift_default"
+            android:layout_marginTop="@dimen/fab_shift_default"
+            android:layout_marginEnd="@dimen/fab_shift_default"
+            android:layout_marginBottom="@dimen/fab_shift_default"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/snow_volleyball_game"
+            android:textColor="@color/colorOnDarkSurface"
+            android:transitionName="gameKindToToolbar"
+            app:backgroundTint="@color/colorSnow"
+            app:icon="@drawable/ic_snow"
+            app:iconTint="@color/colorOnDarkSurface" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/add_rules_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_shift_default"
+        android:text="@string/create"
+        app:icon="@drawable/ic_plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

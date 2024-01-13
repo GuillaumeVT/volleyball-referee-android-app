@@ -25,16 +25,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.AnimRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -54,7 +53,6 @@ import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
-import com.tonkar.volleyballreferee.ui.data.game.StoredGamesListActivity;
 
 import java.util.Locale;
 import java.util.Random;
@@ -176,7 +174,7 @@ public class UiUtils {
     }
 
     public static void shareGameLink(Context context, IStoredGame storedGame) {
-        if (PrefUtils.canSync(context)){
+        if (PrefUtils.canSync(context)) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_TEXT, storedGame.getGameSummary() + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS, storedGame.getId()));
@@ -192,29 +190,21 @@ public class UiUtils {
         }
     }
 
-    public static void navigateToHome(Activity activity, @AnimRes int animIn, @AnimRes int animOut) {
-        Intent intent = new Intent(activity, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(animIn, animOut);
+    public static void navigateBackToHome(Activity originActivity) {
+        navigateToMain(originActivity, R.id.home_fragment);
+        animateBackward(originActivity);
     }
 
-    public static void navigateToHome(Activity originActivity) {
-        navigateToHome(originActivity, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-    }
-
-    public static void navigateToHomeWithDialog(Activity originActivity, IGame game) {
+    public static void navigateToMainWithDialog(Activity originActivity, IGame game) {
         Log.i(Tags.GAME_UI, "Navigate to home");
         if (game.isMatchCompleted()) {
-            UiUtils.navigateToHome(originActivity);
+            UiUtils.navigateBackToHome(originActivity);
         } else if (GameType.TIME.equals(game.getKind())) {
             ITimeBasedGame timeBasedGameService = (ITimeBasedGame) game;
             if (timeBasedGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
                 builder.setTitle(originActivity.getString(R.string.navigate_home)).setMessage(originActivity.getString(R.string.navigate_home_question));
-                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(originActivity));
+                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateBackToHome(originActivity));
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
                 AlertDialog alertDialog = builder.show();
@@ -225,7 +215,7 @@ public class UiUtils {
                 builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     Log.i(Tags.GAME_UI, "User accepts to stop");
                     timeBasedGameService.stop();
-                    UiUtils.navigateToHome(originActivity);
+                    UiUtils.navigateBackToHome(originActivity);
                 });
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects stop"));
                 AlertDialog alertDialog = builder.show();
@@ -234,7 +224,7 @@ public class UiUtils {
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
             builder.setTitle(originActivity.getString(R.string.navigate_home)).setMessage(originActivity.getString(R.string.navigate_home_question));
-            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateToHome(originActivity));
+            builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateBackToHome(originActivity));
             builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
             AlertDialog alertDialog = builder.show();
@@ -245,13 +235,20 @@ public class UiUtils {
     public static void navigateToStoredGameAfterDelay(Activity activity, long delay) {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
-            Intent intent = new Intent(activity, StoredGamesListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            activity.startActivity(intent);
+            navigateToMain(activity, R.id.stored_games_list_fragment);
             UiUtils.animateForward(activity);
         }, delay);
+    }
+
+    public static final String INIT_FRAGMENT_ID = "initFragmentId";
+
+    public static void navigateToMain(Activity originActivity, @IdRes int initFragmentId) {
+        Intent intent = new Intent(originActivity, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(INIT_FRAGMENT_ID, initFragmentId);
+        originActivity.startActivity(intent);
     }
 
     public static void animate(Context context, final View view) {
@@ -276,10 +273,6 @@ public class UiUtils {
 
     public static void animateCreate(Activity activity) {
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public static void animateNavigationView(FragmentTransaction transaction) {
-        transaction.setCustomAnimations(R.anim.push_down_in, R.anim.push_down_out);
     }
 
     public static void playNotificationSound(Context context) {

@@ -19,12 +19,12 @@
 
     <!-- Main activity -->
     <string name="volleyball_game">Volley-ball en salle</string>
+    <string name="home">Accueil</string>
     <string name="beach_volleyball_game">Beach Volley-ball</string>
     <string name="snow_volleyball_game">Snow Volley-ball</string>
     <string name="score_based_game">Panneau de score</string>
     <string name="time_based_game">En temps</string>
     <string name="resume_game_title">Continuer le match</string>
-    <string name="resume_game_question">L\'application a trouvé un match en cours. Voulez-vous le continuer ou le supprimer?</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>
     <string name="my_data_group">Mes données</string>
     <string name="configuration_group">Configuration</string>

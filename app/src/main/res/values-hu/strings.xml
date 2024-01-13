@@ -25,7 +25,6 @@
     <string name="score_based_game">Eredménytábla</string>
     <string name="time_based_game">Időalapú</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
-    <string name="resume_game_question">Van egy folyamatban lévő mérkőzésed. Folytatni szeretnéd vagy törölhetem?</string>
     <string name="resume_game_error">A mérkőzés nem folytatható.</string>
     <string name="my_data_group">Adataim</string>
     <string name="configuration_group">Beállítások</string>
@@ -375,5 +374,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">kezdőlap</string>
 
 </resources>

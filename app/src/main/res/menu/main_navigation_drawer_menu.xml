@@ -3,14 +3,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/action_home"
-            android:icon="@drawable/ic_home"
-            android:title="@string/new_game_title" />
-        <item
-            android:id="@+id/action_purchase"
-            android:icon="@drawable/ic_purchase"
-            android:title="@string/purchase" />
-        <item
             android:id="@+id/my_data_group"
             android:title="@string/my_data_group">
             <menu>
@@ -35,7 +27,8 @@
                     <item
                         android:id="@+id/action_colleagues"
                         android:icon="@drawable/ic_colleagues"
-                        android:title="@string/colleagues" />
+                        android:title="@string/colleagues"
+                        android:visible="false"/>
                 </group>
             </menu>
         </item>

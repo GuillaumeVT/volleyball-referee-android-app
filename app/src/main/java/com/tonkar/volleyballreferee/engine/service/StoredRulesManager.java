@@ -179,7 +179,7 @@ public class StoredRulesManager implements StoredRulesService {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -193,14 +193,14 @@ public class StoredRulesManager implements StoredRulesService {
                         }
                     } else {
                         Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", response.code()));
-                        if (listener != null){
+                        if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
                     }
                 }
             });
         } else {
-            if (listener != null){
+            if (listener != null) {
                 listener.onSynchronizationFailed();
             }
         }
@@ -284,7 +284,7 @@ public class StoredRulesManager implements StoredRulesService {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -299,7 +299,7 @@ public class StoredRulesManager implements StoredRulesService {
                         }
                     } else {
                         Log.e(Tags.STORED_RULES, String.format(Locale.getDefault(), "Error %d while synchronising rules", response.code()));
-                        if (listener != null){
+                        if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
                     }

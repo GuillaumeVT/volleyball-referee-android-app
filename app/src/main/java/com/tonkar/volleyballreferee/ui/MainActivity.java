@@ -5,330 +5,91 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityOptionsCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 
-import com.google.gson.JsonParseException;
+import com.google.android.material.navigation.NavigationBarView;
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiCount;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.game.BeachGame;
-import com.tonkar.volleyballreferee.engine.game.GameFactory;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
-import com.tonkar.volleyballreferee.engine.game.IndoorGame;
-import com.tonkar.volleyballreferee.engine.game.SnowGame;
-import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
-import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.service.SyncService;
-import com.tonkar.volleyballreferee.ui.game.GameActivity;
-import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
 import com.tonkar.volleyballreferee.ui.onboarding.MainOnboardingActivity;
-import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
-import com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListActivity;
-import com.tonkar.volleyballreferee.ui.user.ColleaguesListActivity;
-import com.tonkar.volleyballreferee.ui.user.UserActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.List;
+import java.util.Optional;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-
-public class MainActivity extends NavigationActivity {
-
-    private StoredGamesService mStoredGamesService;
-
-    @Override
-    protected String getToolbarTitle() {
-        return getString(R.string.app_name);
-    }
-
-    @Override
-    protected int getCheckedItem() {
-        return R.id.action_home;
-    }
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO repair
+       /* if (PrefUtils.canSync(this)) {
+            Intent syncServiceIntent = new Intent(this, SyncService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(syncServiceIntent);
+            } else {
+                startService(syncServiceIntent);
+            }
+        }*/
+
         showOnboarding();
 
         super.onCreate(savedInstanceState);
-
-        mStoredGamesService = new StoredGamesManager(this);
 
         Log.i(Tags.MAIN_UI, "Create main activity");
         setContentView(R.layout.activity_main);
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        initNavigationMenu();
+        NavigationBarView navigationView = findViewById(R.id.main_navigation_view);
+        navigationView.setOnItemSelectedListener(item -> {
+                    navigateToFragment(item.getItemId());
+                    return true;
+                }
+        );
 
-        if (mStoredGamesService.hasCurrentGame()) {
-            View resumeGameCard = findViewById(R.id.resume_game_card);
-            resumeGameCard.setVisibility(View.VISIBLE);
-        }
-
-        if (PrefUtils.shouldSignIn(this)) {
-            View goToSignCard = findViewById(R.id.goto_sign_in_card);
-            goToSignCard.setVisibility(View.VISIBLE);
-        }
-
-        fetchFriendRequests();
-        fetchAvailableGames();
-
-        if (mStoredGamesService.hasCurrentGame()) {
-            try {
-                mStoredGamesService.loadCurrentGame();
-            } catch (JsonParseException e) {
-                Log.e(Tags.STORED_GAMES, "Failed to read the recorded game because the JSON format was invalid", e);
-                mStoredGamesService.deleteCurrentGame();
+        getNavigationController().ifPresent(navController -> navController.addOnDestinationChangedListener((argNavController, navDestination, bundle) -> {
+            if (List.of(R.id.home_fragment, R.id.scheduled_games_list_fragment, R.id.user_fragment).contains(navDestination.getId())) {
+                MenuItem menuItem = navigationView.getMenu().findItem(navDestination.getId());
+                menuItem.setChecked(true);
+            } else {
+                MenuItem menuItem = navigationView.getMenu().findItem(R.id.navigation_fragment);
+                menuItem.setChecked(true);
             }
-        }
-        if (mStoredGamesService.hasSetupGame()) {
-            mStoredGamesService.deleteSetupGame();
-        }
+        }));
 
-        Intent intent = new Intent(this, SyncService.class);
-        startService(intent);
+        Intent intent = getIntent();
+        @IdRes int initFragmentId = intent.getIntExtra(UiUtils.INIT_FRAGMENT_ID, 0);
+
+        if (initFragmentId != 0) {
+            navigateToFragment(initFragmentId);
+        }
 
         showReleaseNotes();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-
-        final MenuItem accountItem = menu.findItem(R.id.action_account_menu);
-        accountItem.setVisible(PrefUtils.canSync(this));
-
-        return true;
+    public void onResume() {
+        super.onResume();
+        NavigationBarView navigationView = findViewById(R.id.main_navigation_view);
+        navigationView.getMenu().findItem(R.id.scheduled_games_list_fragment).setVisible(PrefUtils.canSync(this));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_account_menu) {
-            Log.i(Tags.USER_UI, "User account");
-            Intent intent = new Intent(this, UserActivity.class);
-            startActivity(intent);
-            UiUtils.animateForward(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private void navigateToFragment(@IdRes int fragmentId) {
+        getNavigationController().ifPresent(navigationController -> navigationController.navigate(fragmentId));
     }
 
-    public void resumeCurrentGame(View view) {
-        Log.i(Tags.GAME_UI, "Resume game");
-        resumeCurrentGame();
-    }
-
-    public void goToSignIn(View view) {
-        Log.i(Tags.USER_UI, "User sign in");
-        Intent intent = new Intent(this, UserActivity.class);
-        startActivity(intent);
-        UiUtils.animateForward(this);
-    }
-
-    public void startIndoorGame(View view) {
-        Log.i(Tags.GAME_UI, "Start an indoor game");
-        ApiUserSummary user = PrefUtils.getUser(this);
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game");
-        final Intent intent = new Intent(this, GameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
-    }
-
-    public void startBeachGame(View view) {
-        Log.i(Tags.GAME_UI, "Start a beach game");
-        ApiUserSummary user = PrefUtils.getUser(this);
-        BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialBeachRules());
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
-        final Intent intent = new Intent(this, QuickGameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
-    }
-
-    public void startSnowGame(View view) {
-        Log.i(Tags.GAME_UI, "Start a snow game");
-        ApiUserSummary user = PrefUtils.getUser(this);
-        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialSnowRules());
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game");
-        final Intent intent = new Intent(this, GameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
-    }
-
-    public void startIndoor4x4Game(View view) {
-        Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
-        ApiUserSummary user = PrefUtils.getUser(this);
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game");
-        final Intent intent = new Intent(this, GameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
-    }
-
-    public void startTimeBasedGame(View view) {
-        Log.i(Tags.GAME_UI, "Start a time-based game");
-        ApiUserSummary user = PrefUtils.getUser(this);
-        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L);
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
-        final Intent intent = new Intent(this, QuickGameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
-    }
-
-    public void startScoreBasedGame(View view) {
-        Log.i(Tags.GAME_UI, "Start a score-based game");
-        ApiUserSummary user = PrefUtils.getUser(this);
-        IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
-        final Intent intent = new Intent(this, QuickGameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "gameKindToToolbar").toBundle());
-    }
-
-    public void goToAvailableGames(View view) {
-        Log.i(Tags.SCHEDULE_UI, "Scheduled games");
-        Intent intent = new Intent(this, ScheduledGamesListActivity.class);
-        startActivity(intent);
-        UiUtils.animateForward(this);
-    }
-
-    public void goToColleagues(View view) {
-        Log.i(Tags.USER_UI, "User colleagues");
-        Intent intent = new Intent(this, ColleaguesListActivity.class);
-        startActivity(intent);
-        UiUtils.animateForward(this);
-    }
-
-    private void resumeCurrentGame() {
-        Log.i(Tags.GAME_UI, "Start game activity and resume current game");
-        IGame game = mStoredGamesService.loadCurrentGame();
-
-        if (game == null) {
-            UiUtils.makeErrorText(MainActivity.this, getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
-        } else {
-            if (GameType.TIME.equals(game.getKind())) {
-                final Intent gameIntent = new Intent(MainActivity.this, TimeBasedGameActivity.class);
-                startActivity(gameIntent);
-                UiUtils.animateCreate(this);
-            } else {
-                final Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(gameIntent);
-                UiUtils.animateCreate(this);
-            }
-        }
-    }
-
-    private void fetchFriendRequests() {
-        if (PrefUtils.canSync(this)) {
-            VbrApi.getInstance().countFriendRequests(this, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    initFriendRequestsButton(new ApiCount(0L));
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        try (ResponseBody body = response.body()) {
-                            ApiCount count = JsonConverters.GSON.fromJson(body.string(), ApiCount.class);
-                            initFriendRequestsButton(count);
-                        }
-                    } else {
-                        initFriendRequestsButton(new ApiCount(0L));
-                    }
-                }
-            });
-        }
-    }
-
-    private void initFriendRequestsButton(ApiCount count) {
-        runOnUiThread(() -> {
-            if (count.getCount() > 0) {
-                TextView gotoColleaguesText = findViewById(R.id.goto_colleagues_text);
-                gotoColleaguesText.setText(String.format(Locale.getDefault(), "%s: %d", gotoColleaguesText.getText(), count.getCount()));
-
-                View gotoColleaguesCard = findViewById(R.id.goto_colleagues_card);
-                gotoColleaguesCard.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    private void fetchAvailableGames() {
-        if (PrefUtils.canSync(this)) {
-            VbrApi.getInstance().countAvailableGames(this, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    initAvailableGamesButton(new ApiCount(0L));
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        try (ResponseBody body = response.body()) {
-                            ApiCount count = JsonConverters.GSON.fromJson(body.string(), ApiCount.class);
-                            initAvailableGamesButton(count);
-                        }
-                    } else {
-                        initAvailableGamesButton(new ApiCount(0L));
-                    }
-                }
-            });
-        }
-    }
-
-    private void initAvailableGamesButton(ApiCount count) {
-        runOnUiThread(() -> {
-            if (count.getCount() > 0) {
-                TextView gotoAvailableGamesText = findViewById(R.id.goto_available_games_text);
-                gotoAvailableGamesText.setText(String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesText.getText(), count.getCount()));
-
-                View gotoAvailableGamesCard = findViewById(R.id.goto_available_games_card);
-                gotoAvailableGamesCard.setVisibility(View.VISIBLE);
-            }
-        });
+    private Optional<NavController> getNavigationController() {
+        NavHostFragment navigationHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_container_view);
+        return Optional.ofNullable(navigationHostFragment).map(NavHostFragment::getNavController);
     }
 
     private void showReleaseNotes() {

@@ -11,6 +11,8 @@ import java.util.Set;
 
 public interface IBaseTeam {
 
+    int TEAM_NAME_MIN_LENGTH = 2;
+
     String getTeamId(TeamType teamType);
 
     void setTeamId(TeamType teamType, String id);

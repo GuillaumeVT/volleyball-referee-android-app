@@ -1,6 +1,5 @@
 package com.tonkar.volleyballreferee.ui.data.team;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -97,6 +97,13 @@ public class StoredTeamActivity extends AppCompatActivity {
         ScrollView scrollView = findViewById(R.id.team_scroll_view);
         ExtendedFloatingActionButton saveTeamButton = findViewById(R.id.save_team_button);
         UiUtils.addExtendShrinkListener(scrollView, saveTeamButton);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                cancelTeam();
+            }
+        });
     }
 
     @Override
@@ -129,20 +136,13 @@ public class StoredTeamActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        cancelTeam();
-    }
-
     public void saveTeam(View view) {
         Log.i(Tags.STORED_TEAMS, "Save team");
         StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
         storedTeamsService.saveTeam(mTeamService, mCreate);
         UiUtils.makeText(StoredTeamActivity.this, getString(R.string.saved_team), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        UiUtils.animateCreate(this);
+        UiUtils.navigateToMain(this, R.id.stored_teams_list_fragment);
+        UiUtils.animateForward(this);
     }
 
     private void deleteTeam() {
@@ -153,10 +153,7 @@ public class StoredTeamActivity extends AppCompatActivity {
             StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
             storedTeamsService.deleteTeam(mTeamService.getTeamId(null));
             UiUtils.makeText(StoredTeamActivity.this, getString(R.string.deleted_team), Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_teams_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
@@ -168,9 +165,7 @@ public class StoredTeamActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle(getString(R.string.leave_team_creation_title)).setMessage(getString(R.string.leave_team_creation_question));
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-            Intent intent = new Intent(StoredTeamActivity.this, StoredTeamsListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_teams_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});

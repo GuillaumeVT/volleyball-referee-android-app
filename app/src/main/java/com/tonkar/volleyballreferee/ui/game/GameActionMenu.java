@@ -92,7 +92,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 shareGameLinkText.setVisibility(View.GONE);
             }
 
-            navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToHomeWithDialog(mActivity, mGame));
+            navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToMainWithDialog(mActivity, mGame));
             indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
             shareGameLinkText.setOnClickListener(textView -> shareLink());
             tossCoinText.setOnClickListener(textView -> tossACoin());

@@ -124,7 +124,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
                 if (isAdded()) {
                     Log.i(Tags.RULES, "Update rules name");
                     mRules.setName(s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.rules_name_input_layout)).setError(mRules.getName().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    ((TextInputLayout) view.findViewById(R.id.rules_name_input_layout)).setError(mRules.getName().length() < Rules.RULES_NAME_MIN_LENGTH ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), Rules.RULES_NAME_MIN_LENGTH) : null);
                     computeConfirmItemVisibility();
                 }
             }

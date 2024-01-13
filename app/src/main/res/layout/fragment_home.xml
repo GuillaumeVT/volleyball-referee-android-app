@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:orientation="vertical">
+
+        <include layout="@layout/main_sign_in_tile" />
+
+        <include layout="@layout/main_colleagues_tile" />
+
+        <include layout="@layout/main_available_games_tile" />
+
+        <include layout="@layout/main_resume_game_tile" />
+
+        <include layout="@layout/main_indoor_6x6_tile" />
+
+        <include layout="@layout/main_beach_tile" />
+
+        <include layout="@layout/main_scoreboard_tile" />
+
+        <include layout="@layout/main_snow_tile" />
+
+        <include layout="@layout/main_indoor_4x4_tile" />
+
+        <!--include layout="@layout/main_time_based_tile" /-->
+
+    </LinearLayout>
+
+</ScrollView>

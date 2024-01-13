@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -214,7 +213,6 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
         List<ApiRulesSummary> rules = storedRulesService.listRules(mGameSummary.getKind());
 
-
         final NameSpinnerAdapter<ApiRulesSummary> rulesAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), rules) {
             @Override
             public String getName(ApiRulesSummary rules) {
@@ -298,7 +296,11 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_delete) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            getOnBackPressedDispatcher().onBackPressed();
+            return true;
+        } else if (itemId == R.id.action_delete) {
             cancelGame();
             return true;
         }
@@ -422,12 +424,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onSynchronizationSucceeded() {
                 runOnUiThread(() -> {
                     UiUtils.makeText(ScheduledGameActivity.this, getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-                    final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    UiUtils.animateCreate(ScheduledGameActivity.this);
+                    UiUtils.navigateToMain(ScheduledGameActivity.this, R.id.scheduled_games_list_fragment);
+                    UiUtils.animateForward(ScheduledGameActivity.this);
                 });
             }
 
@@ -446,11 +444,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
                     @Override
                     public void onSynchronizationSucceeded() {
                         runOnUiThread(() -> {
-                            final Intent intent = new Intent(ScheduledGameActivity.this, ScheduledGamesListActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                            UiUtils.navigateToMain(ScheduledGameActivity.this, R.id.scheduled_games_list_fragment);
                             UiUtils.animateBackward(ScheduledGameActivity.this);
                         });
                     }

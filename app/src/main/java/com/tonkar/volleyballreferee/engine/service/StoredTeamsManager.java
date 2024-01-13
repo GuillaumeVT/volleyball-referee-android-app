@@ -276,7 +276,7 @@ public class StoredTeamsManager implements StoredTeamsService {
         if (PrefUtils.canSync(mContext)) {
             syncTeams(new ArrayList<>(), 0, 100, listener);
         } else {
-            if (listener != null){
+            if (listener != null) {
                 listener.onSynchronizationFailed();
             }
         }
@@ -287,7 +287,7 @@ public class StoredTeamsManager implements StoredTeamsService {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 call.cancel();
-                if (listener != null){
+                if (listener != null) {
                     listener.onSynchronizationFailed();
                 }
             }
@@ -306,7 +306,7 @@ public class StoredTeamsManager implements StoredTeamsService {
                     }
                 } else {
                     Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -392,7 +392,7 @@ public class StoredTeamsManager implements StoredTeamsService {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -407,7 +407,7 @@ public class StoredTeamsManager implements StoredTeamsService {
                         }
                     } else {
                         Log.e(Tags.STORED_TEAMS, String.format(Locale.getDefault(), "Error %d while synchronising teams", response.code()));
-                        if (listener != null){
+                        if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
                     }

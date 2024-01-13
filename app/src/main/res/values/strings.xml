@@ -27,12 +27,12 @@
 
     <!-- Main activity -->
     <string name="volleyball_game">Indoor volleyball</string>
+    <string name="home">Home</string>
     <string name="beach_volleyball_game">Beach Volleyball</string>
     <string name="snow_volleyball_game">Snow Volleyball</string>
     <string name="score_based_game">Scoreboard</string>
     <string name="time_based_game">Time-based</string>
     <string name="resume_game_title">Resume match</string>
-    <string name="resume_game_question">The application found a match in progress. Do you wish to resume it or to delete it?</string>
     <string name="resume_game_error">The match could not be resumed.</string>
     <string name="my_data_group">My data</string>
     <string name="configuration_group">Configuration</string>

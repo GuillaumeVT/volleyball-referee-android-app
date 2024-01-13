@@ -29,8 +29,6 @@ import java.util.Locale;
 
 public class UserAccountFragment extends Fragment {
 
-    private View mView;
-
     public UserAccountFragment() {}
 
     public static UserAccountFragment newInstance() {
@@ -40,40 +38,40 @@ public class UserAccountFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.USER_UI, "Create user account fragment");
-        mView = inflater.inflate(R.layout.fragment_user_account, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_user_account, container, false);
 
         ApiUserSummary user = PrefUtils.getUser(getContext());
         if (!ApiUserSummary.emptyUser().equals(user)) {
-            EditText emailText = mView.findViewById(R.id.user_email_input_text);
+            EditText emailText = fragmentView.findViewById(R.id.user_email_input_text);
             emailText.setEnabled(false);
             emailText.setText(user.getEmail());
 
-            EditText pseudoText = mView.findViewById(R.id.user_pseudo_input_text);
+            EditText pseudoText = fragmentView.findViewById(R.id.user_pseudo_input_text);
             pseudoText.setEnabled(false);
             pseudoText.setText(user.getPseudo());
 
-            Button signOutButton = mView.findViewById(R.id.user_sign_out_button);
+            Button signOutButton = fragmentView.findViewById(R.id.user_sign_out_button);
             signOutButton.setOnClickListener(button -> {
                 PrefUtils.signOut(getContext());
                 UiUtils.makeText(getContext(), getString(R.string.user_signed_out), Toast.LENGTH_LONG).show();
-                UiUtils.navigateToHome(requireActivity());
+                UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
             });
 
-            Button updatePasswordButton = mView.findViewById(R.id.user_password_update_button);
-            updatePasswordButton.setOnClickListener(button -> onUpdatePasswordClicked());
+            Button updatePasswordButton = fragmentView.findViewById(R.id.user_password_update_button);
+            updatePasswordButton.setOnClickListener(button -> onUpdatePasswordClicked(fragmentView));
         }
 
-        return mView;
+        return fragmentView;
     }
 
-    private void onUpdatePasswordClicked() {
-        TextInputLayout currentPasswordInputLayout = mView.findViewById(R.id.user_current_password_input_layout);
-        TextInputLayout newPasswordInputLayout = mView.findViewById(R.id.user_new_password_input_layout);
-        TextInputLayout confirmNewPasswordInputLayout = mView.findViewById(R.id.user_confirm_new_password_input_layout);
+    private void onUpdatePasswordClicked(View fragmentView) {
+        TextInputLayout currentPasswordInputLayout = fragmentView.findViewById(R.id.user_current_password_input_layout);
+        TextInputLayout newPasswordInputLayout = fragmentView.findViewById(R.id.user_new_password_input_layout);
+        TextInputLayout confirmNewPasswordInputLayout = fragmentView.findViewById(R.id.user_confirm_new_password_input_layout);
 
-        EditText currentPasswordInputText = mView.findViewById(R.id.user_current_password_input_text);
-        EditText newPasswordInputText = mView.findViewById(R.id.user_new_password_input_text);
-        EditText confirmNewPasswordInputText = mView.findViewById(R.id.user_confirm_new_password_input_text);
+        EditText currentPasswordInputText = fragmentView.findViewById(R.id.user_current_password_input_text);
+        EditText newPasswordInputText = fragmentView.findViewById(R.id.user_new_password_input_text);
+        EditText confirmNewPasswordInputText = fragmentView.findViewById(R.id.user_confirm_new_password_input_text);
 
         final String currentPassword = currentPasswordInputText.getText().toString().trim();
         final String newPassword = newPasswordInputText.getText().toString().trim();
@@ -102,7 +100,7 @@ public class UserAccountFragment extends Fragment {
                 public void onUserTokenReceived(ApiUserToken userToken) {
                     requireActivity().runOnUiThread(() -> {
                         UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
-                        UiUtils.navigateToHome(requireActivity());
+                        UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
                     });
                 }
 

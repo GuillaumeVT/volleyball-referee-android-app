@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/AppTheme.RoundedCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin_size"
+        app:contentPadding="@dimen/default_margin_size">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/tiny_margin_size"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:layout_marginBottom="@dimen/big_margin_size"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/default_margin_size"
+                    android:paddingBottom="@dimen/default_margin_size"
+                    android:text="@string/credit_title"
+                    android:textAppearance="@style/AppTheme.TextView"
+                    android:textSize="@dimen/big_text_size" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitEnd"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:autoLink="email"
+                android:paddingBottom="@dimen/big_margin_size"
+                android:text="@string/credit_designers"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/small_text_size" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:paddingBottom="@dimen/small_margin_size"
+                android:text="@string/credit_translators_intro"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/small_text_size" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/small_margin_size"
+                android:paddingStart="@dimen/default_margin_size"
+                android:paddingEnd="@dimen/default_margin_size"
+                android:paddingBottom="@dimen/big_margin_size"
+                android:text="@string/credit_translators"
+                android:textAppearance="@style/AppTheme.TextView"
+                android:textSize="@dimen/small_text_size" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/user_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.user.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_user" />
+
+    <fragment
+        android:id="@+id/scheduled_games_list_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.setup.ScheduledGamesListFragment"
+        android:label="ScheduledGamesListFragment"
+        tools:layout="@layout/fragment_scheduled_games_list" />
+
+    <fragment
+        android:id="@+id/navigation_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.NavigationFragment"
+        android:label="fragment_navigation"
+        tools:layout="@layout/fragment_navigation" />
+
+    <fragment
+        android:id="@+id/stored_games_list_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.data.game.StoredGamesListFragment"
+        android:label="fragment_stored_games_list"
+        tools:layout="@layout/fragment_stored_games_list" />
+
+    <fragment
+        android:id="@+id/stored_rules_list_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.data.rules.StoredRulesListFragment"
+        android:label="fragment_stored_rules_list"
+        tools:layout="@layout/fragment_stored_rules_list" />
+
+    <fragment
+        android:id="@+id/stored_teams_list_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.data.team.StoredTeamsListFragment"
+        android:label="fragment_stored_teams_list"
+        tools:layout="@layout/fragment_stored_teams_list" />
+
+    <fragment
+        android:id="@+id/colleagues_list_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.user.ColleaguesListFragment"
+        android:label="fragment_colleagues_list"
+        tools:layout="@layout/fragment_colleagues_list" />
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+
+    <fragment
+        android:id="@+id/credit_fragment"
+        android:name="com.tonkar.volleyballreferee.ui.credit.CreditFragment"
+        android:label="CreditFragment"
+        tools:layout="@layout/fragment_credit" />
+
+</navigation>

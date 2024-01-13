@@ -31,6 +31,8 @@ public class Rules extends ApiRules {
     public static final String DEFAULT_BEACH_NAME      = "FIVB beach volleyball rules";
     public static final String DEFAULT_SNOW_NAME       = "FIVB snow volleyball rules";
 
+    public static final int RULES_NAME_MIN_LENGTH = 2;
+
     // For GSON Deserialization
     public Rules() {
         super();

@@ -22,7 +22,7 @@ public class StoredBasicGameActivity extends StoredGameActivity {
         mStoredGame = mStoredGamesService.getGame(mGameId);
 
         if (mStoredGame == null) {
-            backToList();
+            getOnBackPressedDispatcher().onBackPressed();
         }
 
         super.onCreate(savedInstanceState);

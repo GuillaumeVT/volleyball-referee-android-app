@@ -25,7 +25,6 @@
     <string name="score_based_game">A punti</string>
     <string name="time_based_game">A tempo</string>
     <string name="resume_game_title">Riprendi la partita</string>
-    <string name="resume_game_question">L\'applicazione ha trovato una partita in corso. Vuoi riprendere la partita o cancellarla?</string>
     <string name="resume_game_error">La partita non può essere ripresa.</string>
     <string name="my_data_group">I miei dati</string>
     <string name="configuration_group">Configurazione</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Home</string>
 
 </resources>

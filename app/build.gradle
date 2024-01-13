@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id'androidx.navigation.safeargs'
+}
 
 android {
     defaultConfig {
@@ -6,8 +9,8 @@ android {
         minSdkVersion 24
         targetSdkVersion 34
         compileSdk 34
-        versionCode 31001
-        versionName "3.10.1"
+        versionCode 31100
+        versionName "3.11.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
@@ -20,7 +23,8 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            buildConfigField "String", "SERVER_ADDRESS", "\"http://192.168.56.107:8080\""
+            //buildConfigField "String", "SERVER_ADDRESS", "\"http://192.168.56.107:8080\""
+            buildConfigField "String", "SERVER_ADDRESS", "\"https://www.volleyball-referee.com\""
         }
         release {
             minifyEnabled false
@@ -45,25 +49,49 @@ android {
 }
 
 dependencies {
+    def lombok_version = "1.18.30"
+    def app_compat_version = "1.6.1"
+    def refresh_layout_version = "1.1.0"
+    def constraint_layout_version = "2.1.4"
+    def flexbox_layout_version = "3.0.0"
+    def vector_drawable_version = "1.1.0"
+    def preference_version = "1.2.1"
+    def room_version = "2.6.1"
+    def billing_version = "6.1.0"
+    def material_version = "1.11.0"
+    def nav_version = "2.7.6"
+    def gson_version = "2.10.1"
+    def okhttp_version = "4.12.0"
+    def jsoup_version = "1.17.2"
+    def app_intro_version = "6.2.0"
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.preference:preference:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.room:room-runtime:2.6.1'
-    annotationProcessor 'androidx.room:room-compiler:2.6.1'
-    implementation 'com.android.billingclient:billing:6.1.0'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-    implementation 'org.jsoup:jsoup:1.17.2'
-    implementation 'com.github.AppIntro:AppIntro:6.2.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    compileOnly "org.projectlombok:lombok:$lombok_version"
+    annotationProcessor "org.projectlombok:lombok:$lombok_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$refresh_layout_version"
+    implementation "androidx.vectordrawable:vectordrawable:$vector_drawable_version"
+    implementation "androidx.preference:preference:$preference_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "com.android.billingclient:billing:$billing_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "com.google.android.flexbox:flexbox:$flexbox_layout_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "org.jsoup:jsoup:$jsoup_version"
+    implementation "com.github.AppIntro:AppIntro:$app_intro_version"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    def junit_version = "4.13.2"
+    def espresso_version = "3.5.1"
+    def test_rules_version = "1.5.0"
+    def ext_junit_version = "1.1.5"
+
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test:rules:$test_rules_version"
+    androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
 }

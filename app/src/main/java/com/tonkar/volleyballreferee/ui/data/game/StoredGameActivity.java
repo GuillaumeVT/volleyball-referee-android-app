@@ -82,7 +82,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.action_index_game) {
+        if (itemId == android.R.id.home) {
+            getOnBackPressedDispatcher().onBackPressed();
+            return true;
+        } else if (itemId == R.id.action_index_game) {
             toggleGameIndexed();
             return true;
         } else if (itemId == R.id.action_delete_game) {
@@ -95,18 +98,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        backToList();
-    }
-
-    protected void backToList() {
-        Intent intent = new Intent(this, StoredGamesListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        UiUtils.animateBackward(this);
-    }
-    
     protected void updateGame() {
         TextView summaryText = findViewById(R.id.stored_game_summary);
         TextView dateText = findViewById(R.id.stored_game_date);
@@ -221,10 +212,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
             mStoredGamesService.deleteGame(mGameId);
             UiUtils.makeText(StoredGameActivity.this, getString(R.string.deleted_game), Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(StoredGameActivity.this, StoredGamesListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            UiUtils.navigateToMain(this, R.id.stored_games_list_fragment);
             UiUtils.animateBackward(this);
         });
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});

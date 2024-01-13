@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -22,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -128,7 +128,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         }
 
         if (mGame == null || mStoredGamesService == null) {
-            UiUtils.navigateToHome(this);
+            UiUtils.navigateBackToHome(this);
         } else {
             mGame.addGeneralListener(this);
             mGame.addScoreListener(this);
@@ -214,6 +214,13 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                 disableView();
             }
         }
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                UiUtils.navigateToMainWithDialog(GameActivity.this, mGame);
+            }
+        });
     }
 
     @Override
@@ -243,11 +250,6 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             outState.putLong("saved_timeout_duration", mCountDown.getDuration());
             deleteToolbarCountdown();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        UiUtils.navigateToHomeWithDialog(this, mGame);
     }
 
     // Menu
@@ -672,9 +674,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
                         fragment = LaddersFragment.newInstance();
                     }
 
-                    final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    UiUtils.animateNavigationView(transaction);
-                    transaction.replace(R.id.game_container, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.game_container, fragment).commit();
 
                     return true;
                 }

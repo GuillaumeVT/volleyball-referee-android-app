@@ -25,7 +25,6 @@
     <string name="score_based_game">Seisu tabloo</string>
     <string name="time_based_game">Ajaline piirang</string>
     <string name="resume_game_title">Jätka mängu</string>
-    <string name="resume_game_question">Rakenduses salvestatud lõpetamata mäng. Kas te soovite antud mängu jätkata või kustutada?</string>
     <string name="resume_game_error">Mängu jätkamine pole võimalik.</string>
     <string name="my_data_group">Minu andmed</string>
     <string name="configuration_group">Seaded</string>
@@ -374,5 +373,6 @@
     <string name="app_intro_next_button">@string/next</string>
     <string name="app_intro_skip_button">@string/skip</string>
     <string name="app_intro_done_button">@string/start</string>
+    <string name="home">Avakuva</string>
 
 </resources>
