@@ -3,8 +3,7 @@ package com.tonkar.volleyballreferee.ui.data.game;
 import android.content.Context;
 import android.view.LayoutInflater;
 
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 public class Lineup4x4Adapter extends LineupAdapter {

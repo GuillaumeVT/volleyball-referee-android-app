@@ -28,7 +28,7 @@
                         android:id="@+id/action_colleagues"
                         android:icon="@drawable/ic_colleagues"
                         android:title="@string/colleagues"
-                        android:visible="false"/>
+                        android:visible="false" />
                 </group>
             </menu>
         </item>

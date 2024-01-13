@@ -2,12 +2,8 @@ package com.tonkar.volleyballreferee.ui.user;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,19 +11,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiNewUser;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
-import com.tonkar.volleyballreferee.engine.service.AsyncUserRequestListener;
-import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.service.StoredUserService;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.net.HttpURLConnection;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 public class UserSignUpFragment extends Fragment {
 
@@ -94,9 +84,9 @@ public class UserSignUpFragment extends Fragment {
             confirmPasswordInputLayout.setError(getString(R.string.user_password_not_matching));
         }
 
-        if (!email.isEmpty() && !confirmedEmail.isEmpty() && email.equals(confirmedEmail)
-                && !password.isEmpty() && !confirmedPassword.isEmpty() && password.equals(confirmedPassword)
-                && !pseudo.isEmpty()) {
+        if (!email.isEmpty() && !confirmedEmail.isEmpty() && email.equals(
+                confirmedEmail) && !password.isEmpty() && !confirmedPassword.isEmpty() && password.equals(
+                confirmedPassword) && !pseudo.isEmpty()) {
             emailInputLayout.setError(null);
             confirmEmailInputLayout.setError(null);
             pseudoInputLayout.setError(null);
@@ -117,7 +107,10 @@ public class UserSignUpFragment extends Fragment {
                 public void onUserTokenReceived(ApiUserToken userToken) {
                     requireActivity().runOnUiThread(() -> {
                         hideProgressIndicator();
-                        UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
+                        UiUtils
+                                .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo),
+                                                                      userToken.getUser().getPseudo()), Toast.LENGTH_LONG)
+                                .show();
                         UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
                     });
                 }

@@ -1,7 +1,9 @@
 package com.tonkar.volleyballreferee.engine.team;
 
 public enum GenderType {
-    LADIES, GENTS, MIXED;
+    LADIES,
+    GENTS,
+    MIXED;
 
     public GenderType next() {
         if (MIXED.equals(this)) {

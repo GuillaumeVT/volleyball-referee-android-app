@@ -1,9 +1,7 @@
 package com.tonkar.volleyballreferee.ui.credit;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 
 import androidx.fragment.app.Fragment;
 

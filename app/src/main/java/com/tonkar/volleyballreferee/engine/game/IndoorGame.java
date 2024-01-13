@@ -1,28 +1,16 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.set.IndoorSet;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.composition.IndoorTeamComposition;
-import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
+import com.tonkar.volleyballreferee.engine.team.definition.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 
 public class IndoorGame extends Game implements IClassicTeam {
 
@@ -42,7 +30,8 @@ public class IndoorGame extends Game implements IClassicTeam {
 
     @Override
     protected com.tonkar.volleyballreferee.engine.game.set.Set createSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
-        return new IndoorSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME), getTeamDefinition(TeamType.GUEST));
+        return new IndoorSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME),
+                             getTeamDefinition(TeamType.GUEST));
     }
 
     private IndoorTeamComposition getIndoorTeamComposition(TeamType teamType) {
@@ -63,16 +52,16 @@ public class IndoorGame extends Game implements IClassicTeam {
             final int leadingScore = currentSet().getPoints(currentSet().getLeadingTeam());
 
             // In indoor volley, the teams change sides after the 8th during the tie break
-            if (isTieBreakSet() && leadingScore == 8 && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST) && teamType.equals(currentSet().getLeadingTeam())) {
+            if (isTieBreakSet() && leadingScore == 8 && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(
+                    TeamType.GUEST) && teamType.equals(currentSet().getLeadingTeam())) {
                 swapTeams(ActionOriginType.APPLICATION);
             }
 
             // In indoor volley, there are two technical timeouts at 8 and 16 but not during tie break
-            if (getRules().isTechnicalTimeouts()
-                    && !isTieBreakSet()
-                    && currentSet().getLeadingTeam().equals(teamType)
-                    && (leadingScore == 8 || leadingScore == 16)
-                    && currentSet().getPoints(TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
+            if (getRules().isTechnicalTimeouts() && !isTieBreakSet() && currentSet()
+                    .getLeadingTeam()
+                    .equals(teamType) && (leadingScore == 8 || leadingScore == 16) && currentSet().getPoints(
+                    TeamType.HOME) != currentSet().getPoints(TeamType.GUEST)) {
                 notifyTechnicalTimeoutReached();
             }
 
@@ -99,27 +88,29 @@ public class IndoorGame extends Game implements IClassicTeam {
         }
 
         // Specific custom rule
-        if (oldServingTeam.equals(newServingTeam) && samePlayerHadServedNConsecutiveTimes(oldServingTeam, getPoints(oldServingTeam), getPointsLadder())) {
+        if (oldServingTeam.equals(newServingTeam) && samePlayerHadServedNConsecutiveTimes(oldServingTeam, getPoints(oldServingTeam),
+                                                                                          getPointsLadder())) {
             rotateToPreviousPositions(oldServingTeam);
         }
     }
 
     private void checkPosition1(final TeamType scoringTeam) {
         int number = getIndoorTeamComposition(scoringTeam).checkPosition1Offence();
-        if (number > -1)  {
+        if (number > -1) {
             substitutePlayer(scoringTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
 
         TeamType defendingTeam = scoringTeam.other();
         number = getIndoorTeamComposition(defendingTeam).checkPosition1Defence();
-        if (number > -1 && getConsecutiveServes(scoringTeam, getPointsLadder()) == 0)  {
+        if (number > -1 && getConsecutiveServes(scoringTeam, getPointsLadder()) == 0) {
             substitutePlayer(defendingTeam, number, PositionType.POSITION_1, ActionOriginType.APPLICATION);
         }
     }
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), actionOriginType)) {
+        if (getIndoorTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST),
+                                                                actionOriginType)) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
@@ -127,10 +118,11 @@ public class IndoorGame extends Game implements IClassicTeam {
     @Override
     protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {
         Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
-        if (!evictedPlayers.contains(substitution.getPlayerIn())
-                && !evictedPlayers.contains(substitution.getPlayerOut())
-                && getIndoorTeamComposition(teamType).undoSubstitution(substitution)) {
-            notifyPlayerChanged(teamType, substitution.getPlayerOut(), getIndoorTeamComposition(teamType).getPlayerPosition(substitution.getPlayerOut()), ActionOriginType.APPLICATION);
+        if (!evictedPlayers.contains(substitution.getPlayerIn()) && !evictedPlayers.contains(
+                substitution.getPlayerOut()) && getIndoorTeamComposition(teamType).undoSubstitution(substitution)) {
+            notifyPlayerChanged(teamType, substitution.getPlayerOut(),
+                                getIndoorTeamComposition(teamType).getPlayerPosition(substitution.getPlayerOut()),
+                                ActionOriginType.APPLICATION);
         }
     }
 
@@ -190,11 +182,13 @@ public class IndoorGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public Set<Integer> filterSubstitutionsWithEvictedPlayersForCurrentSet(TeamType teamType, int evictedNumber, Set<Integer> possibleSubstitutions) {
+    public Set<Integer> filterSubstitutionsWithEvictedPlayersForCurrentSet(TeamType teamType,
+                                                                           int evictedNumber,
+                                                                           Set<Integer> possibleSubstitutions) {
         final Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
         final Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
 
-        for (Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext();) {
+        for (Iterator<Integer> iterator = filteredSubstitutions.iterator(); iterator.hasNext(); ) {
             int possibleReplacement = iterator.next();
             if (evictedPlayers.contains(possibleReplacement)) {
                 iterator.remove();
@@ -327,7 +321,8 @@ public class IndoorGame extends Game implements IClassicTeam {
 
             if (!PositionType.BENCH.equals(positionType)) {
                 final Set<Integer> possibleSubstitutions = getPossibleSubstitutions(teamType, positionType);
-                final Set<Integer> filteredSubstitutions = filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+                final Set<Integer> filteredSubstitutions = filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number,
+                                                                                                              possibleSubstitutions);
 
                 // If there is no possible legal substitution, the set is lost
                 if (filteredSubstitutions.size() == 0) {
@@ -377,7 +372,7 @@ public class IndoorGame extends Game implements IClassicTeam {
         super.restoreTeam(storedGame, teamType);
         setLiberoColor(teamType, storedGame.getLiberoColor(teamType));
 
-        for (ApiPlayer player : storedGame.getLiberos(teamType))  {
+        for (ApiPlayer player : storedGame.getLiberos(teamType)) {
             addPlayer(teamType, player.getNum());
             addLibero(teamType, player.getNum());
             if (!player.getName().trim().isEmpty()) {
@@ -432,13 +427,15 @@ public class IndoorGame extends Game implements IClassicTeam {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<ApiSubstitution> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    List<ApiSubstitution> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints,
+                                                                                                 guestPoints);
                     for (ApiSubstitution substitution : homeSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.HOME, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.HOME, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<ApiSubstitution> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    List<ApiSubstitution> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints,
+                                                                                                  guestPoints);
                     for (ApiSubstitution substitution : guestSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.GUEST, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.GUEST, substitution.getPlayerIn(), positionType, ActionOriginType.USER);

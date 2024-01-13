@@ -2,12 +2,8 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.appcompat.app.AlertDialog;
 

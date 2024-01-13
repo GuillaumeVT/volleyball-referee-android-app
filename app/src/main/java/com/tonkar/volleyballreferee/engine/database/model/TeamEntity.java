@@ -1,16 +1,15 @@
 package com.tonkar.volleyballreferee.engine.database.model;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
+import androidx.room.*;
 
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity(tableName = "teams")
-@Getter @Setter
+@Getter
+@Setter
 public class TeamEntity extends ApiTeamSummary {
 
     @NonNull

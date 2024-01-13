@@ -2,14 +2,8 @@ package com.tonkar.volleyballreferee.ui.user;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
@@ -19,14 +13,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendRequest;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendsAndRequests;
-import com.tonkar.volleyballreferee.engine.service.AsyncFriendRequestListener;
-import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.service.StoredUserService;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class ColleaguesListFragment extends Fragment implements AsyncFriendRequestListener {
@@ -42,8 +31,7 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mStoredUserService = new StoredUserManager(requireContext());
 
         Log.i(Tags.USER_UI, "Create colleagues list fragment");
@@ -121,7 +109,10 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
                     if (pseudo.length() > 2) {
                         mStoredUserService.sendFriendRequest(pseudo, this);
                     } else {
-                        UiUtils.makeErrorText(requireContext(), String.format(getString(R.string.must_provide_at_least_n_characters), 3), Toast.LENGTH_LONG).show();
+                        UiUtils
+                                .makeErrorText(requireContext(), String.format(getString(R.string.must_provide_at_least_n_characters), 3),
+                                               Toast.LENGTH_LONG)
+                                .show();
                     }
                 })
                 .setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> {});

@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 
 public interface AsyncUserRequestListener {
 

@@ -1,12 +1,8 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -14,32 +10,41 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.game.sanction.ISanction;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class PlayerSelectionDialog {
 
     private AlertDialog mAlertDialog;
 
-    PlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IBaseTeam teamService, TeamType teamType, Set<Integer> players) {
+    PlayerSelectionDialog(LayoutInflater layoutInflater,
+                          Context context,
+                          String title,
+                          IBaseTeam teamService,
+                          TeamType teamType,
+                          Set<Integer> players) {
         this(layoutInflater, context, title, teamService, null, teamType, players);
     }
 
-    protected PlayerSelectionDialog(LayoutInflater layoutInflater, Context context, String title, IBaseTeam teamService, ISanction sanction, TeamType teamType, Set<Integer> players) {
+    protected PlayerSelectionDialog(LayoutInflater layoutInflater,
+                                    Context context,
+                                    String title,
+                                    IBaseTeam teamService,
+                                    ISanction sanction,
+                                    TeamType teamType,
+                                    Set<Integer> players) {
         final GridView gridView = new GridView(context);
         gridView.setNumColumns(GridView.AUTO_FIT);
         gridView.setGravity(Gravity.CENTER);
-        gridView.setColumnWidth((int)context.getResources().getDimension(R.dimen.player_form_button_size));
-        gridView.setHorizontalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
-        gridView.setVerticalSpacing((int)context.getResources().getDimension(R.dimen.small_margin_size));
+        gridView.setColumnWidth((int) context.getResources().getDimension(R.dimen.player_form_button_size));
+        gridView.setHorizontalSpacing((int) context.getResources().getDimension(R.dimen.small_margin_size));
+        gridView.setVerticalSpacing((int) context.getResources().getDimension(R.dimen.small_margin_size));
         int pixels = context.getResources().getDimensionPixelSize(R.dimen.default_margin_size);
         gridView.setPadding(pixels, pixels, pixels, pixels);
-        PlayerSelectionAdapter playerSelectionAdapter = new PlayerSelectionAdapter(layoutInflater, context, teamService, sanction, teamType, players) {
+        PlayerSelectionAdapter playerSelectionAdapter = new PlayerSelectionAdapter(layoutInflater, context, teamService, sanction, teamType,
+                                                                                   players) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 PlayerSelectionDialog.this.onPlayerSelected(selectedNumber);
@@ -75,7 +80,12 @@ public abstract class PlayerSelectionDialog {
         private final TeamType       mTeamType;
         private final List<Integer>  mPlayers;
 
-        PlayerSelectionAdapter(LayoutInflater layoutInflater, Context context, IBaseTeam teamService, ISanction sanction, TeamType teamType, Set<Integer> players) {
+        PlayerSelectionAdapter(LayoutInflater layoutInflater,
+                               Context context,
+                               IBaseTeam teamService,
+                               ISanction sanction,
+                               TeamType teamType,
+                               Set<Integer> players) {
             mLayoutInflater = layoutInflater;
             mContext = context;
             mTeamService = teamService;

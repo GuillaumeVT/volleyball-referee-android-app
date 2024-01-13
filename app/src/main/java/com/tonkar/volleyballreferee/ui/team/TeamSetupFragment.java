@@ -3,18 +3,10 @@ package com.tonkar.volleyballreferee.ui.team;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.*;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -24,24 +16,17 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.data.team.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
-import com.tonkar.volleyballreferee.ui.setup.AutocompleteTeamListAdapter;
-import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
+import com.tonkar.volleyballreferee.ui.setup.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandler {
 
@@ -113,7 +98,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             StoredTeamsService storedTeamsService = new StoredTeamsManager(getContext());
 
             teamNameInput.setThreshold(1);
-            teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), storedTeamsService.listTeams(mTeamService.getTeamsKind())));
+            teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(),
+                                                                     storedTeamsService.listTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
                 ApiTeamSummary teamDescription = (ApiTeamSummary) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(teamDescription.getName());
@@ -148,7 +134,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType));
                     mTeamService.setTeamName(mTeamType, s.toString().trim());
-                    ((TextInputLayout) fragmentView.findViewById(R.id.team_name_input_layout)).setError(mTeamService.getTeamName(mTeamType).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), IBaseTeam.TEAM_NAME_MIN_LENGTH) : null);
+                    ((TextInputLayout) fragmentView.findViewById(R.id.team_name_input_layout)).setError(
+                            mTeamService.getTeamName(mTeamType).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH ? String.format(
+                                    Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters),
+                                    IBaseTeam.TEAM_NAME_MIN_LENGTH) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -195,7 +184,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         } else {
             liberoNumbersGrid.setVisibility(View.GONE);
             mLiberoColorButton.setVisibility(View.GONE);
-            final TextView liberoNumbersTitle =  fragmentView.findViewById(R.id.team_libero_numbers_title);
+            final TextView liberoNumbersTitle = fragmentView.findViewById(R.id.team_libero_numbers_title);
             liberoNumbersTitle.setVisibility(View.GONE);
         }
 
@@ -252,8 +241,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
-                getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(),
+                                                                             getString(R.string.select_shirts_color),
+                                                                             getResources().getStringArray(R.array.shirt_colors),
+                                                                             mTeamService.getTeamColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);
@@ -438,8 +429,10 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectLiberoColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team libero color", mTeamType));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(), getString(R.string.select_shirts_color),
-                getResources().getStringArray(R.array.shirt_colors), mTeamService.getLiberoColor(mTeamType)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(mLayoutInflater, getContext(),
+                                                                             getString(R.string.select_shirts_color),
+                                                                             getResources().getStringArray(R.array.shirt_colors),
+                                                                             mTeamService.getLiberoColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 liberoColorSelected(selectedColor);
@@ -474,8 +467,9 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
     private void selectCaptain() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team captain", mTeamType));
-        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, getContext(), getString(R.string.select_captain), mTeamService,
-                mTeamType, mTeamService.getPossibleCaptains(mTeamType)) {
+        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, getContext(),
+                                                                                getString(R.string.select_captain), mTeamService, mTeamType,
+                                                                                mTeamService.getPossibleCaptains(mTeamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 captainUpdated(mTeamType, selectedNumber);

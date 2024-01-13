@@ -1,8 +1,7 @@
 package com.tonkar.volleyballreferee.ui.team;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.util.TypedValue;
+import android.util.*;
 
 import androidx.core.content.ContextCompat;
 

@@ -1,16 +1,14 @@
 package com.tonkar.volleyballreferee.engine.service;
 
 import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class SyncService extends Service {
     private Timer mTimer;

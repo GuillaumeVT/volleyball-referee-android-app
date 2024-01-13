@@ -1,23 +1,13 @@
 package com.tonkar.volleyballreferee.engine.api;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import com.tonkar.volleyballreferee.engine.game.BaseGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.set.Set;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.TeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.player.Player;
-import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+import com.tonkar.volleyballreferee.engine.team.player.*;
 import com.tonkar.volleyballreferee.engine.team.substitution.SubstitutionsLimitation;
 
 import java.lang.reflect.Type;

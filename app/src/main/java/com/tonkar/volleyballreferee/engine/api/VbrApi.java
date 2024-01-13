@@ -1,35 +1,17 @@
 package com.tonkar.volleyballreferee.engine.api;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.*;
 
 import com.tonkar.volleyballreferee.BuildConfig;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.api.model.ApiEmailCredentials;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendRequest;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGame;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiNewUser;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSet;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserPasswordUpdate;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGame;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Callback;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import okhttp3.*;
 
 public class VbrApi {
 
@@ -81,19 +63,18 @@ public class VbrApi {
 
     public Request buildGet(String path, int page, int size, ApiUserToken userToken) {
         return new Request.Builder()
-                .url(HttpUrl.parse(String.format(Locale.US, "%s/%s", VbrApi.BASE_URL, path))
-                        .newBuilder()
-                        .addQueryParameter("page", Integer.toString(page))
-                        .addQueryParameter("size", Integer.toString(size))
-                        .build())
+                .url(HttpUrl
+                             .parse(String.format(Locale.US, "%s/%s", VbrApi.BASE_URL, path))
+                             .newBuilder()
+                             .addQueryParameter("page", Integer.toString(page))
+                             .addQueryParameter("size", Integer.toString(size))
+                             .build())
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
                 .build();
     }
 
     private Request buildGet(String path) {
-        return new Request.Builder()
-                .url(String.format(Locale.US, "%s/%s", VbrApi.BASE_URL, path))
-                .build();
+        return new Request.Builder().url(String.format(Locale.US, "%s/%s", VbrApi.BASE_URL, path)).build();
     }
 
     private Request buildPost(String path, String jsonBody, ApiUserToken userToken) {
@@ -104,7 +85,7 @@ public class VbrApi {
                 .build();
     }
 
-   private Request buildPost(String path, ApiUserToken userToken) {
+    private Request buildPost(String path, ApiUserToken userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", VbrApi.BASE_URL, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
@@ -201,12 +182,14 @@ public class VbrApi {
     }
 
     public void acceptFriendRequest(ApiFriendRequest friendRequest, Context context, Callback callback) {
-        Request request = buildPost(String.format(Locale.US, "users/friends/accept/%s", friendRequest.getId()), PrefUtils.getUserToken(context));
+        Request request = buildPost(String.format(Locale.US, "users/friends/accept/%s", friendRequest.getId()),
+                                    PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
     public void rejectFriendRequest(ApiFriendRequest friendRequest, Context context, Callback callback) {
-        Request request = buildPost(String.format(Locale.US, "users/friends/reject/%s", friendRequest.getId()), PrefUtils.getUserToken(context));
+        Request request = buildPost(String.format(Locale.US, "users/friends/reject/%s", friendRequest.getId()),
+                                    PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
@@ -221,7 +204,8 @@ public class VbrApi {
     }
 
     public void refreshSubscriptionPurchaseToken(Context context, Callback callback) {
-        Request request = buildPost(String.format(Locale.US, "users/%s", PrefUtils.getWebPremiumBillingToken(context)), PrefUtils.getUserToken(context));
+        Request request = buildPost(String.format(Locale.US, "users/%s", PrefUtils.getWebPremiumBillingToken(context)),
+                                    PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
@@ -332,12 +316,14 @@ public class VbrApi {
     public void updateSet(StoredGame game, Context context, Callback callback) {
         int setIndex = game.currentSetIndex();
         String json = JsonConverters.GSON.toJson(game.getSets().get(setIndex), ApiSet.class);
-        Request request = buildPatch(String.format(Locale.US, "games/%s/set/%d", game.getId(), 1 + setIndex), json, PrefUtils.getUserToken(context));
+        Request request = buildPatch(String.format(Locale.US, "games/%s/set/%d", game.getId(), 1 + setIndex), json,
+                                     PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
     public void indexGame(IStoredGame game, Context context, Callback callback) {
-        Request request = buildPatch(String.format(Locale.US, "games/%s/indexed/%b", game.getId(), game.isIndexed()), PrefUtils.getUserToken(context));
+        Request request = buildPatch(String.format(Locale.US, "games/%s/indexed/%b", game.getId(), game.isIndexed()),
+                                     PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 }

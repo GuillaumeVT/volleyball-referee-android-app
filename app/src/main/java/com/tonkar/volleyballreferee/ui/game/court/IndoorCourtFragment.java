@@ -2,34 +2,24 @@ package com.tonkar.volleyballreferee.ui.game.court;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.team.PlayerSelectionDialog;
-import com.tonkar.volleyballreferee.ui.util.AlertDialogFragment;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.*;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class IndoorCourtFragment extends CourtFragment {
 
@@ -194,9 +184,12 @@ public class IndoorCourtFragment extends CourtFragment {
                 int remainingSubstitutions = mClassicTeam.countRemainingSubstitutions(teamType);
 
                 if (remainingSubstitutions == 0) {
-                    UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
+                                             String.format(getString(R.string.all_substitutions_used), mClassicTeam.getTeamName(teamType)));
                 } else if (remainingSubstitutions == 1) {
-                    UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.one_remaining_substitution), mClassicTeam.getTeamName(teamType)));
+                    UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
+                                             String.format(getString(R.string.one_remaining_substitution),
+                                                           mClassicTeam.getTeamName(teamType)));
                 }
             }
         }
@@ -212,12 +205,18 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     protected void rotateAnimation(TeamType teamType, boolean clockwise) {
-        View layoutPosition1 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_1) : mView.findViewById(R.id.right_team_layout_1);
-        View layoutPosition2 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_2) : mView.findViewById(R.id.right_team_layout_2);
-        View layoutPosition3 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_3) : mView.findViewById(R.id.right_team_layout_3);
-        View layoutPosition4 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_4) : mView.findViewById(R.id.right_team_layout_4);
-        View layoutPosition5 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_5) : mView.findViewById(R.id.right_team_layout_5);
-        View layoutPosition6 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_6) : mView.findViewById(R.id.right_team_layout_6);
+        View layoutPosition1 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_1) : mView.findViewById(
+                R.id.right_team_layout_1);
+        View layoutPosition2 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_2) : mView.findViewById(
+                R.id.right_team_layout_2);
+        View layoutPosition3 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_3) : mView.findViewById(
+                R.id.right_team_layout_3);
+        View layoutPosition4 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_4) : mView.findViewById(
+                R.id.right_team_layout_4);
+        View layoutPosition5 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_5) : mView.findViewById(
+                R.id.right_team_layout_5);
+        View layoutPosition6 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_6) : mView.findViewById(
+                R.id.right_team_layout_6);
 
         if (clockwise) {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
@@ -225,14 +224,28 @@ public class IndoorCourtFragment extends CourtFragment {
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
-            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
+            layoutPosition2
+                    .animate()
+                    .setStartDelay(0L)
+                    .x(layoutPosition1.getX())
+                    .y(layoutPosition1.getY())
+                    .setDuration(500L)
+                    .withEndAction(this::detachThenAttach)
+                    .start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition4.getX()).y(layoutPosition4.getY()).setDuration(500L).start();
             layoutPosition4.animate().setStartDelay(0L).x(layoutPosition5.getX()).y(layoutPosition5.getY()).setDuration(500L).start();
             layoutPosition5.animate().setStartDelay(0L).x(layoutPosition6.getX()).y(layoutPosition6.getY()).setDuration(500L).start();
-            layoutPosition6.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
+            layoutPosition6
+                    .animate()
+                    .setStartDelay(0L)
+                    .x(layoutPosition1.getX())
+                    .y(layoutPosition1.getY())
+                    .setDuration(500L)
+                    .withEndAction(this::detachThenAttach)
+                    .start();
         }
     }
 
@@ -282,12 +295,19 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void confirmStartingLineup(TeamType teamType) {
-        if (!mClassicTeam.isStartingLineupConfirmed(teamType) && mClassicTeam.getPlayersOnCourt(teamType).size() == mClassicTeam.getExpectedNumberOfPlayersOnCourt()) {
-            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) requireActivity().getSupportFragmentManager().findFragmentByTag("confirm_lineup");
+        if (!mClassicTeam.isStartingLineupConfirmed(teamType) && mClassicTeam
+                .getPlayersOnCourt(teamType)
+                .size() == mClassicTeam.getExpectedNumberOfPlayersOnCourt()) {
+            AlertDialogFragment alertDialogFragment = (AlertDialogFragment) requireActivity()
+                    .getSupportFragmentManager()
+                    .findFragmentByTag("confirm_lineup");
             if (alertDialogFragment == null) {
                 if (!mOneStartingLineupDialog) {
-                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title), String.format(Locale.getDefault(), getString(R.string.confirm_team_lineup_question), mClassicTeam.getTeamName(teamType)),
-                            getString(android.R.string.no), getString(android.R.string.yes));
+                    alertDialogFragment = AlertDialogFragment.newInstance(getString(R.string.confirm_lineup_title),
+                                                                          String.format(Locale.getDefault(),
+                                                                                        getString(R.string.confirm_team_lineup_question),
+                                                                                        mClassicTeam.getTeamName(teamType)),
+                                                                          getString(android.R.string.no), getString(android.R.string.yes));
                     setStartingLineupDialogListener(alertDialogFragment, teamType);
                     alertDialogFragment.show(requireActivity().getSupportFragmentManager(), "confirm_lineup");
                     mOneStartingLineupDialog = true;
@@ -319,11 +339,13 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void showPlayerSelectionDialog(final TeamType teamType, final PositionType positionType, Set<Integer> possibleReplacements) {
-        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_player_title) + " (" + UiUtils.getPositionTitle(requireActivity(), positionType) + ")",
-                mClassicTeam, mGame, teamType, possibleReplacements) {
+        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(
+                R.string.select_player_title) + " (" + UiUtils.getPositionTitle(requireActivity(), positionType) + ")", mClassicTeam, mGame,
+                                                                                teamType, possibleReplacements) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
-                Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position by #%d player", teamType, positionType, selectedNumber));
+                Log.i(Tags.GAME_UI,
+                      String.format("Substitute %s team player at %s position by #%d player", teamType, positionType, selectedNumber));
                 mClassicTeam.substitutePlayer(teamType, selectedNumber, positionType, ActionOriginType.USER);
             }
         };
@@ -338,8 +360,10 @@ public class IndoorCourtFragment extends CourtFragment {
     }
 
     private void showCaptainSelectionDialog(final TeamType teamType) {
-        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(), getString(R.string.select_captain),
-                mClassicTeam, mGame, teamType, mClassicTeam.getPossibleSecondaryCaptains(teamType)) {
+        PlayerSelectionDialog playerSelectionDialog = new PlayerSelectionDialog(mLayoutInflater, mView.getContext(),
+                                                                                getString(R.string.select_captain), mClassicTeam, mGame,
+                                                                                teamType,
+                                                                                mClassicTeam.getPossibleSecondaryCaptains(teamType)) {
             @Override
             public void onPlayerSelected(int selectedNumber) {
                 Log.i(Tags.GAME_UI, String.format("Change %s team acting captain by #%d player", teamType, selectedNumber));
@@ -387,7 +411,8 @@ public class IndoorCourtFragment extends CourtFragment {
 
     private void showPlayerSelectionDialogAfterExpulsion(TeamType teamType, int number, PositionType positionType) {
         final Set<Integer> possibleSubstitutions = mClassicTeam.getPossibleSubstitutions(teamType, positionType);
-        final Set<Integer> filteredSubstitutions = mClassicTeam.filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+        final Set<Integer> filteredSubstitutions = mClassicTeam.filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number,
+                                                                                                                   possibleSubstitutions);
 
         if (filteredSubstitutions.size() > 0) {
             final Map<PositionType, MaterialButton> teamPositions = getTeamPositions(teamType);
@@ -396,7 +421,8 @@ public class IndoorCourtFragment extends CourtFragment {
             Log.i(Tags.GAME_UI, String.format("Substitute %s team player at %s position after red card", teamType, positionType));
             showPlayerSelectionDialog(teamType, positionType, filteredSubstitutions);
         } else {
-            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
+            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
+                                     String.format(getString(R.string.set_lost_incomplete), mClassicTeam.getTeamName(teamType)));
         }
     }
 
@@ -452,7 +478,8 @@ public class IndoorCourtFragment extends CourtFragment {
         MaterialButton positionButton = getTeamPositions(teamType).get(PositionType.POSITION_1);
         if (mGame.getServingTeam().equals(teamType) && positionButton != null) {
             positionButton.setIconResource(R.drawable.ic_service);
-            UiUtils.styleIndoorTeamButton(mView.getContext(), mClassicTeam, teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), positionButton);
+            UiUtils.styleIndoorTeamButton(mView.getContext(), mClassicTeam, teamType,
+                                          mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), positionButton);
         } else {
             positionButton.setIcon(null);
         }
@@ -494,10 +521,12 @@ public class IndoorCourtFragment extends CourtFragment {
         if (isStart) {
             updateService();
 
-            updatePosition(teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1), getTeamPositions(teamType).get(PositionType.POSITION_1));
+            updatePosition(teamType, mClassicTeam.getPlayerAtPosition(teamType, PositionType.POSITION_1),
+                           getTeamPositions(teamType).get(PositionType.POSITION_1));
 
             TeamType otherTeamType = teamType.other();
-            updatePosition(otherTeamType, mClassicTeam.getPlayerAtPosition(otherTeamType, PositionType.POSITION_1), getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
+            updatePosition(otherTeamType, mClassicTeam.getPlayerAtPosition(otherTeamType, PositionType.POSITION_1),
+                           getTeamPositions(otherTeamType).get(PositionType.POSITION_1));
         }
     }
 }

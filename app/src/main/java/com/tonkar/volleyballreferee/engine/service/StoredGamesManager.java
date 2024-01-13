@@ -8,61 +8,26 @@ import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGame;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPage;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSelectedLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSet;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.database.VbrRepository;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.GameStatus;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.GeneralListener;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.sanction.*;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
 import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Queue;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 
-public class StoredGamesManager implements StoredGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
+public class StoredGamesManager
+        implements StoredGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
     private final Context       mContext;
     private final VbrRepository mRepository;
@@ -323,7 +288,10 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         mStoredGame.setUsage(mGame.getUsage());
         mStoredGame.setStatus(mGame.getMatchStatus());
         mStoredGame.setIndexed(mGame.isIndexed());
-        if (mGame.getLeague() != null && mGame.getKind().equals(mGame.getLeague().getKind()) && mGame.getLeague().getName().length() > 1 && mGame.getLeague().getDivision().length() > 1) {
+        if (mGame.getLeague() != null && mGame.getKind().equals(mGame.getLeague().getKind()) && mGame
+                .getLeague()
+                .getName()
+                .length() > 1 && mGame.getLeague().getDivision().length() > 1) {
             ApiSelectedLeague league = new ApiSelectedLeague();
             league.setAll(mGame.getLeague());
             mStoredGame.setLeague(league);
@@ -435,20 +403,28 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
 
                     ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
                     for (PositionType position : PositionType.listPositions(mGame.getKind())) {
-                        homeStartingPlayers.setPlayerAt(mGame.getPlayerAtPositionInStartingLineup(TeamType.HOME, position, setIndex), position);
+                        homeStartingPlayers.setPlayerAt(mGame.getPlayerAtPositionInStartingLineup(TeamType.HOME, position, setIndex),
+                                                        position);
                     }
 
                     for (ApiSubstitution substitution : indoorTeam.getSubstitutions(TeamType.HOME, setIndex)) {
-                        set.getSubstitutions(TeamType.HOME).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
+                        set
+                                .getSubstitutions(TeamType.HOME)
+                                .add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(),
+                                                         substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
                     ApiCourt guestStartingPlayers = set.getStartingPlayers(TeamType.GUEST);
                     for (PositionType position : PositionType.listPositions(mGame.getKind())) {
-                        guestStartingPlayers.setPlayerAt(mGame.getPlayerAtPositionInStartingLineup(TeamType.GUEST, position, setIndex), position);
+                        guestStartingPlayers.setPlayerAt(mGame.getPlayerAtPositionInStartingLineup(TeamType.GUEST, position, setIndex),
+                                                         position);
                     }
 
                     for (ApiSubstitution substitution : indoorTeam.getSubstitutions(TeamType.GUEST, setIndex)) {
-                        set.getSubstitutions(TeamType.GUEST).add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(), substitution.getHomePoints(), substitution.getGuestPoints()));
+                        set
+                                .getSubstitutions(TeamType.GUEST)
+                                .add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(),
+                                                         substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
                     set.setGameCaptain(TeamType.HOME, indoorTeam.getGameCaptain(TeamType.HOME, setIndex));
@@ -461,20 +437,26 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             mStoredGame.getAllSanctions(TeamType.HOME).clear();
 
             for (ApiSanction sanction : mGame.getAllSanctions(TeamType.HOME)) {
-                mStoredGame.getAllSanctions(TeamType.HOME).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
+                mStoredGame
+                        .getAllSanctions(TeamType.HOME)
+                        .add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(),
+                                             sanction.getGuestPoints()));
             }
 
             mStoredGame.getAllSanctions(TeamType.GUEST).clear();
 
             for (ApiSanction sanction : mGame.getAllSanctions(TeamType.GUEST)) {
-                mStoredGame.getAllSanctions(TeamType.GUEST).add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(), sanction.getGuestPoints()));
+                mStoredGame
+                        .getAllSanctions(TeamType.GUEST)
+                        .add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(),
+                                             sanction.getGuestPoints()));
             }
         }
     }
 
     public static List<StoredGame> readStoredGamesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<StoredGame>>(){}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<StoredGame>>() {}.getType());
         }
     }
 
@@ -484,9 +466,10 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
         }
     }
 
-    public static void writeStoredGamesStream(OutputStream outputStream, List<StoredGame> storedGames) throws JsonParseException, IOException {
+    public static void writeStoredGamesStream(OutputStream outputStream,
+                                              List<StoredGame> storedGames) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(storedGames, new TypeToken<List<StoredGame>>(){}.getType(), writer);
+        JsonConverters.GSON.toJson(storedGames, new TypeToken<List<StoredGame>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -536,12 +519,13 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            List<ApiGameSummary> games = JsonConverters.GSON.fromJson(body.string(), new TypeToken<List<ApiGameSummary>>() {
-                            }.getType());
+                            List<ApiGameSummary> games = JsonConverters.GSON.fromJson(body.string(),
+                                                                                      new TypeToken<List<ApiGameSummary>>() {}.getType());
                             listener.onAvailableGamesReceived(games);
                         }
                     } else {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d getting available games list", response.code()));
+                        Log.e(Tags.STORED_GAMES,
+                              String.format(Locale.getDefault(), "Error %d getting available games list", response.code()));
                         listener.onError(response.code());
                     }
                 }
@@ -570,7 +554,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                             listener.onSynchronizationSucceeded();
                         }
                     } else {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while sending the scheduled game", response.code()));
+                        Log.e(Tags.STORED_GAMES,
+                              String.format(Locale.getDefault(), "Error %d while sending the scheduled game", response.code()));
                         if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
@@ -594,7 +579,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                     if (response.code() == HttpURLConnection.HTTP_NO_CONTENT) {
                         listener.onSynchronizationSucceeded();
                     } else {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while canceling the scheduled game", response.code()));
+                        Log.e(Tags.STORED_GAMES,
+                              String.format(Locale.getDefault(), "Error %d while canceling the scheduled game", response.code()));
                         listener.onSynchronizationFailed();
                     }
                 }
@@ -632,7 +618,9 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     private void pushGameToServer(final IStoredGame storedGame) {
-        if (PrefUtils.canSync(mContext) && storedGame != null && !GameType.TIME.equals(storedGame.getKind()) && !storedGame.getTeamId(TeamType.HOME).equals(storedGame.getTeamId(TeamType.GUEST))) {
+        if (PrefUtils.canSync(mContext) && storedGame != null && !GameType.TIME.equals(storedGame.getKind()) && !storedGame
+                .getTeamId(TeamType.HOME)
+                .equals(storedGame.getTeamId(TeamType.GUEST))) {
             ApiGame game = (ApiGame) storedGame;
 
             VbrApi.getInstance().updateGame(game, mContext, new Callback() {
@@ -661,12 +649,13 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
                                         mRepository.insertGame(game, true, false);
                                     }
                                 } else {
-                                    Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while posting game",  response.code()));
+                                    Log.e(Tags.STORED_GAMES,
+                                          String.format(Locale.getDefault(), "Error %d while posting game", response.code()));
                                 }
                             }
                         });
                     } else {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while pushing game",  response.code()));
+                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while pushing game", response.code()));
                     }
                 }
             });
@@ -678,7 +667,10 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
     }
 
     private synchronized void pushCurrentSetToServer() {
-        if (PrefUtils.canSync(mContext) && mStoredGame != null && !GameType.TIME.equals(mStoredGame.getKind()) && !mStoredGame.getHomeTeam().getId().equals(mStoredGame.getGuestTeam().getId())) {
+        if (PrefUtils.canSync(mContext) && mStoredGame != null && !GameType.TIME.equals(mStoredGame.getKind()) && !mStoredGame
+                .getHomeTeam()
+                .getId()
+                .equals(mStoredGame.getGuestTeam().getId())) {
             VbrApi.getInstance().updateSet(mStoredGame, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -753,8 +745,8 @@ public class StoredGamesManager implements StoredGamesService, GeneralListener, 
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     try (ResponseBody body = response.body()) {
-                        ApiPage<ApiGameSummary> gamesPage = JsonConverters.GSON.fromJson(body.string(), new TypeToken<ApiPage<ApiGameSummary>>() {
-                        }.getType());
+                        ApiPage<ApiGameSummary> gamesPage = JsonConverters.GSON.fromJson(body.string(),
+                                                                                         new TypeToken<ApiPage<ApiGameSummary>>() {}.getType());
                         remoteGameList.addAll(gamesPage.getContent());
                         if (gamesPage.isLast()) {
                             syncGames(remoteGameList, listener);

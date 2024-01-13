@@ -3,9 +3,7 @@ package com.tonkar.volleyballreferee.engine.rules;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 
 import lombok.ToString;
@@ -38,11 +36,32 @@ public class Rules extends ApiRules {
         super();
     }
 
-    public Rules(String id, String createdBy, long createdAt, long updatedAt, String name, GameType kind, int setsPerGame, int pointsPerSet, boolean tieBreakInLastSet, int pointsInTieBreak, boolean twoPointsDifference, boolean sanctions,
-                 int matchTermination, boolean teamTimeouts, int teamTimeoutsPerSet, int teamTimeoutDuration,
-                 boolean technicalTimeouts, int technicalTimeoutDuration, boolean gameIntervals, int gameIntervalDuration,
-                 int substitutionsLimitation, int teamSubstitutionsPerSet,
-                 boolean beachCourtSwitches, int beachCourtSwitchFreq, int beachCourtSwitchFreqTieBreak, int customConsecutiveServesPerPlayer) {
+    public Rules(String id,
+                 String createdBy,
+                 long createdAt,
+                 long updatedAt,
+                 String name,
+                 GameType kind,
+                 int setsPerGame,
+                 int pointsPerSet,
+                 boolean tieBreakInLastSet,
+                 int pointsInTieBreak,
+                 boolean twoPointsDifference,
+                 boolean sanctions,
+                 int matchTermination,
+                 boolean teamTimeouts,
+                 int teamTimeoutsPerSet,
+                 int teamTimeoutDuration,
+                 boolean technicalTimeouts,
+                 int technicalTimeoutDuration,
+                 boolean gameIntervals,
+                 int gameIntervalDuration,
+                 int substitutionsLimitation,
+                 int teamSubstitutionsPerSet,
+                 boolean beachCourtSwitches,
+                 int beachCourtSwitchFreq,
+                 int beachCourtSwitchFreqTieBreak,
+                 int customConsecutiveServesPerPlayer) {
         setId(id);
         setCreatedBy(createdBy);
         setCreatedAt(createdAt);
@@ -72,35 +91,23 @@ public class Rules extends ApiRules {
     }
 
     public static Rules officialIndoorRules() {
-        return new Rules(DEFAULT_INDOOR_ID,
-                ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR,
-                5, 25, true, 15, true, true, WIN_TERMINATION, true, 2, 30,
-                false, 60, true, 180,
-                FIVB_LIMITATION, 6, false, 0, 0, 9999);
+        return new Rules(DEFAULT_INDOOR_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR, 5, 25, true, 15, true,
+                         true, WIN_TERMINATION, true, 2, 30, false, 60, true, 180, FIVB_LIMITATION, 6, false, 0, 0, 9999);
     }
 
     public static Rules officialBeachRules() {
-        return new Rules(DEFAULT_BEACH_ID,
-                ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_BEACH_NAME, GameType.BEACH,
-                3, 21, true, 15, true, true, WIN_TERMINATION, true, 1, 30,
-                true, 30, true, 60,
-                FIVB_LIMITATION, 0, true, 7, 5, 9999);
+        return new Rules(DEFAULT_BEACH_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_BEACH_NAME, GameType.BEACH, 3, 21, true, 15, true,
+                         true, WIN_TERMINATION, true, 1, 30, true, 30, true, 60, FIVB_LIMITATION, 0, true, 7, 5, 9999);
     }
 
     public static Rules defaultIndoor4x4Rules() {
-        return new Rules(DEFAULT_INDOOR_4X4_ID,
-                ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_4X4_NAME, GameType.INDOOR_4X4,
-                5, 25, true, 15, true, true, WIN_TERMINATION, true, 2, 30,
-                true, 60, true, 180,
-                NO_LIMITATION, 4, false, 0, 0, 9999);
+        return new Rules(DEFAULT_INDOOR_4X4_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_4X4_NAME, GameType.INDOOR_4X4, 5, 25,
+                         true, 15, true, true, WIN_TERMINATION, true, 2, 30, true, 60, true, 180, NO_LIMITATION, 4, false, 0, 0, 9999);
     }
 
     public static Rules officialSnowRules() {
-        return new Rules(DEFAULT_SNOW_ID,
-                ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW,
-                3, 15, false, 15, true, true, WIN_TERMINATION, true, 1, 30,
-                false, 0, true, 60,
-                NO_LIMITATION, 2, true, 5, 5, 9999);
+        return new Rules(DEFAULT_SNOW_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW, 3, 15, false, 15, true,
+                         true, WIN_TERMINATION, true, 1, 30, false, 0, true, 60, NO_LIMITATION, 2, true, 5, 5, 9999);
     }
 
     @Override

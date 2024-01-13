@@ -1,17 +1,13 @@
 package com.tonkar.volleyballreferee.engine.database;
 
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
+import androidx.room.*;
 
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 import com.tonkar.volleyballreferee.engine.database.model.TeamEntity;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Dao
 public interface TeamDao {

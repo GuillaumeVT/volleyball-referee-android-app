@@ -3,14 +3,11 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.ScrollView;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.*;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -18,25 +15,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.service.StoredRulesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredRulesService;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.ui.game.GameActivity;
-import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
-import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
+import com.tonkar.volleyballreferee.ui.game.*;
+import com.tonkar.volleyballreferee.ui.interfaces.*;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -195,24 +180,23 @@ public class QuickGameSetupActivity extends AppCompatActivity {
 
     private void initGameSetupNavigation(final NavigationBarView gameSetupNavigation, Bundle savedInstanceState, boolean create) {
         gameSetupNavigation.setOnItemSelectedListener(item -> {
-                    Fragment fragment = null;
+            Fragment fragment = null;
 
-                    int itemId = item.getItemId();
-                    if (itemId == R.id.teams_tab) {
-                        fragment = QuickGameSetupFragment.newInstance(create);
-                    } else if (itemId == R.id.rules_tab && !GameType.TIME.equals(mGame.getKind())) {
-                        fragment = RulesSetupFragment.newInstance(true);
-                    } else if (itemId == R.id.misc_tab) {
-                        fragment = MiscSetupFragment.newInstance();
-                    }
+            int itemId = item.getItemId();
+            if (itemId == R.id.teams_tab) {
+                fragment = QuickGameSetupFragment.newInstance(create);
+            } else if (itemId == R.id.rules_tab && !GameType.TIME.equals(mGame.getKind())) {
+                fragment = RulesSetupFragment.newInstance(true);
+            } else if (itemId == R.id.misc_tab) {
+                fragment = MiscSetupFragment.newInstance();
+            }
 
-                    if (fragment != null) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.quick_game_setup_container, fragment).commit();
-                    }
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.quick_game_setup_container, fragment).commit();
+            }
 
-                    return true;
-                }
-        );
+            return true;
+        });
 
         if (savedInstanceState == null) {
             gameSetupNavigation.setSelectedItemId(R.id.teams_tab);
@@ -224,10 +208,12 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private boolean cannotStartGame(IGame game) {
-        return game.getTeamName(TeamType.HOME).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH
-                || game.getTeamName(TeamType.GUEST).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH
-                || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH
-                || (game.getLeague().getName().length() > 0 && game.getLeague().getDivision().length() < 2);
+        return game.getTeamName(TeamType.HOME).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH || game
+                .getTeamName(TeamType.GUEST)
+                .length() < IBaseTeam.TEAM_NAME_MIN_LENGTH || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH || (game
+                .getLeague()
+                .getName()
+                .length() > 0 && game.getLeague().getDivision().length() < 2);
     }
 
     private void showGameSetupStatus(IGame game) {

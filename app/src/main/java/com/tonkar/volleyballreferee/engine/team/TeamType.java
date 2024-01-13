@@ -1,7 +1,8 @@
 package com.tonkar.volleyballreferee.engine.team;
 
 public enum TeamType {
-    HOME, GUEST;
+    HOME,
+    GUEST;
 
     public TeamType other() {
         if (HOME.equals(this)) {
@@ -10,7 +11,6 @@ public enum TeamType {
             return HOME;
         }
     }
-
 
     public static String toLetter(TeamType teamType) {
         String letter;

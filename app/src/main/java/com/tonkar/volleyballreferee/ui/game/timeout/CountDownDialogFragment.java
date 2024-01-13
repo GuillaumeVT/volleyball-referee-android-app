@@ -1,8 +1,7 @@
 package com.tonkar.volleyballreferee.ui.game.timeout;
 
 import android.app.Dialog;
-import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.*;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
@@ -37,8 +36,7 @@ public class CountDownDialogFragment extends DialogFragment {
         if (savedInstanceState == null) {
             duration = requireArguments().getLong("timeout_duration");
             UiUtils.playNotificationSound(requireActivity());
-        }
-        else {
+        } else {
             duration = savedInstanceState.getLong("saved_timeout_duration");
         }
 

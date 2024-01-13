@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendRequest;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendsAndRequests;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 
 public interface AsyncFriendRequestListener {
 

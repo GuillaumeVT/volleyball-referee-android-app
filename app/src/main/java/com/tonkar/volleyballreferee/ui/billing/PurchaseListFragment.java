@@ -1,18 +1,14 @@
 package com.tonkar.volleyballreferee.ui.billing;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.billing.BillingManager;
-import com.tonkar.volleyballreferee.engine.billing.BillingService;
+import com.tonkar.volleyballreferee.engine.billing.*;
 
 public class PurchaseListFragment extends Fragment {
 
@@ -40,8 +36,7 @@ public class PurchaseListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_purchase_list, container, false);
 
         RecyclerView purchaseList = fragmentView.findViewById(R.id.purchases_list);
@@ -49,9 +44,7 @@ public class PurchaseListFragment extends Fragment {
         purchaseList.setAdapter(mPurchasesListAdapter);
         purchaseList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
-        mPurchaseViewModel
-                .getPurchaseList()
-                .observe(requireActivity(), mPurchasesListAdapter::submitList);
+        mPurchaseViewModel.getPurchaseList().observe(requireActivity(), mPurchasesListAdapter::submitList);
         mBillingService.addBillingListener(mPurchaseViewModel);
 
         return fragmentView;

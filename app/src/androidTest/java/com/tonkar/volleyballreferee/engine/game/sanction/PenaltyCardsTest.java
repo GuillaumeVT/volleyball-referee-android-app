@@ -1,27 +1,19 @@
 package com.tonkar.volleyballreferee.engine.game.sanction;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.GameFactory;
-import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class PenaltyCardsTest {
@@ -29,7 +21,8 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_delayWarning() {
         IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                 System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertEquals(SanctionType.DELAY_WARNING, game.getPossibleDelaySanction(TeamType.HOME));
@@ -44,7 +37,8 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_delayPenalty() {
         IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                 System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertEquals(SanctionType.DELAY_WARNING, game.getPossibleDelaySanction(TeamType.GUEST));
@@ -59,7 +53,8 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_yellowCard() {
         IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                 System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertTrue(game.getPossibleMisconductSanctions(TeamType.HOME, 1).contains(SanctionType.YELLOW));
@@ -80,7 +75,8 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_redCard() {
         IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                 System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -126,7 +122,8 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_redExpulsionCard() {
         IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                 System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertTrue(game.getPossibleMisconductSanctions(TeamType.GUEST, 2).contains(SanctionType.YELLOW));
@@ -150,7 +147,8 @@ public class PenaltyCardsTest {
     @Test
     public void beachGame_redDisqualificationCard() {
         IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                 Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                 System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
 
         assertTrue(game.getPossibleMisconductSanctions(TeamType.HOME, 1).contains(SanctionType.YELLOW));
@@ -171,7 +169,8 @@ public class PenaltyCardsTest {
     @Test
     public void indoorGame_yellowCard() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
@@ -205,7 +204,8 @@ public class PenaltyCardsTest {
     @Test
     public void indoorGame_redCard() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
 
         fillTeam(game, TeamType.HOME, 6);
         fillTeam(game, TeamType.GUEST, 7);
@@ -273,7 +273,8 @@ public class PenaltyCardsTest {
     @Test
     public void indoorGame_redExpulsionCard() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         IClassicTeam indoorTeam = (IClassicTeam) game;
 
         fillTeam(game, TeamType.HOME, 6);
@@ -356,7 +357,8 @@ public class PenaltyCardsTest {
     @Test
     public void indoorGame_redDisqualificationCard() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         IClassicTeam indoorTeam = (IClassicTeam) game;
 
         fillTeam(game, TeamType.HOME, 6);

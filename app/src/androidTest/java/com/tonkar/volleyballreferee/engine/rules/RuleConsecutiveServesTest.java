@@ -1,23 +1,18 @@
 package com.tonkar.volleyballreferee.engine.rules;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IndoorGame;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class RuleConsecutiveServesTest {
@@ -92,14 +87,13 @@ public class RuleConsecutiveServesTest {
 
     private IndoorGame createGame(int consecutiveServes) {
         Rules rules = new Rules(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID,
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
-                "My rules", GameType.INDOOR,
-                5, 25, true, 15, true, true, Rules.WIN_TERMINATION,
-                true,2, 30,true, 60, true, 180,
-                Rules.FIVB_LIMITATION, 6, false, 0, 0, consecutiveServes);
+                                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
+                                "My rules", GameType.INDOOR, 5, 25, true, 15, true, true, Rules.WIN_TERMINATION, true, 2, 30, true, 60,
+                                true, 180, Rules.FIVB_LIMITATION, 6, false, 0, 0, consecutiveServes);
 
         IndoorGame game = new IndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), rules);
+                                         Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
+                                         rules);
 
         for (int index = 1; index <= 6; index++) {
             game.addPlayer(TeamType.HOME, index);

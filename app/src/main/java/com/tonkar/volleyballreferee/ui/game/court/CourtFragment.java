@@ -2,26 +2,21 @@ package com.tonkar.volleyballreferee.ui.game.court;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.sanction.*;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class CourtFragment extends Fragment implements ScoreListener, TeamListener, SanctionListener, GameServiceHandler {
 

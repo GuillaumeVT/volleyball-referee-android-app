@@ -16,20 +16,16 @@ import androidx.test.rule.GrantPermissionRule;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.game.BrazilFranceIndoorGame;
-import com.tonkar.volleyballreferee.engine.game.ItalyUsaBeachGame;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Locale;
 
@@ -38,7 +34,8 @@ import java.util.Locale;
 public class PixelCScreenshots extends Screenshots {
 
     @Rule
-    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                                                  Manifest.permission.READ_EXTERNAL_STORAGE);
 
     @Before
     public void init() {
@@ -64,9 +61,7 @@ public class PixelCScreenshots extends Screenshots {
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.resume_game_card))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withId(R.id.resume_game_card)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot1", 1900000L, 2000000L);
         }
@@ -84,9 +79,7 @@ public class PixelCScreenshots extends Screenshots {
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.swap_teams_button))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withId(R.id.swap_teams_button)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot2", 190000L, 210000L);
         }
@@ -104,9 +97,7 @@ public class PixelCScreenshots extends Screenshots {
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.swap_teams_button))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withId(R.id.swap_teams_button)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot3", 1800000L, 1830000L);
         }
@@ -124,13 +115,9 @@ public class PixelCScreenshots extends Screenshots {
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.left_team_position_3))
-                    .perform(ViewActions.click());
+            Espresso.onView(ViewMatchers.withId(R.id.left_team_position_3)).perform(ViewActions.click());
 
-            Espresso
-                    .onView(ViewMatchers.withText(android.R.string.no))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withText(android.R.string.no)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot4", 162000L, 182000L);
         }
@@ -148,23 +135,15 @@ public class PixelCScreenshots extends Screenshots {
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.left_team_cards_button))
-                    .perform(ViewActions.click());
+            Espresso.onView(ViewMatchers.withId(R.id.left_team_cards_button)).perform(ViewActions.click());
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.delay_warning_button))
-                    .perform(ViewActions.click());
+            Espresso.onView(ViewMatchers.withId(R.id.delay_warning_button)).perform(ViewActions.click());
 
-            Espresso
-                    .onView(ViewMatchers.withText(android.R.string.ok))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withText(android.R.string.ok)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot5", 860000L, 880000L);
 
-            Espresso
-                    .onView(ViewMatchers.withText(android.R.string.no))
-                    .perform(ViewActions.click());
+            Espresso.onView(ViewMatchers.withText(android.R.string.no)).perform(ViewActions.click());
         }
     }
 
@@ -177,16 +156,12 @@ public class PixelCScreenshots extends Screenshots {
         mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
         ActivityScenario.launch(GameActivity.class);
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.ladder_tab))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.ladder_tab)).perform(ViewActions.click());
 
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.set_list))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withId(R.id.set_list)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot6", 137000L, 156000L);
         }
@@ -199,21 +174,13 @@ public class PixelCScreenshots extends Screenshots {
         mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_0);
         ActivityScenario.launch(MainActivity.class);
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.navigation_fragment))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.navigation_fragment)).perform(ViewActions.click());
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.action_stored_rules))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.action_stored_rules)).perform(ViewActions.click());
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.add_rules_button))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.add_rules_button)).perform(ViewActions.click());
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.add_indoor_rules_button))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.add_indoor_rules_button)).perform(ViewActions.click());
 
         Espresso
                 .onView(ViewMatchers.withId(R.id.rules_name_input_text))
@@ -236,14 +203,9 @@ public class PixelCScreenshots extends Screenshots {
         mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_0);
         ActivityScenario.launch(MainActivity.class);
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.navigation_fragment))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.navigation_fragment)).perform(ViewActions.click());
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.action_stored_teams))
-                .perform(ViewActions.click());
-
+        Espresso.onView(ViewMatchers.withId(R.id.action_stored_teams)).perform(ViewActions.click());
 
         Espresso
                 .onData(Matchers.anything())
@@ -251,16 +213,12 @@ public class PixelCScreenshots extends Screenshots {
                 .atPosition(0)
                 .perform(ViewActions.click());
 
-        Espresso
-                .onView(ViewMatchers.withId(R.id.edit_team_button))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.edit_team_button)).perform(ViewActions.click());
 
         for (Locale locale : mLocales) {
             setAppLanguage(locale);
 
-            Espresso
-                    .onView(ViewMatchers.withId(R.id.team_name_input_layout))
-                    .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+            Espresso.onView(ViewMatchers.withId(R.id.team_name_input_layout)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
             takeScreenshot("screenshot8", 225000L, 255000L);
         }

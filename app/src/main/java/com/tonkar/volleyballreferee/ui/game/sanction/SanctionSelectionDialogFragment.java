@@ -3,16 +3,12 @@ package com.tonkar.volleyballreferee.ui.game.sanction;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Button;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
+import androidx.annotation.*;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.*;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
@@ -60,30 +56,29 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
         mSanctionTypePager = mView.findViewById(R.id.sanction_nav);
 
         mSanctionTypePager.setOnItemSelectedListener(item -> {
-                    Fragment fragment = null;
+            Fragment fragment = null;
 
-                    int itemId = item.getItemId();
-                    if (itemId == R.id.delay_sanction_tab) {
-                        fragment = mDelaySanctionSelectionFragment;
-                    } else if (itemId == R.id.misconduct_sanction_tab) {
-                        fragment = mMisconductSanctionSelectionFragment;
-                    }
+            int itemId = item.getItemId();
+            if (itemId == R.id.delay_sanction_tab) {
+                fragment = mDelaySanctionSelectionFragment;
+            } else if (itemId == R.id.misconduct_sanction_tab) {
+                fragment = mMisconductSanctionSelectionFragment;
+            }
 
-                    if (fragment != null) {
-                        getChildFragmentManager().beginTransaction().replace(R.id.sanction_container, fragment).commit();
-                    }
+            if (fragment != null) {
+                getChildFragmentManager().beginTransaction().replace(R.id.sanction_container, fragment).commit();
+            }
 
-                    computeOkAvailability(item.getItemId());
+            computeOkAvailability(item.getItemId());
 
-                    return true;
-                }
-        );
+            return true;
+        });
 
         mSanctionTypePager.setSelectedItemId(R.id.delay_sanction_tab);
 
-        mAlertDialog = new AlertDialog
-                .Builder(requireContext(), R.style.AppTheme_Dialog)
-                .setTitle(title).setView(mView)
+        mAlertDialog = new AlertDialog.Builder(requireContext(), R.style.AppTheme_Dialog)
+                .setTitle(title)
+                .setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> giveSanction())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})
                 .create();
@@ -97,7 +92,8 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
         if (mSanctionTypePager.getSelectedItemId() == R.id.delay_sanction_tab) {
             mGame.giveSanction(mTeamType, mDelaySanctionSelectionFragment.getSelectedDelaySanction(), ApiSanction.TEAM);
         } else {
-            mGame.giveSanction(mTeamType, mMisconductSanctionSelectionFragment.getSelectedMisconductSanction(), mMisconductSanctionSelectionFragment.getSelectedMisconductPlayer());
+            mGame.giveSanction(mTeamType, mMisconductSanctionSelectionFragment.getSelectedMisconductSanction(),
+                               mMisconductSanctionSelectionFragment.getSelectedMisconductPlayer());
         }
     }
 

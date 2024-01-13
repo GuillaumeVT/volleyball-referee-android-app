@@ -2,20 +2,15 @@ package com.tonkar.volleyballreferee.ui.game.substitution;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
@@ -43,11 +38,13 @@ public class SubstitutionsFragment extends Fragment implements TeamListener, Gam
             mIndoorTeam.addTeamListener(this);
 
             ListView leftTeamSubstitutionsList = view.findViewById(R.id.left_team_substitutions_list);
-            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(requireActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnLeftSide());
+            mLeftTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(requireActivity(), inflater, mIndoorTeam,
+                                                                             mIndoorTeam.getTeamOnLeftSide());
             leftTeamSubstitutionsList.setAdapter(mLeftTeamSubstitutionsListAdapter);
 
             ListView rightTeamSubstitutionsList = view.findViewById(R.id.right_team_substitutions_list);
-            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(requireActivity(), inflater, mIndoorTeam, mIndoorTeam.getTeamOnRightSide());
+            mRightTeamSubstitutionsListAdapter = new SubstitutionsListAdapter(requireActivity(), inflater, mIndoorTeam,
+                                                                              mIndoorTeam.getTeamOnRightSide());
             rightTeamSubstitutionsList.setAdapter(mRightTeamSubstitutionsListAdapter);
         }
 

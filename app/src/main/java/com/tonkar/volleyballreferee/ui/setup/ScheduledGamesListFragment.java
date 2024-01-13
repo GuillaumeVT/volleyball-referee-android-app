@@ -3,13 +3,8 @@ package com.tonkar.volleyballreferee.ui.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.SearchView;
@@ -20,24 +15,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.service.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 public class ScheduledGamesListFragment extends Fragment implements AsyncGameRequestListener {
 
@@ -60,8 +45,7 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mStoredGamesService = new StoredGamesManager(requireContext());
 
         Log.i(Tags.SCHEDULE_UI, "Create scheduled games list fragment");

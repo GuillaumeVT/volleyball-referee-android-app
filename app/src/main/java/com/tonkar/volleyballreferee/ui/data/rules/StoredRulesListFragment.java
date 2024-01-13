@@ -3,13 +3,8 @@ package com.tonkar.volleyballreferee.ui.data.rules;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
@@ -21,15 +16,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.service.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.engine.service.StoredRulesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredRulesService;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
@@ -89,7 +80,9 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
 
                     final Intent intent = new Intent(requireContext(), StoredRulesViewActivity.class);
                     intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
-                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), itemView, "listItemToDetails").toBundle());
+                    startActivity(intent, ActivityOptionsCompat
+                            .makeSceneTransitionAnimation(requireActivity(), itemView, "listItemToDetails")
+                            .toBundle());
                 }
             }
         });

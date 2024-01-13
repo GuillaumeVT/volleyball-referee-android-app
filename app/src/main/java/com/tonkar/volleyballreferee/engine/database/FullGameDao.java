@@ -1,9 +1,6 @@
 package com.tonkar.volleyballreferee.engine.database;
 
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
+import androidx.room.*;
 
 import com.tonkar.volleyballreferee.engine.database.model.FullGameEntity;
 

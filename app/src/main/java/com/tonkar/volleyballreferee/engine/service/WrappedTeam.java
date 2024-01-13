@@ -1,19 +1,12 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class WrappedTeam implements IBaseTeam {
 
@@ -260,13 +253,11 @@ public class WrappedTeam implements IBaseTeam {
             result = true;
         } else if (obj instanceof WrappedTeam) {
             WrappedTeam other = (WrappedTeam) obj;
-            result = this.getTeamName(null).equals(other.getTeamName(null))
-                    && (this.getTeamColor(null) == other.getTeamColor(null))
-                    && (this.getLiberoColor(null) == other.getLiberoColor(null))
-                    && (this.getCaptain(null) == other.getCaptain(null))
-                    && (this.getGender().equals(other.getGender()))
-                    && (this.getPlayers(null).equals(other.getPlayers(null)))
-                    && (this.getLiberos(null).equals(other.getLiberos(null)));
+            result = this.getTeamName(null).equals(other.getTeamName(null)) && (this.getTeamColor(null) == other.getTeamColor(
+                    null)) && (this.getLiberoColor(null) == other.getLiberoColor(null)) && (this.getCaptain(null) == other.getCaptain(
+                    null)) && (this.getGender().equals(other.getGender())) && (this
+                    .getPlayers(null)
+                    .equals(other.getPlayers(null))) && (this.getLiberos(null).equals(other.getLiberos(null)));
         }
 
         return result;

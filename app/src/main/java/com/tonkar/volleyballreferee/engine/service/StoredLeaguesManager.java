@@ -8,35 +8,18 @@ import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSelectedLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.database.VbrRepository;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Queue;
-import java.util.TimeZone;
+import java.util.*;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 
 public class StoredLeaguesManager implements StoredLeaguesService {
 
@@ -72,7 +55,9 @@ public class StoredLeaguesManager implements StoredLeaguesService {
 
     @Override
     public void createAndSaveLeagueFrom(ApiSelectedLeague selectedLeague) {
-        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1 && !selectedLeague.getKind().equals(GameType.TIME)) {
+        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1 && !selectedLeague
+                .getKind()
+                .equals(GameType.TIME)) {
             long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
             int leaguesSameName = mRepository.countLeagues(selectedLeague.getName(), selectedLeague.getKind());
@@ -100,13 +85,13 @@ public class StoredLeaguesManager implements StoredLeaguesService {
 
     public static List<ApiLeague> readLeaguesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiLeague>>(){}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiLeague>>() {}.getType());
         }
     }
 
     public static void writeLeaguesStream(OutputStream outputStream, List<ApiLeague> leagues) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(leagues, new TypeToken<List<ApiLeague>>(){}.getType(), writer);
+        JsonConverters.GSON.toJson(leagues, new TypeToken<List<ApiLeague>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -131,11 +116,13 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            List<ApiLeagueSummary> leagueList = JsonConverters.GSON.fromJson(body.string(), new TypeToken<List<ApiLeagueSummary>>() {}.getType());
+                            List<ApiLeagueSummary> leagueList = JsonConverters.GSON.fromJson(body.string(),
+                                                                                             new TypeToken<List<ApiLeagueSummary>>() {}.getType());
                             syncLeagues(leagueList, listener);
                         }
                     } else {
-                        Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising leagues", response.code()));
+                        Log.e(Tags.STORED_LEAGUES,
+                              String.format(Locale.getDefault(), "Error %d while synchronising leagues", response.code()));
                         if (listener != null) {
                             listener.onSynchronizationFailed();
                         }
@@ -235,7 +222,8 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                             downloadLeaguesRecursive(remoteLeagues, listener);
                         }
                     } else {
-                        Log.e(Tags.STORED_LEAGUES, String.format(Locale.getDefault(), "Error %d while synchronising league", response.code()));
+                        Log.e(Tags.STORED_LEAGUES,
+                              String.format(Locale.getDefault(), "Error %d while synchronising league", response.code()));
                         if (listener != null) {
                             listener.onSynchronizationFailed();
                         }

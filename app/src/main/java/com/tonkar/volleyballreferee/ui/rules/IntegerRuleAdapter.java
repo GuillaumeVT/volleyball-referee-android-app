@@ -1,19 +1,14 @@
 package com.tonkar.volleyballreferee.ui.rules;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 
 import com.tonkar.volleyballreferee.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class IntegerRuleAdapter extends ArrayAdapter<Integer> {
 

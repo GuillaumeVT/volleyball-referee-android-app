@@ -1,18 +1,19 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 public class GameEvent {
 
     public enum EventType {
-        POINT, TIMEOUT, SUBSTITUTION, SANCTION
+        POINT,
+        TIMEOUT,
+        SUBSTITUTION,
+        SANCTION
     }
 
     private final TeamType        teamType;

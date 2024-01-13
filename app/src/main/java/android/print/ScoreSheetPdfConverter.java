@@ -1,20 +1,16 @@
 package android.print;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
+import android.content.*;
 import android.net.Uri;
-import android.os.CancellationSignal;
-import android.os.ParcelFileDescriptor;
+import android.os.*;
 import android.util.Log;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import android.widget.Toast;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
-import com.tonkar.volleyballreferee.ui.util.ProgressIndicatorActivity;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
+import com.tonkar.volleyballreferee.ui.util.*;
 
 public class ScoreSheetPdfConverter {
 
@@ -41,8 +37,7 @@ public class ScoreSheetPdfConverter {
             public void onPageFinished(WebView view, String url) {
                 PrintDocumentAdapter printAdapter = mWebView.createPrintDocumentAdapter(scoreSheet.getFilename());
 
-                PrintAttributes printAttributes = new PrintAttributes
-                        .Builder()
+                PrintAttributes printAttributes = new PrintAttributes.Builder()
                         .setColorMode(PrintAttributes.COLOR_MODE_COLOR)
                         .setMediaSize(PrintAttributes.MediaSize.ISO_A4.asLandscape())
                         .setResolution(new PrintAttributes.Resolution("pdf", "pdf", 300, 300))
@@ -62,28 +57,33 @@ public class ScoreSheetPdfConverter {
         printAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
             @Override
             public void onLayoutFinished(PrintDocumentInfo info, boolean changed) {
-                printAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, getOutputFile(), new CancellationSignal(), new PrintDocumentAdapter.WriteResultCallback() {
-                    @Override
-                    public void onWriteFinished(PageRange[] pages) {
-                        super.onWriteFinished(pages);
+                printAdapter.onWrite(new PageRange[]{ PageRange.ALL_PAGES }, getOutputFile(), new CancellationSignal(),
+                                     new PrintDocumentAdapter.WriteResultCallback() {
+                                         @Override
+                                         public void onWriteFinished(PageRange[] pages) {
+                                             super.onWriteFinished(pages);
 
-                        if (!mActivity.isFinishing()) {
-                            mActivity.hideProgressIndicator();
+                                             if (!mActivity.isFinishing()) {
+                                                 mActivity.hideProgressIndicator();
 
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_VIEW);
-                            intent.setDataAndType(mFileUri, "application/pdf");
-                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                                 Intent intent = new Intent();
+                                                 intent.setAction(Intent.ACTION_VIEW);
+                                                 intent.setDataAndType(mFileUri, "application/pdf");
+                                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                            try {
-                                mActivity.startActivity(Intent.createChooser(intent, mActivity.getString(R.string.create_score_sheet)));
-                            } catch (ActivityNotFoundException e) {
-                                Log.e(Tags.SCORE_SHEET, "Exception while opening the score sheet", e);
-                                UiUtils.makeErrorText(mActivity, mActivity.getString(R.string.score_sheet_exception), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                });
+                                                 try {
+                                                     mActivity.startActivity(Intent.createChooser(intent, mActivity.getString(
+                                                             R.string.create_score_sheet)));
+                                                 } catch (ActivityNotFoundException e) {
+                                                     Log.e(Tags.SCORE_SHEET, "Exception while opening the score sheet", e);
+                                                     UiUtils
+                                                             .makeErrorText(mActivity, mActivity.getString(R.string.score_sheet_exception),
+                                                                            Toast.LENGTH_LONG)
+                                                             .show();
+                                                 }
+                                             }
+                                         }
+                                     });
             }
         }, null);
     }

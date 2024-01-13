@@ -3,12 +3,9 @@ package com.tonkar.volleyballreferee.engine.api.model;
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

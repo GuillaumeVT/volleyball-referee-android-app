@@ -2,18 +2,15 @@ package com.tonkar.volleyballreferee.ui.setup;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TableRow;
+import android.widget.*;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 
 import java.util.Locale;
 
@@ -44,8 +41,10 @@ public class GameSetupStatusDialog {
 
         boolean leagueNameValid = mGame.getLeague().getName().length() >= 2;
         boolean divisionNameValid = mGame.getLeague().getDivision().length() >= 2;
-        boolean miscValid = (leagueNameValid && divisionNameValid)
-                || (mGame.getLeague().getName().length() == 0 && mGame.getLeague().getDivision().length() == 0);
+        boolean miscValid = (leagueNameValid && divisionNameValid) || (mGame.getLeague().getName().length() == 0 && mGame
+                .getLeague()
+                .getDivision()
+                .length() == 0);
 
         View gameSetupStatusView = mActivity.getLayoutInflater().inflate(R.layout.game_setup_status_dialog, null);
 
@@ -62,7 +61,8 @@ public class GameSetupStatusDialog {
             ImageView homeTeamStatusIcon = gameSetupStatusView.findViewById(R.id.home_team_status_icon);
             homeTeamStatusIcon.setVisibility(View.GONE);
             homeTeamNameStatusRow.setVisibility(homeTeamNameValid ? View.GONE : View.VISIBLE);
-            homeTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.HOME), mGame.getExpectedNumberOfPlayersOnCourt()));
+            homeTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.HOME),
+                                                            mGame.getExpectedNumberOfPlayersOnCourt()));
             homeTeamPlayersStatusRow.setVisibility(homeTeamPlayersValid || isSimpleSetup ? View.GONE : View.VISIBLE);
             homeTeamCaptainStatusRow.setVisibility(homeTeamCaptainValid || isSimpleSetup ? View.GONE : View.VISIBLE);
         }
@@ -80,7 +80,8 @@ public class GameSetupStatusDialog {
             ImageView guestTeamStatusIcon = gameSetupStatusView.findViewById(R.id.guest_team_status_icon);
             guestTeamStatusIcon.setVisibility(View.GONE);
             guestTeamNameStatusRow.setVisibility(guestTeamNameValid ? View.GONE : View.VISIBLE);
-            guestTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.GUEST), mGame.getExpectedNumberOfPlayersOnCourt()));
+            guestTeamPlayersStatusView.setText(String.format(Locale.getDefault(), "%d / %d", mGame.getNumberOfPlayers(TeamType.GUEST),
+                                                             mGame.getExpectedNumberOfPlayersOnCourt()));
             guestTeamPlayersStatusRow.setVisibility(guestTeamPlayersValid || isSimpleSetup ? View.GONE : View.VISIBLE);
             guestTeamCaptainStatusRow.setVisibility(guestTeamCaptainValid || isSimpleSetup ? View.GONE : View.VISIBLE);
         }

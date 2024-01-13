@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.screenshots;
 
-import android.app.LocaleManager;
-import android.app.UiAutomation;
+import android.app.*;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.LocaleList;
@@ -12,12 +11,9 @@ import androidx.test.espresso.Espresso;
 
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public abstract class Screenshots {
 
@@ -26,24 +22,11 @@ public abstract class Screenshots {
     protected StoredGamesService mStoredGamesService;
     protected File               mScreenshotsDirectory;
 
-    protected final List<Locale> mLocales = List.of(
-            Locale.forLanguageTag("ar"),
-            Locale.forLanguageTag("bg"),
-            Locale.forLanguageTag("ca"),
-            Locale.GERMAN,
-            Locale.forLanguageTag("el"),
-            Locale.forLanguageTag("es"),
-            Locale.forLanguageTag("et"),
-            Locale.FRENCH,
-            Locale.forLanguageTag("hu"),
-            Locale.ITALIAN,
-            Locale.forLanguageTag("nl"),
-            Locale.forLanguageTag("pl"),
-            Locale.forLanguageTag("pt"),
-            Locale.forLanguageTag("pt-BR"),
-            Locale.forLanguageTag("ru"),
-            Locale.ENGLISH
-    );
+    protected final List<Locale> mLocales = List.of(Locale.forLanguageTag("ar"), Locale.forLanguageTag("bg"), Locale.forLanguageTag("ca"),
+                                                    Locale.GERMAN, Locale.forLanguageTag("el"), Locale.forLanguageTag("es"),
+                                                    Locale.forLanguageTag("et"), Locale.FRENCH, Locale.forLanguageTag("hu"), Locale.ITALIAN,
+                                                    Locale.forLanguageTag("nl"), Locale.forLanguageTag("pl"), Locale.forLanguageTag("pt"),
+                                                    Locale.forLanguageTag("pt-BR"), Locale.forLanguageTag("ru"), Locale.ENGLISH);
 
     protected void setAppLanguage(Locale locale) {
         mContext.getSystemService(LocaleManager.class).setApplicationLocales(new LocaleList(locale));

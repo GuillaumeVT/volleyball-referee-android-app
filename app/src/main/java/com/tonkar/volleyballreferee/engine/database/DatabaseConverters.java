@@ -2,9 +2,7 @@ package com.tonkar.volleyballreferee.engine.database;
 
 import androidx.room.TypeConverter;
 
-import com.tonkar.volleyballreferee.engine.game.GameStatus;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 
 public class DatabaseConverters {

@@ -2,25 +2,17 @@ package com.tonkar.volleyballreferee.ui.user;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
-import com.tonkar.volleyballreferee.engine.service.AsyncUserRequestListener;
-import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.service.StoredUserService;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.net.HttpURLConnection;
@@ -80,7 +72,10 @@ public class UserSignInFragment extends Fragment {
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
                     requireActivity().runOnUiThread(() -> {
-                        UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo), userToken.getUser().getPseudo()), Toast.LENGTH_LONG).show();
+                        UiUtils
+                                .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo),
+                                                                      userToken.getUser().getPseudo()), Toast.LENGTH_LONG)
+                                .show();
                         UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
                     });
                 }
@@ -119,12 +114,16 @@ public class UserSignInFragment extends Fragment {
 
             @Override
             public void onUserPasswordRecoveryInitiated() {
-                requireActivity().runOnUiThread(() -> UiUtils.makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated), mUser.getEmail()), Toast.LENGTH_LONG).show());
+                requireActivity().runOnUiThread(() -> UiUtils
+                        .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated),
+                                                              mUser.getEmail()), Toast.LENGTH_LONG)
+                        .show());
             }
 
             @Override
             public void onError(int httpCode) {
-                requireActivity().runOnUiThread(() -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
+                requireActivity().runOnUiThread(
+                        () -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
             }
         });
 

@@ -1,17 +1,13 @@
 package com.tonkar.volleyballreferee.ui.game.timeout;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
 import com.tonkar.volleyballreferee.engine.game.timeout.IBaseTimeout;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -25,11 +21,20 @@ public class TimeoutsListAdapter extends BaseAdapter {
     private       TeamType       mTeamType;
     private final int            mSetIndex;
 
-    TimeoutsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTimeout timeoutService, IBaseTeam teamService, TeamType teamType) {
+    TimeoutsListAdapter(Context context,
+                        LayoutInflater layoutInflater,
+                        IBaseTimeout timeoutService,
+                        IBaseTeam teamService,
+                        TeamType teamType) {
         this(context, layoutInflater, timeoutService, teamService, teamType, -1);
     }
 
-    public TimeoutsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTimeout timeoutService, IBaseTeam teamService, TeamType teamType, int setIndex) {
+    public TimeoutsListAdapter(Context context,
+                               LayoutInflater layoutInflater,
+                               IBaseTimeout timeoutService,
+                               IBaseTeam teamService,
+                               TeamType teamType,
+                               int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mTimeoutService = timeoutService;

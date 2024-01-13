@@ -1,20 +1,15 @@
 package com.tonkar.volleyballreferee.ui.user;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
-import com.tonkar.volleyballreferee.engine.service.AsyncUserRequestListener;
-import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.service.StoredUserService;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.billing.PurchaseListFragment;
 
 import java.net.HttpURLConnection;
@@ -30,8 +25,7 @@ public class UserFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_user, container, false);
 
         mSyncLayout = fragmentView.findViewById(R.id.user_sync_progress_layout);
@@ -83,9 +77,6 @@ public class UserFragment extends Fragment {
     }
 
     private void replaceFragment(Fragment fragment) {
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.user_container_view, fragment)
-                .commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.user_container_view, fragment).commit();
     }
 }

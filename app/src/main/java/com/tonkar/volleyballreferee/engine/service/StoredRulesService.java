@@ -1,12 +1,10 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public interface StoredRulesService {
 

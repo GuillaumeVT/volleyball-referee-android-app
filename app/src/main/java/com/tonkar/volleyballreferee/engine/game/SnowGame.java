@@ -2,27 +2,17 @@ package com.tonkar.volleyballreferee.engine.game;
 
 import android.graphics.Color;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.set.SnowSet;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.composition.SnowTeamComposition;
-import com.tonkar.volleyballreferee.engine.team.definition.SnowTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
+import com.tonkar.volleyballreferee.engine.team.definition.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class SnowGame extends Game implements IClassicTeam {
 
@@ -42,7 +32,8 @@ public class SnowGame extends Game implements IClassicTeam {
 
     @Override
     protected com.tonkar.volleyballreferee.engine.game.set.Set createSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
-        return new SnowSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME), getTeamDefinition(TeamType.GUEST));
+        return new SnowSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME),
+                           getTeamDefinition(TeamType.GUEST));
     }
 
     private SnowTeamComposition getSnowTeamComposition(TeamType teamType) {
@@ -107,7 +98,8 @@ public class SnowGame extends Game implements IClassicTeam {
 
     @Override
     public void substitutePlayer(TeamType teamType, int number, PositionType positionType, ActionOriginType actionOriginType) {
-        if (getSnowTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST), actionOriginType)) {
+        if (getSnowTeamComposition(teamType).substitutePlayer(number, positionType, getPoints(TeamType.HOME), getPoints(TeamType.GUEST),
+                                                              actionOriginType)) {
             notifyPlayerChanged(teamType, number, positionType, actionOriginType);
         }
     }
@@ -115,10 +107,11 @@ public class SnowGame extends Game implements IClassicTeam {
     @Override
     protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {
         java.util.Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
-        if (!evictedPlayers.contains(substitution.getPlayerIn())
-                && !evictedPlayers.contains(substitution.getPlayerOut())
-                && getSnowTeamComposition(teamType).undoSubstitution(substitution)) {
-            notifyPlayerChanged(teamType, substitution.getPlayerOut(), getSnowTeamComposition(teamType).getPlayerPosition(substitution.getPlayerOut()), ActionOriginType.APPLICATION);
+        if (!evictedPlayers.contains(substitution.getPlayerIn()) && !evictedPlayers.contains(
+                substitution.getPlayerOut()) && getSnowTeamComposition(teamType).undoSubstitution(substitution)) {
+            notifyPlayerChanged(teamType, substitution.getPlayerOut(),
+                                getSnowTeamComposition(teamType).getPlayerPosition(substitution.getPlayerOut()),
+                                ActionOriginType.APPLICATION);
         }
     }
 
@@ -178,7 +171,9 @@ public class SnowGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public java.util.Set<Integer> filterSubstitutionsWithEvictedPlayersForCurrentSet(TeamType teamType, int evictedNumber, java.util.Set<Integer> possibleSubstitutions) {
+    public java.util.Set<Integer> filterSubstitutionsWithEvictedPlayersForCurrentSet(TeamType teamType,
+                                                                                     int evictedNumber,
+                                                                                     java.util.Set<Integer> possibleSubstitutions) {
         final java.util.Set<Integer> filteredSubstitutions = new HashSet<>(possibleSubstitutions);
         final java.util.Set<Integer> evictedNumbers = getEvictedPlayersForCurrentSet(teamType, true, true);
 
@@ -302,7 +297,8 @@ public class SnowGame extends Game implements IClassicTeam {
 
             if (!PositionType.BENCH.equals(positionType)) {
                 final java.util.Set<Integer> possibleSubstitutions = getPossibleSubstitutions(teamType, positionType);
-                final java.util.Set<Integer> filteredSubstitutions = filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number, possibleSubstitutions);
+                final java.util.Set<Integer> filteredSubstitutions = filterSubstitutionsWithEvictedPlayersForCurrentSet(teamType, number,
+                                                                                                                        possibleSubstitutions);
 
                 // If there is no possible legal substitution, the set is lost
                 if (filteredSubstitutions.size() == 0) {
@@ -392,13 +388,15 @@ public class SnowGame extends Game implements IClassicTeam {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<ApiSubstitution> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    List<ApiSubstitution> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints,
+                                                                                                 guestPoints);
                     for (ApiSubstitution substitution : homeSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.HOME, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.HOME, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<ApiSubstitution> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    List<ApiSubstitution> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints,
+                                                                                                  guestPoints);
                     for (ApiSubstitution substitution : guestSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.GUEST, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.GUEST, substitution.getPlayerIn(), positionType, ActionOriginType.USER);

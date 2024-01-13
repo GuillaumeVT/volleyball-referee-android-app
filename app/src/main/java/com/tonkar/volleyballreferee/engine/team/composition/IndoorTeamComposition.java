@@ -7,26 +7,19 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.player.IndoorPlayer;
-import com.tonkar.volleyballreferee.engine.team.player.Player;
-import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+import com.tonkar.volleyballreferee.engine.team.definition.*;
+import com.tonkar.volleyballreferee.engine.team.player.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class IndoorTeamComposition extends ClassicTeamComposition {
 
     @SerializedName("actingLibero")
-    private       int                     mActingLibero;
+    private       int          mActingLibero;
     @SerializedName("middleBlockers")
-    private final Set<Integer>            mMiddleBlockers;
+    private final Set<Integer> mMiddleBlockers;
     @SerializedName("waitingMiddleBlocker")
-    private       int                     mWaitingMiddleBlocker;
+    private       int          mWaitingMiddleBlocker;
 
     public IndoorTeamComposition(final TeamDefinition teamDefinition, int substitutionType, int maxSubstitutionsPerSet) {
         super(teamDefinition, substitutionType, maxSubstitutionsPerSet);
@@ -47,16 +40,24 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
-        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType, getTeamDefinition().getTeamType()));
+    protected void onSubstitution(int oldNumber,
+                                  int newNumber,
+                                  PositionType positionType,
+                                  int homeTeamPoints,
+                                  int guestTeamPoints,
+                                  ActionOriginType actionOriginType) {
+        Log.i(Tags.TEAM, String.format("Replacing player #%d by #%d for position %s of %s team", oldNumber, newNumber, positionType,
+                                       getTeamDefinition().getTeamType()));
 
         if (isStartingLineupConfirmed()) {
             if (getTeamDefinition().isLibero(newNumber)) {
-                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber, getTeamDefinition().getTeamType()));
+                Log.i(Tags.TEAM, String.format("Player #%d of %s team is a libero and becomes acting libero", newNumber,
+                                               getTeamDefinition().getTeamType()));
                 mActingLibero = newNumber;
 
                 if (!getTeamDefinition().isLibero(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber, getTeamDefinition().getTeamType()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is waiting outside", oldNumber,
+                                                   getTeamDefinition().getTeamType()));
 
                     if (mMiddleBlockers.size() == 1) {
                         int middleBlocker = mMiddleBlockers.iterator().next();
@@ -77,11 +78,13 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
             } else if (isMiddleBlocker(newNumber) && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(oldNumber)) {
                 if (ActionOriginType.APPLICATION.equals(actionOriginType)) {
                     // The middle blocker is back on court as a result of a rotation
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber, getTeamDefinition().getTeamType()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and is back on court", newNumber,
+                                                   getTeamDefinition().getTeamType()));
                     middleBlockerOnCourt();
                 } else {
                     // The middle blocker is back on court as a result of a substitution, the user wants this middle blocker to stay in defence
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and will stay on court in defence", newNumber, getTeamDefinition().getTeamType()));
+                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a middle blocker and will stay on court in defence", newNumber,
+                                                   getTeamDefinition().getTeamType()));
                     removeMiddleBlocker(newNumber);
                 }
             } else {
@@ -89,7 +92,8 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
                 super.onSubstitution(oldNumber, newNumber, positionType, homeTeamPoints, guestTeamPoints, actionOriginType);
 
                 if (isMiddleBlocker(oldNumber)) {
-                    Log.i(Tags.TEAM, String.format("Player #%d of %s team is a new middle blocker", newNumber, getTeamDefinition().getTeamType()));
+                    Log.i(Tags.TEAM,
+                          String.format("Player #%d of %s team is a new middle blocker", newNumber, getTeamDefinition().getTeamType()));
                     mMiddleBlockers.remove(oldNumber);
                     mMiddleBlockers.add(newNumber);
                 }
@@ -100,7 +104,9 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     @Override
     public Set<Integer> getPossibleSubstitutions(PositionType positionType) {
         Set<Integer> availablePlayers = new TreeSet<>(getPossibleSubstitutionsNoMax(positionType));
-        Log.i(Tags.TEAM, String.format("Possible substitutions for position %s of %s team are %s", positionType, getTeamDefinition().getTeamType(), availablePlayers));
+        Log.i(Tags.TEAM,
+              String.format("Possible substitutions for position %s of %s team are %s", positionType, getTeamDefinition().getTeamType(),
+                            availablePlayers));
         return availablePlayers;
     }
 
@@ -173,7 +179,8 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
         List<Integer> players = new ArrayList<>();
 
         for (ApiPlayer player : getTeamDefinition().getPlayers()) {
-            if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(player.getNum()) && !getTeamDefinition().isLibero(player.getNum())) {
+            if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(
+                    player.getNum()) && !getTeamDefinition().isLibero(player.getNum())) {
                 players.add(player.getNum());
             }
         }
@@ -262,10 +269,12 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     public void rotateToPreviousPositions() {
         super.rotateToPreviousPositions();
 
-        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_2))) {
+        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(
+                getPlayerAtPosition(PositionType.POSITION_2))) {
             substitutePlayer(mWaitingMiddleBlocker, PositionType.POSITION_2, ActionOriginType.APPLICATION);
         }
-        if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(getPlayerAtPosition(PositionType.POSITION_5))) {
+        if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(
+                getPlayerAtPosition(PositionType.POSITION_5))) {
             substitutePlayer(mActingLibero, PositionType.POSITION_5, ActionOriginType.APPLICATION);
         }
     }
@@ -273,7 +282,8 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     public int checkPosition1Offence() {
         int middleBlockerNumber = -1;
 
-        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(getPlayerAtPosition(PositionType.POSITION_1))) {
+        if (hasActingLibero() && hasLiberoOnCourt() && hasWaitingMiddleBlocker() && getTeamDefinition().isLibero(
+                getPlayerAtPosition(PositionType.POSITION_1))) {
             middleBlockerNumber = mWaitingMiddleBlocker;
         }
 
@@ -283,7 +293,8 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     public int checkPosition1Defence() {
         int liberoNumber = -1;
 
-        if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(getPlayerAtPosition(PositionType.POSITION_1))) {
+        if (hasActingLibero() && !hasLiberoOnCourt() && !hasWaitingMiddleBlocker() && isMiddleBlocker(
+                getPlayerAtPosition(PositionType.POSITION_1))) {
             liberoNumber = mActingLibero;
         }
 
@@ -316,26 +327,27 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
             result = true;
         } else if (obj instanceof IndoorTeamComposition) {
             IndoorTeamComposition other = (IndoorTeamComposition) obj;
-            result = super.equals(other)
-                    && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(PositionType.POSITION_1)))
-                    && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(PositionType.POSITION_2)))
-                    && (this.getPlayerAtPosition(PositionType.POSITION_3) == (other.getPlayerAtPosition(PositionType.POSITION_3)))
-                    && (this.getPlayerAtPosition(PositionType.POSITION_4) == (other.getPlayerAtPosition(PositionType.POSITION_4)))
-                    && (this.getPlayerAtPosition(PositionType.POSITION_5) == (other.getPlayerAtPosition(PositionType.POSITION_5)))
-                    && (this.getPlayerAtPosition(PositionType.POSITION_6) == (other.getPlayerAtPosition(PositionType.POSITION_6)))
-                    && (this.isStartingLineupConfirmed() == other.isStartingLineupConfirmed())
-                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_1) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_1)))
-                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_2) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_2)))
-                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_3) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_3)))
-                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_4) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_4)))
-                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_5) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_5)))
-                    && (this.getPlayerAtPositionInStartingLineup(PositionType.POSITION_6) == (other.getPlayerAtPositionInStartingLineup(PositionType.POSITION_6)))
-                    && (this.canSubstitute() == other.canSubstitute())
-                    && (this.getSubstitutionsCopy().equals(other.getSubstitutionsCopy()))
-                    && (this.hasActingLibero() == other.hasActingLibero())
-                    && (this.hasWaitingMiddleBlocker() == other.hasWaitingMiddleBlocker())
-                    && (this.getSecondaryCaptain() == other.getSecondaryCaptain())
-                    && (this.hasLiberoOnCourt() == other.hasLiberoOnCourt());
+            result = super.equals(other) && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_1))) && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_2))) && (this.getPlayerAtPosition(PositionType.POSITION_3) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_3))) && (this.getPlayerAtPosition(PositionType.POSITION_4) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_4))) && (this.getPlayerAtPosition(PositionType.POSITION_5) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_5))) && (this.getPlayerAtPosition(PositionType.POSITION_6) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_6))) && (this.isStartingLineupConfirmed() == other.isStartingLineupConfirmed()) && (this.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_1) == (other.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_1))) && (this.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_2) == (other.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_2))) && (this.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_3) == (other.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_3))) && (this.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_4) == (other.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_4))) && (this.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_5) == (other.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_5))) && (this.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_6) == (other.getPlayerAtPositionInStartingLineup(
+                    PositionType.POSITION_6))) && (this.canSubstitute() == other.canSubstitute()) && (this
+                    .getSubstitutionsCopy()
+                    .equals(other.getSubstitutionsCopy())) && (this.hasActingLibero() == other.hasActingLibero()) && (this.hasWaitingMiddleBlocker() == other.hasWaitingMiddleBlocker()) && (this.getSecondaryCaptain() == other.getSecondaryCaptain()) && (this.hasLiberoOnCourt() == other.hasLiberoOnCourt());
         }
 
         return result;

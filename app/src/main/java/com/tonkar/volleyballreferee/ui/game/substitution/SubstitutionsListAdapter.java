@@ -1,16 +1,12 @@
 package com.tonkar.volleyballreferee.ui.game.substitution;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -33,7 +29,11 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         this(context, layoutInflater, teamService, teamType, -1);
     }
 
-    public SubstitutionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseTeam teamService, TeamType teamType, int setIndex) {
+    public SubstitutionsListAdapter(Context context,
+                                    LayoutInflater layoutInflater,
+                                    IBaseTeam teamService,
+                                    TeamType teamType,
+                                    int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mTeamService = teamService;
@@ -97,9 +97,11 @@ public class SubstitutionsListAdapter extends BaseAdapter {
         }
 
         if (TeamType.HOME.equals(mTeamType)) {
-            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getHomePoints(), substitution.getGuestPoints()));
+            viewHolder.scoreText.setText(
+                    String.format(Locale.getDefault(), "%d-%d", substitution.getHomePoints(), substitution.getGuestPoints()));
         } else {
-            viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", substitution.getGuestPoints(), substitution.getHomePoints()));
+            viewHolder.scoreText.setText(
+                    String.format(Locale.getDefault(), "%d-%d", substitution.getGuestPoints(), substitution.getHomePoints()));
         }
         viewHolder.playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
         viewHolder.playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));

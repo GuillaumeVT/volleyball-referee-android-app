@@ -5,12 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Base64;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -23,9 +19,7 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.setup.NameSpinnerAdapter;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class SignatureDialogFragment extends DialogFragment {
 
@@ -146,8 +140,7 @@ public class SignatureDialogFragment extends DialogFragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        return new AlertDialog
-                .Builder(mContext, R.style.AppTheme_Dialog)
+        return new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog)
                 .setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> setSignature())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})

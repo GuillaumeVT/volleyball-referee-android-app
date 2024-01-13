@@ -2,30 +2,22 @@ package com.tonkar.volleyballreferee.ui.game.sanction;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MisconductSanctionSelectionFragment extends Fragment {
 
@@ -124,7 +116,6 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                 }
             });
 
-
             GridView misconductPlayerGrid = view.findViewById(R.id.misconduct_player_grid);
 
             mMisconductPlayerAdapter = new MisconductPlayerAdapter(requireActivity().getLayoutInflater(), getContext(), mGame, mTeamType);
@@ -145,12 +136,14 @@ public class MisconductSanctionSelectionFragment extends Fragment {
     }
 
     private void onMisconductPlayerSelected(int number) {
-        Set<SanctionType> possibleMisconductSanctions = number >= 0 ? mGame.getPossibleMisconductSanctions(mTeamType, number) : new HashSet<>();
+        Set<SanctionType> possibleMisconductSanctions = number >= 0 ? mGame.getPossibleMisconductSanctions(mTeamType,
+                                                                                                           number) : new HashSet<>();
 
         mYellowCardLayout.setVisibility(possibleMisconductSanctions.contains(SanctionType.YELLOW) ? View.VISIBLE : View.GONE);
         mRedCardLayout.setVisibility(possibleMisconductSanctions.contains(SanctionType.RED) ? View.VISIBLE : View.GONE);
         mExpulsionCardLayout.setVisibility(possibleMisconductSanctions.contains(SanctionType.RED_EXPULSION) ? View.VISIBLE : View.GONE);
-        mDisqualificationCardLayout.setVisibility(possibleMisconductSanctions.contains(SanctionType.RED_DISQUALIFICATION) ? View.VISIBLE : View.GONE);
+        mDisqualificationCardLayout.setVisibility(
+                possibleMisconductSanctions.contains(SanctionType.RED_DISQUALIFICATION) ? View.VISIBLE : View.GONE);
 
         mSelectedMisconductSanction = null;
         mYellowCardButton.setChecked(false);

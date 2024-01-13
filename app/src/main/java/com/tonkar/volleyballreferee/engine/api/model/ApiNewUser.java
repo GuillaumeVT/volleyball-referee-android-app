@@ -1,8 +1,6 @@
 package com.tonkar.volleyballreferee.engine.api.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @Getter

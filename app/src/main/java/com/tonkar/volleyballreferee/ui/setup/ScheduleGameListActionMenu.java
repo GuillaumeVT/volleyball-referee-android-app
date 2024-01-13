@@ -1,37 +1,22 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.app.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.ContextThemeWrapper;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.bottomsheet.*;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.game.GameFactory;
-import com.tonkar.volleyballreferee.engine.game.GameStatus;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.service.AsyncGameRequestListener;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -99,7 +84,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog)super.onCreateDialog(savedInstanceState);
+        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         bottomSheetDialog.setOnShowListener(dialog -> {
             BottomSheetDialog tmpDialog = (BottomSheetDialog) dialog;
             FrameLayout bottomSheet = tmpDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
@@ -133,13 +118,13 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     private void startGame() {
         Log.i(Tags.SCHEDULE_UI, "Start game");
         mConfigureBeforeStart = false;
-        mStoredGamesService.downloadGame(mGameDescription.getId(),this);
+        mStoredGamesService.downloadGame(mGameDescription.getId(), this);
     }
 
     private void configureAndStartGame() {
         Log.i(Tags.SCHEDULE_UI, "Configure and start game");
         mConfigureBeforeStart = true;
-        mStoredGamesService.downloadGame(mGameDescription.getId(),this);
+        mStoredGamesService.downloadGame(mGameDescription.getId(), this);
     }
 
     private void deleteGame() {

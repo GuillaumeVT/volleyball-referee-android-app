@@ -2,34 +2,22 @@ package com.tonkar.volleyballreferee.ui.data.game;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.service.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.StoredGameHandler;
+import com.tonkar.volleyballreferee.ui.interfaces.*;
 import com.tonkar.volleyballreferee.ui.scoresheet.ScoreSheetActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 public abstract class StoredGameActivity extends AppCompatActivity {
 
@@ -110,8 +98,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         formatter.setTimeZone(TimeZone.getDefault());
 
-        summaryText.setText(String.format(Locale.getDefault(),"%s\t\t%d - %d\t\t%s",
-                mStoredGame.getTeamName(TeamType.HOME), mStoredGame.getSets(TeamType.HOME), mStoredGame.getSets(TeamType.GUEST), mStoredGame.getTeamName(TeamType.GUEST)));
+        summaryText.setText(String.format(Locale.getDefault(), "%s\t\t%d - %d\t\t%s", mStoredGame.getTeamName(TeamType.HOME),
+                                          mStoredGame.getSets(TeamType.HOME), mStoredGame.getSets(TeamType.GUEST),
+                                          mStoredGame.getTeamName(TeamType.GUEST)));
         dateText.setText(formatter.format(new Date(mStoredGame.getScheduledAt())));
 
         scoreText.setText(mStoredGame.getScore());
@@ -159,7 +148,8 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         }
 
         if (mStoredGame.getLeague() != null && !mStoredGame.getLeague().getName().isEmpty()) {
-            leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , mStoredGame.getLeague().getName(), mStoredGame.getLeague().getDivision()));
+            leagueText.setText(String.format(Locale.getDefault(), "%s / %s", mStoredGame.getLeague().getName(),
+                                             mStoredGame.getLeague().getDivision()));
         }
         leagueText.setVisibility(mStoredGame.getLeague() == null || mStoredGame.getLeague().getName().isEmpty() ? View.GONE : View.VISIBLE);
     }
@@ -199,7 +189,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
                 @Override
                 public void onSynchronizationFailed() {
-                    runOnUiThread(() -> UiUtils.makeErrorText(StoredGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show());
+                    runOnUiThread(() -> UiUtils
+                            .makeErrorText(StoredGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG)
+                            .show());
                 }
             });
         }

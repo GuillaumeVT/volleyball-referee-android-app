@@ -3,8 +3,7 @@ package com.tonkar.volleyballreferee.engine.service;
 import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public interface StoredGamesService {
 
@@ -53,7 +52,7 @@ public interface StoredGamesService {
     void downloadGame(String id, AsyncGameRequestListener listener);
 
     void downloadAvailableGames(AsyncGameRequestListener listener);
-    
+
     void scheduleGame(ApiGameSummary gameDescription, boolean create, DataSynchronizationListener listener);
 
     void cancelGame(String id, DataSynchronizationListener listener);

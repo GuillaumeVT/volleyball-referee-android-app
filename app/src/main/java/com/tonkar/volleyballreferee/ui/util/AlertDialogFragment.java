@@ -34,7 +34,11 @@ public class AlertDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public static AlertDialogFragment newInstance(String title, String message, String negativeButtonText, String positiveButtonText, String neutralButtonText) {
+    public static AlertDialogFragment newInstance(String title,
+                                                  String message,
+                                                  String negativeButtonText,
+                                                  String positiveButtonText,
+                                                  String neutralButtonText) {
         AlertDialogFragment fragment = new AlertDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);

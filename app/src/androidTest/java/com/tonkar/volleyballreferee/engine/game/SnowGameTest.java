@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -13,9 +12,7 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SnowGameTest {
@@ -23,7 +20,8 @@ public class SnowGameTest {
     @Test
     public void service() {
         SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialSnowRules());
+                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                   System.currentTimeMillis(), Rules.officialSnowRules());
         game.startMatch();
 
         game.substitutePlayer(TeamType.HOME, 1, PositionType.POSITION_1, ActionOriginType.USER);
@@ -77,7 +75,8 @@ public class SnowGameTest {
     @Test
     public void substitution() {
         SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialSnowRules());
+                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                   System.currentTimeMillis(), Rules.officialSnowRules());
         game.addPlayer(TeamType.HOME, 4);
         game.startMatch();
 

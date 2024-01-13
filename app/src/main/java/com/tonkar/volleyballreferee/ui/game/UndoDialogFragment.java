@@ -2,18 +2,10 @@ package com.tonkar.volleyballreferee.ui.game;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
+import android.graphics.*;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -21,16 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.game.GameEvent;
-import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 import com.tonkar.volleyballreferee.ui.team.PlayerToggleButton;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class UndoDialogFragment extends DialogFragment implements GameServiceHandler {
 
@@ -60,9 +49,9 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
         mGameEventListAdapter = new GameEventListAdapter(getContext(), mGame.getLatestGameEvents());
         gameEventList.setAdapter(mGameEventListAdapter);
 
-        mAlertDialog = new AlertDialog
-                .Builder(requireContext(), R.style.AppTheme_Dialog)
-                .setTitle(R.string.undo).setView(mView)
+        mAlertDialog = new AlertDialog.Builder(requireContext(), R.style.AppTheme_Dialog)
+                .setTitle(R.string.undo)
+                .setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> undo())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})
                 .create();
@@ -132,27 +121,31 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
 
             switch (gameEvent.getEventType()) {
                 case POINT:
-                    button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.remove_point_description), mGame.getTeamName(gameEvent.getTeamType())));
+                    button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.remove_point_description),
+                                                 mGame.getTeamName(gameEvent.getTeamType())));
                     layout.addView(createPointEvent());
                     break;
                 case TIMEOUT:
-                    button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout), mGame.getTeamName(gameEvent.getTeamType())));
+                    button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout),
+                                                 mGame.getTeamName(gameEvent.getTeamType())));
                     layout.addView(createTimeoutEvent());
                     break;
                 case SUBSTITUTION:
-                    button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution), mGame.getTeamName(gameEvent.getTeamType())));
+                    button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution),
+                                                 mGame.getTeamName(gameEvent.getTeamType())));
                     layout.addView(createSubstitutionEvent(gameEvent));
                     break;
                 case SANCTION:
                     if (gameEvent.getSanction().getCard().isDelaySanctionType()) {
-                        button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction), mGame.getTeamName(gameEvent.getTeamType())));
+                        button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction),
+                                                     mGame.getTeamName(gameEvent.getTeamType())));
                     } else {
-                        button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.misconduct_sanction), mGame.getTeamName(gameEvent.getTeamType())));
+                        button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.misconduct_sanction),
+                                                     mGame.getTeamName(gameEvent.getTeamType())));
                     }
                     layout.addView(createSanctionEvent(gameEvent));
                     break;
             }
-
 
             button.setColor(mContext, mGame.getTeamColor(gameEvent.getTeamType()));
             button.addOnCheckedChangeListener((cButton, isChecked) -> {
@@ -173,16 +166,26 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
         private View createPointEvent() {
             ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.simple_event_item, null);
             imageView.setImageResource(R.drawable.ic_score_revert);
-            imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            imageView
+                    .getDrawable()
+                    .mutate()
+                    .setColorFilter(
+                            new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+            imageView.setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             return imageView;
         }
 
         private View createTimeoutEvent() {
             ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.simple_event_item, null);
             imageView.setImageResource(R.drawable.ic_timeout);
-            imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            imageView
+                    .getDrawable()
+                    .mutate()
+                    .setColorFilter(
+                            new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+            imageView.setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             return imageView;
         }
 
@@ -199,7 +202,8 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
             UiUtils.styleTeamText(mContext, mGame, gameEvent.getTeamType(), substitution.getPlayerIn(), playerInText);
             UiUtils.styleTeamText(mContext, mGame, gameEvent.getTeamType(), substitution.getPlayerOut(), playerOutText);
 
-            substitutionView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            substitutionView.setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
             return substitutionView;
         }
@@ -225,7 +229,8 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
                 UiUtils.styleTeamText(mContext, mGame, gameEvent.getTeamType(), sanction.getNum(), playerText);
             }
 
-            sanctionView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            sanctionView.setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
             return sanctionView;
         }

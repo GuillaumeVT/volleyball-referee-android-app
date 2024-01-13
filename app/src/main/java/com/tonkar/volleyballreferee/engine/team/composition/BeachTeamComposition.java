@@ -1,11 +1,8 @@
 package com.tonkar.volleyballreferee.engine.team.composition;
 
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.player.BeachPlayer;
-import com.tonkar.volleyballreferee.engine.team.player.Player;
-import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+import com.tonkar.volleyballreferee.engine.team.definition.*;
+import com.tonkar.volleyballreferee.engine.team.player.*;
 
 public class BeachTeamComposition extends TeamComposition {
 
@@ -30,7 +27,8 @@ public class BeachTeamComposition extends TeamComposition {
     public boolean substitutePlayer(final int number, final PositionType positionType, ActionOriginType actionOriginType) {
         boolean result = false;
 
-        if (PositionType.POSITION_1.equals(positionType) || PositionType.POSITION_2.equals(positionType) || PositionType.BENCH.equals(positionType)) {
+        if (PositionType.POSITION_1.equals(positionType) || PositionType.POSITION_2.equals(positionType) || PositionType.BENCH.equals(
+                positionType)) {
             result = super.substitutePlayer(number, positionType, actionOriginType);
         }
 
@@ -38,7 +36,12 @@ public class BeachTeamComposition extends TeamComposition {
     }
 
     @Override
-    protected void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {}
+    protected void onSubstitution(int oldNumber,
+                                  int newNumber,
+                                  PositionType positionType,
+                                  int homeTeamPoints,
+                                  int guestTeamPoints,
+                                  ActionOriginType actionOriginType) {}
 
     @Override
     public boolean equals(Object obj) {
@@ -48,9 +51,9 @@ public class BeachTeamComposition extends TeamComposition {
             result = true;
         } else if (obj instanceof BeachTeamComposition) {
             BeachTeamComposition other = (BeachTeamComposition) obj;
-            result = super.equals(other)
-                    && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(PositionType.POSITION_1)))
-                    && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(PositionType.POSITION_2)));
+            result = super.equals(other) && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_1))) && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(
+                    PositionType.POSITION_2)));
         }
 
         return result;

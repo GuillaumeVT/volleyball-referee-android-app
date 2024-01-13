@@ -4,31 +4,13 @@ import android.content.Context;
 
 import com.google.gson.reflect.TypeToken;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGame;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
-import com.tonkar.volleyballreferee.engine.database.model.FriendEntity;
-import com.tonkar.volleyballreferee.engine.database.model.FullGameEntity;
-import com.tonkar.volleyballreferee.engine.database.model.GameEntity;
-import com.tonkar.volleyballreferee.engine.database.model.LeagueEntity;
-import com.tonkar.volleyballreferee.engine.database.model.RulesEntity;
-import com.tonkar.volleyballreferee.engine.database.model.TeamEntity;
-import com.tonkar.volleyballreferee.engine.game.BaseGame;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGame;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.database.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class VbrRepository {
 
@@ -207,7 +189,6 @@ public class VbrRepository {
         return mTeamDao.listTeamsByKind(kind);
     }
 
-
     public List<ApiTeamSummary> listTeams(GenderType genderType, GameType kind) {
         return mTeamDao.listTeamsByGenderAndKind(genderType, kind);
     }
@@ -216,7 +197,6 @@ public class VbrRepository {
         String json = mTeamDao.findContentById(id);
         return JsonConverters.GSON.fromJson(json, ApiTeam.class);
     }
-
 
     public ApiTeam getTeam(String name, GenderType genderType, GameType kind) {
         String json = mTeamDao.findContentByNameAndGenderAndKind(name, genderType, kind);
@@ -331,11 +311,11 @@ public class VbrRepository {
 
     private IGame getFullGame(String type) {
         String json = mFullGameDao.findContentByType(type);
-        return JsonConverters.GSON.fromJson(json, new TypeToken<BaseGame>(){}.getType());
+        return JsonConverters.GSON.fromJson(json, new TypeToken<BaseGame>() {}.getType());
     }
 
     private void insertFullGame(String type, IGame game, boolean syncInsertion) {
-        String json = JsonConverters.GSON.toJson(game, new TypeToken<BaseGame>(){}.getType());
+        String json = JsonConverters.GSON.toJson(game, new TypeToken<BaseGame>() {}.getType());
         final FullGameEntity fullGameEntity = new FullGameEntity(type, json);
 
         if (syncInsertion) {

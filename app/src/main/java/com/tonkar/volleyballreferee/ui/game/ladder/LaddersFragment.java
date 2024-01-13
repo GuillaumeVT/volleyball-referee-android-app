@@ -2,9 +2,7 @@ package com.tonkar.volleyballreferee.ui.game.ladder;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -12,18 +10,16 @@ import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.sanction.*;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
 import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
-public class LaddersFragment extends Fragment implements ScoreListener, TimeoutListener, TeamListener, SanctionListener, GameServiceHandler {
+public class LaddersFragment extends Fragment
+        implements ScoreListener, TimeoutListener, TeamListener, SanctionListener, GameServiceHandler {
 
     private LadderListAdapter mLadderListAdapter;
     private IGame             mGame;

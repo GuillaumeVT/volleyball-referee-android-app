@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,29 +11,17 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -57,7 +44,8 @@ public class BrazilFranceIndoorGame {
     public void playGame_complete(Context context, StoredGamesService storedGamesService) {
         ApiUserSummary user = PrefUtils.getUser(context);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                             Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                             System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame, context, storedGamesService);
 
@@ -89,7 +77,8 @@ public class BrazilFranceIndoorGame {
     public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
         ApiUserSummary user = PrefUtils.getUser(context);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                             Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                             System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame, context, storedGamesService);
 
@@ -117,7 +106,8 @@ public class BrazilFranceIndoorGame {
     public void playGame_substitutions(Context context, StoredGamesService storedGamesService) {
         ApiUserSummary user = PrefUtils.getUser(context);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                             Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                             System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame, context, storedGamesService);
 
@@ -138,7 +128,8 @@ public class BrazilFranceIndoorGame {
     public void playGame_io() {
         ApiUserSummary user = PrefUtils.getUser(mContext);
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                             Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                             System.currentTimeMillis(), Rules.officialIndoorRules());
 
         defineTeamsAndLeague(indoorGame, mContext, mStoredGamesService);
 

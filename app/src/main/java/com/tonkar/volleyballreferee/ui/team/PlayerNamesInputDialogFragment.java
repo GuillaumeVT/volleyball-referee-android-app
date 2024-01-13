@@ -2,15 +2,9 @@ package com.tonkar.volleyballreferee.ui.team;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.text.*;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,12 +13,9 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class PlayerNamesInputDialogFragment extends DialogFragment {
 
@@ -57,14 +48,16 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
         PlayerNameListAdapter playerNameListAdapter = new PlayerNameListAdapter(requireActivity().getLayoutInflater(), teamType, mTeam);
         playerNameList.setAdapter(playerNameListAdapter);
 
-        AlertDialog alertDialog = new AlertDialog
-                .Builder(requireContext(), R.style.AppTheme_Dialog)
-                .setTitle(R.string.players).setView(mView)
+        AlertDialog alertDialog = new AlertDialog.Builder(requireContext(), R.style.AppTheme_Dialog)
+                .setTitle(R.string.players)
+                .setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> dismiss())
                 .create();
 
         playerNameList.post(() -> {
-            alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            alertDialog
+                    .getWindow()
+                    .clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             mView.requestLayout();
         });
 
@@ -124,8 +117,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
                 viewHolder.playerNameInputTextLayout = playerNameView.findViewById(R.id.player_name_input_layout);
                 viewHolder.playerNameInputText = playerNameView.findViewById(R.id.player_name_input_text);
                 playerNameView.setTag(viewHolder);
-            }
-            else {
+            } else {
                 viewHolder = (ViewHolder) playerNameView.getTag();
                 viewHolder.playerNameInputText.removeTextChangedListener(viewHolder.listener);
             }

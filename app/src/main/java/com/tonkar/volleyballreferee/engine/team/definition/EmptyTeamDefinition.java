@@ -3,8 +3,7 @@ package com.tonkar.volleyballreferee.engine.team.definition;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class EmptyTeamDefinition extends TeamDefinition {
 

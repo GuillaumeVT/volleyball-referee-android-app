@@ -3,25 +3,19 @@ package com.tonkar.volleyballreferee.ui.team;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.*;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.*;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.ui.data.team.StoredTeamActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
@@ -82,7 +76,9 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType));
                     mTeamService.setTeamName(mTeamType, s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.team_name_input_layout)).setError(mTeamService.getTeamName(mTeamType).length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    ((TextInputLayout) view.findViewById(R.id.team_name_input_layout)).setError(
+                            mTeamService.getTeamName(mTeamType).length() < 2 ? String.format(Locale.getDefault(), getString(
+                                    R.string.must_provide_at_least_n_characters), 2) : null);
                     computeSaveItemVisibility();
                 }
             }
@@ -134,8 +130,10 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
 
     private void selectTeamColor() {
         Log.i(Tags.SETUP_UI, String.format("Select %s team color", mTeamType));
-        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(), getString(R.string.select_shirts_color),
-                getResources().getStringArray(R.array.shirt_colors), mTeamService.getTeamColor(mTeamType)) {
+        ColorSelectionDialog colorSelectionDialog = new ColorSelectionDialog(getLayoutInflater(), getContext(),
+                                                                             getString(R.string.select_shirts_color),
+                                                                             getResources().getStringArray(R.array.shirt_colors),
+                                                                             mTeamService.getTeamColor(mTeamType)) {
             @Override
             public void onColorSelected(int selectedColor) {
                 teamColorSelected(selectedColor);

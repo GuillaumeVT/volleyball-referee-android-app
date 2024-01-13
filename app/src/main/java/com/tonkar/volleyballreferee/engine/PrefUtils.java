@@ -1,18 +1,14 @@
 package com.tonkar.volleyballreferee.engine;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.*;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.*;
 
 public class PrefUtils {
 
@@ -39,10 +35,7 @@ public class PrefUtils {
 
     public static void storeUser(Context context, ApiUserSummary user) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences
-                .edit()
-                .putString(PREF_USER, JsonConverters.GSON.toJson(user))
-                .apply();
+        sharedPreferences.edit().putString(PREF_USER, JsonConverters.GSON.toJson(user)).apply();
     }
 
     public static ApiUserSummary getUser(Context context) {
@@ -57,17 +50,16 @@ public class PrefUtils {
 
     public static void signOut(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences
-                .edit()
-                .remove(PREF_USER_TOKEN)
-                .apply();
+        sharedPreferences.edit().remove(PREF_USER_TOKEN).apply();
     }
 
     public static boolean isSignedIn(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_USER, ""))
-                && !"".equals(sharedPreferences.getString(PREF_USER_TOKEN, ""))
-                && Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime() < sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
+        return !"".equals(sharedPreferences.getString(PREF_USER, "")) && !"".equals(
+                sharedPreferences.getString(PREF_USER_TOKEN, "")) && Calendar
+                .getInstance(TimeZone.getTimeZone("UTC"))
+                .getTime()
+                .getTime() < sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
     }
 
     public static ApiUserToken getUserToken(Context context) {
@@ -126,11 +118,13 @@ public class PrefUtils {
     }
 
     public static boolean canSync(Context context) {
-        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && isSignedIn(context);
+        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && isSignedIn(
+                context);
     }
 
     public static boolean shouldSignIn(Context context) {
-        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && !isSignedIn(context);
+        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && !isSignedIn(
+                context);
     }
 
     public static void applyNightMode(Context context) {

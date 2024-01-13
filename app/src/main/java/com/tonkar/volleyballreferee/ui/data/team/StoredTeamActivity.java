@@ -2,36 +2,25 @@ package com.tonkar.volleyballreferee.ui.data.team;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ScrollView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.*;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.*;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
-import com.tonkar.volleyballreferee.ui.team.QuickTeamSetupFragment;
-import com.tonkar.volleyballreferee.ui.team.TeamSetupFragment;
+import com.tonkar.volleyballreferee.ui.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class StoredTeamActivity extends AppCompatActivity {
@@ -175,9 +164,8 @@ public class StoredTeamActivity extends AppCompatActivity {
 
     public void computeSaveLayoutVisibility() {
         View saveLayout = findViewById(R.id.save_team_layout);
-        if (mTeamService.getTeamName(null).trim().length() < 1
-                || mTeamService.getNumberOfPlayers(null) < mTeamService.getExpectedNumberOfPlayersOnCourt()
-                || mTeamService.getCaptain(null) < 0) {
+        if (mTeamService.getTeamName(null).trim().length() < 1 || mTeamService.getNumberOfPlayers(
+                null) < mTeamService.getExpectedNumberOfPlayersOnCourt() || mTeamService.getCaptain(null) < 0) {
             Log.i(Tags.STORED_TEAMS, "Save button is invisible");
             saveLayout.setVisibility(View.GONE);
         } else {

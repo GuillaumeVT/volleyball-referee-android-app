@@ -3,14 +3,10 @@ package com.tonkar.volleyballreferee.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
+import androidx.annotation.*;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -18,38 +14,21 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.gson.JsonParseException;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiCount;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.game.BeachGame;
-import com.tonkar.volleyballreferee.engine.game.GameFactory;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.Indoor4x4Game;
-import com.tonkar.volleyballreferee.engine.game.IndoorGame;
-import com.tonkar.volleyballreferee.engine.game.SnowGame;
-import com.tonkar.volleyballreferee.engine.game.TimeBasedGame;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.ui.game.GameActivity;
-import com.tonkar.volleyballreferee.ui.game.TimeBasedGameActivity;
-import com.tonkar.volleyballreferee.ui.setup.GameSetupActivity;
-import com.tonkar.volleyballreferee.ui.setup.QuickGameSetupActivity;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.ui.game.*;
+import com.tonkar.volleyballreferee.ui.setup.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 
 public class HomeFragment extends Fragment {
 
@@ -62,8 +41,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
 
         mStoredGamesService = new StoredGamesManager(requireContext());
@@ -127,7 +105,7 @@ public class HomeFragment extends Fragment {
         Log.i(Tags.GAME_UI, "Start an indoor game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
         IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+                                                       System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
@@ -139,7 +117,7 @@ public class HomeFragment extends Fragment {
         Log.i(Tags.GAME_UI, "Start a beach game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
         BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialBeachRules());
+                                                     System.currentTimeMillis(), 0L, Rules.officialBeachRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
@@ -150,8 +128,8 @@ public class HomeFragment extends Fragment {
     private void startSnowGame(View view) {
         Log.i(Tags.GAME_UI, "Start a snow game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
-        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialSnowRules());
+        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(), System.currentTimeMillis(),
+                                                   0L, Rules.officialSnowRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
@@ -163,7 +141,7 @@ public class HomeFragment extends Fragment {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
         Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
+                                                             System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
@@ -175,7 +153,7 @@ public class HomeFragment extends Fragment {
         Log.i(Tags.GAME_UI, "Start a time-based game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
         TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L);
+                                                             System.currentTimeMillis(), 0L);
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
@@ -187,7 +165,7 @@ public class HomeFragment extends Fragment {
         Log.i(Tags.GAME_UI, "Start a score-based game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
         IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
+                                                           System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
@@ -225,7 +203,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void navigateToFragment(@IdRes int fragmentId) {
-        NavHostFragment navigationHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.main_container_view);
+        NavHostFragment navigationHostFragment = (NavHostFragment) requireActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.main_container_view);
         if (navigationHostFragment != null) {
             NavController navigationController = navigationHostFragment.getNavController();
             navigationController.navigate(fragmentId);
@@ -297,7 +277,8 @@ public class HomeFragment extends Fragment {
         requireActivity().runOnUiThread(() -> {
             if (count.getCount() > 0) {
                 TextView gotoAvailableGamesText = view.findViewById(R.id.goto_available_games_text);
-                gotoAvailableGamesText.setText(String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesText.getText(), count.getCount()));
+                gotoAvailableGamesText.setText(
+                        String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesText.getText(), count.getCount()));
 
                 View gotoAvailableGamesCard = view.findViewById(R.id.goto_available_games_card);
                 gotoAvailableGamesCard.setVisibility(View.VISIBLE);

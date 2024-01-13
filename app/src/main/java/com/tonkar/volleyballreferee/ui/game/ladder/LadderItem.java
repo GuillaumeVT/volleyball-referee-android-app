@@ -1,12 +1,9 @@
 package com.tonkar.volleyballreferee.ui.game.ladder;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class LadderItem {
 

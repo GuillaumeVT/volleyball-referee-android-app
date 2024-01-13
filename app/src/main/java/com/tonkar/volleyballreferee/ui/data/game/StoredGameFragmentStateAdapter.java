@@ -1,8 +1,7 @@
 package com.tonkar.volleyballreferee.ui.data.game;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.*;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.tonkar.volleyballreferee.ui.data.rules.RulesFragment;
@@ -20,7 +19,8 @@ public class StoredGameFragmentStateAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return position == 0 ? TeamsFragment.newInstance() : position == 1 ? RulesFragment.newInstance() : SetFragment.newInstance(position - 2);
+        return position == 0 ? TeamsFragment.newInstance() : position == 1 ? RulesFragment.newInstance() : SetFragment.newInstance(
+                position - 2);
     }
 
     @Override

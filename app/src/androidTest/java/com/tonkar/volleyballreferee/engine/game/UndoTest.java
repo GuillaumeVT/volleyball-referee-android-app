@@ -7,22 +7,22 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class UndoTest {
 
     @Test
     public void undoLastPoint() {
-        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                          System.currentTimeMillis(), System.currentTimeMillis(),
+                                                          Rules.officialBeachRules());
         beachGame.startMatch();
 
         beachGame.addPoint(TeamType.HOME);
@@ -48,7 +48,9 @@ public class UndoTest {
 
     @Test
     public void undoTimeout() {
-        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                          System.currentTimeMillis(), System.currentTimeMillis(),
+                                                          Rules.officialBeachRules());
         beachGame.startMatch();
 
         beachGame.addPoint(TeamType.HOME);
@@ -88,7 +90,9 @@ public class UndoTest {
 
     @Test
     public void undoSubstitution() {
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                             System.currentTimeMillis(), System.currentTimeMillis(),
+                                                             Rules.officialIndoorRules());
         fillTeam(indoorGame, TeamType.HOME);
         fillTeam(indoorGame, TeamType.GUEST);
         indoorGame.startMatch();
@@ -127,7 +131,9 @@ public class UndoTest {
 
         // Indoor 4x4
 
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                                      System.currentTimeMillis(), System.currentTimeMillis(),
+                                                                      Rules.defaultIndoor4x4Rules());
         fillTeam(indoor4x4Game, TeamType.HOME);
         fillTeam(indoor4x4Game, TeamType.GUEST);
         indoor4x4Game.startMatch();
@@ -167,7 +173,9 @@ public class UndoTest {
 
     @Test
     public void undoSanction() {
-        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialBeachRules());
+        BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                          System.currentTimeMillis(), System.currentTimeMillis(),
+                                                          Rules.officialBeachRules());
         beachGame.startMatch();
 
         beachGame.giveSanction(TeamType.HOME, SanctionType.DELAY_WARNING, 1);
@@ -220,7 +228,9 @@ public class UndoTest {
     public void undoSanction_Expulsion() {
         // Indoor
 
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                             System.currentTimeMillis(), System.currentTimeMillis(),
+                                                             Rules.officialIndoorRules());
         fillTeam(indoorGame, TeamType.HOME);
         fillTeam(indoorGame, TeamType.GUEST);
         indoorGame.startMatch();
@@ -252,7 +262,9 @@ public class UndoTest {
 
         // Indoor 4x4
 
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                                      System.currentTimeMillis(), System.currentTimeMillis(),
+                                                                      Rules.defaultIndoor4x4Rules());
         fillTeam(indoor4x4Game, TeamType.HOME);
         fillTeam(indoor4x4Game, TeamType.GUEST);
         indoor4x4Game.startMatch();
@@ -287,7 +299,9 @@ public class UndoTest {
     public void undoSanction_Disqualification() {
         // Indoor
 
-        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                             System.currentTimeMillis(), System.currentTimeMillis(),
+                                                             Rules.officialIndoorRules());
         fillTeam(indoorGame, TeamType.HOME);
         fillTeam(indoorGame, TeamType.GUEST);
         indoorGame.startMatch();
@@ -320,7 +334,9 @@ public class UndoTest {
 
         // Indoor 4x4
 
-        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "", System.currentTimeMillis(), System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
+        Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+                                                                      System.currentTimeMillis(), System.currentTimeMillis(),
+                                                                      Rules.defaultIndoor4x4Rules());
         fillTeam(indoor4x4Game, TeamType.HOME);
         fillTeam(indoor4x4Game, TeamType.GUEST);
         indoor4x4Game.startMatch();

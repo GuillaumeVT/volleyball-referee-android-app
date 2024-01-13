@@ -2,24 +2,14 @@ package com.tonkar.volleyballreferee.ui.game;
 
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
-import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.*;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.*;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -28,40 +18,26 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.GeneralListener;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.sanction.*;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
 import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
-import com.tonkar.volleyballreferee.ui.game.court.BeachCourtFragment;
-import com.tonkar.volleyballreferee.ui.game.court.Indoor4x4CourtFragment;
-import com.tonkar.volleyballreferee.ui.game.court.IndoorCourtFragment;
-import com.tonkar.volleyballreferee.ui.game.court.SnowCourtFragment;
+import com.tonkar.volleyballreferee.ui.game.court.*;
 import com.tonkar.volleyballreferee.ui.game.ladder.LaddersFragment;
-import com.tonkar.volleyballreferee.ui.game.sanction.SanctionSelectionDialogFragment;
-import com.tonkar.volleyballreferee.ui.game.sanction.SanctionsFragment;
+import com.tonkar.volleyballreferee.ui.game.sanction.*;
 import com.tonkar.volleyballreferee.ui.game.substitution.SubstitutionsFragment;
-import com.tonkar.volleyballreferee.ui.game.timeout.CountDown;
-import com.tonkar.volleyballreferee.ui.game.timeout.CountDownDialogFragment;
-import com.tonkar.volleyballreferee.ui.game.timeout.TimeoutsFragment;
-import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
+import com.tonkar.volleyballreferee.ui.game.timeout.*;
+import com.tonkar.volleyballreferee.ui.interfaces.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
 
-public class GameActivity extends AppCompatActivity implements GeneralListener, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
+public class GameActivity extends AppCompatActivity
+        implements GeneralListener, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private IGame              mGame;
     private StoredGamesService mStoredGamesService;
@@ -121,8 +97,7 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
         if (savedInstanceState == null) {
             setActionBarTitle("");
-        }
-        else {
+        } else {
             long duration = savedInstanceState.getLong("saved_timeout_duration");
             startToolbarCountDown(duration);
         }
@@ -353,7 +328,9 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     private void callTimeoutWithDialog(final TeamType teamType) {
         if (mGame.countRemainingTimeouts(teamType) > 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
-            builder.setTitle(String.format(getString(R.string.timeout_title), mGame.getTeamName(teamType))).setMessage(getString(R.string.timeout_question));
+            builder
+                    .setTitle(String.format(getString(R.string.timeout_title), mGame.getTeamName(teamType)))
+                    .setMessage(getString(R.string.timeout_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                 Log.i(Tags.GAME_UI, "User accepts the timeout");
                 mGame.callTimeout(teamType);
@@ -362,7 +339,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
             AlertDialog alertDialog = builder.show();
             UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
         } else {
-            UiUtils.showNotification(findViewById(R.id.activity_game_content), String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
+            UiUtils.showNotification(findViewById(R.id.activity_game_content),
+                                     String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
         }
     }
 
@@ -533,11 +511,14 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
     public void onTimeout(TeamType teamType, int duration) {
         deleteToolbarCountdown();
         deleteFragmentCountdown();
-        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, String.format(getString(R.string.timeout_title), mGame.getTeamName(teamType)));
+        CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration,
+                                                                                      String.format(getString(R.string.timeout_title),
+                                                                                                    mGame.getTeamName(teamType)));
         timeoutFragment.show(getSupportFragmentManager(), "timeout");
 
         if (mGame.countRemainingTimeouts(teamType) == 0) {
-            UiUtils.showNotification(findViewById(R.id.activity_game_content), String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
+            UiUtils.showNotification(findViewById(R.id.activity_game_content),
+                                     String.format(getString(R.string.all_timeouts_called), mGame.getTeamName(teamType)));
         }
     }
 
@@ -546,7 +527,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (mGame.areNotificationsEnabled()) {
             deleteToolbarCountdown();
             deleteFragmentCountdown();
-            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getString(R.string.technical_timeout_title));
+            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration,
+                                                                                          getString(R.string.technical_timeout_title));
             timeoutFragment.show(getSupportFragmentManager(), "timeout");
         }
     }
@@ -556,7 +538,8 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
         if (mGame.areNotificationsEnabled()) {
             deleteToolbarCountdown();
             deleteFragmentCountdown();
-            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration, getString(R.string.game_interval_title));
+            CountDownDialogFragment timeoutFragment = CountDownDialogFragment.newInstance(duration,
+                                                                                          getString(R.string.game_interval_title));
             timeoutFragment.show(getSupportFragmentManager(), "timeout");
         }
     }
@@ -645,47 +628,45 @@ public class GameActivity extends AppCompatActivity implements GeneralListener, 
 
     private void initGameNavigation(final BottomNavigationView gameNavigation, Bundle savedInstanceState) {
         gameNavigation.setOnItemSelectedListener(item -> {
-                    final Fragment fragment;
+            final Fragment fragment;
 
-                    int itemId = item.getItemId();
-                    if (itemId == R.id.court_position_tab) {
-                        switch (mGame.getKind()) {
-                            case INDOOR_4X4:
-                                fragment = Indoor4x4CourtFragment.newInstance();
-                                break;
-                            case BEACH:
-                                fragment = BeachCourtFragment.newInstance();
-                                break;
-                            case SNOW:
-                                fragment = SnowCourtFragment.newInstance();
-                                break;
-                            case INDOOR:
-                            default:
-                                fragment = IndoorCourtFragment.newInstance();
-                                break;
-                        }
-                    } else if (itemId == R.id.substitutions_tab) {
-                        fragment = SubstitutionsFragment.newInstance();
-                    } else if (itemId == R.id.timeouts_tab) {
-                        fragment = TimeoutsFragment.newInstance();
-                    } else if (itemId == R.id.sanctions_tab) {
-                        fragment = SanctionsFragment.newInstance();
-                    } else {
-                        fragment = LaddersFragment.newInstance();
-                    }
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.game_container, fragment).commit();
-
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.court_position_tab) {
+                switch (mGame.getKind()) {
+                    case INDOOR_4X4:
+                        fragment = Indoor4x4CourtFragment.newInstance();
+                        break;
+                    case BEACH:
+                        fragment = BeachCourtFragment.newInstance();
+                        break;
+                    case SNOW:
+                        fragment = SnowCourtFragment.newInstance();
+                        break;
+                    case INDOOR:
+                    default:
+                        fragment = IndoorCourtFragment.newInstance();
+                        break;
                 }
-        );
+            } else if (itemId == R.id.substitutions_tab) {
+                fragment = SubstitutionsFragment.newInstance();
+            } else if (itemId == R.id.timeouts_tab) {
+                fragment = TimeoutsFragment.newInstance();
+            } else if (itemId == R.id.sanctions_tab) {
+                fragment = SanctionsFragment.newInstance();
+            } else {
+                fragment = LaddersFragment.newInstance();
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.game_container, fragment).commit();
+
+            return true;
+        });
 
         if (!mGame.getRules().isTeamTimeouts()) {
             gameNavigation.getMenu().removeItem(R.id.timeouts_tab);
         }
 
-        if (!mGame.getRules().isSanctions()
-                || UsageType.POINTS_SCOREBOARD.equals(mGame.getUsage())) {
+        if (!mGame.getRules().isSanctions() || UsageType.POINTS_SCOREBOARD.equals(mGame.getUsage())) {
             gameNavigation.getMenu().removeItem(R.id.sanctions_tab);
         }
 

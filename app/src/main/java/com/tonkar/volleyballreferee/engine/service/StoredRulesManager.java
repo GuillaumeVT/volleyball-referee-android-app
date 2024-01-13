@@ -8,38 +8,19 @@ import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.database.VbrRepository;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Queue;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 
 public class StoredRulesManager implements StoredRulesService {
 
@@ -137,31 +118,29 @@ public class StoredRulesManager implements StoredRulesService {
 
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
-        if (rules.getName().length() > 1
-                && !rules.getKind().equals(GameType.TIME)
-                && !rules.getName().equals(Rules.DEFAULT_BEACH_NAME)
-                && !rules.getName().equals(Rules.DEFAULT_INDOOR_NAME)
-                && !rules.getName().equals(Rules.DEFAULT_INDOOR_4X4_NAME)
-                && !rules.getName().equals(Rules.DEFAULT_SNOW_NAME)
-                && !rules.getId().equals(Rules.DEFAULT_BEACH_ID)
-                && !rules.getId().equals(Rules.DEFAULT_INDOOR_ID)
-                && !rules.getId().equals(Rules.DEFAULT_INDOOR_4X4_ID)
-                && !rules.getId().equals(Rules.DEFAULT_SNOW_ID)
-                && mRepository.countRules(rules.getName(), rules.getKind()) == 0
-                && mRepository.countRules(rules.getId()) == 0) {
+        if (rules.getName().length() > 1 && !rules.getKind().equals(GameType.TIME) && !rules
+                .getName()
+                .equals(Rules.DEFAULT_BEACH_NAME) && !rules.getName().equals(Rules.DEFAULT_INDOOR_NAME) && !rules
+                .getName()
+                .equals(Rules.DEFAULT_INDOOR_4X4_NAME) && !rules.getName().equals(Rules.DEFAULT_SNOW_NAME) && !rules
+                .getId()
+                .equals(Rules.DEFAULT_BEACH_ID) && !rules.getId().equals(Rules.DEFAULT_INDOOR_ID) && !rules
+                .getId()
+                .equals(Rules.DEFAULT_INDOOR_4X4_ID) && !rules.getId().equals(Rules.DEFAULT_SNOW_ID) && mRepository.countRules(
+                rules.getName(), rules.getKind()) == 0 && mRepository.countRules(rules.getId()) == 0) {
             saveRules(rules, true);
         }
     }
 
     public static List<ApiRules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiRules>>(){}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiRules>>() {}.getType());
         }
     }
 
     public static void writeRulesStream(OutputStream outputStream, List<ApiRules> rules) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(rules, new TypeToken<List<ApiRules>>(){}.getType(), writer);
+        JsonConverters.GSON.toJson(rules, new TypeToken<List<ApiRules>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -188,7 +167,8 @@ public class StoredRulesManager implements StoredRulesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            List<ApiRulesSummary> rulesList = JsonConverters.GSON.fromJson(body.string(), new TypeToken<List<ApiRulesSummary>>() {}.getType());
+                            List<ApiRulesSummary> rulesList = JsonConverters.GSON.fromJson(body.string(),
+                                                                                           new TypeToken<List<ApiRulesSummary>>() {}.getType());
                             syncRules(rulesList, listener);
                         }
                     } else {

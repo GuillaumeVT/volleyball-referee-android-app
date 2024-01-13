@@ -1,30 +1,24 @@
 package com.tonkar.volleyballreferee.ui;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.WindowManager;
+import android.view.*;
 
 import androidx.annotation.IdRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.*;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.navigation.NavigationBarView;
-import com.tonkar.volleyballreferee.BuildConfig;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.*;
+import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.ui.onboarding.MainOnboardingActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,20 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationBarView navigationView = findViewById(R.id.main_navigation_view);
         navigationView.setOnItemSelectedListener(item -> {
-                    navigateToFragment(item.getItemId());
-                    return true;
-                }
-        );
+            navigateToFragment(item.getItemId());
+            return true;
+        });
 
-        getNavigationController().ifPresent(navController -> navController.addOnDestinationChangedListener((argNavController, navDestination, bundle) -> {
-            if (List.of(R.id.home_fragment, R.id.scheduled_games_list_fragment, R.id.user_fragment).contains(navDestination.getId())) {
-                MenuItem menuItem = navigationView.getMenu().findItem(navDestination.getId());
-                menuItem.setChecked(true);
-            } else {
-                MenuItem menuItem = navigationView.getMenu().findItem(R.id.navigation_fragment);
-                menuItem.setChecked(true);
-            }
-        }));
+        getNavigationController().ifPresent(
+                navController -> navController.addOnDestinationChangedListener((argNavController, navDestination, bundle) -> {
+                    if (List
+                            .of(R.id.home_fragment, R.id.scheduled_games_list_fragment, R.id.user_fragment)
+                            .contains(navDestination.getId())) {
+                        MenuItem menuItem = navigationView.getMenu().findItem(navDestination.getId());
+                        menuItem.setChecked(true);
+                    } else {
+                        MenuItem menuItem = navigationView.getMenu().findItem(R.id.navigation_fragment);
+                        menuItem.setChecked(true);
+                    }
+                }));
 
         Intent intent = getIntent();
         @IdRes int initFragmentId = intent.getIntExtra(UiUtils.INIT_FRAGMENT_ID, 0);
@@ -104,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
                     String releaseNotes = getString(resourceId);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog)
-                            .setTitle(String.format("Welcome to Volleyball Referee %s", BuildConfig.VERSION_NAME)).setMessage(releaseNotes)
-                            .setPositiveButton(android.R.string.yes, (dialog, which) -> sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply());
+                            .setTitle(String.format("Welcome to Volleyball Referee %s", BuildConfig.VERSION_NAME))
+                            .setMessage(releaseNotes)
+                            .setPositiveButton(android.R.string.yes,
+                                               (dialog, which) -> sharedPreferences.edit().putBoolean(releaseNotesKey, true).apply());
                     AlertDialog alertDialog = builder.show();
                     UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
                 }

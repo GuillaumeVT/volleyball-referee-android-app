@@ -2,28 +2,18 @@ package com.tonkar.volleyballreferee.ui.game.ladder;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
 import com.tonkar.volleyballreferee.engine.game.score.IBaseScore;
 import com.tonkar.volleyballreferee.engine.game.timeout.IBaseTimeout;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class LadderListAdapter extends BaseAdapter {
 
@@ -48,7 +38,12 @@ public class LadderListAdapter extends BaseAdapter {
     private final IBaseSanction  mBaseSanction;
     private final int            mCurrentNightMode;
 
-    public LadderListAdapter(LayoutInflater layoutInflater, IBaseScore baseScore, IBaseTeam baseTeam, IBaseTimeout baseTimeout, IBaseSanction baseSanction, boolean reverseOrder) {
+    public LadderListAdapter(LayoutInflater layoutInflater,
+                             IBaseScore baseScore,
+                             IBaseTeam baseTeam,
+                             IBaseTimeout baseTimeout,
+                             IBaseSanction baseSanction,
+                             boolean reverseOrder) {
         mLayoutInflater = layoutInflater;
         mBaseScore = baseScore;
         mBaseTeam = baseTeam;
@@ -96,16 +91,17 @@ public class LadderListAdapter extends BaseAdapter {
             createLadderEventRow(viewHolder.guestTeamEventLadder);
 
             setView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) setView.getTag();
         }
 
         int actualIndex = mReverseOrder ? (mBaseScore.getNumberOfSets() - index - 1) : index;
 
-        viewHolder.setNumberText.setText(String.format(setView.getContext().getString(R.string.set_number), actualIndex+1));
-        viewHolder.setScoreText.setText(UiUtils.formatScoreFromLocale(mBaseScore.getPoints(TeamType.HOME, actualIndex), mBaseScore.getPoints(TeamType.GUEST, actualIndex), true));
-        viewHolder.setDurationText.setText(String.format(setView.getContext().getString(R.string.set_duration), mBaseScore.getSetDuration(actualIndex) / 60000L));
+        viewHolder.setNumberText.setText(String.format(setView.getContext().getString(R.string.set_number), actualIndex + 1));
+        viewHolder.setScoreText.setText(UiUtils.formatScoreFromLocale(mBaseScore.getPoints(TeamType.HOME, actualIndex),
+                                                                      mBaseScore.getPoints(TeamType.GUEST, actualIndex), true));
+        viewHolder.setDurationText.setText(
+                String.format(setView.getContext().getString(R.string.set_duration), mBaseScore.getSetDuration(actualIndex) / 60000L));
 
         List<LadderItem> ladderItems = createLadderItems(mBaseScore.getPointsLadder(actualIndex));
         addSubstitutions(TeamType.HOME, actualIndex, ladderItems);
@@ -236,7 +232,8 @@ public class LadderListAdapter extends BaseAdapter {
                     homeImage.setVisibility(View.VISIBLE);
                     homeImage.setImageResource(getIcon(TeamType.HOME, ladderItem));
                     homeImage.setOnClickListener(view -> {
-                        LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(), TeamType.HOME, ladderItem, mBaseTeam);
+                        LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(),
+                                                                                       TeamType.HOME, ladderItem, mBaseTeam);
                         ladderEventsDialog.show();
                     });
                 } else {
@@ -247,7 +244,8 @@ public class LadderListAdapter extends BaseAdapter {
                     guestImage.setVisibility(View.VISIBLE);
                     guestImage.setImageResource(getIcon(TeamType.GUEST, ladderItem));
                     guestImage.setOnClickListener(view -> {
-                        LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(), TeamType.GUEST, ladderItem, mBaseTeam);
+                        LadderEventsDialog ladderEventsDialog = new LadderEventsDialog(mLayoutInflater, mLayoutInflater.getContext(),
+                                                                                       TeamType.GUEST, ladderItem, mBaseTeam);
                         ladderEventsDialog.show();
                     });
                 } else {

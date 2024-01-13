@@ -183,7 +183,6 @@
     <string name="resume_match">@string/resume_game_title</string>
     <string name="download_match_error">Hiba történt a mérkőzés letöltése közben</string>
 
-
     <!-- Settings activity -->
     <string name="settings">Beállítások</string>
     <string name="pref_keep_screen_on">Képernyő ne kapcsoljon le mérkőzés alatt</string>

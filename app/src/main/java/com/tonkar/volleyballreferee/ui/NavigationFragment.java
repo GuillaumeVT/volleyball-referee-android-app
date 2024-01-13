@@ -3,9 +3,7 @@ package com.tonkar.volleyballreferee.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 
 import androidx.annotation.IdRes;
 import androidx.fragment.app.Fragment;
@@ -13,8 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.tonkar.volleyballreferee.BuildConfig;
-import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.*;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -28,8 +25,7 @@ public class NavigationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_navigation, container, false);
 
         NavigationView navigationView = fragmentView.findViewById(R.id.main_navigation_drawer_view);
@@ -72,7 +68,9 @@ public class NavigationFragment extends Fragment {
     }
 
     private void navigateToFragment(@IdRes int fragmentId) {
-        NavHostFragment navigationHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.main_container_view);
+        NavHostFragment navigationHostFragment = (NavHostFragment) requireActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.main_container_view);
         if (navigationHostFragment != null) {
             NavController navigationController = navigationHostFragment.getNavController();
             navigationController.navigate(fragmentId);

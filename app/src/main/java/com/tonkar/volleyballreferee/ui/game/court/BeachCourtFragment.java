@@ -2,9 +2,7 @@ package com.tonkar.volleyballreferee.ui.game.court;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -13,12 +11,10 @@ import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
-import com.tonkar.volleyballreferee.engine.team.IBeachTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -188,10 +184,12 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
         if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
-            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)));
+            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
+                                     String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)));
         } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
-            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content), String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)));
+            UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
+                                     String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)));
         }
 
         update(teamType);

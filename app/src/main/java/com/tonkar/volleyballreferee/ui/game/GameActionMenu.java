@@ -1,19 +1,11 @@
 package com.tonkar.volleyballreferee.ui.game;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.app.*;
+import android.content.*;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -21,19 +13,13 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.preference.PreferenceManager;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.bottomsheet.*;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
-import com.tonkar.volleyballreferee.ui.interfaces.StoredGamesServiceHandler;
-import com.tonkar.volleyballreferee.ui.util.StringArrayAdapter;
-import com.tonkar.volleyballreferee.ui.util.UiUtils;
+import com.tonkar.volleyballreferee.ui.interfaces.*;
+import com.tonkar.volleyballreferee.ui.util.*;
 
 import java.util.Random;
 
@@ -101,7 +87,9 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 sharedPreferences.edit().putBoolean(PrefUtils.PREF_KEEP_SCREEN_ON, isChecked).apply();
                 mActivity.recreate();
             });
-            StringArrayAdapter nightModeSpinnerAdapter = new StringArrayAdapter(getContext(), inflater, getResources().getStringArray(R.array.night_mode_entries), getResources().getStringArray(R.array.night_mode_values));
+            StringArrayAdapter nightModeSpinnerAdapter = new StringArrayAdapter(getContext(), inflater,
+                                                                                getResources().getStringArray(R.array.night_mode_entries),
+                                                                                getResources().getStringArray(R.array.night_mode_values));
             nightModeSpinner.setAdapter(nightModeSpinnerAdapter);
             nightModeSpinner.setSelection(nightModeSpinnerAdapter.getPosition(PrefUtils.getNightMode(mActivity)));
             nightModeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -120,7 +108,7 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
     @Override
     public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
-        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog)super.onCreateDialog(savedInstanceState);
+        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         bottomSheetDialog.setOnShowListener(dialog -> {
             BottomSheetDialog tmpDialog = (BottomSheetDialog) dialog;
             FrameLayout bottomSheet = tmpDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
@@ -138,7 +126,8 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
     private void shareLink() {
         Log.i(Tags.GAME_UI, "Share game link");
-        UiUtils.shareGameLink(mActivity, mGame.isMatchCompleted() ? mStoredGamesService.getGame(mGame.getId()) : mStoredGamesService.getCurrentGame());
+        UiUtils.shareGameLink(mActivity,
+                              mGame.isMatchCompleted() ? mStoredGamesService.getGame(mGame.getId()) : mStoredGamesService.getCurrentGame());
         dismiss();
     }
 

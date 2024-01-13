@@ -8,47 +8,20 @@ import androidx.annotation.NonNull;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPage;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.database.VbrRepository;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.EmptyTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.SnowTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
+import com.tonkar.volleyballreferee.engine.team.*;
+import com.tonkar.volleyballreferee.engine.team.definition.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Queue;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 
 public class StoredTeamsManager implements StoredTeamsService {
 
@@ -143,9 +116,9 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     @Override
     public void createAndSaveTeamFrom(GameType kind, IBaseTeam teamService, TeamType teamType) {
-        if (teamService.getTeamName(teamType).length() > 1 && !GameType.TIME.equals(kind)
-                && mRepository.countTeams(teamService.getTeamName(teamType), teamService.getGender(teamType), kind) == 0
-                && mRepository.countTeams(teamService.getTeamId(teamType)) == 0) {
+        if (teamService.getTeamName(teamType).length() > 1 && !GameType.TIME.equals(kind) && mRepository.countTeams(
+                teamService.getTeamName(teamType), teamService.getGender(teamType), kind) == 0 && mRepository.countTeams(
+                teamService.getTeamId(teamType)) == 0) {
             IBaseTeam team = createTeam(kind);
             copyTeam(teamService, team, teamType);
             saveTeam(team, true);
@@ -254,13 +227,13 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     public static List<ApiTeam> readTeamsStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiTeam>>(){}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiTeam>>() {}.getType());
         }
     }
 
     public static void writeTeamsStream(OutputStream outputStream, List<ApiTeam> teams) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(teams, new TypeToken<List<ApiTeam>>(){}.getType(), writer);
+        JsonConverters.GSON.toJson(teams, new TypeToken<List<ApiTeam>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -296,7 +269,8 @@ public class StoredTeamsManager implements StoredTeamsService {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     try (ResponseBody body = response.body()) {
-                        ApiPage<ApiTeamSummary> teamsPage = JsonConverters.GSON.fromJson(body.string(), new TypeToken<ApiPage<ApiTeamSummary>>() {}.getType());
+                        ApiPage<ApiTeamSummary> teamsPage = JsonConverters.GSON.fromJson(body.string(),
+                                                                                         new TypeToken<ApiPage<ApiTeamSummary>>() {}.getType());
                         remoteTeamList.addAll(teamsPage.getContent());
                         if (teamsPage.isLast()) {
                             syncTeams(remoteTeamList, listener);

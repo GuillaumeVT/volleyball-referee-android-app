@@ -1,34 +1,17 @@
 package com.tonkar.volleyballreferee.ui.util;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
+import android.content.*;
+import android.content.res.*;
+import android.graphics.*;
+import android.media.*;
 import android.os.Handler;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.BounceInterpolator;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.util.*;
+import android.view.*;
+import android.view.animation.*;
+import android.widget.*;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
+import androidx.annotation.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -38,24 +21,16 @@ import androidx.core.view.ViewCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.tonkar.volleyballreferee.BuildConfig;
-import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.ITimeBasedGame;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
+import com.tonkar.volleyballreferee.*;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.IClassicTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
 
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 public class UiUtils {
 
@@ -69,11 +44,15 @@ public class UiUtils {
 
     public static void styleBaseTeamButton(Context context, IBaseTeam teamService, TeamType teamType, MaterialButton button) {
         colorTeamButton(context, teamService.getTeamColor(teamType), button);
-        button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+        button.setPaintFlags(button.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
     }
 
-    public static void styleIndoorTeamButton(Context context, IClassicTeam indoorTeam, TeamType teamType, int number, MaterialButton button) {
-        button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+    public static void styleIndoorTeamButton(Context context,
+                                             IClassicTeam indoorTeam,
+                                             TeamType teamType,
+                                             int number,
+                                             MaterialButton button) {
+        button.setPaintFlags(button.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
 
         if (number < 0) {
             colorTeamButton(context, indoorTeam.getTeamColor(teamType), button);
@@ -89,7 +68,7 @@ public class UiUtils {
     }
 
     public static void styleTeamButton(Context context, IBaseTeam teamService, TeamType teamType, int number, MaterialButton button) {
-        button.setPaintFlags(button.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+        button.setPaintFlags(button.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
 
         if (number < 0) {
             colorTeamButton(context, teamService.getTeamColor(teamType), button);
@@ -105,7 +84,7 @@ public class UiUtils {
     }
 
     public static void styleTeamText(Context context, IBaseTeam teamService, TeamType teamType, int number, TextView text) {
-        text.setPaintFlags(text.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+        text.setPaintFlags(text.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
 
         if (number < 0) {
             colorTeamText(context, teamService.getTeamColor(teamType), text);
@@ -142,7 +121,8 @@ public class UiUtils {
     public static int getTextColor(Context context, int backgroundColor) {
         int textColor;
 
-        double a = 1 - ( 0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(backgroundColor)) / 255;
+        double a = 1 - (0.299 * Color.red(backgroundColor) + 0.587 * Color.green(backgroundColor) + 0.114 * Color.blue(
+                backgroundColor)) / 255;
 
         if (a < 0.5) {
             textColor = ContextCompat.getColor(context, R.color.colorOnLightSurface);
@@ -156,7 +136,10 @@ public class UiUtils {
     private static void colorIconButton(Context context, ExtendedFloatingActionButton button, @DrawableRes int drawable) {
         button.setIconResource(drawable);
         button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorFab)));
-        button.getIcon().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
+        button
+                .getIcon()
+                .mutate()
+                .setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorOnFab), PorterDuff.Mode.SRC_IN));
     }
 
     public static void colorPlusIconButton(Context context, ExtendedFloatingActionButton button) {
@@ -177,7 +160,9 @@ public class UiUtils {
         if (PrefUtils.canSync(context)) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_TEXT, storedGame.getGameSummary() + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS, storedGame.getId()));
+            intent.putExtra(Intent.EXTRA_TEXT,
+                            storedGame.getGameSummary() + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS,
+                                                                               storedGame.getId()));
             intent.setType("text/plain");
 
             try {
@@ -203,7 +188,9 @@ public class UiUtils {
             ITimeBasedGame timeBasedGameService = (ITimeBasedGame) game;
             if (timeBasedGameService.getRemainingTime() > 0L) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
-                builder.setTitle(originActivity.getString(R.string.navigate_home)).setMessage(originActivity.getString(R.string.navigate_home_question));
+                builder
+                        .setTitle(originActivity.getString(R.string.navigate_home))
+                        .setMessage(originActivity.getString(R.string.navigate_home_question));
                 builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateBackToHome(originActivity));
                 builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
@@ -211,7 +198,9 @@ public class UiUtils {
                 UiUtils.setAlertDialogMessageSize(alertDialog, originActivity.getResources());
             } else {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
-                builder.setTitle(R.string.stop_match_description).setMessage(originActivity.getString(R.string.confirm_stop_match_question));
+                builder
+                        .setTitle(R.string.stop_match_description)
+                        .setMessage(originActivity.getString(R.string.confirm_stop_match_question));
                 builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     Log.i(Tags.GAME_UI, "User accepts to stop");
                     timeBasedGameService.stop();
@@ -223,7 +212,9 @@ public class UiUtils {
             }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
-            builder.setTitle(originActivity.getString(R.string.navigate_home)).setMessage(originActivity.getString(R.string.navigate_home_question));
+            builder
+                    .setTitle(originActivity.getString(R.string.navigate_home))
+                    .setMessage(originActivity.getString(R.string.navigate_home_question));
             builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateBackToHome(originActivity));
             builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
 
@@ -430,7 +421,7 @@ public class UiUtils {
 
     public static void addExtendShrinkListener(View relatedView, ExtendedFloatingActionButton button) {
         relatedView.setOnTouchListener((view, motionEvent) -> {
-            switch (motionEvent.getAction( ) ) {
+            switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:

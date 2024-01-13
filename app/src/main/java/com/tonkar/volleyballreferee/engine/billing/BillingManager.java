@@ -3,26 +3,12 @@ package com.tonkar.volleyballreferee.engine.billing;
 import android.app.Activity;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.*;
 
-import com.android.billingclient.api.AcknowledgePurchaseParams;
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingFlowParams;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.ProductDetails;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.QueryProductDetailsParams;
-import com.android.billingclient.api.QueryPurchasesParams;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.android.billingclient.api.*;
+import com.tonkar.volleyballreferee.engine.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class BillingManager implements BillingService {
 
@@ -53,11 +39,7 @@ public class BillingManager implements BillingService {
             mProductIds = new ArrayList<>();
             mProductDetailList = new ArrayList<>();
             mPurchasedProducts = new HashSet<>();
-            mBillingClient = BillingClient
-                    .newBuilder(mActivity)
-                    .enablePendingPurchases()
-                    .setListener(this)
-                    .build();
+            mBillingClient = BillingClient.newBuilder(mActivity).enablePendingPurchases().setListener(this).build();
         }
 
         void startServiceConnection(final Runnable executeOnSuccess) {
@@ -83,37 +65,28 @@ public class BillingManager implements BillingService {
         void queryProductList() {
             List<QueryProductDetailsParams.Product> productList = new ArrayList<>();
 
-            for (String productId: mProductIds) {
+            for (String productId : mProductIds) {
                 productList.add(
-                        QueryProductDetailsParams.Product
-                                .newBuilder()
-                                .setProductId(productId)
-                                .setProductType(mProductType)
-                                .build()
-                );
+                        QueryProductDetailsParams.Product.newBuilder().setProductId(productId).setProductType(mProductType).build());
             }
 
-            QueryProductDetailsParams params = QueryProductDetailsParams
-                    .newBuilder()
-                    .setProductList(productList)
-                    .build();
+            QueryProductDetailsParams params = QueryProductDetailsParams.newBuilder().setProductList(productList).build();
 
-            mBillingClient.queryProductDetailsAsync(
-                    params,
-                    (billingResult, productDetailsList) -> {
-                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                            mProductDetailList.clear();
-                            mProductDetailList.addAll(productDetailsList);
-                        }
+            mBillingClient.queryProductDetailsAsync(params, (billingResult, productDetailsList) -> {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    mProductDetailList.clear();
+                    mProductDetailList.addAll(productDetailsList);
+                }
 
-                        for (BillingListener listener : mBillingListeners) {
-                            listener.onPurchasesUpdated();
-                        }
-                    });
+                for (BillingListener listener : mBillingListeners) {
+                    listener.onPurchasesUpdated();
+                }
+            });
         }
 
         void queryPurchases() {
-            Runnable queryToExecute = () -> mBillingClient.queryPurchasesAsync(QueryPurchasesParams.newBuilder().setProductType(mProductType).build(), this::onPurchasesUpdated);
+            Runnable queryToExecute = () -> mBillingClient.queryPurchasesAsync(
+                    QueryPurchasesParams.newBuilder().setProductType(mProductType).build(), this::onPurchasesUpdated);
             executeServiceRequest(mProductType, queryToExecute);
         }
 
@@ -121,19 +94,15 @@ public class BillingManager implements BillingService {
             BillingFlowParams.ProductDetailsParams productDetailsParams;
 
             if (BillingClient.ProductType.SUBS.equals(mProductType)) {
-                String offerToken = productDetails
-                        .getSubscriptionOfferDetails()
-                        .get(0)
-                        .getOfferToken();
+                String offerToken = productDetails.getSubscriptionOfferDetails().get(0).getOfferToken();
 
-                productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+                productDetailsParams = BillingFlowParams.ProductDetailsParams
+                        .newBuilder()
                         .setProductDetails(productDetails)
                         .setOfferToken(offerToken)
                         .build();
             } else {
-                productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
-                        .setProductDetails(productDetails)
-                        .build();
+                productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).build();
             }
 
             BillingFlowParams billingFlowParams = BillingFlowParams
@@ -266,7 +235,8 @@ public class BillingManager implements BillingService {
 
     @Override
     public void executeServiceRequest(String productType, Runnable runnable) {
-        AbstractBillingManager abstractBillingManager = BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager : mSubscriptionBillingManager;
+        AbstractBillingManager abstractBillingManager = BillingClient.ProductType.INAPP.equals(
+                productType) ? mInAppBillingManager : mSubscriptionBillingManager;
 
         if (abstractBillingManager.mIsServiceConnected) {
             runnable.run();
@@ -287,17 +257,20 @@ public class BillingManager implements BillingService {
 
     @Override
     public List<ProductDetails> getProductDetailList(String productType) {
-        return BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager.mProductDetailList : mSubscriptionBillingManager.mProductDetailList;
+        return BillingClient.ProductType.INAPP.equals(
+                productType) ? mInAppBillingManager.mProductDetailList : mSubscriptionBillingManager.mProductDetailList;
     }
 
     @Override
     public boolean isPurchased(String productType, String product) {
-        return BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager.mPurchasedProducts.contains(product) : mSubscriptionBillingManager.mPurchasedProducts.contains(product);
+        return BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager.mPurchasedProducts.contains(
+                product) : mSubscriptionBillingManager.mPurchasedProducts.contains(product);
     }
 
     @Override
     public void launchPurchase(String productType, ProductDetails productDetails) {
-        AbstractBillingManager abstractBillingManager = BillingClient.ProductType.INAPP.equals(productType) ? mInAppBillingManager : mSubscriptionBillingManager;
+        AbstractBillingManager abstractBillingManager = BillingClient.ProductType.INAPP.equals(
+                productType) ? mInAppBillingManager : mSubscriptionBillingManager;
         abstractBillingManager.launchPurchase(productDetails);
     }
 

@@ -4,14 +4,11 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
-import java.util.Calendar;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 
 public abstract class TeamDefinition extends ApiTeam {
 
@@ -117,9 +114,7 @@ public abstract class TeamDefinition extends ApiTeam {
             result = true;
         } else if (obj instanceof TeamDefinition) {
             TeamDefinition other = (TeamDefinition) obj;
-            result = super.equals(other) &&
-                    mClassType.equals(other.mClassType)
-                    && mTeamType.equals(other.mTeamType);
+            result = super.equals(other) && mClassType.equals(other.mClassType) && mTeamType.equals(other.mTeamType);
         }
 
         return result;

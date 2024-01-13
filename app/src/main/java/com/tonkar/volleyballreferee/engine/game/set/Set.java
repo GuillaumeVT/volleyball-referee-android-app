@@ -7,8 +7,7 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.TeamComposition;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import lombok.EqualsAndHashCode;
 
@@ -50,7 +49,11 @@ public abstract class Set {
         this(rules, pointsToWinSet, servingTeamAtStart, null, null);
     }
 
-    protected Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart, TeamDefinition homeTeamDefinition, TeamDefinition guestTeamDefinition) {
+    protected Set(Rules rules,
+                  int pointsToWinSet,
+                  TeamType servingTeamAtStart,
+                  TeamDefinition homeTeamDefinition,
+                  TeamDefinition guestTeamDefinition) {
         mClassType = getClass().getName();
         mPointsToWinSet = pointsToWinSet;
         m2PointsDifference = rules.isTwoPointsDifference();
@@ -84,12 +87,14 @@ public abstract class Set {
 
     public boolean isSetCompleted() {
         // Set is complete when a team reaches the number of points to win (e.g. 25, 21, 15) or more, with a 2-points difference
-        return (mHomePoints >= mPointsToWinSet || mGuestPoints >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomePoints - mGuestPoints) >= 2);
+        return (mHomePoints >= mPointsToWinSet || mGuestPoints >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(
+                mHomePoints - mGuestPoints) >= 2);
     }
 
     public boolean isSetPoint() {
         // Set ball when a team will reach the number of points to win  with 1 point (e.g. 25, 21, 15) or more, with at least 1-point difference
-        return !isSetCompleted() && (mHomePoints +1 >= mPointsToWinSet || mGuestPoints +1 >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(mHomePoints - mGuestPoints) >= 1);
+        return !isSetCompleted() && (mHomePoints + 1 >= mPointsToWinSet || mGuestPoints + 1 >= mPointsToWinSet) && (!m2PointsDifference || Math.abs(
+                mHomePoints - mGuestPoints) >= 1);
     }
 
     public TeamType getLeadingTeam() {

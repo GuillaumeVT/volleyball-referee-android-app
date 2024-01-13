@@ -1,27 +1,15 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
+import android.app.*;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.*;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TimePicker;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.*;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
@@ -30,35 +18,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.service.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.service.StoredRulesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredRulesService;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.service.StoredUserService;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 public class ScheduledGameActivity extends AppCompatActivity {
 
@@ -135,7 +101,10 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update division");
                 mGameSummary.setDivisionName(s.toString().trim());
-                ((TextInputLayout)findViewById(R.id.division_name_input_layout)).setError(mGameSummary.getDivisionName().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                ((TextInputLayout) findViewById(R.id.division_name_input_layout)).setError(
+                        mGameSummary.getDivisionName().length() < 2 ? String.format(Locale.getDefault(),
+                                                                                    getString(R.string.must_provide_at_least_n_characters),
+                                                                                    2) : null);
                 computeScheduleLayoutVisibility();
             }
 
@@ -146,14 +115,16 @@ public class ScheduledGameActivity extends AppCompatActivity {
         final AutoCompleteTextView leagueNameInput = findViewById(R.id.league_name_input_text);
         leagueNameInput.setText(mGameSummary.getLeagueName());
         leagueNameInput.setThreshold(1);
-        leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(this, getLayoutInflater(), storedLeaguesService.listLeagues(mGameSummary.getKind())));
+        leagueNameInput.setAdapter(
+                new AutocompleteLeagueListAdapter(this, getLayoutInflater(), storedLeaguesService.listLeagues(mGameSummary.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueSummary leagueDescription = (ApiLeagueSummary) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
             mGameSummary.setLeagueId(leagueDescription.getId());
             mGameSummary.setLeagueName(leagueDescription.getName());
             divisionNameInput.setText("");
-            divisionNameInput.setAdapter(new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
+            divisionNameInput.setAdapter(new ArrayAdapter<>(this, R.layout.autocomplete_list_item, new ArrayList<>(
+                    storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
             computeScheduleLayoutVisibility();
         });
 
@@ -165,7 +136,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i(Tags.SETUP_UI, "Update league");
                 mGameSummary.setLeagueName(s.toString().trim());
-                findViewById(R.id.division_name_input_layout).setVisibility(mGameSummary.getLeagueName().length() < 2 ? View.GONE : View.VISIBLE);
+                findViewById(R.id.division_name_input_layout).setVisibility(
+                        mGameSummary.getLeagueName().length() < 2 ? View.GONE : View.VISIBLE);
                 computeScheduleLayoutVisibility();
             }
 
@@ -398,9 +370,11 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void computeScheduleLayoutVisibility() {
         View saveLayout = findViewById(R.id.schedule_game_layout);
-        if (mGameSummary.getHomeTeamId() != null && mGameSummary.getGuestTeamId() != null && mGameSummary.getRulesId() != null
-                && !mGameSummary.getHomeTeamName().equals(mGameSummary.getGuestTeamName())
-                && (mGameSummary.getLeagueName().isEmpty() || (mGameSummary.getLeagueName().length() > 1 && mGameSummary.getDivisionName().length() > 1))) {
+        if (mGameSummary.getHomeTeamId() != null && mGameSummary.getGuestTeamId() != null && mGameSummary.getRulesId() != null && !mGameSummary
+                .getHomeTeamName()
+                .equals(mGameSummary.getGuestTeamName()) && (mGameSummary.getLeagueName().isEmpty() || (mGameSummary
+                .getLeagueName()
+                .length() > 1 && mGameSummary.getDivisionName().length() > 1))) {
             Log.i(Tags.SCHEDULE_UI, "Save button is visible");
             saveLayout.setVisibility(View.VISIBLE);
         } else {
@@ -412,9 +386,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
     public void scheduleGame(View view) {
         Log.i(Tags.SCHEDULE_UI, "Schedule game");
 
-        if (mGameSummary.getLeagueId() == null
-                && mGameSummary.getLeagueName() != null && !mGameSummary.getLeagueName().isEmpty()
-                && mGameSummary.getDivisionName() != null && !mGameSummary.getDivisionName().isEmpty()) {
+        if (mGameSummary.getLeagueId() == null && mGameSummary.getLeagueName() != null && !mGameSummary
+                .getLeagueName()
+                .isEmpty() && mGameSummary.getDivisionName() != null && !mGameSummary.getDivisionName().isEmpty()) {
             mGameSummary.setLeagueId(UUID.randomUUID().toString());
         }
 
@@ -431,7 +405,9 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
             @Override
             public void onSynchronizationFailed() {
-                runOnUiThread(() -> UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> UiUtils
+                        .makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG)
+                        .show());
             }
         });
     }
@@ -439,21 +415,22 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private void cancelGame() {
         Log.i(Tags.SCHEDULE_UI, "Schedule game");
         StoredGamesService storedGamesService = new StoredGamesManager(this);
-        storedGamesService.cancelGame(mGameSummary.getId(),
-                new DataSynchronizationListener() {
-                    @Override
-                    public void onSynchronizationSucceeded() {
-                        runOnUiThread(() -> {
-                            UiUtils.navigateToMain(ScheduledGameActivity.this, R.id.scheduled_games_list_fragment);
-                            UiUtils.animateBackward(ScheduledGameActivity.this);
-                        });
-                    }
-
-                    @Override
-                    public void onSynchronizationFailed() {
-                        runOnUiThread(() -> UiUtils.makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show());
-                    }
+        storedGamesService.cancelGame(mGameSummary.getId(), new DataSynchronizationListener() {
+            @Override
+            public void onSynchronizationSucceeded() {
+                runOnUiThread(() -> {
+                    UiUtils.navigateToMain(ScheduledGameActivity.this, R.id.scheduled_games_list_fragment);
+                    UiUtils.animateBackward(ScheduledGameActivity.this);
                 });
+            }
+
+            @Override
+            public void onSynchronizationFailed() {
+                runOnUiThread(() -> UiUtils
+                        .makeErrorText(ScheduledGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG)
+                        .show());
+            }
+        });
     }
 
     public Calendar getScheduleDate() {
@@ -471,8 +448,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
         @Override
         public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
             Calendar scheduleDate = mActivity.getScheduleDate();
-            return new DatePickerDialog(mActivity,this,
-                    scheduleDate.get(Calendar.YEAR), scheduleDate.get(Calendar.MONTH), scheduleDate.get(Calendar.DAY_OF_MONTH));
+            return new DatePickerDialog(mActivity, this, scheduleDate.get(Calendar.YEAR), scheduleDate.get(Calendar.MONTH),
+                                        scheduleDate.get(Calendar.DAY_OF_MONTH));
         }
 
         @Override
@@ -492,7 +469,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         @Override
         public @NonNull Dialog onCreateDialog(Bundle savedInstanceState) {
             Calendar scheduleDate = mActivity.getScheduleDate();
-            return new TimePickerDialog(mActivity,this, scheduleDate.get(Calendar.HOUR_OF_DAY), scheduleDate.get(Calendar.MINUTE),true);
+            return new TimePickerDialog(mActivity, this, scheduleDate.get(Calendar.HOUR_OF_DAY), scheduleDate.get(Calendar.MINUTE), true);
         }
 
         public void onTimeSet(TimePicker view, int hour, int minute) {

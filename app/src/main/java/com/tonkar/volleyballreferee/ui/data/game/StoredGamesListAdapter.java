@@ -1,12 +1,8 @@
 package com.tonkar.volleyballreferee.ui.data.game;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -19,12 +15,7 @@ import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummary> {
 
@@ -98,8 +89,7 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             viewHolder.indexedItem = gameView.findViewById(R.id.game_indexed_item);
             viewHolder.leagueText = gameView.findViewById(R.id.stored_game_league);
             gameView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) gameView.getTag();
         }
 
@@ -110,8 +100,9 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
     }
 
     private void updateGame(ViewHolder viewHolder, ApiGameSummary game) {
-        viewHolder.summaryText.setText(String.format(Locale.getDefault(),"%s\t\t%d - %d\t\t%s",
-                game.getHomeTeamName(), game.getHomeSets(), game.getGuestSets(), game.getGuestTeamName()));
+        viewHolder.summaryText.setText(
+                String.format(Locale.getDefault(), "%s\t\t%d - %d\t\t%s", game.getHomeTeamName(), game.getHomeSets(), game.getGuestSets(),
+                              game.getGuestTeamName()));
         viewHolder.dateText.setText(mFormatter.format(new Date(game.getScheduledAt())));
 
         viewHolder.scoreText.setText(game.getScore());
@@ -158,14 +149,17 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             viewHolder.indexedItem.setVisibility(View.GONE);
         }
 
-        if (game.getLeagueName() == null || game.getDivisionName() == null || game.getLeagueName().isEmpty() || game.getDivisionName().isEmpty()) {
+        if (game.getLeagueName() == null || game.getDivisionName() == null || game.getLeagueName().isEmpty() || game
+                .getDivisionName()
+                .isEmpty()) {
             viewHolder.leagueText.setText("");
         } else {
-            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , game.getLeagueName(), game.getDivisionName()));
+            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s", game.getLeagueName(), game.getDivisionName()));
         }
         viewHolder.leagueText.setVisibility(game.getLeagueName() == null || game.getLeagueName().isEmpty() ? View.GONE : View.VISIBLE);
 
-        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(game.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(
+                ContextCompat.getColor(getContext(), isSelectedItem(game.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
     }
 
     @Override
@@ -188,11 +182,13 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
                 List<ApiGameSummary> matchValues = new ArrayList<>();
 
                 for (ApiGameSummary game : mStoredGamesList) {
-                    if (lowerCaseText.isEmpty()
-                            || game.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
-                            || game.getGuestTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
-                            || game.getLeagueName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
-                            || game.getRefereeName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
+                    if (lowerCaseText.isEmpty() || game.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText) || game
+                            .getGuestTeamName()
+                            .toLowerCase(Locale.getDefault())
+                            .contains(lowerCaseText) || game
+                            .getLeagueName()
+                            .toLowerCase(Locale.getDefault())
+                            .contains(lowerCaseText) || game.getRefereeName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(game);
                     }
                 }

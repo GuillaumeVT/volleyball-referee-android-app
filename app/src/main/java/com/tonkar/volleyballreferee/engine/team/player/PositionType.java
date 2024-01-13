@@ -2,12 +2,17 @@ package com.tonkar.volleyballreferee.engine.team.player;
 
 import com.tonkar.volleyballreferee.engine.game.GameType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public enum PositionType {
 
-    POSITION_1, POSITION_2, POSITION_3, POSITION_4, POSITION_5, POSITION_6, BENCH;
+    POSITION_1,
+    POSITION_2,
+    POSITION_3,
+    POSITION_4,
+    POSITION_5,
+    POSITION_6,
+    BENCH;
 
     public PositionType previousPosition(GameType gameType) {
         PositionType previous = BENCH;

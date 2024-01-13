@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,21 +10,14 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
 import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -104,8 +96,8 @@ public class StoredTeamsIOTest {
         StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext.getApplicationContext());
 
         List<ApiTeam> expectedList = new ArrayList<>();
-        expectedList.add(storedTeamsService.getTeam(GameType.INDOOR,"BRAZIL", GenderType.GENTS));
-        expectedList.add(storedTeamsService.getTeam(GameType.INDOOR,"FRANCE", GenderType.GENTS));
+        expectedList.add(storedTeamsService.getTeam(GameType.INDOOR, "BRAZIL", GenderType.GENTS));
+        expectedList.add(storedTeamsService.getTeam(GameType.INDOOR, "FRANCE", GenderType.GENTS));
         List<ApiTeam> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

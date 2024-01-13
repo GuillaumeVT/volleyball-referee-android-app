@@ -1,7 +1,12 @@
 package com.tonkar.volleyballreferee.engine.game.sanction;
 
 public enum SanctionType {
-    YELLOW, RED, RED_EXPULSION, RED_DISQUALIFICATION, DELAY_WARNING, DELAY_PENALTY;
+    YELLOW,
+    RED,
+    RED_EXPULSION,
+    RED_DISQUALIFICATION,
+    DELAY_WARNING,
+    DELAY_PENALTY;
 
     public static String toLetter(SanctionType sanctionType) {
         String letter;

@@ -1,12 +1,8 @@
 package com.tonkar.volleyballreferee.ui.data.rules;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -17,10 +13,7 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSummary> {
 
@@ -79,8 +72,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
             viewHolder.nameText = rulesView.findViewById(R.id.stored_rules_name);
             viewHolder.kindItem = rulesView.findViewById(R.id.rules_kind_item);
             rulesView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) rulesView.getTag();
         }
 
@@ -103,7 +95,8 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
                 break;
         }
 
-        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(
+                ContextCompat.getColor(getContext(), isSelectedItem(rules.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
 
         return rulesView;
     }
@@ -127,7 +120,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
 
                 List<ApiRulesSummary> matchValues = new ArrayList<>();
 
-                for (ApiRulesSummary rules: mStoredRulesList) {
+                for (ApiRulesSummary rules : mStoredRulesList) {
                     if (lowerCaseText.isEmpty() || rules.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(rules);
                     }

@@ -1,26 +1,12 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGame;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSet;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
-import com.tonkar.volleyballreferee.engine.game.GameStatus;
-import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class StoredGame extends ApiGame implements IStoredGame {
 
@@ -34,14 +20,15 @@ public class StoredGame extends ApiGame implements IStoredGame {
     @Override
     public String getGameSummary() {
         if (GameStatus.COMPLETED.equals(getMatchStatus())) {
-            return String.format(Locale.getDefault(), "%s\t\t%d\t-\t%d\t\t%s\n", getHomeTeam().getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), getGuestTeam().getName());
+            return String.format(Locale.getDefault(), "%s\t\t%d\t-\t%d\t\t%s\n", getHomeTeam().getName(), getSets(TeamType.HOME),
+                                 getSets(TeamType.GUEST), getGuestTeam().getName());
         } else {
             return String.format(Locale.getDefault(), "%s\t-\t%s\n", getHomeTeam().getName(), getGuestTeam().getName());
         }
     }
 
     public int currentSetIndex() {
-        return getNumberOfSets() -1;
+        return getNumberOfSets() - 1;
     }
 
     public ApiTeam getTeam(TeamType teamType) {
@@ -206,11 +193,13 @@ public class StoredGame extends ApiGame implements IStoredGame {
         boolean result;
 
         if (TeamType.HOME.equals(teamType)) {
-            result = getHomeTeam().getPlayers().contains(new ApiPlayer(number))
-                    || getHomeTeam().getLiberos().contains(new ApiPlayer(number));
+            result = getHomeTeam().getPlayers().contains(new ApiPlayer(number)) || getHomeTeam()
+                    .getLiberos()
+                    .contains(new ApiPlayer(number));
         } else {
-            result = getGuestTeam().getPlayers().contains(new ApiPlayer(number))
-                    || getGuestTeam().getLiberos().contains(new ApiPlayer(number));
+            result = getGuestTeam().getPlayers().contains(new ApiPlayer(number)) || getGuestTeam()
+                    .getLiberos()
+                    .contains(new ApiPlayer(number));
         }
 
         return result;

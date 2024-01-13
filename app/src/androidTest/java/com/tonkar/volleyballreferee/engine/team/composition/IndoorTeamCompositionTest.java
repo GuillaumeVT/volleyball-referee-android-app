@@ -1,14 +1,10 @@
 package com.tonkar.volleyballreferee.engine.team.composition;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
@@ -17,15 +13,15 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class IndoorTeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        IndoorTeamComposition team = new IndoorTeamComposition(new IndoorTeamDefinition(GameType.INDOOR, UUID.randomUUID().toString(), "", TeamType.HOME), Rules.FIVB_LIMITATION, 6);
+        IndoorTeamComposition team = new IndoorTeamComposition(
+                new IndoorTeamDefinition(GameType.INDOOR, UUID.randomUUID().toString(), "", TeamType.HOME), Rules.FIVB_LIMITATION, 6);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());

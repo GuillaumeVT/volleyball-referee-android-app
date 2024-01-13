@@ -7,8 +7,7 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class IndoorTeamDefinition extends TeamDefinition {
 

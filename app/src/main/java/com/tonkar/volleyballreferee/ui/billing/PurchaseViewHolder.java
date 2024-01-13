@@ -2,16 +2,13 @@ package com.tonkar.volleyballreferee.ui.billing;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.ProductDetails;
+import com.android.billingclient.api.*;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
@@ -53,7 +50,8 @@ public class PurchaseViewHolder extends RecyclerView.ViewHolder {
 
         final Context context = mPurchaseItem.getContext();
 
-        if (billingService.isPurchased(productType, productDetails.getProductId()) || (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(productDetails.getProductId()) && PrefUtils.isWebPremiumPurchased(context))) {
+        if (billingService.isPurchased(productType, productDetails.getProductId()) || (BillingService.WEB_PREMIUM_SUBSCRIPTION.equals(
+                productDetails.getProductId()) && PrefUtils.isWebPremiumPurchased(context))) {
             mPurchaseButton.setText(R.string.already_purchased);
             mPurchaseButton.setOnClickListener(null);
             mPurchaseButton.setClickable(false);
@@ -64,7 +62,9 @@ public class PurchaseViewHolder extends RecyclerView.ViewHolder {
             mPurchaseButton.setClickable(true);
             mPurchaseButton.setIconResource(R.drawable.ic_purchase);
             mPurchaseButton.setIconTint(ColorStateList.valueOf(context.getColor(R.color.colorOnPrimary)));
-            mPurchaseButton.setOnClickListener(view -> billingService.executeServiceRequest(productType, () -> billingService.launchPurchase(productType, productDetails)));
+            mPurchaseButton.setOnClickListener(view -> billingService.executeServiceRequest(productType,
+                                                                                            () -> billingService.launchPurchase(productType,
+                                                                                                                                productDetails)));
         }
     }
 

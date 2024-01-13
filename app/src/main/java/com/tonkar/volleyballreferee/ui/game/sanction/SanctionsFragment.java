@@ -2,21 +2,16 @@ package com.tonkar.volleyballreferee.ui.game.sanction;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.sanction.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
@@ -49,7 +44,8 @@ public class SanctionsFragment extends Fragment implements TeamListener, Sanctio
             leftTeamSanctionsList.setAdapter(mLeftTeamSanctionsListAdapter);
 
             ListView rightTeamSanctionsList = view.findViewById(R.id.right_team_sanctions_list);
-            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(requireActivity(), inflater, mGame, mGame, mGame.getTeamOnRightSide());
+            mRightTeamSanctionsListAdapter = new SanctionsListAdapter(requireActivity(), inflater, mGame, mGame,
+                                                                      mGame.getTeamOnRightSide());
             rightTeamSanctionsList.setAdapter(mRightTeamSanctionsListAdapter);
         }
 

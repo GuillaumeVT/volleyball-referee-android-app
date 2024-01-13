@@ -1,15 +1,10 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
+import android.graphics.*;
 import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -17,10 +12,7 @@ import androidx.core.content.ContextCompat;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
 
@@ -82,13 +74,25 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
             if (drawable != null) {
                 switch (team.getGender()) {
                     case MIXED:
-                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed), PorterDuff.Mode.SRC_IN));
+                        drawable
+                                .mutate()
+                                .setColorFilter(
+                                        new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed),
+                                                                  PorterDuff.Mode.SRC_IN));
                         break;
                     case LADIES:
-                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies), PorterDuff.Mode.SRC_IN));
+                        drawable
+                                .mutate()
+                                .setColorFilter(
+                                        new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies),
+                                                                  PorterDuff.Mode.SRC_IN));
                         break;
                     case GENTS:
-                        drawable.mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents), PorterDuff.Mode.SRC_IN));
+                        drawable
+                                .mutate()
+                                .setColorFilter(
+                                        new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents),
+                                                                  PorterDuff.Mode.SRC_IN));
                         break;
                 }
             }

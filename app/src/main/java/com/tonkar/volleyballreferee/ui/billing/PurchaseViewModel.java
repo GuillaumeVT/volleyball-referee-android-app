@@ -3,17 +3,12 @@ package com.tonkar.volleyballreferee.ui.billing;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.*;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.ProductDetails;
-import com.tonkar.volleyballreferee.engine.billing.BillingListener;
-import com.tonkar.volleyballreferee.engine.billing.BillingService;
+import com.android.billingclient.api.*;
+import com.tonkar.volleyballreferee.engine.billing.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PurchaseViewModel extends AndroidViewModel implements BillingListener {
 

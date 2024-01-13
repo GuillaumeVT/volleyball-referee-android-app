@@ -3,13 +3,8 @@ package com.tonkar.volleyballreferee.ui.data.game;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
@@ -20,14 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
+import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.game.GameType;
-import com.tonkar.volleyballreferee.engine.game.UsageType;
-import com.tonkar.volleyballreferee.engine.service.DataSynchronizationListener;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.List;
@@ -47,8 +38,7 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.STORED_GAMES, "Create stored games list fragment");
 
         mStoredGamesService = new StoredGamesManager(requireContext());
@@ -82,7 +72,9 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
                     }
 
                     intent.putExtra("game", game.getId());
-                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), itemView, "listItemToDetails").toBundle());
+                    startActivity(intent, ActivityOptionsCompat
+                            .makeSceneTransitionAnimation(requireActivity(), itemView, "listItemToDetails")
+                            .toBundle());
                 }
             }
         });

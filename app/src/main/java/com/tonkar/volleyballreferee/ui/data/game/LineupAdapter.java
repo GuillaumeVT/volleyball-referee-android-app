@@ -1,15 +1,11 @@
 package com.tonkar.volleyballreferee.ui.data.game;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -60,8 +56,7 @@ public class LineupAdapter extends BaseAdapter {
             viewHolder.positionTitle = positionView.findViewById(R.id.position_title);
             viewHolder.positionText = positionView.findViewById(R.id.position);
             positionView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) positionView.getTag();
         }
 
@@ -116,7 +111,7 @@ public class LineupAdapter extends BaseAdapter {
 
     private int measureTextWidth() {
         View view = mLayoutInflater.inflate(R.layout.lineup_item, null);
-        TextView text = view.findViewById(R.id.position) ;
+        TextView text = view.findViewById(R.id.position);
         text.setText("###");
         text.measure(0, 0);
         return text.getMeasuredWidth();

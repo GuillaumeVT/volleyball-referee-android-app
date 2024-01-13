@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,28 +11,16 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsManager;
-import com.tonkar.volleyballreferee.engine.service.StoredTeamsService;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -52,7 +39,8 @@ public class ItalyUsaBeachGame {
     public void playGame_complete() {
         ApiUserSummary user = PrefUtils.getUser(mContext);
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                          Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                          System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeamsAndLeague(beachGame, mContext, mStoredGamesService);
 
@@ -72,7 +60,8 @@ public class ItalyUsaBeachGame {
     public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
         ApiUserSummary user = PrefUtils.getUser(context);
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                          Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                          System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeamsAndLeague(beachGame, context, storedGamesService);
 
@@ -102,7 +91,8 @@ public class ItalyUsaBeachGame {
     public void playGame_technicalTimeout(Context context, StoredGamesService storedGamesService) {
         ApiUserSummary user = PrefUtils.getUser(context);
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialBeachRules());
+                                                          Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                          System.currentTimeMillis(), Rules.officialBeachRules());
 
         defineTeamsAndLeague(beachGame, context, storedGamesService);
 

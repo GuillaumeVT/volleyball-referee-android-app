@@ -1,38 +1,23 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.*;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.IGame;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredLeaguesService;
-import com.tonkar.volleyballreferee.engine.service.StoredUserManager;
-import com.tonkar.volleyballreferee.engine.service.StoredUserService;
+import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class MiscSetupFragment extends Fragment implements GameServiceHandler {
 
@@ -71,7 +56,9 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
                 if (isAdded()) {
                     Log.i(Tags.SETUP_UI, "Update division");
                     mGame.getLeague().setDivision(s.toString().trim());
-                    ((TextInputLayout) view.findViewById(R.id.division_name_input_layout)).setError(mGame.getLeague().getDivision().length() < 2 ? String.format(Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
+                    ((TextInputLayout) view.findViewById(R.id.division_name_input_layout)).setError(
+                            mGame.getLeague().getDivision().length() < 2 ? String.format(Locale.getDefault(), getString(
+                                    R.string.must_provide_at_least_n_characters), 2) : null);
                     computeConfirmItemVisibility();
                 }
             }
@@ -83,13 +70,15 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         final AutoCompleteTextView leagueNameInput = view.findViewById(R.id.league_name_input_text);
         leagueNameInput.setText(mGame.getLeague().getName());
         leagueNameInput.setThreshold(1);
-        leagueNameInput.setAdapter(new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));
+        leagueNameInput.setAdapter(
+                new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
             ApiLeagueSummary leagueDescription = (ApiLeagueSummary) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
             mGame.getLeague().setAll(leagueDescription);
             divisionNameInput.setText("");
-            divisionNameInput.setAdapter(new ArrayAdapter<>(requireContext(), R.layout.autocomplete_list_item, new ArrayList<>(storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
+            divisionNameInput.setAdapter(new ArrayAdapter<>(requireContext(), R.layout.autocomplete_list_item, new ArrayList<>(
+                    storedLeaguesService.listDivisionNames(leagueDescription.getId()))));
             computeConfirmItemVisibility();
         });
 
@@ -217,7 +206,9 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
     }
 
     private void computeDivisionLayoutVisibility(View view) {
-        view.findViewById(R.id.division_name_input_layout).setVisibility(mGame.getLeague().getName().length() < 2 ? View.GONE : View.VISIBLE);
+        view
+                .findViewById(R.id.division_name_input_layout)
+                .setVisibility(mGame.getLeague().getName().length() < 2 ? View.GONE : View.VISIBLE);
     }
 
     private void computeConfirmItemVisibility() {

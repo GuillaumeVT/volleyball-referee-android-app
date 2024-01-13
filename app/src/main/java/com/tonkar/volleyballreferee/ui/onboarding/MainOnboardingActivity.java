@@ -5,9 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.appintro.AppIntro;
-import com.github.appintro.AppIntroFragment;
-import com.github.appintro.AppIntroPageTransformerType;
+import com.github.appintro.*;
 import com.github.appintro.model.SliderPage;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;

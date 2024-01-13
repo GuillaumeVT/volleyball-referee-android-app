@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,18 +12,13 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesManager;
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.service.*;
+import com.tonkar.volleyballreferee.engine.team.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class PointsScoreBoardGameTest {
@@ -42,7 +36,8 @@ public class PointsScoreBoardGameTest {
     public void playGame_complete() {
         ApiUserSummary user = PrefUtils.getUser(mContext);
         IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                       Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                       System.currentTimeMillis(), Rules.officialIndoorRules());
         game.setUsage(UsageType.POINTS_SCOREBOARD);
 
         defineTeams(game);

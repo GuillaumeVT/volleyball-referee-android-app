@@ -1,38 +1,22 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.gson.reflect.TypeToken;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
-import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.VbrApi;
-import com.tonkar.volleyballreferee.engine.api.model.ApiEmailCredentials;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendRequest;
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriendsAndRequests;
-import com.tonkar.volleyballreferee.engine.api.model.ApiNewUser;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserPasswordUpdate;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserToken;
-import com.tonkar.volleyballreferee.engine.database.VbrDatabase;
-import com.tonkar.volleyballreferee.engine.database.VbrRepository;
+import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.api.*;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.database.*;
 import com.tonkar.volleyballreferee.engine.database.model.FriendEntity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 
 public class StoredUserManager implements StoredUserService {
 
@@ -67,7 +51,8 @@ public class StoredUserManager implements StoredUserService {
                             }
                         }
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while getting user from purchase token", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while getting user from purchase token", response.code()));
                         if (listener != null) {
                             listener.onError(response.code());
                         }
@@ -155,7 +140,8 @@ public class StoredUserManager implements StoredUserService {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         listener.onUserPasswordRecoveryInitiated();
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while initiating user password recovery", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while initiating user password recovery", response.code()));
                         listener.onError(response.code());
                     }
                 }
@@ -185,7 +171,8 @@ public class StoredUserManager implements StoredUserService {
                             syncAll();
                         }
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while updating user password", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while updating user password", response.code()));
                         listener.onError(response.code());
                     }
                 }
@@ -217,7 +204,8 @@ public class StoredUserManager implements StoredUserService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiFriendsAndRequests friendsAndRequests = JsonConverters.GSON.fromJson(body.string(), new TypeToken<ApiFriendsAndRequests>() {}.getType());
+                            ApiFriendsAndRequests friendsAndRequests = JsonConverters.GSON.fromJson(body.string(),
+                                                                                                    new TypeToken<ApiFriendsAndRequests>() {}.getType());
 
                             mRepository.insertFriends(friendsAndRequests.getFriends(), false);
                             if (listener != null) {
@@ -225,7 +213,8 @@ public class StoredUserManager implements StoredUserService {
                             }
                         }
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d getting friends and requests", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d getting friends and requests", response.code()));
                         if (listener != null) {
                             listener.onError(response.code());
                         }
@@ -270,7 +259,8 @@ public class StoredUserManager implements StoredUserService {
                     if (response.code() == HttpURLConnection.HTTP_CREATED) {
                         listener.onFriendRequestSent(friendPseudo);
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while sending friend request", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while sending friend request", response.code()));
                         listener.onError(response.code());
                     }
                 }
@@ -296,7 +286,8 @@ public class StoredUserManager implements StoredUserService {
                         mRepository.insertFriend(friendRequest.getSenderId(), friendRequest.getSenderPseudo(), false);
                         listener.onFriendRequestAccepted(friendRequest);
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while accepting friend request", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while accepting friend request", response.code()));
                         listener.onError(response.code());
                     }
                 }
@@ -321,7 +312,8 @@ public class StoredUserManager implements StoredUserService {
                     if (response.code() == HttpURLConnection.HTTP_CREATED) {
                         listener.onFriendRequestRejected(friendRequest);
                     } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while rejecting friend request", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while rejecting friend request", response.code()));
                         listener.onError(response.code());
                     }
                 }
@@ -368,7 +360,8 @@ public class StoredUserManager implements StoredUserService {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) {
                     if (response.code() != HttpURLConnection.HTTP_OK) {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while refreshing subscription purchase token", response.code()));
+                        Log.e(Tags.STORED_USER,
+                              String.format(Locale.getDefault(), "Error %d while refreshing subscription purchase token", response.code()));
                     }
                 }
             });

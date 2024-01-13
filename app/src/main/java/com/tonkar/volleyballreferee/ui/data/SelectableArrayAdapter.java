@@ -3,12 +3,10 @@ package com.tonkar.volleyballreferee.ui.data;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
+import androidx.annotation.*;
 import androidx.collection.ArraySet;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class SelectableArrayAdapter<T> extends ArrayAdapter<T> {
 

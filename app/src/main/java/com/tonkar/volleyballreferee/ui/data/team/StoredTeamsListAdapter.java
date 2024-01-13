@@ -1,12 +1,8 @@
 package com.tonkar.volleyballreferee.ui.data.team;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -17,10 +13,7 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummary> {
 
@@ -81,8 +74,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
             viewHolder.kindItem = teamView.findViewById(R.id.team_kind_item);
             viewHolder.genderItem = teamView.findViewById(R.id.team_gender_item);
             teamView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) teamView.getTag();
         }
 
@@ -117,7 +109,8 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
                 break;
         }
 
-        viewHolder.listItemCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
+        viewHolder.listItemCard.setCardBackgroundColor(
+                ContextCompat.getColor(getContext(), isSelectedItem(team.getId()) ? R.color.colorSelectedItem : R.color.colorSurface));
 
         return teamView;
     }

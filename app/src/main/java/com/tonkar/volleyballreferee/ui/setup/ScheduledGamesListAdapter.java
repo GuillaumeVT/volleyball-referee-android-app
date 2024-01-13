@@ -1,12 +1,7 @@
 package com.tonkar.volleyballreferee.ui.setup;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 
@@ -16,12 +11,7 @@ import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 
@@ -88,8 +78,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             viewHolder.genderItem = gameView.findViewById(R.id.game_gender_item);
             viewHolder.leagueText = gameView.findViewById(R.id.scheduled_game_league);
             gameView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) gameView.getTag();
         }
 
@@ -100,7 +89,8 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
     }
 
     private void updateGameDescription(ViewHolder viewHolder, ApiGameSummary gameDescription) {
-        viewHolder.summaryText.setText(String.format(Locale.getDefault(),"%s\t\t - \t\t%s", gameDescription.getHomeTeamName(), gameDescription.getGuestTeamName()));
+        viewHolder.summaryText.setText(String.format(Locale.getDefault(), "%s\t\t - \t\t%s", gameDescription.getHomeTeamName(),
+                                                     gameDescription.getGuestTeamName()));
         viewHolder.dateText.setText(mFormatter.format(new Date(gameDescription.getScheduledAt())));
 
         switch (gameDescription.getGender()) {
@@ -133,11 +123,14 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
 
         viewHolder.liveItem.setVisibility(GameStatus.LIVE.equals(gameDescription.getStatus()) ? View.VISIBLE : View.GONE);
 
-        if (gameDescription.getLeagueName() == null || gameDescription.getDivisionName() == null || gameDescription.getLeagueName().isEmpty() || gameDescription.getDivisionName().isEmpty()) {
+        if (gameDescription.getLeagueName() == null || gameDescription.getDivisionName() == null || gameDescription
+                .getLeagueName()
+                .isEmpty() || gameDescription.getDivisionName().isEmpty()) {
             viewHolder.leagueText.setText("");
             viewHolder.leagueText.setVisibility(View.GONE);
         } else {
-            viewHolder.leagueText.setText(String.format(Locale.getDefault(), "%s / %s" , gameDescription.getLeagueName(), gameDescription.getDivisionName()));
+            viewHolder.leagueText.setText(
+                    String.format(Locale.getDefault(), "%s / %s", gameDescription.getLeagueName(), gameDescription.getDivisionName()));
             viewHolder.leagueText.setVisibility(View.VISIBLE);
         }
     }
@@ -162,11 +155,19 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
                 List<ApiGameSummary> matchValues = new ArrayList<>();
 
                 for (ApiGameSummary gameDescription : mGameDescriptionList) {
-                    if (lowerCaseText.isEmpty()
-                            || gameDescription.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
-                            || gameDescription.getGuestTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)
-                            || (gameDescription.getLeagueName() != null && gameDescription.getLeagueName().toLowerCase(Locale.getDefault()).contains(lowerCaseText))
-                            || gameDescription.getRefereeName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
+                    if (lowerCaseText.isEmpty() || gameDescription
+                            .getHomeTeamName()
+                            .toLowerCase(Locale.getDefault())
+                            .contains(lowerCaseText) || gameDescription
+                            .getGuestTeamName()
+                            .toLowerCase(Locale.getDefault())
+                            .contains(lowerCaseText) || (gameDescription.getLeagueName() != null && gameDescription
+                            .getLeagueName()
+                            .toLowerCase(Locale.getDefault())
+                            .contains(lowerCaseText)) || gameDescription
+                            .getRefereeName()
+                            .toLowerCase(Locale.getDefault())
+                            .contains(lowerCaseText)) {
                         matchValues.add(gameDescription);
                     }
                 }

@@ -4,91 +4,75 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSelectedLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionListener;
-import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.sanction.*;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
 import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamListener;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class Game extends BaseGame {
 
     @SerializedName("id")
-    private final String            mId;
+    private final String                                                 mId;
     @SerializedName("createdBy")
-    private final String            mCreatedBy;
+    private final String                                                 mCreatedBy;
     @SerializedName("createdAt")
-    private final long              mCreatedAt;
+    private final long                                                   mCreatedAt;
     @SerializedName("updatedAt")
-    private       long              mUpdatedAt;
+    private       long                                                   mUpdatedAt;
     @SerializedName("scheduledAt")
-    private       long              mScheduledAt;
+    private       long                                                   mScheduledAt;
     @SerializedName("refereedBy")
-    private       String            mRefereedBy;
+    private       String                                                 mRefereedBy;
     @SerializedName("refereeName")
-    private       String            mRefereeName;
+    private       String                                                 mRefereeName;
     @SerializedName("kind")
-    private final GameType          mKind;
+    private final GameType                                               mKind;
     @SerializedName("gender")
-    private       GenderType        mGender;
+    private       GenderType                                             mGender;
     @SerializedName("usage")
-    private       UsageType         mUsage;
+    private       UsageType                                              mUsage;
     @SerializedName("status")
-    private       GameStatus        mGameStatus;
+    private       GameStatus                                             mGameStatus;
     @SerializedName("indexed")
-    private       boolean           mIndexed;
+    private       boolean                                                mIndexed;
     @SerializedName("rules")
-    private final Rules             mRules;
+    private final Rules                                                  mRules;
     @SerializedName("league")
-    private final ApiSelectedLeague mLeague;
+    private final ApiSelectedLeague                                      mLeague;
     @SerializedName("homeTeam")
-    private final TeamDefinition    mHomeTeam;
+    private final TeamDefinition                                         mHomeTeam;
     @SerializedName("guestTeam")
-    private final TeamDefinition    mGuestTeam;
+    private final TeamDefinition                                         mGuestTeam;
     @SerializedName("teamOnLeftSide")
-    private       TeamType          mTeamOnLeftSide;
+    private       TeamType                                               mTeamOnLeftSide;
     @SerializedName("teamOnRightSide")
-    private       TeamType          mTeamOnRightSide;
+    private       TeamType                                               mTeamOnRightSide;
     @SerializedName("sets")
     private final List<com.tonkar.volleyballreferee.engine.game.set.Set> mSets;
     @SerializedName("servingTeamAtStart")
-    private       TeamType          mServingTeamAtStart;
+    private       TeamType                                               mServingTeamAtStart;
     @SerializedName("homeTeamCards")
-    private final List<ApiSanction> mHomeTeamSanctions;
+    private final List<ApiSanction>                                      mHomeTeamSanctions;
     @SerializedName("guestTeamCards")
-    private final List<ApiSanction> mGuestTeamSanctions;
+    private final List<ApiSanction>                                      mGuestTeamSanctions;
     @SerializedName("startTime")
-    private       long              mStartTime;
+    private       long                                                   mStartTime;
     @SerializedName("endTime")
-    private       long              mEndTime;
+    private       long                                                   mEndTime;
     @SerializedName("referee1Name")
-    private       String            mReferee1Name;
+    private       String                                                 mReferee1Name;
     @SerializedName("referee2Name")
-    private       String            mReferee2Name;
+    private       String                                                 mReferee2Name;
     @SerializedName("scorerName")
-    private       String            mScorerName;
+    private       String                                                 mScorerName;
 
     private transient boolean mEnableNotifications;
 
@@ -141,7 +125,9 @@ public abstract class Game extends BaseGame {
 
     protected abstract TeamDefinition createTeamDefinition(TeamType teamType);
 
-    protected abstract com.tonkar.volleyballreferee.engine.game.set.Set createSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart);
+    protected abstract com.tonkar.volleyballreferee.engine.game.set.Set createSet(Rules rules,
+                                                                                  int pointsToWinSet,
+                                                                                  TeamType servingTeamAtStart);
 
     @Override
     public void addGeneralListener(GeneralListener listener) {
@@ -277,7 +263,9 @@ public abstract class Game extends BaseGame {
 
     @Override
     public String getGameSummary() {
-        StringBuilder builder = new StringBuilder(String.format(Locale.getDefault(),"%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME), getSets(TeamType.GUEST), mGuestTeam.getName()));
+        StringBuilder builder = new StringBuilder(
+                String.format(Locale.getDefault(), "%s\t\t%d\t-\t%d\t\t%s\n", mHomeTeam.getName(), getSets(TeamType.HOME),
+                              getSets(TeamType.GUEST), mGuestTeam.getName()));
 
         for (com.tonkar.volleyballreferee.engine.game.set.Set set : mSets) {
             builder.append(set.getSetSummary());
@@ -293,7 +281,7 @@ public abstract class Game extends BaseGame {
     public void startMatch() {
         mRules.printRules();
 
-        if (mScheduledAt== 0L) {
+        if (mScheduledAt == 0L) {
             mScheduledAt = System.currentTimeMillis();
         }
 
@@ -309,7 +297,8 @@ public abstract class Game extends BaseGame {
         if (!isMatchCompleted() && currentSetIndex() >= 0) {
             resetCurrentSetSanctions(mHomeTeamSanctions);
             resetCurrentSetSanctions(mGuestTeamSanctions);
-            mSets.set(currentSetIndex(), createSet(mRules, isTieBreakSet() ? mRules.getPointsInTieBreak() : mRules.getPointsPerSet(), mServingTeamAtStart));
+            mSets.set(currentSetIndex(),
+                      createSet(mRules, isTieBreakSet() ? mRules.getPointsInTieBreak() : mRules.getPointsPerSet(), mServingTeamAtStart));
             notifySetStarted();
         }
     }
@@ -437,15 +426,17 @@ public abstract class Game extends BaseGame {
 
         switch (mRules.getMatchTermination()) {
             case Rules.ALL_SETS_TERMINATION:
-                matchPoint = !isMatchCompleted() && isSetPoint() && (1 + getSets(TeamType.HOME) + getSets(TeamType.GUEST) == mRules.getSetsPerGame());
+                matchPoint = !isMatchCompleted() && isSetPoint() && (1 + getSets(TeamType.HOME) + getSets(
+                        TeamType.GUEST) == mRules.getSetsPerGame());
                 break;
             case Rules.WIN_TERMINATION:
             default:
                 final int homeTeamSetCount = 1 + getSets(TeamType.HOME);
                 final int guestTeamSetCount = 1 + getSets(TeamType.GUEST);
 
-                matchPoint = !isMatchCompleted() && isSetPoint()
-                        && ((TeamType.HOME.equals(getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
+                matchPoint = !isMatchCompleted() && isSetPoint() && ((TeamType.HOME.equals(
+                        getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(
+                        getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
                 break;
         }
 
@@ -586,9 +577,9 @@ public abstract class Game extends BaseGame {
     }
 
     boolean isTieBreakSet() {
-        return getSets(TeamType.HOME) + getSets(TeamType.GUEST) + 1 == mRules.getSetsPerGame()
-                && mRules.isTieBreakInLastSet()
-                && Arrays.asList(3, 5).contains(mRules.getSetsPerGame());
+        return getSets(TeamType.HOME) + getSets(TeamType.GUEST) + 1 == mRules.getSetsPerGame() && mRules.isTieBreakInLastSet() && Arrays
+                .asList(3, 5)
+                .contains(mRules.getSetsPerGame());
     }
 
     private void notifySetsUpdated(final TeamType teamType, int newCount) {
@@ -668,7 +659,7 @@ public abstract class Game extends BaseGame {
     // Team definition / composition
 
     TeamDefinition getTeamDefinition(final TeamType teamType) {
-        return TeamType.HOME.equals(teamType) ? mHomeTeam: mGuestTeam;
+        return TeamType.HOME.equals(teamType) ? mHomeTeam : mGuestTeam;
     }
 
     @Override
@@ -1030,7 +1021,8 @@ public abstract class Game extends BaseGame {
 
     @Override
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        ApiSanction sanction = new ApiSanction(sanctionType, number, currentSetIndex(), getPoints(TeamType.HOME), getPoints(TeamType.GUEST));
+        ApiSanction sanction = new ApiSanction(sanctionType, number, currentSetIndex(), getPoints(TeamType.HOME),
+                                               getPoints(TeamType.GUEST));
         if (TeamType.HOME.equals(teamType)) {
             mHomeTeamSanctions.add(sanction);
         } else {
@@ -1130,7 +1122,7 @@ public abstract class Game extends BaseGame {
         SanctionType sanctionType = SanctionType.YELLOW;
         List<ApiSanction> playerSanctions = getPlayerSanctions(teamType, number);
 
-        for (ApiSanction sanction: playerSanctions) {
+        for (ApiSanction sanction : playerSanctions) {
             if (sanction.getCard().seriousness() > sanctionType.seriousness()) {
                 sanctionType = sanction.getCard();
             }
@@ -1274,20 +1266,18 @@ public abstract class Game extends BaseGame {
 
         Set<Integer> expulsedOrDisqualifiedPlayers = getEvictedPlayersForCurrentSet(TeamType.HOME, true, true);
 
-        for (ApiSubstitution substitution : getSubstitutions (TeamType.HOME, currentSetIndex)) {
-            if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints
-                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerIn())
-                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())) {
+        for (ApiSubstitution substitution : getSubstitutions(TeamType.HOME, currentSetIndex)) {
+            if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints && !expulsedOrDisqualifiedPlayers.contains(
+                    substitution.getPlayerIn()) && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())) {
                 gameEvents.add(GameEvent.newSubstitutionEvent(TeamType.HOME, substitution));
             }
         }
 
         expulsedOrDisqualifiedPlayers = getEvictedPlayersForCurrentSet(TeamType.GUEST, true, true);
 
-        for (ApiSubstitution substitution : getSubstitutions (TeamType.GUEST, currentSetIndex)) {
-            if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints
-                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerIn())
-                    && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())) {
+        for (ApiSubstitution substitution : getSubstitutions(TeamType.GUEST, currentSetIndex)) {
+            if (substitution.getHomePoints() == homePoints && substitution.getGuestPoints() == guestPoints && !expulsedOrDisqualifiedPlayers.contains(
+                    substitution.getPlayerIn()) && !expulsedOrDisqualifiedPlayers.contains(substitution.getPlayerOut())) {
                 gameEvents.add(GameEvent.newSubstitutionEvent(TeamType.GUEST, substitution));
             }
         }
@@ -1314,7 +1304,7 @@ public abstract class Game extends BaseGame {
                 removeLastPoint();
                 break;
             case TIMEOUT:
-               undoTimeout(gameEvent.getTeamType());
+                undoTimeout(gameEvent.getTeamType());
                 break;
             case SUBSTITUTION:
                 undoSubstitution(gameEvent.getTeamType(), gameEvent.getSubstitution());
@@ -1333,7 +1323,7 @@ public abstract class Game extends BaseGame {
         // By using the variable currentSet, we add points until this set is finished
         com.tonkar.volleyballreferee.engine.game.set.Set currentSet = currentSet();
 
-        while(!currentSet.isSetCompleted()) {
+        while (!currentSet.isSetCompleted()) {
             addPoint(teamType);
         }
 
@@ -1344,7 +1334,7 @@ public abstract class Game extends BaseGame {
         mEnableNotifications = false;
 
         // By using the function currentSet(), we add points until every set is finished (= match)
-        while(!currentSet().isSetCompleted()) {
+        while (!currentSet().isSetCompleted()) {
             addPoint(teamType);
         }
 
@@ -1366,7 +1356,7 @@ public abstract class Game extends BaseGame {
         setTeamColor(teamType, storedGame.getTeamColor(teamType));
         setGender(teamType, storedGame.getGender(teamType));
 
-        for (ApiPlayer player : storedGame.getPlayers(teamType))  {
+        for (ApiPlayer player : storedGame.getPlayers(teamType)) {
             addPlayer(teamType, player.getNum());
             if (!player.getName().trim().isEmpty()) {
                 setPlayerName(teamType, player.getNum(), player.getName());
@@ -1379,7 +1369,9 @@ public abstract class Game extends BaseGame {
         StringBuilder scoreBuilder = new StringBuilder();
 
         for (com.tonkar.volleyballreferee.engine.game.set.Set set : mSets) {
-            scoreBuilder.append(UiUtils.formatScoreFromLocale(set.getPoints(TeamType.HOME), set.getPoints(TeamType.GUEST), false)).append("\t\t");
+            scoreBuilder
+                    .append(UiUtils.formatScoreFromLocale(set.getPoints(TeamType.HOME), set.getPoints(TeamType.GUEST), false))
+                    .append("\t\t");
         }
 
         return scoreBuilder.toString().trim();
@@ -1393,17 +1385,17 @@ public abstract class Game extends BaseGame {
             result = true;
         } else if (obj instanceof Game) {
             Game other = (Game) obj;
-            result = super.equals(other)
-                    && (this.getUsage().equals(other.getUsage()))
-                    && (this.getKind().equals(other.getKind()))
-                    && (this.getId().equals(other.getId()))
-                    && (this.getGender().equals(other.getGender()))
-                    && (this.getRules().equals(other.getRules()))
-                    && (this.getLeague().equals(other.getLeague()))
-                    && (this.getTeamDefinition(TeamType.HOME).equals(other.getTeamDefinition(TeamType.HOME)))
-                    && (this.getTeamDefinition(TeamType.GUEST).equals(other.getTeamDefinition(TeamType.GUEST)))
-                    && (this.getTeamOnLeftSide().equals(other.getTeamOnLeftSide()))
-                    && (this.getTeamOnRightSide().equals(other.getTeamOnRightSide()));
+            result = super.equals(other) && (this.getUsage().equals(other.getUsage())) && (this.getKind().equals(other.getKind())) && (this
+                    .getId()
+                    .equals(other.getId())) && (this.getGender().equals(other.getGender())) && (this
+                    .getRules()
+                    .equals(other.getRules())) && (this.getLeague().equals(other.getLeague())) && (this
+                    .getTeamDefinition(TeamType.HOME)
+                    .equals(other.getTeamDefinition(TeamType.HOME))) && (this
+                    .getTeamDefinition(TeamType.GUEST)
+                    .equals(other.getTeamDefinition(TeamType.GUEST))) && (this
+                    .getTeamOnLeftSide()
+                    .equals(other.getTeamOnLeftSide())) && (this.getTeamOnRightSide().equals(other.getTeamOnRightSide()));
 
             if (result) {
                 for (int setIndex = 0; setIndex < getNumberOfSets(); setIndex++) {

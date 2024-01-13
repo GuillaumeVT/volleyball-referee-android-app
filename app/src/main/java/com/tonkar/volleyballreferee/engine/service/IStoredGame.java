@@ -1,15 +1,11 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
-import com.tonkar.volleyballreferee.engine.game.IBaseGeneral;
-import com.tonkar.volleyballreferee.engine.game.IBaseTime;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
 import com.tonkar.volleyballreferee.engine.game.score.IBaseScore;
 import com.tonkar.volleyballreferee.engine.game.timeout.IBaseTimeout;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 
 import java.util.List;
 

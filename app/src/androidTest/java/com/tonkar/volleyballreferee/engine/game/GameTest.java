@@ -11,9 +11,7 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class GameTest {
@@ -21,7 +19,8 @@ public class GameTest {
     @Test
     public void point_remove() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         assertEquals(0, game.getPoints(TeamType.HOME));
@@ -32,7 +31,8 @@ public class GameTest {
     @Test
     public void service_swapFirst() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -43,7 +43,8 @@ public class GameTest {
     @Test
     public void service_keep() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -54,7 +55,8 @@ public class GameTest {
     @Test
     public void service_sideOut() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         assertEquals(TeamType.HOME, game.getServingTeam());
@@ -65,7 +67,8 @@ public class GameTest {
     @Test
     public void service_keep_Reverse() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         game.addPoint(TeamType.HOME);
@@ -78,7 +81,8 @@ public class GameTest {
     @Test
     public void service_sideOut_Reverse() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         game.addPoint(TeamType.HOME);
@@ -91,7 +95,8 @@ public class GameTest {
     @Test
     public void timeout() {
         IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(), Rules.officialIndoorRules());
+                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                                  System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
 
         assertEquals(game.getRules().getTeamTimeoutsPerSet(), game.countRemainingTimeouts(TeamType.HOME));

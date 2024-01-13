@@ -1,18 +1,13 @@
 package com.tonkar.volleyballreferee.ui.game.sanction;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
@@ -33,11 +28,20 @@ public class SanctionsListAdapter extends BaseAdapter {
     private       TeamType       mTeamType;
     private final int            mSetIndex;
 
-    SanctionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseSanction sanctionService, IBaseTeam teamService, TeamType teamType) {
+    SanctionsListAdapter(Context context,
+                         LayoutInflater layoutInflater,
+                         IBaseSanction sanctionService,
+                         IBaseTeam teamService,
+                         TeamType teamType) {
         this(context, layoutInflater, sanctionService, teamService, teamType, -1);
     }
 
-    public SanctionsListAdapter(Context context, LayoutInflater layoutInflater, IBaseSanction sanctionService, IBaseTeam teamService, TeamType teamType, int setIndex) {
+    public SanctionsListAdapter(Context context,
+                                LayoutInflater layoutInflater,
+                                IBaseSanction sanctionService,
+                                IBaseTeam teamService,
+                                TeamType teamType,
+                                int setIndex) {
         mContext = context;
         mLayoutInflater = layoutInflater;
         mSanctionService = sanctionService;
@@ -108,7 +112,7 @@ public class SanctionsListAdapter extends BaseAdapter {
             viewHolder.scoreText.setText(String.format(Locale.getDefault(), "%d-%d", sanction.getGuestPoints(), sanction.getHomePoints()));
         }
         if (mSetIndex < 0) {
-            viewHolder.setText.setText(String.format(mContext.getString(R.string.set_number), (sanction.getSet()+1)));
+            viewHolder.setText.setText(String.format(mContext.getString(R.string.set_number), (sanction.getSet() + 1)));
         } else {
             viewHolder.setText.setVisibility(View.GONE);
         }

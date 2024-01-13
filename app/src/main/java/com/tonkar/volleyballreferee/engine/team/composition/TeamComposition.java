@@ -7,13 +7,9 @@ import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.player.Player;
-import com.tonkar.volleyballreferee.engine.team.player.PositionType;
+import com.tonkar.volleyballreferee.engine.team.player.*;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public abstract class TeamComposition {
 
@@ -68,12 +64,18 @@ public abstract class TeamComposition {
         return substitutePlayer(number, positionType, 0, 0, actionOriginType);
     }
 
-    public boolean substitutePlayer(final int number, final PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType) {
+    public boolean substitutePlayer(final int number,
+                                    final PositionType positionType,
+                                    int homeTeamPoints,
+                                    int guestTeamPoints,
+                                    ActionOriginType actionOriginType) {
         boolean result = false;
 
         int oldNumber = getPlayerAtPosition(positionType);
 
-        Log.i(Tags.TEAM, String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamDefinition.getTeamType(), number, positionType));
+        Log.i(Tags.TEAM,
+              String.format("Substitute player #%d of %s team by player #%d on position %s", oldNumber, mTeamDefinition.getTeamType(),
+                            number, positionType));
 
         if (mTeamDefinition.hasPlayer(number)) {
             mPlayers.get(number).setPosition(positionType);
@@ -92,7 +94,12 @@ public abstract class TeamComposition {
         return result;
     }
 
-    protected abstract void onSubstitution(int oldNumber, int newNumber, PositionType positionType, int homeTeamPoints, int guestTeamPoints, ActionOriginType actionOriginType);
+    protected abstract void onSubstitution(int oldNumber,
+                                           int newNumber,
+                                           PositionType positionType,
+                                           int homeTeamPoints,
+                                           int guestTeamPoints,
+                                           ActionOriginType actionOriginType);
 
     public int getPlayerAtPosition(final PositionType positionType) {
         int number = -1;

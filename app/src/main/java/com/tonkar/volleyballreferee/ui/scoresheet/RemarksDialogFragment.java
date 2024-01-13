@@ -2,9 +2,7 @@ package com.tonkar.volleyballreferee.ui.scoresheet;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -40,8 +38,7 @@ public class RemarksDialogFragment extends DialogFragment {
         mObservationInputText = mView.findViewById(R.id.observation_input_text);
         mObservationInputText.setText(mScoreSheetActivity.getScoreSheetBuilder().getRemarks());
 
-        return new AlertDialog
-                .Builder(requireContext(), R.style.AppTheme_Dialog)
+        return new AlertDialog.Builder(requireContext(), R.style.AppTheme_Dialog)
                 .setView(mView)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> setObservations())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})

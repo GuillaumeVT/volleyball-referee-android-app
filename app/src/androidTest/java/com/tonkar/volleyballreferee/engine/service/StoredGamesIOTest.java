@@ -1,37 +1,23 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import android.graphics.Color;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSelectedLeague;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSet;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
-import com.tonkar.volleyballreferee.engine.game.GameStatus;
-import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
-import com.tonkar.volleyballreferee.engine.team.GenderType;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.io.*;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class StoredGamesIOTest {
@@ -106,7 +92,8 @@ public class StoredGamesIOTest {
         team1.setName("Team 1");
         team1.setColorInt(Color.parseColor("#123456"));
         team1.setLiberoColorInt(Color.parseColor("#ffffff"));
-        Collections.addAll(team1.getPlayers(), new ApiPlayer(1), new ApiPlayer(3), new ApiPlayer(5), new ApiPlayer(7), new ApiPlayer(9), new ApiPlayer(11), new ApiPlayer(13));
+        Collections.addAll(team1.getPlayers(), new ApiPlayer(1), new ApiPlayer(3), new ApiPlayer(5), new ApiPlayer(7), new ApiPlayer(9),
+                           new ApiPlayer(11), new ApiPlayer(13));
         Collections.addAll(team1.getLiberos(), new ApiPlayer(2));
         team1.setCaptain(11);
         team1.setKind(GameType.INDOOR);
@@ -119,7 +106,8 @@ public class StoredGamesIOTest {
         team2.setName("Team 2");
         team2.setColorInt(Color.parseColor("#a1b2c3"));
         team2.setLiberoColorInt(Color.parseColor("#000000"));
-        Collections.addAll(team2.getPlayers(), new ApiPlayer(2), new ApiPlayer(4), new ApiPlayer(6), new ApiPlayer(8), new ApiPlayer(10), new ApiPlayer(12), new ApiPlayer(14), new ApiPlayer(16), new ApiPlayer(18));
+        Collections.addAll(team2.getPlayers(), new ApiPlayer(2), new ApiPlayer(4), new ApiPlayer(6), new ApiPlayer(8), new ApiPlayer(10),
+                           new ApiPlayer(12), new ApiPlayer(14), new ApiPlayer(16), new ApiPlayer(18));
         team2.setCaptain(2);
         team2.setKind(GameType.INDOOR);
 
@@ -156,7 +144,8 @@ public class StoredGamesIOTest {
         set2.setPoints(TeamType.GUEST, 3);
         set2.setTimeouts(TeamType.HOME, 2);
         set2.setTimeouts(TeamType.GUEST, 1);
-        Collections.addAll(set2.getLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.GUEST);
+        Collections.addAll(set2.getLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST,
+                           TeamType.GUEST);
         set2.setServing(TeamType.GUEST);
         set2.setFirstServing(TeamType.HOME);
         for (int index = 1; index <= 6; index++) {
@@ -240,7 +229,8 @@ public class StoredGamesIOTest {
         set2.setPoints(TeamType.GUEST, 2);
         set2.setTimeouts(TeamType.HOME, 0);
         set2.setTimeouts(TeamType.GUEST, 0);
-        Collections.addAll(set2.getLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME, TeamType.GUEST, TeamType.HOME);
+        Collections.addAll(set2.getLadder(), TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.HOME, TeamType.GUEST, TeamType.HOME,
+                           TeamType.GUEST, TeamType.HOME);
         set2.setServing(TeamType.HOME);
         set2.setFirstServing(TeamType.HOME);
         for (int index = 1; index <= 2; index++) {

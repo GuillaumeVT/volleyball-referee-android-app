@@ -218,7 +218,6 @@
     <string name="name">Name</string>
     <string name="remarks">Remarks</string>
 
-
     <!-- Stored teams activity -->
     <string name="search_teams">Search teams</string>
     <string name="delete_selected_teams">Delete selected teams</string>

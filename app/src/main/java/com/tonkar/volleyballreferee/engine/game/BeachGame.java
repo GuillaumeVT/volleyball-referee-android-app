@@ -2,26 +2,17 @@ package com.tonkar.volleyballreferee.engine.game;
 
 import android.graphics.Color;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.game.set.BeachSet;
 import com.tonkar.volleyballreferee.engine.game.set.Set;
+import com.tonkar.volleyballreferee.engine.game.set.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.IStoredGame;
-import com.tonkar.volleyballreferee.engine.team.IBeachTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
-import com.tonkar.volleyballreferee.engine.team.definition.BeachTeamDefinition;
-import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
+import com.tonkar.volleyballreferee.engine.team.*;
+import com.tonkar.volleyballreferee.engine.team.definition.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class BeachGame extends Game implements IBeachTeam {
 
@@ -41,7 +32,8 @@ public class BeachGame extends Game implements IBeachTeam {
 
     @Override
     protected Set createSet(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
-        return new BeachSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME), getTeamDefinition(TeamType.GUEST));
+        return new BeachSet(getRules(), pointsToWinSet, servingTeamAtStart, getTeamDefinition(TeamType.HOME),
+                            getTeamDefinition(TeamType.GUEST));
     }
 
     @Override

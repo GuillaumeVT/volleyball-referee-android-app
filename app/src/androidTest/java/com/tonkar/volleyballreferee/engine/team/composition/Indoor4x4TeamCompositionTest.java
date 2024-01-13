@@ -1,14 +1,10 @@
 package com.tonkar.volleyballreferee.engine.team.composition;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
-import com.tonkar.volleyballreferee.engine.game.GameType;
+import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.definition.IndoorTeamDefinition;
@@ -17,15 +13,15 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @RunWith(AndroidJUnit4.class)
 public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void defaultTeam() {
-        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME), Rules.NO_LIMITATION, 4);
+        Indoor4x4TeamComposition team = new Indoor4x4TeamComposition(
+                new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME), Rules.NO_LIMITATION, 4);
 
         assertEquals(0, team.getTeamDefinition().getNumberOfPlayers());
         assertEquals(0, team.getPlayersOnCourt().size());
@@ -36,7 +32,8 @@ public class Indoor4x4TeamCompositionTest {
 
     @Test
     public void createPlayers() {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.HOME);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "",
+                                                                       TeamType.HOME);
         int playerCount = 7;
 
         for (int index = 1; index <= playerCount; index++) {
@@ -54,7 +51,8 @@ public class Indoor4x4TeamCompositionTest {
     }
 
     private IndoorTeamDefinition createTeamWithNPlayers(int playerCount) {
-        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "", TeamType.GUEST);
+        IndoorTeamDefinition teamDefinition = new IndoorTeamDefinition(GameType.INDOOR_4X4, UUID.randomUUID().toString(), "",
+                                                                       TeamType.GUEST);
 
         for (int index = 1; index <= playerCount; index++) {
             teamDefinition.addPlayer(index);

@@ -2,9 +2,7 @@ package com.tonkar.volleyballreferee.engine.team.substitution;
 
 import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class NoSubstitutionsLimitation extends SubstitutionsLimitation {
 

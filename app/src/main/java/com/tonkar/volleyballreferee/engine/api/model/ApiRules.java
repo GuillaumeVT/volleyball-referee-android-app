@@ -5,9 +5,7 @@ import com.tonkar.volleyballreferee.engine.game.GameType;
 
 import java.util.UUID;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

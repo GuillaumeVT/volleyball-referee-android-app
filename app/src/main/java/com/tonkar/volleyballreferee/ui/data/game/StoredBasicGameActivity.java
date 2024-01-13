@@ -43,7 +43,8 @@ public class StoredBasicGameActivity extends StoredGameActivity {
         initScoreSheetAvailability();
 
         ListView setsList = findViewById(R.id.stored_game_set_list);
-        LadderListAdapter ladderListAdapter = new LadderListAdapter(getLayoutInflater(), mStoredGame, mStoredGame, mStoredGame, mStoredGame, false);
+        LadderListAdapter ladderListAdapter = new LadderListAdapter(getLayoutInflater(), mStoredGame, mStoredGame, mStoredGame, mStoredGame,
+                                                                    false);
         setsList.setAdapter(ladderListAdapter);
     }
 

@@ -2,9 +2,7 @@ package com.tonkar.volleyballreferee.ui.game.court;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -96,18 +94,35 @@ public class SnowCourtFragment extends IndoorCourtFragment {
 
     @Override
     protected void rotateAnimation(TeamType teamType, boolean clockwise) {
-        View layoutPosition1 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_1) : mView.findViewById(R.id.right_team_layout_1);
-        View layoutPosition2 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_2) : mView.findViewById(R.id.right_team_layout_2);
-        View layoutPosition3 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_3) : mView.findViewById(R.id.right_team_layout_3);
+        View layoutPosition1 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_1) : mView.findViewById(
+                R.id.right_team_layout_1);
+        View layoutPosition2 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_2) : mView.findViewById(
+                R.id.right_team_layout_2);
+        View layoutPosition3 = mTeamOnLeftSide.equals(teamType) ? mView.findViewById(R.id.left_team_layout_3) : mView.findViewById(
+                R.id.right_team_layout_3);
 
         if (clockwise) {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
             layoutPosition3.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
-            layoutPosition2.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
+            layoutPosition2
+                    .animate()
+                    .setStartDelay(0L)
+                    .x(layoutPosition1.getX())
+                    .y(layoutPosition1.getY())
+                    .setDuration(500L)
+                    .withEndAction(this::detachThenAttach)
+                    .start();
         } else {
             layoutPosition1.animate().setStartDelay(0L).x(layoutPosition2.getX()).y(layoutPosition2.getY()).setDuration(500L).start();
             layoutPosition2.animate().setStartDelay(0L).x(layoutPosition3.getX()).y(layoutPosition3.getY()).setDuration(500L).start();
-            layoutPosition3.animate().setStartDelay(0L).x(layoutPosition1.getX()).y(layoutPosition1.getY()).setDuration(500L).withEndAction(this::detachThenAttach).start();
+            layoutPosition3
+                    .animate()
+                    .setStartDelay(0L)
+                    .x(layoutPosition1.getX())
+                    .y(layoutPosition1.getY())
+                    .setDuration(500L)
+                    .withEndAction(this::detachThenAttach)
+                    .start();
         }
     }
 

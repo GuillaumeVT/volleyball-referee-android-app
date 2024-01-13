@@ -1,13 +1,10 @@
 package com.tonkar.volleyballreferee.engine.team;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiCourt;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public interface IBaseTeam {
 

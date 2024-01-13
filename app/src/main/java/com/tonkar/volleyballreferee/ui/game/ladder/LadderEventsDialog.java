@@ -1,32 +1,21 @@
 package com.tonkar.volleyballreferee.ui.game.ladder;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.graphics.*;
+import android.view.*;
+import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.GameEvent;
-import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
-import com.tonkar.volleyballreferee.engine.team.TeamType;
+import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class LadderEventsDialog {
 
@@ -35,7 +24,11 @@ public class LadderEventsDialog {
     private final Context        mContext;
     private final IBaseTeam      mBaseTeam;
 
-    LadderEventsDialog(LayoutInflater layoutInflater, final Context context, final TeamType teamType, final LadderItem ladderItem, final IBaseTeam baseTeam) {
+    LadderEventsDialog(LayoutInflater layoutInflater,
+                       final Context context,
+                       final TeamType teamType,
+                       final LadderItem ladderItem,
+                       final IBaseTeam baseTeam) {
         mLayoutInflater = layoutInflater;
         mContext = context;
         mBaseTeam = baseTeam;
@@ -57,7 +50,8 @@ public class LadderEventsDialog {
             }
         }
 
-        for (ApiSubstitution substitution : (TeamType.HOME.equals(teamType) ? ladderItem.getHomeSubstitutions() : ladderItem.getGuestSubstitutions())) {
+        for (ApiSubstitution substitution : (TeamType.HOME.equals(
+                teamType) ? ladderItem.getHomeSubstitutions() : ladderItem.getGuestSubstitutions())) {
             gameEvents.add(GameEvent.newSubstitutionEvent(teamType, substitution));
         }
         for (ApiSanction sanction : (TeamType.HOME.equals(teamType) ? ladderItem.getHomeSanctions() : ladderItem.getGuestSanctions())) {
@@ -68,9 +62,7 @@ public class LadderEventsDialog {
         GameEventListAdapter eventListAdapter = new GameEventListAdapter(context, gameEvents);
         eventList.setAdapter(eventListAdapter);
 
-        mAlertDialog = new AlertDialog.Builder(context)
-                .setView(view)
-                .create();
+        mAlertDialog = new AlertDialog.Builder(context).setView(view).create();
     }
 
     public void show() {
@@ -114,18 +106,22 @@ public class LadderEventsDialog {
 
             switch (ladderEvent.getEventType()) {
                 case TIMEOUT:
-                    textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                    textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout),
+                                                   mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     layout.addView(createTimeoutEvent());
                     break;
                 case SUBSTITUTION:
-                    textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                    textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution),
+                                                   mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     layout.addView(createSubstitutionEvent(ladderEvent));
                     break;
                 case SANCTION:
                     if (ladderEvent.getSanction().getCard().isDelaySanctionType()) {
-                        textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                        textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction),
+                                                       mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     } else {
-                        textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.misconduct_sanction), mBaseTeam.getTeamName(ladderEvent.getTeamType())));
+                        textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.misconduct_sanction),
+                                                       mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     }
                     layout.addView(createSanctionEvent(ladderEvent));
                     break;
@@ -137,7 +133,11 @@ public class LadderEventsDialog {
         private View createTimeoutEvent() {
             ImageView imageView = (ImageView) mLayoutInflater.inflate(R.layout.simple_event_item, null);
             imageView.setImageResource(R.drawable.ic_timeout);
-            imageView.getDrawable().mutate().setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
+            imageView
+                    .getDrawable()
+                    .mutate()
+                    .setColorFilter(
+                            new PorterDuffColorFilter(ContextCompat.getColor(mContext, R.color.colorOnSurface), PorterDuff.Mode.SRC_IN));
             return imageView;
         }
 
