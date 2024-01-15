@@ -15,6 +15,7 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.navigation.NavigationBarView;
 import com.tonkar.volleyballreferee.*;
 import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.engine.worker.SyncWorker;
 import com.tonkar.volleyballreferee.ui.onboarding.MainOnboardingActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -24,15 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO repair
-       /* if (PrefUtils.canSync(this)) {
-            Intent syncServiceIntent = new Intent(this, SyncService.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(syncServiceIntent);
-            } else {
-                startService(syncServiceIntent);
-            }
-        }*/
+        SyncWorker.enqueue(getApplicationContext());
 
         showOnboarding();
 

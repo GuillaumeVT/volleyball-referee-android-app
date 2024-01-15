@@ -15,12 +15,11 @@ public class Tags {
     public static final String TIMEOUT        = "V-Timeout";
     public static final String SANCTION       = "V-Sanction";
     public static final String RULES          = "V-Rules";
-    public static final String WEB            = "V-Web";
-    public static final String SETTINGS       = "V-Settings";
     public static final String MAIN_UI        = "V-Main-UI";
     public static final String GAME_UI        = "V-Game-UI";
     public static final String USER_UI        = "V-User-UI";
     public static final String SCHEDULE_UI    = "V-Schedule-UI";
     public static final String SETUP_UI       = "V-Setup-UI";
     public static final String UTILS_UI       = "V-Utils-UI";
+    public static final String SYNC_WORKER    = "V-SyncWorker";
 }

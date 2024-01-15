@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.service;
 
-import android.content.*;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +11,7 @@ import com.tonkar.volleyballreferee.engine.api.*;
 import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.database.*;
 import com.tonkar.volleyballreferee.engine.database.model.FriendEntity;
+import com.tonkar.volleyballreferee.engine.worker.SyncWorker;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -369,7 +370,6 @@ public class StoredUserManager implements StoredUserService {
     }
 
     private void syncAll() {
-        Intent intent = new Intent(mContext.getApplicationContext(), SyncService.class);
-        mContext.getApplicationContext().startService(intent);
+        SyncWorker.enqueue(mContext.getApplicationContext());
     }
 }

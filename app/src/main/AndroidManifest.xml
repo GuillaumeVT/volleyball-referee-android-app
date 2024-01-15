@@ -46,8 +46,6 @@
         <activity android:name=".ui.data.rules.StoredRulesViewActivity" />
         <activity android:name=".ui.setup.ScheduledGameActivity" />
 
-        <service android:name=".engine.service.SyncService" />
-
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"

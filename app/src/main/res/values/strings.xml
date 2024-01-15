@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_31001" translatable="false">
+    <string name="rn_40000" translatable="false">
         New in this release:
-        \n\n\u2022 Added Catalan language support (big thanks to Marti C.)
-        \n\n\u2022 Fixed performance issues when inputting player names
-        \n\n\u2022 Score sheets are now free
-        \n\n\u2022 Fixed a bug when setting up a game
+        \n\n\u2022 Reworked the navigation
     </string>
 
     <!-- General actions -->
