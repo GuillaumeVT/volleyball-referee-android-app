@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.ui.screenshots;
 
 import android.Manifest;
-import android.app.UiAutomation;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.Espresso;
@@ -28,7 +27,7 @@ import java.util.Locale;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class PixelCScreenshots extends Screenshots {
+public class Pixel6aScreenshots extends Screenshots {
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -36,7 +35,7 @@ public class PixelCScreenshots extends Screenshots {
 
     @Before
     public void init() {
-        init(LocalDate.now() + "_tablet");
+        init(LocalDate.now() + "_phone");
     }
 
     @Test
@@ -45,15 +44,13 @@ public class PixelCScreenshots extends Screenshots {
 
         new ItalyUsaBeachGame().playGame_technicalTimeout(mContext, mStoredGamesService);
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
-
         try (ActivityScenario<MainActivity> launch = ActivityScenario.launch(MainActivity.class)) {
             for (Locale locale : mLocales) {
                 setAppLanguage(locale);
 
                 Espresso.onView(ViewMatchers.withId(R.id.resume_game_card)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot1", 1800000L, 2000000L);
+                takeScreenshot("screenshot1", 2100000L, 2200000L);
             }
         }
     }
@@ -64,15 +61,13 @@ public class PixelCScreenshots extends Screenshots {
 
         new BrazilFranceIndoorGame().playGame_lastSetEnd(mContext, mStoredGamesService);
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
-
         try (ActivityScenario<GameActivity> launch = ActivityScenario.launch(GameActivity.class)) {
             for (Locale locale : mLocales) {
                 setAppLanguage(locale);
 
                 Espresso.onView(ViewMatchers.withId(R.id.swap_teams_button)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot2", 190000L, 220000L);
+                takeScreenshot("screenshot2", 155000L, 165000L);
             }
         }
     }
@@ -83,15 +78,13 @@ public class PixelCScreenshots extends Screenshots {
 
         new ItalyUsaBeachGame().playGame_lastSetEnd(mContext, mStoredGamesService);
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
-
         try (ActivityScenario<GameActivity> launch = ActivityScenario.launch(GameActivity.class)) {
             for (Locale locale : mLocales) {
                 setAppLanguage(locale);
 
                 Espresso.onView(ViewMatchers.withId(R.id.swap_teams_button)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot3", 1800000L, 1830000L);
+                takeScreenshot("screenshot3", 1000000L, 1150000L);
             }
         }
     }
@@ -102,8 +95,6 @@ public class PixelCScreenshots extends Screenshots {
 
         new BrazilFranceIndoorGame().playGame_substitutions(mContext, mStoredGamesService);
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
-
         try (ActivityScenario<GameActivity> launch = ActivityScenario.launch(GameActivity.class)) {
             for (Locale locale : mLocales) {
                 setAppLanguage(locale);
@@ -112,7 +103,7 @@ public class PixelCScreenshots extends Screenshots {
 
                 Espresso.onView(ViewMatchers.withText(android.R.string.no)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot4", 160000L, 190000L);
+                takeScreenshot("screenshot4", 110000L, 130000L);
             }
         }
     }
@@ -122,8 +113,6 @@ public class PixelCScreenshots extends Screenshots {
         PrefUtils.setNightMode(mContext, "light");
 
         new ItalyUsaBeachGame().playGame_technicalTimeout(mContext, mStoredGamesService);
-
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
 
         try (ActivityScenario<GameActivity> launch = ActivityScenario.launch(GameActivity.class)) {
             for (Locale locale : mLocales) {
@@ -135,7 +124,7 @@ public class PixelCScreenshots extends Screenshots {
 
                 Espresso.onView(ViewMatchers.withText(android.R.string.ok)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot5", 860000L, 900000L);
+                takeScreenshot("screenshot5", 300000L, 400000L);
 
                 Espresso.onView(ViewMatchers.withText(android.R.string.no)).perform(ViewActions.click());
             }
@@ -148,10 +137,7 @@ public class PixelCScreenshots extends Screenshots {
 
         new ItalyUsaBeachGame().playGame_lastSetEnd(mContext, mStoredGamesService);
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_90);
-
         try (ActivityScenario<GameActivity> launch = ActivityScenario.launch(GameActivity.class)) {
-
             Espresso.onView(ViewMatchers.withId(R.id.ladder_tab)).perform(ViewActions.click());
 
             for (Locale locale : mLocales) {
@@ -159,7 +145,7 @@ public class PixelCScreenshots extends Screenshots {
 
                 Espresso.onView(ViewMatchers.withId(R.id.set_list)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot6", 140000L, 170000L);
+                takeScreenshot("screenshot6", 115000L, 130000L);
             }
         }
     }
@@ -168,10 +154,7 @@ public class PixelCScreenshots extends Screenshots {
     public void screenshot7() throws IOException {
         PrefUtils.setNightMode(mContext, "light");
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_0);
-
         try (ActivityScenario<MainActivity> launch = ActivityScenario.launch(MainActivity.class)) {
-
             Espresso.onView(ViewMatchers.withId(R.id.navigation_fragment)).perform(ViewActions.click());
 
             Espresso.onView(ViewMatchers.withId(R.id.action_stored_rules)).perform(ViewActions.click());
@@ -180,12 +163,15 @@ public class PixelCScreenshots extends Screenshots {
 
             Espresso.onView(ViewMatchers.withId(R.id.add_indoor_rules_button)).perform(ViewActions.click());
 
-            Espresso.onView(ViewMatchers.withId(R.id.rules_name_input_text)).perform(ViewActions.typeText("Test Rules")).perform(ViewActions.closeSoftKeyboard());
+            Espresso
+                    .onView(ViewMatchers.withId(R.id.rules_name_input_text))
+                    .perform(ViewActions.typeText("Test Rules"))
+                    .perform(ViewActions.closeSoftKeyboard());
 
             for (Locale locale : mLocales) {
                 setAppLanguage(locale);
 
-                takeScreenshot("screenshot7", 160000L, 200000L);
+                takeScreenshot("screenshot7", 120000L, 150000L);
             }
         }
     }
@@ -196,15 +182,16 @@ public class PixelCScreenshots extends Screenshots {
 
         new BrazilFranceIndoorGame().playGame_complete(mContext, mStoredGamesService);
 
-        mUiAutomation.setRotation(UiAutomation.ROTATION_FREEZE_0);
-
         try (ActivityScenario<MainActivity> launch = ActivityScenario.launch(MainActivity.class)) {
-
             Espresso.onView(ViewMatchers.withId(R.id.navigation_fragment)).perform(ViewActions.click());
 
             Espresso.onView(ViewMatchers.withId(R.id.action_stored_teams)).perform(ViewActions.click());
 
-            Espresso.onData(Matchers.anything()).inAdapterView(ViewMatchers.withId(R.id.stored_teams_list)).atPosition(0).perform(ViewActions.click());
+            Espresso
+                    .onData(Matchers.anything())
+                    .inAdapterView(ViewMatchers.withId(R.id.stored_teams_list))
+                    .atPosition(0)
+                    .perform(ViewActions.click());
 
             Espresso.onView(ViewMatchers.withId(R.id.edit_team_button)).perform(ViewActions.click());
 
@@ -213,7 +200,7 @@ public class PixelCScreenshots extends Screenshots {
 
                 Espresso.onView(ViewMatchers.withId(R.id.team_name_input_layout)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
 
-                takeScreenshot("screenshot8", 225000L, 275000L);
+                takeScreenshot("screenshot8", 220000L, 270000L);
             }
         }
     }

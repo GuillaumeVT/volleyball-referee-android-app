@@ -22,8 +22,6 @@
 
             <include layout="@layout/main_colleagues_tile" />
 
-            <include layout="@layout/main_available_games_tile" />
-
             <include layout="@layout/main_resume_game_tile" />
 
             <include layout="@layout/main_indoor_6x6_tile" />
@@ -41,11 +39,11 @@
             android:gravity="top|center"
             android:orientation="vertical">
 
+            <include layout="@layout/main_available_games_tile" />
+
             <include layout="@layout/main_beach_tile" />
 
             <include layout="@layout/main_scoreboard_tile" />
-
-            <include layout="@layout/main_time_based_tile" />
 
         </LinearLayout>
 

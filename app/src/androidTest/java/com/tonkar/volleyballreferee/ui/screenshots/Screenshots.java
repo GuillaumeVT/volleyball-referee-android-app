@@ -3,13 +3,14 @@ package com.tonkar.volleyballreferee.ui.screenshots;
 import android.app.*;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.LocaleList;
+import android.os.*;
 import android.util.Log;
 
 import androidx.test.core.app.DeviceCapture;
 import androidx.test.espresso.Espresso;
+import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
+import com.tonkar.volleyballreferee.engine.service.*;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -28,6 +29,17 @@ public abstract class Screenshots {
                                                     Locale.forLanguageTag("nl"), Locale.forLanguageTag("pl"), Locale.forLanguageTag("pt"),
                                                     Locale.forLanguageTag("pt-BR"), Locale.forLanguageTag("ru"), Locale.ENGLISH);
 
+    protected void init(String screenshotDirectory) {
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mUiAutomation = InstrumentationRegistry.getInstrumentation().getUiAutomation();
+        mStoredGamesService = new StoredGamesManager(mContext);
+        mScreenshotsDirectory = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_SCREENSHOTS), screenshotDirectory);
+
+        if (!mScreenshotsDirectory.exists()) {
+            mScreenshotsDirectory.mkdirs();
+        }
+    }
+
     protected void setAppLanguage(Locale locale) {
         mContext.getSystemService(LocaleManager.class).setApplicationLocales(new LocaleList(locale));
     }
@@ -37,15 +49,23 @@ public abstract class Screenshots {
 
         Locale locale = mContext.getResources().getConfiguration().getLocales().get(0);
 
-        File screenshot = new File(mScreenshotsDirectory, String.format("%s_%s.png", locale, filename));
+        File localeDirectory = new File(mScreenshotsDirectory, locale.toString());
+
+        if (!localeDirectory.exists()) {
+            localeDirectory.mkdirs();
+        }
+
+        File screenshot = new File(localeDirectory, String.format("%s.png", filename));
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(screenshot)) {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
         }
 
-        Log.i("V-Screenshots", String.format("%s: file size %d < %d < %d", screenshot, minSize, Files.size(screenshot.toPath()), maxSize));
+        long screenshotSize = Files.size(screenshot.toPath());
 
-        if (Files.size(screenshot.toPath()) < minSize || Files.size(screenshot.toPath()) > maxSize) {
+        Log.i("V-Screenshots", String.format("%s: file size %d < %d < %d", screenshot, minSize, screenshotSize, maxSize));
+
+        if (screenshotSize < minSize || screenshotSize > maxSize) {
             Espresso.onIdle();
             takeScreenshot(filename, minSize, maxSize);
         }
