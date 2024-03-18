@@ -26,8 +26,7 @@ public class Indoor4x4TeamComposition extends ClassicTeamComposition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof Indoor4x4TeamComposition) {
-            Indoor4x4TeamComposition other = (Indoor4x4TeamComposition) obj;
+        } else if (obj instanceof Indoor4x4TeamComposition other) {
             result = super.equals(other) && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(
                     PositionType.POSITION_1))) && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(
                     PositionType.POSITION_2))) && (this.getPlayerAtPosition(PositionType.POSITION_3) == (other.getPlayerAtPosition(

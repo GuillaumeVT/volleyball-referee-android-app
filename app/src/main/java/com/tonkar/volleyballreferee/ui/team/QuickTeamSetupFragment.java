@@ -57,12 +57,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         mPlayerNamesButton.setOnClickListener(v -> showPlayerNamesInputDialogFragment());
 
         switch (mTeamType) {
-            case HOME:
-                teamNameInputLayout.setHint(getString(R.string.home_team_hint));
-                break;
-            case GUEST:
-                teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
-                break;
+            case HOME -> teamNameInputLayout.setHint(getString(R.string.home_team_hint));
+            case GUEST -> teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
         }
 
         final String teamName = mTeamService.getTeamName(mTeamType);
@@ -121,8 +117,7 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         getChildFragmentManager().addFragmentOnAttachListener((fragmentManager, childFragment) -> {
-            if (childFragment instanceof PlayerNamesInputDialogFragment) {
-                PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
+            if (childFragment instanceof PlayerNamesInputDialogFragment fragment) {
                 fragment.setTeam(mTeamService);
             }
         });
@@ -167,14 +162,10 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         int captain = mTeamService.getCaptain(mTeamType);
 
         switch (captain) {
-            case 1:
-                captain = 2;
-                break;
-            case 2:
-                captain = 1;
-                break;
-            default:
-                break;
+            case 1 -> captain = 2;
+            case 2 -> captain = 1;
+            default -> {
+            }
         }
 
         captainUpdated(captain);
@@ -184,15 +175,12 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
         Context context = requireContext();
         mTeamService.setGender(mTeamType, genderType);
         switch (genderType) {
-            case MIXED:
-                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
-                break;
-            case LADIES:
-                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
-                break;
-            case GENTS:
-                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
-                break;
+            case MIXED -> UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed,
+                                                  mGenderButton);
+            case LADIES -> UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies,
+                                                   mGenderButton);
+            case GENTS -> UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents,
+                                                  mGenderButton);
         }
     }
 

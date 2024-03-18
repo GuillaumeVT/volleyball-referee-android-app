@@ -19,38 +19,20 @@ public class LineupSnowAdapter extends LineupAdapter {
 
     @Override
     protected boolean isVisible(PositionType positionType) {
-        boolean visible;
-
-        switch (positionType) {
-            case POSITION_1:
-            case POSITION_2:
-            case POSITION_3:
-                visible = true;
-                break;
-            default:
-                visible = false;
-        }
-
-        return visible;
+        return switch (positionType) {
+            case POSITION_1, POSITION_2, POSITION_3 -> true;
+            default -> false;
+        };
     }
 
     @Override
     protected PositionType viewIndexToPosition(int index) {
-        PositionType positionType = null;
-
-        switch (index) {
-            case 0:
-                positionType = PositionType.POSITION_1;
-                break;
-            case 1:
-                positionType = PositionType.POSITION_2;
-                break;
-            case 2:
-                positionType = PositionType.POSITION_3;
-                break;
-        }
-
-        return positionType;
+        return switch (index) {
+            case 0 -> PositionType.POSITION_1;
+            case 1 -> PositionType.POSITION_2;
+            case 2 -> PositionType.POSITION_3;
+            default -> null;
+        };
     }
 
 }

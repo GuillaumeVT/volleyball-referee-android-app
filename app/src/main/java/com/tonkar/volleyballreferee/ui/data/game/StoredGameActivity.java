@@ -28,12 +28,10 @@ public abstract class StoredGameActivity extends AppCompatActivity {
     public StoredGameActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof StoredGameHandler) {
-                StoredGameHandler storedGameHandler = (StoredGameHandler) fragment;
+            if (fragment instanceof StoredGameHandler storedGameHandler) {
                 storedGameHandler.setStoredGame(mStoredGame);
             }
-            if (fragment instanceof RulesHandler) {
-                RulesHandler rulesHandler = (RulesHandler) fragment;
+            if (fragment instanceof RulesHandler rulesHandler) {
                 rulesHandler.setRules(mStoredGame.getRules());
             }
         });
@@ -106,34 +104,17 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         scoreText.setText(mStoredGame.getScore());
 
         switch (mStoredGame.getGender()) {
-            case MIXED:
-                UiUtils.colorChipIcon(this, R.color.colorMixedLight, R.drawable.ic_mixed, genderItem);
-                break;
-            case LADIES:
-                UiUtils.colorChipIcon(this, R.color.colorLadiesLight, R.drawable.ic_ladies, genderItem);
-                break;
-            case GENTS:
-                UiUtils.colorChipIcon(this, R.color.colorGentsLight, R.drawable.ic_gents, genderItem);
-                break;
+            case MIXED -> UiUtils.colorChipIcon(this, R.color.colorMixedLight, R.drawable.ic_mixed, genderItem);
+            case LADIES -> UiUtils.colorChipIcon(this, R.color.colorLadiesLight, R.drawable.ic_ladies, genderItem);
+            case GENTS -> UiUtils.colorChipIcon(this, R.color.colorGentsLight, R.drawable.ic_gents, genderItem);
         }
 
         switch (mStoredGame.getKind()) {
-            case INDOOR_4X4:
-                UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
-                break;
-            case BEACH:
-                UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
-                break;
-            case TIME:
-                UiUtils.colorChipIcon(this, R.color.colorTimeLight, R.drawable.ic_time_based, kindItem);
-                break;
-            case SNOW:
-                UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
-                break;
-            case INDOOR:
-            default:
-                UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
-                break;
+            case INDOOR_4X4 -> UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
+            case BEACH -> UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
+            case TIME -> UiUtils.colorChipIcon(this, R.color.colorTimeLight, R.drawable.ic_time_based, kindItem);
+            case SNOW -> UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
+            default -> UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
         }
 
         if (PrefUtils.canSync(this)) {

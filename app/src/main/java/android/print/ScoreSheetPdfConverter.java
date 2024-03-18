@@ -29,13 +29,13 @@ public class ScoreSheetPdfConverter {
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return false;
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                PrintDocumentAdapter printAdapter = mWebView.createPrintDocumentAdapter(scoreSheet.getFilename());
+                PrintDocumentAdapter printAdapter = mWebView.createPrintDocumentAdapter(scoreSheet.filename());
 
                 PrintAttributes printAttributes = new PrintAttributes.Builder()
                         .setColorMode(PrintAttributes.COLOR_MODE_COLOR)
@@ -50,7 +50,7 @@ public class ScoreSheetPdfConverter {
             }
         });
 
-        mWebView.loadDataWithBaseURL(null, scoreSheet.getContent(), "text/html", "UTF-8", null);
+        mWebView.loadDataWithBaseURL(null, scoreSheet.content(), "text/html", "UTF-8", null);
     }
 
     private void print(PrintDocumentAdapter printAdapter, PrintAttributes printAttributes) {

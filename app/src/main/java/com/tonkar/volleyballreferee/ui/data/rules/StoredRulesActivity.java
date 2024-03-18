@@ -31,8 +31,7 @@ public class StoredRulesActivity extends AppCompatActivity {
     public StoredRulesActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof RulesHandler) {
-                RulesHandler rulesHandler = (RulesHandler) fragment;
+            if (fragment instanceof RulesHandler rulesHandler) {
                 rulesHandler.setRules(mRules);
             }
         });

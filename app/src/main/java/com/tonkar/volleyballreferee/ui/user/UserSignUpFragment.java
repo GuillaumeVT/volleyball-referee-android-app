@@ -105,14 +105,16 @@ public class UserSignUpFragment extends Fragment {
 
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
-                    requireActivity().runOnUiThread(() -> {
-                        hideProgressIndicator();
-                        UiUtils
-                                .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo),
-                                                                      userToken.getUser().getPseudo()), Toast.LENGTH_LONG)
-                                .show();
-                        UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            hideProgressIndicator();
+                            UiUtils
+                                    .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo),
+                                                                          userToken.getUser().getPseudo()), Toast.LENGTH_LONG)
+                                    .show();
+                            UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
+                        });
+                    }
                 }
 
                 @Override
@@ -120,23 +122,25 @@ public class UserSignUpFragment extends Fragment {
 
                 @Override
                 public void onError(int httpCode) {
-                    requireActivity().runOnUiThread(() -> {
-                        hideProgressIndicator();
-                        switch (httpCode) {
-                            case HttpURLConnection.HTTP_CONFLICT:
-                                emailInputLayout.setError(getString(R.string.user_email_pseudo_conflict));
-                                confirmEmailInputLayout.setError(getString(R.string.user_email_pseudo_conflict));
-                                pseudoInputLayout.setError(getString(R.string.user_email_pseudo_conflict));
-                                break;
-                            case HttpURLConnection.HTTP_BAD_REQUEST:
-                                passwordInputLayout.setError(getString(R.string.password_strength_error));
-                                confirmPasswordInputLayout.setError(getString(R.string.password_strength_error));
-                                break;
-                            default:
-                                UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            hideProgressIndicator();
+                            switch (httpCode) {
+                                case HttpURLConnection.HTTP_CONFLICT -> {
+                                    emailInputLayout.setError(getString(R.string.user_email_pseudo_conflict));
+                                    confirmEmailInputLayout.setError(getString(R.string.user_email_pseudo_conflict));
+                                    pseudoInputLayout.setError(getString(R.string.user_email_pseudo_conflict));
+                                }
+                                case HttpURLConnection.HTTP_BAD_REQUEST -> {
+                                    passwordInputLayout.setError(getString(R.string.password_strength_error));
+                                    confirmPasswordInputLayout.setError(getString(R.string.password_strength_error));
+                                }
+                                default -> UiUtils
+                                        .makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
                 }
             });
         }

@@ -25,8 +25,6 @@ import java.io.ByteArrayOutputStream;
 import java.text.*;
 import java.util.*;
 
-import lombok.*;
-
 public class ScoreSheetBuilder {
 
     private final Context     mContext;
@@ -54,33 +52,19 @@ public class ScoreSheetBuilder {
     private String mGuestCaptainName;
     private String mGuestCoachName;
 
-    @AllArgsConstructor
-    @Getter
-    public static class ScoreSheet {
-        private final String filename;
-        private final String content;
-    }
+    public record ScoreSheet(String filename, String content) {}
 
     public ScoreSheet createScoreSheet() {
         mDocument = Jsoup.parse(htmlSkeleton(mFilename), "UTF-8");
         mBody = mDocument.body();
 
-        String html = null;
-
-        switch (mStoredGame.getKind()) {
-            case INDOOR:
-                html = createStoredIndoorGame();
-                break;
-            case BEACH:
-                html = createStoredBeachGame();
-                break;
-            case INDOOR_4X4:
-                html = createStoredIndoor4x4Game();
-                break;
-            case SNOW:
-                html = createStoredSnowGame();
-                break;
-        }
+        String html = switch (mStoredGame.getKind()) {
+            case INDOOR -> createStoredIndoorGame();
+            case BEACH -> createStoredBeachGame();
+            case INDOOR_4X4 -> createStoredIndoor4x4Game();
+            case SNOW -> createStoredSnowGame();
+            default -> null;
+        };
 
         return new ScoreSheet(mFilename, html);
     }
@@ -572,31 +556,14 @@ public class ScoreSheetBuilder {
     }
 
     private String getSanctionImageClass(SanctionType sanctionType) {
-        String imageClass;
-
-        switch (sanctionType) {
-            case YELLOW:
-                imageClass = "yellow-card-image";
-                break;
-            case RED:
-                imageClass = "red-card-image";
-                break;
-            case RED_EXPULSION:
-                imageClass = "expulsion-card-image";
-                break;
-            case RED_DISQUALIFICATION:
-                imageClass = "disqualification-card-image";
-                break;
-            case DELAY_WARNING:
-                imageClass = "delay-warning-image";
-                break;
-            case DELAY_PENALTY:
-            default:
-                imageClass = "delay-penalty-image";
-                break;
-        }
-
-        return imageClass;
+        return switch (sanctionType) {
+            case YELLOW -> "yellow-card-image";
+            case RED -> "red-card-image";
+            case RED_EXPULSION -> "expulsion-card-image";
+            case RED_DISQUALIFICATION -> "disqualification-card-image";
+            case DELAY_WARNING -> "delay-warning-image";
+            default -> "delay-penalty-image";
+        };
     }
 
     private Element createStoredLadder(int setIndex) {

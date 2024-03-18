@@ -162,25 +162,13 @@ public class Rules extends ApiRules {
     }
 
     public static ApiRulesSummary getDefaultRules(GameType kind) {
-        final Rules rules;
-
-        switch (kind) {
-            case INDOOR:
-                rules = officialIndoorRules();
-                break;
-            case INDOOR_4X4:
-                rules = defaultIndoor4x4Rules();
-                break;
-            case BEACH:
-                rules = officialBeachRules();
-                break;
-            case SNOW:
-                rules = officialSnowRules();
-                break;
-            default:
-                rules = null;
-                break;
-        }
+        final Rules rules = switch (kind) {
+            case INDOOR -> officialIndoorRules();
+            case INDOOR_4X4 -> defaultIndoor4x4Rules();
+            case BEACH -> officialBeachRules();
+            case SNOW -> officialSnowRules();
+            default -> null;
+        };
 
         ApiRulesSummary rulesDescription = new ApiRulesSummary();
         rulesDescription.setId(rules.getId());
@@ -194,18 +182,13 @@ public class Rules extends ApiRules {
     }
 
     public static Rules getDefaultRules(String rulesId) {
-        switch (rulesId) {
-            case DEFAULT_INDOOR_ID:
-                return officialIndoorRules();
-            case DEFAULT_BEACH_ID:
-                return officialBeachRules();
-            case DEFAULT_INDOOR_4X4_ID:
-                return defaultIndoor4x4Rules();
-            case DEFAULT_SNOW_ID:
-                return officialSnowRules();
-            default:
-                return null;
-        }
+        return switch (rulesId) {
+            case DEFAULT_INDOOR_ID -> officialIndoorRules();
+            case DEFAULT_BEACH_ID -> officialBeachRules();
+            case DEFAULT_INDOOR_4X4_ID -> defaultIndoor4x4Rules();
+            case DEFAULT_SNOW_ID -> officialSnowRules();
+            default -> null;
+        };
     }
 
     @Override
@@ -214,8 +197,7 @@ public class Rules extends ApiRules {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof Rules) {
-            Rules other = (Rules) obj;
+        } else if (obj instanceof Rules other) {
             result = super.equals(other);
         }
 

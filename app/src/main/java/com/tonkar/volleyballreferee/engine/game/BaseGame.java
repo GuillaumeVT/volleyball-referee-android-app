@@ -21,8 +21,7 @@ public abstract class BaseGame implements IGame {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof BaseGame) {
-            BaseGame other = (BaseGame) obj;
+        } else if (obj instanceof BaseGame other) {
             result = this.getClassType().equals(other.getClassType());
         }
 

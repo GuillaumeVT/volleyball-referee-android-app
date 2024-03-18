@@ -467,8 +467,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof StoredGame) {
-            StoredGame other = (StoredGame) obj;
+        } else if (obj instanceof StoredGame other) {
             result = super.equals(other);
         }
 

@@ -129,49 +129,61 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
 
     @Override
     public void onFriendsAndRequestsReceived(ApiFriendsAndRequests friendsAndRequests) {
-        requireActivity().runOnUiThread(() -> {
-            mColleaguesListAdapter.updateFriendsAndRequests(friendsAndRequests);
-            mSyncLayout.setRefreshing(false);
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                mColleaguesListAdapter.updateFriendsAndRequests(friendsAndRequests);
+                mSyncLayout.setRefreshing(false);
+            });
+        }
     }
 
     @Override
     public void onFriendRequestSent(String friendPseudo) {
-        requireActivity().runOnUiThread(() -> {
-            UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-            updateColleaguesList();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+                updateColleaguesList();
+            });
+        }
     }
 
     @Override
     public void onFriendRequestAccepted(ApiFriendRequest friendRequest) {
-        requireActivity().runOnUiThread(() -> {
-            UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-            updateColleaguesList();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+                updateColleaguesList();
+            });
+        }
     }
 
     @Override
     public void onFriendRequestRejected(ApiFriendRequest friendRequest) {
-        requireActivity().runOnUiThread(() -> {
-            UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-            updateColleaguesList();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+                updateColleaguesList();
+            });
+        }
     }
 
     @Override
     public void onFriendRemoved(ApiFriend friend) {
-        requireActivity().runOnUiThread(() -> {
-            UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
-            updateColleaguesList();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
+                updateColleaguesList();
+            });
+        }
     }
 
     @Override
     public void onError(int httpCode) {
-        requireActivity().runOnUiThread(() -> {
-            UiUtils.makeErrorText(requireContext(), getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
-            mSyncLayout.setRefreshing(false);
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                UiUtils.makeErrorText(requireContext(), getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                mSyncLayout.setRefreshing(false);
+            });
+        }
     }
 }

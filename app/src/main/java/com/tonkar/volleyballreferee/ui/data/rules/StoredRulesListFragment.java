@@ -273,20 +273,24 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
 
     @Override
     public void onSynchronizationSucceeded() {
-        requireActivity().runOnUiThread(() -> {
-            mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
-            if (mDeleteSelectedRulesItem != null) {
-                mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
-            }
-            mSyncLayout.setRefreshing(false);
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                mStoredRulesListAdapter.updateStoredRulesList(mStoredRulesService.listRules());
+                if (mDeleteSelectedRulesItem != null) {
+                    mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
+                }
+                mSyncLayout.setRefreshing(false);
+            });
+        }
     }
 
     @Override
     public void onSynchronizationFailed() {
-        requireActivity().runOnUiThread(() -> {
-            UiUtils.makeErrorText(requireContext(), getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
-            mSyncLayout.setRefreshing(false);
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                UiUtils.makeErrorText(requireContext(), getString(R.string.sync_failed_message), Toast.LENGTH_LONG).show();
+                mSyncLayout.setRefreshing(false);
+            });
+        }
     }
 }

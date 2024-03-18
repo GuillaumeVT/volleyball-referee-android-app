@@ -49,8 +49,7 @@ public class BeachTeamComposition extends TeamComposition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof BeachTeamComposition) {
-            BeachTeamComposition other = (BeachTeamComposition) obj;
+        } else if (obj instanceof BeachTeamComposition other) {
             result = super.equals(other) && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(
                     PositionType.POSITION_1))) && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(
                     PositionType.POSITION_2)));

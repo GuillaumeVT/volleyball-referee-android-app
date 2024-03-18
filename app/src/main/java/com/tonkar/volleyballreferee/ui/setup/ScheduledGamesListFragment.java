@@ -66,13 +66,12 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
             ApiGameSummary gameDescription = mScheduledGamesListAdapter.getItem(i);
             if (!GameType.TIME.equals(gameDescription.getKind())) {
                 switch (gameDescription.getStatus()) {
-                    case SCHEDULED:
-                    case LIVE:
+                    case SCHEDULED, LIVE -> {
                         ScheduleGameListActionMenu scheduleGameListActionMenu = ScheduleGameListActionMenu.newInstance(gameDescription);
                         scheduleGameListActionMenu.show(getChildFragmentManager(), "schedule_game_list_action_menu");
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
         });
@@ -183,18 +182,22 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
 
     @Override
     public void onAvailableGamesReceived(List<ApiGameSummary> gameDescriptionList) {
-        requireActivity().runOnUiThread(() -> {
-            mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
-            mSyncLayout.setRefreshing(false);
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
+                mSyncLayout.setRefreshing(false);
+            });
+        }
     }
 
     @Override
     public void onError(int httpCode) {
-        requireActivity().runOnUiThread(() -> {
-            mSyncLayout.setRefreshing(false);
-            UiUtils.makeErrorText(requireContext(), getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                mSyncLayout.setRefreshing(false);
+                UiUtils.makeErrorText(requireContext(), getString(R.string.download_match_error), Toast.LENGTH_LONG).show();
+            });
+        }
     }
 
     private void scheduleIndoorGame(View view) {

@@ -50,12 +50,10 @@ public class TimeBasedGameActivity extends AppCompatActivity implements GeneralL
     public TimeBasedGameActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof GameServiceHandler) {
-                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            if (fragment instanceof GameServiceHandler gameServiceHandler) {
                 gameServiceHandler.setGameService(mGameService);
             }
-            if (fragment instanceof StoredGamesServiceHandler) {
-                StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
+            if (fragment instanceof StoredGamesServiceHandler storedGamesServiceHandler) {
                 storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
             }
         });

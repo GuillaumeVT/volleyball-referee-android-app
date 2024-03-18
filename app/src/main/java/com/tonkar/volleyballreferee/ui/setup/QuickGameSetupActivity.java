@@ -32,12 +32,10 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     public QuickGameSetupActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof GameServiceHandler) {
-                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            if (fragment instanceof GameServiceHandler gameServiceHandler) {
                 gameServiceHandler.setGameService(mGame);
             }
-            if (fragment instanceof RulesHandler) {
-                RulesHandler rulesHandler = (RulesHandler) fragment;
+            if (fragment instanceof RulesHandler rulesHandler) {
                 rulesHandler.setRules(mGame.getRules());
             }
         });

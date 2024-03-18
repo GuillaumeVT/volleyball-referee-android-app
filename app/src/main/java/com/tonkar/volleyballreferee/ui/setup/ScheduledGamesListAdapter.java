@@ -94,31 +94,17 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
         viewHolder.dateText.setText(mFormatter.format(new Date(gameDescription.getScheduledAt())));
 
         switch (gameDescription.getGender()) {
-            case MIXED:
-                UiUtils.colorChipIcon(getContext(), R.color.colorMixedLight, R.drawable.ic_mixed, viewHolder.genderItem);
-                break;
-            case LADIES:
-                UiUtils.colorChipIcon(getContext(), R.color.colorLadiesLight, R.drawable.ic_ladies, viewHolder.genderItem);
-                break;
-            case GENTS:
-                UiUtils.colorChipIcon(getContext(), R.color.colorGentsLight, R.drawable.ic_gents, viewHolder.genderItem);
-                break;
+            case MIXED -> UiUtils.colorChipIcon(getContext(), R.color.colorMixedLight, R.drawable.ic_mixed, viewHolder.genderItem);
+            case LADIES -> UiUtils.colorChipIcon(getContext(), R.color.colorLadiesLight, R.drawable.ic_ladies, viewHolder.genderItem);
+            case GENTS -> UiUtils.colorChipIcon(getContext(), R.color.colorGentsLight, R.drawable.ic_gents, viewHolder.genderItem);
         }
 
         switch (gameDescription.getKind()) {
-            case INDOOR_4X4:
-                UiUtils.colorChipIcon(getContext(), R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, viewHolder.kindItem);
-                break;
-            case BEACH:
-                UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
-                break;
-            case SNOW:
-                UiUtils.colorChipIcon(getContext(), R.color.colorSnowLight, R.drawable.ic_snow, viewHolder.kindItem);
-                break;
-            case INDOOR:
-            default:
-                UiUtils.colorChipIcon(getContext(), R.color.colorIndoorLight, R.drawable.ic_6x6_small, viewHolder.kindItem);
-                break;
+            case INDOOR_4X4 ->
+                    UiUtils.colorChipIcon(getContext(), R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, viewHolder.kindItem);
+            case BEACH -> UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
+            case SNOW -> UiUtils.colorChipIcon(getContext(), R.color.colorSnowLight, R.drawable.ic_snow, viewHolder.kindItem);
+            default -> UiUtils.colorChipIcon(getContext(), R.color.colorIndoorLight, R.drawable.ic_6x6_small, viewHolder.kindItem);
         }
 
         viewHolder.liveItem.setVisibility(GameStatus.LIVE.equals(gameDescription.getStatus()) ? View.VISIBLE : View.GONE);

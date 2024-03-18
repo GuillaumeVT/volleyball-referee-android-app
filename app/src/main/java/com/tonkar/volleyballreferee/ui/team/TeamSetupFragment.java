@@ -86,12 +86,8 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         final TextInputLayout coachNameInputLayout = fragmentView.findViewById(R.id.coach_name_input_layout);
 
         switch (mTeamType) {
-            case HOME:
-                teamNameInputLayout.setHint(getString(R.string.home_team_hint));
-                break;
-            case GUEST:
-                teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
-                break;
+            case HOME -> teamNameInputLayout.setHint(getString(R.string.home_team_hint));
+            case GUEST -> teamNameInputLayout.setHint(getString(R.string.guest_team_hint));
         }
 
         if (isGameContext) {
@@ -232,8 +228,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         getChildFragmentManager().addFragmentOnAttachListener((fragmentManager, childFragment) -> {
-            if (childFragment instanceof PlayerNamesInputDialogFragment) {
-                PlayerNamesInputDialogFragment fragment = (PlayerNamesInputDialogFragment) childFragment;
+            if (childFragment instanceof PlayerNamesInputDialogFragment fragment) {
                 fragment.setTeam(mTeamService);
             }
         });
@@ -368,19 +363,11 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         private void initCount() {
             switch (mNumberOfShirts) {
-                case 4:
-                    // Snow volley: at most 4 players
-                    mCount = 4;
-                    break;
-                case 100:
-                    mCount = 101;
-                    break;
-                case 51:
-                    mCount = 53;
-                    break;
-                default:
-                    mCount = 27;
-                    break;
+                // Snow volley: at most 4 players
+                case 4 -> mCount = 4;
+                case 100 -> mCount = 101;
+                case 51 -> mCount = 53;
+                default -> mCount = 27;
             }
         }
 
@@ -389,40 +376,23 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         }
 
         private boolean isLess(int position) {
-            final boolean result;
-
-            switch (mNumberOfShirts) {
-                case 100:
-                case 51:
-                    result = position == mNumberOfShirts;
-                    break;
-                default:
-                    result = false;
-                    break;
-            }
-
-            return result;
+            return switch (mNumberOfShirts) {
+                case 100, 51 -> position == mNumberOfShirts;
+                default -> false;
+            };
         }
 
         private void moreShirts() {
             switch (mNumberOfShirts) {
-                case 26:
-                    mNumberOfShirts = 51;
-                    break;
-                case 51:
-                    mNumberOfShirts = 100;
-                    break;
+                case 26 -> mNumberOfShirts = 51;
+                case 51 -> mNumberOfShirts = 100;
             }
         }
 
         private void lessShirts() {
             switch (mNumberOfShirts) {
-                case 100:
-                    mNumberOfShirts = 51;
-                    break;
-                case 51:
-                    mNumberOfShirts = 26;
-                    break;
+                case 100 -> mNumberOfShirts = 51;
+                case 51 -> mNumberOfShirts = 26;
             }
         }
     }
@@ -556,15 +526,12 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
         Context context = requireContext();
         mTeamService.setGender(mTeamType, genderType);
         switch (genderType) {
-            case MIXED:
-                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed, mGenderButton);
-                break;
-            case LADIES:
-                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies, mGenderButton);
-                break;
-            case GENTS:
-                UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents, mGenderButton);
-                break;
+            case MIXED -> UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorMixed), R.drawable.ic_mixed,
+                                                  mGenderButton);
+            case LADIES -> UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorLadies), R.drawable.ic_ladies,
+                                                   mGenderButton);
+            case GENTS -> UiUtils.colorTeamButton(context, ContextCompat.getColor(context, R.color.colorGents), R.drawable.ic_gents,
+                                                  mGenderButton);
         }
     }
 

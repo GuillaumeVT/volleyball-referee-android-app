@@ -83,30 +83,15 @@ public class LineupAdapter extends BaseAdapter {
     }
 
     protected PositionType viewIndexToPosition(int index) {
-        PositionType positionType = null;
-
-        switch (index) {
-            case 0:
-                positionType = PositionType.POSITION_4;
-                break;
-            case 1:
-                positionType = PositionType.POSITION_3;
-                break;
-            case 2:
-                positionType = PositionType.POSITION_2;
-                break;
-            case 3:
-                positionType = PositionType.POSITION_5;
-                break;
-            case 4:
-                positionType = PositionType.POSITION_6;
-                break;
-            case 5:
-                positionType = PositionType.POSITION_1;
-                break;
-        }
-
-        return positionType;
+        return switch (index) {
+            case 0 -> PositionType.POSITION_4;
+            case 1 -> PositionType.POSITION_3;
+            case 2 -> PositionType.POSITION_2;
+            case 3 -> PositionType.POSITION_5;
+            case 4 -> PositionType.POSITION_6;
+            case 5 -> PositionType.POSITION_1;
+            default -> null;
+        };
     }
 
     private int measureTextWidth() {

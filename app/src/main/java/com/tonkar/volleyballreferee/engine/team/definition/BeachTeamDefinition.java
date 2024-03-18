@@ -75,8 +75,7 @@ public class BeachTeamDefinition extends TeamDefinition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof BeachTeamDefinition) {
-            BeachTeamDefinition other = (BeachTeamDefinition) obj;
+        } else if (obj instanceof BeachTeamDefinition other) {
             result = super.equals(other);
         }
 

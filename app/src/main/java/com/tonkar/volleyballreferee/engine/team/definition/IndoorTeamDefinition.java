@@ -106,21 +106,11 @@ public class IndoorTeamDefinition extends TeamDefinition {
 
     @Override
     public int getExpectedNumberOfPlayersOnCourt() {
-        int number;
-
-        switch (getKind()) {
-            case INDOOR:
-                number = 6;
-                break;
-            case INDOOR_4X4:
-                number = 4;
-                break;
-            default:
-                number = 0;
-                break;
-        }
-
-        return number;
+        return switch (getKind()) {
+            case INDOOR -> 6;
+            case INDOOR_4X4 -> 4;
+            default -> 0;
+        };
     }
 
     @Override
@@ -129,8 +119,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof IndoorTeamDefinition) {
-            IndoorTeamDefinition other = (IndoorTeamDefinition) obj;
+        } else if (obj instanceof IndoorTeamDefinition other) {
             result = super.equals(other);
         }
 

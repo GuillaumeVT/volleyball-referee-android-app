@@ -120,22 +120,22 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
             LinearLayout layout = view.findViewById(R.id.game_event_layout);
 
             switch (gameEvent.getEventType()) {
-                case POINT:
+                case POINT -> {
                     button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.remove_point_description),
                                                  mGame.getTeamName(gameEvent.getTeamType())));
                     layout.addView(createPointEvent());
-                    break;
-                case TIMEOUT:
+                }
+                case TIMEOUT -> {
                     button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout),
                                                  mGame.getTeamName(gameEvent.getTeamType())));
                     layout.addView(createTimeoutEvent());
-                    break;
-                case SUBSTITUTION:
+                }
+                case SUBSTITUTION -> {
                     button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution),
                                                  mGame.getTeamName(gameEvent.getTeamType())));
                     layout.addView(createSubstitutionEvent(gameEvent));
-                    break;
-                case SANCTION:
+                }
+                case SANCTION -> {
                     if (gameEvent.getSanction().getCard().isDelaySanctionType()) {
                         button.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction),
                                                      mGame.getTeamName(gameEvent.getTeamType())));
@@ -144,7 +144,7 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
                                                      mGame.getTeamName(gameEvent.getTeamType())));
                     }
                     layout.addView(createSanctionEvent(gameEvent));
-                    break;
+                }
             }
 
             button.setColor(mContext, mGame.getTeamColor(gameEvent.getTeamType()));

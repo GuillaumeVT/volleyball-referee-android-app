@@ -86,19 +86,11 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
 
         final boolean isGameContext = requireArguments().getBoolean("is_game");
 
-        switch (mRules.getKind()) {
-            case BEACH:
-                view = inflater.inflate(R.layout.fragment_beach_rules_setup, container, false);
-                break;
-            case SNOW:
-                view = inflater.inflate(R.layout.fragment_snow_rules_setup, container, false);
-                break;
-            case INDOOR:
-            case INDOOR_4X4:
-            default:
-                view = inflater.inflate(R.layout.fragment_indoor_rules_setup, container, false);
-                break;
-        }
+        view = switch (mRules.getKind()) {
+            case BEACH -> inflater.inflate(R.layout.fragment_beach_rules_setup, container, false);
+            case SNOW -> inflater.inflate(R.layout.fragment_snow_rules_setup, container, false);
+            default -> inflater.inflate(R.layout.fragment_indoor_rules_setup, container, false);
+        };
 
         mRulesNameInput = view.findViewById(R.id.rules_name_input_text);
 

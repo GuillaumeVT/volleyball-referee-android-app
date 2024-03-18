@@ -112,8 +112,7 @@ public abstract class TeamDefinition extends ApiTeam {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof TeamDefinition) {
-            TeamDefinition other = (TeamDefinition) obj;
+        } else if (obj instanceof TeamDefinition other) {
             result = super.equals(other) && mClassType.equals(other.mClassType) && mTeamType.equals(other.mTeamType);
         }
 

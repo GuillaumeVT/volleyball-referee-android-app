@@ -33,18 +33,12 @@ public class ApiCourt {
     }
 
     public boolean isFilled(GameType kind) {
-        switch (kind) {
-            case INDOOR:
-                return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0 && p5 >= 0 && p6 >= 0;
-            case INDOOR_4X4:
-                return p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0;
-            case SNOW:
-                return p1 >= 0 && p2 >= 0 && p3 >= 0;
-            case BEACH:
-            case TIME:
-            default:
-                return true;
-        }
+        return switch (kind) {
+            case INDOOR -> p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0 && p5 >= 0 && p6 >= 0;
+            case INDOOR_4X4 -> p1 >= 0 && p2 >= 0 && p3 >= 0 && p4 >= 0;
+            case SNOW -> p1 >= 0 && p2 >= 0 && p3 >= 0;
+            default -> true;
+        };
     }
 
     public PositionType getPositionOf(int number) {
@@ -70,57 +64,27 @@ public class ApiCourt {
     }
 
     public int getPlayerAt(PositionType positionType) {
-        int number;
-
-        switch (positionType) {
-            case POSITION_1:
-                number = p1;
-                break;
-            case POSITION_2:
-                number = p2;
-                break;
-            case POSITION_3:
-                number = p3;
-                break;
-            case POSITION_4:
-                number = p4;
-                break;
-            case POSITION_5:
-                number = p5;
-                break;
-            case POSITION_6:
-                number = p6;
-                break;
-            default:
-                number = -1;
-                break;
-        }
-
-        return number;
+        return switch (positionType) {
+            case POSITION_1 -> p1;
+            case POSITION_2 -> p2;
+            case POSITION_3 -> p3;
+            case POSITION_4 -> p4;
+            case POSITION_5 -> p5;
+            case POSITION_6 -> p6;
+            default -> -1;
+        };
     }
 
     public void setPlayerAt(int number, PositionType positionType) {
         switch (positionType) {
-            case POSITION_1:
-                setP1(number);
-                break;
-            case POSITION_2:
-                setP2(number);
-                break;
-            case POSITION_3:
-                setP3(number);
-                break;
-            case POSITION_4:
-                setP4(number);
-                break;
-            case POSITION_5:
-                setP5(number);
-                break;
-            case POSITION_6:
-                setP6(number);
-                break;
-            default:
-                break;
+            case POSITION_1 -> setP1(number);
+            case POSITION_2 -> setP2(number);
+            case POSITION_3 -> setP3(number);
+            case POSITION_4 -> setP4(number);
+            case POSITION_5 -> setP5(number);
+            case POSITION_6 -> setP6(number);
+            default -> {
+            }
         }
     }
 }

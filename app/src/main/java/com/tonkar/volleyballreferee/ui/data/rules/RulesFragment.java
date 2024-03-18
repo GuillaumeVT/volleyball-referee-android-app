@@ -28,21 +28,11 @@ public class RulesFragment extends Fragment implements RulesHandler {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(Tags.STORED_RULES, "Create rules fragment");
-        View view;
-
-        switch (mRules.getKind()) {
-            case BEACH:
-                view = inflater.inflate(R.layout.fragment_beach_rules, container, false);
-                break;
-            case SNOW:
-                view = inflater.inflate(R.layout.fragment_snow_rules, container, false);
-                break;
-            case INDOOR:
-            case INDOOR_4X4:
-            default:
-                view = inflater.inflate(R.layout.fragment_indoor_rules, container, false);
-                break;
-        }
+        View view = switch (mRules.getKind()) {
+            case BEACH -> inflater.inflate(R.layout.fragment_beach_rules, container, false);
+            case SNOW -> inflater.inflate(R.layout.fragment_snow_rules, container, false);
+            default -> inflater.inflate(R.layout.fragment_indoor_rules, container, false);
+        };
 
         // General
 

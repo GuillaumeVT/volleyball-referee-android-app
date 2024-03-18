@@ -34,18 +34,18 @@ public class PurchaseViewHolder extends RecyclerView.ViewHolder {
 
         mPurchaseTitle.setText(productDetails.getTitle());
         switch (productDetails.getProductId()) {
-            case BillingService.WEB_PREMIUM:
+            case BillingService.WEB_PREMIUM -> {
                 mPurchaseSummary.setText(R.string.purchase_web_premium_summary);
                 productType = BillingClient.ProductType.INAPP;
-                break;
-            case BillingService.WEB_PREMIUM_SUBSCRIPTION:
+            }
+            case BillingService.WEB_PREMIUM_SUBSCRIPTION -> {
                 mPurchaseSummary.setText(R.string.purchase_web_premium_summary);
                 productType = BillingClient.ProductType.SUBS;
-                break;
-            default:
+            }
+            default -> {
                 mPurchaseSummary.setText("");
                 productType = BillingClient.ProductType.INAPP;
-                break;
+            }
         }
 
         final Context context = mPurchaseItem.getContext();

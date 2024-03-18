@@ -110,29 +110,15 @@ public class SignatureDialogFragment extends DialogFragment {
                 mNameInputText.setHint(mContext.getString(R.string.name));
 
                 switch (mSelectedSignatureType) {
-                    case 0:
-                        mNameInputText.setText(referee1Name);
-                        break;
-                    case 1:
-                        mNameInputText.setText(referee2Name);
-                        break;
-                    case 2:
-                        mNameInputText.setText(scorerName);
-                        break;
-                    case 3:
-                        mNameInputText.setText(homeCaptainName);
-                        break;
-                    case 4:
-                        mNameInputText.setText(guestCaptainName);
-                        break;
-                    case 5:
-                        mNameInputText.setText(homeCoachName);
-                        break;
-                    case 6:
-                        mNameInputText.setText(guestCoachName);
-                        break;
-                    default:
-                        break;
+                    case 0 -> mNameInputText.setText(referee1Name);
+                    case 1 -> mNameInputText.setText(referee2Name);
+                    case 2 -> mNameInputText.setText(scorerName);
+                    case 3 -> mNameInputText.setText(homeCaptainName);
+                    case 4 -> mNameInputText.setText(guestCaptainName);
+                    case 5 -> mNameInputText.setText(homeCoachName);
+                    case 6 -> mNameInputText.setText(guestCoachName);
+                    default -> {
+                    }
                 }
             }
 
@@ -156,27 +142,13 @@ public class SignatureDialogFragment extends DialogFragment {
         String name = mNameInputText.getText().toString();
 
         switch (mSelectedSignatureType) {
-            case 0:
-                mScoreSheetActivity.getScoreSheetBuilder().setReferee1Signature(name, base64Image);
-                break;
-            case 1:
-                mScoreSheetActivity.getScoreSheetBuilder().setReferee2Signature(name, base64Image);
-                break;
-            case 2:
-                mScoreSheetActivity.getScoreSheetBuilder().setScorerSignature(name, base64Image);
-                break;
-            case 3:
-                mScoreSheetActivity.getScoreSheetBuilder().setHomeCaptainSignature(name, base64Image);
-                break;
-            case 4:
-                mScoreSheetActivity.getScoreSheetBuilder().setGuestCaptainSignature(name, base64Image);
-                break;
-            case 5:
-                mScoreSheetActivity.getScoreSheetBuilder().setHomeCoachSignature(name, base64Image);
-                break;
-            case 6:
-                mScoreSheetActivity.getScoreSheetBuilder().setGuestCoachSignature(name, base64Image);
-                break;
+            case 0 -> mScoreSheetActivity.getScoreSheetBuilder().setReferee1Signature(name, base64Image);
+            case 1 -> mScoreSheetActivity.getScoreSheetBuilder().setReferee2Signature(name, base64Image);
+            case 2 -> mScoreSheetActivity.getScoreSheetBuilder().setScorerSignature(name, base64Image);
+            case 3 -> mScoreSheetActivity.getScoreSheetBuilder().setHomeCaptainSignature(name, base64Image);
+            case 4 -> mScoreSheetActivity.getScoreSheetBuilder().setGuestCaptainSignature(name, base64Image);
+            case 5 -> mScoreSheetActivity.getScoreSheetBuilder().setHomeCoachSignature(name, base64Image);
+            case 6 -> mScoreSheetActivity.getScoreSheetBuilder().setGuestCoachSignature(name, base64Image);
         }
         mScoreSheetActivity.loadScoreSheet(true);
     }

@@ -65,7 +65,7 @@ public class GameFactory {
         IGame game = null;
 
         switch (storedGame.getKind()) {
-            case INDOOR:
+            case INDOOR -> {
                 IndoorGame indoorGame = createIndoorGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
                                                          storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
                 indoorGame.setUsage(storedGame.getUsage());
@@ -73,16 +73,16 @@ public class GameFactory {
                 indoorGame.getLeague().setAll(storedGame.getLeague());
                 indoorGame.restoreTeams(storedGame);
                 game = indoorGame;
-                break;
-            case BEACH:
+            }
+            case BEACH -> {
                 BeachGame beachGame = createBeachGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
                                                       storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
                 beachGame.setIndexed(storedGame.isIndexed());
                 beachGame.getLeague().setAll(storedGame.getLeague());
                 beachGame.restoreTeams(storedGame);
                 game = beachGame;
-                break;
-            case INDOOR_4X4:
+            }
+            case INDOOR_4X4 -> {
                 Indoor4x4Game indoor4x4Game = createIndoor4x4Game(storedGame.getId(), storedGame.getCreatedBy(),
                                                                   storedGame.getRefereeName(), storedGame.getCreatedAt(),
                                                                   storedGame.getScheduledAt(), storedGame.getRules());
@@ -91,15 +91,15 @@ public class GameFactory {
                 indoor4x4Game.getLeague().setAll(storedGame.getLeague());
                 indoor4x4Game.restoreTeams(storedGame);
                 game = indoor4x4Game;
-                break;
-            case SNOW:
+            }
+            case SNOW -> {
                 SnowGame snowGame = createSnowGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
                                                    storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
                 snowGame.setIndexed(storedGame.isIndexed());
                 snowGame.getLeague().setAll(storedGame.getLeague());
                 snowGame.restoreTeams(storedGame);
                 game = snowGame;
-                break;
+            }
         }
 
         return game;

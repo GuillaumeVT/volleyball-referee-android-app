@@ -39,10 +39,12 @@ public class UserFragment extends Fragment {
             storedUserService.getUser(PrefUtils.getWebPremiumBillingToken(requireContext()), new AsyncUserRequestListener() {
                 @Override
                 public void onUserReceived(ApiUserSummary user) {
-                    requireActivity().runOnUiThread(() -> {
-                        hideProgressIndicator();
-                        replaceFragment(UserSignInFragment.newInstance());
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            hideProgressIndicator();
+                            replaceFragment(UserSignInFragment.newInstance());
+                        });
+                    }
                 }
 
                 @Override
@@ -53,12 +55,14 @@ public class UserFragment extends Fragment {
 
                 @Override
                 public void onError(int httpCode) {
-                    requireActivity().runOnUiThread(() -> {
-                        hideProgressIndicator();
-                        if (httpCode == HttpURLConnection.HTTP_NOT_FOUND) {
-                            replaceFragment(UserSignUpFragment.newInstance());
-                        }
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            hideProgressIndicator();
+                            if (httpCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                                replaceFragment(UserSignUpFragment.newInstance());
+                            }
+                        });
+                    }
                 }
             });
         } else if (!PrefUtils.isWebPremiumSubscribed(requireContext()) && !PrefUtils.isWebPremiumPurchased(requireContext())) {
@@ -77,6 +81,6 @@ public class UserFragment extends Fragment {
     }
 
     private void replaceFragment(Fragment fragment) {
-        getChildFragmentManager().beginTransaction().replace(R.id.user_container_view, fragment).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.user_container_view, fragment).commitAllowingStateLoss();
     }
 }

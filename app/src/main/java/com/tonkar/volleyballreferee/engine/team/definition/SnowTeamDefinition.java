@@ -84,8 +84,7 @@ public class SnowTeamDefinition extends TeamDefinition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof SnowTeamDefinition) {
-            SnowTeamDefinition other = (SnowTeamDefinition) obj;
+        } else if (obj instanceof SnowTeamDefinition other) {
             result = super.equals(other);
         }
 

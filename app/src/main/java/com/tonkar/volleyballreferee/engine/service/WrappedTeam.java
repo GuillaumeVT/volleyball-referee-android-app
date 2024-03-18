@@ -251,8 +251,7 @@ public class WrappedTeam implements IBaseTeam {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof WrappedTeam) {
-            WrappedTeam other = (WrappedTeam) obj;
+        } else if (obj instanceof WrappedTeam other) {
             result = this.getTeamName(null).equals(other.getTeamName(null)) && (this.getTeamColor(null) == other.getTeamColor(
                     null)) && (this.getLiberoColor(null) == other.getLiberoColor(null)) && (this.getCaptain(null) == other.getCaptain(
                     null)) && (this.getGender().equals(other.getGender())) && (this

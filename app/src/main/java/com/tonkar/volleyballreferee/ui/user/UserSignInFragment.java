@@ -71,13 +71,15 @@ public class UserSignInFragment extends Fragment {
 
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
-                    requireActivity().runOnUiThread(() -> {
-                        UiUtils
-                                .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo),
-                                                                      userToken.getUser().getPseudo()), Toast.LENGTH_LONG)
-                                .show();
-                        UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            UiUtils
+                                    .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_signed_in_as_pseudo),
+                                                                          userToken.getUser().getPseudo()), Toast.LENGTH_LONG)
+                                    .show();
+                            UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
+                        });
+                    }
                 }
 
                 @Override
@@ -85,19 +87,19 @@ public class UserSignInFragment extends Fragment {
 
                 @Override
                 public void onError(int httpCode) {
-                    requireActivity().runOnUiThread(() -> {
-                        switch (httpCode) {
-                            case HttpURLConnection.HTTP_UNAUTHORIZED:
-                                passwordInputLayout.setError(getString(R.string.user_password_error));
-                                break;
-                            case HttpURLConnection.HTTP_FORBIDDEN:
-                                passwordInputLayout.setError(getString(R.string.user_locked_error));
-                                break;
-                            default:
-                                UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                    });
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            switch (httpCode) {
+                                case HttpURLConnection.HTTP_UNAUTHORIZED ->
+                                        passwordInputLayout.setError(getString(R.string.user_password_error));
+                                case HttpURLConnection.HTTP_FORBIDDEN ->
+                                        passwordInputLayout.setError(getString(R.string.user_locked_error));
+                                default -> UiUtils
+                                        .makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -114,16 +116,20 @@ public class UserSignInFragment extends Fragment {
 
             @Override
             public void onUserPasswordRecoveryInitiated() {
-                requireActivity().runOnUiThread(() -> UiUtils
-                        .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated),
-                                                              mUser.getEmail()), Toast.LENGTH_LONG)
-                        .show());
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> UiUtils
+                            .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated),
+                                                                  mUser.getEmail()), Toast.LENGTH_LONG)
+                            .show());
+                }
             }
 
             @Override
             public void onError(int httpCode) {
-                requireActivity().runOnUiThread(
-                        () -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(
+                            () -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
+                }
             }
         });
 

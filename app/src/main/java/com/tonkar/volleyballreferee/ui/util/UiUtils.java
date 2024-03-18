@@ -276,30 +276,15 @@ public class UiUtils {
     }
 
     public static String getPositionTitle(Context context, PositionType positionType) {
-        String title = "";
-
-        switch (positionType) {
-            case POSITION_1:
-                title = context.getString(R.string.position_1_title);
-                break;
-            case POSITION_2:
-                title = context.getString(R.string.position_2_title);
-                break;
-            case POSITION_3:
-                title = context.getString(R.string.position_3_title);
-                break;
-            case POSITION_4:
-                title = context.getString(R.string.position_4_title);
-                break;
-            case POSITION_5:
-                title = context.getString(R.string.position_5_title);
-                break;
-            case POSITION_6:
-                title = context.getString(R.string.position_6_title);
-                break;
-        }
-
-        return title;
+        return switch (positionType) {
+            case POSITION_1 -> context.getString(R.string.position_1_title);
+            case POSITION_2 -> context.getString(R.string.position_2_title);
+            case POSITION_3 -> context.getString(R.string.position_3_title);
+            case POSITION_4 -> context.getString(R.string.position_4_title);
+            case POSITION_5 -> context.getString(R.string.position_5_title);
+            case POSITION_6 -> context.getString(R.string.position_6_title);
+            default -> "";
+        };
     }
 
     public static void showNotification(View view, String message) {
@@ -372,49 +357,29 @@ public class UiUtils {
 
     public static void setSanctionImage(ImageView imageView, SanctionType sanctionType) {
         switch (sanctionType) {
-            case YELLOW:
-                imageView.setImageResource(R.drawable.yellow_card);
-                break;
-            case RED:
-                imageView.setImageResource(R.drawable.red_card);
-                break;
-            case RED_EXPULSION:
-                imageView.setImageResource(R.drawable.expulsion_card);
-                break;
-            case RED_DISQUALIFICATION:
-                imageView.setImageResource(R.drawable.disqualification_card);
-                break;
-            case DELAY_WARNING:
-                imageView.setImageResource(R.drawable.delay_warning);
-                break;
-            case DELAY_PENALTY:
-                imageView.setImageResource(R.drawable.delay_penalty);
-                break;
+            case YELLOW -> imageView.setImageResource(R.drawable.yellow_card);
+            case RED -> imageView.setImageResource(R.drawable.red_card);
+            case RED_EXPULSION -> imageView.setImageResource(R.drawable.expulsion_card);
+            case RED_DISQUALIFICATION -> imageView.setImageResource(R.drawable.disqualification_card);
+            case DELAY_WARNING -> imageView.setImageResource(R.drawable.delay_warning);
+            case DELAY_PENALTY -> imageView.setImageResource(R.drawable.delay_penalty);
         }
     }
 
     public static void updateToolbarLogo(Toolbar toolbar, GameType gameType, UsageType usageType) {
         ImageView imageView = toolbar.findViewById(R.id.toolbar_logo);
         switch (gameType) {
-            case INDOOR:
+            case INDOOR -> {
                 if (UsageType.NORMAL.equals(usageType)) {
                     imageView.setImageResource(R.drawable.ic_6x6);
                 } else {
                     imageView.setImageResource(R.drawable.ic_volleyball);
                 }
-                break;
-            case INDOOR_4X4:
-                imageView.setImageResource(R.drawable.ic_4x4);
-                break;
-            case BEACH:
-                imageView.setImageResource(R.drawable.ic_beach);
-                break;
-            case SNOW:
-                imageView.setImageResource(R.drawable.ic_snow);
-                break;
-            case TIME:
-                imageView.setImageResource(R.drawable.ic_time_based);
-                break;
+            }
+            case INDOOR_4X4 -> imageView.setImageResource(R.drawable.ic_4x4);
+            case BEACH -> imageView.setImageResource(R.drawable.ic_beach);
+            case SNOW -> imageView.setImageResource(R.drawable.ic_snow);
+            case TIME -> imageView.setImageResource(R.drawable.ic_time_based);
         }
         imageView.setVisibility(View.VISIBLE);
     }
@@ -422,16 +387,8 @@ public class UiUtils {
     public static void addExtendShrinkListener(View relatedView, ExtendedFloatingActionButton button) {
         relatedView.setOnTouchListener((view, motionEvent) -> {
             switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                case MotionEvent.ACTION_CANCEL:
-                case MotionEvent.ACTION_UP:
-                    button.extend();
-                    break;
-                case MotionEvent.ACTION_SCROLL:
-                case MotionEvent.ACTION_MOVE:
-                default:
-                    button.shrink();
-                    break;
+                case MotionEvent.ACTION_DOWN, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> button.extend();
+                default -> button.shrink();
             }
             return false;
         });

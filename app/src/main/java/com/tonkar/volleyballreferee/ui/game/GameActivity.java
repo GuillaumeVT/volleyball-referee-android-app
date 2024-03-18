@@ -65,12 +65,10 @@ public class GameActivity extends AppCompatActivity
     public GameActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof GameServiceHandler) {
-                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            if (fragment instanceof GameServiceHandler gameServiceHandler) {
                 gameServiceHandler.setGameService(mGame);
             }
-            if (fragment instanceof StoredGamesServiceHandler) {
-                StoredGamesServiceHandler storedGamesServiceHandler = (StoredGamesServiceHandler) fragment;
+            if (fragment instanceof StoredGamesServiceHandler storedGamesServiceHandler) {
                 storedGamesServiceHandler.setStoredGamesService(mStoredGamesService);
             }
         });
@@ -491,8 +489,7 @@ public class GameActivity extends AppCompatActivity
         for (int index = 0; index < linearLayout.getChildCount(); index++) {
             View view = linearLayout.getChildAt(index);
 
-            if (view instanceof ImageView) {
-                ImageView imageView = (ImageView) view;
+            if (view instanceof ImageView imageView) {
 
                 final int colorId;
 
@@ -601,24 +598,12 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        String sanctionText = "";
-
-        switch (sanctionType) {
-            case YELLOW:
-            case DELAY_WARNING:
-                sanctionText = getString(R.string.yellow_card);
-                break;
-            case RED:
-            case DELAY_PENALTY:
-                sanctionText = getString(R.string.red_card);
-                break;
-            case RED_EXPULSION:
-                sanctionText = getString(R.string.red_card_expulsion);
-                break;
-            case RED_DISQUALIFICATION:
-                sanctionText = getString(R.string.red_card_disqualification);
-                break;
-        }
+        String sanctionText = switch (sanctionType) {
+            case YELLOW, DELAY_WARNING -> getString(R.string.yellow_card);
+            case RED, DELAY_PENALTY -> getString(R.string.red_card);
+            case RED_EXPULSION -> getString(R.string.red_card_expulsion);
+            case RED_DISQUALIFICATION -> getString(R.string.red_card_disqualification);
+        };
 
         UiUtils.makeText(this, sanctionText, Toast.LENGTH_LONG).show();
     }
@@ -632,21 +617,12 @@ public class GameActivity extends AppCompatActivity
 
             int itemId = item.getItemId();
             if (itemId == R.id.court_position_tab) {
-                switch (mGame.getKind()) {
-                    case INDOOR_4X4:
-                        fragment = Indoor4x4CourtFragment.newInstance();
-                        break;
-                    case BEACH:
-                        fragment = BeachCourtFragment.newInstance();
-                        break;
-                    case SNOW:
-                        fragment = SnowCourtFragment.newInstance();
-                        break;
-                    case INDOOR:
-                    default:
-                        fragment = IndoorCourtFragment.newInstance();
-                        break;
-                }
+                fragment = switch (mGame.getKind()) {
+                    case INDOOR_4X4 -> Indoor4x4CourtFragment.newInstance();
+                    case BEACH -> BeachCourtFragment.newInstance();
+                    case SNOW -> SnowCourtFragment.newInstance();
+                    default -> IndoorCourtFragment.newInstance();
+                };
             } else if (itemId == R.id.substitutions_tab) {
                 fragment = SubstitutionsFragment.newInstance();
             } else if (itemId == R.id.timeouts_tab) {

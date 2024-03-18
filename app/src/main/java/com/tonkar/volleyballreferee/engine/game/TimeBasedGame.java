@@ -724,12 +724,8 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
             mPointsLadder.remove(mPointsLadder.size() - 1);
 
             switch (teamLosingOnePoint) {
-                case HOME:
-                    mHomeTeamPoints--;
-                    break;
-                case GUEST:
-                    mGuestTeamPoints--;
-                    break;
+                case HOME -> mHomeTeamPoints--;
+                case GUEST -> mGuestTeamPoints--;
             }
         }
 
@@ -754,12 +750,8 @@ public class TimeBasedGame extends BaseGame implements ITimeBasedGame {
     public void swapServiceAtStart() {
         if (getPointsLadder().isEmpty()) {
             switch (mServingTeamAtStart) {
-                case HOME:
-                    mServingTeamAtStart = TeamType.GUEST;
-                    break;
-                case GUEST:
-                    mServingTeamAtStart = TeamType.HOME;
-                    break;
+                case HOME -> mServingTeamAtStart = TeamType.GUEST;
+                case GUEST -> mServingTeamAtStart = TeamType.HOME;
             }
 
             notifyServiceSwapped(mServingTeamAtStart, true);

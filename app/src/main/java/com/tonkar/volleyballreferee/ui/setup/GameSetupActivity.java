@@ -33,16 +33,13 @@ public class GameSetupActivity extends AppCompatActivity {
     public GameSetupActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof RulesHandler) {
-                RulesHandler rulesHandler = (RulesHandler) fragment;
+            if (fragment instanceof RulesHandler rulesHandler) {
                 rulesHandler.setRules(mGame.getRules());
             }
-            if (fragment instanceof BaseTeamServiceHandler) {
-                BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
+            if (fragment instanceof BaseTeamServiceHandler baseTeamServiceHandler) {
                 baseTeamServiceHandler.setTeamService(mGame);
             }
-            if (fragment instanceof GameServiceHandler) {
-                GameServiceHandler gameServiceHandler = (GameServiceHandler) fragment;
+            if (fragment instanceof GameServiceHandler gameServiceHandler) {
                 gameServiceHandler.setGameService(mGame);
             }
         });

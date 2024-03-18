@@ -109,14 +109,14 @@ public abstract class Set {
         }
 
         switch (teamType) {
-            case HOME:
+            case HOME -> {
                 mHomePoints++;
                 points = mHomePoints;
-                break;
-            case GUEST:
+            }
+            case GUEST -> {
                 mGuestPoints++;
                 points = mGuestPoints;
-                break;
+            }
         }
 
         mPointsLadder.add(teamType);
@@ -138,12 +138,8 @@ public abstract class Set {
             mPointsLadder.remove(mPointsLadder.size() - 1);
 
             switch (teamLosingOnePoint) {
-                case HOME:
-                    mHomePoints--;
-                    break;
-                case GUEST:
-                    mGuestPoints--;
-                    break;
+                case HOME -> mHomePoints--;
+                case GUEST -> mGuestPoints--;
             }
         }
 

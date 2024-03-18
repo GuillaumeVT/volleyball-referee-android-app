@@ -58,8 +58,7 @@ public class CountDownDialogFragment extends DialogFragment {
         builder.setNeutralButton(R.string.run_background, (dialog, which) -> {
             Log.i(Tags.TIMEOUT, "User runs the countdown in background");
             mCountDown.getCountDownTimer().cancel();
-            if (isAdded() && requireActivity() instanceof GameActivity) {
-                GameActivity activity = (GameActivity) requireActivity();
+            if (isAdded() && requireActivity() instanceof GameActivity activity) {
                 activity.startToolbarCountDown(mCountDown.getDuration());
             }
         });

@@ -38,18 +38,10 @@ public abstract class ClassicTeamComposition extends TeamComposition {
         mSecondaryCaptain = -1;
 
         switch (substitutionType) {
-            case Rules.FIVB_LIMITATION:
-                mSubstitutionsLimitation = new FivbSubstitutionsLimitation();
-                break;
-            case Rules.ALTERNATIVE_LIMITATION_1:
-                mSubstitutionsLimitation = new AlternativeSubstitutionsLimitation1();
-                break;
-            case Rules.ALTERNATIVE_LIMITATION_2:
-                mSubstitutionsLimitation = new AlternativeSubstitutionsLimitation2();
-                break;
-            case Rules.NO_LIMITATION:
-                mSubstitutionsLimitation = new NoSubstitutionsLimitation();
-                break;
+            case Rules.FIVB_LIMITATION -> mSubstitutionsLimitation = new FivbSubstitutionsLimitation();
+            case Rules.ALTERNATIVE_LIMITATION_1 -> mSubstitutionsLimitation = new AlternativeSubstitutionsLimitation1();
+            case Rules.ALTERNATIVE_LIMITATION_2 -> mSubstitutionsLimitation = new AlternativeSubstitutionsLimitation2();
+            case Rules.NO_LIMITATION -> mSubstitutionsLimitation = new NoSubstitutionsLimitation();
         }
     }
 

@@ -309,22 +309,15 @@ public abstract class Game extends BaseGame {
 
     @Override
     public boolean isMatchCompleted() {
-        boolean completed;
         final int homeTeamSetCount = getSets(TeamType.HOME);
         final int guestTeamSetCount = getSets(TeamType.GUEST);
 
-        switch (mRules.getMatchTermination()) {
-            case Rules.ALL_SETS_TERMINATION:
-                completed = (homeTeamSetCount + guestTeamSetCount == mRules.getSetsPerGame());
-                break;
-            case Rules.WIN_TERMINATION:
-            default:
+        return switch (mRules.getMatchTermination()) {
+            case Rules.ALL_SETS_TERMINATION -> (homeTeamSetCount + guestTeamSetCount == mRules.getSetsPerGame());
+            default ->
                 // Match is complete when a team reaches the number of sets to win (e.g. 3, 2, 1)
-                completed = (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
-                break;
-        }
-
-        return completed;
+                    (homeTeamSetCount > 0 && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (guestTeamSetCount > 0 && guestTeamSetCount * 2 > mRules.getSetsPerGame());
+        };
     }
 
     private void notifyMatchCompleted(final TeamType winner) {
@@ -425,19 +418,15 @@ public abstract class Game extends BaseGame {
         boolean matchPoint;
 
         switch (mRules.getMatchTermination()) {
-            case Rules.ALL_SETS_TERMINATION:
-                matchPoint = !isMatchCompleted() && isSetPoint() && (1 + getSets(TeamType.HOME) + getSets(
-                        TeamType.GUEST) == mRules.getSetsPerGame());
-                break;
-            case Rules.WIN_TERMINATION:
-            default:
+            case Rules.ALL_SETS_TERMINATION -> matchPoint = !isMatchCompleted() && isSetPoint() && (1 + getSets(TeamType.HOME) + getSets(
+                    TeamType.GUEST) == mRules.getSetsPerGame());
+            default -> {
                 final int homeTeamSetCount = 1 + getSets(TeamType.HOME);
                 final int guestTeamSetCount = 1 + getSets(TeamType.GUEST);
-
                 matchPoint = !isMatchCompleted() && isSetPoint() && ((TeamType.HOME.equals(
                         getLeadingTeam()) && homeTeamSetCount * 2 > mRules.getSetsPerGame()) || (TeamType.GUEST.equals(
                         getLeadingTeam()) && guestTeamSetCount * 2 > mRules.getSetsPerGame()));
-                break;
+            }
         }
 
         return matchPoint;
@@ -635,12 +624,8 @@ public abstract class Game extends BaseGame {
     public void swapServiceAtStart() {
         if (getPointsLadder().isEmpty()) {
             switch (mServingTeamAtStart) {
-                case HOME:
-                    mServingTeamAtStart = TeamType.GUEST;
-                    break;
-                case GUEST:
-                    mServingTeamAtStart = TeamType.HOME;
-                    break;
+                case HOME -> mServingTeamAtStart = TeamType.GUEST;
+                case GUEST -> mServingTeamAtStart = TeamType.HOME;
             }
 
             currentSet().setServingTeamAtStart(mServingTeamAtStart);
@@ -1300,20 +1285,12 @@ public abstract class Game extends BaseGame {
     @Override
     public void undoGameEvent(GameEvent gameEvent) {
         switch (gameEvent.getEventType()) {
-            case POINT:
-                removeLastPoint();
-                break;
-            case TIMEOUT:
-                undoTimeout(gameEvent.getTeamType());
-                break;
-            case SUBSTITUTION:
-                undoSubstitution(gameEvent.getTeamType(), gameEvent.getSubstitution());
-                break;
-            case SANCTION:
-                undoSanction(gameEvent.getTeamType(), gameEvent.getSanction());
-                break;
-            default:
-                break;
+            case POINT -> removeLastPoint();
+            case TIMEOUT -> undoTimeout(gameEvent.getTeamType());
+            case SUBSTITUTION -> undoSubstitution(gameEvent.getTeamType(), gameEvent.getSubstitution());
+            case SANCTION -> undoSanction(gameEvent.getTeamType(), gameEvent.getSanction());
+            default -> {
+            }
         }
     }
 
@@ -1383,8 +1360,7 @@ public abstract class Game extends BaseGame {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof Game) {
-            Game other = (Game) obj;
+        } else if (obj instanceof Game other) {
             result = super.equals(other) && (this.getUsage().equals(other.getUsage())) && (this.getKind().equals(other.getKind())) && (this
                     .getId()
                     .equals(other.getId())) && (this.getGender().equals(other.getGender())) && (this

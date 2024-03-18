@@ -59,41 +59,27 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
         teamTextView.setText(team.getName());
 
         switch (team.getGender()) {
-            case MIXED:
-                teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_mixed, 0);
-                break;
-            case LADIES:
-                teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_ladies, 0);
-                break;
-            case GENTS:
-                teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_gents, 0);
-                break;
+            case MIXED -> teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_mixed, 0);
+            case LADIES -> teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_ladies, 0);
+            case GENTS -> teamTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_gents, 0);
         }
 
         for (Drawable drawable : teamTextView.getCompoundDrawables()) {
             if (drawable != null) {
                 switch (team.getGender()) {
-                    case MIXED:
-                        drawable
-                                .mutate()
-                                .setColorFilter(
-                                        new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed),
-                                                                  PorterDuff.Mode.SRC_IN));
-                        break;
-                    case LADIES:
-                        drawable
-                                .mutate()
-                                .setColorFilter(
-                                        new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies),
-                                                                  PorterDuff.Mode.SRC_IN));
-                        break;
-                    case GENTS:
-                        drawable
-                                .mutate()
-                                .setColorFilter(
-                                        new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents),
-                                                                  PorterDuff.Mode.SRC_IN));
-                        break;
+                    case MIXED -> drawable
+                            .mutate()
+                            .setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorMixed),
+                                                                      PorterDuff.Mode.SRC_IN));
+                    case LADIES -> drawable
+                            .mutate()
+                            .setColorFilter(
+                                    new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorLadies),
+                                                              PorterDuff.Mode.SRC_IN));
+                    case GENTS -> drawable
+                            .mutate()
+                            .setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(teamTextView.getContext(), R.color.colorGents),
+                                                                      PorterDuff.Mode.SRC_IN));
                 }
             }
         }

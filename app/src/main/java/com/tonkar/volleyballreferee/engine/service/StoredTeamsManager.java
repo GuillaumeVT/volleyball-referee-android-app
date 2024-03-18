@@ -62,24 +62,12 @@ public class StoredTeamsManager implements StoredTeamsService {
         String id = UUID.randomUUID().toString();
         String userId = PrefUtils.getUser(mContext).getId();
 
-        TeamDefinition teamDefinition;
-
-        switch (kind) {
-            case INDOOR:
-            case INDOOR_4X4:
-                teamDefinition = new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
-                break;
-            case BEACH:
-                teamDefinition = new BeachTeamDefinition(id, userId, TeamType.HOME);
-                break;
-            case SNOW:
-                teamDefinition = new SnowTeamDefinition(id, userId, TeamType.HOME);
-                break;
-            case TIME:
-            default:
-                teamDefinition = new EmptyTeamDefinition(id, userId, TeamType.HOME);
-                break;
-        }
+        TeamDefinition teamDefinition = switch (kind) {
+            case INDOOR, INDOOR_4X4 -> new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
+            case BEACH -> new BeachTeamDefinition(id, userId, TeamType.HOME);
+            case SNOW -> new SnowTeamDefinition(id, userId, TeamType.HOME);
+            default -> new EmptyTeamDefinition(id, userId, TeamType.HOME);
+        };
 
         return new WrappedTeam(teamDefinition);
     }
@@ -105,12 +93,14 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     @Override
     public void deleteTeams(Set<String> ids, DataSynchronizationListener listener) {
-        mRepository.deleteTeams(ids);
-        for (String id : ids) {
-            deleteTeamOnServer(id);
-        }
-        if (listener != null) {
-            listener.onSynchronizationSucceeded();
+        if (!ids.isEmpty()) {
+            mRepository.deleteTeams(ids);
+            for (String id : ids) {
+                deleteTeamOnServer(id);
+            }
+            if (listener != null) {
+                listener.onSynchronizationSucceeded();
+            }
         }
     }
 

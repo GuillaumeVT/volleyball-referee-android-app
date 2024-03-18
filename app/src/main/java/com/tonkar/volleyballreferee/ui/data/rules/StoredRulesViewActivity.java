@@ -29,8 +29,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
     public StoredRulesViewActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof RulesHandler) {
-                RulesHandler rulesHandler = (RulesHandler) fragment;
+            if (fragment instanceof RulesHandler rulesHandler) {
                 rulesHandler.setRules(mRules);
             }
         });
@@ -59,19 +58,10 @@ public class StoredRulesViewActivity extends AppCompatActivity {
         nameText.setText(mRules.getName());
 
         switch (mRules.getKind()) {
-            case INDOOR_4X4:
-                UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
-                break;
-            case BEACH:
-                UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
-                break;
-            case SNOW:
-                UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
-                break;
-            case INDOOR:
-            default:
-                UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
-                break;
+            case INDOOR_4X4 -> UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
+            case BEACH -> UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
+            case SNOW -> UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
+            default -> UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

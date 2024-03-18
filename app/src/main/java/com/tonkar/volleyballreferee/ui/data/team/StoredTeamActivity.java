@@ -32,8 +32,7 @@ public class StoredTeamActivity extends AppCompatActivity {
     public StoredTeamActivity() {
         super();
         getSupportFragmentManager().addFragmentOnAttachListener((fragmentManager, fragment) -> {
-            if (fragment instanceof BaseTeamServiceHandler) {
-                BaseTeamServiceHandler baseTeamServiceHandler = (BaseTeamServiceHandler) fragment;
+            if (fragment instanceof BaseTeamServiceHandler baseTeamServiceHandler) {
                 baseTeamServiceHandler.setTeamService(mTeamService);
             }
         });
@@ -55,17 +54,10 @@ public class StoredTeamActivity extends AppCompatActivity {
         Fragment fragment = null;
 
         switch (gameType) {
-            case INDOOR:
-            case INDOOR_4X4:
-            case SNOW:
-                fragment = TeamSetupFragment.newInstance(mTeamService.getTeamsKind(), TeamType.HOME, false);
-                break;
-            case BEACH:
-                fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME);
-                break;
-            case TIME:
-            default:
-                break;
+            case INDOOR, INDOOR_4X4, SNOW -> fragment = TeamSetupFragment.newInstance(mTeamService.getTeamsKind(), TeamType.HOME, false);
+            case BEACH -> fragment = QuickTeamSetupFragment.newInstance(TeamType.HOME);
+            default -> {
+            }
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);

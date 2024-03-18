@@ -53,17 +53,11 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
         ColleagueItem colleagueItem = mFilteredColleagueItems.get(index);
 
         switch (colleagueItem.getItemType()) {
-            case FRIEND:
-                view = createFriendItem(colleagueItem);
-                break;
-            case RECEIVED:
-                view = createReceivedFriendRequestItem(colleagueItem);
-                break;
-            case SENT:
-                view = createSentFriendRequestItem(colleagueItem);
-                break;
-            default:
-                break;
+            case FRIEND -> view = createFriendItem(colleagueItem);
+            case RECEIVED -> view = createReceivedFriendRequestItem(colleagueItem);
+            case SENT -> view = createSentFriendRequestItem(colleagueItem);
+            default -> {
+            }
         }
 
         return view;

@@ -9,85 +9,35 @@ public enum SanctionType {
     DELAY_PENALTY;
 
     public static String toLetter(SanctionType sanctionType) {
-        String letter;
-
-        switch (sanctionType) {
-            case DELAY_WARNING:
-                letter = "DW";
-                break;
-            case DELAY_PENALTY:
-                letter = "DP";
-                break;
-            case RED:
-                letter = "R";
-                break;
-            case RED_EXPULSION:
-                letter = "RE";
-                break;
-            case RED_DISQUALIFICATION:
-                letter = "RD";
-                break;
-            case YELLOW:
-            default:
-                letter = "Y";
-                break;
-        }
-
-        return letter;
+        return switch (sanctionType) {
+            case DELAY_WARNING -> "DW";
+            case DELAY_PENALTY -> "DP";
+            case RED -> "R";
+            case RED_EXPULSION -> "RE";
+            case RED_DISQUALIFICATION -> "RD";
+            default -> "Y";
+        };
     }
 
     public static SanctionType fromLetter(String letter) {
-        SanctionType sanctionType;
-
-        switch (letter) {
-            case "DW":
-                sanctionType = DELAY_WARNING;
-                break;
-            case "DP":
-                sanctionType = DELAY_PENALTY;
-                break;
-            case "R":
-                sanctionType = RED;
-                break;
-            case "RE":
-                sanctionType = RED_EXPULSION;
-                break;
-            case "RD":
-                sanctionType = RED_DISQUALIFICATION;
-                break;
-            case "Y":
-            default:
-                sanctionType = YELLOW;
-                break;
-        }
-
-        return sanctionType;
+        return switch (letter) {
+            case "DW" -> DELAY_WARNING;
+            case "DP" -> DELAY_PENALTY;
+            case "R" -> RED;
+            case "RE" -> RED_EXPULSION;
+            case "RD" -> RED_DISQUALIFICATION;
+            default -> YELLOW;
+        };
     }
 
     public int seriousness() {
-        int seriousness;
-
-        switch (this) {
-            case DELAY_WARNING:
-            case DELAY_PENALTY:
-                seriousness = -1;
-                break;
-            case RED:
-                seriousness = 2;
-                break;
-            case RED_EXPULSION:
-                seriousness = 3;
-                break;
-            case RED_DISQUALIFICATION:
-                seriousness = 4;
-                break;
-            case YELLOW:
-            default:
-                seriousness = 1;
-                break;
-        }
-
-        return seriousness;
+        return switch (this) {
+            case DELAY_WARNING, DELAY_PENALTY -> -1;
+            case RED -> 2;
+            case RED_EXPULSION -> 3;
+            case RED_DISQUALIFICATION -> 4;
+            default -> 1;
+        };
     }
 
     public boolean isDelaySanctionType() {

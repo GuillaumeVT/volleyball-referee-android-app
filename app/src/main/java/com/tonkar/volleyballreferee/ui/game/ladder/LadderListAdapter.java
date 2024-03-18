@@ -300,35 +300,25 @@ public class LadderListAdapter extends BaseAdapter {
 
         if (ladderItem.hasSeveralEvents(teamType)) {
             switch (mCurrentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    id = R.drawable.ic_thumb_list;
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    id = R.drawable.ic_thumb_list_white;
-                    break;
+                case Configuration.UI_MODE_NIGHT_NO -> id = R.drawable.ic_thumb_list;
+                case Configuration.UI_MODE_NIGHT_YES -> id = R.drawable.ic_thumb_list_white;
             }
         } else if (ladderItem.hasSubstitutionEvents(teamType)) {
             id = R.drawable.ic_thumb_substitution;
         } else if (ladderItem.hasTimeoutEvents(teamType)) {
-            switch (mCurrentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    id = R.drawable.ic_thumb_timeout;
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    id = R.drawable.ic_thumb_timeout_white;
-                    break;
-            }
+            id = switch (mCurrentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO -> R.drawable.ic_thumb_timeout;
+                case Configuration.UI_MODE_NIGHT_YES -> R.drawable.ic_thumb_timeout_white;
+                default -> id;
+            };
         } else if (ladderItem.hasSanctionEvents(teamType)) {
             id = R.drawable.ic_thumb_card;
         } else if (ladderItem.hasFirstService(teamType)) {
-            switch (mCurrentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    id = R.drawable.ic_thumb_service;
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    id = R.drawable.ic_thumb_service_white;
-                    break;
-            }
+            id = switch (mCurrentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO -> R.drawable.ic_thumb_service;
+                case Configuration.UI_MODE_NIGHT_YES -> R.drawable.ic_thumb_service_white;
+                default -> id;
+            };
         }
 
         return id;

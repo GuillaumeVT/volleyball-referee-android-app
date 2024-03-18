@@ -26,8 +26,7 @@ public class SnowTeamComposition extends ClassicTeamComposition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof SnowTeamComposition) {
-            SnowTeamComposition other = (SnowTeamComposition) obj;
+        } else if (obj instanceof SnowTeamComposition other) {
             result = super.equals(other) && (this.getPlayerAtPosition(PositionType.POSITION_1) == (other.getPlayerAtPosition(
                     PositionType.POSITION_1))) && (this.getPlayerAtPosition(PositionType.POSITION_2) == (other.getPlayerAtPosition(
                     PositionType.POSITION_2))) && (this.getPlayerAtPosition(PositionType.POSITION_3) == (other.getPlayerAtPosition(

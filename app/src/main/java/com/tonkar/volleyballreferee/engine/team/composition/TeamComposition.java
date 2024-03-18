@@ -140,8 +140,7 @@ public abstract class TeamComposition {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof TeamComposition) {
-            TeamComposition other = (TeamComposition) obj;
+        } else if (obj instanceof TeamComposition other) {
             result = mClassType.equals(other.mClassType) && mTeamDefinition.equals(other.mTeamDefinition);
         }
 

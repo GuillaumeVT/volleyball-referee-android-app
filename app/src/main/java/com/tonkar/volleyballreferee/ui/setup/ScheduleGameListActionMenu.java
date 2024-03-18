@@ -100,16 +100,14 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
         if (!GameType.TIME.equals(mGameDescription.getKind())) {
             if (GameStatus.SCHEDULED.equals(mGameDescription.getStatus())) {
                 switch (mGameDescription.getKind()) {
-                    case INDOOR:
-                    case INDOOR_4X4:
-                    case BEACH:
+                    case INDOOR, INDOOR_4X4, BEACH -> {
                         Log.i(Tags.SCHEDULE_UI, "Start activity to reschedule game");
                         final Intent intent = new Intent(mActivity, ScheduledGameActivity.class);
                         intent.putExtra("game", JsonConverters.GSON.toJson(mGameDescription, ApiGameSummary.class));
                         intent.putExtra("create", false);
                         startActivity(intent);
                         UiUtils.animateForward(mActivity);
-                        break;
+                    }
                 }
             }
         }
@@ -142,7 +140,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                 Log.i(Tags.SCHEDULE_UI, "Received game");
 
                 switch (storedGame.getMatchStatus()) {
-                    case SCHEDULED:
+                    case SCHEDULED -> {
                         if (mConfigureBeforeStart) {
                             Log.i(Tags.SCHEDULE_UI, "Edit scheduled game before starting");
                             mStoredGamesService.saveSetupGame(game);
@@ -169,8 +167,8 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                             startActivity(gameIntent);
                             UiUtils.animateCreate(mActivity);
                         }
-                        break;
-                    case LIVE:
+                    }
+                    case LIVE -> {
                         Log.i(Tags.SCHEDULE_UI, "Resume game");
                         game.restoreGame(storedGame);
                         mStoredGamesService.createCurrentGame(game);
@@ -180,9 +178,9 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                         gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(gameIntent);
                         UiUtils.animateCreate(mActivity);
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             });
         }

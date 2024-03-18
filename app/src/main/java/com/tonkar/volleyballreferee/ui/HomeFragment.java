@@ -237,16 +237,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void initFriendRequestsButton(View view, ApiCount count) {
-        requireActivity().runOnUiThread(() -> {
-            if (count.getCount() > 0) {
-                TextView gotoColleaguesText = view.findViewById(R.id.goto_colleagues_text);
-                gotoColleaguesText.setText(String.format(Locale.getDefault(), "%s: %d", gotoColleaguesText.getText(), count.getCount()));
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                if (count.getCount() > 0) {
+                    TextView gotoColleaguesText = view.findViewById(R.id.goto_colleagues_text);
+                    gotoColleaguesText.setText(
+                            String.format(Locale.getDefault(), "%s: %d", gotoColleaguesText.getText(), count.getCount()));
 
-                View gotoColleaguesCard = view.findViewById(R.id.goto_colleagues_card);
-                gotoColleaguesCard.setVisibility(View.VISIBLE);
-                gotoColleaguesCard.setOnClickListener(this::goToColleagues);
-            }
-        });
+                    View gotoColleaguesCard = view.findViewById(R.id.goto_colleagues_card);
+                    gotoColleaguesCard.setVisibility(View.VISIBLE);
+                    gotoColleaguesCard.setOnClickListener(this::goToColleagues);
+                }
+            });
+        }
     }
 
     private void fetchAvailableGames(View view) {
@@ -274,16 +277,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void initAvailableGamesButton(View view, ApiCount count) {
-        requireActivity().runOnUiThread(() -> {
-            if (count.getCount() > 0) {
-                TextView gotoAvailableGamesText = view.findViewById(R.id.goto_available_games_text);
-                gotoAvailableGamesText.setText(
-                        String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesText.getText(), count.getCount()));
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                if (count.getCount() > 0) {
+                    TextView gotoAvailableGamesText = view.findViewById(R.id.goto_available_games_text);
+                    gotoAvailableGamesText.setText(
+                            String.format(Locale.getDefault(), "%s: %d", gotoAvailableGamesText.getText(), count.getCount()));
 
-                View gotoAvailableGamesCard = view.findViewById(R.id.goto_available_games_card);
-                gotoAvailableGamesCard.setVisibility(View.VISIBLE);
-                gotoAvailableGamesCard.setOnClickListener(this::goToAvailableGames);
-            }
-        });
+                    View gotoAvailableGamesCard = view.findViewById(R.id.goto_available_games_card);
+                    gotoAvailableGamesCard.setVisibility(View.VISIBLE);
+                    gotoAvailableGamesCard.setOnClickListener(this::goToAvailableGames);
+                }
+            });
+        }
     }
 }

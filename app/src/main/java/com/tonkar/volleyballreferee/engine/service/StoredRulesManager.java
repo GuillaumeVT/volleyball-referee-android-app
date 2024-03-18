@@ -63,23 +63,12 @@ public class StoredRulesManager implements StoredRulesService {
 
     @Override
     public Rules createRules(GameType gameType) {
-        final Rules rules;
-
-        switch (gameType) {
-            case INDOOR_4X4:
-                rules = Rules.defaultIndoor4x4Rules();
-                break;
-            case BEACH:
-                rules = Rules.officialBeachRules();
-                break;
-            case SNOW:
-                rules = Rules.officialSnowRules();
-                break;
-            case INDOOR:
-            default:
-                rules = Rules.officialIndoorRules();
-                break;
-        }
+        final Rules rules = switch (gameType) {
+            case INDOOR_4X4 -> Rules.defaultIndoor4x4Rules();
+            case BEACH -> Rules.officialBeachRules();
+            case SNOW -> Rules.officialSnowRules();
+            default -> Rules.officialIndoorRules();
+        };
 
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
@@ -107,12 +96,14 @@ public class StoredRulesManager implements StoredRulesService {
 
     @Override
     public void deleteRules(Set<String> ids, DataSynchronizationListener listener) {
-        mRepository.deleteRules(ids);
-        for (String id : ids) {
-            deleteRulesOnServer(id);
-        }
-        if (listener != null) {
-            listener.onSynchronizationSucceeded();
+        if (!ids.isEmpty()) {
+            mRepository.deleteRules(ids);
+            for (String id : ids) {
+                deleteRulesOnServer(id);
+            }
+            if (listener != null) {
+                listener.onSynchronizationSucceeded();
+            }
         }
     }
 

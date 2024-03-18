@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/main_card_height"
     android:layout_margin="@dimen/tiny_margin_size"
-    android:background="@color/colorBackgroundMain"
-    android:onClick="startTimeBasedGame">
+    android:background="@color/colorBackgroundMain">
 
     <View
         android:layout_width="match_parent"

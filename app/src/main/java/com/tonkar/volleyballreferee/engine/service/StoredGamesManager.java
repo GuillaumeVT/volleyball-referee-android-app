@@ -106,12 +106,14 @@ public class StoredGamesManager
 
     @Override
     public void deleteGames(Set<String> ids, DataSynchronizationListener listener) {
-        mRepository.deleteGames(ids);
-        for (String id : ids) {
-            deleteGameOnServer(id);
-        }
-        if (listener != null) {
-            listener.onSynchronizationSucceeded();
+        if (!ids.isEmpty()) {
+            mRepository.deleteGames(ids);
+            for (String id : ids) {
+                deleteGameOnServer(id);
+            }
+            if (listener != null) {
+                listener.onSynchronizationSucceeded();
+            }
         }
     }
 
@@ -393,13 +395,11 @@ public class StoredGamesManager
                     set.getCalledTimeouts(TeamType.GUEST).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
                 }
 
-                if (GameType.TIME.equals(mStoredGame.getKind()) && mGame instanceof ITimeBasedGame) {
-                    ITimeBasedGame timeBasedGameService = (ITimeBasedGame) mGame;
+                if (GameType.TIME.equals(mStoredGame.getKind()) && mGame instanceof ITimeBasedGame timeBasedGameService) {
                     set.setRemainingTime(timeBasedGameService.getRemainingTime(setIndex));
                 }
 
-                if (mGame instanceof IClassicTeam) {
-                    IClassicTeam indoorTeam = (IClassicTeam) mGame;
+                if (mGame instanceof IClassicTeam indoorTeam) {
 
                     ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
                     for (PositionType position : PositionType.listPositions(mGame.getKind())) {

@@ -162,7 +162,7 @@ public class ScoreSheetActivity extends ProgressIndicatorActivity {
 
     void loadScoreSheet(boolean scrollBottom) {
         ScoreSheetBuilder.ScoreSheet scoreSheet = mScoreSheetBuilder.createScoreSheet();
-        mWebView.loadDataWithBaseURL(null, scoreSheet.getContent(), "text/html", "UTF-8", null);
+        mWebView.loadDataWithBaseURL(null, scoreSheet.content(), "text/html", "UTF-8", null);
         if (scrollBottom) {
             mWebView.pageDown(true);
         }

@@ -69,17 +69,13 @@ public class SignatureView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN -> {
                 mStartX = event.getX();
                 mStartY = event.getY();
                 actionDown(event.getX(), event.getY());
-                break;
-            case MotionEvent.ACTION_MOVE:
-                actionMove(event.getX(), event.getY());
-                break;
-            case MotionEvent.ACTION_UP:
-                actionUp();
-                break;
+            }
+            case MotionEvent.ACTION_MOVE -> actionMove(event.getX(), event.getY());
+            case MotionEvent.ACTION_UP -> actionUp();
         }
 
         invalidate();

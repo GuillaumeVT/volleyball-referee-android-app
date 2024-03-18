@@ -24,8 +24,7 @@ public class ApiPlayer implements Comparable<ApiPlayer> {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof ApiPlayer) {
-            ApiPlayer other = (ApiPlayer) obj;
+        } else if (obj instanceof ApiPlayer other) {
             result = num == other.num;
         }
 

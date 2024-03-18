@@ -105,17 +105,17 @@ public class LadderEventsDialog {
             LinearLayout layout = view.findViewById(R.id.game_event_layout);
 
             switch (ladderEvent.getEventType()) {
-                case TIMEOUT:
+                case TIMEOUT -> {
                     textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.timeout),
                                                    mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     layout.addView(createTimeoutEvent());
-                    break;
-                case SUBSTITUTION:
+                }
+                case SUBSTITUTION -> {
                     textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.substitution),
                                                    mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     layout.addView(createSubstitutionEvent(ladderEvent));
-                    break;
-                case SANCTION:
+                }
+                case SANCTION -> {
                     if (ladderEvent.getSanction().getCard().isDelaySanctionType()) {
                         textView.setText(String.format(Locale.getDefault(), "%s (%s)", mContext.getString(R.string.delay_sanction),
                                                        mBaseTeam.getTeamName(ladderEvent.getTeamType())));
@@ -124,7 +124,7 @@ public class LadderEventsDialog {
                                                        mBaseTeam.getTeamName(ladderEvent.getTeamType())));
                     }
                     layout.addView(createSanctionEvent(ladderEvent));
-                    break;
+                }
             }
 
             return view;
