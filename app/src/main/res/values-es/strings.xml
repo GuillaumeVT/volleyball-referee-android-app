@@ -37,16 +37,6 @@
     <string name="my_account">Mi cuenta</string>
     <string name="privacy_policy">Política de privacidad</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Comprar</string>
-    <string name="already_purchased">Comprado</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Mantén tus partidos, equipos y reglas sincronizados entre diferentes dispositivos.
-        \n\u2022 Disfruta de almacenamiento ilimitado para tus datos y mejor calidad de vídeo para tus partidos en directo.
-        \n\u2022 Planifica tus partidos para que se jueguen más tarde.
-        \n\u2022 ¿Has borrado un partido por error? Reanuda tus partidos desde la copia del servidor.
-        \n\u2022 Obtén automáticamente las funcionalidades de la futura web.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Entrar</string>

@@ -37,16 +37,6 @@
     <string name="my_account">Minu konto</string>
     <string name="privacy_policy">Isikuandmete kaitse</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Osta</string>
-    <string name="already_purchased">Juba ostetud</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Mängude, võistkondade ja reeglite sünkroniseerimine kõikide Teie seadmetel.
-        \n\u2022 Piiramatud anndmete salvestamine ning online mängude ühenduse parem kvaliteet.
-        \n\u2022 Teie tulevaste mängude planeerimine.
-        \n\u2022 Kogemata kadunud mängude taastamine serverist.
-        \n\u2022 Tulevased uued rakenduse web-funktsioone lisatakse teie paketi tasuta!
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Logi sisse</string>

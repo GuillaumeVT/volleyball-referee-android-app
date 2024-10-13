@@ -37,16 +37,6 @@
     <string name="my_account">Il mio profilo</string>
     <string name="privacy_policy">Politica in materia di privacy</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Acquistare</string>
-    <string name="already_purchased">Già acquistato</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Guardare le vostre partite, squadre e regole sincronizzate tra i vostri dispositivi.
-        \n\u2022 Approfittare di memoria illimitata per i vostri dati e di uno streaming di migliore qualità per le vostre partite in diretta.
-        \n\u2022 Programmare le vostre partite da giocare più tardi
-        \n\u2022 Avete cancellato una partita per sbaglio? Recuperate le vostre partite dal backup del server.
-        \n\u2022 Beneficiare automaticamente delle future funzioni web dell\'applicazione
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Connettiti</string>

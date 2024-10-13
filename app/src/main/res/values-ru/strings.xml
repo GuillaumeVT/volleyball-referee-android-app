@@ -36,16 +36,6 @@
     <string name="my_account">Мой аккаунт</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Купить</string>
-    <string name="already_purchased">Уже куплено</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Синхронизация ваших матчей, команд и правил на всех ваших устройствах.
-        \n\u2022 Безлимитное хранение ваших данных и лучшее качество трансляции счёта матчей он-лайн.
-        \n\u2022 Планирование ваших матчей заранее.
-        \n\u2022 Восстановление случайно потерянных матчей с сервера.
-        \n\u2022 Последующие новые веб функции приложения будут включены в ваш пакет бесплатно!
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Войти</string>

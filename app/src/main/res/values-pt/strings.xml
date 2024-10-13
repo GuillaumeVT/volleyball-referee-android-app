@@ -37,16 +37,6 @@
     <string name="my_account">A minha conta</string>
     <string name="privacy_policy">Política de privacidade</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Compra</string>
-    <string name="already_purchased">Já comprado</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Mantenha os seus jogos, equipas e regras, sincronizados entre dispositivos.
-        \n\u2022 Disfrute de armazenamento ilimitado para os seus dados e a melhor qualidade de transmissão dos jogos ao vivo.
-        \n\u2022 Agende os seus jogos para transmitir mais tarde.
-        \n\u2022 Apagou o jogo por engano? Recupere os seus jogos a partir da cópia de segurança no servidor.
-        \n\u2022 Beneficie automaticamente das futuras novas funcionalidades online.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Iniciar sessão</string>

@@ -37,16 +37,6 @@
     <string name="my_account">Mijn account</string>
     <string name="privacy_policy">Privacybeleid</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Aankoop</string>
-    <string name="already_purchased">Al gekocht</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Hou je wedstrijden, ploegen en regels gesynchroniseerd tussen je apparaten.
-        \n\u2022 Geniet van de onbeperkte opslag voor je gegevens en betere streamingkwaliteit voor je live wedstrijden.
-        \n\u2022 Plan je wedstrijden die later gespeeld worden.
-        \n\u2022 Heb je per ongeluk je wedstrijd verwijderd? Herstel je wedstrijden van de server back-up.
-        \n\u2022 Profiteer automatisch van de toekomstige nieuwe webfuncties.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Aanmelden</string>

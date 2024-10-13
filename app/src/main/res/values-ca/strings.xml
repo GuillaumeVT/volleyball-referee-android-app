@@ -37,16 +37,6 @@
     <string name="my_account">El meu compte</string>
     <string name="privacy_policy">Política de privacitat</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Comprar</string>
-    <string name="already_purchased">Comprat</string>
-    <string name="purchase_web_premium_summary">
-       \n\u2022 Mantingui els seus partits, equips i regles sincronitzats entre diferents dispositius.
-       \n\u2022 Gaudeixi de l\'emmagatzematge il·limitat per les seves dades i millor qualitat de vídeo pels seus partits en directe.
-       \n\u2022 Planifica els partits perquè es juguin més tard.
-       \n\u2022 ¿Has esborrat un partit per error? Reprèn els teus partits des del núvol.
-       \n\u2022 Obtingui automàticament les funcions de la futura web.
-   </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Entrar</string>

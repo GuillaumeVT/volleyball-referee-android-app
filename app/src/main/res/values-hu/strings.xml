@@ -37,16 +37,6 @@
     <string name="my_account">Fiókom</string>
     <string name="privacy_policy">Adatvédelmi politika</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Vásárlás</string>
-    <string name="already_purchased">Már megvetted</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Tartsd a mérkőzésedet, csapataidat és szabályaidat szinkronban az eszközeid között.
-        \n\u2022 Használd ki a korlátlan tárhelyet és jobb élő közvetítési minőséget.
-        \n\u2022 Ütemezd be mérkőzéseidet későbbre.
-        \n\u2022 Véletlenül töröltél egy mérkőzést? Állítsd vissza a szerver biztonsági mentéséből.
-        \n\u2022 Automatikusan megkapod az összes jövőbeni webes funkciót.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Bejelentkezés</string>

@@ -37,16 +37,6 @@
     <string name="my_account">Mon compte</string>
     <string name="privacy_policy">Protection de la vie privée</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Acheter</string>
-    <string name="already_purchased">Déjà possédé</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Gardez vos matchs, équipes et règles synchronisés entre vos appareils.
-        \n\u2022 Profitez du stockage illimité pour vos données et d\'un streaming de meilleure qualité pour vos matchs en direct.
-        \n\u2022 Planifiez vos matchs pour les jouer plus tard.
-        \n\u2022 Vous avez effacé un match par erreur? Reprenez vos matchs depuis la sauvegarde du serveur.
-        \n\u2022 Bénéficiez automatiquement des futures fonctionnalités web de l\'appli.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Me connecter</string>

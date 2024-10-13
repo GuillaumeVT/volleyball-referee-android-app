@@ -36,16 +36,6 @@
     <string name="my_account">Moje Konto</string>
     <string name="privacy_policy">Informacja o polityce prywatności</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Zakup</string>
-    <string name="already_purchased">Już zakupione</string>
-    <string name="purchase_web_premium_summary">
-       \n\u2022 Zachowaj synchronizację meczów, drużyn i zasad między swoimi urządzeniami.
-       \n\u2022 Ciesz się nieograniczoną ilością miejsca na dane i lepszą jakością transmisji na żywo.
-       \n\u2022 Zaplanuj swoje mecze do rozegrania później.
-       \n\u2022 Usunąłeś mecz przez pomyłkę? Wznów swoje mecze, korzystając z kopii zapasowej serwera.
-       \n\u2022 Automatycznie korzystaj z przyszłych nowych funkcji sieciowych.
-   </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>

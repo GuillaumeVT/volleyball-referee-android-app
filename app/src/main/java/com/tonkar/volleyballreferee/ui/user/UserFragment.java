@@ -65,7 +65,7 @@ public class UserFragment extends Fragment {
                     }
                 }
             });
-        } else if (!PrefUtils.isWebPremiumSubscribed(requireContext()) && !PrefUtils.isWebPremiumPurchased(requireContext())) {
+        } else {
             replaceFragment(PurchaseListFragment.newInstance());
         }
 

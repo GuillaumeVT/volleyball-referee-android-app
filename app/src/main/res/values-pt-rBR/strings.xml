@@ -37,16 +37,6 @@
     <string name="my_account">Minha Conta</string>
     <string name="privacy_policy">Política de privacidade</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Adquirir</string>
-    <string name="already_purchased">Já adquirido</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Mantenha suas partidas, equipes e regras sincronizadas entre seus aparelhos.
-        \n\u2022 Desfrute de armazenamento ilimitado para seus dados e a melhor qualidade de transmissão para suas partidas Ao Vivo.
-        \n\u2022 Agende suas partidas para datas futuras.
-        \n\u2022 Apagou sua partida sem querer? Recupere-as através do bakcup que fica no servidor.
-        \n\u2022 Seja beneficiado automaticamente com os novos recursos web.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Entrar</string>

@@ -37,16 +37,6 @@
     <string name="my_account">Mein Konto</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">Kaufen</string>
-    <string name="already_purchased">Schon gekauft</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 Synchronisiere Ihre Spiele, Teams und Regeln zwischen Ihre Geräten.
-        \n\u2022 Genießen Sie den unbegrenzten Speicherplatz für Ihre Daten und die bessere Streaming-Qualität für Ihre Live-Spiele.
-        \n\u2022 Planen Sie Ihre Spiele.
-        \n\u2022 Ihr Spiel wurde versehentlich gelöscht? Setzen Sie Ihre Spiele von der Serversicherung fort.
-        \n\u2022 Profitieren Sie von den zukünftigen neuen Webfunktionen.
-   </string>
 
     <!-- User activity -->
     <string name="user_sign_in">Anmelden</string>

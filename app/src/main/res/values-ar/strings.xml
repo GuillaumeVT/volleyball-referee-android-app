@@ -37,16 +37,6 @@
     <string name="my_account">حسابي</string>
     <string name="privacy_policy">سياسة الخصوصية</string>
 
-    <!-- Purchase activity -->
-    <string name="purchase">شراء</string>
-    <string name="already_purchased">تم الشراء سابقا</string>
-    <string name="purchase_web_premium_summary">
-        \n\u2022 حافظ على مزامنة مبارياتك و الفرق و القوانين بين أجهزتك.
-        \n\u2022 إستمتع بمساحة تخزين غير محدودة لبياناتك و جودة بث أفضل لمبارياتك المباشرة.
-        \n\u2022 جدولة مبارياتك ليتم لعبها لاحقًا.
-        \n\u2022 حذف مباراتك عن طريق الخطأ؟ استئناف مباراتك من النسخ الاحتياطية في الخادم.
-        \n\u2022 إستفد تلقائيًا من مميزات الويب الجديدة المستقبلية.
-    </string>
 
     <!-- User activity -->
     <string name="user_sign_in">تسجيل الدخول</string>
