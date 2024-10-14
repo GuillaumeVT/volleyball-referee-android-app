@@ -90,7 +90,6 @@
     <string name="confirm">Confermare</string>
     <string name="confirm_game_setup_question">Confermate questa formazione?</string>
     <string name="gender_description">Genere</string>
-    <string name="match_duration_text">Selezionare la durata di una partita</string>
     <string name="league_name">Nome della categoria o del torneo</string>
     <string name="division_name">Nome della divisione / pool</string>
     <string name="misc_tab">Varie</string>
@@ -135,10 +134,6 @@
     <string name="confirm_team_lineup_question">Confermi la conposizione titolare per %s in questo set?</string>
     <string name="no_substitution_message">Nessun cambio possibile</string>
     <string name="confirm_set_question">Vuoi confermare il punto?</string>
-    <string name="start_match_description">Iniziare la partita</string>
-    <string name="stop_match_description">Interrompere la partita</string>
-    <string name="confirm_start_match_question">Volete iniziare la partita?</string>
-    <string name="confirm_stop_match_question">Volete interrompere la partita?</string>
     <string name="index_game">Passare da partita pubblica a partita privata</string>
     <string name="public_game_message">La partita è pubblica</string>
     <string name="private_game_message">La partita è privata</string>
@@ -169,7 +164,7 @@
     <string name="delete_match">Eliminare la partita</string>
     <string name="reschedule_match">Riprogrammare la partita</string>
     <string name="edit_start_match">Modificare e iniziare la partita</string>
-    <string name="start_match">@string/start_match_description</string>
+    <string name="start_match">Iniziare la partita</string>
     <string name="resume_match">@string/resume_game_title</string>
     <string name="download_match_error">Errore durante il caricamento della partita</string>
 

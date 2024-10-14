@@ -97,7 +97,6 @@
     <string name="confirm">Confirm</string>
     <string name="confirm_game_setup_question">Do you confirm this setup?</string>
     <string name="gender_description">Gender</string>
-    <string name="match_duration_text">Select the match duration</string>
     <string name="league_name">League / tournament name</string>
     <string name="division_name">Division / pool name</string>
     <string name="misc_tab">Misc.</string>
@@ -142,10 +141,6 @@
     <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
     <string name="no_substitution_message">No substitution available</string>
     <string name="confirm_set_question">Do you confirm this point?</string>
-    <string name="start_match_description">Start the match</string>
-    <string name="stop_match_description">Stop the match</string>
-    <string name="confirm_start_match_question">Do you want to start the match?</string>
-    <string name="confirm_stop_match_question">Do you want to stop the match?</string>
     <string name="index_game">Toggle public / private match</string>
     <string name="public_game_message">The match is now public</string>
     <string name="private_game_message">The match is now private</string>
@@ -176,7 +171,7 @@
     <string name="delete_match">Delete the match</string>
     <string name="reschedule_match">Reschedule the match</string>
     <string name="edit_start_match">Edit and then start the match</string>
-    <string name="start_match">@string/start_match_description</string>
+    <string name="start_match">Start the match</string>
     <string name="resume_match">Resume the match</string>
     <string name="download_match_error">Error while downloading the match</string>
 

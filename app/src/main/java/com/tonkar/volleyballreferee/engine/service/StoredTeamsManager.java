@@ -66,7 +66,6 @@ public class StoredTeamsManager implements StoredTeamsService {
             case INDOOR, INDOOR_4X4 -> new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
             case BEACH -> new BeachTeamDefinition(id, userId, TeamType.HOME);
             case SNOW -> new SnowTeamDefinition(id, userId, TeamType.HOME);
-            default -> new EmptyTeamDefinition(id, userId, TeamType.HOME);
         };
 
         return new WrappedTeam(teamDefinition);
@@ -106,8 +105,9 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     @Override
     public void createAndSaveTeamFrom(GameType kind, IBaseTeam teamService, TeamType teamType) {
-        if (teamService.getTeamName(teamType).length() > 1 && !GameType.TIME.equals(kind) && mRepository.countTeams(
-                teamService.getTeamName(teamType), teamService.getGender(teamType), kind) == 0 && mRepository.countTeams(
+        if (teamService.getTeamName(teamType).length() > 1 && mRepository.countTeams(teamService.getTeamName(teamType),
+                                                                                     teamService.getGender(teamType),
+                                                                                     kind) == 0 && mRepository.countTeams(
                 teamService.getTeamId(teamType)) == 0) {
             IBaseTeam team = createTeam(kind);
             copyTeam(teamService, team, teamType);

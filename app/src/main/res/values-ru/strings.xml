@@ -89,7 +89,6 @@
     <string name="confirm">Подтвердить</string>
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>
-    <string name="match_duration_text">Выберите длительность матча</string>
     <string name="league_name">Название лиги / турнира</string>
     <string name="division_name">Название дивизиона / группы</string>
     <string name="misc_tab">Разное</string>
@@ -134,10 +133,6 @@
     <string name="confirm_team_lineup_question">Подтвердить стартовую расстановку команды %s в данной партии?</string>
     <string name="no_substitution_message">Замена невозможна</string>
     <string name="confirm_set_question">Подтвердить окончание данной партии?</string>
-    <string name="start_match_description">Начать матч</string>
-    <string name="stop_match_description">Остановить матч</string>
-    <string name="confirm_start_match_question">Начать матч?</string>
-    <string name="confirm_stop_match_question">Остановить матч?</string>
     <string name="index_game">Поменять статус матча (публичный/скрытый)</string>
     <string name="public_game_message">Статус матча: публичный</string>
     <string name="private_game_message">Статус матча: скрытый</string>
@@ -168,7 +163,7 @@
     <string name="delete_match">Удалить матч</string>
     <string name="reschedule_match">Изменить запланированный матч</string>
     <string name="edit_start_match">Изменить и начать матч</string>
-    <string name="start_match">@string/start_match_description</string>
+    <string name="start_match">Начать матч</string>
     <string name="resume_match">@string/resume_game_title</string>
     <string name="download_match_error">Произошла ошибка при загрузке матча</string>
 

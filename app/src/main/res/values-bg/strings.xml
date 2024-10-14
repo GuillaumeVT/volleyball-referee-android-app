@@ -90,7 +90,6 @@
     <string name="confirm">Потвърди</string>
     <string name="confirm_game_setup_question">Потвърждавате ли въведените данни?</string>
     <string name="gender_description">Пол</string>
-    <string name="match_duration_text">Изберете продължителност на мача</string>
     <string name="league_name">Наименование на първенството/турнира</string>
     <string name="division_name">Лига / Група</string>
     <string name="misc_tab">Други</string>
@@ -135,10 +134,6 @@
     <string name="confirm_team_lineup_question">Потвърждавате ли стартовото нареждане за %s в този гейм?</string>
     <string name="no_substitution_message">Няма налични смени</string>
     <string name="confirm_set_question">Потвърждавате ли тази точка?</string>
-    <string name="start_match_description">Започнете мача</string>
-    <string name="stop_match_description">Спрете мача</string>
-    <string name="confirm_start_match_question">Искате ли да стартирате мача?</string>
-    <string name="confirm_stop_match_question">Искате ли да спрете мача?</string>
     <string name="index_game">Toggle public / private match</string>
     <string name="public_game_message">Мачът е общодостъпен</string>
     <string name="private_game_message">Мачът е личен</string>
@@ -169,7 +164,7 @@
     <string name="delete_match">Изтрийте мач</string>
     <string name="reschedule_match">Подгответе мач отново</string>
     <string name="edit_start_match">Редактирайте и след това започнете мач</string>
-    <string name="start_match">@string/start_match_description</string>
+    <string name="start_match">Започнете мача</string>
     <string name="resume_match">Възобновете мач</string>
     <string name="download_match_error">Грешка при сваляне на мача</string>
 

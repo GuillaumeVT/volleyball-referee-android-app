@@ -90,7 +90,6 @@
     <string name="confirm">تأكيد</string>
     <string name="confirm_game_setup_question">هل أنت موافق على هذه الإعدادات</string>
     <string name="gender_description">الجنس</string>
-    <string name="match_duration_text">حدد مدة المباراة</string>
     <string name="league_name">اسم الدوري / البطولة</string>
     <string name="division_name">اسم القسم / التجمع</string>
     <string name="misc_tab">متنوع</string>
@@ -135,10 +134,6 @@
     <string name="confirm_team_lineup_question">هل تؤكد خط البداية هذا على %s في هذه الشوط؟</string>
     <string name="no_substitution_message">لا يوجد بديل متاح</string>
     <string name="confirm_set_question">هل تؤكد هذه النقطة؟</string>
-    <string name="start_match_description">بدأ المباراة</string>
-    <string name="stop_match_description">إيقاف المباراة</string>
-    <string name="confirm_start_match_question">هل تريد بدء المباراة؟</string>
-    <string name="confirm_stop_match_question">هل تريد إيقاف المباراة؟</string>
     <string name="index_game">تبديل عام/خاص المباراة</string>
     <string name="public_game_message">المباراة الآن عامة</string>
     <string name="private_game_message">المباراة الآن خاصة</string>
@@ -169,7 +164,7 @@
     <string name="delete_match">حذف المباراة</string>
     <string name="reschedule_match">إعادة جدولة المباراة</string>
     <string name="edit_start_match">عدل ثم إبدأ المباراة</string>
-    <string name="start_match">@string/start_match_description</string>
+    <string name="start_match">بدأ المباراة</string>
     <string name="resume_match">@string/resume_game_title</string>
     <string name="download_match_error">خطأ أثناء تنزيل المباراة</string>
 

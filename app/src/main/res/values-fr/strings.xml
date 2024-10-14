@@ -90,7 +90,6 @@
     <string name="confirm">Confirmer</string>
     <string name="confirm_game_setup_question">Confirmez-vous cette configuration?</string>
     <string name="gender_description">Genre</string>
-    <string name="match_duration_text">Sélectionner la durée du match</string>
     <string name="league_name">Nom de la ligue / du tournoi</string>
     <string name="division_name">Nom de la division / poule</string>
     <string name="misc_tab">Divers</string>
@@ -135,10 +134,6 @@
     <string name="confirm_team_lineup_question">Confirmez-vous la composition de %s pour ce set?</string>
     <string name="no_substitution_message">Pas de changement possible</string>
     <string name="confirm_set_question">Confirmez-vous ce point?</string>
-    <string name="start_match_description">Démarrer le match</string>
-    <string name="stop_match_description">Arrêter le match</string>
-    <string name="confirm_start_match_question">Voulez-vous démarrer le match?</string>
-    <string name="confirm_stop_match_question">Voulez-vous arrêter le match?</string>
     <string name="index_game">Basculer entre match publique / privé</string>
     <string name="public_game_message">Le match est publique</string>
     <string name="private_game_message">Le match est privé</string>
@@ -169,7 +164,7 @@
     <string name="delete_match">Supprimer le match</string>
     <string name="reschedule_match">Re-programmer le match</string>
     <string name="edit_start_match">Éditer puis démarrer le match</string>
-    <string name="start_match">@string/start_match_description</string>
+    <string name="start_match">Démarrer le match</string>
     <string name="resume_match">@string/resume_game_title</string>
     <string name="download_match_error">Erreur lors du téléchargement du match</string>
 

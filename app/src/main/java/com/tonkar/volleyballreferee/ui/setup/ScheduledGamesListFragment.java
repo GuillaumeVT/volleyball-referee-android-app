@@ -64,14 +64,12 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
 
         scheduledGamesList.setOnItemClickListener((adapterView, itemView, i, l) -> {
             ApiGameSummary gameDescription = mScheduledGamesListAdapter.getItem(i);
-            if (!GameType.TIME.equals(gameDescription.getKind())) {
-                switch (gameDescription.getStatus()) {
-                    case SCHEDULED, LIVE -> {
-                        ScheduleGameListActionMenu scheduleGameListActionMenu = ScheduleGameListActionMenu.newInstance(gameDescription);
-                        scheduleGameListActionMenu.show(getChildFragmentManager(), "schedule_game_list_action_menu");
-                    }
-                    default -> {
-                    }
+            switch (gameDescription.getStatus()) {
+                case SCHEDULED, LIVE -> {
+                    ScheduleGameListActionMenu scheduleGameListActionMenu = ScheduleGameListActionMenu.newInstance(gameDescription);
+                    scheduleGameListActionMenu.show(getChildFragmentManager(), "schedule_game_list_action_menu");
+                }
+                default -> {
                 }
             }
         });

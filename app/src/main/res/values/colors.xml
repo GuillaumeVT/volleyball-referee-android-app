@@ -42,8 +42,6 @@
     <color name="colorIndoorLight">#cedaf5</color>
     <color name="colorBeach">#f2bb1a</color>
     <color name="colorBeachLight">#f8dc8a</color>
-    <color name="colorTime">#1f1f1f</color>
-    <color name="colorTimeLight">#d1d1d1</color>
     <color name="colorIndoor4x4">#781FC9</color>
     <color name="colorIndoor4x4Light">#dbc0f5</color>
     <color name="colorSnow">#2980b9</color>
@@ -62,8 +60,6 @@
     <color name="colorYellowCard">#f3bc07</color>
     <color name="colorRedCard">#bc0019</color>
     <color name="colorService">#1f4294</color>
-    <color name="colorStart">@android:color/holo_green_dark</color>
-    <color name="colorStop">@android:color/holo_red_dark</color>
     <color name="colorReportDuplicate">#d6d7d7</color>
 
     <color name="colorScoreSheetBackground">#ecebec</color>

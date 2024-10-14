@@ -40,11 +40,6 @@ public class GameFactory {
         return game;
     }
 
-    public static TimeBasedGame createTimeBasedGame(String id, String createdBy, String refereeName, long createdAt, long scheduledAt) {
-        Log.i(Tags.FACTORY, "Create time-based game");
-        return new TimeBasedGame(id, createdBy, refereeName, createdAt, scheduledAt);
-    }
-
     public static Indoor4x4Game createIndoor4x4Game(String id,
                                                     String createdBy,
                                                     String refereeName,

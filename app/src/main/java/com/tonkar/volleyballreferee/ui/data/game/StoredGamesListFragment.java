@@ -17,7 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
-import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -65,7 +65,7 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
 
                     final Intent intent;
 
-                    if (UsageType.POINTS_SCOREBOARD.equals(game.getUsage()) || GameType.TIME.equals(game.getKind())) {
+                    if (UsageType.POINTS_SCOREBOARD.equals(game.getUsage())) {
                         intent = new Intent(requireContext(), StoredBasicGameActivity.class);
                     } else {
                         intent = new Intent(requireContext(), StoredAdvancedGameActivity.class);

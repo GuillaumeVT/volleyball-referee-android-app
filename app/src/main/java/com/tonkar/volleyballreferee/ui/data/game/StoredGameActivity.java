@@ -9,7 +9,6 @@ import androidx.appcompat.app.*;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.*;
-import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.*;
@@ -49,7 +48,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         String userId = PrefUtils.getUser(this).getId();
         boolean canSync = PrefUtils.canSync(this);
 
-        if (canSync && mStoredGame.getCreatedBy().equals(userId) && !GameType.TIME.equals(mStoredGame.getKind())) {
+        if (canSync && mStoredGame.getCreatedBy().equals(userId)) {
             if (mStoredGamesService.isGameIndexed(mGameId)) {
                 recordMenu.setIcon(R.drawable.ic_public_menu);
             } else {
@@ -60,7 +59,7 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         }
 
         deleteMenu.setVisible(mStoredGame.getCreatedBy().equals(userId));
-        shareLinkMenu.setVisible(canSync && !GameType.TIME.equals(mStoredGame.getKind()));
+        shareLinkMenu.setVisible(canSync);
 
         return true;
     }
@@ -112,7 +111,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         switch (mStoredGame.getKind()) {
             case INDOOR_4X4 -> UiUtils.colorChipIcon(this, R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, kindItem);
             case BEACH -> UiUtils.colorChipIcon(this, R.color.colorBeachLight, R.drawable.ic_beach, kindItem);
-            case TIME -> UiUtils.colorChipIcon(this, R.color.colorTimeLight, R.drawable.ic_time_based, kindItem);
             case SNOW -> UiUtils.colorChipIcon(this, R.color.colorSnowLight, R.drawable.ic_snow, kindItem);
             default -> UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
         }
@@ -137,23 +135,15 @@ public abstract class StoredGameActivity extends AppCompatActivity {
 
     protected void initScoreSheetAvailability() {
         View generateScoreSheetLayout = findViewById(R.id.generate_score_sheet_layout);
-
-        if (!GameType.TIME.equals(mStoredGame.getKind())) {
-            generateScoreSheetLayout.setVisibility(View.VISIBLE);
-        } else {
-            generateScoreSheetLayout.setVisibility(View.GONE);
-        }
+        generateScoreSheetLayout.setVisibility(View.VISIBLE);
     }
 
     protected void generateScoreSheet() {
         Log.i(Tags.STORED_GAMES, "Generate score sheet");
-
-        if (!GameType.TIME.equals(mStoredGame.getKind())) {
-            Intent intent = new Intent(this, ScoreSheetActivity.class);
-            intent.putExtra("game", mGameId);
-            startActivity(intent);
-            UiUtils.animateForward(this);
-        }
+        Intent intent = new Intent(this, ScoreSheetActivity.class);
+        intent.putExtra("game", mGameId);
+        startActivity(intent);
+        UiUtils.animateForward(this);
     }
 
     private void toggleGameIndexed() {

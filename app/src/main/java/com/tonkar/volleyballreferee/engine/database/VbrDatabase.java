@@ -11,7 +11,7 @@ import com.tonkar.volleyballreferee.engine.database.model.*;
 import java.util.concurrent.*;
 
 @Database(entities = { RulesEntity.class, TeamEntity.class, GameEntity.class, FullGameEntity.class, LeagueEntity.class, FriendEntity.class
-}, version = 3)
+}, version = 4)
 @TypeConverters({ DatabaseConverters.class })
 public abstract class VbrDatabase extends RoomDatabase {
 
@@ -24,22 +24,14 @@ public abstract class VbrDatabase extends RoomDatabase {
     public static VbrDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (VbrDatabase.class) {
-                if (sInstance == null) {
-                    sInstance = Room
-                            .databaseBuilder(context, VbrDatabase.class, "vbr-db")
-                            .addMigrations(MIGRATION_1_2)
-                            .addMigrations(MIGRATION_2_3)
-                            .allowMainThreadQueries()
-                            .build();
-                }
+                sInstance = Room
+                        .databaseBuilder(context, VbrDatabase.class, "vbr-db")
+                        .addMigrations(MIGRATION_1_2)
+                        .addMigrations(MIGRATION_2_3)
+                        .addMigrations(MIGRATION_3_4)
+                        .allowMainThreadQueries()
+                        .build();
             }
-
-            sInstance = Room
-                    .databaseBuilder(context, VbrDatabase.class, "vbr-db")
-                    .addMigrations(MIGRATION_1_2)
-                    .addMigrations(MIGRATION_2_3)
-                    .allowMainThreadQueries()
-                    .build();
         }
 
         return sInstance;
@@ -87,4 +79,13 @@ public abstract class VbrDatabase extends RoomDatabase {
         }
     };
 
+    private static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("DELETE FROM `leagues` WHERE `kind` = 'TIME'");
+            database.execSQL("DELETE FROM `games` WHERE `kind` = 'TIME'");
+            database.execSQL("DELETE FROM `teams` WHERE `kind` = 'TIME'");
+            database.execSQL("DELETE FROM `rules` WHERE `kind` = 'TIME'");
+        }
+    };
 }

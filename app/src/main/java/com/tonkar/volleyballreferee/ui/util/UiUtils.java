@@ -184,32 +184,6 @@ public class UiUtils {
         Log.i(Tags.GAME_UI, "Navigate to home");
         if (game.isMatchCompleted()) {
             UiUtils.navigateBackToHome(originActivity);
-        } else if (GameType.TIME.equals(game.getKind())) {
-            ITimeBasedGame timeBasedGameService = (ITimeBasedGame) game;
-            if (timeBasedGameService.getRemainingTime() > 0L) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
-                builder
-                        .setTitle(originActivity.getString(R.string.navigate_home))
-                        .setMessage(originActivity.getString(R.string.navigate_home_question));
-                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> UiUtils.navigateBackToHome(originActivity));
-                builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
-
-                AlertDialog alertDialog = builder.show();
-                UiUtils.setAlertDialogMessageSize(alertDialog, originActivity.getResources());
-            } else {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
-                builder
-                        .setTitle(R.string.stop_match_description)
-                        .setMessage(originActivity.getString(R.string.confirm_stop_match_question));
-                builder.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                    Log.i(Tags.GAME_UI, "User accepts to stop");
-                    timeBasedGameService.stop();
-                    UiUtils.navigateBackToHome(originActivity);
-                });
-                builder.setNegativeButton(android.R.string.no, (dialog, which) -> Log.i(Tags.GAME_UI, "User rejects stop"));
-                AlertDialog alertDialog = builder.show();
-                UiUtils.setAlertDialogMessageSize(alertDialog, originActivity.getResources());
-            }
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(originActivity, R.style.AppTheme_Dialog);
             builder
@@ -379,7 +353,6 @@ public class UiUtils {
             case INDOOR_4X4 -> imageView.setImageResource(R.drawable.ic_4x4);
             case BEACH -> imageView.setImageResource(R.drawable.ic_beach);
             case SNOW -> imageView.setImageResource(R.drawable.ic_snow);
-            case TIME -> imageView.setImageResource(R.drawable.ic_time_based);
         }
         imageView.setVisibility(View.VISIBLE);
     }

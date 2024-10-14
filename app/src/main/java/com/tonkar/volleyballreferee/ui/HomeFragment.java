@@ -20,7 +20,7 @@ import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.*;
-import com.tonkar.volleyballreferee.ui.game.*;
+import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.setup.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -149,18 +149,6 @@ public class HomeFragment extends Fragment {
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, "gameKindToToolbar").toBundle());
     }
 
-    public void startTimeBasedGame(View view) {
-        Log.i(Tags.GAME_UI, "Start a time-based game");
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
-        TimeBasedGame game = GameFactory.createTimeBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
-                                                             System.currentTimeMillis(), 0L);
-        mStoredGamesService.saveSetupGame(game);
-
-        Log.i(Tags.GAME_UI, "Start activity to setup game quickly");
-        final Intent intent = new Intent(requireContext(), QuickGameSetupActivity.class);
-        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, "gameKindToToolbar").toBundle());
-    }
-
     private void startScoreBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a score-based game");
         ApiUserSummary user = PrefUtils.getUser(requireContext());
@@ -190,15 +178,9 @@ public class HomeFragment extends Fragment {
         if (game == null) {
             UiUtils.makeErrorText(requireContext(), getString(R.string.resume_game_error), Toast.LENGTH_LONG).show();
         } else {
-            if (GameType.TIME.equals(game.getKind())) {
-                final Intent gameIntent = new Intent(requireContext(), TimeBasedGameActivity.class);
-                startActivity(gameIntent);
-                UiUtils.animateCreate(requireActivity());
-            } else {
-                final Intent gameIntent = new Intent(requireContext(), GameActivity.class);
-                startActivity(gameIntent);
-                UiUtils.animateCreate(requireActivity());
-            }
+            final Intent gameIntent = new Intent(requireContext(), GameActivity.class);
+            startActivity(gameIntent);
+            UiUtils.animateCreate(requireActivity());
         }
     }
 

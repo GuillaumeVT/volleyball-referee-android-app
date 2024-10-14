@@ -97,17 +97,15 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     private void rescheduleGame() {
         Log.i(Tags.SCHEDULE_UI, "Reschedule game");
-        if (!GameType.TIME.equals(mGameDescription.getKind())) {
-            if (GameStatus.SCHEDULED.equals(mGameDescription.getStatus())) {
-                switch (mGameDescription.getKind()) {
-                    case INDOOR, INDOOR_4X4, BEACH -> {
-                        Log.i(Tags.SCHEDULE_UI, "Start activity to reschedule game");
-                        final Intent intent = new Intent(mActivity, ScheduledGameActivity.class);
-                        intent.putExtra("game", JsonConverters.GSON.toJson(mGameDescription, ApiGameSummary.class));
-                        intent.putExtra("create", false);
-                        startActivity(intent);
-                        UiUtils.animateForward(mActivity);
-                    }
+        if (GameStatus.SCHEDULED.equals(mGameDescription.getStatus())) {
+            switch (mGameDescription.getKind()) {
+                case INDOOR, INDOOR_4X4, BEACH -> {
+                    Log.i(Tags.SCHEDULE_UI, "Start activity to reschedule game");
+                    final Intent intent = new Intent(mActivity, ScheduledGameActivity.class);
+                    intent.putExtra("game", JsonConverters.GSON.toJson(mGameDescription, ApiGameSummary.class));
+                    intent.putExtra("create", false);
+                    startActivity(intent);
+                    UiUtils.animateForward(mActivity);
                 }
             }
         }

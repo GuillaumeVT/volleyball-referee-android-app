@@ -16,7 +16,7 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.bottomsheet.*;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.*;
-import com.tonkar.volleyballreferee.engine.game.*;
+import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.service.StoredGamesService;
 import com.tonkar.volleyballreferee.ui.interfaces.*;
 import com.tonkar.volleyballreferee.ui.util.*;
@@ -67,8 +67,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 indexGameText.setVisibility(View.GONE);
                 resetSetText.setVisibility(View.GONE);
                 keepScreenOnSwitch.setVisibility(View.GONE);
-            } else if (GameType.TIME.equals(mGame.getKind())) {
-                resetSetText.setVisibility(View.GONE);
             }
 
             if (PrefUtils.canSync(context)) {

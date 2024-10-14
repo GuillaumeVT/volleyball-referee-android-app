@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.text.*;
 import android.util.Log;
 import android.view.*;
-import android.widget.*;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -151,23 +151,6 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
         } else {
             teamColorSelected(TeamType.HOME, mGame.getTeamColor(TeamType.HOME));
             teamColorSelected(TeamType.GUEST, mGame.getTeamColor(TeamType.GUEST));
-        }
-
-        NumberPicker matchDurationPicker = view.findViewById(R.id.match_duration_picker);
-        TextView matchDurationText = view.findViewById(R.id.match_duration_text);
-
-        if (GameType.TIME.equals(mGame.getKind())) {
-            final ITimeBasedGame timeBasedGameService = (ITimeBasedGame) mGame;
-            matchDurationPicker.setWrapSelectorWheel(false);
-            matchDurationPicker.setMinValue(10);
-            matchDurationPicker.setMaxValue(40);
-            matchDurationPicker.setValue((int) (timeBasedGameService.getDuration() / 60000L));
-
-            matchDurationPicker.setOnValueChangedListener(
-                    (picker, oldValue, newValue) -> timeBasedGameService.setDuration(newValue * 60000L));
-        } else {
-            matchDurationPicker.setVisibility(View.GONE);
-            matchDurationText.setVisibility(View.GONE);
         }
 
         if (GameType.BEACH.equals(mGame.getKind())) {

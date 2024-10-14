@@ -55,9 +55,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
 
     @Override
     public void createAndSaveLeagueFrom(ApiSelectedLeague selectedLeague) {
-        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1 && !selectedLeague
-                .getKind()
-                .equals(GameType.TIME)) {
+        if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1) {
             long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
             int leaguesSameName = mRepository.countLeagues(selectedLeague.getName(), selectedLeague.getKind());

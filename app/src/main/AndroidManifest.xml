@@ -34,7 +34,6 @@
         <activity android:name=".ui.setup.QuickGameSetupActivity" />
         <activity android:name=".ui.setup.GameSetupActivity" />
         <activity android:name=".ui.game.GameActivity" />
-        <activity android:name=".ui.game.TimeBasedGameActivity" />
         <activity android:name=".ui.data.game.StoredAdvancedGameActivity" />
         <activity android:name=".ui.data.game.StoredBasicGameActivity" />
         <activity

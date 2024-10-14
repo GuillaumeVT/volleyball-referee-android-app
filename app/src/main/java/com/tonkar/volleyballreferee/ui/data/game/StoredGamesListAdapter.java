@@ -117,7 +117,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             case INDOOR_4X4 ->
                     UiUtils.colorChipIcon(getContext(), R.color.colorIndoor4x4Light, R.drawable.ic_4x4_small, viewHolder.kindItem);
             case BEACH -> UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
-            case TIME -> UiUtils.colorChipIcon(getContext(), R.color.colorTimeLight, R.drawable.ic_time_based, viewHolder.kindItem);
             case SNOW -> UiUtils.colorChipIcon(getContext(), R.color.colorSnowLight, R.drawable.ic_snow, viewHolder.kindItem);
             default -> UiUtils.colorChipIcon(getContext(), R.color.colorIndoorLight, R.drawable.ic_6x6_small, viewHolder.kindItem);
         }

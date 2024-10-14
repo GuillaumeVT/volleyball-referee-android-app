@@ -109,16 +109,16 @@ public class StoredRulesManager implements StoredRulesService {
 
     @Override
     public void createAndSaveRulesFrom(Rules rules) {
-        if (rules.getName().length() > 1 && !rules.getKind().equals(GameType.TIME) && !rules
+        if (rules.getName().length() > 1 && !rules.getName().equals(Rules.DEFAULT_BEACH_NAME) && !rules
                 .getName()
-                .equals(Rules.DEFAULT_BEACH_NAME) && !rules.getName().equals(Rules.DEFAULT_INDOOR_NAME) && !rules
+                .equals(Rules.DEFAULT_INDOOR_NAME) && !rules.getName().equals(Rules.DEFAULT_INDOOR_4X4_NAME) && !rules
                 .getName()
-                .equals(Rules.DEFAULT_INDOOR_4X4_NAME) && !rules.getName().equals(Rules.DEFAULT_SNOW_NAME) && !rules
+                .equals(Rules.DEFAULT_SNOW_NAME) && !rules.getId().equals(Rules.DEFAULT_BEACH_ID) && !rules
                 .getId()
-                .equals(Rules.DEFAULT_BEACH_ID) && !rules.getId().equals(Rules.DEFAULT_INDOOR_ID) && !rules
+                .equals(Rules.DEFAULT_INDOOR_ID) && !rules.getId().equals(Rules.DEFAULT_INDOOR_4X4_ID) && !rules
                 .getId()
-                .equals(Rules.DEFAULT_INDOOR_4X4_ID) && !rules.getId().equals(Rules.DEFAULT_SNOW_ID) && mRepository.countRules(
-                rules.getName(), rules.getKind()) == 0 && mRepository.countRules(rules.getId()) == 0) {
+                .equals(Rules.DEFAULT_SNOW_ID) && mRepository.countRules(rules.getName(), rules.getKind()) == 0 && mRepository.countRules(
+                rules.getId()) == 0) {
             saveRules(rules, true);
         }
     }

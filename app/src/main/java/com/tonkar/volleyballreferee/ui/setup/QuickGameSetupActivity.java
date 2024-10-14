@@ -20,7 +20,7 @@ import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.*;
-import com.tonkar.volleyballreferee.ui.game.*;
+import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.interfaces.*;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -111,28 +111,18 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         StoredGamesService storedGamesService = new StoredGamesManager(this);
         storedGamesService.createCurrentGame(mGame);
 
-        if (GameType.TIME.equals(mGame.getKind())) {
-            Log.i(Tags.SETUP_UI, "Start time-based game activity");
-            final Intent gameIntent = new Intent(this, TimeBasedGameActivity.class);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(gameIntent);
-            UiUtils.animateCreate(this);
-        } else {
-            if (GameType.BEACH.equals(mGame.getKind())) {
-                saveTeams();
-                saveLeague();
-                saveRules();
-            }
-            Log.i(Tags.SETUP_UI, "Start game activity");
-            final Intent gameIntent = new Intent(this, GameActivity.class);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(gameIntent);
-            UiUtils.animateCreate(this);
+        if (GameType.BEACH.equals(mGame.getKind())) {
+            saveTeams();
+            saveLeague();
+            saveRules();
         }
+        Log.i(Tags.SETUP_UI, "Start game activity");
+        final Intent gameIntent = new Intent(this, GameActivity.class);
+        gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        gameIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        gameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(gameIntent);
+        UiUtils.animateCreate(this);
     }
 
     private void saveTeams() {
@@ -183,7 +173,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             if (itemId == R.id.teams_tab) {
                 fragment = QuickGameSetupFragment.newInstance(create);
-            } else if (itemId == R.id.rules_tab && !GameType.TIME.equals(mGame.getKind())) {
+            } else if (itemId == R.id.rules_tab) {
                 fragment = RulesSetupFragment.newInstance(true);
             } else if (itemId == R.id.misc_tab) {
                 fragment = MiscSetupFragment.newInstance();
@@ -199,19 +189,15 @@ public class QuickGameSetupActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             gameSetupNavigation.setSelectedItemId(R.id.teams_tab);
         }
-
-        if (GameType.TIME.equals(mGame.getKind())) {
-            gameSetupNavigation.setVisibility(View.GONE);
-        }
     }
 
     private boolean cannotStartGame(IGame game) {
         return game.getTeamName(TeamType.HOME).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH || game
                 .getTeamName(TeamType.GUEST)
-                .length() < IBaseTeam.TEAM_NAME_MIN_LENGTH || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH || (game
+                .length() < IBaseTeam.TEAM_NAME_MIN_LENGTH || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH || (!game
                 .getLeague()
                 .getName()
-                .length() > 0 && game.getLeague().getDivision().length() < 2);
+                .isEmpty() && game.getLeague().getDivision().length() < 2);
     }
 
     private void showGameSetupStatus(IGame game) {

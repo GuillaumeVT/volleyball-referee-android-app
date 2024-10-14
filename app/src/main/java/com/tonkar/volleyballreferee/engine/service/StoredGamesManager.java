@@ -395,10 +395,6 @@ public class StoredGamesManager
                     set.getCalledTimeouts(TeamType.GUEST).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
                 }
 
-                if (GameType.TIME.equals(mStoredGame.getKind()) && mGame instanceof ITimeBasedGame timeBasedGameService) {
-                    set.setRemainingTime(timeBasedGameService.getRemainingTime(setIndex));
-                }
-
                 if (mGame instanceof IClassicTeam indoorTeam) {
 
                     ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
@@ -618,7 +614,7 @@ public class StoredGamesManager
     }
 
     private void pushGameToServer(final IStoredGame storedGame) {
-        if (PrefUtils.canSync(mContext) && storedGame != null && !GameType.TIME.equals(storedGame.getKind()) && !storedGame
+        if (PrefUtils.canSync(mContext) && storedGame != null && !storedGame
                 .getTeamId(TeamType.HOME)
                 .equals(storedGame.getTeamId(TeamType.GUEST))) {
             ApiGame game = (ApiGame) storedGame;
@@ -667,7 +663,7 @@ public class StoredGamesManager
     }
 
     private synchronized void pushCurrentSetToServer() {
-        if (PrefUtils.canSync(mContext) && mStoredGame != null && !GameType.TIME.equals(mStoredGame.getKind()) && !mStoredGame
+        if (PrefUtils.canSync(mContext) && mStoredGame != null && !mStoredGame
                 .getHomeTeam()
                 .getId()
                 .equals(mStoredGame.getGuestTeam().getId())) {
@@ -786,8 +782,6 @@ public class StoredGamesManager
         if (afterPurchase) {
             localGameList = listGames();
         }
-
-        localGameList.removeIf(localGame -> GameType.TIME.equals(localGame.getKind()));
 
         for (ApiGameSummary localGame : localGameList) {
             boolean foundRemoteVersion = false;
