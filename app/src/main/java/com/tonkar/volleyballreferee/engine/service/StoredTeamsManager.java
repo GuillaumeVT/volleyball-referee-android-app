@@ -16,6 +16,8 @@ import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.definition.*;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -60,7 +62,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     private WrappedTeam createWrappedTeam(GameType kind) {
         String id = UUID.randomUUID().toString();
-        String userId = PrefUtils.getUser(mContext).getId();
+        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(ApiUserSummary::getId).orElse(null);
 
         TeamDefinition teamDefinition = switch (kind) {
             case INDOOR, INDOOR_4X4 -> new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
@@ -246,7 +248,7 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     private void syncTeams(List<ApiTeamSummary> remoteTeamList, int page, int size, DataSynchronizationListener listener) {
-        VbrApi.getInstance().getTeamPage(page, size, mContext, new Callback() {
+        VbrApi.getInstance(mContext).getTeamPage(page, size, mContext, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 call.cancel();
@@ -286,7 +288,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
         // User purchased web services, write his user id
         for (ApiTeamSummary localTeam : localTeamList) {
-            if (localTeam.getCreatedBy().equals(ApiUserSummary.VBR_USER_ID)) {
+            if (StringUtils.isBlank(localTeam.getCreatedBy())) {
                 ApiTeam team = getTeam(localTeam.getId());
                 team.setCreatedBy(userId);
                 team.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
@@ -352,7 +354,7 @@ public class StoredTeamsManager implements StoredTeamsService {
             }
         } else {
             ApiTeamSummary remoteTeam = remoteTeams.poll();
-            VbrApi.getInstance().getTeam(remoteTeam.getId(), mContext, new Callback() {
+            VbrApi.getInstance(mContext).getTeam(remoteTeam.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -382,7 +384,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     private void pushTeamToServer(final ApiTeam team, boolean create) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().upsertTeam(team, create, mContext, new Callback() {
+            VbrApi.getInstance(mContext).upsertTeam(team, create, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -402,7 +404,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     private void deleteTeamOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().deleteTeam(id, mContext, new Callback() {
+            VbrApi.getInstance(mContext).deleteTeam(id, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();

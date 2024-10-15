@@ -342,8 +342,8 @@ public class ScheduledGameActivity extends AppCompatActivity {
     }
 
     private void updateReferee(ApiFriend referee) {
-        mGameSummary.setRefereedBy(referee == null ? ApiUserSummary.VBR_USER_ID : referee.getId());
-        mGameSummary.setRefereeName(referee == null ? ApiUserSummary.VBR_PSEUDO : referee.getPseudo());
+        mGameSummary.setRefereedBy(referee == null ? null : referee.getId());
+        mGameSummary.setRefereeName(referee == null ? null : referee.getPseudo());
         computeScheduleLayoutVisibility();
     }
 

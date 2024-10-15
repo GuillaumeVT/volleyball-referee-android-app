@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ApiEmailCredentials {
-    private String userEmail;
-    private String userPassword;
+public class ApiLoginCredentials {
+    private String pseudo;
+    private String password;
 }

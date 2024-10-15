@@ -30,132 +30,37 @@ public class StoredUserManager implements StoredUserService {
     }
 
     @Override
-    public void getUser(String purchaseToken, AsyncUserRequestListener listener) {
-        if (PrefUtils.shouldSignIn(mContext)) {
-            VbrApi.getInstance().getUser(purchaseToken, mContext, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    if (listener != null) {
-                        listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+    public void signInUser(String pseudo, String password, AsyncUserRequestListener listener) {
+        ApiLoginCredentials loginCredentials = new ApiLoginCredentials(pseudo, password);
+
+        VbrApi.getInstance(mContext).signInUser(loginCredentials, mContext, new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                call.cancel();
+                listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.code() == HttpURLConnection.HTTP_OK) {
+                    try (ResponseBody body = response.body()) {
+                        ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
+                        PrefUtils.signIn(mContext, userToken);
+                        listener.onUserTokenReceived(userToken);
+                        syncAll();
                     }
+                } else {
+                    Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while signing in user", response.code()));
+                    listener.onError(response.code());
                 }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        try (ResponseBody body = response.body()) {
-                            ApiUserSummary user = JsonConverters.GSON.fromJson(body.string(), ApiUserSummary.class);
-                            PrefUtils.storeUser(mContext, user);
-                            if (listener != null) {
-                                listener.onUserReceived(user);
-                            }
-                        }
-                    } else {
-                        Log.e(Tags.STORED_USER,
-                              String.format(Locale.getDefault(), "Error %d while getting user from purchase token", response.code()));
-                        if (listener != null) {
-                            listener.onError(response.code());
-                        }
-                    }
-                }
-            });
-        } else {
-            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-        }
-    }
-
-    @Override
-    public void createUser(ApiNewUser newUser, AsyncUserRequestListener listener) {
-        if (PrefUtils.shouldSignIn(mContext)) {
-            VbrApi.getInstance().createUser(newUser, mContext, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_CREATED) {
-                        try (ResponseBody body = response.body()) {
-                            ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
-                            PrefUtils.signIn(mContext, userToken);
-                            listener.onUserTokenReceived(userToken);
-                        }
-                    } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while creating user", response.code()));
-                        listener.onError(response.code());
-                    }
-                }
-            });
-        } else {
-            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-        }
-    }
-
-    @Override
-    public void signInUser(String email, String password, AsyncUserRequestListener listener) {
-        if (PrefUtils.shouldSignIn(mContext)) {
-            ApiEmailCredentials emailCredentials = new ApiEmailCredentials(email, password);
-
-            VbrApi.getInstance().signInUser(emailCredentials, mContext, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        try (ResponseBody body = response.body()) {
-                            ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
-                            PrefUtils.signIn(mContext, userToken);
-                            listener.onUserTokenReceived(userToken);
-                            syncAll();
-                        }
-                    } else {
-                        Log.e(Tags.STORED_USER, String.format(Locale.getDefault(), "Error %d while signing in user", response.code()));
-                        listener.onError(response.code());
-                    }
-                }
-            });
-        } else {
-            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-        }
-    }
-
-    @Override
-    public void initiateUserPasswordRecovery(String email, AsyncUserRequestListener listener) {
-        if (PrefUtils.shouldSignIn(mContext)) {
-            VbrApi.getInstance().initiateUserPasswordRecovery(email, mContext, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                    listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        listener.onUserPasswordRecoveryInitiated();
-                    } else {
-                        Log.e(Tags.STORED_USER,
-                              String.format(Locale.getDefault(), "Error %d while initiating user password recovery", response.code()));
-                        listener.onError(response.code());
-                    }
-                }
-            });
-        } else {
-            listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-        }
+            }
+        });
     }
 
     @Override
     public void updateUserPassword(ApiUserPasswordUpdate passwordUpdate, AsyncUserRequestListener listener) {
-        if (PrefUtils.shouldSignIn(mContext)) {
-            VbrApi.getInstance().updateUserPassword(passwordUpdate, mContext, new Callback() {
+        if (PrefUtils.canSync(mContext)) {
+            VbrApi.getInstance(mContext).updateUserPassword(passwordUpdate, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -185,14 +90,13 @@ public class StoredUserManager implements StoredUserService {
 
     @Override
     public void syncUser() {
-        refreshSubscriptionPurchaseToken();
         downloadFriendsAndRequests(null);
     }
 
     @Override
     public void downloadFriendsAndRequests(AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().getFriendsAndRequests(mContext, new Callback() {
+            VbrApi.getInstance(mContext).getFriendsAndRequests(mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -248,7 +152,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void sendFriendRequest(String friendPseudo, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().sendFriendRequest(friendPseudo, mContext, new Callback() {
+            VbrApi.getInstance(mContext).sendFriendRequest(friendPseudo, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -274,7 +178,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void acceptFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().acceptFriendRequest(friendRequest, mContext, new Callback() {
+            VbrApi.getInstance(mContext).acceptFriendRequest(friendRequest, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -301,7 +205,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void rejectFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().rejectFriendRequest(friendRequest, mContext, new Callback() {
+            VbrApi.getInstance(mContext).rejectFriendRequest(friendRequest, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -327,7 +231,7 @@ public class StoredUserManager implements StoredUserService {
     @Override
     public void removeFriend(ApiFriend friend, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().removeFriend(friend, mContext, new Callback() {
+            VbrApi.getInstance(mContext).removeFriend(friend, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -347,25 +251,6 @@ public class StoredUserManager implements StoredUserService {
             });
         } else {
             listener.onError(HttpURLConnection.HTTP_INTERNAL_ERROR);
-        }
-    }
-
-    private void refreshSubscriptionPurchaseToken() {
-        if (PrefUtils.canSync(mContext) && PrefUtils.isWebPremiumSubscribed(mContext)) {
-            VbrApi.getInstance().refreshSubscriptionPurchaseToken(mContext, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) {
-                    if (response.code() != HttpURLConnection.HTTP_OK) {
-                        Log.e(Tags.STORED_USER,
-                              String.format(Locale.getDefault(), "Error %d while refreshing subscription purchase token", response.code()));
-                    }
-                }
-            });
         }
     }
 

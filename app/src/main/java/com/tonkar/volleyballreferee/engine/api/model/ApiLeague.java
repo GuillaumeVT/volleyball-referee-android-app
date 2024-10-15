@@ -28,7 +28,7 @@ public class ApiLeague {
 
     public ApiLeague() {
         id = UUID.randomUUID().toString();
-        createdBy = ApiUserSummary.VBR_USER_ID;
+        createdBy = null;
         createdAt = 0L;
         updatedAt = 0L;
         kind = GameType.INDOOR;

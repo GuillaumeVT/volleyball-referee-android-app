@@ -11,7 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.tonkar.volleyballreferee.*;
+import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -46,23 +46,21 @@ public class NavigationFragment extends Fragment {
             } else if (itemId == R.id.action_settings) {
                 navigateToFragment(R.id.settings_fragment);
             } else if (itemId == R.id.action_live_games_vbr_com) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/search?type=live", BuildConfig.SERVER_ADDRESS)));
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                                           Uri.parse(String.format("%s/search?type=live", PrefUtils.getServerUrl(requireContext()))));
                 startActivity(intent);
                 UiUtils.animateForward(requireActivity());
             } else if (itemId == R.id.action_credits) {
                 navigateToFragment(R.id.credit_fragment);
-            } else if (itemId == R.id.action_privacy_policy) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s/privacy-policy", BuildConfig.SERVER_ADDRESS)));
-                startActivity(intent);
-                UiUtils.animateForward(requireActivity());
             }
 
             return true;
         });
 
-        boolean paidFeaturesVisible = PrefUtils.canSync(requireContext());
-        navigationView.getMenu().findItem(R.id.action_available_games).setVisible(paidFeaturesVisible);
-        navigationView.getMenu().findItem(R.id.action_colleagues).setVisible(paidFeaturesVisible);
+        boolean onlineFeaturesVisible = PrefUtils.canSync(requireContext());
+        navigationView.getMenu().findItem(R.id.action_available_games).setVisible(onlineFeaturesVisible);
+        navigationView.getMenu().findItem(R.id.action_colleagues).setVisible(onlineFeaturesVisible);
+        navigationView.getMenu().findItem(R.id.action_live_games_vbr_com).setVisible(onlineFeaturesVisible);
 
         return fragmentView;
     }

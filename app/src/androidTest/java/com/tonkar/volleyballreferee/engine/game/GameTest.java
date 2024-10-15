@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
@@ -18,7 +17,7 @@ public class GameTest {
 
     @Test
     public void point_remove() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -30,7 +29,7 @@ public class GameTest {
 
     @Test
     public void service_swapFirst() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -42,7 +41,7 @@ public class GameTest {
 
     @Test
     public void service_keep() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -54,7 +53,7 @@ public class GameTest {
 
     @Test
     public void service_sideOut() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -66,7 +65,7 @@ public class GameTest {
 
     @Test
     public void service_keep_Reverse() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -80,7 +79,7 @@ public class GameTest {
 
     @Test
     public void service_sideOut_Reverse() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -94,7 +93,7 @@ public class GameTest {
 
     @Test
     public void timeout() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();

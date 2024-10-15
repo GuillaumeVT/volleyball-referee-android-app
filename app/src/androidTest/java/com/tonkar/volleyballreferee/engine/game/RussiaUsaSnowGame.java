@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
@@ -38,7 +37,7 @@ public class RussiaUsaSnowGame {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         SnowGame snowGame = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                        Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                        System.currentTimeMillis(), Rules.officialSnowRules());
@@ -56,7 +55,7 @@ public class RussiaUsaSnowGame {
 
     @Test
     public void playGame_matchPoint() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         SnowGame snowGame = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                        Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                        System.currentTimeMillis(), Rules.officialSnowRules());

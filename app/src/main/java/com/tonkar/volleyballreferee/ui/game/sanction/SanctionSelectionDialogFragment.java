@@ -119,12 +119,10 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         getChildFragmentManager().addFragmentOnAttachListener((fragmentManager, childFragment) -> {
-            if (childFragment instanceof DelaySanctionSelectionFragment) {
-                DelaySanctionSelectionFragment fragment = (DelaySanctionSelectionFragment) childFragment;
+            if (childFragment instanceof DelaySanctionSelectionFragment fragment) {
                 fragment.init(this, mGame);
             }
-            if (childFragment instanceof MisconductSanctionSelectionFragment) {
-                MisconductSanctionSelectionFragment fragment = (MisconductSanctionSelectionFragment) childFragment;
+            if (childFragment instanceof MisconductSanctionSelectionFragment fragment) {
                 fragment.init(this, mGame);
             }
         });

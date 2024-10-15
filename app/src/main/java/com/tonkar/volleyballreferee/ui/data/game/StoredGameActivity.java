@@ -41,25 +41,9 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_stored_game, menu);
 
-        MenuItem recordMenu = menu.findItem(R.id.action_index_game);
         MenuItem deleteMenu = menu.findItem(R.id.action_delete_game);
-        MenuItem shareLinkMenu = menu.findItem(R.id.action_share_game_link);
-
         String userId = PrefUtils.getUser(this).getId();
-        boolean canSync = PrefUtils.canSync(this);
-
-        if (canSync && mStoredGame.getCreatedBy().equals(userId)) {
-            if (mStoredGamesService.isGameIndexed(mGameId)) {
-                recordMenu.setIcon(R.drawable.ic_public_menu);
-            } else {
-                recordMenu.setIcon(R.drawable.ic_private_menu);
-            }
-        } else {
-            recordMenu.setVisible(false);
-        }
-
         deleteMenu.setVisible(mStoredGame.getCreatedBy().equals(userId));
-        shareLinkMenu.setVisible(canSync);
 
         return true;
     }
@@ -70,14 +54,8 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         if (itemId == android.R.id.home) {
             getOnBackPressedDispatcher().onBackPressed();
             return true;
-        } else if (itemId == R.id.action_index_game) {
-            toggleGameIndexed();
-            return true;
         } else if (itemId == R.id.action_delete_game) {
             deleteGame();
-            return true;
-        } else if (itemId == R.id.action_share_game_link) {
-            shareGameLink();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -89,7 +67,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         TextView scoreText = findViewById(R.id.stored_game_score);
         ImageView kindItem = findViewById(R.id.game_kind_item);
         ImageView genderItem = findViewById(R.id.game_gender_item);
-        ImageView indexedItem = findViewById(R.id.game_indexed_item);
         TextView leagueText = findViewById(R.id.stored_game_league);
 
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
@@ -115,17 +92,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
             default -> UiUtils.colorChipIcon(this, R.color.colorIndoorLight, R.drawable.ic_6x6_small, kindItem);
         }
 
-        if (PrefUtils.canSync(this)) {
-            if (mStoredGame.isIndexed()) {
-                UiUtils.colorChipIcon(this, R.color.colorWebPublicLight, R.drawable.ic_public, indexedItem);
-            } else {
-                UiUtils.colorChipIcon(this, R.color.colorWebPrivateLight, R.drawable.ic_private, indexedItem);
-            }
-            indexedItem.setVisibility(View.VISIBLE);
-        } else {
-            indexedItem.setVisibility(View.GONE);
-        }
-
         if (mStoredGame.getLeague() != null && !mStoredGame.getLeague().getName().isEmpty()) {
             leagueText.setText(String.format(Locale.getDefault(), "%s / %s", mStoredGame.getLeague().getName(),
                                              mStoredGame.getLeague().getDivision()));
@@ -146,28 +112,6 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         UiUtils.animateForward(this);
     }
 
-    private void toggleGameIndexed() {
-        Log.i(Tags.STORED_GAMES, "Toggle game indexed");
-        if (PrefUtils.canSync(this)) {
-            mStoredGamesService.toggleGameIndexed(mGameId, new DataSynchronizationListener() {
-                @Override
-                public void onSynchronizationSucceeded() {
-                    runOnUiThread(() -> {
-                        updateGame();
-                        invalidateOptionsMenu();
-                    });
-                }
-
-                @Override
-                public void onSynchronizationFailed() {
-                    runOnUiThread(() -> UiUtils
-                            .makeErrorText(StoredGameActivity.this, getString(R.string.sync_failed_message), Toast.LENGTH_LONG)
-                            .show());
-                }
-            });
-        }
-    }
-
     private void deleteGame() {
         Log.i(Tags.STORED_GAMES, "Delete game");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
@@ -181,10 +125,5 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.no, (dialog, which) -> {});
         AlertDialog alertDialog = builder.show();
         UiUtils.setAlertDialogMessageSize(alertDialog, getResources());
-    }
-
-    private void shareGameLink() {
-        Log.i(Tags.STORED_GAMES, "Share game link");
-        UiUtils.shareGameLink(this, mStoredGamesService.getGame(mGameId));
     }
 }

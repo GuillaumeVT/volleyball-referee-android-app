@@ -67,7 +67,7 @@ public class StoredGamesIOTest {
     private StoredGame someStoredGame1() {
         StoredGame game = new StoredGame();
         game.setId(UUID.randomUUID().toString());
-        game.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        game.setCreatedBy(null);
         game.setCreatedAt(1234L);
         game.setUpdatedAt(651234L);
         game.setScheduledAt(65432L);
@@ -77,7 +77,7 @@ public class StoredGamesIOTest {
         game.setLeague(new ApiSelectedLeague());
         game.getLeague().setName("VBR League");
         game.getLeague().setDivision("VBR Division");
-        game.setRefereedBy(ApiUserSummary.VBR_USER_ID);
+        game.setRefereedBy(null);
         game.setRefereeName("VBR");
         game.setMatchStatus(GameStatus.LIVE);
         game.setSets(TeamType.HOME, 0);
@@ -86,7 +86,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team1 = game.getTeam(TeamType.HOME);
         team1.setId(UUID.randomUUID().toString());
-        team1.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        team1.setCreatedBy(null);
         team1.setCreatedAt(4869434L);
         team1.setUpdatedAt(1869694L);
         team1.setName("Team 1");
@@ -100,7 +100,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team2 = game.getTeam(TeamType.GUEST);
         team2.setId(UUID.randomUUID().toString());
-        team2.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        team2.setCreatedBy(null);
         team2.setCreatedAt(58594L);
         team2.setUpdatedAt(9578594L);
         team2.setName("Team 2");
@@ -168,7 +168,7 @@ public class StoredGamesIOTest {
     private StoredGame someStoredGame2() {
         StoredGame game = new StoredGame();
         game.setId(UUID.randomUUID().toString());
-        game.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        game.setCreatedBy(null);
         game.setCreatedAt(646516L);
         game.setUpdatedAt(58473L);
         game.setScheduledAt(764578L);
@@ -178,7 +178,7 @@ public class StoredGamesIOTest {
         game.setLeague(new ApiSelectedLeague());
         game.getLeague().setName("VBR Beach League");
         game.getLeague().setDivision("VBR Beach Division");
-        game.setRefereedBy(ApiUserSummary.VBR_USER_ID);
+        game.setRefereedBy(null);
         game.setRefereeName("VBR");
         game.setMatchStatus(GameStatus.SCHEDULED);
         game.setSets(TeamType.HOME, 1);
@@ -187,7 +187,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team1 = game.getTeam(TeamType.HOME);
         team1.setId(UUID.randomUUID().toString());
-        team1.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        team1.setCreatedBy(null);
         team1.setCreatedAt(5386831L);
         team1.setUpdatedAt(7069493L);
         team1.setName("Player A / Player B");
@@ -197,7 +197,7 @@ public class StoredGamesIOTest {
 
         ApiTeam team2 = game.getTeam(TeamType.GUEST);
         team2.setId(UUID.randomUUID().toString());
-        team2.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        team2.setCreatedBy(null);
         team2.setCreatedAt(794302L);
         team2.setUpdatedAt(149593L);
         team2.setName("Player C / Player D");

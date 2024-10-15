@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee.ui.game;
 
 import android.app.*;
-import android.content.*;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -44,8 +44,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
                 .cloneInContext(new ContextThemeWrapper(inflater.getContext(), R.style.AppTheme_Dialog))
                 .inflate(R.layout.game_action_menu, container, false);
 
-        Context context = inflater.getContext();
-
         mActivity = requireActivity();
 
         if (mGame != null && mStoredGamesService != null) {
@@ -53,8 +51,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
             final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
             TextView navigateHomeText = view.findViewById(R.id.action_navigate_home);
-            SwitchCompat indexGameText = view.findViewById(R.id.action_index_game);
-            TextView shareGameLinkText = view.findViewById(R.id.action_share_game_link);
             TextView tossCoinText = view.findViewById(R.id.action_toss_coin);
             TextView resetSetText = view.findViewById(R.id.action_reset_set);
             SwitchCompat keepScreenOnSwitch = view.findViewById(R.id.keep_screen_on);
@@ -64,21 +60,11 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
 
             if (mGame.isMatchCompleted()) {
                 tossCoinText.setVisibility(View.GONE);
-                indexGameText.setVisibility(View.GONE);
                 resetSetText.setVisibility(View.GONE);
                 keepScreenOnSwitch.setVisibility(View.GONE);
             }
 
-            if (PrefUtils.canSync(context)) {
-                indexGameText.setChecked(mGame.isIndexed());
-            } else {
-                indexGameText.setVisibility(View.GONE);
-                shareGameLinkText.setVisibility(View.GONE);
-            }
-
             navigateHomeText.setOnClickListener(textView -> UiUtils.navigateToMainWithDialog(mActivity, mGame));
-            indexGameText.setOnCheckedChangeListener((button, isChecked) -> toggleIndexed());
-            shareGameLinkText.setOnClickListener(textView -> shareLink());
             tossCoinText.setOnClickListener(textView -> tossACoin());
             resetSetText.setOnClickListener(textView -> resetCurrentSetWithDialog());
             keepScreenOnSwitch.setOnCheckedChangeListener((button, isChecked) -> {
@@ -115,18 +101,6 @@ public class GameActionMenu extends BottomSheetDialogFragment implements GameSer
             BottomSheetBehavior.from(bottomSheet).setHideable(true);
         });
         return bottomSheetDialog;
-    }
-
-    private void toggleIndexed() {
-        Log.i(Tags.GAME_UI, "Toggle indexed");
-        mGame.setIndexed(!mGame.isIndexed());
-    }
-
-    private void shareLink() {
-        Log.i(Tags.GAME_UI, "Share game link");
-        UiUtils.shareGameLink(mActivity,
-                              mGame.isMatchCompleted() ? mStoredGamesService.getGame(mGame.getId()) : mStoredGamesService.getCurrentGame());
-        dismiss();
     }
 
     private void tossACoin() {

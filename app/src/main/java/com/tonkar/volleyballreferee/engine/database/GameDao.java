@@ -10,14 +10,11 @@ import java.util.*;
 @Dao
 public interface GameDao {
 
-    @Query("SELECT id, createdBy, createdAt, updatedAt, synced, scheduledAt, kind, gender, usage, public, leagueName, divisionName, homeTeamName, guestTeamName, homeSets, guestSets, score FROM games ORDER BY scheduledAt DESC")
+    @Query("SELECT id, createdBy, createdAt, updatedAt, synced, scheduledAt, kind, gender, usage, leagueName, divisionName, homeTeamName, guestTeamName, homeSets, guestSets, score FROM games ORDER BY scheduledAt DESC")
     List<ApiGameSummary> listGames();
 
     @Query("SELECT content FROM games WHERE id = :id")
     String findContentById(String id);
-
-    @Query("SELECT public FROM games WHERE id = :id")
-    boolean isGameIndexed(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(GameEntity gameEntity);

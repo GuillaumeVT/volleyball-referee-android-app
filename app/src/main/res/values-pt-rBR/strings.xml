@@ -7,7 +7,6 @@
     <string name="no">Não</string>
     <string name="resume">Continuar</string>
     <string name="delete">Deletar</string>
-    <string name="ignore">Ignorar</string>
     <string name="accept">Aceitar</string>
     <string name="reject">Recusar</string>
     <string name="remove">Remover</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Vôlei de praia</string>
     <string name="snow_volleyball_game">Vôlei de neve</string>
     <string name="score_based_game">Placar</string>
-    <string name="time_based_game">Partida por tempo</string>
     <string name="resume_game_title">Continuar partida</string>
     <string name="resume_game_error">Não foi possível continuar a partida.</string>
     <string name="my_data_group">Meus dados</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Amigos</string>
     <string name="live_games_vbr_com">Jogos ao vivo no site</string>
     <string name="my_account">Minha Conta</string>
-    <string name="privacy_policy">Política de privacidade</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Entrar</string>
-    <string name="user_sign_up">Inscrever-se</string>
     <string name="user_password_update">Mudar minha senha</string>
-    <string name="user_lost_password">Esqueci minha senha</string>
     <string name="user_sign_out">Sair</string>
-    <string name="user_sign_in_why_title">Por que eu tenho que logar?</string>
-    <string name="user_sign_in_why_message">Seus dados no Volleyball Referee (jogos, equipes, regras, ligas, amigos) serão sincronizados com o nosso servidor. Fazendo login, nós saberemos quem você é e iremos manter seus dados associados com a sua conta.</string>
     <string name="user_pseudo_hint">Nome de Usuário</string>
-    <string name="user_email_hint">E-mail</string>
-    <string name="user_confirm_email_hint">Confirmar e-mail</string>
-    <string name="user_email_not_matching">E-mails não conferem</string>
     <string name="user_current_password_hint">Senha Atual</string>
     <string name="user_password_hint">Senha</string>
-    <string name="user_confirm_password_hint">Confirmar Senha</string>
     <string name="user_new_password_hint">Nova Senha</string>
     <string name="user_confirm_new_password_hint">Confirmar Nova Senha</string>
     <string name="user_password_not_matching">Senhas não conferem</string>
     <string name="user_password_error">Senha incoreta</string>
     <string name="user_locked_error">A Conta está bloqueada por 30 minutos após muitas tentativas sem sucesso de entrar</string>
-    <string name="user_email_pseudo_conflict">Esse nome de usuário ou este e-mail já existem</string>
     <string name="user_request_error">Erro ao processar o pedido</string>
     <string name="user_signed_in_as_pseudo">Logado como %s</string>
-    <string name="user_password_recovery_initiated">Um link de recuperação de senha foi enviado para %s</string>
     <string name="password_strength">A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial</string>
     <string name="password_strength_error">A senha não atende aos critérios mencionados acima</string>
     <string name="user_signed_out">Você saiu</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Selecionar líberos (opcional)</string>
     <string name="select_gender">Selecionar o naipe</string>
     <string name="input_player_names">Incluir nome dos atletas (opcional)</string>
-    <string name="confirm">Confirmar</string>
     <string name="confirm_game_setup_question">Você confirma essa seleção?</string>
     <string name="gender_description">Gênero</string>
     <string name="league_name">Nome da Competição</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Retornar ao Início</string>
     <string name="reset_set">Reiniciar set atual</string>
     <string name="reset_set_question">O set atual será reiniciando e todoas as ações serão perdidas. Confirmar?</string>
-    <string name="share">Compartilhar</string>
-    <string name="share_exception">Falha ao compartilhar partida</string>
     <string name="navigate_home_question">Deseja continuar a partida atual depois?</string>
     <string name="select_player_title">Escolha um jogador do banco</string>
     <string name="court_position_tab">Posições</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Você confirma essa escalação inicial para %s no set?</string>
     <string name="no_substitution_message">Não há substituição disponível</string>
     <string name="confirm_set_question">Você confirma esse ponto?</string>
-    <string name="index_game">Alternar partida pública / partida privada</string>
-    <string name="public_game_message">A partida agora é pública</string>
-    <string name="private_game_message">A partida agora é privada</string>
     <string name="all_timeouts_called">%s não possui mais tempos no set</string>
     <string name="all_substitutions_used">%s não possui mais substituições no set</string>
     <string name="one_remaining_substitution">%s possui apenas mais uma substituição</string>

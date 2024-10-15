@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/user_sync_progress_layout"
+<androidx.fragment.app.FragmentContainerView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/user_container_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/user_container_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/default_margin_size" />
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_margin_size" />

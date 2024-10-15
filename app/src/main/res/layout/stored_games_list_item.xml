@@ -42,14 +42,6 @@
                     app:srcCompat="@drawable/ic_mixed"
                     app:tint="@color/colorOnLightSurface" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/game_indexed_item"
-                    style="@style/AppTheme.IconChip"
-                    android:layout_marginEnd="@dimen/default_margin_size"
-                    android:backgroundTint="@color/colorWebPublicLight"
-                    app:srcCompat="@drawable/ic_public"
-                    app:tint="@color/colorOnLightSurface" />
-
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/stored_game_date"
                     android:layout_width="0dp"

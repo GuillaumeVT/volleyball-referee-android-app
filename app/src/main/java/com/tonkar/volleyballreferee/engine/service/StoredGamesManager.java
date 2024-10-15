@@ -19,6 +19,8 @@ import com.tonkar.volleyballreferee.engine.game.timeout.TimeoutListener;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -26,8 +28,7 @@ import java.util.*;
 
 import okhttp3.*;
 
-public class StoredGamesManager
-        implements StoredGamesService, GeneralListener, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
+public class StoredGamesManager implements StoredGamesService, ScoreListener, TeamListener, TimeoutListener, SanctionListener {
 
     private final Context       mContext;
     private final VbrRepository mRepository;
@@ -57,7 +58,6 @@ public class StoredGamesManager
 
         mGame = game;
 
-        mGame.addGeneralListener(this);
         mGame.addScoreListener(this);
         mGame.addTeamListener(this);
         mGame.addTimeoutListener(this);
@@ -76,7 +76,6 @@ public class StoredGamesManager
             saveCurrentGame();
         }
 
-        mGame.removeGeneralListener(this);
         mGame.removeScoreListener(this);
         mGame.removeTeamListener(this);
         mGame.removeTimeoutListener(this);
@@ -164,24 +163,6 @@ public class StoredGamesManager
     @Override
     public void deleteSetupGame() {
         mRepository.deleteSetupGame();
-    }
-
-    @Override
-    public boolean isGameIndexed(String id) {
-        return mRepository.isGameIndexed(id);
-    }
-
-    @Override
-    public void toggleGameIndexed(String id, DataSynchronizationListener listener) {
-        IStoredGame storedGame = getGame(id);
-
-        if (storedGame == null) {
-            listener.onSynchronizationFailed();
-        } else {
-            storedGame.setIndexed(!storedGame.isIndexed());
-            setIndexedOnServer(storedGame, listener);
-            mRepository.insertGame((StoredGame) storedGame, false, true);
-        }
     }
 
     @Override
@@ -289,7 +270,6 @@ public class StoredGamesManager
         mStoredGame.setGender(mGame.getGender());
         mStoredGame.setUsage(mGame.getUsage());
         mStoredGame.setStatus(mGame.getMatchStatus());
-        mStoredGame.setIndexed(mGame.isIndexed());
         if (mGame.getLeague() != null && mGame.getKind().equals(mGame.getLeague().getKind()) && mGame
                 .getLeague()
                 .getName()
@@ -352,7 +332,6 @@ public class StoredGamesManager
         if (mStoredGame != null) {
             mStoredGame.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
             mStoredGame.setMatchStatus(mGame.isMatchCompleted() ? GameStatus.COMPLETED : GameStatus.LIVE);
-            mStoredGame.setIndexed(mGame.isIndexed());
             mStoredGame.setSets(TeamType.HOME, mGame.getSets(TeamType.HOME));
             mStoredGame.setSets(TeamType.GUEST, mGame.getSets(TeamType.GUEST));
             mStoredGame.setScore(mGame.getScore());
@@ -476,7 +455,7 @@ public class StoredGamesManager
     @Override
     public void downloadGame(final String id, final AsyncGameRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().getGame(id, mContext, new Callback() {
+            VbrApi.getInstance(mContext).getGame(id, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -504,7 +483,7 @@ public class StoredGamesManager
     @Override
     public void downloadAvailableGames(final AsyncGameRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().getAvailableGames(mContext, new Callback() {
+            VbrApi.getInstance(mContext).getAvailableGames(mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -534,7 +513,7 @@ public class StoredGamesManager
     @Override
     public void scheduleGame(ApiGameSummary gameDescription, final boolean create, final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().scheduleGame(gameDescription, create, mContext, new Callback() {
+            VbrApi.getInstance(mContext).scheduleGame(gameDescription, create, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -564,7 +543,7 @@ public class StoredGamesManager
     @Override
     public void cancelGame(String id, DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().deleteGame(id, mContext, new Callback() {
+            VbrApi.getInstance(mContext).deleteGame(id, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -588,7 +567,7 @@ public class StoredGamesManager
 
     private void deleteGameOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().deleteGame(id, mContext, new Callback() {
+            VbrApi.getInstance(mContext).deleteGame(id, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -604,22 +583,13 @@ public class StoredGamesManager
         }
     }
 
-    @Override
-    public void onMatchIndexed(boolean indexed) {
-        saveCurrentGame();
-
-        if (PrefUtils.canSync(mContext)) {
-            pushCurrentGameToServer();
-        }
-    }
-
     private void pushGameToServer(final IStoredGame storedGame) {
         if (PrefUtils.canSync(mContext) && storedGame != null && !storedGame
                 .getTeamId(TeamType.HOME)
                 .equals(storedGame.getTeamId(TeamType.GUEST))) {
             ApiGame game = (ApiGame) storedGame;
 
-            VbrApi.getInstance().updateGame(game, mContext, new Callback() {
+            VbrApi.getInstance(mContext).updateGame(game, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -632,7 +602,7 @@ public class StoredGamesManager
                             mRepository.insertGame(game, true, false);
                         }
                     } else if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                        VbrApi.getInstance().createGame(game, mContext, new Callback() {
+                        VbrApi.getInstance(mContext).createGame(game, mContext, new Callback() {
                             @Override
                             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                                 call.cancel();
@@ -667,7 +637,7 @@ public class StoredGamesManager
                 .getHomeTeam()
                 .getId()
                 .equals(mStoredGame.getGuestTeam().getId())) {
-            VbrApi.getInstance().updateSet(mStoredGame, mContext, new Callback() {
+            VbrApi.getInstance(mContext).updateSet(mStoredGame, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -681,33 +651,6 @@ public class StoredGamesManager
                     }
                 }
             });
-        }
-    }
-
-    private void setIndexedOnServer(IStoredGame storedGame, DataSynchronizationListener listener) {
-        if (PrefUtils.canSync(mContext) && storedGame != null) {
-            VbrApi.getInstance().indexGame(storedGame, mContext, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    call.cancel();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) {
-                    if (response.code() == HttpURLConnection.HTTP_OK) {
-                        listener.onSynchronizationSucceeded();
-                    } else if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while indexing game", response.code()));
-                        pushCurrentGameToServer();
-                        listener.onSynchronizationSucceeded();
-                    } else {
-                        Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while indexing game", response.code()));
-                        listener.onSynchronizationFailed();
-                    }
-                }
-            });
-        } else {
-            listener.onSynchronizationFailed();
         }
     }
 
@@ -728,7 +671,7 @@ public class StoredGamesManager
     }
 
     private void syncGames(List<ApiGameSummary> remoteGameList, int page, int size, DataSynchronizationListener listener) {
-        VbrApi.getInstance().getCompletedGames(page, size, mContext, new Callback() {
+        VbrApi.getInstance(mContext).getCompletedGames(page, size, mContext, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 call.cancel();
@@ -768,7 +711,7 @@ public class StoredGamesManager
 
         // User purchased web services, write his user id
         for (ApiGameSummary localGame : localGameList) {
-            if (localGame.getCreatedBy().equals(ApiUserSummary.VBR_USER_ID)) {
+            if (StringUtils.isBlank(localGame.getCreatedBy())) {
                 StoredGame game = (StoredGame) getGame(localGame.getId());
                 game.setCreatedBy(user.getId());
                 game.setRefereedBy(user.getId());
@@ -836,7 +779,7 @@ public class StoredGamesManager
             }
         } else {
             ApiGameSummary remoteGame = remoteGames.poll();
-            VbrApi.getInstance().getGame(remoteGame.getId(), mContext, new Callback() {
+            VbrApi.getInstance(mContext).getGame(remoteGame.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();

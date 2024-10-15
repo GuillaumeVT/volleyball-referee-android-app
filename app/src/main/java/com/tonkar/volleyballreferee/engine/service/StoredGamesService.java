@@ -45,10 +45,6 @@ public interface StoredGamesService {
 
     void syncGames(DataSynchronizationListener listener);
 
-    boolean isGameIndexed(String id);
-
-    void toggleGameIndexed(String id, DataSynchronizationListener listener);
-
     void downloadGame(String id, AsyncGameRequestListener listener);
 
     void downloadAvailableGames(AsyncGameRequestListener listener);

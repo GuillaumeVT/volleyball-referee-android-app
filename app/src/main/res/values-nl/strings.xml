@@ -7,7 +7,6 @@
     <string name="no">Neen</string>
     <string name="resume">Hervat</string>
     <string name="delete">Verwijder</string>
-    <string name="ignore">Negeren</string>
     <string name="accept">Aanvaarden</string>
     <string name="reject">Afwijzen</string>
     <string name="remove">Verwijderen</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Beachvolleybal</string>
     <string name="snow_volleyball_game">Sneeuwvolleybal</string>
     <string name="score_based_game">Scorebord</string>
-    <string name="time_based_game">Tijdgebaseerd</string>
     <string name="resume_game_title">Spel hervatten</string>
     <string name="resume_game_error">De wedstrijd kon niet worden hervat.</string>
     <string name="my_data_group">Mijn data</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Collega scheidsrechters</string>
     <string name="live_games_vbr_com">Live wedstrijden op de website</string>
     <string name="my_account">Mijn account</string>
-    <string name="privacy_policy">Privacybeleid</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Aanmelden</string>
-    <string name="user_sign_up">Registreren</string>
     <string name="user_password_update">Update mijn wachtwoord</string>
-    <string name="user_lost_password">Wachtwoord vergeten</string>
     <string name="user_sign_out">Uitloggen</string>
-    <string name="user_sign_in_why_title">Waarom moet ik me aanmelden?</string>
-    <string name="user_sign_in_why_message">Je volleybalgegevens (wedstrijden, ploegen, regels, competities, collega\'s) worden gesynchroniseerd met onze server. Door u aan te melden, weten we wie u bent en houden we uw gegevens aan uw account gekoppeld.</string>
     <string name="user_pseudo_hint">Scheidsrechter pseudoniem</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Bevestig email</string>
-    <string name="user_email_not_matching">E-mailadressen komen niet overeen</string>
     <string name="user_current_password_hint">Huidig wachtwoord</string>
     <string name="user_password_hint">Wachtwoord</string>
-    <string name="user_confirm_password_hint">Bevestig wachtwoord</string>
     <string name="user_new_password_hint">Nieuw wachtwoord</string>
     <string name="user_confirm_new_password_hint">Bevestig nieuw wachtwoord</string>
     <string name="user_password_not_matching">Wachtwoorden komen niet overeen</string>
     <string name="user_password_error">Verkeerd wachtwoord</string>
     <string name="user_locked_error">Account is 30 minuten vergrendeld na te veel mislukte pogingen om in te loggen</string>
-    <string name="user_email_pseudo_conflict">Dit scheidsrechter pseudoniem of deze e-mail bestaat al</string>
     <string name="user_request_error">Fout tijdens het verwerken van het verzoek</string>
     <string name="user_signed_in_as_pseudo">Aangemeld als %s</string>
-    <string name="user_password_recovery_initiated">Een herstellink is per e-mail verzonden naar %s</string>
     <string name="password_strength">Het wachtwoord moet minimaal 8 tekens bevatten, waaronder 1 hoofdletter, 1 cijfer en 1 speciaal teken</string>
     <string name="password_strength_error">Wachtwoord voldoet niet aan de bovengenoemde criteria</string>
     <string name="user_signed_out">Afgemeld</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Selecteer de liberos (optioneel)</string>
     <string name="select_gender">Selecteer het geslacht</string>
     <string name="input_player_names">Voer de spelersnamen in (optioneel)</string>
-    <string name="confirm">Bevestig</string>
     <string name="confirm_game_setup_question">Bevestig je deze opstelling?</string>
     <string name="gender_description">Geslacht</string>
     <string name="league_name">Naam competitie / toernooi</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Terug naar de startpagina</string>
     <string name="reset_set">Reset huidige set</string>
     <string name="reset_set_question">De huidige set wordt opnieuw gestart en alle acties gaan verloren. Reset?</string>
-    <string name="share">Delen</string>
-    <string name="share_exception">Kan de wedstrijd niet delen</string>
     <string name="navigate_home_question">Je kan de huidige wedstrijd later hervatten. Weggaan?</string>
     <string name="select_player_title">Selecteer een speler vanop de bank</string>
     <string name="court_position_tab">Posities</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Bevestig je deze beginopstelling voor %s in deze set?</string>
     <string name="no_substitution_message">Geen vervanging beschikbaar</string>
     <string name="confirm_set_question">Bevestig je dit punt?</string>
-    <string name="index_game">Wissel tussen publieke/privé wedstrijd</string>
-    <string name="public_game_message">De wedstrijd is nu publiek</string>
-    <string name="private_game_message">De wedstrijd is nu privé</string>
     <string name="all_timeouts_called">%s heeft geen beschikbare time-out meer</string>
     <string name="all_substitutions_used">%s heeft geen vervaningen meer</string>
     <string name="one_remaining_substitution">%s heeft 1 resterende vervanging</string>

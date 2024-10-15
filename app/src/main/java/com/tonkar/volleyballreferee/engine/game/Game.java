@@ -41,8 +41,6 @@ public abstract class Game extends BaseGame {
     private       UsageType                                              mUsage;
     @SerializedName("status")
     private       GameStatus                                             mGameStatus;
-    @SerializedName("indexed")
-    private       boolean                                                mIndexed;
     @SerializedName("rules")
     private final Rules                                                  mRules;
     @SerializedName("league")
@@ -76,7 +74,6 @@ public abstract class Game extends BaseGame {
 
     private transient boolean mEnableNotifications;
 
-    private transient Set<GeneralListener>  mGeneralListeners;
     private transient Set<ScoreListener>    mScoreListeners;
     private transient Set<TimeoutListener>  mTimeoutListeners;
     private transient Set<TeamListener>     mTeamListeners;
@@ -96,7 +93,6 @@ public abstract class Game extends BaseGame {
         mGameStatus = GameStatus.SCHEDULED;
         mUsage = UsageType.NORMAL;
         mRules = rules;
-        mIndexed = true;
         mLeague = new ApiSelectedLeague();
         mLeague.setId(UUID.randomUUID().toString());
         mLeague.setCreatedBy(createdBy);
@@ -128,16 +124,6 @@ public abstract class Game extends BaseGame {
     protected abstract com.tonkar.volleyballreferee.engine.game.set.Set createSet(Rules rules,
                                                                                   int pointsToWinSet,
                                                                                   TeamType servingTeamAtStart);
-
-    @Override
-    public void addGeneralListener(GeneralListener listener) {
-        mGeneralListeners.add(listener);
-    }
-
-    @Override
-    public void removeGeneralListener(GeneralListener listener) {
-        mGeneralListeners.remove(listener);
-    }
 
     @Override
     public void addScoreListener(final ScoreListener listener) {
@@ -645,20 +631,6 @@ public abstract class Game extends BaseGame {
 
     TeamDefinition getTeamDefinition(final TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? mHomeTeam : mGuestTeam;
-    }
-
-    @Override
-    public boolean isIndexed() {
-        return mIndexed;
-    }
-
-    @Override
-    public void setIndexed(boolean indexed) {
-        mIndexed = indexed;
-
-        for (GeneralListener listener : mGeneralListeners) {
-            listener.onMatchIndexed(indexed);
-        }
     }
 
     @Override
@@ -1214,7 +1186,6 @@ public abstract class Game extends BaseGame {
 
     private void initTransientFields() {
         mEnableNotifications = true;
-        mGeneralListeners = new HashSet<>();
         mScoreListeners = new HashSet<>();
         mTimeoutListeners = new HashSet<>();
         mTeamListeners = new HashSet<>();

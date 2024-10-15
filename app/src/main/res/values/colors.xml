@@ -46,10 +46,6 @@
     <color name="colorIndoor4x4Light">#dbc0f5</color>
     <color name="colorSnow">#2980b9</color>
     <color name="colorSnowLight">#e7f2fa</color>
-    <color name="colorWebPublic">#2980b9</color>
-    <color name="colorWebPublicLight">#e7f2fa</color>
-    <color name="colorWebPrivate">#ffcc0000</color>
-    <color name="colorWebPrivateLight">#faa</color>
     <color name="colorMixed">#006032</color>
     <color name="colorMixedLight">#c8ffe4</color>
     <color name="colorLadies">#c2185b</color>

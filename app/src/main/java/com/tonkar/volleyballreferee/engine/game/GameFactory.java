@@ -64,7 +64,6 @@ public class GameFactory {
                 IndoorGame indoorGame = createIndoorGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
                                                          storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
                 indoorGame.setUsage(storedGame.getUsage());
-                indoorGame.setIndexed(storedGame.isIndexed());
                 indoorGame.getLeague().setAll(storedGame.getLeague());
                 indoorGame.restoreTeams(storedGame);
                 game = indoorGame;
@@ -72,7 +71,6 @@ public class GameFactory {
             case BEACH -> {
                 BeachGame beachGame = createBeachGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
                                                       storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
-                beachGame.setIndexed(storedGame.isIndexed());
                 beachGame.getLeague().setAll(storedGame.getLeague());
                 beachGame.restoreTeams(storedGame);
                 game = beachGame;
@@ -82,7 +80,6 @@ public class GameFactory {
                                                                   storedGame.getRefereeName(), storedGame.getCreatedAt(),
                                                                   storedGame.getScheduledAt(), storedGame.getRules());
                 indoor4x4Game.setUsage(storedGame.getUsage());
-                indoor4x4Game.setIndexed(storedGame.isIndexed());
                 indoor4x4Game.getLeague().setAll(storedGame.getLeague());
                 indoor4x4Game.restoreTeams(storedGame);
                 game = indoor4x4Game;
@@ -90,7 +87,6 @@ public class GameFactory {
             case SNOW -> {
                 SnowGame snowGame = createSnowGame(storedGame.getId(), storedGame.getCreatedBy(), storedGame.getRefereeName(),
                                                    storedGame.getCreatedAt(), storedGame.getScheduledAt(), storedGame.getRules());
-                snowGame.setIndexed(storedGame.isIndexed());
                 snowGame.getLeague().setAll(storedGame.getLeague());
                 snowGame.restoreTeams(storedGame);
                 game = snowGame;

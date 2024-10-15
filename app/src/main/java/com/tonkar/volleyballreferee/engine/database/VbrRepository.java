@@ -251,10 +251,6 @@ public class VbrRepository {
         return JsonConverters.GSON.fromJson(json, StoredGame.class);
     }
 
-    public boolean isGameIndexed(String id) {
-        return mGameDao.isGameIndexed(id);
-    }
-
     public void insertGame(final ApiGame game, boolean synced, boolean syncInsertion) {
         Runnable runnable = () -> {
             game.setScore(game.buildScore());
@@ -273,7 +269,6 @@ public class VbrRepository {
             gameEntity.setGender(game.getGender());
             gameEntity.setUsage(game.getUsage());
             gameEntity.setSynced(synced);
-            gameEntity.setIndexed(game.isIndexed());
             if (game.getLeague() == null) {
                 gameEntity.setLeagueName("");
                 gameEntity.setDivisionName("");

@@ -16,7 +16,6 @@ public class ApiRulesSummary {
     @ColumnInfo(name = "id")
     @SerializedName("id")
     private String   id;
-    @NonNull
     @ColumnInfo(name = "createdBy")
     @SerializedName("createdBy")
     private String   createdBy;
@@ -40,7 +39,7 @@ public class ApiRulesSummary {
 
     public ApiRulesSummary() {
         id = "";
-        createdBy = ApiUserSummary.VBR_USER_ID;
+        createdBy = null;
         createdAt = 0L;
         updatedAt = 0L;
         synced = false;

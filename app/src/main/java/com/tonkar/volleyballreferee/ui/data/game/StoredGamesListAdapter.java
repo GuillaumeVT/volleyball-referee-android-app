@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -26,7 +25,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
         TextView         scoreText;
         ImageView        kindItem;
         ImageView        genderItem;
-        ImageView        indexedItem;
         TextView         leagueText;
     }
 
@@ -35,7 +33,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
     private final List<ApiGameSummary> mFilteredStoredGamesList;
     private final DateFormat           mFormatter;
     private final NamesFilter          mNamesFilter;
-    private final boolean              mIsSyncOn;
 
     StoredGamesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiGameSummary> storedGamesList) {
         super(context, R.layout.stored_games_list_item, storedGamesList);
@@ -46,7 +43,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
         mFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault());
         mFormatter.setTimeZone(TimeZone.getDefault());
         mNamesFilter = new NamesFilter();
-        mIsSyncOn = PrefUtils.canSync(context);
     }
 
     void updateStoredGamesList(List<ApiGameSummary> storedGamesList) {
@@ -86,7 +82,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             viewHolder.scoreText = gameView.findViewById(R.id.stored_game_score);
             viewHolder.kindItem = gameView.findViewById(R.id.game_kind_item);
             viewHolder.genderItem = gameView.findViewById(R.id.game_gender_item);
-            viewHolder.indexedItem = gameView.findViewById(R.id.game_indexed_item);
             viewHolder.leagueText = gameView.findViewById(R.id.stored_game_league);
             gameView.setTag(viewHolder);
         } else {
@@ -119,17 +114,6 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             case BEACH -> UiUtils.colorChipIcon(getContext(), R.color.colorBeachLight, R.drawable.ic_beach, viewHolder.kindItem);
             case SNOW -> UiUtils.colorChipIcon(getContext(), R.color.colorSnowLight, R.drawable.ic_snow, viewHolder.kindItem);
             default -> UiUtils.colorChipIcon(getContext(), R.color.colorIndoorLight, R.drawable.ic_6x6_small, viewHolder.kindItem);
-        }
-
-        if (mIsSyncOn) {
-            if (game.isIndexed()) {
-                UiUtils.colorChipIcon(getContext(), R.color.colorWebPublicLight, R.drawable.ic_public, viewHolder.indexedItem);
-            } else {
-                UiUtils.colorChipIcon(getContext(), R.color.colorWebPrivateLight, R.drawable.ic_private, viewHolder.indexedItem);
-            }
-            viewHolder.indexedItem.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.indexedItem.setVisibility(View.GONE);
         }
 
         if (game.getLeagueName() == null || game.getDivisionName() == null || game.getLeagueName().isEmpty() || game

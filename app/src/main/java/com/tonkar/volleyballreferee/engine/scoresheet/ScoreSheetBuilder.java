@@ -63,7 +63,6 @@ public class ScoreSheetBuilder {
             case BEACH -> createStoredBeachGame();
             case INDOOR_4X4 -> createStoredIndoor4x4Game();
             case SNOW -> createStoredSnowGame();
-            default -> null;
         };
 
         return new ScoreSheet(mFilename, html);

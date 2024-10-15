@@ -36,8 +36,7 @@ import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 import java.util.Locale;
 
-public class GameActivity extends AppCompatActivity
-        implements GeneralListener, ScoreListener, TimeoutListener, TeamListener, SanctionListener {
+public class GameActivity extends AppCompatActivity implements ScoreListener, TimeoutListener, TeamListener, SanctionListener {
 
     private IGame              mGame;
     private StoredGamesService mStoredGamesService;
@@ -103,7 +102,6 @@ public class GameActivity extends AppCompatActivity
         if (mGame == null || mStoredGamesService == null) {
             UiUtils.navigateBackToHome(this);
         } else {
-            mGame.addGeneralListener(this);
             mGame.addScoreListener(this);
             mGame.addTimeoutListener(this);
             mGame.addTeamListener(this);
@@ -201,7 +199,6 @@ public class GameActivity extends AppCompatActivity
         super.onDestroy();
 
         if (mGame != null) {
-            mGame.removeGeneralListener(this);
             mGame.removeScoreListener(this);
             mGame.removeTimeoutListener(this);
             mGame.removeTeamListener(this);
@@ -661,15 +658,6 @@ public class GameActivity extends AppCompatActivity
             if (savedInstanceState == null) {
                 gameNavigation.setSelectedItemId(R.id.ladder_tab);
             }
-        }
-    }
-
-    @Override
-    public void onMatchIndexed(boolean indexed) {
-        if (indexed) {
-            UiUtils.makeText(this, getString(R.string.public_game_message), Toast.LENGTH_LONG).show();
-        } else {
-            UiUtils.makeText(this, getString(R.string.private_game_message), Toast.LENGTH_LONG).show();
         }
     }
 

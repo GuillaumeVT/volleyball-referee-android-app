@@ -32,7 +32,7 @@ public class StoredLeaguesIOTest {
     public void save() {
         ApiSelectedLeague selectedLeague1 = new ApiSelectedLeague();
         selectedLeague1.setId(UUID.randomUUID().toString());
-        selectedLeague1.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        selectedLeague1.setCreatedBy(null);
         selectedLeague1.setCreatedAt(System.currentTimeMillis());
         selectedLeague1.setUpdatedAt(System.currentTimeMillis());
         selectedLeague1.setKind(GameType.INDOOR);
@@ -41,7 +41,7 @@ public class StoredLeaguesIOTest {
 
         ApiSelectedLeague selectedLeague2 = new ApiSelectedLeague();
         selectedLeague2.setId(UUID.randomUUID().toString());
-        selectedLeague2.setCreatedBy(ApiUserSummary.VBR_USER_ID);
+        selectedLeague2.setCreatedBy(null);
         selectedLeague2.setCreatedAt(System.currentTimeMillis());
         selectedLeague2.setUpdatedAt(System.currentTimeMillis());
         selectedLeague2.setKind(GameType.INDOOR);

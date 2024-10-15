@@ -49,28 +49,6 @@
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/user_email_input_layout"
-                    style="@style/AppTheme.TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin_size">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_email_input_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/user_email_hint"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
-                        android:paddingStart="@dimen/default_margin_size"
-                        android:paddingEnd="@dimen/default_margin_size"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/default_text_size" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/user_pseudo_input_layout"
                     style="@style/AppTheme.TextInputLayout"
                     android:layout_width="match_parent"

@@ -7,7 +7,6 @@
     <string name="no">لا</string>
     <string name="resume">إستئناف</string>
     <string name="delete">مسح</string>
-    <string name="ignore">تجاهل</string>
     <string name="accept">قبول</string>
     <string name="reject">رفض</string>
     <string name="remove">إزالة</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">كرة الطائرة الشاطئية</string>
     <string name="snow_volleyball_game">كرة الطائرة الثلجية</string>
     <string name="score_based_game">لوحة النتائج</string>
-    <string name="time_based_game">محدد الوقت</string>
     <string name="resume_game_title">إستئناف المباراة</string>
     <string name="resume_game_error">المباراة لا يمكن إستئنافها.</string>
     <string name="my_data_group">بياناتي</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">الزملاء</string>
     <string name="live_games_vbr_com">المباريات المباشرة في الموقع</string>
     <string name="my_account">حسابي</string>
-    <string name="privacy_policy">سياسة الخصوصية</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">تسجيل الدخول</string>
-    <string name="user_sign_up">تسجيل حساب</string>
     <string name="user_password_update">تحديث كلمة المرور</string>
-    <string name="user_lost_password">فقدان كلمة المرور</string>
     <string name="user_sign_out">تسجيل الخروج</string>
-    <string name="user_sign_in_why_title">لماذا يجب عليك تسجيل الدخول؟</string>
-    <string name="user_sign_in_why_message">ستتم مزامنة بيانات حكم الكرة الطائرة (المباريات ، الفرق ، القواعد ، البطولات ، الزملاء) مع خادمنا. من خلال تسجيل الدخول ، سوف نعرف من أنت و سنحتفظ ببياناتك المرتبطة بحسابك.</string>
     <string name="user_pseudo_hint">إسم الحكم المستعار</string>
-    <string name="user_email_hint">البريد الإلكتروني</string>
-    <string name="user_confirm_email_hint">تأكيد عنوان البريد الإلكتروني</string>
-    <string name="user_email_not_matching">عناوين البريد الإلكتروني غير متطابق</string>
     <string name="user_current_password_hint">كلمة المرور الحالية</string>
     <string name="user_password_hint">كلمة المرور</string>
-    <string name="user_confirm_password_hint">تأكيد كلمة المرور</string>
     <string name="user_new_password_hint">كلمة المرور الجديدة</string>
     <string name="user_confirm_new_password_hint">تأكيد كلمة المرور الجديدة</string>
     <string name="user_password_not_matching">كلمات المرور غير متطابق</string>
     <string name="user_password_error">كلمة المرور خاطئة</string>
     <string name="user_locked_error">الحساب مغلق لمدة 30 دقيقة بعد محاولات فاشلة كثيرة لتسجيل الدخول</string>
-    <string name="user_email_pseudo_conflict">اسم مستعار للحكم أو هذا البريد الإلكتروني موجود بالفعل</string>
     <string name="user_request_error">خطأ أثناء معالجة الطلب</string>
     <string name="user_signed_in_as_pseudo">تسجيل الدخول ك %s</string>
-    <string name="user_password_recovery_initiated">تم إرسال رابط الاسترداد عن طريق البريد الإلكتروني إلى %s</string>
     <string name="password_strength">يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل ، بما في ذلك حرف كبير واحد ورقم واحد وحرف خاص واحد</string>
     <string name="password_strength_error">كلمة المرور لا تفي بالمعايير المذكورة أعلاه</string>
     <string name="user_signed_out">تسجيل الخروج</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">حدد اللاعب الحر (إختياري)</string>
     <string name="select_gender">حدد الجنس</string>
     <string name="input_player_names">أدخل أسماء اللاعبين (إختياري)</string>
-    <string name="confirm">تأكيد</string>
     <string name="confirm_game_setup_question">هل أنت موافق على هذه الإعدادات</string>
     <string name="gender_description">الجنس</string>
     <string name="league_name">اسم الدوري / البطولة</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">العودة إلى الصفحة الرئيسية</string>
     <string name="reset_set">إعادة تعيين الشوط الحالي</string>
     <string name="reset_set_question">سيتم إعادة تشغيل الشوط الحالي وسيتم فقدان كل الإجراءات. إعادة تعيين؟</string>
-    <string name="share">مشاركة</string>
-    <string name="share_exception">فشل في مشاركة المباراة</string>
     <string name="navigate_home_question">يمكنك إستئناف المباراة الحالية في وقت لاحق. مغادرة؟</string>
     <string name="select_player_title">إختر لاعب من البدلاء</string>
     <string name="court_position_tab">المواقع</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">هل تؤكد خط البداية هذا على %s في هذه الشوط؟</string>
     <string name="no_substitution_message">لا يوجد بديل متاح</string>
     <string name="confirm_set_question">هل تؤكد هذه النقطة؟</string>
-    <string name="index_game">تبديل عام/خاص المباراة</string>
-    <string name="public_game_message">المباراة الآن عامة</string>
-    <string name="private_game_message">المباراة الآن خاصة</string>
     <string name="all_timeouts_called">%s ليس لديه المزيد من الوقت المستقطع</string>
     <string name="all_substitutions_used">%s ليس لدبه اي تبديلات متوفرة</string>
     <string name="one_remaining_substitution">%s لديه بديل واحد متبقي</string>

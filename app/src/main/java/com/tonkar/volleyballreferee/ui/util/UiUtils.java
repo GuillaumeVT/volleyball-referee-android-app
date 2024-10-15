@@ -21,11 +21,10 @@ import androidx.core.view.ViewCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.tonkar.volleyballreferee.*;
-import com.tonkar.volleyballreferee.engine.*;
+import com.tonkar.volleyballreferee.R;
+import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
-import com.tonkar.volleyballreferee.engine.service.IStoredGame;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 import com.tonkar.volleyballreferee.ui.MainActivity;
@@ -154,25 +153,6 @@ public class UiUtils {
         imageView.setImageResource(drawable);
         imageView.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
         imageView.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorOnLightSurface)));
-    }
-
-    public static void shareGameLink(Context context, IStoredGame storedGame) {
-        if (PrefUtils.canSync(context)) {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_TEXT,
-                            storedGame.getGameSummary() + "\n" + String.format("%s/view/game/%s", BuildConfig.SERVER_ADDRESS,
-                                                                               storedGame.getId()));
-            intent.setType("text/plain");
-
-            try {
-                context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)));
-            } catch (ActivityNotFoundException e) {
-                Log.e(Tags.UTILS_UI, "Exception while sharing stored game", e);
-                UiUtils.makeErrorText(context, context.getString(R.string.share_exception), Toast.LENGTH_LONG).show();
-            }
-
-        }
     }
 
     public static void navigateBackToHome(Activity originActivity) {
@@ -322,7 +302,7 @@ public class UiUtils {
 
     public static String formatScoreFromLocale(int leftScore, int rightScore, boolean withSpace) {
         String format = withSpace ? "%d\t-\t%d" : "%d-%d";
-        if (ViewCompat.LAYOUT_DIRECTION_LTR == TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault())) {
+        if (View.LAYOUT_DIRECTION_LTR == TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault())) {
             return String.format(Locale.getDefault(), format, leftScore, rightScore);
         } else {
             return String.format(Locale.getDefault(), format, rightScore, leftScore);

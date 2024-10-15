@@ -35,8 +35,6 @@ public class ApiGame {
     private UsageType         usage;
     @SerializedName("status")
     private GameStatus        status;
-    @SerializedName("indexed")
-    private boolean           indexed;
     @SerializedName("league")
     private ApiSelectedLeague league;
     @SerializedName("homeTeam")
@@ -70,17 +68,16 @@ public class ApiGame {
 
     public ApiGame() {
         id = UUID.randomUUID().toString();
-        createdBy = ApiUserSummary.VBR_USER_ID;
+        createdBy = null;
         createdAt = 0L;
         updatedAt = 0L;
         scheduledAt = 0L;
-        refereedBy = ApiUserSummary.VBR_USER_ID;
+        refereedBy = null;
         refereeName = "";
         kind = GameType.INDOOR;
         gender = GenderType.MIXED;
         usage = UsageType.NORMAL;
         status = GameStatus.SCHEDULED;
-        indexed = true;
         league = null;
         homeTeam = null;
         guestTeam = null;

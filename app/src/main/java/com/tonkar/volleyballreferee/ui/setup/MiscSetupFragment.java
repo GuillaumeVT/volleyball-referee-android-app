@@ -132,8 +132,8 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    mGame.setRefereedBy(ApiUserSummary.VBR_USER_ID);
-                    mGame.setRefereeName(ApiUserSummary.VBR_PSEUDO);
+                    mGame.setRefereedBy(null);
+                    mGame.setRefereeName(null);
                 }
             });
         } else {

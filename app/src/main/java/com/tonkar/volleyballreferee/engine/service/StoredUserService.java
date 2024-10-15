@@ -6,13 +6,7 @@ import java.util.List;
 
 public interface StoredUserService {
 
-    void getUser(String purchaseToken, AsyncUserRequestListener listener);
-
-    void createUser(ApiNewUser newUser, AsyncUserRequestListener listener);
-
     void signInUser(String email, String password, AsyncUserRequestListener listener);
-
-    void initiateUserPasswordRecovery(String email, AsyncUserRequestListener listener);
 
     void updateUserPassword(ApiUserPasswordUpdate passwordUpdate, AsyncUserRequestListener listener);
 

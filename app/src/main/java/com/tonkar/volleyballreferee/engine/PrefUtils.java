@@ -8,20 +8,42 @@ import androidx.preference.PreferenceManager;
 import com.tonkar.volleyballreferee.engine.api.*;
 import com.tonkar.volleyballreferee.engine.api.model.*;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.net.URL;
 import java.util.*;
 
 public class PrefUtils {
 
     public static final String PREF_KEEP_SCREEN_ON = "pref_keep_screen_on";
     public static final String PREF_NIGHT_MODE     = "pref_night_mode";
+    public static final String PREF_SERVER_URL     = "pref_server_url";
 
-    private static final String PREF_USER                                   = "pref_user";
-    private static final String PREF_USER_TOKEN                             = "pref_user_token";
-    private static final String PREF_USER_TOKEN_EXPIRY                      = "pref_user_token_expiry";
-    private static final String PREF_WEB_PREMIUM_BILLING_TOKEN              = "pref_web_premium_token";
-    private static final String PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN = "pref_web_premium_subscription_token";
+    private static final String PREF_USER              = "pref_user";
+    private static final String PREF_USER_TOKEN        = "pref_user_token";
+    private static final String PREF_USER_TOKEN_EXPIRY = "pref_user_token_expiry";
 
     public static final String PREF_ONBOARDING_MAIN = "pref_onboarding_main";
+
+    public static boolean hasServerUrl(Context context) {
+        String url = getServerUrl(context);
+
+        if (StringUtils.isNotBlank(url)) {
+            try {
+                new URL(url).toURI();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static String getServerUrl(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(PrefUtils.PREF_SERVER_URL, null);
+    }
 
     public static void signIn(Context context, ApiUserToken userToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -33,98 +55,49 @@ public class PrefUtils {
                 .apply();
     }
 
-    public static void storeUser(Context context, ApiUserSummary user) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_USER, JsonConverters.GSON.toJson(user)).apply();
-    }
-
     public static ApiUserSummary getUser(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String userStr = sharedPreferences.getString(PREF_USER, "");
-        if ("".equals(userStr)) {
-            return ApiUserSummary.emptyUser();
-        } else {
+        String userStr = sharedPreferences.getString(PREF_USER, null);
+        if (StringUtils.isNotBlank(userStr)) {
             return JsonConverters.GSON.fromJson(userStr, ApiUserSummary.class);
+        } else {
+            return null;
         }
     }
 
     public static void signOut(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_USER_TOKEN).apply();
+        sharedPreferences.edit().remove(PREF_USER).remove(PREF_USER_TOKEN).remove(PREF_USER_TOKEN_EXPIRY).apply();
     }
 
     public static boolean isSignedIn(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_USER, "")) && !"".equals(
-                sharedPreferences.getString(PREF_USER_TOKEN, "")) && Calendar
+        return StringUtils.isNotBlank(sharedPreferences.getString(PREF_USER, null)) && StringUtils.isNotBlank(
+                sharedPreferences.getString(PREF_USER_TOKEN, null)) && Calendar
                 .getInstance(TimeZone.getTimeZone("UTC"))
                 .getTime()
                 .getTime() < sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
     }
 
     public static ApiUserToken getUserToken(Context context) {
-        ApiUserToken userToken;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String userStr = sharedPreferences.getString(PREF_USER, "");
-        String tokenStr = sharedPreferences.getString(PREF_USER_TOKEN, "");
+        String userStr = sharedPreferences.getString(PREF_USER, null);
+        String tokenStr = sharedPreferences.getString(PREF_USER_TOKEN, null);
         long tokenExpiry = sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
 
-        if (!"".equals(userStr) && !"".equals(tokenStr)) {
+        final ApiUserToken userToken;
+
+        if (StringUtils.isNotBlank(userStr) && StringUtils.isNotBlank(tokenStr)) {
             userToken = new ApiUserToken(JsonConverters.GSON.fromJson(userStr, ApiUserSummary.class), tokenStr, tokenExpiry);
         } else {
-            userToken = new ApiUserToken(ApiUserSummary.emptyUser(), "", 0L);
+            userToken = null;
         }
 
         return userToken;
     }
 
-    public static void purchaseWebPremium(Context context, String purchaseToken) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_WEB_PREMIUM_BILLING_TOKEN, purchaseToken).apply();
-    }
-
-    public static void unpurchaseWebPremium(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_WEB_PREMIUM_BILLING_TOKEN).apply();
-    }
-
-    public static boolean isWebPremiumPurchased(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_WEB_PREMIUM_BILLING_TOKEN, ""));
-    }
-
-    public static void subscribeWebPremium(Context context, String subscriptionToken) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN, subscriptionToken).apply();
-    }
-
-    public static void unsubscribeWebPremium(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().remove(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN).apply();
-    }
-
-    public static boolean isWebPremiumSubscribed(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return !"".equals(sharedPreferences.getString(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN, ""));
-    }
-
-    public static String getWebPremiumBillingToken(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (isWebPremiumSubscribed(context)) {
-            return sharedPreferences.getString(PREF_WEB_PREMIUM_SUBSCRIPTION_BILLING_TOKEN, "");
-        } else {
-            return sharedPreferences.getString(PREF_WEB_PREMIUM_BILLING_TOKEN, "");
-        }
-    }
-
     public static boolean canSync(Context context) {
-        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && isSignedIn(
-                context);
-    }
-
-    public static boolean shouldSignIn(Context context) {
-        return (isWebPremiumPurchased(context) || isWebPremiumSubscribed(context)) && VbrApi.isConnectedToInternet(context) && !isSignedIn(
-                context);
+        return hasServerUrl(context) && VbrApi.isConnectedToInternet(context) && isSignedIn(context);
     }
 
     public static void applyNightMode(Context context) {

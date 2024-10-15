@@ -15,7 +15,8 @@
     <item
         android:id="@+id/user_fragment"
         android:icon="@drawable/ic_account_menu"
-        android:title="@string/my_account" />
+        android:title="@string/my_account"
+        android:visible="false" />
 
     <item
         android:id="@+id/navigation_fragment"

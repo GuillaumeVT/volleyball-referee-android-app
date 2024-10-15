@@ -32,11 +32,7 @@ public class UserAccountFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_user_account, container, false);
 
         ApiUserSummary user = PrefUtils.getUser(getContext());
-        if (!ApiUserSummary.emptyUser().equals(user)) {
-            EditText emailText = fragmentView.findViewById(R.id.user_email_input_text);
-            emailText.setEnabled(false);
-            emailText.setText(user.getEmail());
-
+        if (user != null) {
             EditText pseudoText = fragmentView.findViewById(R.id.user_pseudo_input_text);
             pseudoText.setEnabled(false);
             pseudoText.setText(user.getPseudo());
@@ -86,9 +82,6 @@ public class UserAccountFragment extends Fragment {
             StoredUserService storedUserService = new StoredUserManager(getContext());
             storedUserService.updateUserPassword(new ApiUserPasswordUpdate(currentPassword, newPassword), new AsyncUserRequestListener() {
                 @Override
-                public void onUserReceived(ApiUserSummary user) {}
-
-                @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
                     if (isAdded()) {
                         requireActivity().runOnUiThread(() -> {
@@ -100,9 +93,6 @@ public class UserAccountFragment extends Fragment {
                         });
                     }
                 }
-
-                @Override
-                public void onUserPasswordRecoveryInitiated() {}
 
                 @Override
                 public void onError(int httpCode) {

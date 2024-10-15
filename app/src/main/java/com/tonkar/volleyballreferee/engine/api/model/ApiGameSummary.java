@@ -17,7 +17,6 @@ public class ApiGameSummary {
     @ColumnInfo(name = "id")
     @SerializedName("id")
     private String     id;
-    @NonNull
     @ColumnInfo(name = "createdBy")
     @SerializedName("createdBy")
     private String     createdBy;
@@ -54,9 +53,6 @@ public class ApiGameSummary {
     @Ignore
     @SerializedName("status")
     private GameStatus status;
-    @ColumnInfo(name = "public")
-    @SerializedName("indexed")
-    private boolean    indexed;
     @Ignore
     @SerializedName("leagueId")
     private String     leagueId;
@@ -108,18 +104,17 @@ public class ApiGameSummary {
 
     public ApiGameSummary() {
         id = "";
-        createdBy = ApiUserSummary.VBR_USER_ID;
+        createdBy = null;
         createdAt = 0L;
         updatedAt = 0L;
         scheduledAt = 0L;
         synced = false;
-        refereedBy = ApiUserSummary.VBR_USER_ID;
+        refereedBy = null;
         refereeName = "";
         kind = GameType.INDOOR;
         gender = GenderType.MIXED;
         usage = UsageType.NORMAL;
         status = GameStatus.SCHEDULED;
-        indexed = true;
         leagueId = null;
         leagueName = "";
         divisionName = "";

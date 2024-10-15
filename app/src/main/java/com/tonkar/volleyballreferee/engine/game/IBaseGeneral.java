@@ -39,10 +39,6 @@ public interface IBaseGeneral {
 
     ApiSelectedLeague getLeague();
 
-    boolean isIndexed();
-
-    void setIndexed(boolean indexed);
-
     long getStartTime();
 
     long getEndTime();

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         NavigationBarView navigationView = findViewById(R.id.main_navigation_view);
         navigationView.getMenu().findItem(R.id.scheduled_games_list_fragment).setVisible(PrefUtils.canSync(this));
+        navigationView.getMenu().findItem(R.id.user_fragment).setVisible(PrefUtils.hasServerUrl(this));
     }
 
     private void navigateToFragment(@IdRes int fragmentId) {

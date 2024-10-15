@@ -6,7 +6,6 @@
     <string name="no">Nie</string>
     <string name="resume">Wznów</string>
     <string name="delete">Usuń</string>
-    <string name="ignore">Ignoruj</string>
     <string name="accept">Zaakceptuj</string>
     <string name="reject">Odrzuć</string>
     <string name="remove">Usuń</string>
@@ -22,7 +21,6 @@
     <string name="beach_volleyball_game">Siatkówka plażowa</string>
     <string name="snow_volleyball_game">Siatkówka na śniegu</string>
     <string name="score_based_game">Tablica wyników</string>
-    <string name="time_based_game">Rozpocznij grę na czas</string>
     <string name="resume_game_title">Wznów grę</string>
     <string name="resume_game_error">Gra nie może zostać wznowiona.</string>
     <string name="my_data_group">Moje Dane</string>
@@ -34,33 +32,21 @@
     <string name="colleagues">Znajomi</string>
     <string name="live_games_vbr_com">Mecze na żywo przez stronę www</string>
     <string name="my_account">Moje Konto</string>
-    <string name="privacy_policy">Informacja o polityce prywatności</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
     <string name="user_password_update">Zaktualizuj hasło</string>
-    <string name="user_lost_password">Zagubiłem hasło</string>
     <string name="user_sign_out">Wyloguj się</string>
-    <string name="user_sign_in_why_title">Dlaczego muszę się zalogować?</string>
-    <string name="user_sign_in_why_message">Twoje dane Volleyball Referee (gry, drużyny, zasady, ligi, znajomi) zostaną zsynchronizowane z naszym serwerem. Po zalogowaniu się będziemy wiedzieli, że to ty i będziemy przechowywać Twoje dane powiązane z Twoim kontem.</string>
     <string name="user_pseudo_hint">Pseudonim sędziego</string>
-    <string name="user_email_hint">e-mail</string>
-    <string name="user_confirm_email_hint">Potwierdź e-mail</string>
-    <string name="user_email_not_matching">Adres e-mail nie pasuje</string>
     <string name="user_current_password_hint">Aktualne hasło</string>
     <string name="user_password_hint">Hasło</string>
-    <string name="user_confirm_password_hint">Potwierdź hasło</string>
     <string name="user_new_password_hint">Nowe hasło</string>
     <string name="user_confirm_new_password_hint">Potwierdź nowe hasło</string>
     <string name="user_password_not_matching">Hasło nie pasuje</string>
     <string name="user_password_error">Niewłaściwe hasło</string>
     <string name="user_locked_error">Konto zablokowane na 30 minut ze względu na zbyt wiele nieudanych prób logowania</string>
-    <string name="user_email_pseudo_conflict">Ten pseudonim sędziego lub e-mail już istnieją</string>
     <string name="user_request_error">Błąd podczas próby przetwarzania</string>
     <string name="user_signed_in_as_pseudo">Zalogowany jako %s</string>
-    <string name="user_password_recovery_initiated">Link do odzyskiwania został wysłany na adres e-mail %s</string>
     <string name="password_strength">Hasło musi zawierać co najmniej 8 znaków, w tym 1 wielką literę, 1 cyfrę i 1 znak specjalny</string>
     <string name="password_strength_error">Hasło nie spełnia wyżej wymienionych kryteriów</string>
     <string name="user_signed_out">Wylogowano</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Wybierz libero (opcjonalnie)</string>
     <string name="select_gender">Wybierz płeć</string>
     <string name="input_player_names">Wpisz graczy (opcjonalnie)</string>
-    <string name="confirm">Potwierdź</string>
     <string name="confirm_game_setup_question">Czy potwierdzasz te ustawienia?</string>
     <string name="gender_description">Płeć</string>
     <string name="league_name">Liga / turniej</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Powrót na stronę główną</string>
     <string name="reset_set">Zrestartuj set</string>
     <string name="reset_set_question">Bieżący set zostanie uruchomiony ponownie i wszystkie czynności zostaną utracone. Zresetować?</string>
-    <string name="share">Udostepnij</string>
-    <string name="share_exception">Nie udało się udostępnić meczu</string>
     <string name="navigate_home_question">Możesz wznowić bieżący mecz później, kontynuować?</string>
     <string name="select_player_title">Wybierz zawodnika z ławki</string>
     <string name="court_position_tab">Pozycje</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Czy potwierdzasz ustawienie początkowe %s w tym secie?</string>
     <string name="no_substitution_message">Brak zmiany</string>
     <string name="confirm_set_question">Czy potwierdzasz ten punkt</string>
-    <string name="index_game">Przełącz grę na ogólnodostępną / prywatną</string>
-    <string name="public_game_message">Mecz jest teraz ogólnodostępny</string>
-    <string name="private_game_message">Mecz jest teraz prywatny</string>
     <string name="all_timeouts_called">%s brak dostępnych przerw na żądanie</string>
     <string name="all_substitutions_used">%s brak dostępnych zmian</string>
     <string name="one_remaining_substitution">Pozostała jedna zmiana w zespole %s</string>

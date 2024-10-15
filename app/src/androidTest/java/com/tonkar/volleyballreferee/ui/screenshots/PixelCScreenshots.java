@@ -180,7 +180,10 @@ public class PixelCScreenshots extends Screenshots {
 
             Espresso.onView(ViewMatchers.withId(R.id.add_indoor_rules_button)).perform(ViewActions.click());
 
-            Espresso.onView(ViewMatchers.withId(R.id.rules_name_input_text)).perform(ViewActions.typeText("Test Rules")).perform(ViewActions.closeSoftKeyboard());
+            Espresso
+                    .onView(ViewMatchers.withId(R.id.rules_name_input_text))
+                    .perform(ViewActions.typeText("Test Rules"))
+                    .perform(ViewActions.closeSoftKeyboard());
 
             for (Locale locale : mLocales) {
                 setAppLanguage(locale);
@@ -204,7 +207,11 @@ public class PixelCScreenshots extends Screenshots {
 
             Espresso.onView(ViewMatchers.withId(R.id.action_stored_teams)).perform(ViewActions.click());
 
-            Espresso.onData(Matchers.anything()).inAdapterView(ViewMatchers.withId(R.id.stored_teams_list)).atPosition(0).perform(ViewActions.click());
+            Espresso
+                    .onData(Matchers.anything())
+                    .inAdapterView(ViewMatchers.withId(R.id.stored_teams_list))
+                    .atPosition(0)
+                    .perform(ViewActions.click());
 
             Espresso.onView(ViewMatchers.withId(R.id.edit_team_button)).perform(ViewActions.click());
 

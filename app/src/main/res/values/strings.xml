@@ -13,7 +13,6 @@
     <string name="no">No</string>
     <string name="resume">Resume</string>
     <string name="delete">Delete</string>
-    <string name="ignore">Ignore</string>
     <string name="accept">Accept</string>
     <string name="reject">Discard</string>
     <string name="remove">Remove</string>
@@ -30,7 +29,6 @@
     <string name="beach_volleyball_game">Beach Volleyball</string>
     <string name="snow_volleyball_game">Snow Volleyball</string>
     <string name="score_based_game">Scoreboard</string>
-    <string name="time_based_game">Time-based</string>
     <string name="resume_game_title">Resume match</string>
     <string name="resume_game_error">The match could not be resumed.</string>
     <string name="my_data_group">My data</string>
@@ -42,33 +40,21 @@
     <string name="colleagues">Colleagues</string>
     <string name="live_games_vbr_com">All live matches on website</string>
     <string name="my_account">My account</string>
-    <string name="privacy_policy">Privacy policy</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_up">Sign up</string>
     <string name="user_password_update">Update my password</string>
-    <string name="user_lost_password">Lost my password</string>
     <string name="user_sign_out">Sign out</string>
-    <string name="user_sign_in_why_title">Why do I have to sign in?</string>
-    <string name="user_sign_in_why_message">Your Volleyball Referee data (games, teams, rules, leagues, colleagues) will be synchronized with our server. By signing in, we will know who you are and we will keep your data associated with your account.</string>
     <string name="user_pseudo_hint">Referee pseudonym</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Confirm email</string>
-    <string name="user_email_not_matching">Email addresses don\'t match</string>
     <string name="user_current_password_hint">Current password</string>
     <string name="user_password_hint">Password</string>
-    <string name="user_confirm_password_hint">Confirm password</string>
     <string name="user_new_password_hint">New password</string>
     <string name="user_confirm_new_password_hint">Confirm new password</string>
     <string name="user_password_not_matching">Passwords don\'t match</string>
     <string name="user_password_error">Wrong password</string>
     <string name="user_locked_error">Subscription is expired or account is locked for 30 minutes after too many failed attempts to sign in</string>
-    <string name="user_email_pseudo_conflict">This referee pseudonym or this email already exist</string>
     <string name="user_request_error">Error while processing request</string>
     <string name="user_signed_in_as_pseudo">Signed in as %s</string>
-    <string name="user_password_recovery_initiated">A recovery link was sent by email to %s</string>
     <string name="password_strength">The password must contain at least 8 characters, including 1 uppercase character, 1 digit, and 1 special character</string>
     <string name="password_strength_error">Password does not satisfy the aforementioned criteria</string>
     <string name="user_signed_out">Signed out</string>
@@ -94,7 +80,6 @@
     <string name="select_libero">Select the liberos (optional)</string>
     <string name="select_gender">Select the gender</string>
     <string name="input_player_names">Input the player names (optional)</string>
-    <string name="confirm">Confirm</string>
     <string name="confirm_game_setup_question">Do you confirm this setup?</string>
     <string name="gender_description">Gender</string>
     <string name="league_name">League / tournament name</string>
@@ -114,8 +99,6 @@
     <string name="navigate_home">Back to home page</string>
     <string name="reset_set">Reset current set</string>
     <string name="reset_set_question">The current set will be restarted and every actions will be lost. Reset?</string>
-    <string name="share">Share</string>
-    <string name="share_exception">Failed to share the game</string>
     <string name="navigate_home_question">You may resume the current match later. Leave?</string>
     <string name="select_player_title">Select a player from the bench</string>
     <string name="court_position_tab">Positions</string>
@@ -141,9 +124,6 @@
     <string name="confirm_team_lineup_question">Do you confirm this starting line-up for %s in this set?</string>
     <string name="no_substitution_message">No substitution available</string>
     <string name="confirm_set_question">Do you confirm this point?</string>
-    <string name="index_game">Toggle public / private match</string>
-    <string name="public_game_message">The match is now public</string>
-    <string name="private_game_message">The match is now private</string>
     <string name="all_timeouts_called">%s has no more available timeout</string>
     <string name="all_substitutions_used">%s has no more available substitution</string>
     <string name="one_remaining_substitution">%s has one remaining substitution</string>
@@ -177,6 +157,7 @@
 
     <!-- Settings activity -->
     <string name="settings">Settings</string>
+    <string name="pref_server_url" translatable="false">Server URL</string>
     <string name="pref_keep_screen_on">Keep the screen on during games</string>
     <string name="pref_night_mode">Theme</string>
 

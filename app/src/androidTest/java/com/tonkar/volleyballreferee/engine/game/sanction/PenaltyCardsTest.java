@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.*;
@@ -20,7 +20,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_delayWarning() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -36,7 +36,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_delayPenalty() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -52,7 +52,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_yellowCard() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -74,7 +74,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redCard() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -121,7 +121,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redExpulsionCard() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -146,7 +146,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void beachGame_redDisqualificationCard() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -168,7 +168,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_yellowCard() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
 
@@ -203,7 +203,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redCard() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
 
@@ -272,7 +272,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redExpulsionCard() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         IClassicTeam indoorTeam = (IClassicTeam) game;
@@ -356,7 +356,7 @@ public class PenaltyCardsTest {
 
     @Test
     public void indoorGame_redDisqualificationCard() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         IClassicTeam indoorTeam = (IClassicTeam) game;

@@ -151,11 +151,6 @@
         <item name="endIconTint">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.NumberPicker" parent="AppTheme">
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="colorControlNormal">@color/colorPrimary</item>
-    </style>
-
     <style name="AppTheme.DynamicTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="textAllCaps">false</item>

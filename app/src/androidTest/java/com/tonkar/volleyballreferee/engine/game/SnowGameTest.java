@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.player.PositionType;
@@ -19,7 +18,7 @@ public class SnowGameTest {
 
     @Test
     public void service() {
-        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), null, "",
                                                    Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                    System.currentTimeMillis(), Rules.officialSnowRules());
         game.startMatch();
@@ -74,7 +73,7 @@ public class SnowGameTest {
 
     @Test
     public void substitution() {
-        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), null, "",
                                                    Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                    System.currentTimeMillis(), Rules.officialSnowRules());
         game.addPlayer(TeamType.HOME, 4);

@@ -91,23 +91,23 @@ public class Rules extends ApiRules {
     }
 
     public static Rules officialIndoorRules() {
-        return new Rules(DEFAULT_INDOOR_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR, 5, 25, true, 15, true,
-                         true, WIN_TERMINATION, true, 2, 30, false, 60, true, 180, FIVB_LIMITATION, 6, false, 0, 0, 9999);
+        return new Rules(DEFAULT_INDOOR_ID, null, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR, 5, 25, true, 15, true, true,
+                         WIN_TERMINATION, true, 2, 30, false, 60, true, 180, FIVB_LIMITATION, 6, false, 0, 0, 9999);
     }
 
     public static Rules officialBeachRules() {
-        return new Rules(DEFAULT_BEACH_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_BEACH_NAME, GameType.BEACH, 3, 21, true, 15, true,
-                         true, WIN_TERMINATION, true, 1, 30, true, 30, true, 60, FIVB_LIMITATION, 0, true, 7, 5, 9999);
+        return new Rules(DEFAULT_BEACH_ID, null, 0L, 0L, DEFAULT_BEACH_NAME, GameType.BEACH, 3, 21, true, 15, true, true, WIN_TERMINATION,
+                         true, 1, 30, true, 30, true, 60, FIVB_LIMITATION, 0, true, 7, 5, 9999);
     }
 
     public static Rules defaultIndoor4x4Rules() {
-        return new Rules(DEFAULT_INDOOR_4X4_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_INDOOR_4X4_NAME, GameType.INDOOR_4X4, 5, 25,
-                         true, 15, true, true, WIN_TERMINATION, true, 2, 30, true, 60, true, 180, NO_LIMITATION, 4, false, 0, 0, 9999);
+        return new Rules(DEFAULT_INDOOR_4X4_ID, null, 0L, 0L, DEFAULT_INDOOR_4X4_NAME, GameType.INDOOR_4X4, 5, 25, true, 15, true, true,
+                         WIN_TERMINATION, true, 2, 30, true, 60, true, 180, NO_LIMITATION, 4, false, 0, 0, 9999);
     }
 
     public static Rules officialSnowRules() {
-        return new Rules(DEFAULT_SNOW_ID, ApiUserSummary.VBR_USER_ID, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW, 3, 15, false, 15, true,
-                         true, WIN_TERMINATION, true, 1, 30, false, 0, true, 60, NO_LIMITATION, 2, true, 5, 5, 9999);
+        return new Rules(DEFAULT_SNOW_ID, null, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW, 3, 15, false, 15, true, true, WIN_TERMINATION,
+                         true, 1, 30, false, 0, true, 60, NO_LIMITATION, 2, true, 5, 5, 9999);
     }
 
     @Override
@@ -167,7 +167,6 @@ public class Rules extends ApiRules {
             case INDOOR_4X4 -> defaultIndoor4x4Rules();
             case BEACH -> officialBeachRules();
             case SNOW -> officialSnowRules();
-            default -> null;
         };
 
         ApiRulesSummary rulesDescription = new ApiRulesSummary();

@@ -11,7 +11,7 @@ import com.tonkar.volleyballreferee.engine.database.model.*;
 import java.util.concurrent.*;
 
 @Database(entities = { RulesEntity.class, TeamEntity.class, GameEntity.class, FullGameEntity.class, LeagueEntity.class, FriendEntity.class
-}, version = 4)
+}, version = 5)
 @TypeConverters({ DatabaseConverters.class })
 public abstract class VbrDatabase extends RoomDatabase {
 
@@ -29,6 +29,7 @@ public abstract class VbrDatabase extends RoomDatabase {
                         .addMigrations(MIGRATION_1_2)
                         .addMigrations(MIGRATION_2_3)
                         .addMigrations(MIGRATION_3_4)
+                        .addMigrations(MIGRATION_4_5)
                         .allowMainThreadQueries()
                         .build();
             }
@@ -86,6 +87,23 @@ public abstract class VbrDatabase extends RoomDatabase {
             database.execSQL("DELETE FROM `games` WHERE `kind` = 'TIME'");
             database.execSQL("DELETE FROM `teams` WHERE `kind` = 'TIME'");
             database.execSQL("DELETE FROM `rules` WHERE `kind` = 'TIME'");
+        }
+    };
+
+    private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE `games` RENAME TO `games_old`");
+            database.execSQL(
+                    "CREATE TABLE `games` (`id` TEXT NOT NULL, `createdBy` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `scheduledAt` INTEGER NOT NULL, `synced` INTEGER NOT NULL, `kind` TEXT NOT NULL, `gender` TEXT NOT NULL, `usage` TEXT NOT NULL, `leagueName` TEXT, `divisionName` TEXT, `homeTeamName` TEXT NOT NULL, `guestTeamName` TEXT NOT NULL, `homeSets` INTEGER NOT NULL, `guestSets` INTEGER NOT NULL, `score` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))");
+            database.execSQL(
+                    "INSERT INTO `games` SELECT `id`, `createdBy`, `createdAt`, `updatedAt`, `scheduledAt`, `synced`, `kind`, `gender`, `usage`, `leagueName`, `divisionName`, `homeTeamName`, `guestTeamName`, `homeSets`, `guestSets`, `score`, `content` FROM `games_old`");
+            database.execSQL("DROP TABLE IF EXISTS `games_old`");
+
+            database.execSQL("UPDATE `leagues` SET `createdBy` = NULL");
+            database.execSQL("UPDATE `games` SET `createdBy` = NULL");
+            database.execSQL("UPDATE `teams` SET `createdBy` = NULL");
+            database.execSQL("UPDATE `rules` SET `createdBy` = NULL");
         }
     };
 }

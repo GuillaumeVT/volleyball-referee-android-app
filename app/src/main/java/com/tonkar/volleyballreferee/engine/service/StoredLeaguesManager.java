@@ -14,6 +14,8 @@ import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.database.VbrRepository;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -101,7 +103,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     @Override
     public void syncLeagues(DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().getLeagueList(mContext, new Callback() {
+            VbrApi.getInstance(mContext).getLeagueList(mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -135,14 +137,14 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     }
 
     private void syncLeagues(List<ApiLeagueSummary> remoteLeagueList, DataSynchronizationListener listener) {
-        String userId = PrefUtils.getUser(mContext).getId();
+        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(ApiUserSummary::getId).orElse(null);
         List<ApiLeagueSummary> localLeagueList = listLeagues();
         Queue<ApiLeagueSummary> remoteLeaguesToDownload = new LinkedList<>();
         boolean afterPurchase = false;
 
         // User purchased web services, write his user id
         for (ApiLeagueSummary localLeague : localLeagueList) {
-            if (localLeague.getCreatedBy().equals(ApiUserSummary.VBR_USER_ID)) {
+            if (StringUtils.isBlank(localLeague.getCreatedBy())) {
                 ApiLeague league = mRepository.getLeague(localLeague.getId());
                 league.setCreatedBy(userId);
                 league.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
@@ -202,7 +204,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
             }
         } else {
             ApiLeagueSummary remoteLeague = remoteLeagues.poll();
-            VbrApi.getInstance().getLeague(remoteLeague.getId(), mContext, new Callback() {
+            VbrApi.getInstance(mContext).getLeague(remoteLeague.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -233,7 +235,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
 
     private void pushLeagueToServer(final ApiLeague league) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().createLeague(league, mContext, new Callback() {
+            VbrApi.getInstance(mContext).createLeague(league, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();

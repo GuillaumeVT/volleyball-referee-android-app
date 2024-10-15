@@ -7,7 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
@@ -36,7 +35,7 @@ public class Indoor4x4CompleteGame {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                                       Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                                       System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());

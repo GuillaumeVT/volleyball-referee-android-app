@@ -7,7 +7,6 @@
     <string name="no">Не</string>
     <string name="resume">Продължи</string>
     <string name="delete">Изтрий</string>
-    <string name="ignore">Игнорирай</string>
     <string name="accept">Приеми</string>
     <string name="reject">Отхвърли</string>
     <string name="remove">Премахни</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Плажен волейбол</string>
     <string name="snow_volleyball_game">Снежен волейбол</string>
     <string name="score_based_game">Табло</string>
-    <string name="time_based_game">За време</string>
     <string name="resume_game_title">Продължи мач</string>
     <string name="resume_game_error">Мачът не може да бъде продължен.</string>
     <string name="my_data_group">Моите данни</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Колеги</string>
     <string name="live_games_vbr_com">Всички мачове на живо</string>
     <string name="my_account">Моят акаунт</string>
-    <string name="privacy_policy">Политика за поверителност</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Вход</string>
-    <string name="user_sign_up">Регистрация</string>
     <string name="user_password_update">Актуализация на паролата</string>
-    <string name="user_lost_password">Забравена парола</string>
     <string name="user_sign_out">Изход</string>
-    <string name="user_sign_in_why_title">Защо трябва да се впиша?</string>
-    <string name="user_sign_in_why_message">Вашите данни от положението (мачове, отбори, правила, първенства, колеги) ще бъдат синхронизирани на нашия сървър. Чрез вписването Ви, ние ще знаем кой сте Вие и ще запазим Вашите данни свързани с акаунта Ви.</string>
     <string name="user_pseudo_hint">Съдийски псевдоним</string>
-    <string name="user_email_hint">Електронна поща</string>
-    <string name="user_confirm_email_hint">Потвърди електронната поща</string>
-    <string name="user_email_not_matching">Електронната Ви поща не съвпада</string>
     <string name="user_current_password_hint">Настояща парола</string>
     <string name="user_password_hint">Парола</string>
-    <string name="user_confirm_password_hint">Потвърди паролата</string>
     <string name="user_new_password_hint">Нова парола</string>
     <string name="user_confirm_new_password_hint">Потвърдете новата парола</string>
     <string name="user_password_not_matching">Паролата не съвпада</string>
     <string name="user_password_error">Грешна парола</string>
     <string name="user_locked_error">Акаунта Ви е заключен за 30 минути поради многото неуспешни опити за вписване</string>
-    <string name="user_email_pseudo_conflict">Този съдийски псевдоним или имейл вече съществува</string>
     <string name="user_request_error">Грешка при изпълнение на искането</string>
     <string name="user_signed_in_as_pseudo">Влезли сте като %s</string>
-    <string name="user_password_recovery_initiated">Имейл с линк за възстановяване бе изпратен на %s</string>
     <string name="password_strength">Паролата трябва да съдържа най-малко 8 знака, включително 1 главна буква, 1 цифра и 1 специален символ.</string>
     <string name="password_strength_error">Паролата не покрива гореспоменатите критерии</string>
     <string name="user_signed_out">Отписан сте</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Изберете либерата (опция)</string>
     <string name="select_gender">Изберете пола на играчите</string>
     <string name="input_player_names">Въведете имената на играчите (опция)</string>
-    <string name="confirm">Потвърди</string>
     <string name="confirm_game_setup_question">Потвърждавате ли въведените данни?</string>
     <string name="gender_description">Пол</string>
     <string name="league_name">Наименование на първенството/турнира</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Връщане към началната страница</string>
     <string name="reset_set">Нулиране на текущия гейм</string>
     <string name="reset_set_question">Текущият гейм ще се рестартира, всички разигравания ще бъдат загубени. Нулиране?</string>
-    <string name="share">Share</string>
-    <string name="share_exception">Споделянето на мача е неуспешно</string>
     <string name="navigate_home_question">Можете да подновите текущия мач по-късно. Напускане?</string>
     <string name="select_player_title">Избиране играч от резервите</string>
     <string name="court_position_tab">Позиции</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Потвърждавате ли стартовото нареждане за %s в този гейм?</string>
     <string name="no_substitution_message">Няма налични смени</string>
     <string name="confirm_set_question">Потвърждавате ли тази точка?</string>
-    <string name="index_game">Toggle public / private match</string>
-    <string name="public_game_message">Мачът е общодостъпен</string>
-    <string name="private_game_message">Мачът е личен</string>
     <string name="all_timeouts_called">%s няма повече почивки</string>
     <string name="all_substitutions_used">%s няма повече смени</string>
     <string name="one_remaining_substitution">%s oстава една смяна</string>

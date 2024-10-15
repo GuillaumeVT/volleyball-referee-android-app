@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
@@ -18,7 +17,7 @@ public class BeachGameTest {
 
     @Test
     public void winSet_normal() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -36,7 +35,7 @@ public class BeachGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -63,7 +62,7 @@ public class BeachGameTest {
 
     @Test
     public void winGame_normal() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();
@@ -84,7 +83,7 @@ public class BeachGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), null, "",
                                                  Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                  System.currentTimeMillis(), Rules.officialBeachRules());
         game.startMatch();

@@ -15,6 +15,8 @@ import com.tonkar.volleyballreferee.engine.database.VbrRepository;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
@@ -73,7 +75,7 @@ public class StoredRulesManager implements StoredRulesService {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
         rules.setId(UUID.randomUUID().toString());
-        rules.setCreatedBy(PrefUtils.getUser(mContext).getId());
+        rules.setCreatedBy(Optional.ofNullable(PrefUtils.getUser(mContext)).map(ApiUserSummary::getId).orElse(null));
         rules.setCreatedAt(utcTime);
         rules.setUpdatedAt(utcTime);
         rules.setName("");
@@ -145,7 +147,7 @@ public class StoredRulesManager implements StoredRulesService {
     @Override
     public void syncRules(final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().getRulesList(mContext, new Callback() {
+            VbrApi.getInstance(mContext).getRulesList(mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -185,7 +187,7 @@ public class StoredRulesManager implements StoredRulesService {
 
         // User purchased web services, write his user id
         for (ApiRulesSummary localRules : localRulesList) {
-            if (localRules.getCreatedBy().equals(ApiUserSummary.VBR_USER_ID)) {
+            if (StringUtils.isBlank(localRules.getCreatedBy())) {
                 ApiRules rules = getRules(localRules.getId());
                 rules.setCreatedBy(userId);
                 rules.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
@@ -251,7 +253,7 @@ public class StoredRulesManager implements StoredRulesService {
             }
         } else {
             ApiRulesSummary remoteRule = remoteRules.poll();
-            VbrApi.getInstance().getRules(remoteRule.getId(), mContext, new Callback() {
+            VbrApi.getInstance(mContext).getRules(remoteRule.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -281,7 +283,7 @@ public class StoredRulesManager implements StoredRulesService {
 
     private void pushRulesToServer(final ApiRules rules, boolean create) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().upsertRules(rules, create, mContext, new Callback() {
+            VbrApi.getInstance(mContext).upsertRules(rules, create, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -301,7 +303,7 @@ public class StoredRulesManager implements StoredRulesService {
 
     private void deleteRulesOnServer(final String id) {
         if (PrefUtils.canSync(mContext)) {
-            VbrApi.getInstance().deleteRules(id, mContext, new Callback() {
+            VbrApi.getInstance(mContext).deleteRules(id, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();

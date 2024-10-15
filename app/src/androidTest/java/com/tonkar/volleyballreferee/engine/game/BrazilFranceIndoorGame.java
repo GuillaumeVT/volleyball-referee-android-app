@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.PrefUtils;
 import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.scoresheet.ScoreSheetBuilder;
@@ -42,7 +41,7 @@ public class BrazilFranceIndoorGame {
     }
 
     public void playGame_complete(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = PrefUtils.getUser(context);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -75,7 +74,7 @@ public class BrazilFranceIndoorGame {
     }
 
     public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = PrefUtils.getUser(context);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -104,7 +103,7 @@ public class BrazilFranceIndoorGame {
     }
 
     public void playGame_substitutions(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = PrefUtils.getUser(context);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -126,7 +125,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
+        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());

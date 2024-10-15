@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
             resumeGameCard.setOnClickListener(this::resumeCurrentGame);
         }
 
-        if (PrefUtils.shouldSignIn(requireContext())) {
+        if (PrefUtils.hasServerUrl(requireContext()) && !PrefUtils.isSignedIn(requireContext())) {
             View goToSignCard = fragmentView.findViewById(R.id.goto_sign_in_card);
             goToSignCard.setVisibility(View.VISIBLE);
             goToSignCard.setOnClickListener(this::goToSignIn);
@@ -196,7 +196,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchFriendRequests(View view) {
         if (PrefUtils.canSync(requireContext())) {
-            VbrApi.getInstance().countFriendRequests(requireContext(), new Callback() {
+            VbrApi.getInstance(requireContext()).countFriendRequests(requireContext(), new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -236,7 +236,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchAvailableGames(View view) {
         if (PrefUtils.canSync(requireContext())) {
-            VbrApi.getInstance().countAvailableGames(requireContext(), new Callback() {
+            VbrApi.getInstance(requireContext()).countAvailableGames(requireContext(), new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();

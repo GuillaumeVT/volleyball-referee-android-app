@@ -6,7 +6,6 @@
     <string name="no">Non</string>
     <string name="resume">Continuer</string>
     <string name="delete">Supprimer</string>
-    <string name="ignore">Ignorer</string>
     <string name="accept">Accepter</string>
     <string name="reject">Refuser</string>
     <string name="remove">Supprimer</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Beach Volley-ball</string>
     <string name="snow_volleyball_game">Snow Volley-ball</string>
     <string name="score_based_game">Panneau de score</string>
-    <string name="time_based_game">En temps</string>
     <string name="resume_game_title">Continuer le match</string>
     <string name="resume_game_error">Le match n\'a pas pu être repris.</string>
     <string name="my_data_group">Mes données</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Collègues</string>
     <string name="live_games_vbr_com">Matchs en cours sur le site</string>
     <string name="my_account">Mon compte</string>
-    <string name="privacy_policy">Protection de la vie privée</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Me connecter</string>
-    <string name="user_sign_up">@string/create</string>
     <string name="user_password_update">Modifier mon mot de passe</string>
-    <string name="user_lost_password">Mot de passe oublié</string>
     <string name="user_sign_out">Me déconnecter</string>
-    <string name="user_sign_in_why_title">Pourquoi me connecter?</string>
-    <string name="user_sign_in_why_message">Vos données Volleyball Referee (matchs, équipes, règles, ligues, collègues) seront synchronisées avec notre serveur. Si vous vous connectez, nous saurons qui vous êtes et nous associerons vos données avec votre compte.</string>
     <string name="user_pseudo_hint">Pseudo d\'arbitre</string>
-    <string name="user_email_hint">E-mail</string>
-    <string name="user_confirm_email_hint">Confirmer e-mail</string>
-    <string name="user_email_not_matching">Les addresses e-mail sont différentes</string>
     <string name="user_current_password_hint">Mot de passe actuel</string>
     <string name="user_password_hint">Mot de passe</string>
-    <string name="user_confirm_password_hint">Confirmer mot de passe</string>
     <string name="user_new_password_hint">Nouveau mot de passe</string>
     <string name="user_confirm_new_password_hint">Confirmer nouveau mot de passe</string>
     <string name="user_password_not_matching">Les mots de passe sont différents</string>
     <string name="user_password_error">Mot de passe incorrect</string>
     <string name="user_locked_error">L\'abonnement est expiré ou le compte est bloqué pendant 30 minutes suite à de trop nombreuses tentatives de connexion</string>
-    <string name="user_email_pseudo_conflict">Ce pseudo ou cette addresse e-mail existent déjà</string>
     <string name="user_request_error">Erreur lors du traitement de la requête</string>
     <string name="user_signed_in_as_pseudo">Connecté en tant que %s</string>
-    <string name="user_password_recovery_initiated">Un e-mail a été envoyé à %s pour réinitialiser le mot de passe</string>
     <string name="password_strength">Le mot de passe doit contenir au moins 8 caractères, dont 1 majuscule, 1 chiffre, et 1 caractère special</string>
     <string name="password_strength_error">Le mot de passe ne remplit pas les critères décrits précédemment</string>
     <string name="user_signed_out">Déconnecté</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Sélectionner des libéros (optionnel)</string>
     <string name="select_gender">Sélectionner le genre</string>
     <string name="input_player_names">Saisir les noms des joueurs (optionnel)</string>
-    <string name="confirm">Confirmer</string>
     <string name="confirm_game_setup_question">Confirmez-vous cette configuration?</string>
     <string name="gender_description">Genre</string>
     <string name="league_name">Nom de la ligue / du tournoi</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Retour à la page d\'accueil</string>
     <string name="reset_set">Redémarrer ce set</string>
     <string name="reset_set_question">Ce set sera redémarré et toutes les actions effectuées seront perdues. Redémarrer?</string>
-    <string name="share">Partager</string>
-    <string name="share_exception">Échec du partage du match</string>
     <string name="navigate_home_question">Il sera possible de reprendre le match en cours. Quitter?</string>
     <string name="select_player_title">Sélectionner un joueur du banc</string>
     <string name="court_position_tab">Positions</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Confirmez-vous la composition de %s pour ce set?</string>
     <string name="no_substitution_message">Pas de changement possible</string>
     <string name="confirm_set_question">Confirmez-vous ce point?</string>
-    <string name="index_game">Basculer entre match publique / privé</string>
-    <string name="public_game_message">Le match est publique</string>
-    <string name="private_game_message">Le match est privé</string>
     <string name="all_timeouts_called">%s n\'a plus de temps mort disponible</string>
     <string name="all_substitutions_used">%s n\'a plus de changement disponible</string>
     <string name="one_remaining_substitution">%s n\'a plus qu\'un seul changement disponible</string>

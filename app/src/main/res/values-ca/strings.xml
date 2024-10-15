@@ -7,7 +7,6 @@
     <string name="no">No</string>
     <string name="resume">Continuar</string>
     <string name="delete">Esborrar</string>
-    <string name="ignore">Ignorar</string>
     <string name="accept">Acceptar</string>
     <string name="reject">Rebutjar</string>
     <string name="remove">Eliminar</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Vòlei-Platja</string>
     <string name="snow_volleyball_game">Vòlei-Neu</string>
     <string name="score_based_game">Marcador</string>
-    <string name="time_based_game">Joc per temps</string>
     <string name="resume_game_title">Continuar partit</string>
     <string name="resume_game_error">No s’ha pogut continuar el partit</string>
     <string name="my_data_group">Les meves dades</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Companys</string>
     <string name="live_games_vbr_com">Partits en directe a la web</string>
     <string name="my_account">El meu compte</string>
-    <string name="privacy_policy">Política de privacitat</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Entrar</string>
-    <string name="user_sign_up">Registrar-se</string>
     <string name="user_password_update">Canviar contrasenya</string>
-    <string name="user_lost_password">Contrasenya perduda</string>
     <string name="user_sign_out">Sortir</string>
-    <string name="user_sign_in_why_title">Per què he de registrar-me?</string>
-    <string name="user_sign_in_why_message">Les teves dades en Volleyball Referee (partits, equips, regles, lligues, companys) es sincronizaran amb el nostre servidor. Registrant-te sabrem qui ets i mantindrem les teves dades associades amb el teu compte.</string>
     <string name="user_pseudo_hint">Pseudònim d’àrbitre</string>
-    <string name="user_email_hint">Correu electrònic</string>
-    <string name="user_confirm_email_hint">Confirmar el correu electrònic</string>
-    <string name="user_email_not_matching">Les adreces de correu no coincideixen</string>
     <string name="user_current_password_hint">Contrasenya actual</string>
     <string name="user_password_hint">Contrasenya</string>
-    <string name="user_confirm_password_hint">Confirmar contrasenya</string>
     <string name="user_new_password_hint">Contrasenya nova</string>
     <string name="user_confirm_new_password_hint">Confirmar nova contrasenya</string>
     <string name="user_password_not_matching">Les contrasenyes no coincideixen</string>
     <string name="user_password_error">Contrasenya errònia</string>
     <string name="user_locked_error">Massa errors d’autenticació; el compte es bloquejarà durant 30 minuts</string>
-    <string name="user_email_pseudo_conflict">Aquest pseudónim o correu electrònic ja existeix</string>
     <string name="user_request_error">Error al processar la petició</string>
     <string name="user_signed_in_as_pseudo">Registrat com %s</string>
-    <string name="user_password_recovery_initiated">S’ha enviat un correu electrònic amb un enllaç de recuperació a %s</string>
     <string name="password_strength">La contrasenya ha de tenir almenys 8 caràcters, incloent-hi 1 majúscula, 1 dígit i 1 caràcter especial (símbol)</string>
     <string name="password_strength_error">La contrasenya no compleix amb els requisits</string>
     <string name="user_signed_out">Sessió finalitzada</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Escull els lliures (opcional)</string>
     <string name="select_gender">Selecciona el gènere</string>
     <string name="input_player_names">Introdueix els noms dels jugadors (opcional)</string>
-    <string name="confirm">Confirmar</string>
     <string name="confirm_game_setup_question">Confirmes aquesta configuració?</string>
     <string name="gender_description">Gènere</string>
     <string name="league_name">Nom de la lliga/torneig</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Tornar a l’inici</string>
     <string name="reset_set">Reinicia el set actual</string>
     <string name="reset_set_question">El set actual es reiniciarà, i totes les accions es perdran. ¿Reiniciar?</string>
-    <string name="share">Compartir</string>
-    <string name="share_exception">Error al compartir el partit</string>
     <string name="navigate_home_question">Pots continuar el partit més tard. ¿Sortir?</string>
     <string name="select_player_title">Seleccionar jugador de la banqueta</string>
     <string name="court_position_tab">Posicions</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Confirmes l’alineació inicial de %s per aquest set?</string>
     <string name="no_substitution_message">No queden més substitucions</string>
     <string name="confirm_set_question">Confirmes aquest punt?</string>
-    <string name="index_game">Canviar partit privat/públic</string>
-    <string name="public_game_message">El partit ara és públic</string>
-    <string name="private_game_message">El partit ara és privat</string>
     <string name="all_timeouts_called">%s no pot demanar més temps morts</string>
     <string name="all_substitutions_used">%s no pot demanar més substitucions</string>
     <string name="one_remaining_substitution">A %s només li queda una substitució</string>

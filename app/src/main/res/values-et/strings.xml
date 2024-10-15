@@ -7,7 +7,6 @@
     <string name="no">Ei</string>
     <string name="resume">Jätka</string>
     <string name="delete">Kustuta</string>
-    <string name="ignore">Jäta vahele</string>
     <string name="accept">Nõustu</string>
     <string name="reject">Tagasi lükkamine</string>
     <string name="remove">Eemalda</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Ranna võrkpall</string>
     <string name="snow_volleyball_game">Lumevõrkpall</string>
     <string name="score_based_game">Seisu tabloo</string>
-    <string name="time_based_game">Ajaline piirang</string>
     <string name="resume_game_title">Jätka mängu</string>
     <string name="resume_game_error">Mängu jätkamine pole võimalik.</string>
     <string name="my_data_group">Minu andmed</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Kolleegid</string>
     <string name="live_games_vbr_com">Live-mängu veebilehelt</string>
     <string name="my_account">Minu konto</string>
-    <string name="privacy_policy">Isikuandmete kaitse</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Logi sisse</string>
-    <string name="user_sign_up">Registreeru</string>
     <string name="user_password_update">Minu salasõna uuendamine</string>
-    <string name="user_lost_password">Unustasin salasõna</string>
     <string name="user_sign_out">Logi välja</string>
-    <string name="user_sign_in_why_title">Miks ennast registreerida?</string>
-    <string name="user_sign_in_why_message">Teie Volleyball Referee rakenduse andmed (mängud, võistkonnad, reeglid, liigad ja kolleegid) sünkroniseeritakse meie sereriga. Registreerimisega me saame teada kes Te olete ning suudame seostada andmed Teie kontoga.</string>
     <string name="user_pseudo_hint">Kohtuniku pseudonüüm</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Emaili kordamine</string>
-    <string name="user_email_not_matching">Email aadress ei klapi match</string>
     <string name="user_current_password_hint">Kehtiv salasõna</string>
     <string name="user_password_hint">Salasõna</string>
-    <string name="user_confirm_password_hint">Korda salasõna</string>
     <string name="user_new_password_hint">Uus salasõna</string>
     <string name="user_confirm_new_password_hint">Uue salasõna kordamine</string>
     <string name="user_password_not_matching">salasõna ei klapi</string>
     <string name="user_password_error">Vale salasõna</string>
     <string name="user_locked_error">Konto on blokeeritud 30 minutiks pärast mitmeid sisselogimise ebaõnnestumisi</string>
-    <string name="user_email_pseudo_conflict">Antud kohtuniku pseudnüüm või email on juba olemas</string>
     <string name="user_request_error">Viga päringu protsessis</string>
     <string name="user_signed_in_as_pseudo">Registreeritud nimega %s</string>
-    <string name="user_password_recovery_initiated">Salasõna taastamise link on saadetud emailile: %s</string>
     <string name="password_strength">Salasõna peab olema vähemalt 8 sümbolist koosnev, milles 1 peab olema suur täht, 1 number ning 1 erisümbol</string>
     <string name="password_strength_error">Sisestatud salasõna ei vasta kriteeriumitele</string>
     <string name="user_signed_out">Väljas</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Valige libero (valikuline)</string>
     <string name="select_gender">Valige kategooria (sugu)</string>
     <string name="input_player_names">Sisesta mängijate nimed (valikuline)</string>
-    <string name="confirm">Kinnita</string>
     <string name="confirm_game_setup_question">Mängu seadete kinnitamine?</string>
     <string name="gender_description">Sugu</string>
     <string name="league_name">Liiga / turnii nimetus</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Mine tagasi avalehele</string>
     <string name="reset_set">Tühista jooksva geimi</string>
     <string name="reset_set_question">Jooksva geimi taaskäivitatakse ning kõik tegevused kaotatakse. Kas tühistan ?</string>
-    <string name="share">Jagada</string>
-    <string name="share_exception">Viga! Mängu tulemuste jagamine ebaõnnestus</string>
     <string name="navigate_home_question">Lõpeta antud mängu hiljem. Kas soovite lehelt lahkuda?</string>
     <string name="select_player_title">Vali mängijat varumängijate hulgast</string>
     <string name="court_position_tab">Asetus</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Kas Te kinnitate algasetust võistkonnal %s antud geimi jaoks?</string>
     <string name="no_substitution_message">Vahetust pole võimalik teha</string>
     <string name="confirm_set_question">Kinnitada antud geimi lõppemist?</string>
-    <string name="index_game">Muuda mängu staatust (avalik/peidetud)</string>
-    <string name="public_game_message">Mängu staatus: avalik</string>
-    <string name="private_game_message">Mängu staatus: peidetud</string>
     <string name="all_timeouts_called">Võistkond \"%s\": võistkonna vaheajad puuduvad</string>
     <string name="all_substitutions_used">Võistkond \"%s\": ei ole rohkem vahetusi antud geimis</string>
     <string name="one_remaining_substitution">\"%s\" üks vahetus jäänud</string>

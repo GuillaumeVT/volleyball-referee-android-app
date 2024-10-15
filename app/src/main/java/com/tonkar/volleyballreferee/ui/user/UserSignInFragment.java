@@ -34,20 +34,13 @@ public class UserSignInFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_user_sign_in, container, false);
 
         mUser = PrefUtils.getUser(getContext());
-        if (!ApiUserSummary.emptyUser().equals(mUser)) {
-            EditText emailText = fragmentView.findViewById(R.id.user_email_input_text);
-            emailText.setEnabled(false);
-            emailText.setText(mUser.getEmail());
-
+        if (mUser != null) {
             EditText pseudoText = fragmentView.findViewById(R.id.user_pseudo_input_text);
             pseudoText.setEnabled(false);
             pseudoText.setText(mUser.getPseudo());
 
             Button signInButton = fragmentView.findViewById(R.id.user_sign_in_button);
             signInButton.setOnClickListener(button -> onSignInClicked(fragmentView));
-
-            Button lostPasswordButton = fragmentView.findViewById(R.id.lost_password_button);
-            lostPasswordButton.setOnClickListener(button -> onLostPasswordClicked());
         }
 
         return fragmentView;
@@ -65,10 +58,7 @@ public class UserSignInFragment extends Fragment {
         } else {
             passwordInputLayout.setError(null);
             StoredUserService storedUserService = new StoredUserManager(getContext());
-            storedUserService.signInUser(mUser.getEmail(), password, new AsyncUserRequestListener() {
-                @Override
-                public void onUserReceived(ApiUserSummary user) {}
-
+            storedUserService.signInUser(mUser.getPseudo(), password, new AsyncUserRequestListener() {
                 @Override
                 public void onUserTokenReceived(ApiUserToken userToken) {
                     if (isAdded()) {
@@ -81,9 +71,6 @@ public class UserSignInFragment extends Fragment {
                         });
                     }
                 }
-
-                @Override
-                public void onUserPasswordRecoveryInitiated() {}
 
                 @Override
                 public void onError(int httpCode) {
@@ -104,35 +91,4 @@ public class UserSignInFragment extends Fragment {
             });
         }
     }
-
-    private void onLostPasswordClicked() {
-        StoredUserService storedUserService = new StoredUserManager(getContext());
-        storedUserService.initiateUserPasswordRecovery(mUser.getEmail(), new AsyncUserRequestListener() {
-            @Override
-            public void onUserReceived(ApiUserSummary user) {}
-
-            @Override
-            public void onUserTokenReceived(ApiUserToken userToken) {}
-
-            @Override
-            public void onUserPasswordRecoveryInitiated() {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> UiUtils
-                            .makeText(getContext(), String.format(Locale.getDefault(), getString(R.string.user_password_recovery_initiated),
-                                                                  mUser.getEmail()), Toast.LENGTH_LONG)
-                            .show());
-                }
-            }
-
-            @Override
-            public void onError(int httpCode) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(
-                            () -> UiUtils.makeErrorText(getContext(), getString(R.string.user_request_error), Toast.LENGTH_LONG).show());
-                }
-            }
-        });
-
-    }
-
 }

@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.set.IndoorSet;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
@@ -21,7 +20,7 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_normal() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -39,7 +38,7 @@ public class IndoorGameTest {
 
     @Test
     public void winSet_2PointsGap() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -66,7 +65,7 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_normal() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -95,7 +94,7 @@ public class IndoorGameTest {
 
     @Test
     public void winGame_tieBreak() {
-        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
+        IGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "",
                                                   Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                   System.currentTimeMillis(), Rules.officialIndoorRules());
         game.startMatch();
@@ -145,8 +144,8 @@ public class IndoorGameTest {
 
     @Test
     public void substitution_libero_singleLine() {
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                                                       System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "", System.currentTimeMillis(),
+                                                       System.currentTimeMillis(), Rules.officialIndoorRules());
         createTeamWithNPlayers(game, TeamType.HOME, 10);
         createTeamWithNPlayers(game, TeamType.GUEST, 10);
         game.startMatch();
@@ -179,8 +178,8 @@ public class IndoorGameTest {
 
     @Test
     public void substitution_libero_singleLine_replace() {
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                                                       System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "", System.currentTimeMillis(),
+                                                       System.currentTimeMillis(), Rules.officialIndoorRules());
         createTeamWithNPlayers(game, TeamType.HOME, 10);
         createTeamWithNPlayers(game, TeamType.GUEST, 10);
         game.startMatch();
@@ -213,8 +212,8 @@ public class IndoorGameTest {
 
     @Test
     public void substitution_libero_singleLine_rotate() {
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID, "",
-                                                       System.currentTimeMillis(), System.currentTimeMillis(), Rules.officialIndoorRules());
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), null, "", System.currentTimeMillis(),
+                                                       System.currentTimeMillis(), Rules.officialIndoorRules());
         createTeamWithNPlayers(game, TeamType.HOME, 10);
         createTeamWithNPlayers(game, TeamType.GUEST, 10);
         game.startMatch();

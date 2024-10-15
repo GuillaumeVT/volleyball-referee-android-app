@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
@@ -98,10 +97,9 @@ public class BeachSetTest {
 
     @Test
     public void winSet_1PointGap() {
-        Rules rules = new Rules(UUID.randomUUID().toString(), ApiUserSummary.VBR_USER_ID,
-                                Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(), System.currentTimeMillis(),
-                                "My rules", GameType.BEACH, 3, 21, true, 15, false, true, Rules.WIN_TERMINATION, true, 1, 30, true, 30,
-                                true, 180, Rules.FIVB_LIMITATION, 0, true, 7, 5, 9999);
+        Rules rules = new Rules(UUID.randomUUID().toString(), null, Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
+                                System.currentTimeMillis(), "My rules", GameType.BEACH, 3, 21, true, 15, false, true, Rules.WIN_TERMINATION,
+                                true, 1, 30, true, 30, true, 180, Rules.FIVB_LIMITATION, 0, true, 7, 5, 9999);
         BeachSet set = new BeachSet(rules, rules.getPointsPerSet(), TeamType.GUEST, null, null);
 
         for (int index = 0; index < 20; index++) {

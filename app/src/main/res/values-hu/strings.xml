@@ -7,7 +7,6 @@
     <string name="no">Nem</string>
     <string name="resume">Folytatás</string>
     <string name="delete">Törlés</string>
-    <string name="ignore">Mégsem</string>
     <string name="accept">Elfogadás</string>
     <string name="reject">Visszautasítás</string>
     <string name="remove">Eltávolítás</string>
@@ -23,7 +22,6 @@
     <string name="beach_volleyball_game">Strandröplabda</string>
     <string name="snow_volleyball_game">Hóröplabda</string>
     <string name="score_based_game">Eredménytábla</string>
-    <string name="time_based_game">Időalapú</string>
     <string name="resume_game_title">Mérkőzés folytatása</string>
     <string name="resume_game_error">A mérkőzés nem folytatható.</string>
     <string name="my_data_group">Adataim</string>
@@ -35,33 +33,21 @@
     <string name="colleagues">Társak</string>
     <string name="live_games_vbr_com">Élő mérkőzések a weboldalon</string>
     <string name="my_account">Fiókom</string>
-    <string name="privacy_policy">Adatvédelmi politika</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Bejelentkezés</string>
-    <string name="user_sign_up">Regisztráció</string>
     <string name="user_password_update">Jelszó módosítása</string>
-    <string name="user_lost_password">Elfelejtettem a jelszavam</string>
     <string name="user_sign_out">Kijelentkezés</string>
-    <string name="user_sign_in_why_title">Miért kell belépnem?</string>
-    <string name="user_sign_in_why_message">Volleyball Referee adataid (mérkőzések, csapatok, egyedi szabályzatok, bajnokságok, játékvezető társak) le tudjuk menteni, de csak akkor, ha bejelentkezel.</string>
     <string name="user_pseudo_hint">Név</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Email megerősítése</string>
-    <string name="user_email_not_matching">Email címek nem egyeznek</string>
     <string name="user_current_password_hint">Jelenlegi jelszó</string>
     <string name="user_password_hint">Jelszó</string>
-    <string name="user_confirm_password_hint">Jelszó megerősítése</string>
     <string name="user_new_password_hint">Új jelszó</string>
     <string name="user_confirm_new_password_hint">Új jelszó megerősítése</string>
     <string name="user_password_not_matching">A jelszavak nem egyeznek</string>
     <string name="user_password_error">Hibás jelszó</string>
     <string name="user_locked_error">Túl sok hibás próbálkozás. 30 percig nem lehet próbálkozni.</string>
-    <string name="user_email_pseudo_conflict">Ez a név vagy email már foglalt.</string>
     <string name="user_request_error">Hiba történt a feldolgozás közben</string>
     <string name="user_signed_in_as_pseudo">Belépve, mint %s</string>
-    <string name="user_password_recovery_initiated">Jelszó helyreállító kiküldtük a %s címre</string>
     <string name="password_strength">A jelszónak legalább 8 karakter hosszúnak kell lennie és tartalmaznia kell legalább 1 nagybetűt, 1 számot és egy speciális karaktert.</string>
     <string name="password_strength_error">A jelszó nem elég biztonságos.</string>
     <string name="user_signed_out">Kilépve</string>
@@ -87,7 +73,6 @@
     <string name="select_libero">Jelöld ki a liberókat (nem kötelező)</string>
     <string name="select_gender">Válaszd ki a csapat nemét</string>
     <string name="input_player_names">Add meg a játékosok neveit (opcionális)</string>
-    <string name="confirm">Jóváhagyás</string>
     <string name="confirm_game_setup_question">Jóváhagyod a csapatok összeállítását?</string>
     <string name="gender_description">Nem</string>
     <string name="league_name">Bajnokság / torna neve</string>
@@ -107,8 +92,6 @@
     <string name="navigate_home">Vissza a kezdőképernyőre</string>
     <string name="reset_set">Aktuális játszma alaphelyzetbe állítása</string>
     <string name="reset_set_question">A játszma minden eseménye el fog veszni. Biztosan alaphelyzetbe akarod állítani a játszmát?</string>
-    <string name="share">Megosztás</string>
-    <string name="share_exception">Nem sikerült a mérkőzés megosztása</string>
     <string name="navigate_home_question">Később folytathatod a mérkőzést. Nyugodtan kiléphetsz.</string>
     <string name="select_player_title">Válassz egy cserejátékost</string>
     <string name="court_position_tab">Állásrend</string>
@@ -134,9 +117,6 @@
     <string name="confirm_team_lineup_question">Valóban ez legyen a kezdő felállása a %s csapatnak?</string>
     <string name="no_substitution_message">Nincsen elérhető cserejátékos</string>
     <string name="confirm_set_question">Jóváhagyod ezt a pontot?</string>
-    <string name="index_game">Publikus / privát mérkőzés</string>
-    <string name="public_game_message">A mérkőzés most már publikus</string>
-    <string name="private_game_message">A mérkőzés most már privát</string>
     <string name="all_timeouts_called">%s csapatnak nincs több időkérése</string>
     <string name="all_substitutions_used">%s csapatnak nincs több cserelehetősége</string>
     <string name="one_remaining_substitution">A %s csapatnak 1 cserelehetősége maradt</string>

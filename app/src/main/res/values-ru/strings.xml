@@ -6,7 +6,6 @@
     <string name="no">Нет</string>
     <string name="resume">Продолжить</string>
     <string name="delete">Удалить</string>
-    <string name="ignore">Пропустить</string>
     <string name="accept">Добавить</string>
     <string name="reject">Отказать</string>
     <string name="remove">Удалить</string>
@@ -22,7 +21,6 @@
     <string name="beach_volleyball_game">Пляжный волейбол</string>
     <string name="snow_volleyball_game">Снежный волейбол</string>
     <string name="score_based_game">Счётное табло</string>
-    <string name="time_based_game">Матч ограниченный по времени</string>
     <string name="resume_game_title">Продолжить матч</string>
     <string name="resume_game_error">Невозможно продолжить матч.</string>
     <string name="my_data_group">Мои данные</string>
@@ -34,33 +32,21 @@
     <string name="colleagues">Коллеги</string>
     <string name="live_games_vbr_com">Матчи в процессе (на веб-сайте)</string>
     <string name="my_account">Мой аккаунт</string>
-    <string name="privacy_policy">Политика конфиденциальности</string>
-
 
     <!-- User activity -->
     <string name="user_sign_in">Войти</string>
-    <string name="user_sign_up">Зарегистрироваться</string>
     <string name="user_password_update">Изменить пароль</string>
-    <string name="user_lost_password">Забыли пароль?</string>
     <string name="user_sign_out">Выход</string>
-    <string name="user_sign_in_why_title">Зачем использовать мой аккаунт?</string>
-    <string name="user_sign_in_why_message">Все ваши данные в Volleyball Referee (матчи, команды, правила, лиги, коллеги) будут синхронизированы с нашим сервером. При идентификации приложение соединяет ваши данные с вашим аккаунтом.</string>
     <string name="user_pseudo_hint">Никнейм</string>
-    <string name="user_email_hint">Email</string>
-    <string name="user_confirm_email_hint">Подтвердить email</string>
-    <string name="user_email_not_matching">Адрес почты не совпадает</string>
     <string name="user_current_password_hint">Текущий пароль</string>
     <string name="user_password_hint">Пароль</string>
-    <string name="user_confirm_password_hint">Подтвердить пароль</string>
     <string name="user_new_password_hint">Новый пароль</string>
     <string name="user_confirm_new_password_hint">Подтвердить новый пароль</string>
     <string name="user_password_not_matching">Пароли не совпадают</string>
     <string name="user_password_error">Неправильный пароль</string>
     <string name="user_locked_error">Ваш аккаунт временно заблокирован по причине слишком большого числа неудачных попыток входа</string>
-    <string name="user_email_pseudo_conflict">Данный никнейм или email уже существует</string>
     <string name="user_request_error">Произошла ошибка при запросе</string>
     <string name="user_signed_in_as_pseudo">Подключён как %s</string>
-    <string name="user_password_recovery_initiated">На ваш email %s была отправлена ссылка для восстановления пароля</string>
     <string name="password_strength">Пароль должен содержать не менее восьми символов, включая одну заклавную букву, одну цифру и один специальный символ</string>
     <string name="password_strength_error">Введённый пароль не удовлетворяет заданным требованиям</string>
     <string name="user_signed_out">Вышел из аккаунта</string>
@@ -86,7 +72,6 @@
     <string name="select_libero">Выберите либеро (факультативно)</string>
     <string name="select_gender">Выберите категорию (пол)</string>
     <string name="input_player_names">Введите имена игроков (факультативно)</string>
-    <string name="confirm">Подтвердить</string>
     <string name="confirm_game_setup_question">Подтвердить настройки матча?</string>
     <string name="gender_description">Пол</string>
     <string name="league_name">Название лиги / турнира</string>
@@ -106,8 +91,6 @@
     <string name="navigate_home">Вернуться на главную страницу</string>
     <string name="reset_set">Начать партию сначала</string>
     <string name="reset_set_question">Партия начнётся сначала и все ваши действия будут потеряны. Перезагрузить?</string>
-    <string name="share">Поделиться</string>
-    <string name="share_exception">Произошла ошибка! Не удалось поделиться результатами матча</string>
     <string name="navigate_home_question">Закончить данный матч позже. Покинуть страницу?</string>
     <string name="select_player_title">Выбрать игрока со скамейки запасных</string>
     <string name="court_position_tab">Расстановка</string>
@@ -133,9 +116,6 @@
     <string name="confirm_team_lineup_question">Подтвердить стартовую расстановку команды %s в данной партии?</string>
     <string name="no_substitution_message">Замена невозможна</string>
     <string name="confirm_set_question">Подтвердить окончание данной партии?</string>
-    <string name="index_game">Поменять статус матча (публичный/скрытый)</string>
-    <string name="public_game_message">Статус матча: публичный</string>
-    <string name="private_game_message">Статус матча: скрытый</string>
     <string name="all_timeouts_called">Команда \"%s\": нет командных тайм аутов</string>
     <string name="all_substitutions_used">Команда \"%s\": нет доступных замен в данной партии</string>
     <string name="one_remaining_substitution">Команда \"%s\": одна последняя замена в данной партии</string>
