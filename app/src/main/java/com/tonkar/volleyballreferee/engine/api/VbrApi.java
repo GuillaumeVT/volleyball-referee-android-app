@@ -25,7 +25,7 @@ public class VbrApi {
     private        TokenExpiredInterceptor mTokenExpiredInterceptor;
 
     private VbrApi(String serverUrl) {
-        mBaseUrl = serverUrl + "/api/v3.2";
+        mBaseUrl = serverUrl + "/api";
     }
 
     public static VbrApi getInstance(Context context) {
