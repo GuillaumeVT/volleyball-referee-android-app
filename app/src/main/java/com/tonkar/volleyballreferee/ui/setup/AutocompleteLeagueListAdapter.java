@@ -74,17 +74,26 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueSummary
                 results.count = mStoredLeagueList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
-
+                boolean perfectMatch = false;
                 List<ApiLeagueSummary> matchValues = new ArrayList<>();
 
                 for (ApiLeagueSummary league : mStoredLeagueList) {
                     if (lowerCaseText.isEmpty() || league.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(league);
                     }
+                    if (league.getName().toLowerCase(Locale.getDefault()).equals(lowerCaseText)) {
+                        perfectMatch = true;
+                    }
                 }
 
-                results.values = matchValues;
-                results.count = matchValues.size();
+                // If the input is a league name, show all leagues to quickly select another
+                if (perfectMatch) {
+                    results.values = mStoredLeagueList;
+                    results.count = mStoredLeagueList.size();
+                } else {
+                    results.values = matchValues;
+                    results.count = matchValues.size();
+                }
             }
 
             return results;

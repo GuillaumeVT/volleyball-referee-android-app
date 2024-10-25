@@ -74,17 +74,26 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesSummary> 
                 results.count = mStoredRulesList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
-
+                boolean perfectMatch = false;
                 List<ApiRulesSummary> matchValues = new ArrayList<>();
 
                 for (ApiRulesSummary rules : mStoredRulesList) {
                     if (lowerCaseText.isEmpty() || rules.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(rules);
                     }
+                    if (rules.getName().toLowerCase(Locale.getDefault()).equals(lowerCaseText)) {
+                        perfectMatch = true;
+                    }
                 }
 
-                results.values = matchValues;
-                results.count = matchValues.size();
+                // If the input is a rules name, show all rules to quickly select another
+                if (perfectMatch) {
+                    results.values = mStoredRulesList;
+                    results.count = mStoredRulesList.size();
+                } else {
+                    results.values = matchValues;
+                    results.count = matchValues.size();
+                }
             }
 
             return results;
