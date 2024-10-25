@@ -103,17 +103,26 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
                 results.count = mStoredTeamsList.size();
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
-
+                boolean perfectMatch = false;
                 List<ApiTeamSummary> matchValues = new ArrayList<>();
 
                 for (ApiTeamSummary team : mStoredTeamsList) {
                     if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(team);
                     }
+                    if (team.getName().toLowerCase(Locale.getDefault()).equals(lowerCaseText)) {
+                        perfectMatch = true;
+                    }
                 }
 
-                results.values = matchValues;
-                results.count = matchValues.size();
+                // If the input is a team name, show all teams to quickly select another
+                if (perfectMatch) {
+                    results.values = mStoredTeamsList;
+                    results.count = mStoredTeamsList.size();
+                } else {
+                    results.values = matchValues;
+                    results.count = matchValues.size();
+                }
             }
 
             return results;
