@@ -73,8 +73,8 @@ public class QuickTeamSetupFragment extends Fragment implements BaseTeamServiceH
                     Log.i(Tags.SETUP_UI, String.format("Update %s team name", mTeamType));
                     mTeamService.setTeamName(mTeamType, s.toString().trim());
                     ((TextInputLayout) view.findViewById(R.id.team_name_input_layout)).setError(
-                            mTeamService.getTeamName(mTeamType).length() < 2 ? String.format(Locale.getDefault(), getString(
-                                    R.string.must_provide_at_least_n_characters), 2) : null);
+                            mTeamService.getTeamName(mTeamType).length() < IBaseTeam.TEAM_NAME_MIN_LENGTH ? String.format(
+                                    Locale.getDefault(), getString(R.string.must_provide_at_least_n_characters), 2) : null);
                     computeSaveItemVisibility();
                 }
             }

@@ -12,6 +12,8 @@ import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
@@ -167,7 +169,7 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mColleagueItems;
                 results.count = mColleagueItems.size();
             } else {

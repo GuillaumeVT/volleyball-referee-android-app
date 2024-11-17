@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiLeagueSummary;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueSummary> {
@@ -69,7 +71,7 @@ public class AutocompleteLeagueListAdapter extends ArrayAdapter<ApiLeagueSummary
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mStoredLeagueList;
                 results.count = mStoredLeagueList.size();
             } else {

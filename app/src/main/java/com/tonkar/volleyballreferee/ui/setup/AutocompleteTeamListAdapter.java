@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
@@ -98,7 +100,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mStoredTeamsList;
                 results.count = mStoredTeamsList.size();
             } else {

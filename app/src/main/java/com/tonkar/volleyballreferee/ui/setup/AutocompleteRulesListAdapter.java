@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesSummary> {
@@ -69,7 +71,7 @@ public class AutocompleteRulesListAdapter extends ArrayAdapter<ApiRulesSummary> 
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mStoredRulesList;
                 results.count = mStoredRulesList.size();
             } else {

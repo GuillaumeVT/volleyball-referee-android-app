@@ -589,7 +589,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
                 .equals(storedGame.getTeamId(TeamType.GUEST))) {
             ApiGame game = (ApiGame) storedGame;
 
-            VbrApi.getInstance(mContext).updateGame(game, mContext, new Callback() {
+            VbrApi.getInstance(mContext).upsertGame(game, mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
@@ -601,25 +601,6 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
                         if (GameStatus.COMPLETED.equals(game.getStatus())) {
                             mRepository.insertGame(game, true, false);
                         }
-                    } else if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                        VbrApi.getInstance(mContext).createGame(game, mContext, new Callback() {
-                            @Override
-                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                call.cancel();
-                            }
-
-                            @Override
-                            public void onResponse(@NonNull Call call, @NonNull Response response) {
-                                if (response.code() == HttpURLConnection.HTTP_CREATED) {
-                                    if (GameStatus.COMPLETED.equals(game.getStatus())) {
-                                        mRepository.insertGame(game, true, false);
-                                    }
-                                } else {
-                                    Log.e(Tags.STORED_GAMES,
-                                          String.format(Locale.getDefault(), "Error %d while posting game", response.code()));
-                                }
-                            }
-                        });
                     } else {
                         Log.e(Tags.STORED_GAMES, String.format(Locale.getDefault(), "Error %d while pushing game", response.code()));
                     }

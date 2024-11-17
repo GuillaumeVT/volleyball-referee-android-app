@@ -273,15 +273,9 @@ public class VbrApi {
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void createGame(ApiGame game, Context context, Callback callback) {
+    public void upsertGame(ApiGame game, Context context, Callback callback) {
         String json = JsonConverters.GSON.toJson(game, ApiGame.class);
         Request request = buildPost("games/full", json, PrefUtils.getUserToken(context));
-        getHttpClient(context).newCall(request).enqueue(callback);
-    }
-
-    public void updateGame(ApiGame game, Context context, Callback callback) {
-        String json = JsonConverters.GSON.toJson(game, ApiGame.class);
-        Request request = buildPut("games/full", json, PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 

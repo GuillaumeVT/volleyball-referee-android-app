@@ -12,6 +12,8 @@ import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.*;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Locale;
 
 public class GameSetupStatusDialog {
@@ -41,10 +43,8 @@ public class GameSetupStatusDialog {
 
         boolean leagueNameValid = mGame.getLeague().getName().length() >= 2;
         boolean divisionNameValid = mGame.getLeague().getDivision().length() >= 2;
-        boolean miscValid = (leagueNameValid && divisionNameValid) || (mGame.getLeague().getName().length() == 0 && mGame
-                .getLeague()
-                .getDivision()
-                .length() == 0);
+        boolean miscValid = (leagueNameValid && divisionNameValid) || (StringUtils.isBlank(
+                mGame.getLeague().getName()) && StringUtils.isBlank(mGame.getLeague().getDivision()));
 
         View gameSetupStatusView = mActivity.getLayoutInflater().inflate(R.layout.game_setup_status_dialog, null);
 

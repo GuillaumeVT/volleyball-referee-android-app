@@ -13,6 +13,8 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummary> {
@@ -112,7 +114,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mStoredTeamsList;
                 results.count = mStoredTeamsList.size();
             } else {

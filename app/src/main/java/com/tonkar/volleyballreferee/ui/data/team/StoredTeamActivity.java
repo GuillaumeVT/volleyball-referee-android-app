@@ -23,6 +23,8 @@ import com.tonkar.volleyballreferee.ui.interfaces.BaseTeamServiceHandler;
 import com.tonkar.volleyballreferee.ui.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class StoredTeamActivity extends AppCompatActivity {
 
     private StoredTeamsService mStoredTeamsService;
@@ -156,7 +158,7 @@ public class StoredTeamActivity extends AppCompatActivity {
 
     public void computeSaveLayoutVisibility() {
         View saveLayout = findViewById(R.id.save_team_layout);
-        if (mTeamService.getTeamName(null).trim().length() < 1 || mTeamService.getNumberOfPlayers(
+        if (StringUtils.isBlank(mTeamService.getTeamName(null)) || mTeamService.getNumberOfPlayers(
                 null) < mTeamService.getExpectedNumberOfPlayersOnCourt() || mTeamService.getCaptain(null) < 0) {
             Log.i(Tags.STORED_TEAMS, "Save button is invisible");
             saveLayout.setVisibility(View.GONE);

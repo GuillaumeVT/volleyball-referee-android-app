@@ -13,6 +13,8 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 
 public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSummary> {
@@ -104,7 +106,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mStoredRulesList;
                 results.count = mStoredRulesList.size();
             } else {

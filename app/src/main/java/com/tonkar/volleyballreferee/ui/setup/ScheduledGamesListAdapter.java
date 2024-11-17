@@ -10,6 +10,8 @@ import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.util.*;
 
@@ -132,7 +134,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
         protected FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (prefix == null || prefix.length() == 0) {
+            if (StringUtils.isBlank(prefix)) {
                 results.values = mGameDescriptionList;
                 results.count = mGameDescriptionList.size();
             } else {

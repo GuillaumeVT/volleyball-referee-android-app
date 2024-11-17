@@ -26,6 +26,8 @@ import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 import com.tonkar.volleyballreferee.ui.team.TeamSetupFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class GameSetupActivity extends AppCompatActivity {
 
     private IGame mGame;
@@ -207,10 +209,8 @@ public class GameSetupActivity extends AppCompatActivity {
                 .getTeamName(TeamType.GUEST)
                 .length() < IBaseTeam.TEAM_NAME_MIN_LENGTH || game.getNumberOfPlayers(
                 TeamType.GUEST) < game.getExpectedNumberOfPlayersOnCourt() || game.getCaptain(TeamType.HOME) < 0 || game.getCaptain(
-                TeamType.GUEST) < 0 || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH || (game
-                .getLeague()
-                .getName()
-                .length() > 0 && game.getLeague().getDivision().length() < 2);
+                TeamType.GUEST) < 0 || game.getRules().getName().length() < Rules.RULES_NAME_MIN_LENGTH || (StringUtils.isNotBlank(
+                game.getLeague().getName()) && game.getLeague().getDivision().length() < 2);
     }
 
     private void showGameSetupStatus(IGame game) {

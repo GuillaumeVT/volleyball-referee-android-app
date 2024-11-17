@@ -23,6 +23,8 @@ import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class StoredRulesActivity extends AppCompatActivity {
 
     private Rules   mRules;
@@ -143,7 +145,7 @@ public class StoredRulesActivity extends AppCompatActivity {
 
     public void computeSaveLayoutVisibility() {
         View saveLayout = findViewById(R.id.save_rules_layout);
-        if (mRules.getName().length() > 1) {
+        if (StringUtils.isNotBlank(mRules.getName())) {
             Log.i(Tags.STORED_RULES, "Save button is visible");
             saveLayout.setVisibility(View.VISIBLE);
         } else {
